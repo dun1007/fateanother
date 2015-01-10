@@ -374,6 +374,7 @@
 			"particle"				"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
 			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
 			"particle"				"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt_birds.vpcf"
 		}
 		
 		"OnSpellStart"
@@ -415,6 +416,24 @@
 			"modifier_caliburn_slow"
 			{
 				"Duration"		"3.0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt_birds.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+							"TARGET"		"attach_hitloc"
+						}
+					}
+				}
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-50"
