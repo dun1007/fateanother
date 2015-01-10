@@ -12,6 +12,11 @@ function OnInstinctStart(keys)
 	--keys.caster:AddNewModifier(keys.caster, nil, "modifier_item_sphere", {})
 end
 
+--[[
+	Author: kritth
+	Date: 10.01.2015.
+	Create tracking tornado towards the target
+]]
 function CreateWind(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -46,6 +51,7 @@ end
 
 function InvisibleAirPull(keys)
 	keys.caster.invisible_air_reach_target = true					-- Addition
+
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
@@ -76,13 +82,83 @@ function InvisibleAirPull(keys)
 	  unit:SetPhysicsVelocity(unit:GetPhysicsVelocity():Length() * dir)
 	  if diff:Length() < 100 then
 	  	target:RemoveModifierByName("drag_pause")
-	  	target:RemoveModifierByName( "modifier_invisible_air_target" )		-- Addition
+		target:RemoveModifierByName( "modifier_invisible_air_target" )		-- Addition
 		unit:PreventDI(false)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		unit:OnPhysicsFrame(nil)
         FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 	  end
 	end)
+end
+
+--[[
+	Author: kritth
+	Date: 10.01.2015.
+	Create magnataur shockwave in tracking manner upon start
+]]
+function CaliburnSlash( keys )
+	-- Variables
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local movespeed = ability:GetLevelSpecialValueFor( "speed", ability:GetLevel() - 1 )
+	local particleName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+	
+	-- Create particle
+	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
+	
+	-- Global value
+	caster.caliburn_reach_target = false
+	caster.caliburn_pos = caster:GetAbsOrigin()
+	
+	-- Change forward vector over interval
+	Timers:CreateTimer( function() 
+			local targetPos = target:GetAbsOrigin()
+			local forwardVec = targetPos - caster.caliburn_pos
+			forwardVec = forwardVec:Normalized()
+			
+			caster.caliburn_pos = caster.caliburn_pos + forwardVec * ( movespeed / 10 )
+			
+			ParticleManager:SetParticleControl( fxIndex, 1, forwardVec * movespeed )
+			
+			if caster.caliburn_reach_target then
+				ParticleManager:DestroyParticle( fxIndex, false )
+				return nil
+			else
+				return 1.0 / movespeed
+			end
+		end
+	)
+end
+
+--[[
+	Author: kritth
+	Date: 10.01.2015.
+	Create yellowish explosion upon hitting unit
+]]
+function CaliburnExplode( keys )
+	-- Turn the flag
+	keys.caster.caliburn_reach_target = true
+	
+	print("Exploding")
+	
+	-- Variables
+	local caster = keys.caster
+	local target = keys.target
+	local lightParticleName = "particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
+	local explodeParticleName = "particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
+	
+	-- Create particle
+	local lightFxIndex = ParticleManager:CreateParticle( lightParticleName, PATTACH_ABSORIGIN, target )
+	local explodeFxIndex = ParticleManager:CreateParticle( explodeParticleName, PATTACH_ABSORIGIN, target )
+	ParticleManager:SetParticleControl( explodeFxIndex, 3, target:GetAbsOrigin() )
+	
+	Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( lightFxIndex, false )
+			ParticleManager:DestroyParticle( explodeFxIndex, false )
+			return nil
+		end
+	)
 end
 
 function OnCaliburnHit(keys) 

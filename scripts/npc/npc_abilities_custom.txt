@@ -13,10 +13,11 @@
 		"AbilityBehavior"				"DOTA_ABILITY_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"saber_charisma"
 		"MaxLevel"						"1"
-		"DisplayAdditionalHeroes"   "1"
+		"DisplayAdditionalHeroes"   	"1"
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff_glow.vpcf"
+			"particle"					"particles/items2_fx/rod_of_atos_debuff_glow.vpcf"
+			"particle"					"particles/items2_fx/rod_of_atos_debuff_ground.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -37,20 +38,38 @@
 		{
 			"modifier_charisma_aura"
 			{
-				"Passive"	"1"
-				"IsHidden"	"0"
-				"Aura"		"saber_charisma_aura"
-				"Aura_Radius"	"1000"
-				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP "
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_charisma_aura_buff"
+				"Aura_Radius"			"1000"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP "
+			}
+			
+			"modifier_charisma_aura_buff"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/items2_fx/rod_of_atos_debuff_glow.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/items2_fx/rod_of_atos_debuff_ground.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
 				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%speed_modifier"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_modifier"
 				}
-				"EffectName"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff_glow.vpcf"
-				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
@@ -152,19 +171,16 @@
 		"AbilityTextureName"			"saber_invisible_air"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		
+		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
-		"precache"						
-		{
-			"particle"				"particles/econ/items/windrunner/windrunner_cape_sparrowhawk/windrunner_windrun_blur_sparrowhawk.vpcf"
-			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
-			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
-		}
 		"AbilityCastRange"				"250"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"8.0 8.0 8.0 8.0 8.0"
 		"AbilityDamage"					"200 250 300 350 400"
 		"AbilityManaCost"				"100"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -182,6 +198,16 @@
 				"var_type"			"FIELD_INTEGER"
 				"range"				"250"
 			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+			"particle"				"particles/econ/items/windrunner/windrunner_cape_sparrowhawk/windrunner_windrun_blur_sparrowhawk.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 		}
 		
 		"OnSpellStart"
@@ -295,7 +321,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"500" // 200"
 		"AbilityCastPoint"				"0.8"
 
 		// Time		
@@ -310,6 +336,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"200"
 		
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -339,8 +367,23 @@
 			}
 		}
 		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
+			"particle"				"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
+		}
+		
 		"OnSpellStart"
 		{
+			"RunScript"
+			{
+				"ScriptFile"		"saber_ability"
+				"Function"			"CaliburnSlash"
+			}
+		
 			"TrackingProjectile"
 			{
 				"Target"			"TARGET"
@@ -353,11 +396,17 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"saber_ability"
-				"Function"	"OnCaliburnHit"
-				"Damage"	"%damage"
-				"AoEDamage"	"%aoe_damage_percent"
-				"Radius"	"%radius"
+				"ScriptFile"		"saber_ability"
+				"Function"			"CaliburnExplode"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"saber_ability"
+				"Function"			"OnCaliburnHit"
+				"Damage"			"%damage"
+				"AoEDamage"			"%aoe_damage_percent"
+				"Radius"			"%radius"
 			}
 		}
 		
@@ -372,8 +421,6 @@
 				}
 			}
 		}
-		
-		
 	}
 	
 	//=================================================================================================================
@@ -868,7 +915,7 @@
 		}
 	}
 
-		//=================================================================================================================
+	//=================================================================================================================
 	// Saber : Max Excalibur
 	//=================================================================================================================
 	"saber_max_excalibur"
