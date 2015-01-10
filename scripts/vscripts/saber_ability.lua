@@ -43,12 +43,12 @@ function CreateWind(keys)
 		end
 	)
 end
+
 function InvisibleAirPull(keys)
+	keys.caster.invisible_air_reach_target = true					-- Addition
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-
-	keys.caster.invisible_air_reach_target = true					-- Addition
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
 	if ply.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
