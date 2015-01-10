@@ -1,0 +1,41 @@
+"dota_shops"
+{
+	"consumables"
+	{
+		"item"		"item_mana_essence"
+		"item"		"item_gem_of_speed"
+		"item"		"item_scout_familiar"
+		"item"		"item_ward_familiar"
+		"item"		"item_teleport_scroll"
+		"item"		"item_berserk_scroll"
+		"item"		"item_spirit_link"
+		"item"		"item_mass_teleport_scroll"
+		"item"		"item_gem_of_resonance" 
+	}
+
+	"attributes"
+	{
+		"item"		"item_blink_scroll" 
+		"item"		"item_c_scroll" 
+		"item"		"item_b_scroll" 
+		"item"		"item_a_scroll" 
+		"item"		"item_s_scroll" 
+		"item"		"item_ex_scroll" 
+	}
+
+	"misc"
+	{
+		"item"		"item_healing_scroll_recipe"
+		"item" 		"item_a_plus_scroll_recipe"
+	}
+
+	"basics"
+	{
+		"item"		"item_condensed_mana_essence" 
+		"item"		"item_healing_scroll"
+		"item"		"item_a_plus_scroll"
+
+	}
+
+
+}

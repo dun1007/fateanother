@@ -1,0 +1,7845 @@
+// Dota Heroes File
+"DOTAAbilities"
+{
+	"Version"		"1"
+
+
+	//=================================================================================================================
+	// Saber : Charisma
+	//=================================================================================================================
+	"saber_charisma"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"saber_charisma"
+		"MaxLevel"						"1"
+		"DisplayAdditionalHeroes"   "1"
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff_glow.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"Range"					"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_modifier"		"20"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_charisma_aura"
+			{
+				"Passive"	"1"
+				"IsHidden"	"0"
+				"Aura"		"saber_charisma_aura"
+				"Aura_Radius"	"1000"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP "
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%speed_modifier"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_modifier"
+				}
+				"EffectName"	"particles/units/heroes/hero_ancient_apparition/ancient_apparition_ice_blast_debuff_glow.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Saber : Instinct
+	//=================================================================================================================
+	"saber_instinct"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"saber_instinct"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"evasion_rate"			"15"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_instinct_evasion"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion_rate"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Saber : Improved Instinct
+	//=================================================================================================================
+	"saber_improved_instinct"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"saber_instinct"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"45"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"evasion_rate"			"30"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"saber_ability"
+				"Function"			"OnInstinctStart"
+			}
+		}
+		
+		
+		
+		"Modifiers"
+		{
+			"modifier_instinct_evasion"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_AVOID_SPELL"		"100"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion_rate"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Saber : Invisible Air
+	//=================================================================================================================
+	"saber_invisible_air"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_invisible_air"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		
+		"precache"						
+		{
+				"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
+				"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+		}
+		"AbilityCastRange"				"250"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8.0 8.0 8.0 8.0 8.0"
+		"AbilityDamage"					"200 250 300 350 400"
+		"AbilityManaCost"				"100"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200 250 300 350 400"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"250"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"CreateWind"
+				"MoveSpeed"		"%speed"
+			}
+			"TrackingProjectile"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
+				"MoveSpeed"			"%speed"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			}
+	
+			"FireSound"
+			{
+				"EffectName"	"Ability.Focusfire"
+			}
+			
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"    "saber_ability"
+				"Function"      "InvisibleAirPull"
+				"Damage"		"%damage"
+			}
+		}
+	}
+	
+	
+	
+	//=================================================================================================================
+	// Saber : Caliburn
+	//=================================================================================================================
+	"saber_caliburn"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_caliburn"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_impact.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"200"
+		"AbilityCastPoint"				"0.8"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"300 380 460 540 620"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"300 380 460 540 620"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_damage_percent"	"0.2 0.3 0.4 0.5 0.6"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"200"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"700"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"			"TARGET"
+				"MoveSpeed"			"%speed"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"	"OnCaliburnHit"
+				"Damage"	"%damage"
+				"AoEDamage"	"%aoe_damage_percent"
+				"Radius"	"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_caliburn_slow"
+			{
+				"Duration"		"3.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-50"
+				}
+			}
+		}
+		
+		
+	}
+	
+	//=================================================================================================================
+	// Saber : Excalibur
+	//=================================================================================================================
+	"saber_excalibur"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"			"saber_excalibur"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"0.9"
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"
+			"particle_folder"		"particles/units/heroes/hero_invoker"
+			"particle_folder"		"particles/units/heroes/hero_lina"
+		}
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"37.0"
+		
+		"AbilityDamage"					"700 900 1100 1300 1500"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"saber_pause"
+				"Target"			"CASTER"
+			}
+
+			"RunScript"
+			{
+			 	"ScriptFile"	"saber_ability"
+			 	"Function"		"OnExcaliburStart"
+			 	"Target"		"POINT"
+			 	"StartRadius"	"%width"
+			 	"EndRadius"		"%width"
+			 	"Speed"			"%speed"
+			 	"Range"			"%length"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+			 	"ScriptFile"	"saber_ability"
+			 	"Function"		"OnExcaliburHit"
+			 	"Damage"		"%damage"
+			}			
+		}
+				
+					
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"					"2000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"700 900 1100 1300 1500"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"saber_pause"
+			{
+				"Duration"		"4"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Saber : Avalon
+	//=================================================================================================================
+	"saber_avalon"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"saber_avalon"
+		"MaxLevel"						"5"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1"
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_omniknight"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		}
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCoodown"				"60"
+		"AbilityManaCost"				"800"
+		
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"4.0 5.0 6.0 7.0 8.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1650"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_threshold"		"300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"700 950 1200 1450 1700"
+			}
+		}
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnAvalonStart"
+			}
+			
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_avalon"
+				"Target"		"CASTER"
+				"Duration"		"%duration"
+			}
+			
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+			}
+			
+		}
+				
+		"Modifiers"
+		{
+			"modifier_avalon"
+			{
+				"Duration"		"%duration"
+				"EffectName"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"100"
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "saber_ability"
+						"Function"      "AvalonOnTakeDamage"
+						"Threshold"		"%damage_threshold"
+						"DamageTaken"	"%attack_damage"
+						"Damage"		"%damage"
+					}
+				}
+			}
+
+			"avalon_pause"
+			{
+				"Duration"		"0.5"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		
+	}
+
+	//=======================================
+	// Saber Attribute : Improve Excalibur
+	//=======================================
+	"saber_attribute_improve_excalibur"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_excalibur"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnImproveExcaliburAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Attribute : Improve Instinct
+	//=======================================
+	"saber_attribute_improve_instinct"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_instinct"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnImproveInstinctAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Attribute : Chivalry
+	//=======================================
+	"saber_attribute_chivalry"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_chivalry"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnChivalryAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Attribute : Strike Air
+	//=======================================
+	"saber_attribute_strike_air"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_strike_air"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnStrikeAirAcquired"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Saber : Strike Air
+	//=================================================================================================================
+	"saber_strike_air"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"			"saber_strike_air"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"0.5"
+
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_invoker"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+		}
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"37.0"
+		
+		"AbilityDamage"					"650"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"saber_pause"
+				"Target"			"CASTER"
+			}
+			
+			"RunScript"
+			{
+				"ScriptFile"    "saber_ability"
+				"Function"      "OnStrikeAirStart"
+			}
+			
+			"DelayedAction"
+			{
+				"Delay"				"1.75"
+				"Action"
+				{
+					"LinearProjectile"
+					{
+						"Target"				"POINT"
+						"EffectName"			"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+						"MoveSpeed"				"%speed"
+						"StartRadius"			"%width"
+						"EndRadius"				"%width"
+						"FixedDistance"			"%length"
+						"HasFrontalCone"		"1"
+						"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+						"TargetTypes"			"DOTA_UNIT_TARGET_ALL"
+					}
+				}
+			}
+			
+			"FireSound"
+			{
+				"EffectName"	"Hero_Invoker.Tornado"
+			}
+			
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"    "saber_ability"
+				"Function"      "StrikeAirPush"
+				"Damage"		"%damage"
+				"Speed"			"%speed"
+			}
+		}
+				
+					
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"					"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"10000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"700 900 1100 1300 1500"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"saber_pause"
+			{
+				"Duration"		"1.75"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+		//=================================================================================================================
+	// Saber : Max Excalibur
+	//=================================================================================================================
+	"saber_max_excalibur"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"			"saber_max_excal"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"0.9"
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_lina"
+		}
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"saber_pause"
+				"Target"			"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnMaxStart"
+				"Target"		"POINT"
+				"Speed"			"%speed"
+				"Range"			"%range"
+				"Width"			"%width"
+
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnMaxHit"
+				"Target"		"POINT"
+				"Speed"			"%speed"
+				"Range"			"%range"
+				"Width"			"%width"
+
+			}
+		}
+				
+					
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"2100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"2500"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"saber_pause"
+			{
+				"Duration"		"5"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+		}
+	}
+	
+	//=================================================================================================================
+	// Lancer : Battle Continuation
+	//=================================================================================================================
+	"lancer_5th_battle_continuation"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"lancer_battle_continuation"
+		"AbilityCooldown"				"60"
+
+		"precache"
+		{
+			"particle"	"particles/items_fx/aegis_timer.vpcf"
+
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_lancer_revive"
+				"Target"		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_lancer_revive"
+			{
+				"Passive"	"1"
+				"IsPurgable"	"0"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lancer_ability"
+						"Function"	"LancerOnTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lancer : Protection from Arrows
+	//=================================================================================================================
+	"lancer_5th_protection_from_arrows"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"lancer_battle_continuation"
+
+		"OnSpellStart"
+		{
+		}
+
+		"Modifiers"
+		{
+			"modifier_lancer_revive"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"35"
+				}
+			}
+		}
+		
+	}
+	
+	//=================================================================================================================
+	// Lancer : Rune Magic
+	//=================================================================================================================
+	"lancer_5th_rune_magic"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lancer_rune_magic"
+		"AbilityCooldown"				"20"
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicOpen"
+			}
+		}
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneLevelUp"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lancer : Rune Magic Spellbook
+	//=================================================================================================================
+	"lancer_5th_rune_of_disengage"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"phantom_lancer_juxtapose"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityManaCost"				"100"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"distance"		"600 700 800 900 1000"
+			}
+		}
+
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"Disengage"
+				"Distance"		"%distance"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicUsed"
+			}
+		}
+	}
+
+	"lancer_5th_rune_of_replenishment"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"omniknight_purification"
+		"AbilityManaCost"				"100"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"heal"		"200 300 400 500 600"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"Heal"
+			{
+				"Target"		"CASTER"
+				"HealAmount"	"%heal"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicUsed"
+			}
+		}
+	}
+
+	"lancer_5th_rune_of_trap"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AOERadius"						"%radius"
+		"AbilityTextureName"			"templar_assassin_psionic_trap"
+		"AbilityManaCost"				"100"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 		"FIELD_FLOAT"
+				"stun_duration"		"0.50 0.75 1.00 1.25 1.50"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"radius"		"400"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"trap_duration"	"45.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"Trap"
+				"Duration"		"%trap_duration"
+				"StunDuration"	"%stun_duration"
+				"Radius"		"%radius"
+				"Target"		"POINT"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicUsed"
+			}
+		}
+	}
+
+	"lancer_5th_rune_of_conversion"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"percentage"		"10 15 20 25 30"
+			}
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"Conversion"
+				"Percentage"	"%percentage"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicUsed"
+			}
+		}
+	}
+
+	"lancer_5th_rune_of_vision"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"keeper_of_the_light_blinding_light"
+		"AbilityManaCost"				"100"
+		"AbilityCastPoint"				"0.3"
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicUsed"
+			}
+		}
+	}
+
+	//bugged
+	"lancer_5th_rune_of_flame"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"huskar_burning_spear"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type" 		"FIELD_INTEGER"
+				"extra_damage"		"1 2 3 4 5"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_lancer_incinerate"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL"	"%extra_damage"
+				}
+				"OnAttackLanded"
+				{
+					"ScriptFile"	"lancer_ability"
+					"Function"		"IncinerateOnHit"
+				}
+			}
+		}
+	}
+
+	"lancer_5th_close_spellbook"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"silencer_last_word"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"RuneMagicClose"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Lancer : Relentless Spear
+	//=================================================================================================================
+	"lancer_5th_relentless_spear"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityTextureName"			"lancer_relentless_spear"
+		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
+		
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"19"
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aspd_modifier"			"30 60 90 120 150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_modifier"		"20"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_aspd_increase"
+				"Target"		"CASTER"
+				"Duration"		"9.0"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnRAStart"
+			}
+		}
+		
+			
+		"Modifiers"
+		{
+			"modifier_aspd_increase"
+			{
+				"EffectName"	"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_modifier"
+				}
+			}
+		}
+	}	
+		
+	
+	//=================================================================================================================
+	// Lancer : Gae Bolg - The Spear of Impaling Barbed Death
+	//=================================================================================================================
+	"lancer_5th_gae_bolg"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gae_bolg_target"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"1.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"550 660 770 880 990"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"550 660 770 880 990"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heartbreak_threshold"		"200 240 280 320 360"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"lancer_ability"
+			 	"Function"		"OnGBTargetHit"
+			 	"Damage"		"%damage"
+			 	"HBThreshold"	"%heartbreak_threshold"
+			 }
+		}
+	}
+
+	//=================================================================================================================
+	// Lancer : Wesen Gae Bolg
+	//=================================================================================================================
+	"lancer_5th_wesen_gae_bolg"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"lancer_wesen_gae_bolg"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90.0"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"1500"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heartbreak_threshold_percentage"	"25"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+			"RunScript"
+
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"lancer_ability"
+			 	"Function"		"OnGBComboHit"
+			 	"Damage"		"%damage"
+			 	"HBThreshold"	"%heartbreak_threshold_percentage"
+			 }
+		}
+	}
+	
+	//====================================
+	// Lancer : Gae Bolg - The Spear of Striking Death Flight
+	//====================================
+	"lancer_5th_gae_bolg_jump"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gae_bolg_aoe"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.2"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
+			"particle"		"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf"
+			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.8"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"750 950 1150 1350 1550"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"750 950 1150 1350 1550"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1000"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"lancer_ability"
+			 	"Function"		"OnGBAOEStart"
+			 	"Target"		"POINT"
+			}
+		}
+
+		"OnProjectileHitUnit" 
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnGBAOEHit"
+				"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"Radius"		"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	
+	//=======================================
+	// Lancer : Improve Battle Continuation
+	//=======================================
+	"lancer_attribute_improve_battle_continuation"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lancer_battle_continuation"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnImrpoveBCAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Lancer : Improve Gae Bolg
+	//=======================================
+	"lancer_attribute_improve_gae_bolg"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"gae_bolg_aoe"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnImrpoveGaeBolgAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Lancer : Protection from Arrows
+	//=======================================
+	"lancer_attribute_protection_from_arrows"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"visage_gravekeepers_cloak"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnPFAAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Lancer : The Heartseeker
+	//=======================================
+	"lancer_attribute_the_heartseeker"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lancer_the_heartseeker"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnHeartseekerAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Saber Alter : Mana Shroud
+	//=================================================================================================================
+	"saber_alter_mana_shroud"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"saber_alter_mana_shroud"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"Range"					"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen_bonus"		"7"
+			}
+		}
+		
+		"OnSpelLStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_mana_shroud_aura"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mana_shroud_aura"
+			{
+				"Passive"	"1"
+				"IsHidden"	"0"
+				"Aura"		"saber_alter_mana_shroud_aura_effect"
+				"Aura_Radius"	"%Range"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+				"Aura_Flags"  "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+			}
+			"saber_alter_mana_shroud_aura_effect"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_bonus"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Saber Alter : Unleashed Ferocity
+	//=================================================================================================================
+	"saber_alter_unleashed_ferocity"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_alter_unleashed_ferocity"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
+		}
+		
+		"AbilityCastPoint"				"1.3"
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"90"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnUFStart"
+				"Radius"		"%radius"
+				"Damage"		"%damage"
+			}
+		}
+		
+			
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Saber Alter : Unleashed Ferocity Improved
+	//=================================================================================================================
+	"saber_alter_unleashed_ferocity_improved"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_alter_unleashed_ferocity"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
+		}
+		
+		"AbilityCastPoint"				"1.3"
+		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"300"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"450"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"150"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnUFStart"
+				"Radius"		"%radius"
+				"Damage"		"%damage"
+			}
+		}
+		
+			
+		"Modifiers"
+		{
+			//"modifier_temporal_slow"
+		}
+	}
+
+	//=================================================================================================================
+	// Saber Alter : Darklight attribute passive
+	//=================================================================================================================
+	"saber_alter_darklight_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"saber_instinct"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_instinct_evasion"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"50"
+				}
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"		"15"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"saber_alter_ability"
+								"Function"		"OnDarklightProc"
+							}
+						}						
+					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Saber Alter : Derange
+	//=================================================================================================================
+	"saber_alter_derange"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"saber_alter_derange"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"100"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aspd_modifier"			"5 10 15 20 25"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mspd_modifier"			"3 6 9 12 15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"dmg_modifier"			"20 40 60 80 100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"-2 -4 -6 -8 -10"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_aspd_increase"
+				"Target"		"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnDerangeStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Saber_Alter.Derange"
+			}
+		}
+		
+			
+		"Modifiers"
+		{
+			"modifier_aspd_increase"
+			{
+				"Duration"		"15.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_modifier"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%mspd_modifier"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%dmg_modifier"
+				}
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_armor_reduction"
+						"Target"	"TARGET"
+						"Duration"	"1.0"
+					}
+				}
+			}
+			"modifier_armor_reduction"
+			{
+				"Duration"	"1.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"%armor_reduction"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Saber Alter : Mana Burst
+	//=================================================================================================================
+	"saber_alter_mana_burst"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_alter_mana_burst"
+		"AOERadius"						"%radius"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"0.5"
+		"precache"
+		{
+			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf"
+			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
+			"particle"		"particles/prototype_fx/item_linkens_buff_explosion_wave.vpcf"
+			"particle"		"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.8"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"300 380 460 540 620"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnMBStart"
+				"Damage"		"%damage"
+				"Radius"		"%radius"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnManaBlastHit"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Saber Alter : MAX Mana Burst
+	//=================================================================================================================
+	"saber_alter_max_mana_burst"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_alter_mmb"
+		"AOERadius"						"%radius"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"0.5"
+		"precache"
+		{
+			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_cowlofice.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.8"
+		"AbilityCooldown"				"180"
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnMMBStart"
+				"Radius"		"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Saber Alter : Vortigern
+	//=================================================================================================================
+	"saber_alter_vortigern"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_alter_vortigern"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.5"
+		
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
+			"particle"	"particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line_heads_trail_e.vpcf"
+			"particle"	"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+			"particle"	"particles/econ/generic/generic_projectile_linear_1/generic_projectile_linear_1.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.15"
+		"AbilityCooldown"				"27"
+		"AbilityManaCost"				"400"
+		"AbilityCastRange"				"600"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"470 540 610 680 750"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.3"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"vortigern_pause"
+				"Target"	"CASTER"
+			}
+			"RunScript"
+			{
+					"ScriptFile"    "saber_alter_ability"
+					"Function"      "OnVortigernStart"
+					"Target"		"POINT"
+					"Damage"		"%damage"
+					"Radius"		"%radius"
+					"StunDuration"	"%stun_duration"
+			}
+		}
+		
+		//"OnProjectileHitUnit" 
+		//{
+		//	"RunScript"
+		//	{
+		//		"ScriptFile"	"saber_alter_ability"
+		//		"Function"		"OnVortigernHit"
+		//		"Damage"		"%damage"
+		//		"StunDuration"	"%stun_duration"
+		//	}
+		//}
+			
+		"Modifiers"
+		{
+			"vortigern_pause"
+			{
+				"Duration"		"0.4"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			
+		}
+	}
+	
+	
+	//=================================================================================================================
+	// Saber Alter : Excalibur
+	//=================================================================================================================
+	"saber_alter_excalibur"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"			"saber_alter_excalibur"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"
+			"particle_folder"		"particles/units/heroes/hero_invoker"
+			"particle_folder"		"particles/units/heroes/hero_lina"
+		}
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1800"
+		"AbilityCastPoint"				"0.25"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45.0"
+		
+		"AbilityDamage"					"900 1250 1600 1950 2300"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"saber_alter_pause"
+				"Target"			"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"    "saber_alter_ability"
+				"Function"      "OnDexStart"
+				"Speed"			"%speed"
+				"Width"			"%width"
+				"Range"		"%length"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnDexHit"
+				"Damage"		"%damage"
+			}
+		}
+				
+					
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"					"2000"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"900 1250 1600 1950 2300"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"saber_alter_pause"
+			{
+				"Duration"		"4.75"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+		}
+	}
+
+	//=======================================
+	// Saber Alter Attribute : Improve Mana Shroud
+	//=======================================
+	"saber_alter_attribute_mana_shroud"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_alter_mana_shroud"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnImproveManaShroundAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Alter Attribute : Mana Blast
+	//=======================================
+	"saber_alter_attribute_mana_blast"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_alter_prana_burst"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnManaBlastAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Alter Attribute : Improve Ferocity
+	//=======================================
+	"saber_alter_attribute_improve_ferocity"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_alter_vortigern"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnImproveFerocityAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Alter Attribute : The Sword of Ultimate Darklight
+	//=======================================
+	"saber_alter_attribute_ultimate_darklight"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_alter_darklight"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnDarklightAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Rider : Mystic Eye 
+	//=================================================================================================================
+	"rider_5th_mystic_eye"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"rider_mystic_eyes"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"Range"					"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_modifier"		"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mystic_eye"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"IsDebuff"	"1"
+				"Aura"		"rider_5th_mystic_eye_aura"
+				"Aura_Radius"	"%range"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+			}
+			"rider_5th_mystic_eye_aura"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%speed_modifier"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rider : Mystic Eye (Improved)
+	//=================================================================================================================
+	"rider_5th_mystic_eye_improved"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"rider_mystic_eyes"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"Range"					"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed_modifier"		"20"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_mystic_eye"
+			{
+				"Passive"	"1"
+				"IsHidden"	"0"
+				"Aura"		"rider_5th_mystic_eye_aura"
+				"Aura_Radius"	"1000"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
+			}
+			"rider_5th_mystic_eye_aura"
+			{
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%speed_modifier"
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Rider : Monstrous Strength passive
+	//=================================================================================================================
+	"rider_5th_monstrous_strength_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"rider_monstrous_strength"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_monstrous_strength_passive"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"50"
+				}
+				"OnAttackStart"
+				{
+					"Random"
+					{
+						"Chance"		"30"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"	"rider_ability"
+								"Function"		"OnMonstrousStrengthProc"
+							}
+						}						
+					}
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Rider : Nail Swing
+	//=================================================================================================================
+	"rider_5th_nail_swing"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"rider_nail_swing"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_disruptor/disruptor_glimpse_travel.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9 8 7 6 5"
+		"AbilityManaCost"				"100"
+		"AbilityDamage"					"120 140 160 180 200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"120 140 160 180 200"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "rider_ability"
+				"Function"      "NailPull"
+				"Radius"		"%radius"
+				"Damage"		"%damage"
+			}
+		}
+		
+		
+	}
+	
+	//=================================================================================================================
+	// Rider : Breaker Gorgon
+	//=================================================================================================================
+	"rider_5th_breaker_gorgon"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"rider_breaker_gorgon"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle"			"particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"19"
+		"AbilityManaCost"				"200"
+		"AbilityCastRange"				"550"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"				"-20 -30 -40 -50 -60"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"16.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_breaker_gorgon"
+				"Target"
+				{
+					"Center"	"POINT"
+					"Radius"	"%radius"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				}
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBGStart"
+			}
+		}
+		
+			
+			
+		"Modifiers"
+		{
+			"modifier_breaker_gorgon"
+			{
+				"IsDebuff"	"true"
+				"Duration"	"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+			}
+			"modifier_petrified"
+			{
+				"IsDebuff"	"true"
+				"EffectName"		"particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Rider : Bloodfort Andromeda
+	//=================================================================================================================
+	"rider_5th_bloodfort_andromeda"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"rider_bloodfort"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"0.4"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+		}
+		
+		"AbilityCastPoint"				"2.5"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"				"-10 -20 -30 -40 -50"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"5.0"
+			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage"		"70 80 90 100 110"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"absorb"			"30 40 50 60 70"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBloodfortStart"
+				"Damage"		"%damage"
+				"Duration"		"%duration"
+				"Radius"		"%radius"
+			}
+			
+		}
+		
+			
+		"Modifiers"
+		{
+			"modifier_bloodfort_slow"
+			{
+				"Duration"		"3.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Rider : Bellerophon II
+	//=================================================================================================================
+	"rider_5th_bellerophon_2"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"rider_bellerophon_two"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"0.4"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+		}
+		
+		"AbilityCastPoint"				"2.5"
+		"AbilityCooldown"				"100"
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"damage"		"2500"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"range"		"1500"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"width"		"500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBelle2Start"
+				"Range"			"%range"
+				"Width"			"%width"
+			}
+			
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBelle2Hit"
+				"Damage"		"%damage"
+			}
+		}
+			
+		"Modifiers"
+		{
+		}
+	}
+	
+	//=================================================================================================================
+	// Rider : Bellerophon
+	//=================================================================================================================
+	"rider_5th_bellerophon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"rider_bellerophon"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_huskar"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"750 950 1150 1350 1550"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"750 950 1150 1350 1550"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1200"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"jump_invul"
+				"Target"		"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBelleStart"
+				"Target"		"POINT"
+				"Radius"		"%radius"
+				"Damage"		"%damage"
+			}
+			
+		}
+		
+		"Modifiers"
+		{
+			"jump_invul"
+			{
+				"Duration"		"1.0"
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	//=======================================
+	// Rider Attribute : Improve Mystic Eyes
+	//=======================================
+	"rider_5th_attribute_improve_mystic_eyes"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"rider_mystic_eyes"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnImproveMysticEyesAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Rider Attribute : Riding
+	//=======================================
+	"rider_5th_attribute_riding"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"rider_riding"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnRidingAcquired"
+			}
+		}
+	}
+		//=======================================
+	// Rider Attribute : Monstrous Strength
+	//=======================================
+	"rider_5th_attribute_monstrous_strength"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"rider_seal"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnMonstrousStrengthAcquired"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Archer : Clairvoyance
+	//=================================================================================================================
+	"archer_5th_clairvoyance"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_clairvoyance"
+		"AOERadius"						"%radius"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"99999"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"99999"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"8.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "archer_ability"
+				"Function"      "FarSightVision"
+				"Radius"		"%radius"
+				"Target"		"POINT"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Archer : Kanshou Bakuya
+	//=================================================================================================================
+	"archer_5th_kanshou_bakuya"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_kanshou_bakuya"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
+			"particle"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"8"
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_tick"				"50 75 100 125 150"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"KBStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Luna.Attack"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"KBHit"
+				"DamagePerTick"	"%damage_per_tick"
+			}
+		}
+
+
+	}
+	
+	//=================================================================================================================
+	// Archer : Broken Phantasm
+	//=================================================================================================================
+	"archer_5th_broken_phantasm"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_broken_phantasm"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"
+		
+		"AbilityCastPoint"				"2.5"
+		"AbilityCastRange"				"3000"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"200"
+		
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+			"particle"				"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"particle"	"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"target_damage"			"175 225 275 325 375"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"splash_damage"			"175 225 275 325 375"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"350"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"2.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"3000"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"total_damage"			"750"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Dodgeable"		"1"
+				"ProvidesVision"	"0"
+				"EffectName"	"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+				"MoveSpeed"		"3000"
+				"Target"		"TARGET"
+			}
+		}
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "archer_ability"
+				"Function"      "BPHit"
+				"Radius"		"%radius"
+				"StunDuration"	"%stun_duration"
+				"TargetDamage"	"%target_damage"
+				"SplashDamage"	"%splash_damage"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Sven.StormBoltImpact"
+			}
+		}
+
+	}
+	
+	//=======================================
+	// Archer : Rho Aias
+	//=======================================
+	"archer_5th_rho_aias"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_rho_aias"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"24"
+		"AbilityManaCost"				"400"
+
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_absorb"				"700 900 1100 1300 1500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnRhoStart"
+				"ShieldAmount"	"%damage_absorb"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_rho_aias_shield"
+				"Target"		"TARGET"
+			}
+		}
+
+		
+
+		"Modifiers"
+		{
+			"modifier_rho_aias_shield"
+			{
+				"IsDebuff"		"false"
+				"IsPurgable"	"false"
+				"Duration"		"7.0"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"archer_ability"
+						"Function"		"OnRhoDamaged"
+						"DamageTaken"	"%attack_damage"		
+					}
+				}
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Archer : Unlimited Blade Works
+	//=================================================================================================================
+	"archer_5th_ubw"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_ubw"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"50"
+		"AbilityManaCost"				"800"
+		"AbilityCastRange"				"1150"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1150"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"12.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"20 30 40 50 60"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnUBWCastStart"
+				"Radius"		"%radius"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_ubw_freeze"
+				"Target"		"CASTER"
+			}
+			
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnUBWWeaponHit"
+				"Damage"		"%damage"
+			}
+		}
+		
+			
+		"Modifiers"
+		{
+			"modifier_ubw_freeze"
+			{
+				"Duration"		"2.0"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_ubw_death_checker"
+			{
+				"Duration"	"12.0"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"archer_ability"
+						"Function"		"OnUBWDeath"
+					}
+				}
+			}
+		}
+	}
+
+
+	//=====================================
+	// Archer : Sword Barrage
+	//=====================================
+	"archer_5th_sword_barrage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_sword_rain"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"2.0"		
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"7.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1150"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"archer_ability"
+			 	"Function"		"OnUBWBarrageStart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"Radius"		"%radius"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_sword_barrage"
+				"Target"			"CASTER"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnBarrageCanceled"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnBarrageCanceled"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_sword_barrage"
+			{
+				"Duration"		"2.0"
+			}
+		}
+	}
+
+	//=====================================
+	// Archer : Rule Breaker
+	//=====================================
+	"archer_5th_rule_breaker"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"caster_rule_breaker"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"200"
+		"AbilityCooldown"				"4.0"
+		"AbilityManaCost"				"100"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave_circle_trace.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"10.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ministun"				"0.3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"-2 -4 -6 -8 -10"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_rb_armor_reduction"
+				"Target"			"TARGET"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnUBWRBStart"
+				"StunDuration"		"%ministun"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_rb_armor_reduction"
+			{
+				"IsDebuff"					"true"
+				"Duration"					"%duration"
+				"EffectName"				"particles/units/heroes/hero_dazzle/dazzle_weave_circle_trace.vpcf"	
+				"EffectAttachType"			"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+				}
+			}
+		}
+	}
+
+	//===================================================
+	// Archer : Nine Lives
+	//===================================================
+	"archer_5th_nine_lives"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"berserker_nine"
+		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
+		"AnimationPlaybackRate" 		"1.0"		
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_earthshaker"
+			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"300"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_lasthit"	"450"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_lasthit"	"200"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"700"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnUBWNineStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_ubw_nine_anim"
+			{
+				"Duration"			"3.0"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Archer : Arrow Rain
+	//=================================================================================================================
+	"archer_5th_arrow_rain"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_arrow_rain"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"particle"			"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+		}
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"180"
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"arrow_damage"		"500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnRainStart"
+				"Damage"		"%arrow_damage"
+			}
+			
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "archer_ability"
+				"Function"      "OnArrowRainBPHit"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Sven.StormBoltImpact"
+			}
+		}
+			
+		"Modifiers"
+		{
+		}
+	}	
+	//=================================================================================================================
+	// Archer : Kanshou Bakuya Overedge
+	//=================================================================================================================
+	"archer_5th_overedge"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_overedge"
+		"AOERadius"						"%radius"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"3.0"	
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.80"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"250"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnOveredgeStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"modifier_overedge_anim"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_overedge_anim"
+			{
+				"OverrideAnimation"		"ACT_DOTA_ATTACK"
+				"Duration"				"0.6"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Archer : Hrunting
+	//=================================================================================================================
+	"archer_5th_hrunting"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_hrunting"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+		}
+		
+		"AbilityCastPoint"				"4.0"
+		"AbilityCastRange"				"4000"
+		"AbilityCooldown"				"70"
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnHruntStart"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnHruntHit"
+			}
+		}
+			
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Archer Attribute : Eagle Eye
+	//=======================================
+	"archer_5th_attribute_eagle_eye"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_eagle_eye"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnEagleEyeAcquired"
+			}
+		}
+	}
+	//=======================================
+	// Archer Attribute : Hrunting
+	//=======================================
+	"archer_5th_attribute_hrunting"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_hrunting"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnHruntingAcquired"
+			}
+		}
+	}
+	//=======================================
+	// Archer Attribute : Shroud of Martin
+	//=======================================
+	"archer_5th_attribute_shroud_of_martin"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_shroud_of_martin"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnShroudOfMartinAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Archer Attribute : Improve Projection
+	//=======================================
+	"archer_5th_attribute_improve_projection"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_projection"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnImproveProjectionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Archer Attribute : Kanshou Bakuya Overedge
+	//=======================================
+	"archer_5th_attribute_overedge"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_overedge"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnOveredgeAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Berserker : Divinity
+	//=================================================================================================================
+	"berserker_5th_divinity"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"berserker_divinity"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"			"12"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_divinity_damage_block"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"%damage_reduction"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Berserker : Divinity (Improved)
+	//=================================================================================================================
+	"berserker_5th_divinity_improved"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"berserker_divinity"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_reduction"			"24"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_divinity_damage_block_improved"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"%damage_reduction"
+				}
+			}
+		}
+	}
+
+	//===================================================
+	// Berserker : Fissure Strike
+	//===================================================
+	"berserker_5th_fissure_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"berserker_fissure_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_earth_splitter.vpcf"
+			"particle"	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+		"AbilityDamage"					"200 250 300 350 400"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200 250 300 350 400"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnFissureStart"
+				"Target"			"POINT"
+				"Width"				"%width"
+				"Range"				"%range"
+				"Speed"				"%range"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnFissureHit"
+				"Damage"			"%damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//========================================
+	// Berserker : Courage
+	//========================================
+	"berserker_5th_courage"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"berserker_courage"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"2.0"
+		"MaxLevel"						"5"
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"15 18 21 24 27"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_reduction"		"-3 -6 -9 -12 -15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"15 25 35 45 55"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_proc"			"25 35 45 55 65"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_chance"			"0.20 0.30 0.40 0.50 0.60"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aspd_reduction"		"-20 -15 -10 -5 0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"9.0 12.0 15.0 18.0 21.0"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance_percentage"	"20 30 40 50 60"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnCourageStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_courage_armor_reduction"
+				"Target"
+				{
+					"Center"	"CASTER"
+					"Radius"	"400"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+					"Types"		"DOTA_UNIT_TARGET_ALL"
+				}
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_courage_self_buff"
+				"Target"		"CASTER"
+			}
+		}
+		
+		
+		
+		"Modifiers"
+		{
+			"modifier_courage_armor_reduction"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+				}
+			}
+			"modifier_courage_self_buff"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_reduction"
+				}
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%proc_chance"
+						"OnSuccess"
+						{
+							"Damage"
+							{
+								"Target"	"TARGET"
+								"Type"		"DAMAGE_TYPE_PHYSICAL"
+								"Damage"	"%damage_proc"
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+
+	//========================================
+	// Berserker : Madman's Roar
+	//========================================
+	"berserker_5th_madmans_roar"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"berserker_roar"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"2.0"
+		"MaxLevel"						"5"
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"120"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"1000"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage2"				"800"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage3"				"500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"50"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"3.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnRoarStart"
+				"Damage1"			"%damage"
+				"Damage2"			"%damage2"
+				"Damage3"			"%damage3"
+				"StunDuration"		"%stun_duration"
+			}
+		}
+		
+		
+		
+		"Modifiers"
+		{
+		}
+	}
+	//========================================
+	// Berserker : Berserk
+	//========================================
+	"berserker_5th_berserk"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"berserker_berserk"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"2.0"
+		"MaxLevel"						"5"
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"25.0"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_constant"			"800 1050 1300 1550 1800"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"4.0 4.5 5.0 5.5 6.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnBerserkStart"
+				"Duration"			"%duration"
+				"Health"			"%health_constant"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_berserk_self_buff"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_berserk_self_buff"
+			{
+				"Duration"		"%duration"
+			}
+		}
+	}
+
+	//===================================================
+	// Berserker : Nine Lives
+	//===================================================
+	"berserker_5th_nine_lives"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"berserker_nine"
+		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
+		"AnimationPlaybackRate" 		"1.0"		
+		"AOERadius"						"%radius"
+		"FightRecapLevel"				"1"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_earthshaker"
+			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"350"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_lasthit"	"500"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"60 70 80 90 100"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_lasthit"	"400 500 600 700 800"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"700"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnNineStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_nine_anim"
+			{
+				"Duration"			"3.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
+			}
+		}
+	}
+
+	//=======================================
+	// Berserker Attribute : Improve Divinity
+	//=======================================
+	"berserker_5th_attribute_improve_divinity"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"berserker_divinity"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnImproveDivinityAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Berserker Attribute : Berserk
+	//=======================================
+	"berserker_5th_attribute_berserk"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"berserker_berserk"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnBerserkAcquired"
+			}
+		}
+	}
+	//=======================================
+	// Berserker Attribute : God Hand
+	//=======================================
+	"berserker_5th_attribute_god_hand"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"berserker_god_hand"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnGodHandAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Berserker Attribute : Reincarnation
+	//=======================================
+	"berserker_5th_attribute_reincarnation"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"berserker_reincarnation"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnReincarnationdAcquired"
+			}
+		}
+	}
+
+	//========================================
+	// False Assassin : Gate Keeper
+	//========================================
+	"false_assassin_gate_keeper"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"false_assassin_gate_keeper"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"MaxLevel"						"5"
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"17"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_hp_regen"		"50 60 70 80 90"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"			"3 6 9 12 15"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_decrease"	"-20 -15 -10 -5 0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_sight"			"300"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"100"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnGKStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_gate_keeper_self_buff"
+				"Target"		"CASTER"
+			}
+		}
+		
+		
+		
+		"Modifiers"
+		{
+			"modifier_gate_keeper_self_buff"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"%bonus_hp_regen"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_decrease"
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"%bonus_sight"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"%bonus_sight"
+				}
+				"States"
+				{
+				}
+
+			}
+		}
+	}
+
+	//========================================
+	// False Assassin : Heart of Harmony
+	//========================================
+	"false_assassin_heart_of_harmony"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"false_assassin_heart_of_harmony"
+
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AnimationPlaybackRate" 		"1.0"
+		"MaxLevel"						"5"
+
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"25 23 21 19 17"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_aspd"		"10 15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_proc"			"100 130 160 190 220"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance"			"0.20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"0.3"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"18.0 16.0 14.0 12.0 10.0"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"proc_chance_percentage"	"20"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnHeartStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_heart_self_buff"
+				"Target"		"CASTER"
+			}
+		}
+		
+		
+		
+		"Modifiers"
+		{
+			"modifier_heart_self_buff"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"		"%proc_chance"
+						"OnSuccess"
+						{
+							"Damage"
+							{
+								"Target"	"TARGET"
+								"Type"		"DAMAGE_TYPE_MAGICAL"
+								"Damage"	"%damage_proc"
+							}
+							"Stun"
+							{
+								"Target"	"TARGET"
+								"Duration"	"%stun_duration"
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+
+	//========================================
+	// False Assassin : Illusory Wanderer(Passive)
+	//========================================
+	"false_assassin_combo_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"false_assassin_illusion"
+
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AnimationPlaybackRate" 		"1.0"
+		"MaxLevel"						"1"
+
+		"AbilitySpecial"
+		{
+		}
+		
+		
+		"Modifiers"
+		{
+			"modifier_psuedo_omnislash"
+			{
+				"Passive"	"1"
+				"AllowIllusionDuplicate"	"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"TPOnAttack"
+					}
+				}
+
+			}
+		}
+	}
+
+	//========================================
+	// False Assassin : Illusory Wanderer
+	//========================================
+	"false_assassin_illusory_wanderer"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"false_assassin_illusion"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AnimationPlaybackRate" 		"1.0"
+		"MaxLevel"						"5"
+
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"25.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnIWStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//========================================
+	// False Assassin : Windblade
+	//========================================
+	"false_assassin_windblade"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"false_assassin_windblade"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"2.0"
+		"MaxLevel"						"5"
+
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"500"
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"AbilityDamage"					"400 500 600 700 800"
+
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"400 500 600 700 800"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"global_cooldown"		"30 26 22 18 14"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnWBStart"
+				"Damage"			"%damage"
+				"Radius"			"%radius"
+				"GCD"				"%global_cooldown"
+			}
+		}
+	}
+
+	//=====================================
+	// False Assassin : Tsubame Gaeshi
+	//=====================================
+	"false_assassin_tsubame_gaeshi"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.5"
+		"FightRecapLevel"				"1"
+		
+		"AbilityCastPoint"				"0.7"
+		"AbilityCastRange"				"150"
+		"AbilityCooldown"				"50"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow_c.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 250 300 350 400"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lasthit_damage"		"300 400 500 600 700"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"global_cooldown"		"45 43 41 39 37"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"TGPlaySound"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnTGStart"
+				"Damage"			"%damage"
+				"LastDamage"		"%lasthit_damage"
+				"StunDuration"		"%stun_duration"
+				"GCD"				"%global_cooldown"
+			}
+		}
+	}
+
+	//=======================================
+	// FA Attribute : Ganryu
+	//=======================================
+	"false_assassin_attribute_ganryu"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"false_assassin_ganryu"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"OnGanryuAcquired"
+			}
+		}
+	}
+	//=======================================
+	// FA Attribute : Eye of Serenity
+	//=======================================
+	"false_assassin_attribute_eye_of_serenity"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"false_assassin_eye_of_serenity"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"OnEyeOfSerenityAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// FA Attribute : Quickdraw
+	//=======================================
+	"false_assassin_attribute_quickdraw"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"false_assassin_quickdraw"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"OnQuickdrawAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// FA Attribute : Vitrification
+	//=======================================
+	"false_assassin_attribute_vitrification"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"false_assassin_vitrification"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"OnVitrificationAcquired"
+			}
+		}
+	}
+	//=====================================
+	// True Assassin : Presence Concealment
+	//=====================================
+	"true_assassin_presence_concealment"
+	{
+		"BaseClass"          			    "ability_datadriven"
+		"AbilityTextureName"           		"ta_presence_concealment"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityCastPoint"		"1.5"
+		"AbilityCooldown"		"0.0"
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"	"CASTER"
+				"ModifierName"		"modifier_ta_invis"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"ta_ability"
+				"Function"		"PCStopOrder"
+			}
+		}
+
+
+		"Modifiers"
+		{
+			"modifier_ta_invis"
+			{
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCDeactivate"
+					}
+				}
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCDeactivate"
+					}
+				}
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCDeactivate"
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+	//=====================================
+	// True Assassin : Dirk
+	//=====================================
+	"true_assassin_dirk"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
+		"AbilityTextureName"			"ta_dirk"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"700"
+		"AbilityCooldown"				"8"
+		"AbilityManaCost"				"100"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"180"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"poison_dot"			"13"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"poison_slow"			"-18"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_target"			"5"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnDirkStart"
+				"Damage"			"%damage"
+				"MaxTarget"		"%max_target"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"    "ta_ability"
+				"Function"      "OnDirkHit"
+				"Damage"		"%damage"
+			}
+            "ApplyModifier"
+            {
+            	"ModifierName"	"modifier_dirk_poison"
+            	"Target"		"TARGET"
+            }
+		}
+
+		"Modifiers"
+		{
+			"modifier_dirk_poison"
+			{
+				"Duration"		"%duration"
+				"ThinkInterval"		"1.0"
+				"OnThinkInterval"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%poison_dot"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%poison_slow"
+				}
+			}
+		}
+	}
+
+
+	"true_assassin_ambush"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"			"ability_datadriven"
+		"AbilityTextureName"			"ta_ambush"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"24"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"		
+
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8.0 9.0 10.0 11.0 12.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 200 300 400 500"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnAmbushStart"
+				"Duration"			"%duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_first_hit"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_first_hit"
+			{
+				"Duration"		"%duration"
+				"OnAttack"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnFirstHitStart"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnFirstHitLanded"
+						"Damage"			"%damage"
+					}					
+				}
+			}
+		}
+
+	}
+
+	//========================================
+	// True Assassin : Delusional Illusion
+	//========================================
+	"true_assassin_combo"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"ta_combo"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_bane/bane_fiendsgrip_ground_water.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"200"
+		"AbilityCastPoint"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amount"		"200 250 300 350 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stat_chance"			"10 15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal_over_time"	"40 50 60 70 80"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnDIStart"
+			}
+		}
+		"Modifiers"
+		{
+		}
+	}
+
+	//========================================
+	// True Assassin : Self Modification
+	//========================================
+	"true_assassin_self_modification"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"ta_self_modification"
+		"MaxLevel"						"5"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_bane/bane_fiendsgrip_ground_rubble.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+		"AbilityCastPoint"				"0.5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amount"		"200 250 300 350 400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stat_chance"			"10 15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal_over_time"	"40 50 60 70 80"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"Heal"
+			{
+				"Target"		"CASTER"
+				"HealAmount"	"%heal_amount"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnModStart"
+				"StatChance"		"%stat_chance"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_ta_self_mod"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_ta_self_mod"
+			{
+				"IsPurgable"	"true"
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"Heal"
+					{
+						"Target"		"CASTER"
+						"HealAmount"	"%heal_amount/5"
+					}		
+				}
+				"Duration"		"5.0"
+			}
+		}
+	}
+
+	//=====================================
+	// True Assassin : Snatch Strike
+	//=====================================
+	"true_assassin_snatch_strike"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"ta_snatch_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"150"
+		"AbilityCooldown"				"25"
+		"AbilityManaCost"				"400"
+		"AbilityDamage"					"400 450 500 550 600"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"400 450 500 550 600"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_steal"			"120 140 160 180 200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"steal_chance"			"10 15 20 25 30"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnStealStart"
+				"Damage"			"%damage"
+				"GoldAmount"		"%gold_steal"
+				"StealChance"		"%steal_chance"
+			}
+		}
+	}
+
+	//=====================================
+	// True Assassin : Zabaniya
+	//=====================================
+	"true_assassin_zabaniya"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"ta_zabaniya"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+		}
+		
+		"AbilityCastPoint"				"1.0"
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"36"
+		"AbilityDamage"					"700 900 1100 1300 1500"
+		"AbilityManaCost"				"800"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"700 900 1100 1300 1500"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnZabStart"
+				"Damage"			"%damage"
+			}
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"    "ta_ability"
+				"Function"      "OnZabHit"
+				"Damage"		"%damage"
+			}
+		}
+	}
+
+	//=======================================
+	// TA Attribute : Improve Presence Concealment
+	//=======================================
+	"true_assassin_attribute_improve_presence_concealment"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"ta_presence_concealment"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"ta_ability"
+				"Function"		"OnImprovePresenceConcealmentAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// TA Attribute : Protection from Wind
+	//=======================================
+	"true_assassin_attribute_protection_from_wind"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"ta_protection_from_wind"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"ta_ability"
+				"Function"		"OnProtectionFromWindAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// TA Attribute : Weakening Venom
+	//=======================================
+	"true_assassin_attribute_weakening_venom"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"ta_weakening_venom"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"ta_ability"
+				"Function"		"OnWeakeningVenomAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// TA Attribute : Shadow Strike
+	//=======================================
+	"true_assassin_attribute_shadow_strike"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"ta_shadow_strike"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"ta_ability"
+				"Function"		"OnShadowStrikeAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Gilgamesh : Golden Rule
+	//=================================================================================================================
+	"gilgamesh_golden_rule"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"alchemist_goblins_greed"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gold_gain"				"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_golden_rule"
+			{
+			}
+		}
+	}
+
+	//=====================================
+	// Gilgamesh : Sword Barrage
+	//=====================================
+	"gilgamesh_sword_barrage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gilga_sword_barrage"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"25"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"25"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnBarrageStart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"Radius"		"%radius"
+			}
+		}
+	}
+
+	//=====================================
+	// Gilgamesh : Enkidu
+	//=====================================
+	"gilgamesh_enkidu"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"gilga_enkidu"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+
+
+		"AbilityChannelTime"			"2.0 2.5 3.0 3.5 4.0"		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"450"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"100"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"2.0 2.5 3.0 3.5 4.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gilg_ability"
+				"Function"			"OnChainStart"
+			}
+		}
+
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gilg_ability"
+				"Function"			"OnChainBroken"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gilg_ability"
+				"Function"			"OnChainBroken"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_enkidu_bind"
+			{
+				"Duration"		"%duration"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Gilgamesh : Gram
+	//=====================================
+	"gilgamesh_gram"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"gilga_gram"
+		"FightRecapLevel"				"1"
+		
+		"AbilityCastPoint"				"0.8"
+		"AbilityCastRange"				"800"
+		"AbilityCooldown"				"17"
+		"AbilityManaCost"				"200"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
+		"AnimationPlaybackRate" 		"0.5"
+
+		"AbilityDamage"			"400 480 560 640 720"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
+			"particle"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast_c.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"400 480 560 640 720"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gilg_ability"
+				"Function"			"OnGramStart"
+			}
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"    "gilg_ability"
+				"Function"      "OnGramHit"
+				"Damage"		"%damage"
+				"StunDuration"		"%stun_duration"
+			}
+		}
+	}
+
+	//=====================================
+	// Gilgamesh : Gate of Babylon
+	//=====================================
+	"gilgamesh_gate_of_babylon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gilga_gob"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"2.0"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
+			"particle"		"particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
+			"particle"		"particles/econ/items/tinker/boots_of_travel/teleport_start_bots_ground_glow.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"30 45 60 75 90"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"30 45 60 75 90"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"150"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"6 8 10 12 14"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnGOBStart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"Duration"		"%duration"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnGOBHit"
+			 	"Damage"		"%damage"
+			}
+		}
+	}
+
+	//=====================================
+	// Gilgamesh : Enuma Elish
+	//=====================================
+	"gilgamesh_enuma_elish"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AbilityTextureName"			"gilga_enuma_elish"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"	"particles/forked/dk_breathe_fire_test.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1700"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"47"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"1000 1400 1800 2200 2600"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"1000 1400 1800 2200 2600"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"start_radius"		"250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"end_radius"		"500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1700"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"750"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"enuma_elish_pause"
+				"Target"			"CASTER"
+			}
+
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnEnumaStart"
+			 	"Target"		"POINT"
+			 	"StartRadius"	"%start_radius"
+			 	"EndRadius"		"%end_radius"
+			 	"Speed"			"%speed"
+			 	"Range"			"%radius"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnEnumaHit"
+			 	"Damage"		"%damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"enuma_elish_pause"
+			{
+				"Duration"	"5.0"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Gilgamesh : MAX Enuma Elish
+	//=====================================
+	"gilgamesh_max_enuma_elish"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AbilityTextureName"			"gilga_max_enuma_elish"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1600"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"160"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"3500"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"start_radius"		"250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"end_radius"		"500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1600"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"750"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"enuma_elish_pause"
+				"Target"			"CASTER"
+			}
+
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnMaxEnumaStart"
+			 	"Target"		"POINT"
+			 	"StartRadius"	"%start_radius"
+			 	"EndRadius"		"%end_radius"
+			 	"Speed"			"%speed"
+			 	"Range"			"%radius"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnMaxEnumaHit"
+			 	"Damage"		"%damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"enuma_elish_pause"
+			{
+				"Duration"	"6.0"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=======================================
+	// Gilgamesh Attribute : Improve Golden Rule
+	//=======================================
+	"gilgamesh_attribute_improve_golden_rule"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"alchemist_goblins_greed"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gilg_ability"
+				"Function"		"OnImproveGoldenRuleAcquired"
+			}
+		}
+	}
+	//=======================================
+	// Gilgamesh Attribute : Power of Sumer
+	//=======================================
+	"gilgamesh_attribute_power_of_sumer"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"gilga_power_of_sumer"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gilg_ability"
+				"Function"		"OnPowerOfSumerAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilgamesh Attribute : Rain of Swords
+	//=======================================
+	"gilgamesh_attribute_rain_of_swords"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"gilga_sword_barrage"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gilg_ability"
+				"Function"		"OnRainOfSwordsAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilgamesh Attribute : Sword of Creation
+	//=======================================
+	"gilgamesh_attribute_sword_of_creation"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"gilga_sword_of_creation"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gilg_ability"
+				"Function"		"OnSwordOfCreationAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster : Item Construction
+	//=======================================
+	"caster_5th_item_construction"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"caster_item_construction"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"100"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnItemStart"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster : Argos
+	//=======================================
+	"caster_5th_argos"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"caster_argos"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"100"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"shield_amount"			"100 150 200 250 300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_shield"			"200 300 400 500 600"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnArgosStart"
+				"ShieldAmount"	"%shield_amount"
+				"MaxShield"		"%max_shield"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_argos_shield"
+				"Target"		"CASTER"
+			}
+		}
+
+		
+
+		"Modifiers"
+		{
+			"modifier_argos_shield"
+			{
+				"IsDebuff"		"false"
+				"IsPurgable"	"false"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"caster_ability"
+						"Function"		"OnArgosDamaged"
+						"DamageTaken"	"%attack_damage"		
+					}
+				}
+				"EffectName"	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster : Ancient Magic
+	//=======================================
+	"caster_5th_ancient_magic"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"caster_magic"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnAncientStart"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster : Wall of Flame
+	//=======================================
+	"caster_5th_wall_of_flame"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"dragon_knight_breathe_fire"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"200"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_fire.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"pushback"				"900 1000 1100 1200 1300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"300"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnFirewallStart"
+				"Damage"		"%damage"
+				"Pushback"		"%pushback"
+				"Radius"		"%radius"
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : Silence
+	//=====================================
+	"caster_5th_silence"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"death_prophet_silence"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"2.0"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"1.4 1.8 2.2 2.6 3.0"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"250"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"caster_ability"
+			 	"Function"		"OnSilenceStart"
+			 	"Target"		"POINT"
+			 	"Radius"		"%radius"
+			 	"Duration"		"%duration"
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : High-Speed Divine Words
+	//=====================================
+	"caster_5th_divine_words"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"invoker_sun_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"2.0"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"14"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"350 450 550 650 750"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"caster_ability"
+			 	"Function"		"OnDWStart"
+			 	"Target"		"POINT"
+			 	"Radius"		"%radius"
+			 	"Damage"		"%damage"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster : Sacrifice
+	//=======================================
+	"caster_5th_sacrifice"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"			"omniknight_guardian_angel"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"40"
+		"AbilityManaCost"				"600"
+		"AbilityCastRange"				"600 675 750 825 900"
+		"AbilityChannelTime"			"10.0"	
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AnimationPlaybackRate" 		"2.0"
+
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_fire.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600 675 750 825 900"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnSacrificeStart"
+				"Radius"		"%radius"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_sac_check"
+				"Target"		"CASTER"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnSacrificeEnd"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnSacrificeEnd"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_sac_check"
+			{
+				"Duration"		"10.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : Mana Transfer
+	//=====================================
+	"caster_5th_mana_transfer"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"keeper_of_the_light_chakra_magic"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"600"
+		"AbilityCooldown"				"60 50 40 30 20"
+		"AbilityManaCost"				"0"
+		"AbilityChannelTime"			"5.0"	
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_pugna/pugna_life_drain.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_amount"			"30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"5.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnMTStart"
+				"Duration"			"%duration"
+			}
+		}
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnMTEnd"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnMTEnd"
+			}
+		}
+	}
+
+	"caster_5th_close_spellbook"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"silencer_last_word"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnAncientClosed"
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : Rule Breaker
+	//=====================================
+	"caster_5th_rule_breaker"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"caster_rule_breaker"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"100"
+		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"400"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.2 1.45 1.7 1.95 2.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 4.0 5.0 6.0 7.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnRBStart"
+				"StunDuration"		"%stun_duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_rule_breaker"
+				"Target"			"TARGET"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_rule_breaker"
+			{
+				"IsDebuff"					"true"
+				"IsPurgable"				"true"
+				"Duration"					"%duration"
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE"						"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"							"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE"	"-100"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"			"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"				"1"
+				}
+			}
+		}
+	}
+
+	//====================================
+	// Caster : Hecatic Graea
+	//====================================
+	"caster_5th_hecatic_graea"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"caster_hecatic_graea"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
+			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"53.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"220 290 360 430 500"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"220 290 360 430 500"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_bolt"			"250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bolt_amount"		"13"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"jump_invul"
+				"Target"		"CASTER"
+			}
+		
+			"RunScript"
+			{
+			 	"ScriptFile"	"caster_ability"
+			 	"Function"		"OnHGStart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"RadiusBolt"	"%radius_bolt"
+			 	"Radius"		"%radius"
+			}
+		}
+
+		"Modifiers"
+		{
+			"jump_invul"
+			{
+				"Duration"		"4.0"
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+		
+		
+	}
+
+
+	//====================================
+	// Caster : Hecatic Graea Powered
+	//====================================
+	"caster_5th_hecatic_graea_powered"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"caster_hecatic_graea_2"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
+			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1300"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"600"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"600"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_bolt"			"250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bolt_amount"		"13"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"jump_invul"
+				"Target"		"CASTER"
+			}
+		
+			"RunScript"
+			{
+			 	"ScriptFile"	"caster_ability"
+			 	"Function"		"OnHGPStart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"RadiusBolt"	"%radius_bolt"
+			 	"Radius"		"%radius"
+			}
+		}
+
+		"Modifiers"
+		{
+			"jump_invul"
+			{
+				"Duration"		"6.0"
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+	//=======================================
+	// Caster Attribute : Improve Territory Creation
+	//=======================================
+	"caster_5th_attribute_improve_territory_creation"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"caster_territory_creation"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnImproveTerritoryCreationAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster Attribute : Improve Territory Creation
+	//=======================================
+	"caster_5th_attribute_improve_argos"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"caster_argos"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnImproveArgosAcquired"
+			}
+		}
+	}
+	
+	//=======================================
+	// Caster Attribute : Improve Hecatic Graea
+	//=======================================
+	"caster_5th_attribute_improve_hecatic_graea"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"caster_hecatic_graea_attr"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnImproveHGAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster Attribute : Dagger of Treachery
+	//=======================================
+	"caster_5th_attribute_dagger_of_treachery"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"caster_dagger_of_treachery"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnDaggerOfTreacheryAcquired"
+			}
+		}
+	}
+	
+	//================================================
+	// simple dummy passive
+	//================================================
+	"dummy_unit_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}
+
+	//================================================
+	// master passive
+	//================================================
+	"master_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		"DisplayAdditionalHeroes"   "1"
+		
+		"Modifiers"
+		{
+			"dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}
+
+	//=================================================================================================================
+	// Ward Conversion
+	//=================================================================================================================
+	"ward_conversion"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"obs_ward"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityGoldCost"				"800"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"items"
+			 	"Function"		"BecomeWard"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// 1st Command Seal
+	//=================================================================================================================
+	"cmd_seal_1"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"cmd_seal_1"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"60"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"20"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnSeal1Start"
+			 	"Duration"		"%duration"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// 2nd Command Seal
+	//=================================================================================================================
+	"cmd_seal_2"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"cmd_seal_2"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"30"
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnSeal2Start"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// 3rd Command Seal
+	//=================================================================================================================
+	"cmd_seal_3"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"cmd_seal_3"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"30"
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnSeal3Start"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// 4th Command Seal
+	//=================================================================================================================
+	"cmd_seal_4"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"cmd_seal_4"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"30"
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnSeal4Start"
+			}
+		}
+	}
+
+		//=================================================================================================================
+	// C Scroll 
+	//=================================================================================================================
+	"dummy_c_scroll"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_invisible_air"
+	    "precache"
+	    {
+	    	"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+	    }
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"10.0"
+		"AbilityDamage"					"100"
+		"AbilityManaCost"				"0"
+		
+		"OnSpellStart"
+		{
+			"TrackingProjectile"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+				"MoveSpeed"			"750"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Dodgeable"			"true"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"Damage"
+			{
+				"Damage"		"100"
+				"Target"		"TARGET"
+				"Type"			"DAMAGE_TYPE_MAGICAL"			
+			}
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"items"
+			 	"Function"		"CScrollHit"           	
+            }
+		}
+	}
+
+	"lancer_trap_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+
+		"Modifiers"
+		{
+			"lancer_trap"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_INVISIBLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}	
+}

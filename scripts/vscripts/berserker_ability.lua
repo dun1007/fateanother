@@ -1,0 +1,244 @@
+require("Physics")
+require("util")
+
+function OnFissureStart(keys)
+	local caster = keys.caster
+	local targetPoint = keys.target_points[1]
+	BerCheckCombo(caster, keys.ability)
+	local fissure = {
+	    Ability        	 	=   keys.ability,
+		EffectName			=	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
+		iMoveSpeed			=   keys.Speed,
+		vSpawnOrigin		=	caster:GetAbsOrigin(),
+		fDistance			=	500,
+		fStartRadius		=	keys.Width,
+		fEndRadius			=	keys.Width,
+		Source         	 	=   caster,
+		bHasFrontalCone		=	true,
+		bRepalceExisting 	=  false,
+		iUnitTargetTeams		=	DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags		=	DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetTypes		=	DOTA_UNIT_TARGET_ALL,
+		fExpireTime     =   GameRules:GetGameTime() + 2.0,
+		bDeleteOnHit    =   false,
+		vVelocity       =   caster:GetForwardVector() * keys.Speed
+	}
+	local proj = ProjectileManager:CreateLinearProjectile(fissure)
+
+	--local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_earth_splitter_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    --ParticleManager:SetParticleControl(particle, 1, targetPoint)
+
+end
+
+function OnFissureHit(keys)
+	print("does it ever hit")
+	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+end
+
+function OnCourageStart(keys)
+
+end
+
+function OnRoarStart(keys)
+	local caster = keys.caster
+	local casterloc = caster:GetAbsOrigin()
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	local finaldmg = 0
+	for k,v in pairs(targets) do
+		local dist = (v:GetAbsOrigin() - casterloc):Length2D() 
+		if dist <= 300 then
+			finaldmg = keys.Damage1
+			v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 3.0})
+		elseif dist > 300 and dist <= 1000 then
+			finaldmg = keys.Damage2
+		elseif dist > 1000 and dist <= 2000 then
+			finaldmg = keys.Damage3
+		elseif dist > 2000 and dist <= 3000 then
+			finaldmg = 0
+		end
+
+	    DoDamage(caster, v, finaldmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	end
+
+end
+
+function OnBerserkStart(keys)
+	local caster = keys.caster
+	local hplock = keys.Health
+	local duration = keys.Duration
+	local berserkCounter = 0
+	BerCheckCombo(caster, keys.ability)
+	EmitGlobalSound("Berserker.Roar") --[[Returns:void
+	Play named sound for all players
+	]]
+	Timers:CreateTimer(function()
+		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
+		if berserkCounter == duration then return end
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
+		caster:SetHealth(hplock)
+		berserkCounter = berserkCounter + 0.25
+		return 0.25
+		end
+	)
+
+end
+
+function OnNineStart(keys)
+	local caster = keys.caster
+	local targetPoint = keys.target_points[1]
+
+	local berserker = Physics:Unit(caster)
+	local origin = caster:GetAbsOrigin()
+	local distance = (targetPoint - origin):Length2D()
+	local forward = (targetPoint - origin):Normalized() * distance
+
+	caster:SetPhysicsFriction(0)
+	caster:SetPhysicsVelocity(forward)
+	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
+	giveUnitDataDrivenModifier(caster, caster, "nine_pause", 4.0)
+	Timers:CreateTimer(1.00, function() 
+		if caster:HasModifier("modifier_nine_anim") == false then
+			OnNineLanded(caster, keys.ability) 
+		end
+	return end)
+
+	caster:OnPhysicsFrame(function(unit)
+		local diff = unit:GetAbsOrigin() - origin
+		print(distance .. " and " .. diff:Length2D())
+		if diff:Length2D() > distance then
+			unit:PreventDI(false)
+			unit:OnPhysicsFrame(nil)
+			unit:SetPhysicsVelocity(Vector(0,0,0))
+			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+			unit:OnPhysicsFrame(nil)
+		end
+	end)
+
+	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
+		OnNineLanded(caster, keys.ability)
+		unit:OnPreBounce(nil)
+		unit:SetBounceMultiplier(0)
+		unit:PreventDI(false)
+		unit:SetPhysicsVelocity(Vector(0,0,0))
+		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+		unit:OnPreBounce(nil)
+	end)
+
+	
+
+
+	--[[Timers:CreateTimer(function()
+		if travelCounter == 33 then OnNineLanded(caster, keys.ability) return end
+		caster:SetAbsOrigin(caster:GetAbsOrigin() + forward) 
+		travelCounter = travelCounter + 1
+		
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		return 0.03
+		end
+	)]]
+end
+
+-- add pause
+function OnNineLanded(caster, ability)
+	local tickdmg = ability:GetLevelSpecialValueFor("damage", ability:GetLevel() - 1)
+	local lasthitdmg = ability:GetLevelSpecialValueFor("damage_lasthit", ability:GetLevel() - 1)
+	local radius = ability:GetSpecialValueFor("radius")
+	local lasthitradius = ability:GetSpecialValueFor("radius_lasthit")
+	local stun = ability:GetSpecialValueFor("stun_duration")
+	local nineCounter = 0
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {})
+	Timers:CreateTimer(function()
+		if caster:IsAlive() then -- only perform actions while caster stays alive
+			if nineCounter == 8 then -- if nine is finished
+				EmitGlobalSound("Berserker.Roar") 
+				caster:RemoveModifierByName("nine_pause") 
+				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+				for k,v in pairs(lasthitTargets) do
+					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+				end
+				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
+	   			local lasthitparticle2 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	   			ParticleManager:SetParticleControl(lasthitparticle2, 1, caster:GetAbsOrigin())
+				return 
+			end
+			
+			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+			for k,v in pairs(targets) do
+				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+			end
+
+			local particle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControl(particle1, 1, caster:GetAbsOrigin())
+			local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControl(particle2, 1, caster:GetAbsOrigin())
+			nineCounter = nineCounter + 1
+			print(nineCounter)
+			return 0.3
+		end 
+	end)
+end
+
+
+QUsed = false
+QTime = 0
+
+function BerCheckCombo(caster, ability)
+	if ability == caster:FindAbilityByName("berserker_5th_fissure_strike") then
+		QUsed = true
+		QTime = GameRules:GetGameTime()
+		Timers:CreateTimer({
+			endTime = 4,
+			callback = function()
+			QUsed = false
+		end
+		})
+	elseif ability == caster:FindAbilityByName("berserker_5th_berserk") then
+		if QUsed == true then 
+			caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+			local newTime =  GameRules:GetGameTime()
+			Timers:CreateTimer({
+				endTime = 4 - (newTime - QTime),
+				callback = function()
+				caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+				QUsed = false
+			end
+			})
+		end
+	end
+end
+
+function OnImproveDivinityAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsDivinityImproved = true
+	hero:SetBaseMagicalResistanceValue(0.25)
+	hero:SwapAbilities("berserker_5th_divinity","berserker_5th_divinity_improved", false, true)
+end
+
+function OnBerserkAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsBerserkAcquired = true
+end
+
+function OnGodHandAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsGodHandAcquired = true
+end
+
+function OnReincarnationdAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsReincarnationAcquired = true
+end
