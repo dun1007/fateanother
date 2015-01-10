@@ -13,12 +13,42 @@ function OnInstinctStart(keys)
 end
 
 function CreateWind(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local movespeed = ability:GetLevelSpecialValueFor( "speed", ability:GetLevel() - 1 )
+	
+	local particleName = "particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
+	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
+	ParticleManager:SetParticleControl( fxIndex, 3, caster:GetAbsOrigin() )
+	
+	caster.invisible_air_reach_target = false
+	caster.invisible_air_pos = caster:GetAbsOrigin()
+	
+	Timers:CreateTimer( function() 
+			local targetPos = target:GetAbsOrigin()
+			local forwardVec = targetPos - caster.invisible_air_pos
+			forwardVec = forwardVec:Normalized()
+			
+			caster.invisible_air_pos = caster.invisible_air_pos + forwardVec * 25
+			
+			ParticleManager:SetParticleControl( fxIndex, 3, caster.invisible_air_pos )
+			
+			if caster.invisible_air_reach_target then
+				ParticleManager:DestroyParticle( fxIndex, false )
+				return nil
+			else
+				return 1.0 / movespeed
+			end
+		end
+	)
 end
-
 function InvisibleAirPull(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+
+	keys.caster.invisible_air_reach_target = true					-- Addition
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
 	if ply.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
@@ -46,6 +76,7 @@ function InvisibleAirPull(keys)
 	  unit:SetPhysicsVelocity(unit:GetPhysicsVelocity():Length() * dir)
 	  if diff:Length() < 100 then
 	  	target:RemoveModifierByName("drag_pause")
+	  	target:RemoveModifierByName( "modifier_invisible_air_target" )		-- Addition
 		unit:PreventDI(false)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		unit:OnPhysicsFrame(nil)
