@@ -9627,6 +9627,7 @@
 		"precache"
 		{
 			"particle_folder"		"particles/units/heroes/hero_lina"
+			"particle"				"particles/custom/screen_yellow_splash.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

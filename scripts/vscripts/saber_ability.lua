@@ -262,6 +262,8 @@ function OnMaxStart(keys)
 	Timers:CreateTimer({
 		endTime = 3, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
 		callback = function()
+		ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+
 	    local projectile = ProjectileManager:CreateLinearProjectile(max)
 	end})
 end
@@ -310,7 +312,6 @@ end -- function end
 
 function AvalonDash(caster, attacker, counterdamage, ability)
 	local targetPoint = attacker:GetAbsOrigin()
-	print("yay")
 	local casterDash = Physics:Unit(caster)
 	local distance = targetPoint - caster:GetAbsOrigin()
 

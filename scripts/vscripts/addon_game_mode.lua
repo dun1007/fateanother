@@ -403,7 +403,12 @@ function FateGameMode:OnEntityKilled( keys )
 
   if killedUnit:IsRealHero() then
     killerEntity:SetGold(0, false)
-    killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty() , true, 0) 
+    local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()
+    killerEntity:ModifyGold(bounty , true, 0) 
+    -- if killer has Golden Rule attribute, grant 50% more gold
+    if killerEntity.IsGoldenRuleImproved then 
+      killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
+    end 
     print("Player collected bounty : " .. 1000 - killedUnit:GetGoldBounty())
   end
 
@@ -598,6 +603,7 @@ function FateGameMode:InitializeRound()
 		duration = 4.0
 	}
 
+  -- currently bugged. when you spawn hero by cheat(-createhero), it registers player twice to vPlayerList
 	for _,ply in pairs(self.vPlayerList) do
 	    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0)
       ply:GetAssignedHero():SetGold(0, false)
