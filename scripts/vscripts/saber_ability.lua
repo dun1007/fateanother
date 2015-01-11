@@ -12,11 +12,6 @@ function OnInstinctStart(keys)
 	--keys.caster:AddNewModifier(keys.caster, nil, "modifier_item_sphere", {})
 end
 
---[[
-	Author: kritth
-	Date: 10.01.2015.
-	Create tracking tornado towards the target
-]]
 function CreateWind(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -197,7 +192,7 @@ function OnExcaliburStart(keys)
 	local excal = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+        EffectName = "particles/custom/saber_excalibur.vpcf",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = casterloc,
         fDistance = keys.Range,
@@ -219,7 +214,7 @@ function OnExcaliburStart(keys)
 		end
 	end)
 
-	Timers:CreateTimer(2.5, function() 
+	Timers:CreateTimer(3.2, function() -- Adjust 2.5 to 3.2 to match the sound
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			local projectile = ProjectileManager:CreateLinearProjectile(excal) return 
