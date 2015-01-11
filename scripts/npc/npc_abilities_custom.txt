@@ -719,11 +719,6 @@
 		"MaxLevel"						"5"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1"
-		"precache"
-		{
-			"particle_folder"		"particles/units/heroes/hero_omniknight"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-		}
 		
 		"AbilityCastPoint"				"0.3"
 		"AbilityCoodown"				"60"
@@ -759,9 +754,19 @@
 			}
 		}
 		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		
+		"precache"
+		{
+			"particle"					"particles/custom/saber_avalon_floor.vpcf"
+			"particle_folder"			"particles/units/heroes/hero_omniknight"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+		}
 		
 		"OnSpellStart"
 		{
+		
 			"RunScript"
 			{
 				"ScriptFile"	"saber_ability"
@@ -788,8 +793,17 @@
 			"modifier_avalon"
 			{
 				"Duration"		"%duration"
-				"EffectName"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_omni.vpcf"
-				"EffectAttachType"	"follow_origin"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/saber_avalon_floor.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"100"
@@ -6255,7 +6269,8 @@
 						"Target"		"CASTER"
 						"HealAmount"	"%heal_amount/5"
 					}		
-				}	Search
+				}	Search
+
 
 				"Duration"		"5.0"
 			}
