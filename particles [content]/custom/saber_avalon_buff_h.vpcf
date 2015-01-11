@@ -16,13 +16,13 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	string m_hFallback = ""
 	int m_nFallbackMaxCount = -1
 	string m_hLowViolenceDef = ""
-	uint(4) m_ConstantColor = ( 188, 176, 1, 255 )
+	uint(4) m_ConstantColor = ( 255, 255, 127, 55 )
 	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
-	float m_flConstantRadius = 1.000000
+	float m_flConstantRadius = 5.000000
 	float m_flConstantRotation = 0.000000
 	float m_flConstantRotationSpeed = 0.000000
 	float m_flConstantLifespan = 1.000000
-	int m_nConstantSequenceNumber = 7
+	int m_nConstantSequenceNumber = 0
 	int m_nConstantSequenceNumber1 = 0
 	int m_nGroupID = 0
 	float m_flMaximumTimeStep = 0.100000
@@ -55,24 +55,24 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	bool m_bShouldHitboxesFallbackToRenderBounds = true
 	CParticleOperatorInstance*[] m_Operators = 
 	[
-		&C_OP_Decay_0,
+		&C_OP_BasicMovement_0,
 		&C_OP_InterpolateRadius_1,
-		&C_OP_BasicMovement_2,
-		&C_OP_VectorNoise_3,
-		&C_OP_FadeInSimple_4
+		&C_OP_LockToBone_2,
+		&C_OP_Decay_3,
+		&C_OP_FadeOutSimple_4,
+		&C_OP_FadeInSimple_5,
+		&C_OP_RampScalarLinearSimple_6
 	]
 	CParticleOperatorInstance*[] m_Renderers = 
 	[
-		&C_OP_RenderSprites_5
+		&C_OP_RenderSprites_7
 	]
 	CParticleOperatorInstance*[] m_Initializers = 
 	[
-		&C_INIT_RandomRadius_6,
-		&C_INIT_RandomLifeTime_7,
-		&C_INIT_CreateFromParentParticles_8,
-		&C_INIT_PositionOffset_9,
-		&C_INIT_InitialVelocityNoise_10,
-		&C_INIT_PositionWarp_11
+		&C_INIT_RandomLifeTime_8,
+		&C_INIT_RandomRadius_9,
+		&C_INIT_RandomAlpha_10,
+		&C_INIT_CreateOnModel_11
 	]
 	CParticleOperatorInstance*[] m_Emitters = 
 	[
@@ -80,7 +80,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	]
 	CParticleOperatorInstance*[] m_ForceGenerators = 
 	[
-		
+		&C_OP_AttractToControlPoint_13
 	]
 	CParticleOperatorInstance*[] m_Constraints = 
 	[
@@ -88,60 +88,10 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	]
 }
 
-C_OP_Decay C_OP_Decay_0
+C_OP_BasicMovement C_OP_BasicMovement_0
 {
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_OP_InterpolateRadius C_OP_InterpolateRadius_1
-{
-	float m_flStartTime = 0.000000
-	float m_flEndTime = 2.000000
-	float m_flStartScale = 6.000000
-	float m_flEndScale = 10.000000
-	bool m_bEaseInAndOut = true
-	float m_flBias = 0.750000
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_OP_BasicMovement C_OP_BasicMovement_2
-{
-	float(3) m_Gravity = ( 0.000000, 0.000000, 0.000000 )
-	float m_fDrag = 0.600000
+	float(3) m_Gravity = ( 0.000000, 0.000000, 150.000000 )
+	float m_fDrag = 0.050000
 	int m_nMaxConstraintPasses = 3
 	bool m_bLockULCorner = false
 	bool m_bLockURCorner = false
@@ -167,14 +117,14 @@ C_OP_BasicMovement C_OP_BasicMovement_2
 	string m_Notes = ""
 }
 
-C_OP_VectorNoise C_OP_VectorNoise_3
+C_OP_InterpolateRadius C_OP_InterpolateRadius_1
 {
-	int m_nFieldOutput = 0
-	float(3) m_vecOutputMin = ( -32.000000, -32.000000, -4.000000 )
-	float(3) m_vecOutputMax = ( 32.000000, 32.000000, 4.000000 )
-	float m_fl4NoiseScale = 0.100000
-	bool m_bAdditive = true
-	bool m_bOffset = false
+	float m_flStartTime = 0.000000
+	float m_flEndTime = 1.000000
+	float m_flStartScale = 1.000000
+	float m_flEndScale = 2.000000
+	bool m_bEaseInAndOut = false
+	float m_flBias = 0.750000
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
 	float m_flOpStartFadeOutTime = 0.000000
@@ -195,9 +145,60 @@ C_OP_VectorNoise C_OP_VectorNoise_3
 	string m_Notes = ""
 }
 
-C_OP_FadeInSimple C_OP_FadeInSimple_4
+C_OP_LockToBone C_OP_LockToBone_2
 {
-	float m_flFadeInTime = 0.125000
+	int m_nControlPointNumber = 0
+	float m_flLifeTimeFadeStart = 1.000000
+	float m_flLifeTimeFadeEnd = 1.000000
+	float m_flJumpThreshold = 100.000000
+	float m_flPrevPosScale = 1.000000
+	string m_HitboxSetName = "default"
+	bool m_bRigid = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_3
+{
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_FadeOutSimple C_OP_FadeOutSimple_4
+{
+	float m_flFadeOutTime = 0.750000
 	int m_nFieldOutput = 7
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
@@ -219,7 +220,57 @@ C_OP_FadeInSimple C_OP_FadeInSimple_4
 	string m_Notes = ""
 }
 
-C_OP_RenderSprites C_OP_RenderSprites_5
+C_OP_FadeInSimple C_OP_FadeInSimple_5
+{
+	float m_flFadeInTime = 0.250000
+	int m_nFieldOutput = 7
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_RampScalarLinearSimple C_OP_RampScalarLinearSimple_6
+{
+	float m_Rate = -6.000000
+	float m_flStartTime = 0.000000
+	float m_flEndTime = 99999.000000
+	int m_nField = 16
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = 1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_RenderSprites C_OP_RenderSprites_7
 {
 	int m_nSequenceOverride = -1
 	int m_nOrientationType = 0
@@ -267,8 +318,8 @@ C_OP_RenderSprites C_OP_RenderSprites_5
 	float m_flSequence1RGBWeight = 0.500000
 	float m_flSequence1AlphaWeight = 0.500000
 	float m_flAddSelfAmount = 0.000000
-	bool m_bAdditive = true
-	bool m_bMod2X = false
+	bool m_bAdditive = false
+	bool m_bMod2X = true
 	bool m_bMaxLuminanceBlendingSequence0 = false
 	bool m_bMaxLuminanceBlendingSequence1 = false
 	bool m_bRefract = false
@@ -280,12 +331,12 @@ C_OP_RenderSprites C_OP_RenderSprites_5
 	bool m_bWriteStencilOnDepthPass = true
 	bool m_bWriteStencilOnDepthFail = false
 	bool m_bReverseZBuffering = false
-	bool m_bDisableZBuffering = false
+	bool m_bDisableZBuffering = true
 	bool m_bParticleFeathering = false
 	float m_flFeatheringMinDist = 0.000000
 	float m_flFeatheringMaxDist = 15.000000
 	float m_flOverbrightFactor = 1.000000
-	string m_hTexture = "materials/particle/particle_flares/particle_flare_007b.vtex"
+	string m_hTexture = "materials/particle/particle_modulate_01.vtex"
 	CParticleVisibilityInputs VisibilityInputs = CParticleVisibilityInputs
 	{
 		float m_flCameraBias = 0.000000
@@ -324,36 +375,10 @@ C_OP_RenderSprites C_OP_RenderSprites_5
 	string m_Notes = ""
 }
 
-C_INIT_RandomRadius C_INIT_RandomRadius_6
+C_INIT_RandomLifeTime C_INIT_RandomLifeTime_8
 {
-	float m_flRadiusMin = 550.000000
-	float m_flRadiusMax = 600.000000
-	float m_flRadiusRandExponent = 1.000000
-	bool m_bRunForParentApplyKillList = true
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_INIT_RandomLifeTime C_INIT_RandomLifeTime_7
-{
-	float m_fLifetimeMin = 1.000000
-	float m_fLifetimeMax = 1.500000
+	float m_fLifetimeMin = 0.400000
+	float m_fLifetimeMax = 0.500000
 	float m_fLifetimeRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
@@ -376,12 +401,11 @@ C_INIT_RandomLifeTime C_INIT_RandomLifeTime_7
 	string m_Notes = ""
 }
 
-C_INIT_CreateFromParentParticles C_INIT_CreateFromParentParticles_8
+C_INIT_RandomRadius C_INIT_RandomRadius_9
 {
-	float m_flVelocityScale = 0.100000
-	float m_flIncrement = 1.000000
-	bool m_bRandomDistribution = false
-	bool m_bSubFrame = true
+	float m_flRadiusMin = 15.000000
+	float m_flRadiusMax = 30.000000
+	float m_flRadiusRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
@@ -403,13 +427,42 @@ C_INIT_CreateFromParentParticles C_INIT_CreateFromParentParticles_8
 	string m_Notes = ""
 }
 
-C_INIT_PositionOffset C_INIT_PositionOffset_9
+C_INIT_RandomAlpha C_INIT_RandomAlpha_10
 {
-	float(3) m_OffsetMin = ( -16.000000, -16.000000, 80.000000 )
-	float(3) m_OffsetMax = ( 16.000000, 16.000000, 150.000000 )
+	int m_nFieldOutput = 7
+	int m_nAlphaMin = 60
+	int m_nAlphaMax = 80
+	float m_flAlphaRandExponent = 1.000000
+	bool m_bRunForParentApplyKillList = true
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_INIT_CreateOnModel C_INIT_CreateOnModel_11
+{
 	int m_nControlPointNumber = 0
+	int m_nForceInModel = 0
+	int m_nDesiredHitbox = -1
+	float m_flHitBoxScale = 0.800000
+	float(3) m_vecDirectionBias = ( 0.000000, 0.000000, 0.000000 )
+	string m_HitboxSetName = "default"
 	bool m_bLocalCoords = false
-	bool m_bProportional = false
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
@@ -426,73 +479,6 @@ C_INIT_PositionOffset C_INIT_PositionOffset_9
 	float m_flOpTimeScaleMin = 1.000000
 	float m_flOpTimeScaleMax = 1.000000
 	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_INIT_InitialVelocityNoise C_INIT_InitialVelocityNoise_10
-{
-	float(3) m_vecAbsVal = ( 0.000000, 0.000000, 0.000000 )
-	float(3) m_vecAbsValInv = ( 0.000000, 0.000000, 0.000000 )
-	float(3) m_vecOffsetLoc = ( 0.000000, 0.000000, 0.000000 )
-	float m_flOffset = 0.000000
-	float(3) m_vecOutputMin = ( -864.000000, -864.000000, 564.000000 )
-	float(3) m_vecOutputMax = ( 864.000000, 864.000000, 864.000000 )
-	float m_flNoiseScale = 1.000000
-	float m_flNoiseScaleLoc = 0.200000
-	int m_nControlPointNumber = 0
-	bool m_bLocalSpace = false
-	bool m_bIgnoreDt = false
-	bool m_bRunForParentApplyKillList = true
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = true
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_INIT_PositionWarp C_INIT_PositionWarp_11
-{
-	float(3) m_vecWarpMin = ( 1.000000, 1.000000, 0.000000 )
-	float(3) m_vecWarpMax = ( 1.000000, 1.000000, 1.000000 )
-	int m_nScaleControlPointNumber = -1
-	int m_nControlPointNumber = 0
-	int m_nRadiusComponent = -1
-	float m_flWarpTime = 0.500000
-	float m_flWarpStartTime = 0.000000
-	float m_flPrevPosScale = 1.000000
-	bool m_bInvertWarp = false
-	bool m_bUseCount = false
-	bool m_bRunForParentApplyKillList = true
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = true
 	int m_nOpEndCapState = -1
 	int m_nOpScaleCP = -1
 	string m_Notes = ""
@@ -501,13 +487,42 @@ C_INIT_PositionWarp C_INIT_PositionWarp_11
 C_OP_ContinuousEmitter C_OP_ContinuousEmitter_12
 {
 	float m_flEmissionDuration = 0.000000
-	float m_flStartTime = 0.200000
-	float m_flEmitRate = 20.000000
+	float m_flStartTime = 0.000000
+	float m_flEmitRate = 100.000000
 	float m_flEmissionScale = 0.000000
 	int m_nScaleControlPoint = -1
 	int m_nScaleControlPointField = 0
 	bool m_bScalePerParticle = false
 	bool m_bInitFromKilledParentParticles = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_AttractToControlPoint C_OP_AttractToControlPoint_13
+{
+	float(3) m_vecComponentScale = ( 1.000000, 1.000000, 1.000000 )
+	float m_fForceAmount = -500.000000
+	float m_fFalloffPower = 0.000000
+	int m_nControlPointNumber = 1
+	int m_nScaleCP = -1
+	int m_nScaleCPField = 0
+	bool m_bScaleLocal = false
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
 	float m_flOpStartFadeOutTime = 0.000000
