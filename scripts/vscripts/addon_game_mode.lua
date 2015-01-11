@@ -765,7 +765,10 @@ donotlevel = {
   "saber_alter_darklight_passive",
   "rider_5th_mystic_eye_improved",
   "rider_5th_monstrous_strength_passive",
-  "berserker_5th_divinity_improved"
+  "berserker_5th_divinity_improved",
+  "berserker_5th_berserk_attribute_passive",
+  "berserker_5th_god_hand",
+  "false_assassin_combo_passive"
 }
 
 function LevelAllAbility(hero)

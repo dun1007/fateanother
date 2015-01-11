@@ -67,11 +67,13 @@ function OnBerserkStart(keys)
 	local caster = keys.caster
 	local hplock = keys.Health
 	local duration = keys.Duration
+	local ply = caster:GetPlayerOwner()
+	if ply.IsBerserkAcquired then duration = duration + 1 end
+
 	local berserkCounter = 0
 	BerCheckCombo(caster, keys.ability)
-	EmitGlobalSound("Berserker.Roar") --[[Returns:void
-	Play named sound for all players
-	]]
+	EmitGlobalSound("Berserker.Roar") 
+
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
 		if berserkCounter == duration then return end
@@ -83,6 +85,42 @@ function OnBerserkStart(keys)
 		end
 	)
 
+
+	if ply.IsBerserkAcquired then 
+		local explosionCounter = 0
+		local manaregenCounter = 0
+
+		Timers:CreateTimer(function()
+			if caster:HasModifier("modifier_berserk_self_buff") == false then return end
+			if explosionCounter == duration then return end
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			for k,v in pairs(targets) do
+		        DoDamage(caster, v, 150, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			end
+
+			explosionCounter = explosionCounter + 1.0
+			return 1.0
+			end
+		)
+
+		Timers:CreateTimer(function()
+			if caster:HasModifier("modifier_berserk_self_buff") == false then return end
+			if manaregenCounter == 2.0 then return end
+			caster:SetMana(caster:GetMana() + 30) 
+
+			manaregenCounter = manaregenCounter + 0.2
+			return 0.2
+			end
+		)
+	end
+end
+
+function OnBerserkProc(keys)
+	local caster = keys.caster
+	local targets = FindUnitsInRadius(caster:GetTeam(), keys.target, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	for k,v in pairs(targets) do
+        DoDamage(caster, v, 200, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	end
 end
 
 function OnNineStart(keys)
@@ -213,6 +251,30 @@ function BerCheckCombo(caster, ability)
 	end
 end
 
+function OnGodHandDeath(keys)
+	local caster = keys.caster
+	local respawnPos = caster:GetOrigin()
+	local ply = caster:GetPlayerOwner()
+	print("God Hand activated, respawning")
+	Timers:CreateTimer({
+		endTime = 1,
+		callback = function()
+		EmitGlobalSound("Berserker.Roar") 
+		caster:SetRespawnPosition(respawnPos)
+		caster:RespawnHero(false,false,false)
+
+		if ply.IsReincarnationAcquired then 
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			for k,v in pairs(targets) do
+		        DoDamage(caster, v, caster:GetMaxHealth() * 3/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			end	
+		end
+		--caster:SetRespawnPosition(Vector(7000, 2000, 320)) need to set the respawn base after reviving
+	end
+	})	
+
+end
+
 function OnImproveDivinityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -226,6 +288,7 @@ function OnBerserkAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero:FindAbilityByName("berserker_5th_berserk_attribute_passive"):SetLevel(1)
 	ply.IsBerserkAcquired = true
 end
 
@@ -233,6 +296,7 @@ function OnGodHandAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero:FindAbilityByName("berserker_5th_god_hand"):SetLevel(1)
 	ply.IsGodHandAcquired = true
 end
 
@@ -240,5 +304,9 @@ function OnReincarnationdAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero:SetBaseHealthRegen(hero:GetMaxHealth()/100)
+
+
 	ply.IsReincarnationAcquired = true
+
 end

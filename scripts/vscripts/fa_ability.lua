@@ -44,14 +44,26 @@ end
 function OnWBStart(keys)
 	EmitGlobalSound("FA.Windblade" )
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local radius = keys.Radius
 	local casterInitOrigin = caster:GetAbsOrigin() 
 
-	
-	
+	if not ply.IsGanryuAcquired then
+		caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
+		caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
+		caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
+	end
+
 	local targets = FindUnitsInRadius(caster:GetTeam(), casterInitOrigin, nil, radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	local risingwind = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+
+	if ply.IsGanryuAcquired then
+		Timers:CreateTimer(0.3, function()
+			caster:SetAbsOrigin(targets[math.random(#targets)]:GetAbsOrigin())
+			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		return end)
+	end
 
 	for k,v in pairs(targets) do
 		giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
@@ -80,6 +92,10 @@ function OnTGStart(keys)
 	local target = keys.target
 	EmitGlobalSound("FA.TG")
 	EmitGlobalSound("FA.Chop")
+
+	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
+	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
+	caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
 
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
@@ -132,6 +148,14 @@ function FACheckCombo(caster, ability)
 end
 
 function OnGanryuAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsGanryuAcquired = true
+end
+
+function OnEyeOfSerenityAcquired(keys)
+
 end
 
 function OnQuickdrawAcquired(keys)
