@@ -288,6 +288,7 @@ function AvalonOnTakeDamage(keys)
 	if (damageTaken > keys.Threshold) then
 		if avalonCooldown then
 			if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
+			
 			AvalonDash(caster, attacker, keys.Damage, keys.ability)
 			-- dash attack 3 seconds cooldown
 			avalonCooldown = false
@@ -323,6 +324,20 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 	Timers:CreateTimer({
 		endTime = 0.5,
 		callback = function()
+		
+		-- Particles
+		local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_impact.vpcf", PATTACH_ABSORIGIN, caster )
+		local explosionFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_explosion.vpcf", PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( explosionFxIndex, 3, caster:GetAbsOrigin() )
+		EmitSoundOn( "Hero_EarthShaker.Fissure", caster )
+		
+		Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( impactFxIndex, false )
+				ParticleManager:DestroyParticle( explosionFxIndex, false )
+			end
+		)
+		
+		-- Original function
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 300
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do

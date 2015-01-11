@@ -719,11 +719,6 @@
 		"MaxLevel"						"5"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1"
-		"precache"
-		{
-			"particle_folder"		"particles/units/heroes/hero_omniknight"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-		}
 		
 		"AbilityCastPoint"				"0.3"
 		"AbilityCoodown"				"60"
@@ -764,8 +759,11 @@
 		"precache"
 		{
 			"particle"					"particles/custom/saber_avalon_floor.vpcf"
+			"particle"					"particles/custom/saber_avalon_impact.vpcf"
+			"particle"					"particles/custom/saber_avalon_explosion.vpcf"
 			"particle_folder"			"particles/units/heroes/hero_omniknight"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
 		}
 		
 		"OnSpellStart"
@@ -775,6 +773,12 @@
 			{
 				"ScriptFile"	"saber_ability"
 				"Function"		"OnAvalonStart"
+			}
+			
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_avalon"
+				"Target"		"CASTER"
 			}
 			
 			"ApplyModifier"
@@ -787,6 +791,7 @@
 			
 			"FireSound"
 			{
+				"Target"		"CASTER"
 				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
 			}
 			
@@ -808,10 +813,6 @@
 					}
 				}
 				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"100"
-				}
 				"OnTakeDamage"
 				{
 					"RunScript"
@@ -823,6 +824,11 @@
 						"Damage"		"%damage"
 					}
 				}
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"100"
+				}
 			}
 
 			"avalon_pause"
@@ -831,7 +837,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
