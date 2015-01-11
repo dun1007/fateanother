@@ -316,8 +316,13 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_impact.vpcf"
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_impact.vpcf"
+			"particle"				"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
+			"particle"				"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt_birds.vpcf"
 		}
+		
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -369,14 +374,7 @@
 		
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
-			"particle"				"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
-			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt_birds.vpcf"
-		}
-		
+
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -5231,6 +5229,59 @@
 		}
 	}
 
+	//=====================================
+	// False Assassin : Quickdraw
+	//=====================================
+	"false_assassin_quickdraw"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"false_assassin_quickdraw"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"750"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"80"
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"fa_ability"
+			 	"Function"		"OnQuickdrawStart"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"fa_ability"
+			 	"Function"		"OnQuickdrawHit"
+			}
+		}
+	}
+
 	//========================================
 	// False Assassin : Heart of Harmony
 	//========================================
@@ -5447,7 +5498,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"400"
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"30"
@@ -5713,6 +5764,7 @@
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityCastPoint"		"1.5"
 		"AbilityCooldown"		"0.0"
+		"MaxLevel"			"1"
 
 		"OnSpellStart"
 		{
@@ -5872,6 +5924,112 @@
 		}
 	}
 
+	//=====================================
+	// True Assassin : Dirk (Improved)
+	//=====================================
+	"true_assassin_dirk_improved"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"ta_dirk"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"8"
+		"AbilityManaCost"				"200"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"180"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"poison_dot"			"13"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"poison_slow"			"-18"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"15"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_target"			"5"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnDirkStart"
+				"Damage"			"%damage"
+				"MaxTarget"		"%max_target"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"    "ta_ability"
+				"Function"      "OnDirkHit"
+				"Damage"		"%damage"
+			}
+            "ApplyModifier"
+            {
+            	"ModifierName"	"modifier_dirk_poison"
+            	"Target"		"TARGET"
+            }
+		}
+
+		"Modifiers"
+		{
+			"modifier_dirk_poison"
+			{
+				"Duration"		"%duration"
+				"ThinkInterval"		"1.0"
+				"OnThinkInterval"
+				{
+					"Damage"
+					{
+						"Target"	"TARGET"
+						"Type"		"DAMAGE_TYPE_MAGICAL"
+						"Damage"	"%poison_dot"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%poison_slow"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-2"
+				}
+			}
+		}
+	}
 
 	"true_assassin_ambush"
 	{
@@ -6047,7 +6205,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stat_chance"			"10 15 20 25 30"
+				"agi_increase"			"0.5 1.0 1.5 2.0"
 			}
 			"04"
 			{
@@ -6067,12 +6225,21 @@
 			{
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnModStart"
-				"StatChance"		"%stat_chance"
+				"StatIncrease"		"%stat_increase"
 			}
 			"ApplyModifier"
 			{
 				"ModifierName"		"modifier_ta_self_mod"
 				"Target"			"CASTER"
+			}
+		}
+
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"SelfModUpgraded"
 			}
 		}
 		"Modifiers"
@@ -6088,8 +6255,30 @@
 						"Target"		"CASTER"
 						"HealAmount"	"%heal_amount/5"
 					}		
-				}
+				}	Search
+
 				"Duration"		"5.0"
+			}
+			"modifier_ta_self_mod_passive"
+			{
+				"Passive"		"1"
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"SelfModKilled"
+					}					
+				}
+			}
+			"modifier_ta_agi_bonus"
+			{
+				"IsHidden"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%agi_increase"
+				}
 			}
 		}
 	}
@@ -6131,12 +6320,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_steal"			"120 140 160 180 200"
+				"str_steal"				"-3 -6 -9 -12 -15"
 			}
 			"03"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8.0 11.0 14.0 17.0 20.0"
+			}
+			"04"
+			{
 				"var_type"				"FIELD_INTEGER"
-				"steal_chance"			"10 15 20 25 30"
+				"str_gain"				"3 6 9 12 15"
 			}
 		}
 
@@ -6147,8 +6341,37 @@
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnStealStart"
 				"Damage"			"%damage"
-				"GoldAmount"		"%gold_steal"
-				"StealChance"		"%steal_chance"
+				"StealPercentage"	"%str_steal"
+				"Duration"			"%duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_steal_str_reduction"
+				"Target"			"TARGET"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_steal_str_increase"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_steal_str_reduction"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%str_steal"
+				}
+			}
+			"modifier_steal_str_increase"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%str_gain"
+				}
 			}
 		}
 	}
@@ -6210,6 +6433,65 @@
 				"ScriptFile"    "ta_ability"
 				"Function"      "OnZabHit"
 				"Damage"		"%damage"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// TA : Weakening Venom passive
+	//=================================================================================================================
+	"true_assassin_weakening_venom_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"ta_weakening_venom"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"str_reduction"			"-1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_slow"		"-5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_weakening_venom_passive"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnVenomHit"
+					}
+				}
+			}
+			"modifier_weakening_venom_debuff"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+				"Duration"		"3.0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%str_reduction"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_slow"
+				}
 			}
 		}
 	}

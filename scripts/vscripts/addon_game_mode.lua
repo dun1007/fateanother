@@ -436,7 +436,7 @@ function FateGameMode:InitGameMode()
 	GameRules:SetPostGameTime(0)
 	GameRules:SetUseCustomHeroXPValues(true)
 	GameRules:SetGoldPerTick(0)
-	GameRules:GetGameModeEntity():SetCameraDistanceOverride(1500)
+	GameRules:GetGameModeEntity():SetCameraDistanceOverride(1700)
 	-- Random seed for RNG
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
 	math.randomseed(tonumber(timeTxt)) 
@@ -768,7 +768,8 @@ donotlevel = {
   "berserker_5th_divinity_improved",
   "berserker_5th_berserk_attribute_passive",
   "berserker_5th_god_hand",
-  "false_assassin_combo_passive"
+  "false_assassin_combo_passive",
+  "true_assassin_weakening_venom_passive"
 }
 
 function LevelAllAbility(hero)

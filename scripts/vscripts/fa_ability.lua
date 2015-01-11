@@ -1,5 +1,12 @@
 function OnGKStart(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	FACheckCombo(keys.caster, keys.ability)
+	if ply.IsQuickdrawAcquired then 
+		caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true) 
+		Timers:CreateTimer(5, function() return caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true)   end)
+	end
+
 end
 
 function OnHeartStart(keys)
@@ -38,6 +45,64 @@ function TPOnAttack(keys)
 	local rand = RandomInt(1, #targets) 
 	caster:SetAbsOrigin(targets[1]:GetAbsOrigin() + Vector(RandomFloat(-100, 100),RandomFloat(-100, 100),RandomFloat(-100, 100) ))		
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+end
+
+function OnQuickdrawStart(keys)
+	local caster = keys.caster
+	local quickdraw = 
+	{
+		Ability = keys.ability,
+        EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+        iMoveSpeed = 1500,
+        vSpawnOrigin = caster:GetOrigin(),
+        fDistance = 750,
+        fStartRadius = 150,
+        fEndRadius = 150,
+        Source = caster,
+        bHasFrontalCone = true,
+        bReplaceExisting = false,
+        iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+        iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+        fExpireTime = GameRules:GetGameTime() + 2.0,
+		bDeleteOnHit = false,
+		vVelocity = caster:GetForwardVector() * 1500
+	}
+	local projectile = ProjectileManager:CreateLinearProjectile(quickdraw)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.4)
+
+	local sin = Physics:Unit(caster)
+	caster:SetPhysicsFriction(0)
+	caster:SetPhysicsVelocity(caster:GetForwardVector()*1500)
+	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
+
+	Timers:CreateTimer("quickdraw_dash", {
+		endTime = 0.5,
+		callback = function()
+		print("dash timer")
+		caster:OnPreBounce(nil)
+		caster:SetBounceMultiplier(0)
+		caster:PreventDI(false)
+		caster:SetPhysicsVelocity(Vector(0,0,0))
+		caster:RemoveModifierByName("pause_sealenabled")
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	return end
+	})
+
+	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
+		Timers:RemoveTimer("qickdraw_dash")
+		unit:OnPreBounce(nil)
+		unit:SetBounceMultiplier(0)
+		unit:PreventDI(false)
+		unit:SetPhysicsVelocity(Vector(0,0,0))
+		caster:RemoveModifierByName("pause_sealenabled")
+		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+	end)
+
+end
+
+function OnQuickdrawHit(keys)
+	DoDamage(keys.caster, keys.target, 700 + keys.caster:GetAgility() * 10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 
@@ -155,11 +220,22 @@ function OnGanryuAcquired(keys)
 end
 
 function OnEyeOfSerenityAcquired(keys)
-
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsEyeOfSerenityAcquired = true
 end
 
 function OnQuickdrawAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsQuickdrawAcquired = true
 end
 
 function OnVitrificationAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsVitrificationAcquired = true
 end

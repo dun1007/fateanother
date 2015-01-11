@@ -24,7 +24,24 @@ function OnDirkStart(keys)
 end
 
 function OnDirkHit(keys)
-	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	if keys.ability:GetName() == "true_assassin_dirk" then
+		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	else
+		DoDamage(keys.caster, keys.target, keys.Damage + keys.caster:GetAgility() , DAMAGE_TYPE_PURE, 0, keys.ability, false)
+	end
+end
+
+function OnVenomHit(keys)
+	local caster = keys.caster
+	local target = keys.target 
+
+	local currentStack = target:GetModifierStackCount("modifier_weakening_venom_debuff", keys.ability)
+
+	if currentStack == 0 and target:HasModifier("modifier_weakening_venom_debuff") then currentStack = 1 end
+	print(currentStack)
+	target:RemoveModifierByName("modifier_weakening_venom_debuff") 
+	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_weakening_venom_debuff", {}) 
+	target:SetModifierStackCount("modifier_weakening_venom_debuff", keys.ability, currentStack + 1)
 end
 
 function OnPCDeactivate(keys)
@@ -74,8 +91,33 @@ function OnModStart(keys)
 	--increase stat
 end
 
+function SelfModUpgraded(keys)
+	local caster = keys.caster
+	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
+	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
+end
+
+function SelfModKilled(keys)
+	local caster = keys.caster
+	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
+	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
+	--[[for i=1, caster:GetKills() do
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
+	end]]
+end
+
+
 function OnStealStart(keys)
-	Timers:CreateTimer(0.3, function() DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) return end)
+	local caster = keys.caster
+	local target = keys.target
+
+	if caster:HasModifier("modifier_invisible") and ply.IsShadowStrikeAcquired then
+		keys.Damage = keys.Damage + 300
+	end
+
+	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnZabStart(keys)
@@ -88,6 +130,8 @@ function OnZabStart(keys)
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 700
 	}
+	if caster:HasModifier("modifier_invisible") then caster.IsShadowStrikeActivated = true end
+
 	ProjectileManager:CreateTrackingProjectile(info) 
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
@@ -97,6 +141,7 @@ end
 
 function OnZabHit(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 	local stunduration = keys.StunDuration
 
@@ -104,6 +149,10 @@ function OnZabHit(keys)
 	ParticleManager:SetParticleControl(blood, 4, target:GetAbsOrigin())
 	ParticleManager:SetParticleControlEnt(blood, 1, target , 0, "attach_hitloc", target:GetAbsOrigin(), false)
 
+	if ply.IsShadowStrikeAcquired and caster.IsShadowStrikeActivated then 
+		keys.Damage = keys.Damage + 400 
+		caster.IsShadowStrikeActivated = false
+	end
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	caster:Heal(keys.Damage/2, caster)
 end
@@ -133,14 +182,32 @@ function TACheckCombo(caster, ability)
 	end
 end
 
+--requires presence detect mechanism
 function OnImprovePresenceConcealmentAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsPCImproved = true
 end
 
 function OnProtectionFromWindAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsPFWAcquired = true
 end
 
 function OnWeakeningVenomAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsWeakeningVenomAcquired = true
+	hero:FindAbilityByName("true_assassin_weakening_venom_passive"):SetLevel(1)
 end
 
 function OnShadowStrikeAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsShadowStrikeAcquired = true
 end

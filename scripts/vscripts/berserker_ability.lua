@@ -305,8 +305,6 @@ function OnReincarnationdAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SetBaseHealthRegen(hero:GetMaxHealth()/100)
-
-
 	ply.IsReincarnationAcquired = true
 
 end

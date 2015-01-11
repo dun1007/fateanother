@@ -208,13 +208,13 @@ function OnExcaliburStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = frontward * keys.Speed
 	}
-	Timers:CreateTimer(1.0, function() 
+	Timers:CreateTimer(0.5, function() 
 		if caster:IsAlive() then
 			EmitGlobalSound("Saber.Excalibur") return 
 		end
 	end)
 
-	Timers:CreateTimer(3.2, function() -- Adjust 2.5 to 3.2 to match the sound
+	Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			local projectile = ProjectileManager:CreateLinearProjectile(excal) return 
