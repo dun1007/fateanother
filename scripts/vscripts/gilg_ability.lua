@@ -30,8 +30,12 @@ function OnBarrageStart(keys)
 end
 
 function OnGoldenRuleStart(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local goldgain = 10
+	if ply.IsGoldenRuleImproved = true then goldgain = 20 end
     Timers:CreateTimer(function()
-    	keys.caster:ModifyGold(10, true, 0) 
+    	keys.caster:ModifyGold(goldgain, true, 0) 
       	return 1.0
     end)
 end

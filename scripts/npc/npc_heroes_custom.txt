@@ -38,6 +38,7 @@
 		"AttackAnimationPoint"			"0.75"
 		"AttackAcquisitionRange"		"250"
 		"AttackRange"					"150"
+
 		
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"

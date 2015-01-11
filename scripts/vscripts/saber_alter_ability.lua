@@ -85,8 +85,10 @@ end
 
 function OnMMBStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	
 	local dmg = caster:GetMaxMana()
 	if ply.IsManaShroudImproved == true then dmg = dmg + 200 end
 	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
