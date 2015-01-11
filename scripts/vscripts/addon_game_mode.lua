@@ -130,7 +130,8 @@ function FateGameMode:OnHeroInGame(hero)
   MultiTeam:SetPlayerTeam(playerID, team)]]
 
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
-  	hero:SetGold(3000, false)
+    hero:SetGold(0, false)
+  	hero:SetGold(3000, true)
     LevelAllAbility(hero)
   -- GameRules:AddMinimapDebugPoint(keys.caster:GetPlayerID(), hero:GetAbsOrigin(), 255, 0, 0, 250, 5.0) -- AddMinimapDebugPort(playerindex, position, R, G, B, Size, Duration)
   	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
@@ -437,6 +438,7 @@ function FateGameMode:InitGameMode()
 	GameRules:SetUseCustomHeroXPValues(true)
 	GameRules:SetGoldPerTick(0)
 	GameRules:GetGameModeEntity():SetCameraDistanceOverride(1700)
+  GameRules:SetUseBaseGoldBountyOnHeroes(USE_STANDARD_HERO_GOLD_BOUNTY)
 	-- Random seed for RNG
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
 	math.randomseed(tonumber(timeTxt)) 

@@ -29,6 +29,14 @@ function OnBarrageStart(keys)
 	--ParticleManager:SetParticleControl(particle, 3, targetPoint) -- target effect location
 end
 
+function OnGoldenRuleStart(keys)
+    Timers:CreateTimer(function()
+    	keys.caster:ModifyGold(10, true, 0) 
+      	return 1.0
+    end)
+end
+
+
 function OnChainStart(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -219,13 +227,29 @@ function GilgaCheckCombo(caster, ability)
 end
 
 function OnImproveGoldenRuleAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsGoldenRuleImproved = true
 end
 
 function OnPowerOfSumerAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsSumerAcquired = true
 end
 
 function OnRainOfSwordsAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsRainAcquired = true
 end
 
 function OnSwordOfCreationAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsEnumaImproved = true
 end

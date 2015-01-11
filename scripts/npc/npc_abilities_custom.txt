@@ -6654,6 +6654,15 @@
 		{
 			"modifier_golden_rule"
 			{
+				"Passive"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"gilg_ability"
+						"Function"			"OnGoldenRuleStart"
+					}
+				}
 			}
 		}
 	}
