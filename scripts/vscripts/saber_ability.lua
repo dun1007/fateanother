@@ -234,7 +234,7 @@ function OnMaxStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 
-	local max = 
+	local max_excal = 
 	{
 		Ability = keys.ability,
         EffectName = "particles/custom/saber_excalibur.vpcf",
@@ -264,7 +264,7 @@ function OnMaxStart(keys)
 		callback = function()
 		ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
-	    local projectile = ProjectileManager:CreateLinearProjectile(max)
+	    local projectile = ProjectileManager:CreateLinearProjectile( max_excal )
 		
 		-- Function to create rock follow the projectile
 		local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, caster )

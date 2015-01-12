@@ -311,7 +311,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"saber_caliburn"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK" // Change the animation from "ACT_DOTA_CAST_ABILITY_1" to match the timing of the ability
 		"AnimationPlaybackRate" 		"0.5"
 		"AOERadius"						"%radius"
 		"precache"
@@ -443,7 +443,7 @@
 	//=================================================================================================================
 	// Saber : Excalibur
 	//=================================================================================================================
-		"saber_excalibur"
+	"saber_excalibur"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
@@ -456,12 +456,17 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityTextureName"			"saber_excalibur"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"0.9"
+		"AnimationPlaybackRate" 		"1.0"				// Adjust playback rate to reflect the ability was 0.9
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"
-			"particle_folder"		"particles/units/heroes/hero_invoker"
-			"particle_folder"		"particles/units/heroes/hero_lina"
+			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"		// I don't think it's neccessary to precache these
+			"particle_folder"		"particles/units/heroes/hero_invoker"					// three folders
+			"particle_folder"		"particles/units/heroes/hero_lina"						//
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
+			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
+			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
+			"particle"				"particles/custom/saber_excalibur.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -511,16 +516,7 @@
 		}
 		
 		// Data driven
-		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
-			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
-			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
-			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
-			"particle"				"particles/custom/saber_excalibur.vpcf"
-		}
-		
+		//-------------------------------------------------------------------------------------------------------------		
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -577,7 +573,7 @@
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			
@@ -721,12 +717,24 @@
 		"MaxLevel"						"5"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1"
+		"precache"
+		{
+			"particle"					"particles/custom/saber_avalon_floor.vpcf"
+			"particle"					"particles/custom/saber_avalon_impact.vpcf"
+			"particle"					"particles/custom/saber_avalon_explosion.vpcf"
+			"particle_folder"			"particles/units/heroes/hero_omniknight"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+		}
 		
+		// Cast
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
 		"AbilityCoodown"				"60"
 		"AbilityManaCost"				"800"
 		
-		
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -757,17 +765,6 @@
 		}
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
-		
-		"precache"
-		{
-			"particle"					"particles/custom/saber_avalon_floor.vpcf"
-			"particle"					"particles/custom/saber_avalon_impact.vpcf"
-			"particle"					"particles/custom/saber_avalon_explosion.vpcf"
-			"particle_folder"			"particles/units/heroes/hero_omniknight"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
-		}
-		
 		"OnSpellStart"
 		{
 		
@@ -996,12 +993,15 @@
 		"AbilityTextureName"			"saber_strike_air"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"0.5"
-
 		"precache"
 		{
+			"particle"				"particles/custom/saber_strike_air_blast.vpcf"
+			"particle"				"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
 			"particle_folder"		"particles/units/heroes/hero_invoker"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 		}
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
@@ -1017,6 +1017,34 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"400"
 		
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"width"					"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"length"				"1200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"speed"					"4000"				// I think it's better to reduce the speed, 10000 is too fast and projectile will not show up
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"700 900 1100 1300 1500"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -1033,13 +1061,27 @@
 			
 			"DelayedAction"
 			{
+				"Delay"			"1.5"
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"Target"				"CASTER"
+						"ModifierName"			"modifier_strike_air_animation"
+					}
+				}
+			}
+			
+			"DelayedAction"
+			{
 				"Delay"				"1.75"
+				
 				"Action"
 				{
 					"LinearProjectile"
 					{
 						"Target"				"POINT"
-						"EffectName"			"particles/units/heroes/hero_invoker/invoker_deafening_blast.vpcf"
+						"EffectName"			"particles/custom/saber_strike_air_blast.vpcf"
 						"MoveSpeed"				"%speed"
 						"StartRadius"			"%width"
 						"EndRadius"				"%width"
@@ -1053,6 +1095,7 @@
 			
 			"FireSound"
 			{
+				"Target"		"CASTER"
 				"EffectName"	"Hero_Invoker.Tornado"
 			}
 			
@@ -1069,30 +1112,11 @@
 				"Damage"		"%damage"
 				"Speed"			"%speed"
 			}
-		}
-				
-					
-		"AbilitySpecial"
-		{
-			"01"
+			
+			"ApplyModifier"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"width"					"400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"length"					"1200"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed"					"10000"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"700 900 1100 1300 1500"
+				"Target"		"TARGET"
+				"ModifierName"	"modifier_strike_air_target_VFX"
 			}
 		}
 		
@@ -1101,11 +1125,31 @@
 			"saber_pause"
 			{
 				"Duration"		"1.75"
+				
+				"EffectName"		"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+			
+			"modifier_strike_air_animation"
+			{
+				"IsHidden"			"1"
+				"IsPurgable"		"0"
+				"Duration"			"1.0"
+				"OverrideAnimation"	"ACT_DOTA_ATTACK"
+			}
+			
+			"modifier_strike_air_target_VFX"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.5"
+				"EffectName"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
@@ -1125,6 +1169,18 @@
 		"AbilityTextureName"			"saber_max_excal"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"0.9"
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
+			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+			"particle"				"particles/custom/saber_excalibur_max_beam.vpcf"
+			"particle"				"particles/custom/saber_excalibur.vpcf"
+			"particle"				"particles/custom/saber_excalibur_max_charge.vpcf"
+			"particle"				"particles/custom/saber_excalibur_circle.vpcf"
+			"parictle"				"particles/custom/saber_excalibur_max_rock_emitter.vpcf"
+			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
+			"particle"				"particles/custom/screen_yellow_splash.vpcf"
+		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -1167,19 +1223,6 @@
 		
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
-		"precache"
-		{
-			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
-			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
-			"particle"				"particles/custom/saber_excalibur_max_beam.vpcf"
-			"particle"				"particles/custom/saber_excalibur.vpcf"
-			"particle"				"particles/custom/saber_excalibur_max_charge.vpcf"
-			"particle"				"particles/custom/saber_excalibur_circle.vpcf"
-			"parictle"				"particles/custom/saber_excalibur_max_rock_emitter.vpcf"
-			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
-			"particle"				"particles/custom/screen_yellow_splash.vpcf"
-		}
-		
 		"OnSpellStart"
 		{
 			"ApplyModifier"
