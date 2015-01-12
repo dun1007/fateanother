@@ -438,7 +438,7 @@
 		"Ability1"				"caster_5th_argos"
 		"Ability2"				"caster_5th_ancient_magic"
 		"Ability3"				"caster_5th_rule_breaker"
-		"Ability4"				"rubick_empty1"
+		"Ability4"				"caster_5th_territory_creation"
 		"Ability5"				"caster_5th_item_construction"
 		"Ability6"				"caster_5th_hecatic_graea"
 		"Ability7"				"caster_5th_wall_of_flame"
@@ -498,7 +498,8 @@
 		"Ability5"				"gilgamesh_sword_barrage"
 		"Ability6"				"gilgamesh_enuma_elish"
 		"Ability7"				"gilgamesh_max_enuma_elish"
-		"Ability8"				"attribute_bonus"
+		"Ability8"				"gilgamesh_sword_barrage_improved"
+		"Ability9"				"attribute_bonus"
 		
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"2.5"

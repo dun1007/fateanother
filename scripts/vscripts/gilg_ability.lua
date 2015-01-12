@@ -34,7 +34,7 @@ function OnGoldenRuleStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local goldgain = 10
     Timers:CreateTimer(function()
-    	if ply.IsGoldenRuleImproved = true then goldgain = 20 end
+    	if ply.IsGoldenRuleImproved == true then goldgain = 20 end
     	keys.caster:ModifyGold(goldgain, true, 0) 
       	return 1.0
     end)
@@ -43,15 +43,47 @@ end
 
 function OnChainStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local target = keys.target
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_enkidu_bind", {}) 
-
-
+	local targetloc = target:GetAbsOrigin()
+	giveUnitDataDrivenModifier(caster, target, "pause_sealdisabled", keys.Duration)
 	enkiduTarget = target
+
+	if ply.IsRainAcquired then
+		local rainCount = 0
+	    Timers:CreateTimer(function()
+	    	if rainCount == 15 then return end
+	       	local targets = FindUnitsInRadius(caster:GetTeam(), targetloc, nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	        for k,v in pairs(targets) do
+	        	DoDamage(caster, v, 25, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			end
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControl(particle, 0, targetloc)
+			ParticleManager:SetParticleControl(particle, 1, targetloc)
+			ParticleManager:SetParticleControl(particle, 5, targetloc)
+			ParticleManager:SetParticleControl(particle, 6, targetloc)
+			rainCount = rainCount + 1
+	      	return 0.15
+	    end
+	    )
+	end
+
+	if caster.IsGOBUp and ply.IsSumerAcquired then 
+
+		-- Casting by dummy doesn't work for some reason
+		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
+		dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
+		dummy:AddAbility("gilgamesh_power_of_sumer")
+		local dummyAbility = dummy:FindAbilityByName("gilgamesh_power_of_sumer")
+		dummyAbility:SetLevel(1)
+		dummy:CastAbilityOnTarget(target, dummyAbility, 1) 
+		Timers:CreateTimer(0.5, function() dummy:RemoveSelf() return end)
+	end
 end
 
 function OnChainBroken(keys)
-	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("modifier_enkidu_bind") end
+	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("pause_sealdisabled") end
 end
 
 function OnGramStart(keys)
@@ -85,6 +117,8 @@ function OnGOBStart(keys)
 	local duration = keys.Duration
 	local frontward = caster:GetForwardVector()
 	local casterloc = caster:GetAbsOrigin()
+	caster.GOBLocation = casterloc
+	caster.IsGOBUp = true
 	GilgaCheckCombo(caster, keys.ability)
 
 	local gobWeapon = 
@@ -112,7 +146,7 @@ function OnGOBStart(keys)
 	local projectile = nil
 	local gobCount = 0
     Timers:CreateTimer(function()
-    	if gobCount > duration then return end
+    	if gobCount > duration then caster.IsGOBUp = false return end
     	local random1 = RandomInt(0, 400)
 		local random2 = RandomInt(0,1)
 
@@ -129,12 +163,35 @@ function OnGOBStart(keys)
       	return 0.15
     end
     )
+
 end
 
 
 function OnGOBHit(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
+
+function SumerArrowFire(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local info = {
+		Target = target,
+		Source = caster, 
+		Ability = keys.ability,
+		EffectName = "particles/units/heroes/hero_drow/drow_base_attack.vpcf",
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		iMoveSpeed = 700
+	}
+	for i=1,10 do
+		info.vSpawnOrigin = caster:GetAbsOrigin() + Vector(RandomInt(-100, 100),RandomInt(-100, 100) ,RandomInt(-100, 100))
+		ProjectileManager:CreateTrackingProjectile(info) 
+	end
+end
+
+function OnSumerArrowHit(keys)
+	DoDamage(keys.caster, keys.target, 50, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+end
+
 
 function OnEnumaStart(keys)
 	local caster = keys.caster
@@ -249,6 +306,7 @@ function OnRainOfSwordsAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsRainAcquired = true
+	hero:SwapAbilities("gilgamesh_sword_barrage","gilgamesh_sword_barrage_improved", true, true)
 end
 
 function OnSwordOfCreationAcquired(keys)

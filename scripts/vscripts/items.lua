@@ -66,6 +66,7 @@ function ScoutFam(keys)
 	local scout = CreateUnitByName("scout_familiar", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
 	scout:SetControllableByPlayer(pid, true)
 	keys.ability:ApplyDataDrivenModifier(caster, scout, "modifier_banished", {}) 
+	LevelAllAbility(scout)
 	Timers:CreateTimer({
 		endTime = 40,
 		callback = function()

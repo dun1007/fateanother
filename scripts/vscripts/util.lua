@@ -14,6 +14,19 @@ goesthruB = {"saber_avalon",
             "false_assassin_quickdraw",
             "saber_alter_max_mana_burst",
             "archer_5th_overedge"}
+donotlevel = {
+  "attribute_bonus",
+  "saber_improved_instinct",
+  "lancer_5th_protection_from_arrows",
+  "saber_alter_darklight_passive",
+  "rider_5th_mystic_eye_improved",
+  "rider_5th_monstrous_strength_passive",
+  "berserker_5th_divinity_improved",
+  "berserker_5th_berserk_attribute_passive",
+  "berserker_5th_god_hand",
+  "false_assassin_combo_passive",
+  "true_assassin_weakening_venom_passive"
+}
 
 -- Calculates the angle from caster to target(in radian, multiply it by 180/math.pi for degree)
 function CalculateAngle(u, v)
@@ -35,6 +48,19 @@ function DummyEnd(dummy)
     dummy:RemoveSelf()
     return nil
 end
+
+function LevelAllAbility(hero)
+    for i=0, 30 do
+        local ability = hero:GetAbilityByIndex(i)
+      if ability == nil then return end
+      local level0 = false
+      for i=1, #donotlevel do
+        if ability:GetName() == donotlevel[i] then level0 = true end
+      end
+      if not level0 then ability:SetLevel(1) end
+    end
+end
+
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsAbsorbed = false

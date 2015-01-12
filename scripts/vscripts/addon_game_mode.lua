@@ -402,7 +402,7 @@ function FateGameMode:OnEntityKilled( keys )
 	end
 
   if killedUnit:IsRealHero() then
-    killerEntity:SetGold(0, false)
+    --killerEntity:SetGold(0, false)
     local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()
     killerEntity:ModifyGold(bounty , true, 0) 
     -- if killer has Golden Rule attribute, grant 50% more gold
@@ -410,39 +410,40 @@ function FateGameMode:OnEntityKilled( keys )
       killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
     end 
     print("Player collected bounty : " .. 1000 - killedUnit:GetGoldBounty())
-  end
+  
 
-	if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
-		self.nRadiantDead = self.nRadiantDead + 1
-	else 
-		self.nDireDead = self.nDireDead + 1
-	end
+  	if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
+  		self.nRadiantDead = self.nRadiantDead + 1
+  	else 
+  		self.nDireDead = self.nDireDead + 1
+  	end
 
-	local nRadiantAlive = 0
-	local nDireAlive = 0
-    for _,ply in pairs(self.vPlayerList) do
-    	if ply:GetAssignedHero():IsAlive() then
-    		if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
-    			nRadiantAlive = nRadiantAlive + 1
-    		else 
-    			nDireAlive = nDireAlive + 1
-    		end
-    	end
-    end
- 	
- 	if nRadiantAlive == 0 then
- 		Timers:RemoveTimer('round_timer')
-	 	Timers:RemoveTimer('alertmsg')
-		Timers:RemoveTimer('alertmsg2')
-		Timers:RemoveTimer('timeoutmsg')
- 		self:FinishRound(false, 1)
- 	elseif nDireAlive == 0 then 
- 		Timers:RemoveTimer('round_timer')
-	 	Timers:RemoveTimer('alertmsg')
-		Timers:RemoveTimer('alertmsg2')
-		Timers:RemoveTimer('timeoutmsg')
- 		self:FinishRound(false, 0)
- 	end
+  	local nRadiantAlive = 0
+  	local nDireAlive = 0
+      for _,ply in pairs(self.vPlayerList) do
+      	if ply:GetAssignedHero():IsAlive() then
+      		if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
+      			nRadiantAlive = nRadiantAlive + 1
+      		else 
+      			nDireAlive = nDireAlive + 1
+      		end
+      	end
+      end
+   	
+   	if nRadiantAlive == 0 then
+   		Timers:RemoveTimer('round_timer')
+  	 	Timers:RemoveTimer('alertmsg')
+  		Timers:RemoveTimer('alertmsg2')
+  		Timers:RemoveTimer('timeoutmsg')
+   		self:FinishRound(false, 1)
+   	elseif nDireAlive == 0 then 
+   		Timers:RemoveTimer('round_timer')
+  	 	Timers:RemoveTimer('alertmsg')
+  		Timers:RemoveTimer('alertmsg2')
+  		Timers:RemoveTimer('timeoutmsg')
+   		self:FinishRound(false, 0)
+   	end
+ end
 end
 
 
@@ -690,7 +691,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 		endTime = 5,
 		callback = function()
 	    for _,ply in pairs(self.vPlayerList) do
-        if ply:GetAssignedHero():GetName() == "npc_dota_hero_archer_5th" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
+        if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
           EndUBW(ply:GetAssignedHero())
         end 
 	    	ply:GetAssignedHero():RespawnHero(false, false, false)
@@ -790,31 +791,6 @@ function FateGameMode:ExampleConsoleCommand()
   print( '*********************************************' )
 end]]
 
-donotlevel = {
-  "attribute_bonus",
-  "saber_improved_instinct",
-  "lancer_5th_protection_from_arrows",
-  "saber_alter_darklight_passive",
-  "rider_5th_mystic_eye_improved",
-  "rider_5th_monstrous_strength_passive",
-  "berserker_5th_divinity_improved",
-  "berserker_5th_berserk_attribute_passive",
-  "berserker_5th_god_hand",
-  "false_assassin_combo_passive",
-  "true_assassin_weakening_venom_passive"
-}
-
-function LevelAllAbility(hero)
-	for i=0, 30 do
-    	local ability = hero:GetAbilityByIndex(i)
-      if ability == nil then return end
-      local level0 = false
-      for i=1, #donotlevel do
-        if ability:GetName() == donotlevel[i] then level0 = true end
-      end
-      if not level0 then ability:SetLevel(1) end
-    end
-end
 
 function giveUnitDataDrivenModifier(source, target, modifier,dur)
     --source and target should be hscript-units. The same unit can be in both source and target

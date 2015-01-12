@@ -6894,6 +6894,69 @@
 	}
 
 	//=====================================
+	// Gilgamesh : Sword Barrage
+	//=====================================
+	"gilgamesh_sword_barrage_improved"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gilga_sword_barrage"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"25"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"gilg_ability"
+			 	"Function"		"OnBarrageStart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			 	"Radius"		"%radius"
+			}
+		}
+	}
+	//=====================================
 	// Gilgamesh : Enkidu
 	//=====================================
 	"gilgamesh_enkidu"
@@ -6935,6 +6998,7 @@
 			{
 				"ScriptFile"		"gilg_ability"
 				"Function"			"OnChainStart"
+				"Duration"			"%duration"
 			}
 		}
 
@@ -6957,17 +7021,6 @@
 
 		"Modifiers"
 		{
-			"modifier_enkidu_bind"
-			{
-				"Duration"		"%duration"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 
@@ -7131,6 +7184,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"gilga_gob"
+		"AbilityCastRange"				"9999"
 
 		
 		"precache"
@@ -7558,6 +7612,375 @@
 			{
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnItemStart"
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : Territory Creation
+	//=====================================
+	"caster_5th_territory_creation"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"caster_territory_creation"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"2.0"
+		"precache"
+		{
+			"model"			"models/props_structures/tower_good.vmdl"
+			"particle"		"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"200"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"caster_ability"
+			 	"Function"		"OnTerritoryCreated"
+			 	"Target"		"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_caster_death_checker"
+			{
+				"Passive"	"1"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"caster_ability"
+					 	"Function"		"OnTerritoryOwnerDeath"
+					 	"Target"		"POINT"
+					}
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : Mana Drain
+	//=====================================
+	"caster_5th_mana_drain"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"BaseClass" 					"lion_mana_drain"
+		"MaxLevel"						"1"
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"5.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		// Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"5.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"mana_per_second"			"60"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"break_distance"			"1000"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"illusion_kill_time"		"0.25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"tick_interval"				"0.25"
+			}
+		}
+	}
+
+	//=======================================
+	// Caster : Territory Explosion
+	//=======================================
+	"caster_5th_territory_explosion"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"caster_territory_explosion"
+		"AbilityCastPoint"				"1.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"100"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnTerritoryExplosion"
+			}
+		}
+
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Caster : Summon Skeleton
+	//=======================================
+	"caster_5th_summon_skeleton"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"caster_summon_skeleton"
+		"AbilityCastPoint"				"4.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"10"
+
+		"precache"
+		{
+			"model"			"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnSummonSkeleton"
+			}
+		}
+
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Caster : Mobilize
+	//=======================================
+	"caster_5th_mobilize"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"caster_mobilize"
+		"AbilityCastPoint"				"3.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnTerritoryMobilize"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_mobilize"
+				"Target"		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_mobilize"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_FLYING"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+	//=======================================
+	// Caster : Immobilize
+	//=======================================
+	"caster_5th_immobilize"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"caster_immobilize"
+		"AbilityCastPoint"				"3.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnTerritoryImmobilize"
+			}
+		}
+
+		"Modifiers"
+		{
+		}
+	}
+
+	//=====================================
+	// Caster : Recall
+	//=====================================
+	"caster_5th_recall"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"keeper_of_the_light_recall"
+
+		"AbilityCastRange"				"99999"
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"100"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnTerritoryRecall"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_recall"
+			{
+				"Duration"		"3.0"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"caster_ability"
+						"Function"			"OnRecallCanceled"
+					}
+				}
+
+			}
+		}
+	}
+
+	//=====================================
+	// Caster : All-seeing Orb
+	//=====================================
+	"caster_5th_all_seeing_orb"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"puck_illusory_orb"
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"99999"
+		"AbilityCastPoint"				"0.3"
+		"AbilityManaCost"				"100"
+		"AbilityCooldown"				"20"
+
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"caster_ability"
+			 	"Function"		"OnTerritoryOrbStart"
+			 	"Target"		"POINT"
 			}
 		}
 	}
@@ -8680,6 +9103,49 @@
 				}
 		  	}
 		}
+	}
+
+	"fate_empty1"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}	
+	"fate_empty2"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}	
+	"fate_empty3"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}	
+	"fate_empty4"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}	
+	"fate_empty5"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}	
+	"fate_empty6"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
 	}	
 }
 

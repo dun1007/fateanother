@@ -71,7 +71,7 @@ end
 function OnFirstHitStart(keys)
 
 	Timers:CreateTimer({
-		endTime = 1.5,
+		endTime = 0.5,
 		callback = function()
 		keys.caster:RemoveModifierByName("modifier_first_hit")
 	end

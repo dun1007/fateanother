@@ -3,8 +3,122 @@ require("util")
 
 sac = false
 mt = false
+territory = nil
+
+function OnTerritoryCreated(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerID()
+	local targetPoint = keys.target_points[1]
+
+	if Entities:FindAllByName("caster_5th_territory") then return end
+
+	territory = CreateUnitByName("caster_5th_territory", targetPoint, true, caster, caster, caster:GetTeamNumber()) 
+	territory:SetControllableByPlayer(pid, true)
+	LevelAllAbility(territory)
+
+	-- Construct castle
+	territory:SetHealth(1)
+	giveUnitDataDrivenModifier(caster, territory, "pause_sealdisabled", 5.0)
+	territory:AddNewModifier(caster, nil, 'modifier_rooted', {})
+	local territoryConstTimer = 0
+	Timers:CreateTimer(function()
+		if territoryConstTimer == 10 then return end
+		territory:SetHealth(territory:GetHealth() + 100)
+		territoryConstTimer = territoryConstTimer + 1
+		return 0.5
+		end
+	)
+end
+
+function OnTerritoryOwnerDeath(keys)
+	territory:Kill(keys.ability, territory)
+end
+
+function OnTerritoryExplosion(keys)
+	local caster = keys.caster
+	caster:Kill(keys.ability, caster)
+end
+
+function OnSummonSkeleton(keys)
+	local caster = keys.caster
+	local pid = caster:GetMainControllingPlayer()
+	local spooky = CreateUnitByName("caster_5th_skeleton", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
+	spooky:SetControllableByPlayer(pid, true)
+	LevelAllAbility(spooky)
+	FindClearSpaceForUnit(spooky, spooky:GetAbsOrigin(), true)
+end
+
+function OnTerritoryMobilize(keys)
+	local caster = keys.caster
+	caster:RemoveModifierByName("modifier_rooted")
+	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, true) 
+
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", true, true)
+	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, true)
+	caster:SwapAbilities("caster_5th_summon_skeleton", "fate_empty4", true, true)
+	caster:SwapAbilities("caster_5th_recall", "fate_empty5", true, true)
+end
+
+function OnTerritoryImmobilize(keys)
+	local caster = keys.caster
+	caster:RemoveModifierByName("modifier_mobilize")
+	caster:AddNewModifier(caster, nil, 'modifier_rooted', {})
+	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, true) 	
+
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", true, true)
+	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, true)
+	caster:SwapAbilities("caster_5th_summon_skeleton", "fate_empty4", true, true)
+	caster:SwapAbilities("caster_5th_recall", "fate_empty5", true, true)
+end
+
+function OnTerritoryRecall(keys)
+	local caster = keys.caster
+	local target = keys.target 
+	print(target:GetName())
+	if target:GetName() == "npc_dota_hero_crystal_maiden" then
+		print("Casted on caster")
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_recall", {}) 
+
+		caster.IsRecallCanceled = false
+		Timers:CreateTimer(3.0, function()  
+		if not caster.IsRecallCanceled and caster:IsAlive()  then 
+			target:SetAbsOrigin(caster:GetAbsOrigin())
+			FindClearSpaceForUnit(target, target:GetAbsOrigin(), true)
+		end
+		return end)
+	end
+end
+
+function OnRecallCanceled(keys)
+	local caster = keys.caster
+	caster.IsRecallCanceled = true
+end
+
+function OnTerritoryOrbStart(keys)
+	local caster = keys.caster
+
+	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	visiondummy:SetDayTimeVisionRange(900)
+	visiondummy:SetNightTimeVisionRange(900)
+	local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+	unseen:SetLevel(1)
+
+	Timers:CreateTimer(8, function() return visiondummy:RemoveSelf() end)
+end
+
 
 function OnItemStart(keys)
+	local caster = keys.caster
+	local randomitem = math.random(3)
+	local item = nil
+	if randomitem == 1 then 
+		item = CreateItem("item_b_scroll", caster, caster) 
+	elseif randomitem == 2 then
+		item = CreateItem("item_a_scroll", caster, caster) 
+	elseif randomitem == 3 then
+		item = CreateItem("item_s_scroll", caster, caster) 
+	end
+	caster:AddItem(item)
 end
 
 function OnArgosStart(keys)
@@ -319,13 +433,29 @@ function CasterCheckCombo(caster, ability)
 end
 
 function OnImproveTerritoryCreationAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsTerritoryImproved = true
 end
 
 function OnImproveArgosAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsArgosImproved = true
 end
 
 function OnImproveHGAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsHGImproved = true
 end
 
 function OnDaggerOfTreacheryAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsRBImproved = true
 end
