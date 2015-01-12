@@ -354,7 +354,7 @@ function LancerCheckCombo(caster, ability)
 		caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
 	end
 	Timers:CreateTimer({
-		endTime = 3,
+		endTime = 4,
 		callback = function()
 		caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
 	end

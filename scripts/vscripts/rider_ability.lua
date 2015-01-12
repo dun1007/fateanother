@@ -177,7 +177,7 @@ function RiderCheckCombo(caster, ability)
 			caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", false, true)
 			local newTime =  GameRules:GetGameTime()
 			Timers:CreateTimer({
-				endTime = 7 - (newTime - nailTime),
+				endTime = 4 - (newTime - nailTime),
 				callback = function()
 				caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", true, false)
 				nailUsed = false
