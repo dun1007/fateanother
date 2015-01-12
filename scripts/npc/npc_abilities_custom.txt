@@ -146,7 +146,6 @@
 				"IsHidden"		"0"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_AVOID_SPELL"		"100"
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion_rate"
 				}
 			}
@@ -1940,7 +1939,6 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"GBAttachEffect"
 			}
-			"RunScript"
 
 		}
 		"OnSpellStart"
@@ -3559,6 +3557,41 @@
 			}
 		}
 	}
+
+		//=======================================
+	// Rider Attribute : Seal
+	//=======================================
+	"rider_5th_attribute_seal"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"rider_seal"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnSealAcquired"
+			}
+		}
+	}
+
 		//=======================================
 	// Rider Attribute : Monstrous Strength
 	//=======================================
@@ -3568,7 +3601,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"rider_seal"
+		"AbilityTextureName"			"rider_monstrous_strength"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -9072,6 +9105,55 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Attribute List
+	//=================================================================================================================
+	"master_attribute_list"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"invoker_invoke"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnAttributeListOpen"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Stat List
+	//=================================================================================================================
+	"master_stat_list"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"attribute_bonus"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnStatListOpen"
+			}
+		}
+	}
 		//=================================================================================================================
 	// C Scroll 
 	//=================================================================================================================
