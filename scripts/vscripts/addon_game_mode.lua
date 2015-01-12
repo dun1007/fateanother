@@ -253,6 +253,7 @@ function FateGameMode:OnNPCSpawned(keys)
 ]]
 	    local master = CreateUnitByName("master_dummy", Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
+      AddMasterAbility(master)
       LevelAllAbility(master)
 	end
 end

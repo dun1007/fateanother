@@ -1,8 +1,8 @@
 require("physics")
 require("util")
 
-vortigernCount = 0
-isLeftside = nil
+--vortigernCount = 0
+--isLeftside = nil
 
 function OnDerangeStart(keys)
 	local caster = keys.caster
@@ -23,6 +23,7 @@ end
 function OnDarklightProc(keys)
 	DoDamage(keys.caster, keys.target, 400 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 end
+
 function OnUFStart(keys)
 	local caster = keys.caster
 	local UFCount = 0
