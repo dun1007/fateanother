@@ -290,6 +290,10 @@ function OnMaxStart(keys)
 end
 
 function OnMaxHit(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	if ply.IsExcaliburAcquired == true then keys.Damage = keys.Damage + 2000 end
+
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 

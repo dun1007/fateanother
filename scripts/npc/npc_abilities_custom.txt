@@ -1177,6 +1177,7 @@
 			"particle"				"particles/custom/saber_excalibur_circle.vpcf"
 			"parictle"				"particles/custom/saber_excalibur_max_rock_emitter.vpcf"
 			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
+			"particle"				"particles/custom/screen_yellow_splash.vpcf"
 		}
 		
 		"OnSpellStart"
@@ -1206,10 +1207,7 @@
 			{
 				"ScriptFile"	"saber_ability"
 				"Function"		"OnMaxHit"
-				"Target"		"POINT"
-				"Speed"			"%speed"
-				"Range"			"%range"
-				"Width"			"%width"
+				"Damage"		"%damage"
 			}
 		}
 		

@@ -21,7 +21,8 @@
 		"Ability6"					"saber_avalon"
 		"Ability7"					"saber_max_excalibur"
 		"Ability8"					"saber_improved_instinct"
-		"Ability9"					"attribute_bonus"
+		"Ability9"					"saber_strike_air"
+		"Ability10"					"attribute_bonus"
 		
 		"StatusHealth"					"1300"
 		"StatusHeathRegen"				"3"
