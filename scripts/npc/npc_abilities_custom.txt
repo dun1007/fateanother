@@ -443,7 +443,7 @@
 	//=================================================================================================================
 	// Saber : Excalibur
 	//=================================================================================================================
-	"saber_excalibur"
+		"saber_excalibur"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
@@ -517,7 +517,6 @@
 			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
 			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
-			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate.vpcf"
 			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
 			"particle"				"particles/custom/saber_excalibur.vpcf"
 		}
@@ -585,6 +584,7 @@
 			// VFX section
 			"excalibur_vfx_phase_1"
 			{
+				"IsHidden"					"1"
 				"Duration"					"1.5"
 			
 				"OnCreated"
@@ -636,6 +636,7 @@
 			
 			"excalibur_vfx_phase_2"
 			{
+				"IsHidden"					"1"
 				"Duration"					"1.9"
 				
 				"OnCreated"
@@ -662,6 +663,7 @@
 			
 			"excalibur_vfx_phase_3"
 			{
+				"IsHidden"					"1"
 				"Duration"					"3.0"
 				
 				"OnCreated"
@@ -1123,10 +1125,7 @@
 		"AbilityTextureName"			"saber_max_excal"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"0.9"
-		"precache"
-		{
-			"particle_folder"		"particles/units/heroes/hero_lina"
-		}
+		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"2000"
@@ -1140,43 +1139,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"400"
 		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"saber_pause"
-				"Target"			"CASTER"
-			}
-
-			"RunScript"
-			{
-				"ScriptFile"	"saber_ability"
-				"Function"		"OnMaxStart"
-				"Target"		"POINT"
-				"Speed"			"%speed"
-				"Range"			"%range"
-				"Width"			"%width"
-
-			}
-		}
-		
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"			"false"
-			"RunScript"
-			{
-				"ScriptFile"	"saber_ability"
-				"Function"		"OnMaxHit"
-				"Target"		"POINT"
-				"Speed"			"%speed"
-				"Range"			"%range"
-				"Width"			"%width"
-
-			}
-		}
-				
-					
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -1201,11 +1165,75 @@
 			}
 		}
 		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
+			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+			"particle"				"particles/custom/saber_excalibur_max_beam.vpcf"
+			"particle"				"particles/custom/saber_excalibur.vpcf"
+			"particle"				"particles/custom/saber_excalibur_max_charge.vpcf"
+			"particle"				"particles/custom/saber_excalibur_circle.vpcf"
+			"parictle"				"particles/custom/saber_excalibur_max_rock_emitter.vpcf"
+			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"saber_pause"
+				"Target"			"CASTER"
+			}
+
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnMaxStart"
+				"Target"		"POINT"
+				"Speed"			"%speed"
+				"Range"			"%range"
+				"Width"			"%width"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnMaxHit"
+				"Target"		"POINT"
+				"Speed"			"%speed"
+				"Range"			"%range"
+				"Width"			"%width"
+			}
+		}
+		
 		"Modifiers"
 		{
 			"saber_pause"
 			{
 				"Duration"		"5"
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"excalibur_vfx_phase_1"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"excalibur_vfx_phase_3"
+					}
+				}
+				
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -1213,6 +1241,114 @@
 				}
 			}
 			
+			// VFX section
+			"excalibur_vfx_phase_1"
+			{
+				"IsHidden"					"1"
+				"Duration"					"1.5"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+				}
+				
+				"ThinkInterval"				"1.1"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"excalibur_vfx_phase_2"
+					}
+				}
+			}
+			
+			"excalibur_vfx_phase_2"
+			{
+				"IsHidden"					"1"
+				"Duration"					"1.9"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_excalibur_max_beam.vpcf"
+						"EffectAttachType"	"attach_origin"
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+				}
+			}
+			
+			"excalibur_vfx_phase_3"
+			{
+				"IsHidden"					"1"
+				"Duration"					"3.0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_excalibur_max_charge.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"ControlPoints"
+						{
+							"02"			"255 255 0"
+							"15" 			"255 255 0"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_excalibur_circle.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"EffectRadius"		"600"
+					}
+				}
+			}
 		}
 	}
 	

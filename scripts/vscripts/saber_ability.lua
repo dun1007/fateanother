@@ -237,7 +237,7 @@ function OnMaxStart(keys)
 	local max = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+        EffectName = "particles/custom/saber_excalibur.vpcf",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = caster:GetAbsOrigin(),
         fDistance = keys.Range,
@@ -265,6 +265,27 @@ function OnMaxStart(keys)
 		ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
 	    local projectile = ProjectileManager:CreateLinearProjectile(max)
+		
+		-- Function to create rock follow the projectile
+		local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		local burnFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_burn.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		local currentLocation = caster:GetAbsOrigin()
+		local forwardVec = caster:GetForwardVector()
+		local distance_traverse = 0
+		Timers:CreateTimer( 0.2, function()
+				if distance_traverse < keys.Range then
+					currentLocation = currentLocation + forwardVec * ( keys.Speed / 10 )
+					ParticleManager:SetParticleControl( rockFxIndex, 0, currentLocation )
+					ParticleManager:SetParticleControl( burnFxIndex, 3, currentLocation )
+					distance_traverse = distance_traverse + keys.Speed / 10
+					return 0.1
+				else
+					ParticleManager:DestroyParticle( rockFxIndex, false )
+					ParticleManager:DestroyParticle( burnFxIndex, false )
+					return nil
+				end
+			end
+		)
 	end})
 end
 
