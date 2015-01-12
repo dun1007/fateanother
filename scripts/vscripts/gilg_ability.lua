@@ -33,8 +33,8 @@ function OnGoldenRuleStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local goldgain = 10
-	if ply.IsGoldenRuleImproved = true then goldgain = 20 end
     Timers:CreateTimer(function()
+    	if ply.IsGoldenRuleImproved = true then goldgain = 20 end
     	keys.caster:ModifyGold(goldgain, true, 0) 
       	return 1.0
     end)
