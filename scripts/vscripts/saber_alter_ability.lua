@@ -72,6 +72,7 @@ function OnMBStart(keys)
 		while caster.ManaBlastCount ~= 0 do
 			info.Target = targets[math.random(#targets)]
 			ProjectileManager:CreateTrackingProjectile(info) 
+			caster.ManaBlastCount = caster.ManaBlastCount - 1
 		end
 	end
 
