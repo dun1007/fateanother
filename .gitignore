@@ -42,26 +42,15 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-#sound and soundevent files
-*.vsnd_c
-*vsndevts_c
-
-#images, portraits and batch files
-*.png
-*.usm
-*.bat
 *.bin
 
-#models,meshes,animations, materials and textures
-*.vmdl_c
-*.vmesh_c
-*.vanim_c
-*.vagrp_c
-*.vmat_c
-*.vtex_c
-
-*.vpcf_c
-maps/fate_raw.vpk
-resource/overviews/test2.txt
-resource/overviews/fate_raw.txt
-resource/overviews/untitled_1.txt
+resource/*
+particles/*
+maps/*
+materials/*
+models/*
+soundevents/*
+sounds/*
+scripts/spell_shop_ui/*
+scripts/custom_events.txt
+src SpellShopUI/*
