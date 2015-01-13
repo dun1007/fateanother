@@ -2,6 +2,7 @@ require( "timers")
 require( 'spell_shop_UI' )
 require( 'util' )
 require( 'archer_ability')
+require( 'master_ability')
 
 ENABLE_HERO_RESPAWN = false             -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = true             -- Should the main shop contain Secret Shop items as well as regular items
@@ -54,7 +55,6 @@ FATE_VERSION = "WIP Version"
 
 XP_PER_LEVEL_TABLE[1] = 100
 for i=2,MAX_LEVEL do
-  print("Setting up XP")
   XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100  -- XP required per level formula : Previous level XP requirement + Level * 100
 end
 
@@ -251,9 +251,9 @@ function FateGameMode:OnNPCSpawned(keys)
      end
      })
 ]]
-	    local master = CreateUnitByName("master_dummy", Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
+	    master = CreateUnitByName("master_dummy", Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
-      AddMasterAbility(master)
+      AddMasterAbility(master, hero:GetName())
       LevelAllAbility(master)
 	end
 end
@@ -793,8 +793,3 @@ function FateGameMode:ExampleConsoleCommand()
 end]]
 
 
-function giveUnitDataDrivenModifier(source, target, modifier,dur)
-    --source and target should be hscript-units. The same unit can be in both source and target
-    local item = CreateItem( "item_apply_modifiers", source, source)
-    item:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
-end

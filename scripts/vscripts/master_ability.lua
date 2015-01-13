@@ -1,3 +1,5 @@
+
+
 SaberAttribute = {
 	"saber_attribute_improve_excalibur",
 	"saber_attribute_improve_instinct",
@@ -75,10 +77,7 @@ function LoopThroughAttr(hero, attrTable)
 	end
 end
 
-function AddMasterAbility(master)
-	local ply = master:GetPlayerOwner()
-	local hero = ply:GetAssignedHero()
-	local name = hero:GetName()
+function FindAttribute(name)
 	local attributes = nil
 	if name == "npc_dota_hero_legion_commander" then
 		attributes = SaberAttribute
@@ -101,11 +100,46 @@ function AddMasterAbility(master)
 	elseif name == "npc_dota_hero_gilgamesh" then
 		attributes = GilgaAttribute
 	end
-	LoopThroughAttr(hero, attributes)
+	return attributes
+end 
+
+function AddMasterAbility(master, name)
+	--local ply = master:GetPlayerOwner()
+	local attributeTable = FindAttribute(name)
+	LoopThroughAttr(master, attributes)
 end
 
 function OnAttributeListOpen(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	local attributes = nil
+	if name == "npc_dota_hero_legion_commander" then
+		attributes = SaberAttribute
+	elseif name == "npc_dota_hero_phantom_lancer" then
+		attributes = LancerAttribute
+	elseif name == "npc_dota_hero_spectre" then
+		attributes = SaberAlterAttribute
+	elseif name == "npc_dota_hero_ember_spirit" then
+		attributes = ArcherAttribute
+	elseif name == "npc_dota_hero_templar_assassin" then
+		attributes = RiderAttribute
+	elseif name == "npc_dota_hero_doom_bringer" then
+		attributes = BerserkerAttribute
+	elseif name == "npc_dota_hero_juggernaut" then
+		attributes = FAAttribute
+	elseif name == "npc_dota_hero_bounty_hunter" then
+		attributes = TAAttribute
+	elseif name == "npc_dota_hero_crystal_maiden" then
+		attributes = CasterAttribute
+	elseif name == "npc_dota_hero_gilgamesh" then
+		attributes = GilgaAttribute
+	end
+
+end
+
+function OnAttributeListClose(keys)
 end
 
 function OnStatListOpen(keys)

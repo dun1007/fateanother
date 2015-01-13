@@ -10,7 +10,7 @@ function OnTerritoryCreated(keys)
 	local pid = caster:GetPlayerID()
 	local targetPoint = keys.target_points[1]
 
-	if Entities:FindAllByName("caster_5th_territory") then return end
+	--if Entities:FindAllByName("caster_5th_territory") then print("Territory already exists") return end
 
 	territory = CreateUnitByName("caster_5th_territory", targetPoint, true, caster, caster, caster:GetTeamNumber()) 
 	territory:SetControllableByPlayer(pid, true)
