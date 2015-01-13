@@ -6,10 +6,8 @@ vectorA = Vector(0,0,0)
 combo_available = false
 currentHealth = 0
 
-
--- linken doesnt work
 function OnInstinctStart(keys)
-	--keys.caster:AddNewModifier(keys.caster, nil, "modifier_item_sphere", {})
+	keys.caster:AddNewModifier(keys.caster, nil, "modifier_item_sphere_target", {Duration = 1.0}) -- Just the particles
 end
 
 function CreateWind(keys)
@@ -45,11 +43,13 @@ function CreateWind(keys)
 end
 
 function InvisibleAirPull(keys)
-	keys.caster.invisible_air_reach_target = true					-- Addition
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
+	keys.caster.invisible_air_reach_target = true					-- Addition
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
 	if ply.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
@@ -99,6 +99,7 @@ function CaliburnSlash( keys )
 	local movespeed = ability:GetLevelSpecialValueFor( "speed", ability:GetLevel() - 1 )
 	local particleName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
 	
+
 	-- Create particle
 	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
 	
@@ -136,13 +137,14 @@ function CaliburnExplode( keys )
 	keys.caster.caliburn_reach_target = true
 	
 	print("Exploding")
-	
+
 	-- Variables
 	local caster = keys.caster
 	local target = keys.target
 	local lightParticleName = "particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
 	local explodeParticleName = "particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
-	
+
+
 	-- Create particle
 	local lightFxIndex = ParticleManager:CreateParticle( lightParticleName, PATTACH_ABSORIGIN, target )
 	local explodeFxIndex = ParticleManager:CreateParticle( explodeParticleName, PATTACH_ABSORIGIN, target )
@@ -157,10 +159,13 @@ function CaliburnExplode( keys )
 end
 
 function OnCaliburnHit(keys) 
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
+
+
 
 	if ply.IsChivalryAcquired == true then 
 		keys.Damage = keys.Damage + 200 

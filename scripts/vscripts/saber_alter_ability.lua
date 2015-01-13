@@ -49,7 +49,10 @@ function OnMBStart(keys)
 	local ply = caster:GetPlayerOwner()
 
 
-	if ply.IsManaShroudImproved == true then keys.Radius = keys.Radius + 200 end
+	if ply.IsManaShroudImproved == true then 
+		keys.Radius = keys.Radius + 200 
+		keys.Damage = keys.Damage + 100
+	end
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -82,7 +85,7 @@ function OnMBStart(keys)
 end
 
 function OnManaBlastHit(keys)
-	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(keys.caster, keys.target, 150 , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnMMBStart(keys)
@@ -281,8 +284,10 @@ function OnImproveManaShroundAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	print("mana shroud acquired" .. hero:GetPhysicalArmorBaseValue())
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 20) 
-	hero:SetBaseMagicalResistanceValue(0.25)
+	hero:SetBaseMagicalResistanceValue(25)
+	hero:CalculateStatBonus()
 	ply.IsManaShroudImproved = true
 end
 
@@ -307,5 +312,7 @@ function OnDarklightAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero:FindAbilityByName("saber_alter_darklight_passive"):SetLevel(1)
 	ply.IsDarklightAcquired = true
+
 end

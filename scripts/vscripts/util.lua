@@ -62,6 +62,14 @@ function LevelAllAbility(hero)
 end
 
 
+function IsSpellBlocked(target)
+    if target:HasModifier("modifier_instinct_active") then  --This abililty is blocked by the active/targeted Linken's effect.
+        target:EmitSound("DOTA_Item.LinkensSphere.Activate")
+        return true
+    end
+end 
+
+
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsAbsorbed = false
     local damageTaken = dmg

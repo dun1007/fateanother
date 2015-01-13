@@ -280,7 +280,7 @@ function OnImproveDivinityAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsDivinityImproved = true
-	hero:SetBaseMagicalResistanceValue(0.25)
+	hero:SetBaseMagicalResistanceValue(25)
 	hero:SwapAbilities("berserker_5th_divinity","berserker_5th_divinity_improved", false, true)
 end
 

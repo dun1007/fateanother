@@ -189,6 +189,7 @@ function OnTGStart(keys)
 	Timers:CreateTimer(0.9, function()  
 		if caster:IsAlive() then
 			caster:SetAbsOrigin(target:GetAbsOrigin())
+			if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 			DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)

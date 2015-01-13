@@ -459,6 +459,9 @@
 		"Ability6"					"cmd_seal_4"			// Ability 6 - Extra.
 		"Ability7"					"master_passive"			// Ability 4.
 		"Ability8"					"master_close_attribute_list"
+		"Ability9"					"fate_empty2"
+		"Ability10"					"fate_empty3"
+		"Ability11"					"fate_empty4"
 
 		// Armor
 		//----------------------------------------------------------------

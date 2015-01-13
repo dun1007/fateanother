@@ -97,7 +97,7 @@ function FindAttribute(name)
 		attributes = TAAttribute
 	elseif name == "npc_dota_hero_crystal_maiden" then
 		attributes = CasterAttribute
-	elseif name == "npc_dota_hero_gilgamesh" then
+	elseif name == "npc_dota_hero_skywrath_mage" then
 		attributes = GilgaAttribute
 	end
 	return attributes
@@ -106,7 +106,7 @@ end
 function AddMasterAbility(master, name)
 	--local ply = master:GetPlayerOwner()
 	local attributeTable = FindAttribute(name)
-	LoopThroughAttr(master, attributes)
+	LoopThroughAttr(master, attributeTable)
 end
 
 function OnAttributeListOpen(keys)
@@ -115,11 +115,28 @@ function OnAttributeListOpen(keys)
 	local hero = ply:GetAssignedHero()
 
 	local attributeTable = FindAttribute(hero:GetName())
-	for 
-	caster:SwapAbilities("berserker_5th_divinity","berserker_5th_divinity_improved", false, true)
+
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "master_close_attribute_list", true, true)
+	for i=1, 5 do
+		if i == 5 and attributeTable[5] == nil then 
+			caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty4", true, true)
+		elseif i == 5 and attributeTable[5] ~= nil then
+			caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), attributeTable[5], true, true)
+		else 
+			caster:SwapAbilities(caster:GetAbilityByIndex(i-1):GetName(), attributeTable[i], true, true)
+		end
+	end
 end
 
 function OnAttributeListClose(keys)
+	local caster = keys.caster
+
+	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "cmd_seal_1", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "cmd_seal_2", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "cmd_seal_3", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "master_attribute_list", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "fate_empty1", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "cmd_seal_4", true, true)
 end
 
 function OnStatListOpen(keys)

@@ -292,6 +292,7 @@ function OnAncientClosed(keys)
 end
 
 function OnRBStart(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	EmitGlobalSound("Caster.RuleBreaker") 
 	CasterCheckCombo(keys.caster,keys.ability)
 	keys.target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})

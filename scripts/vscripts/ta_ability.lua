@@ -24,6 +24,7 @@ function OnDirkStart(keys)
 end
 
 function OnDirkHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	if keys.ability:GetName() == "true_assassin_dirk" then
 		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	else
@@ -71,7 +72,7 @@ end
 function OnFirstHitStart(keys)
 
 	Timers:CreateTimer({
-		endTime = 0.5,
+		endTime = 1.0,
 		callback = function()
 		keys.caster:RemoveModifierByName("modifier_first_hit")
 	end
@@ -79,6 +80,7 @@ function OnFirstHitStart(keys)
 end
 
 function OnFirstHitLanded(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	print("dagger landed")
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 end
@@ -110,6 +112,7 @@ end
 
 
 function OnStealStart(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local target = keys.target
 
@@ -140,6 +143,7 @@ function OnZabStart(keys)
 end
 
 function OnZabHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target

@@ -113,10 +113,14 @@
 	"saber_improved_instinct"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"saber_instinct"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"45"
+		"precache"
+		{
+			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
+		}
 		
 		"AbilitySpecial"
 		{
@@ -134,9 +138,12 @@
 				"ScriptFile"		"saber_ability"
 				"Function"			"OnInstinctStart"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_instinct_active"
+				"Target"			"CASTER"
+			}
 		}
-		
-		
 		
 		"Modifiers"
 		{
@@ -148,6 +155,10 @@
 				{
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion_rate"
 				}
+			}
+			"modifier_instinct_active"
+			{
+				"Duration"		"1.0"
 			}
 		}
 	}
@@ -729,7 +740,7 @@
 		// Cast
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
-		"AbilityCoodown"				"60"
+		"AbilityCooldown"				"60"
 		"AbilityManaCost"				"800"
 		
 		// Ability Special
@@ -2365,7 +2376,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"saber_instinct"
+		"AbilityTextureName"			"saber_alter_darklight"
 		"MaxLevel"						"1"
 		
 		"AbilitySpecial"
@@ -2382,7 +2393,7 @@
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"50"
 				}
-				"OnAttackStart"
+				"OnAttackLanded"
 				{
 					"Random"
 					{
@@ -2863,7 +2874,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_alter_prana_burst"
+		"AbilityTextureName"			"saber_alter_mana_burst"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -3816,7 +3827,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"total_damage"			"750"
+				"total_damage"			"350 450 550 650 750"
 			}
 		}
 		

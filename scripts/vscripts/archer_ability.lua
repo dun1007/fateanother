@@ -52,9 +52,9 @@ function KBStart(keys)
 	
 	if ply.IsOveredgeAcquired and caster.OveredgeCount < 3 then
 		caster.OveredgeCount = caster.OveredgeCount + 1
-	elseif hero.OveredgeCount == 3 then 
+	elseif caster.OveredgeCount == 3 then 
 		if caster:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
-			hero:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
+			caster:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
 		end
 	end
 
@@ -81,6 +81,7 @@ end
 
 
 function BPHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
@@ -324,6 +325,7 @@ function OnRainStart(keys)
 end
 
 function OnArrowRainBPHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local ability = caster:FindAbilityByName("archer_5th_broken_phantasm")
 	local targetdmg = ability:GetLevelSpecialValueFor("target_damage", ability:GetLevel())
@@ -512,6 +514,7 @@ function OnHruntStart(keys)
 end
 
 function OnHruntHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	DoDamage(keys.caster, keys.target, keys.caster.HruntDamage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local targets = FindUnitsInRadius(caster:GetTeam(), keys.target:GetAbsOrigin(), nil, 1000
@@ -525,6 +528,7 @@ function OnOveredgeStart(keys)
 	local caster = keys.caster 
 	local targetPoint = keys.target_points[1]
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() * 10/6
+	caster.OveredgeCount = 0
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.59)
 	caster:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
@@ -596,7 +600,7 @@ function OnShroudOfMartinAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 10) 
-	hero:SetBaseMagicalResistanceValue(0.15)
+	hero:SetBaseMagicalResistanceValue(15)
 	ply.IsMartinAcquired = true
 end
 

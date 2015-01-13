@@ -215,7 +215,7 @@ function OnMonstrousStrengthAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:SetBaseMagicalResistanceValue(0.15)
+	hero:SetBaseMagicalResistanceValue(15)
 	hero:SetBaseStrength(hero:GetBaseStrength()+10) 
 	hero:FindAbilityByName("rider_5th_monstrous_strength_passive"):SetLevel(1)
 	ply.IsMonstrousStrengthAcquired = true

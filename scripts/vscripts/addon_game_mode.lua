@@ -452,8 +452,7 @@ end
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function FateGameMode:InitGameMode()
-  	FateGameMode = self
- 	SpellShopUI:InitGameMode();
+  FateGameMode = self
  	print('[BAREBONES] Starting to load Barebones FateGameMode...')
 	-- Set game rules
 	GameRules:SetHeroRespawnEnabled(false) 

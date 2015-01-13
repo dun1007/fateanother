@@ -1,4 +1,5 @@
 require("physics")
+require("util")
 
 bolgdummy = nil
 
@@ -184,6 +185,8 @@ end
 
 
 function OnGBTargetHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
@@ -198,6 +201,7 @@ function OnGBTargetHit(keys)
 		Timers:CreateTimer(function() 
 			if dotCount == 3 then return end
 			DoDamage(caster, target, target:GetHealth()/30, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			dotCount = dotCount + 1
 			return 1.0 
 		end)
 	end
@@ -222,12 +226,13 @@ function OnGBTargetHit(keys)
 end
 
 function OnGBComboHit(keys)
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
 	print(HBThreshold)
-	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 end
+	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 + target:GetStrength() end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 5.0)
 	EmitGlobalSound("Lancer.Heartbreak")
