@@ -2273,7 +2273,8 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"					"particles/custom/saber_alter/saber_alter_unleashed_ferocity.vpcf"
 		}
 		
 		"AbilityCastPoint"				"1.3"
@@ -2296,6 +2297,12 @@
 		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_unleashed_ferocity_caster_VFX_controller"
+			}
+			
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
@@ -2308,6 +2315,65 @@
 			
 		"Modifiers"
 		{
+			"modifier_unleashed_ferocity_caster_VFX_controller"
+			{
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+				"Duration"						"2.0"	
+			
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target"				"TARGET"
+						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+					}
+				}
+				
+				"ThinkInterval"					"0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"Target"				"TARGET"
+						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"				"TARGET"
+						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+					}
+				}
+			}
+			
+			"modifier_unleashed_ferocity_caster_VFX"
+			{
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+				"Duration"						"0.1"
+				
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"Hero_Crystal.CrystalNova"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/custom/saber_alter/saber_alter_unleashed_ferocity.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+						"ControlPoints"
+						{
+							"01"				"%radius+150 3 0"
+						}
+					}
+				}
+			}
 		}
 	}
 
