@@ -7509,7 +7509,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1600"
+		"AbilityCastRange"				"1700"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -7542,7 +7542,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1600"
+				"radius"			"1700"
 			}
 			"05"
 			{
@@ -7612,8 +7612,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -7645,8 +7645,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -7679,8 +7679,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"8"
 
 		"precache"
 		{
@@ -7713,8 +7713,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
