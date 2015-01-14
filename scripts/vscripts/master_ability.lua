@@ -1,4 +1,4 @@
-
+require('util')
 
 SaberAttribute = {
 	"saber_attribute_improve_excalibur",
@@ -116,31 +116,149 @@ function OnAttributeListOpen(keys)
 
 	local attributeTable = FindAttribute(hero:GetName())
 
-	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "master_close_attribute_list", true, true)
-	for i=1, 5 do
-		if i == 5 and attributeTable[5] == nil then 
-			caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty4", true, true)
-		elseif i == 5 and attributeTable[5] ~= nil then
-			caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), attributeTable[5], true, true)
-		else 
-			caster:SwapAbilities(caster:GetAbilityByIndex(i-1):GetName(), attributeTable[i], true, true)
-		end
+	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), attributeTable[1], true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), attributeTable[2], true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), attributeTable[3], true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "master_close_list", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), attributeTable[4], true, true)
+	if attributeTable[5] ~= nil then 
+		caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), attributeTable[5], true, true)
+	else 
+		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), fate_empty4, true, true)
 	end
 end
 
-function OnAttributeListClose(keys)
+function OnListClose(keys)
 	local caster = keys.caster
 
-	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "cmd_seal_1", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "cmd_seal_2", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "cmd_seal_3", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "master_attribute_list", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "fate_empty1", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "cmd_seal_4", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "master_attribute_list", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "master_stat_list1", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "master_stat_list2", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "fate_empty2", true, true)
+	--caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty3", true, true)
 end
 
-function OnStatListOpen(keys)
+function OnStatListClose(keys)
+	local caster = keys.caster
+	for i=0,5 do
+		caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
+	end
+	for i=1, 20 do
+		if caster.SavedList[i] == nil then break
+		else
+			caster:AddAbility(caster.SavedList[i])
+		end
+		LevelAllAbility(caster)
+	end
 end
+
+
+function OnStatList1Open(keys)
+	local caster = keys.caster
+
+	RemoveAllAbility(caster)
+	caster:AddAbility("master_strength")
+	caster:AddAbility("master_agility")
+	caster:AddAbility("master_intelligence")
+	caster:AddAbility("master_close_stat_list")
+	caster:AddAbility("master_damage")
+	caster:AddAbility("master_armor")
+	caster:GetAbilityByIndex(0):SetLevel(1) 
+	caster:GetAbilityByIndex(1):SetLevel(1)
+	caster:GetAbilityByIndex(2):SetLevel(1)
+	caster:GetAbilityByIndex(3):SetLevel(1)
+	caster:GetAbilityByIndex(4):SetLevel(1)
+	caster:GetAbilityByIndex(5):SetLevel(1)
+end
+
+function OnStatList2Open(keys)
+	local caster = keys.caster
+
+	RemoveAllAbility(caster)
+	caster:AddAbility("master_health_regen")
+	caster:AddAbility("master_mana_regen")
+	caster:AddAbility("master_movement_speed")
+	caster:AddAbility("master_close_stat_list")
+	caster:AddAbility("fate_empty1")
+	caster:AddAbility("fate_empty1")
+	caster:GetAbilityByIndex(0):SetLevel(1) 
+	caster:GetAbilityByIndex(1):SetLevel(1)
+	caster:GetAbilityByIndex(2):SetLevel(1)
+	caster:GetAbilityByIndex(3):SetLevel(1)
+end
+
+-- Remove all abilities and save it to caster handle
+function RemoveAllAbility(caster)
+	local abilityList = {}
+	for i=0,20 do
+		if caster:GetAbilityByIndex(i) ~= nil then 
+			abilityList[i+1] = caster:GetAbilityByIndex(i):GetName()
+			caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
+		else 
+			break
+		end
+	end
+	caster.SavedList = abilityList
+end
+
+function OnStrengthGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseStrength(hero:GetBaseStrength()+1) 
+end
+
+function OnAgilityGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseAgility(hero:GetBaseAgility()+1) 
+end
+
+function OnIntelligenceGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseIntellect(hero:GetBaseIntellect()+1) 
+end
+
+function OnDamageGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseDamageMin(hero:GetBaseDamageMin()+3)
+	hero:SetBaseDamageMax(hero:GetBaseDamageMax()+3)
+end
+
+function OnArmorGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+2)
+end
+
+function OnHPRegenGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2) 
+end
+
+function OnManaRegenGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseManaRegen(hero:GetManaRegen()+1)
+end
+
+function OnMovementSpeedGain(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
+end
+
 
 function OnSeal1Start(keys)
 	local caster = keys.caster

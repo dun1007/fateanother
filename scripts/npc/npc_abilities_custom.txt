@@ -865,8 +865,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -899,8 +899,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -933,8 +933,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -967,8 +967,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -2078,7 +2078,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"8"
 
 		"precache"
 		{
@@ -2112,7 +2112,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -2146,7 +2146,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -2180,7 +2180,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"17"
 
 		"precache"
 		{
@@ -2845,7 +2845,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -2879,7 +2879,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -2913,7 +2913,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -2947,7 +2947,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -3515,7 +3515,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"8"
 
 		"precache"
 		{
@@ -3549,7 +3549,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"17"
 
 		"precache"
 		{
@@ -3583,7 +3583,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -3617,7 +3617,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -4503,7 +4503,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -4536,7 +4536,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -4570,7 +4570,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -4604,7 +4604,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -4638,7 +4638,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -5259,7 +5259,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -5293,7 +5293,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -5326,7 +5326,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"23"
 
 		"precache"
 		{
@@ -5360,7 +5360,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -5878,7 +5878,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"19"
 
 		"precache"
 		{
@@ -5911,7 +5911,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -5945,7 +5945,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -5979,7 +5979,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -6448,8 +6448,8 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"agi_increase"			"0.5 1.0 1.5 2.0"
+				"var_type"				"FIELD_FLOAT"
+				"agi_increase"			"0.5 1.0 1.5 2.0 2.5"
 			}
 			"04"
 			{
@@ -6755,7 +6755,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"19"
 
 		"precache"
 		{
@@ -6789,7 +6789,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -6823,7 +6823,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -6857,7 +6857,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -8990,8 +8990,9 @@
 				{
 					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 		  	}
 		}
@@ -9142,9 +9143,9 @@
 	}
 
 	//=================================================================================================================
-	// Close Attribute List
+	// Close List
 	//=================================================================================================================
-	"master_close_attribute_list"
+	"master_close_list"
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
@@ -9161,15 +9162,42 @@
 			"RunScript"
 			{
 			 	"ScriptFile"	"master_ability"
-			 	"Function"		"OnAttributeListClose"
+			 	"Function"		"OnListClose"
 			}
 		}
 	}
 
+
+	//=================================================================================================================
+	// Close Stat List
+	//=================================================================================================================
+	"master_close_stat_list"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"silencer_last_word"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnStatListClose"
+			}
+		}
+	}
+
+
 	//=================================================================================================================
 	// Stat List
 	//=================================================================================================================
-	"master_stat_list"
+	"master_stat_list1"
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
@@ -9186,10 +9214,245 @@
 			"RunScript"
 			{
 			 	"ScriptFile"	"master_ability"
-			 	"Function"		"OnStatListOpen"
+			 	"Function"		"OnStatList1Open"
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Stat List
+	//=================================================================================================================
+	"master_stat_list2"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"attribute_bonus"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnStatList2Open"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Strength Stat
+	//=================================================================================================================
+	"master_strength"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"strength"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnStrengthGain"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Agiliy Stat
+	//=================================================================================================================
+	"master_agility"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"agility"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnAgilityGain"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Intelligence Stat
+	//=================================================================================================================
+	"master_intelligence"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"intelligence"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnIntelligenceGain"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Damage Stat
+	//=================================================================================================================
+	"master_damage"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"juggernaut_blade_dance"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnDamageGain"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Gain Armor Stat
+	//=================================================================================================================
+	"master_armor"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lich_frost_armor"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnArmorGain"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Health Regen Stat
+	//=================================================================================================================
+	"master_health_regen"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"huskar_inner_vitality"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnHPRegenGain"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Mana Regen Stat
+	//=================================================================================================================
+	"master_mana_regen"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"crystal_maiden_brilliance_aura"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnManaRegenGain"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Gain Movement Speed Stat
+	//=================================================================================================================
+	"master_movement_speed"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"clinkz_wind_walk"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnMovementSpeedGain"
+			}
+		}
+	}
+
 		//=================================================================================================================
 	// C Scroll 
 	//=================================================================================================================

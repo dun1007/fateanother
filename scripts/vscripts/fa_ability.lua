@@ -160,7 +160,7 @@ function OnTGStart(keys)
 
 	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
 	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
-	caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
+	caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
 
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})

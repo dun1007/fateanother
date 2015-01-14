@@ -1,5 +1,4 @@
 require( "timers")
-require( 'spell_shop_UI' )
 require( 'util' )
 require( 'archer_ability')
 require( 'master_ability')
@@ -238,21 +237,24 @@ function FateGameMode:OnNPCSpawned(keys)
         print((hero:GetPlayerID()+1) .." is a bot!") 
         self.vPlayerList[hero:GetPlayerID() + 1] = player
       end
---[[
-    Timers:CreateTimer('asd', {
-         endTime = 5,
+    --[[Timers:CreateTimer('asd', {
+         endTime =5,
          callback = function()
-         local master = CreateUnitByName("npc_dota_hero_legion_commander", Vector(1000, 1000, 50), true, nil, nil, hero:GetTeam())
+         local master = CreateUnitByName("master_dummy", Vector(1000, 1000, 50), true, nil, nil, hero:GetTeamNumber())
+         master:SetOwner(hero:GetOwnerEntity())
          master:SetControllableByPlayer(hero:GetPlayerID(), true) 
-         return
      end
-     })
-]]
-	    master = CreateUnitByName("master_dummy", Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
+     })]]
+	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*500,-7150,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit = master
-      AddMasterAbility(hero.MasterUnit, hero:GetName())
-      LevelAllAbility(hero.MasterUnit)
+      LevelAllAbility(master)
+
+      master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*500,-7350,0), true, hero, hero, hero:GetTeamNumber())
+      master2:SetControllableByPlayer(hero:GetPlayerID(), true) 
+      hero.MasterUnit2 = master2
+      AddMasterAbility(master2, hero:GetName())
+      LevelAllAbility(master2)
 	end
 end
 

@@ -165,7 +165,7 @@ AmbushUsed = false
 
 function TACheckCombo(caster, ability)
 	print("we got here")
-	if ability == caster:FindAbilityByName("true_assassin_ambush") then
+	if ability == caster:FindAbilityByName("true_assassin_self_modification") then
 		AmbushUsed = true
 		Timers:CreateTimer({
 			endTime = 5,
@@ -173,7 +173,7 @@ function TACheckCombo(caster, ability)
 			AmbushUsed = false
 		end
 		})
-	elseif ability == caster:FindAbilityByName("true_assassin_self_modification") then
+	elseif ability == caster:FindAbilityByName("true_assassin_ambush") then
 		if AmbushUsed == true then 
 			caster:SwapAbilities("true_assassin_self_modification", "true_assassin_combo", true, true)
 			Timers:CreateTimer({

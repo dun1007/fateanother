@@ -438,30 +438,29 @@
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 	}
 
-	"master_dummy"
+	"master_1"
 	{
 		// General
 		//
 		"BaseClass"					"npc_dota_base"	// Class of entity of link to.
-		"Model"						"models/items/courier/mighty_chicken/mighty_chicken.vmdl"	// Model.
+		"Model"						"models/shirou/shirouanim.vmdl"	// Model.
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
 		"UnitLabel"					"healing_ward"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"6"
+		"AbilityLayout"				"4"
 		"Ability1"					"cmd_seal_1"			// Ability 1.
 		"Ability2"					"cmd_seal_2"			// Ability 2.
 		"Ability3"					"cmd_seal_3"			// Ability 3.
-		"Ability4"					"master_attribute_list"			// Ability 5.
-		"Ability5"					"fate_empty1"			// Ability 5.
-		"Ability6"					"cmd_seal_4"			// Ability 6 - Extra.
-		"Ability7"					"master_passive"			// Ability 4.
-		"Ability8"					"master_close_attribute_list"
-		"Ability9"					"fate_empty2"
-		"Ability10"					"fate_empty3"
-		"Ability11"					"fate_empty4"
+		//"Ability4"					"master_attribute_list"			
+		"Ability4"					"cmd_seal_4"			
+		"Ability5"					"master_passive"			
+		//"Ability8"					"master_close_attribute_list"
+		"Ability6"					"fate_empty2"
+		"Ability7"					"fate_empty3"
+		"Ability8"					"fate_empty4"
 
 		// Armor
 		//----------------------------------------------------------------
@@ -510,9 +509,9 @@
 
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"1"			// Base health.
+		"StatusHealth"				"13"			// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
-		"StatusMana"				"0"			// Base mana.
+		"StatusMana"				"100"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.
 
 		// Team
@@ -531,6 +530,98 @@
 		//----------------------------------------------------------------
 		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
 	}
+
+	"master_2"
+	{
+		// General
+		//
+		"BaseClass"					"npc_dota_base"	// Class of entity of link to.
+		"Model"						"models/tohsaka/tohsaka.vmdl"	// Model.
+		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
+		"Level"						"0"
+		"UnitLabel"					"healing_ward"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"6"
+		"Ability1"					"master_attribute_list"			// Ability 1.
+		"Ability2"					"master_stat_list1"			// Ability 2.
+		"Ability3"					"master_stat_list2"			// Ability 3.	
+		"Ability4"					"fate_empty1"		
+		"Ability5"					"fate_empty2"	
+		"Ability6"					"fate_empty3"
+		"Ability7"					"master_close_list"
+		"Ability8"					"master_passive"
+
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"			// Physical protection.
+		"MagicalResistance"				"0"			// Magical protection.
+
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"			// Type of attack - melee, ranged, etc.
+		"AttackDamageMin"			"0"			// Damage range min.
+		"AttackDamageMax"			"0"			// Damage range max.
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1"			// Speed of attack.
+		"AttackAnimationPoint"		"0.5"		// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"800"		// Range within a target can be acquired.
+		"AttackRange"				"500"		// Range within a target can be attacked.
+		"ProjectileModel"			"" // Particle system model for projectile.
+		"ProjectileSpeed"			"900"		// Speed of projectile.
+
+		// Attributes
+		//----------------------------------------------------------------
+		"AttributePrimary"			"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"		"0"			// Base strength
+		"AttributeStrengthGain"		"0"			// Strength bonus per level.
+		"AttributeBaseIntelligence"	"0"			// Base intelligence
+		"AttributeIntelligenceGain"	"0"			// Intelligence bonus per level.
+		"AttributeBaseAgility"		"0"			// Base agility
+		"AttributeAgilityGain"		"0"			// Agility bonus per level.
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"0"			// Experience earn.
+		"BountyGoldMin"				"0"			// Gold earned min.
+		"BountyGoldMax"				"0"			// Gold earned max.
+
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"			// Type of locomotion - ground, air
+		"MovementSpeed"				"0"		// Speed
+		"MovementTurnRate"			"1.0"		// Turning rate.
+		"FollowRange"				"250"		// Distance to keep when following
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"13"			// Base health.
+		"StatusHealthRegen"			"0"			// Health regeneration rate.
+		"StatusMana"				"100"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
+
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
+		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"900"		// Range of vision during day light.
+		"VisionNighttimeRange"		"900"		// Range of vision at night time.
+
+		// Bots
+		//----------------------------------------------------------------
+		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
+	}
+
 
 	"npc_precache_everything"
 	{
@@ -571,6 +662,9 @@
 			"model"					"models/props_gameplay/rune_haste01.vmdl"
 			"model"					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
 			"model"					"models/development/invisiblebox.vmdl"
+			"model"					"models/shirou/shirouanim.vmdl"
+			"model"					"models/tohsaka/tohsaka.vmdl"
+
 
 
 			//"model"			"models/heroes/juggernaut/jugg_healing_ward.vmdl"

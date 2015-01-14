@@ -452,6 +452,8 @@ function OnImproveInstinctAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	ply.IsInstinctImproved = true
+
 	hero:FindAbilityByName("saber_improved_instinct"):SetLevel(1)
 	hero:SwapAbilities("saber_instinct","saber_improved_instinct", false, true)
 end
