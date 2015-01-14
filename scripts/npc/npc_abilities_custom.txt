@@ -2077,7 +2077,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"8"
 
 		"precache"
@@ -2111,7 +2111,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"12"
 
 		"precache"
@@ -2145,7 +2145,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"10"
 
 		"precache"
@@ -2179,7 +2179,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"17"
 
 		"precache"
@@ -2910,7 +2910,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"12"
 
 		"precache"
@@ -2944,7 +2944,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"15"
 
 		"precache"
@@ -2978,7 +2978,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"11"
 
 		"precache"
@@ -3012,7 +3012,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"12"
 
 		"precache"
@@ -3580,7 +3580,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"8"
 
 		"precache"
@@ -3614,7 +3614,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"17"
 
 		"precache"
@@ -3648,7 +3648,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"14"
 
 		"precache"
@@ -3682,7 +3682,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"15"
 
 		"precache"
@@ -4568,7 +4568,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"12"
 
 		"precache"
@@ -4601,7 +4601,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"16"
 
 		"precache"
@@ -4635,7 +4635,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"11"
 
 		"precache"
@@ -4669,7 +4669,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"16"
 
 		"precache"
@@ -4703,7 +4703,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"12"
 
 		"precache"
@@ -5324,7 +5324,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"16"
 
 		"precache"
@@ -5358,7 +5358,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"14"
 
 		"precache"
@@ -5391,7 +5391,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"23"
 
 		"precache"
@@ -5425,7 +5425,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"10"
 
 		"precache"
@@ -5943,7 +5943,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"19"
 
 		"precache"
@@ -5976,7 +5976,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"16"
 
 		"precache"
@@ -6010,7 +6010,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"13"
 
 		"precache"
@@ -6044,7 +6044,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"13"
 
 		"precache"
@@ -6820,7 +6820,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"19"
 
 		"precache"
@@ -6854,7 +6854,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"12"
 
 		"precache"
@@ -6888,7 +6888,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"16"
 
 		"precache"
@@ -6922,7 +6922,7 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"9999"
 		"AbilityManaCost"				"16"
 
 		"precache"
@@ -8883,8 +8883,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -8917,8 +8917,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -8951,8 +8951,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -8985,8 +8985,8 @@
 		
 		
 		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"19"
 
 		"precache"
 		{
