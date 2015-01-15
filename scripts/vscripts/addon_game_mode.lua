@@ -144,7 +144,6 @@ function FateGameMode:OnHeroInGame(hero)
   -- This line for example will set the starting gold of every hero to 500 unreliable gold
     hero:SetGold(0, false)
     LevelAllAbility(hero)
-  -- GameRules:AddMinimapDebugPoint(keys.caster:GetPlayerID(), hero:GetAbsOrigin(), 255, 0, 0, 250, 5.0) -- AddMinimapDebugPort(playerindex, position, R, G, B, Size, Duration)
   	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
   --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
     --with the "example_ability" ability
@@ -218,10 +217,9 @@ function FateGameMode:PlayerSay(keys)
   end
   
   -- testing if the dot can be seen by other people
-  if text == "-dot" then
-    for i=0,9 do
-      GameRules:AddMinimapDebugPoint(i, Vector(1500, 1500, 0), 255, 255, 255, 1000, 5.0)
-    end
+  if text == "-customping" then
+    print("Testing custom ping")
+    CustomPing(plyID, Vector(0,0,0))
   end
 end
 -- The overall game state has changed

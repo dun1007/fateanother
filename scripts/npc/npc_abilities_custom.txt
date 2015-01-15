@@ -9091,13 +9091,18 @@
 	//=================================================================================================================
 	// Passive Presence Detection
 	//=================================================================================================================
-	"prescence_detection_passive"
+	"presence_detection_passive"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"magnus_shockwave"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
+
+		"precache"
+		{
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+		}
 		
 		"AbilitySpecial"
 		{
@@ -9105,10 +9110,22 @@
 		
 		"OnSpellStart"
 		{
-			"RunScript"
+		}
+
+		"Modifiers"
+		{
+			"modifier_detect"
 			{
-			 	"ScriptFile"	"master_ability"
-			 	"Function"		"PresenceDetection"
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"master_ability"
+					 	"Function"		"PresenceDetection"
+					}
+				}
 			}
 		}
 	}

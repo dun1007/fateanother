@@ -904,7 +904,7 @@
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bristleback.vsndevts"
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
-			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_elder_titan.vsndevts"
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 			//"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"

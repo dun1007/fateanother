@@ -22,7 +22,8 @@
 		"Ability7"					"saber_max_excalibur"
 		"Ability8"					"saber_improved_instinct"
 		"Ability9"					"saber_strike_air"
-		"Ability10"					"attribute_bonus"
+		"Ability10"					"presence_detection_passive"
+		"Ability11"					"attribute_bonus"
 		
 		"StatusHealth"					"1300"
 		"StatusHeathRegen"				"3"

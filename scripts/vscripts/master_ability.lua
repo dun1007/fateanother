@@ -359,4 +359,28 @@ function OnMovementSpeedGain(keys)
 end
 
 function PresenceDetection(keys)
+	local caster = keys.caster
+
+	
+	print("Presence detection started by " .. caster:GetName())
+	Timers:CreateTimer(function()  
+		print("Detecting enemy servants")
+		local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
+		for i=1, #enemies do
+			local enemy = enemies[i]
+			print("Checking if " .. enemy:GetName() .. " should be detected...")
+			if enemy.IsPresenceDetected ~= true or enemy.IsPresenceDetected == nil then
+				print("Pinged")
+				GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 5.0)
+				--EmitGlobalSound("Hero_Abaddon.BorrowedTime")
+				EmitSoundOnClient("Hero_Abaddon.BorrowedTime", caster:GetPlayerOwner()) 
+			end
+		end
+		return 10
+	end)
 end
+
+function CustomPing(playerid, location)
+	print("Custom Ping Issued")
+	GameRules:AddMinimapDebugPoint(playerid, location, 255, 0, 0, 300, 3.0)
+end 
