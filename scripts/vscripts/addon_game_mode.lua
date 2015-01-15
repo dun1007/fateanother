@@ -189,6 +189,41 @@ function FateGameMode:OnDisconnect(keys)
 
 end
 
+function FateGameMode:PlayerSay(keys)
+  print ('[BAREBONES] PlayerSay')
+  if keys == nil then print("empty keys") end
+  PrintTable(keys)
+
+  -- Get the player entity for the user speaking
+  local ply = keys.ply
+  
+  -- Get the player ID for the user speaking
+  local plyID = ply:GetPlayerID()
+  if not PlayerResource:IsValidPlayer(plyID) then
+    return
+  end
+  
+  -- Should have a valid, in-game player saying something at this point
+  -- The text the person said
+  local text = keys.text
+  
+  -- Match the text against something
+  local matchA, matchB = string.match(text, "^-swap%s+(%d)%s+(%d)")
+  if matchA ~= nil and matchB ~= nil then
+    -- Act on the match
+  end
+
+  if text == "-createdummy" then
+    print("We got here! yay!!")
+  end
+  
+  -- testing if the dot can be seen by other people
+  if text == "-dot" then
+    for i=0,9 do
+      GameRules:AddMinimapDebugPoint(i, Vector(1500, 1500, 0), 255, 255, 255, 1000, 5.0)
+    end
+  end
+end
 -- The overall game state has changed
 function FateGameMode:OnGameRulesStateChange(keys)
   print("[BAREBONES] GameRules State Changed")
@@ -492,6 +527,7 @@ function FateGameMode:InitGameMode()
   ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(FateGameMode, 'OnPlayerPickHero'), self)
   ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(FateGameMode, 'OnTeamKillCredit'), self)
   ListenToGameEvent("player_reconnected", Dynamic_Wrap(FateGameMode, 'OnPlayerReconnect'), self)
+  ListenToGameEvent('player_say', Dynamic_Wrap(FateGameMode, 'PlayerSay'), self)
   --ListenToGameEvent('player_spawn', Dynamic_Wrap(FateGameMode, 'OnPlayerSpawn'), self)
   --ListenToGameEvent('dota_unit_event', Dynamic_Wrap(FateGameMode, 'OnDotaUnitEvent'), self)
   --ListenToGameEvent('nommed_tree', Dynamic_Wrap(FateGameMode, 'OnPlayerAteTree'), self)
@@ -505,7 +541,22 @@ function FateGameMode:InitGameMode()
 
   -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
   Convars:RegisterCommand( "command_example", Dynamic_Wrap(FateGameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
-  
+  function FateGameMode:ExampleConsoleCommand()
+    print("im here")
+  end
+
+  -- Convars:RegisterCommand( "player_say", Dynamic_Wrap(FateGameMode, 'PlayerSay'), "Reads player chat", 0) 
+  Convars:RegisterCommand('player_say', function(...)
+      local arg = {...}
+      table.remove(arg,1)
+      local cmdPlayer = Convars:GetCommandClient()
+      keys = {}
+      keys.ply = cmdPlayer
+      keys.text = table.concat(arg, " ")
+      self:PlayerSay(keys) 
+    end, "Player said something", 0)
+
+
   -- Fill server with fake clients
   -- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging
   Convars:RegisterCommand('fake', function()

@@ -1,0 +1,13 @@
+"CustomUI"
+{
+	// swf files should be published into the same folder as this file
+
+	// Add a numbered block for each swf file to load when your addon starts
+
+
+	"1"
+	{
+	"File"		"PlayerSay"
+	"Depth"		"12"
+	}
+}

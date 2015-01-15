@@ -3896,6 +3896,15 @@
 				"total_damage"			"350 450 550 650 750"
 			}
 		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnBPCast"
+			}
+		}
 		
 		"OnSpellStart"
 		{
@@ -3907,13 +3916,18 @@
 				"MoveSpeed"		"3000"
 				"Target"		"TARGET"
 			}
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnBPStart"
+			}
 		}
 		"OnProjectileHitUnit"
 		{
 			"RunScript"
 			{
 				"ScriptFile"    "archer_ability"
-				"Function"      "BPHit"
+				"Function"      "OnBPHit"
 				"Radius"		"%radius"
 				"StunDuration"	"%stun_duration"
 				"TargetDamage"	"%target_damage"
@@ -4531,6 +4545,16 @@
 		"AbilitySpecial"
 		{
 		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnHruntCast"
+			}
+		}
+		
 		
 		"OnSpellStart"
 		{
@@ -9061,6 +9085,31 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 		  	}
+		}
+	}
+
+	//=================================================================================================================
+	// Passive Presence Detection
+	//=================================================================================================================
+	"prescence_detection_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"magnus_shockwave"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"PresenceDetection"
+			}
 		}
 	}
 

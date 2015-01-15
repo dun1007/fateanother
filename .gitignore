@@ -44,7 +44,8 @@ Temporary Items
 
 *.bin
 
-resource/*
+resource/flash3/images/*
+resource/flash3/videos/*
 particles/*
 maps/*
 materials/*

@@ -4,28 +4,36 @@ SaberAttribute = {
 	"saber_attribute_improve_excalibur",
 	"saber_attribute_improve_instinct",
 	"saber_attribute_chivalry",
-	"saber_attribute_strike_air"
+	"saber_attribute_strike_air",
+	"saber_max_excalibur",
+	attrCount = 4
 }
 
 LancerAttribute = {
 	"lancer_attribute_improve_battle_continuation",
 	"lancer_attribute_improve_gae_bolg",
 	"lancer_attribute_protection_from_arrows",
-	"lancer_attribute_the_heartseeker"
+	"lancer_attribute_the_heartseeker",
+	"lancer_5th_wesen_gae_bolg",
+	attrCount = 4
 }
 
 SaberAlterAttribute = {
 	"saber_alter_attribute_mana_shroud",
 	"saber_alter_attribute_mana_blast",
 	"saber_alter_attribute_improve_ferocity",
-	"saber_alter_attribute_ultimate_darklight"
+	"saber_alter_attribute_ultimate_darklight",
+	"saber_alter_max_mana_burst",
+	attrCount = 4
 }
 
 RiderAttribute = {
 	"rider_5th_attribute_improve_mystic_eyes",
 	"rider_5th_attribute_riding",
 	"rider_5th_attribute_seal",
-	"rider_5th_attribute_monstrous_strength"
+	"rider_5th_attribute_monstrous_strength",
+	"rider_5th_bellerophon_2",
+	attrCount = 4
 }
 
 ArcherAttribute = {
@@ -33,48 +41,135 @@ ArcherAttribute = {
 	"archer_5th_attribute_hrunting",
 	"archer_5th_attribute_shroud_of_martin",
 	"archer_5th_attribute_improve_projection",
-	"archer_5th_attribute_overedge"
+	"archer_5th_attribute_overedge",
+	"archer_5th_arrow_rain",
+	attrCount = 5
 }
 
 BerserkerAttribute = {
 	"berserker_5th_attribute_improve_divinity",
 	"berserker_5th_attribute_berserk",
 	"berserker_5th_attribute_god_hand",
-	"berserker_5th_attribute_reincarnation"
+	"berserker_5th_attribute_reincarnation",
+	"berserker_5th_madmans_roar",
+	attrCount = 4
 }
 
 FAAttribute = {
 	"false_assassin_attribute_ganryu",
 	"false_assassin_attribute_eye_of_serenity",
 	"false_assassin_attribute_quickdraw",
-	"false_assassin_attribute_vitrification"
+	"false_assassin_attribute_vitrification",
+	"false_assassin_illusory_wanderer",
+	attrCount = 4
 }
 
 TAAttribute = {
 	"true_assassin_attribute_improve_presence_concealment",
 	"true_assassin_attribute_protection_from_wind",
 	"true_assassin_attribute_weakening_venom",
-	"true_assassin_attribute_shadow_strike"
+	"true_assassin_attribute_shadow_strike",
+	"true_assassin_combo",
+	attrCount = 4
 }
 
 GilgaAttribute = {
 	"gilgamesh_attribute_improve_golden_rule",
 	"gilgamesh_attribute_power_of_sumer",
 	"gilgamesh_attribute_rain_of_swords",
-	"gilgamesh_attribute_sword_of_creation"
+	"gilgamesh_attribute_sword_of_creation",
+	"gilgamesh_max_enuma_elish",
+	attrCount = 4
 }
 
 CasterAttribute = {
 	"caster_5th_attribute_improve_territory_creation",
 	"caster_5th_attribute_improve_argos",
 	"caster_5th_attribute_improve_hecatic_graea",
-	"caster_5th_attribute_dagger_of_treachery"
+	"caster_5th_attribute_dagger_of_treachery",
+	"caster_5th_hecatic_graea_powered",
+	attrCount = 4
 }
+
+
+function OnSeal1Start(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	ply.IsFirstSeal = true
+	caster:FindAbilityByName("cmd_seal_1"):StartCooldown(60)
+	Timers:CreateTimer({
+		endTime = 20.0,
+		callback = function()
+		ply.IsFirstSeal = false
+	end
+	})
+end
+
+function OnSeal2Start(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	for i=0, 30 do 
+		local ability = hero:GetAbilityByIndex(i)
+		if ability ~= nil then
+			ability:EndCooldown()
+		else break end
+	end
+	if ply.IsFirstSeal == true then
+		keys.ability:EndCooldown()
+		--print("did it end?")
+	else
+		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
+	end
+end
+
+function OnSeal3Start(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	hero:Heal(hero:GetMaxHealth(), hero)
+	if ply.IsFirstSeal == true then
+		keys.ability:EndCooldown()
+	else
+		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
+	end
+end
+
+function OnSeal4Start(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	hero:SetMana(hero:GetMaxMana()) 
+	if ply.IsFirstSeal == true then
+		keys.ability:EndCooldown()
+	else
+		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
+		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
+	end
+end
+
 
 function LoopThroughAttr(hero, attrTable)
 	for i=1, #attrTable do
+		print("Added " .. attrTable[i])
 		hero:AddAbility(attrTable[i])
 	end
+	hero.ComboName = attrTable[#attrTable]
+	--print(attrTable[#attrTable])
+	hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(3):GetName(), true, true)
+	hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
+	hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
 end
 
 function FindAttribute(name)
@@ -121,10 +216,14 @@ function OnAttributeListOpen(keys)
 	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), attributeTable[3], true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "master_close_list", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), attributeTable[4], true, true)
-	if attributeTable[5] ~= nil then 
-		caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), attributeTable[5], true, true)
+	
+
+	--if attributeTable[5] ~= nil then 
+
+	if attributeTable.attrCount == 5 then 
+		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), attributeTable[5], true, true)
 	else 
-		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), fate_empty4, true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), fate_empty1, true, true)
 	end
 end
 
@@ -134,9 +233,9 @@ function OnListClose(keys)
 	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "master_attribute_list", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "master_stat_list1", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "master_stat_list2", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "fate_empty2", true, true)
-	--caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty3", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), caster.ComboName, true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "fate_empty1", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty2", true, true)
 end
 
 function OnStatListClose(keys)
@@ -181,7 +280,7 @@ function OnStatList2Open(keys)
 	caster:AddAbility("master_movement_speed")
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("fate_empty1")
-	caster:AddAbility("fate_empty1")
+	caster:AddAbility("fate_empty2")
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -259,70 +358,5 @@ function OnMovementSpeedGain(keys)
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
 end
 
-
-function OnSeal1Start(keys)
-	local caster = keys.caster
-	local ply = caster:GetPlayerOwner()
-	ply.IsFirstSeal = true
-	caster:FindAbilityByName("cmd_seal_1"):StartCooldown(60)
-	Timers:CreateTimer({
-		endTime = 20.0,
-		callback = function()
-		ply.IsFirstSeal = false
-	end
-	})
-end
-
-function OnSeal2Start(keys)
-	local caster = keys.caster
-	local ply = caster:GetPlayerOwner()
-	local hero = ply:GetAssignedHero()
-
-	for i=0, 30 do 
-		local ability = hero:GetAbilityByIndex(i)
-		if ability ~= nil then
-			ability:EndCooldown()
-		else break end
-	end
-	if ply.IsFirstSeal == true then
-		keys.ability:EndCooldown()
-		--print("did it end?")
-	else
-		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
-	end
-end
-
-function OnSeal3Start(keys)
-	local caster = keys.caster
-	local ply = caster:GetPlayerOwner()
-	local hero = ply:GetAssignedHero()
-
-	hero:Heal(hero:GetMaxHealth(), hero)
-	if ply.IsFirstSeal == true then
-		keys.ability:EndCooldown()
-	else
-		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
-	end
-end
-
-function OnSeal4Start(keys)
-	local caster = keys.caster
-	local ply = caster:GetPlayerOwner()
-	local hero = ply:GetAssignedHero()
-
-	hero:SetMana(hero:GetMaxMana()) 
-	if ply.IsFirstSeal == true then
-		keys.ability:EndCooldown()
-	else
-		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
-		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
-	end
+function PresenceDetection(keys)
 end

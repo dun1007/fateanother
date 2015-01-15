@@ -79,8 +79,19 @@ function KBHit(keys)
 	end)
 end
 
+function OnBPCast(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Broken Phantasm targets " .. keys.target:GetName() .. ".", true)
+end
 
-function BPHit(keys)
+function OnBPStart(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Broken Phantasm fired at " .. keys.target:GetName() .. ".", true)
+end
+
+function OnBPHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local target = keys.target
@@ -498,8 +509,16 @@ function OnUBWNineLanded(caster, ability)
 	end)
 end
 
+function OnHruntCast(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Hrunting targets " .. keys.target:GetName() .. ".", true)
+end
+
 function OnHruntStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Hrunting fired at " .. keys.target:GetName() .. ".", true)
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
 	caster:SetMana(0) 
 	local info = {
@@ -510,6 +529,7 @@ function OnHruntStart(keys)
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 3000
 	}
+
 	ProjectileManager:CreateTrackingProjectile(info) 
 end
 
