@@ -2659,7 +2659,7 @@
 		{
 			"modifier_mana_burst_VFX"
 			{
-				"IsHidden"		"0"
+				"IsHidden"		"1"
 				"IsPurgable"	"0"
 			
 				"Duration"		"1.5"
