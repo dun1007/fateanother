@@ -1,5 +1,6 @@
 require('util')
 
+
 SaberAttribute = {
 	"saber_attribute_improve_excalibur",
 	"saber_attribute_improve_instinct",
@@ -95,6 +96,15 @@ CasterAttribute = {
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
+		caster:SetMana(caster:GetMana()+2) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
+		return
+	end
 	ply.IsFirstSeal = true
 	caster:FindAbilityByName("cmd_seal_1"):StartCooldown(60)
 	Timers:CreateTimer({
@@ -110,9 +120,16 @@ function OnSeal2Start(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
+		caster:SetMana(caster:GetMana()+2) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
+		return
+	end
 	for i=0, 30 do 
 		local ability = hero:GetAbilityByIndex(i)
-		if ability ~= nil then
+		if ability ~= nil and ability.IsResetable ~= false then
 			ability:EndCooldown()
 		else break end
 	end
@@ -132,6 +149,15 @@ function OnSeal3Start(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+		print("Cannot use seals")
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
+		caster:SetMana(caster:GetMana()+1) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
+		return
+	end
+
 	hero:Heal(hero:GetMaxHealth(), hero)
 	if ply.IsFirstSeal == true then
 		keys.ability:EndCooldown()
@@ -147,6 +173,15 @@ function OnSeal4Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+		print("Cannot use seals")
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
+		caster:SetMana(caster:GetMana()+1) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
+		return
+	end
 
 	hero:SetMana(hero:GetMaxMana()) 
 	if ply.IsFirstSeal == true then
@@ -375,7 +410,7 @@ function PresenceDetection(keys)
 		for i=1,#oldEnemyTable do
 			for j=1, #newEnemyTable do
 				if oldEnemyTable[i] == newEnemyTable[j] then 
-					print(" " .. newEnemyTable[j]:GetName() .. " has not been out of range since last presence detection")
+					--print(" " .. newEnemyTable[j]:GetName() .. " has not been out of range since last presence detection")
 					newEnemyTable[j].IsPresenceDetected = false
 					break
 				end
@@ -387,8 +422,8 @@ function PresenceDetection(keys)
 			local enemy = newEnemyTable[i]
 
 			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
-				print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
-				-- need warning
+				--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
 				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
 				ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())

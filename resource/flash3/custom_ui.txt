@@ -10,4 +10,9 @@
 	"File"		"PlayerSay"
 	"Depth"		"12"
 	}
+	"2"
+	{
+		"File"		"CustomError"
+		"Depth"		"50"
+	}
 }

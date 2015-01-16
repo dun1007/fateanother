@@ -48,6 +48,7 @@ function OnChainStart(keys)
 	local target = keys.target
 	local targetloc = target:GetAbsOrigin()
 	giveUnitDataDrivenModifier(caster, target, "pause_sealdisabled", keys.Duration)
+	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
 
 	if ply.IsRainAcquired then

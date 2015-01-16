@@ -11,6 +11,7 @@ function NailPull(keys)
 	local radius = keys.Radius
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 	RiderCheckCombo(caster, keys.ability)
+	caster:EmitSound("Rider.NailSwing")
 
 	for k,v in pairs(targets) do
 		giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
@@ -47,7 +48,9 @@ end
 
 function OnBGStart(keys)
 	RiderCheckCombo(keys.caster, keys.ability)
+	local caster = keys.caster
 	local ply = keys.caster:GetPlayerOwner()
+	caster:EmitSound("Rider.BreakerGorgon") 
 	if ply.IsSealAcquired then  
 		if math.random(100) < 20 then
 			giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
@@ -66,7 +69,7 @@ function OnBloodfortStart(keys)
 	local radius = keys.Radius
 	local ability = keys.ability
 	local bloodfortCount = 0
-
+	caster:EmitSound("Rider.BloodFort"  ) 
 
 	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, nil, nil, caster:GetTeamNumber())
 	local dummy_ability = dummy:FindAbilityByName("dummy_unit_passive")
@@ -143,7 +146,7 @@ function OnBelleStart(keys)
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
 	if ply.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
-
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.0)
 	Timers:CreateTimer(0.5, function()
 		EmitGlobalSound("Rider.Bellerophon") 
 	end)

@@ -194,6 +194,8 @@ function OnExcaliburStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
+
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.0)
 	local excal = 
 	{
 		Ability = keys.ability,
@@ -392,7 +394,7 @@ function OnStrikeAirStart(keys)
 		local sound = RandomInt(1,2)
 		if sound == 1 then EmitGlobalSound("Saber.StrikeAir_Release1") else EmitGlobalSound("Saber.StrikeAir_Release2") end
 	return end)
-	
+
 end
 
 function StrikeAirPush(keys)

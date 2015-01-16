@@ -17,6 +17,7 @@
 	    {
 			"pause_sealenabled"
 			{
+				"IsDebuff"		"1"
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -27,6 +28,7 @@
 			}
 			"drag_pause"
 			{
+				"IsDebuff"		"1"
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -37,6 +39,7 @@
 			}
 			"pause_sealdisabled"
 			{
+				"IsDebuff"		"1"
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -62,6 +65,7 @@
 			}
 			"round_pause"
 			{
+				"IsDebuff"		"1"
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"

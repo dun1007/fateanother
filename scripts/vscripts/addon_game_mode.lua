@@ -505,6 +505,7 @@ function FateGameMode:InitGameMode()
 	GameRules:SetGoldPerTick(0)
 	GameRules:GetGameModeEntity():SetCameraDistanceOverride(1700)
   GameRules:SetUseBaseGoldBountyOnHeroes(false)
+
 	-- Random seed for RNG
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
 	math.randomseed(tonumber(timeTxt)) 

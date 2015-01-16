@@ -49,15 +49,42 @@ function DummyEnd(dummy)
     return nil
 end
 
+
+CannotReset = {
+    "saber_improved_instinct",
+    "saber_strike_air",
+    "saber_max_excalibur",
+    "lancer_5th_battle_continuation",
+    "lancer_5th_wesen_gae_bolg",
+    "saber_alter_max_mana_burst",
+    "rider_5th_bellerophon_2",
+    "archer_5th_hrunting",
+    "archer_5th_overedge",
+    "archer_5th_arrow_rain",
+    "berserker_5th_madmans_roar",
+    "false_assassin_quickdraw",
+    "false_assassin_illusory_wanderer",
+    "true_assassin_combo",
+    "gilgamesh_max_enuma_elish",
+    "caster_5th_hecatic_graea_powered"
+}
+
 function LevelAllAbility(hero)
     for i=0, 30 do
         local ability = hero:GetAbilityByIndex(i)
-      if ability == nil then return end
-      local level0 = false
-      for i=1, #donotlevel do
-        if ability:GetName() == donotlevel[i] then level0 = true end
-      end
-      if not level0 then ability:SetLevel(1) end
+        if ability == nil then return end
+        local level0 = false
+        local cannotreset = false
+        -- If skill shouldn't be leveled, do not set level to 1
+        for i=1, #donotlevel do
+            if ability:GetName() == donotlevel[i] then level0 = true end
+        end
+        if not level0 then ability:SetLevel(1) end
+        -- if skill should not be reset when using command seal, flag it as unresetable
+        for i=1, #CannotReset do
+            if ability:GetName() == CannotReset[i] then ability.IsResetable = false break end
+        end
+        
     end
 end
 

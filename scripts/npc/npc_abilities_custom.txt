@@ -579,12 +579,6 @@
 						"ModifierName"	"excalibur_vfx_phase_3"
 					}
 				}
-				
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 			
 			// VFX section
@@ -2353,12 +2347,6 @@
 				
 				"OnCreated"
 				{
-					"FireSound"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"Hero_Crystal.CrystalNova"
-					}
-				
 					"AttachEffect"
 					{
 						"Target"				"TARGET"
@@ -2780,11 +2768,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"vortigern_pause"
-				"Target"	"CASTER"
-			}
 			"RunScript"
 			{
 					"ScriptFile"    "saber_alter_ability"
@@ -2796,30 +2779,8 @@
 			}
 		}
 		
-		//"OnProjectileHitUnit" 
-		//{
-		//	"RunScript"
-		//	{
-		//		"ScriptFile"	"saber_alter_ability"
-		//		"Function"		"OnVortigernHit"
-		//		"Damage"		"%damage"
-		//		"StunDuration"	"%stun_duration"
-		//	}
-		//}
-			
 		"Modifiers"
 		{
-			"vortigern_pause"
-			{
-				"Duration"		"0.4"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-			
-			
 		}
 	}
 	
@@ -2864,11 +2825,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"saber_alter_pause"
-				"Target"			"CASTER"
-			}
 			"RunScript"
 			{
 				"ScriptFile"    "saber_alter_ability"
@@ -2918,16 +2874,6 @@
 		
 		"Modifiers"
 		{
-			"saber_alter_pause"
-			{
-				"Duration"		"4.75"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-			
 		}
 	}
 
@@ -3568,11 +3514,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"jump_invul"
-				"Target"		"CASTER"
-			}
 			"RunScript"
 			{
 				"ScriptFile"	"rider_ability"
@@ -3586,18 +3527,6 @@
 		
 		"Modifiers"
 		{
-			"jump_invul"
-			{
-				"Duration"		"1.0"
-				"States"
-				{
-					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 	

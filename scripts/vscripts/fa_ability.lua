@@ -164,7 +164,7 @@ function OnTGStart(keys)
 
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
-	giveUnitDataDrivenModifier(caster, caster, "tg_pause", 1.0)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 
 	Timers:CreateTimer(0.5, function()  
 		if caster:IsAlive() then

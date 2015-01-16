@@ -135,7 +135,7 @@ function OnNineStart(keys)
 	caster:SetPhysicsFriction(0)
 	caster:SetPhysicsVelocity(forward)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
-	giveUnitDataDrivenModifier(caster, caster, "nine_pause", 4.0)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
 	Timers:CreateTimer(1.00, function() 
 		if caster:HasModifier("modifier_nine_anim") == false then
 			OnNineLanded(caster, keys.ability) 

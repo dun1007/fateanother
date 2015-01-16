@@ -27,10 +27,10 @@ end
 function OnUFStart(keys)
 	local caster = keys.caster
 	local UFCount = 0
-
 	DSCheckCombo(caster, keys.ability)
 	Timers:CreateTimer(function()
 		if UFCount == 5 then return end
+		caster:EmitSound("Saber_Alter.Unleashed") 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
@@ -51,6 +51,7 @@ function OnMBStart(keys)
 		keys.Radius = keys.Radius + 200 
 		keys.Damage = keys.Damage + 100
 	end
+	caster:EmitSound("Saber_Alter.ManaBurst") 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	
@@ -85,7 +86,9 @@ function OnMMBStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	
+	EmitGlobalSound("Saber_Alter.MMB" ) 
+	EmitGlobalSound("Saber_Alter.MMBAfter") 
+
 	local dmg = caster:GetMaxMana()
 	if ply.IsManaShroudImproved == true then dmg = dmg + 200 end
 	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -105,6 +108,7 @@ function OnVortigernStart(keys)
 	local casterVec = caster:GetForwardVector()
 	local targetVec = Vector(0,0,0)
 	local damage = keys.Damage
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 0.4)
 	if ply.IsFerocityImproved then 
 		damage = damage + 100
 		keys.StunDuration = keys.StunDuration + 0.3
@@ -140,7 +144,7 @@ end
 function OnDexStart(keys)
 	local caster = keys.caster
 	local frontward = caster:GetForwardVector()
-	
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.75)
 	EmitGlobalSound("Saber.Caliburn")
 	local dex = 
 	{

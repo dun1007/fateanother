@@ -265,6 +265,7 @@ function EndUBW(caster)
 
     Timers:RemoveTimer("ubw_timer")
 end
+
 -- combo
 function OnRainStart(keys)
 	local caster = keys.caster
@@ -272,6 +273,7 @@ function OnRainStart(keys)
 	local descendCount = 0
 	local radius = 1200
 
+	caster:EmitSound("Archer.Combo") 
 	local info = {
 		Target = nil,
 		Source = caster, 
@@ -313,7 +315,7 @@ function OnRainStart(keys)
     end)
 
 	local bpCount = 0 
-	Timers:CreateTimer(3.3, function()
+	Timers:CreateTimer(2.8, function()
 		if bpCount == 5 then return end
 		local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		info.Target = units[math.random(#units)]
@@ -321,7 +323,7 @@ function OnRainStart(keys)
 			ProjectileManager:CreateTrackingProjectile(info) 
 		end
 		bpCount = bpCount + 1
-		return 0.1
+		return 0.2
     end)
 
 	Timers:CreateTimer('rain_descend', {
@@ -430,7 +432,7 @@ function OnUBWNineStart(keys)
 	caster:SetPhysicsVelocity(forward)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 
-	giveUnitDataDrivenModifier(caster, caster, "nine_pause", 2.0)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
 	Timers:CreateTimer(1.00, function() 
 		if caster:HasModifier("modifier_ubw_nine_anim") == false then
 			OnUBWNineLanded(caster, keys.ability) 
@@ -478,8 +480,8 @@ function OnUBWNineLanded(caster, ability)
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
 			if nineCounter == 8 then -- if nine is finished
-				EmitGlobalSound("Berserker.Roar") 
-				caster:RemoveModifierByName("nine_pause") 
+				caster:EmitSound("Archer.NineFinish") 
+				caster:RemoveModifierByName("pause_sealdisabled") 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
