@@ -1020,8 +1020,6 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"37.0"
-		
-		"AbilityDamage"					"650"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -1049,7 +1047,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"700 900 1100 1300 1500"
+				"cast_time"				"1.75"
 			}
 		}
 		
@@ -9138,6 +9136,8 @@
 		"precache"
 		{
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"	"particles/ui_mouseactions/ping_danger.vpcf"
+			"particle"	"particles/ui_mouseactions/ping_world.vpcf"
 		}
 		
 		"AbilitySpecial"

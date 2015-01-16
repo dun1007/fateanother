@@ -361,23 +361,44 @@ end
 function PresenceDetection(keys)
 	local caster = keys.caster
 
-	
+	EmitGlobalSound("Misc.BorrowedTime") --[[Returns:void
+	Play named sound for all players
+	]]
 	print("Presence detection started by " .. caster:GetName())
 	Timers:CreateTimer(function()  
 		print("Detecting enemy servants")
 		local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 		for i=1, #enemies do
 			local enemy = enemies[i]
-			print("Checking if " .. enemy:GetName() .. " should be detected...")
+
 			if enemy.IsPresenceDetected ~= true or enemy.IsPresenceDetected == nil then
-				print("Pinged")
-				GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 5.0)
-				--EmitGlobalSound("Hero_Abaddon.BorrowedTime")
-				EmitSoundOnClient("Hero_Abaddon.BorrowedTime", caster:GetPlayerOwner()) 
+				--enemy.IsPresenceDetected = true
+				caster.PresenceDetectionTable = enemies
+				print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+				ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
+				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
+				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
 			end
 		end
-		return 10
+		return 5.0
 	end)
+end
+
+function CompareValues(t1,t2)
+	local peopleIn = {}
+	local peopleOut = {}
+	
+	for i=1,#ti do
+		for j=1, #t2 do
+			if t1[i] == t1[j] then 
+				return false
+				break 
+			end
+		end
+	end
+
 end
 
 function CustomPing(playerid, location)

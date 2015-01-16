@@ -318,7 +318,7 @@ function AvalonOnTakeDamage(keys)
 	local newCurrentHealth = caster:GetHealth()
 	local emitwhichsound = RandomInt(1, 2)
 	if (damageTaken > keys.Threshold) then
-		if avalonCooldown then
+		if avalonCooldown and not caster:HasModifier("pause_sealdisabled") then
 			if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
 			
 			AvalonDash(caster, attacker, keys.Damage, keys.ability)
@@ -387,6 +387,7 @@ end
 
 function OnStrikeAirStart(keys)
 	EmitGlobalSound("Saber.StrikeAir_Cast")
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.75)
 	Timers:CreateTimer(1.75, function()  
 		local sound = RandomInt(1,2)
 		if sound == 1 then EmitGlobalSound("Saber.StrikeAir_Release1") else EmitGlobalSound("Saber.StrikeAir_Release2") end
@@ -396,7 +397,7 @@ end
 
 function StrikeAirPush(keys)
 	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_avalon"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-
+	giveUnitDataDrivenModifier(keys.caster, keys.target, "pause_sealenabled", 0.5)
 
     local pushTarget = Physics:Unit(keys.target)
     keys.target:PreventDI()
