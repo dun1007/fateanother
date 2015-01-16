@@ -393,8 +393,6 @@ function CompareValues(t1,t2)
 	for i=1,#ti do
 		for j=1, #t2 do
 			if t1[i] == t1[j] then 
-				return false
-				break 
 			end
 		end
 	end
