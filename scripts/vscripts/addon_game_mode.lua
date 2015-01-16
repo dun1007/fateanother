@@ -102,6 +102,7 @@ function FateGameMode:OnAllPlayersLoaded()
 	GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
 	GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
 
+
   	Timers:CreateTimer('30secondalert', {
 		endTime = 30,
 		callback = function()
@@ -262,6 +263,7 @@ function FateGameMode:OnNPCSpawned(keys)
 	if hero:IsRealHero() and hero.bFirstSpawned == nil then
       hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
 	    hero.bFirstSpawned = true
+      hero.PresenceTable = {}
 	    FateGameMode:OnHeroInGame(hero)
       hero:SetAbilityPoints(0)
 	    local player = PlayerResource:GetPlayer(hero:GetPlayerID())
@@ -278,16 +280,22 @@ function FateGameMode:OnNPCSpawned(keys)
          master:SetControllableByPlayer(hero:GetPlayerID(), true) 
      end
      })]]
+
+      -- Create Command Seal master for hero
 	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*500,-7150,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit = master
       LevelAllAbility(master)
 
+      -- Create attribute/stat master for hero
       master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*500,-7350,0), true, hero, hero, hero:GetTeamNumber())
       master2:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit2 = master2
       AddMasterAbility(master2, hero:GetName())
       LevelAllAbility(master2)
+
+
+
 	end
 end
 
@@ -631,7 +639,6 @@ function FateGameMode:InitializeRound()
 	if self.nCurrentRound == 1 then
 		GameRules:SendCustomMessage("The game has begun!", 0, 0)
 	end
-
 
 	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false)
 	-- Remove pause 

@@ -360,21 +360,35 @@ end
 
 function PresenceDetection(keys)
 	local caster = keys.caster
-
-	EmitGlobalSound("Misc.BorrowedTime") --[[Returns:void
-	Play named sound for all players
-	]]
 	print("Presence detection started by " .. caster:GetName())
-	Timers:CreateTimer(function()  
-		print("Detecting enemy servants")
-		local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
-		for i=1, #enemies do
-			local enemy = enemies[i]
 
-			if enemy.IsPresenceDetected ~= true or enemy.IsPresenceDetected == nil then
-				--enemy.IsPresenceDetected = true
-				caster.PresenceDetectionTable = enemies
+	Timers:CreateTimer(function()  
+		local oldEnemyTable = caster.PresenceTable
+		local newEnemyTable = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
+
+		-- Flag everyone in range as true before comparing two tables
+		for i=1, #newEnemyTable do
+			newEnemyTable[i].IsPresenceDetected = true
+		end
+
+		-- If enemy has not moved out of range since last presence detection, flag them as false
+		for i=1,#oldEnemyTable do
+			for j=1, #newEnemyTable do
+				if oldEnemyTable[i] == newEnemyTable[j] then 
+					print(" " .. newEnemyTable[j]:GetName() .. " has not been out of range since last presence detection")
+					newEnemyTable[j].IsPresenceDetected = false
+					break
+				end
+			end
+		end
+
+		-- Do the ping for everyone with IsPresenceDetected marked as true
+		for i=1, #newEnemyTable do
+			local enemy = newEnemyTable[i]
+
+			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
 				print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+				-- need warning
 				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
 				ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
 				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
@@ -382,23 +396,12 @@ function PresenceDetection(keys)
 				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
 			end
 		end
-		return 5.0
+		caster.PresenceTable = newEnemyTable
+		return 0.3
 	end)
 end
 
-function CompareValues(t1,t2)
-	local peopleIn = {}
-	local peopleOut = {}
-	
-	for i=1,#ti do
-		for j=1, #t2 do
-			if t1[i] == t1[j] then 
-			end
-		end
-	end
-
-end
-
+-- Scrapped it(can have only 1 instance of AddMinimapDebugPoint at time)
 function CustomPing(playerid, location)
 	print("Custom Ping Issued")
 	GameRules:AddMinimapDebugPoint(playerid, location, 255, 0, 0, 300, 3.0)

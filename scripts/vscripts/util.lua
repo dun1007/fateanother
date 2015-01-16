@@ -61,6 +61,15 @@ function LevelAllAbility(hero)
     end
 end
 
+function AddValueToTable(table, value)
+    for i=1, 100 do
+        if table[i] == nil then 
+            table[i] = value
+        end
+    end
+    return table
+end
+
 
 function IsSpellBlocked(target)
     if target:HasModifier("modifier_instinct_active") then  --This abililty is blocked by the active/targeted Linken's effect.
