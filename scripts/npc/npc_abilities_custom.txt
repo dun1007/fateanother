@@ -2596,10 +2596,9 @@
 		"AnimationPlaybackRate" 		"0.5"
 		"precache"
 		{
-			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf"
-			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
-			"particle"		"particles/prototype_fx/item_linkens_buff_explosion_wave.vpcf"
-			"particle"		"particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf"
+			"particle"		"particles/items2_fx/skadi_projectile.vpcf"
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.8"
@@ -2620,8 +2619,24 @@
 			}
 		}
 		
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+				"EffectAttachType"	"start_at_origin"
+			}
+		}
+		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_mana_burst_VFX"
+			}
+		
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
@@ -2642,6 +2657,27 @@
 		
 		"Modifiers"
 		{
+			"modifier_mana_burst_VFX"
+			{
+				"IsHidden"		"0"
+				"IsPurgable"	"0"
+			
+				"Duration"		"1.5"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPoints"
+						{
+							"01"			"%radius 0 0"
+							"02"			"1.0 0 0"
+						}
+					}
+				}
+			}
 		}
 	}
 

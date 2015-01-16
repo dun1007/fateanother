@@ -53,22 +53,16 @@ function OnMBStart(keys)
 	end
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
-	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
-	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
-	local particle = ParticleManager:CreateParticle("particles/prototype_fx/item_linkens_buff_explosion_wave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
 	
 	local info = {
 		Target = nil,
 		Source = caster, 
 		Ability = keys.ability,
-		EffectName = "particles/units/heroes/hero_stormspirit/stormspirit_ball_lightning.vpcf",
+		EffectName = "particles/items2_fx/skadi_projectile.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 400
 	}
-
+	
 	if ply.IsManaBlastAcquired then
 		while caster.ManaBlastCount ~= 0 do
 			info.Target = targets[math.random(#targets)]
