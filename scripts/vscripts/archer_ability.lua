@@ -58,7 +58,14 @@ function KBStart(keys)
 		end
 	end
 
+	if caster:HasModifier("modifier_ubw_death_checker") then
+		print("UBW up")
+		keys.ability:EndCooldown()
+		keys.ability:StartCooldown(3.0)
+	end	
+
 	if ply.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
+		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(2.0)
 	end
 end

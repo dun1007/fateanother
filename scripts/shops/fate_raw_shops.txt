@@ -20,13 +20,7 @@
 	"weapons_armor"
 	{
 		"item"		"item_spirit_link"
-		"item"		"item_mass_teleport_scroll"
-		"item"		"item_gem_of_resonance" 
-	}
-	
-	"misc"
-	{
-		"item"		"item_healing_scroll_recipe"
-		"item" 		"item_a_plus_scroll_recipe"
+		"item"		"item_healing_scroll"
+		"item" 		"item_a_plus_scroll"
 	}
 }

@@ -1,4 +1,5 @@
 purgable = {"modifier_aspd_increase",
+        "modifier_derange",
         "modifier_courage_self_buff",
         "modifier_berserk_self_buff",
         "modifier_ta_self_mod",
@@ -7,6 +8,7 @@ purgable = {"modifier_aspd_increase",
         "modifier_a_plus_armor",
         "modifier_speed_gem",
         "modifier_share_damage"}
+
 goesthruB = {"saber_avalon",
             "archer_5th_hrunting",
             "avenger_berg_avesta",
@@ -107,6 +109,7 @@ end
 
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
+   -- if target == nil then return end 
     local IsAbsorbed = false
     local damageTaken = dmg
     local IsBScrollIgnored = false
@@ -180,17 +183,19 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             ability = abil
         }
         -- if target is linked, distribute damages 
-        if target:HasModifier("modifier_share_damage") and not isLoop then
-            dmgtable.damage = dmgtable.damage/#target.linkTable
+        if target:HasModifier("modifier_share_damage") and not isLoop and target.linkTable ~= nil then
+            if #target.linkTable ~= 0 then dmgtable.damage = dmgtable.damage/#target.linkTable end
             for i=1, #target.linkTable do
                 -- do ApplyDamage if it's primary target since the shield processing is already done
                 if target.linkTable[i] == target then
+                    print("Damage dealt to primary target : " .. dmgtable.damage .. " dealt by " .. dmgtable.attacker:GetName())
                     ApplyDamage(dmgtable)
-                    print("Damage dealt to primary target : " .. dmgtable.damage)
+                   
                 -- for other linked targets, we need DoDamage
                 else
+                    print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. dmgtable.damage )
                     DoDamage(source, target.linkTable[i], dmgtable.damage,  DAMAGE_TYPE_MAGICAL, 0, abil, true) 
-                    print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. dmgtable.damage) 
+                 
                 end
             end
         else 

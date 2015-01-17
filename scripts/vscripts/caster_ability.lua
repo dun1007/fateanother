@@ -18,6 +18,8 @@ function OnTerritoryCreated(keys)
 
 	-- Construct castle
 	territory:SetHealth(1)
+	territory:SetMana(0)
+	territory:SetBaseManaRegen(3) 
 	giveUnitDataDrivenModifier(caster, territory, "pause_sealdisabled", 5.0)
 	territory:AddNewModifier(caster, nil, 'modifier_rooted', {})
 	local territoryConstTimer = 0
@@ -44,6 +46,7 @@ function OnSummonSkeleton(keys)
 	local pid = caster:GetMainControllingPlayer()
 	local spooky = CreateUnitByName("caster_5th_skeleton", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
 	spooky:SetControllableByPlayer(pid, true)
+	
 	LevelAllAbility(spooky)
 	FindClearSpaceForUnit(spooky, spooky:GetAbsOrigin(), true)
 end
@@ -286,7 +289,7 @@ function OnAncientClosed(keys)
 	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", true ,true) 
 	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", true, true) 
 	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", true, true) 
-	caster:SwapAbilities(a4:GetName(), "rubick_empty1", true, true) 
+	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
 	caster:SwapAbilities(a6:GetName(), "caster_5th_hecatic_graea", true, true )
 end

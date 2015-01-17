@@ -1,6 +1,5 @@
 require("physics")
 require("util")
-TPLocation = nil
 cdummy = nil
 
 function PotInstantHeal(keys)
@@ -13,37 +12,38 @@ function PotInstantHeal(keys)
 
 end
 
+local TPLoc = nil 
 function TPScroll(keys)
+	print("TP initiated")
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 1500
-            , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
-	for k,v in pairs(targets) do
-		if v:GetName() == "npc_dota_ward_base" then
-			TPLocation = v 
-		end
-		return
-	end
+
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, 0, FIND_CLOSEST, false) 
+
+
+	TPLoc = targets[1]:GetAbsOrigin() 
 end
 
 function TPSuccess(keys)
+	print("TP successful")
 	local caster = keys.caster
-	caster:SetAbsOrigin(TPLocation:GetAbsOrigin())
+	caster:SetAbsOrigin(TPLoc)
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 end
 
 function MassTPSuccess(keys)
 	local caster = keys.caster
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000
-            , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)	
+            , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)	
 	for k,v in pairs(targets) do
-		v:SetAbsOrigin(TPLocation:GetAbsOrigin())
+		v:SetAbsOrigin(TPLoc)
 		FindClearSpaceForUnit(v, v:GetAbsOrigin(), true)
 	end
 
 end
 
 function TPFail(keys)
+	print("TP failed")
 end
 
 function WardFam(keys)
@@ -52,12 +52,7 @@ function WardFam(keys)
 	local ward = CreateUnitByName("ward_familiar", targetPoint, true, caster, caster, caster:GetTeamNumber())
 	ward:AddNewModifier(caster, caster, "modifier_invisible", {}) 
 	ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600}) 
-	Timers:CreateTimer({
-		endTime = 105,
-		callback = function()
-		if ward:IsAlive() then ward:RemoveSelf() return end
-	end
-	})
+    ward:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
 end
 
 function ScoutFam(keys)
@@ -67,12 +62,7 @@ function ScoutFam(keys)
 	scout:SetControllableByPlayer(pid, true)
 	keys.ability:ApplyDataDrivenModifier(caster, scout, "modifier_banished", {}) 
 	LevelAllAbility(scout)
-	Timers:CreateTimer({
-		endTime = 40,
-		callback = function()
-		if scout:IsAlive() then scout:RemoveSelf() return end
-	end
-	})
+   	scout:AddNewModifier(caster, nil, "modifier_kill", {duration = 40})
 end
 
 function BecomeWard(keys)
@@ -81,18 +71,13 @@ function BecomeWard(keys)
 
 	transform:AddNewModifier(caster, caster, "modifier_invisible", {}) 
 	transform:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600}) 
+	transform:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
 	
 	Timers:CreateTimer({
 		endTime = 0.1,
 		callback = function()
 		caster:RemoveSelf() 
 		return
-	end
-	})
-	Timers:CreateTimer({
-		endTime = 105,
-		callback = function()
-		if transform:IsAlive() then transform:RemoveSelf() return end
 	end
 	})
 end
@@ -103,17 +88,12 @@ function SpiritLink(keys)
             , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 	local linkTargets = {}
 	-- set up table for link
-	for i=1,5 do
-		if targets[i] == nil then 
-			break
-		end
+	for i=1,#targets do
 		linkTargets[i] = targets[i]
+		print("Linked hero detected :" .. targets[i]:GetName())
 	end
 	-- add list of linked targets to hero table
-	for i=1,5 do
-		if targets[i] == nil then 
-			break
-		end		
+	for i=1,#targets do	
 		targets[i].linkTable = linkTargets
 		print(targets[i]:GetName())
 		keys.ability:ApplyDataDrivenModifier(caster, targets[i], "modifier_share_damage", {}) 
@@ -121,7 +101,30 @@ function SpiritLink(keys)
 end
 
 function OnLinkDamageTaken(keys)
+	local caster = keys.caster
+	if caster:GetHealth() == 0 then 
+		caster:SetHealth(1) 
+		caster:RemoveModifierByName("modifier_share_damage") 
+	end
+end
 
+function OnLinkDestroyed(keys)
+	local caster = keys.caster
+	for i=0, 9 do
+		local player = PlayerResource:GetPlayer(i)
+		if player ~= nil then 
+			hero = PlayerResource:GetPlayer(i):GetAssignedHero()
+			-- print("Looping through" .. hero:GetName())
+			if hero.linkTable ~= nil then
+				for j=1,#hero.linkTable do
+					if hero.linkTable[j] == caster then
+						table.remove(hero.linkTable, j)
+						print("Removed " .. caster:GetName() .. " from link table")
+					end 
+				end
+			end
+		end
+	end
 end
 
 function GemOfResonance(keys)
@@ -131,6 +134,14 @@ end
 function Blink(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+
+	if caster:HasModifier("modifier_purge") then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
+		keys.ability:EndCooldown()
+		caster:AddItem(CreateItem("item_blink_scroll", nil, nil) ) 
+		return
+	end
+
 	local diff = targetPoint - caster:GetAbsOrigin()
 	local particle = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin()) -- target effect location
@@ -192,9 +203,7 @@ function SScroll(keys)
 	}
 	ApplyDamage(lightning) 
 	ApplyPurge(target)
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier1", {Duration = 0.5}) 
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier2", {Duration = 1.0}) 
-	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) -- a bit bad right now
+	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 end
 
@@ -213,7 +222,7 @@ function EXScroll(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier1", {Duration = 1.0}) 
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier2", {Duration = 2.0}) 
 
-	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) -- a bit bad right now
+	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) -
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 	local forkCount = 0
 	local dist = target:GetAbsOrigin() - caster:GetAbsOrigin()

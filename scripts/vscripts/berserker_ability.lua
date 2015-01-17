@@ -197,6 +197,7 @@ function OnNineLanded(caster, ability)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+					giveUnitDataDrivenModifier(caster, v, "pause_sealdisabled", 1.0)
 				end
 				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
@@ -209,6 +210,7 @@ function OnNineLanded(caster, ability)
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+				giveUnitDataDrivenModifier(caster, v, "pause_sealdisabled", 1.0)
 			end
 
 			local particle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
