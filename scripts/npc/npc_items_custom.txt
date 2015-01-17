@@ -755,9 +755,13 @@
 	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
 
 
+
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
+		"ItemStockMax"					"7"
+		"ItemStockInitial"				"7"
+		"ItemStockTime"					"10.0"
 	    "ItemInitialCharges" "1"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "1"
