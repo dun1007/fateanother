@@ -515,6 +515,13 @@
 			{
 				"ScriptFile"	"items"
 				"Function"		"SpiritLink"
+				"Target"
+				{
+					"Center"	"TARGET"
+			        "Radius"	"1000"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
 			}
 	    }
 	    "Modifiers"
@@ -528,9 +535,10 @@
 					{
 						"ScriptFile"	"items"
 						"Function"		"OnLinkDamageTaken"
-						"DamageTaken"	"%attack_damage"		
+						"DamageTaken"	"%attack_damage"	
 					}
 	    		}
+
 	    		"OnDestroy"
 	    		{
 	    			"RunScript"

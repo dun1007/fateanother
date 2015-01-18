@@ -514,7 +514,7 @@
 
 		// Team
 		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
+		"TeamName"					"DOTA_TEAM_NEUTRALS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
@@ -524,9 +524,7 @@
 		"VisionDaytimeRange"		"900"		// Range of vision during day light.
 		"VisionNighttimeRange"		"900"		// Range of vision at night time.
 
-		// Bots
-		//----------------------------------------------------------------
-		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
+		"HasInventory"				"1"
 	}
 
 	"master_2"

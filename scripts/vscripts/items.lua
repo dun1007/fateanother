@@ -84,8 +84,8 @@ end
 
 function SpiritLink(keys)
 	local caster = keys.caster
-	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000
-            , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
+	local targets = keys.target_entities
+	--local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 	local linkTargets = {}
 	-- set up table for link
 	for i=1,#targets do
@@ -101,30 +101,30 @@ function SpiritLink(keys)
 end
 
 function OnLinkDamageTaken(keys)
-	local caster = keys.caster
-	if caster:GetHealth() == 0 then 
-		caster:SetHealth(1) 
-		caster:RemoveModifierByName("modifier_share_damage") 
-	end
+	local target = keys.target
+	print(target:GetName())
 end
 
 function OnLinkDestroyed(keys)
-	local caster = keys.caster
+	print("Link destroyed")
+	local target = keys.target
+	--[[local caster = keys.caster
+	local target = keys.target
 	for i=0, 9 do
 		local player = PlayerResource:GetPlayer(i)
 		if player ~= nil then 
 			hero = PlayerResource:GetPlayer(i):GetAssignedHero()
-			-- print("Looping through" .. hero:GetName())
+			print("Looping through " .. hero:GetName())
 			if hero.linkTable ~= nil then
 				for j=1,#hero.linkTable do
-					if hero.linkTable[j] == caster then
+					if hero.linkTable[j] == target then
 						table.remove(hero.linkTable, j)
-						print("Removed " .. caster:GetName() .. " from link table")
+						print("Removed " .. target:GetName() .. " from link table")
 					end 
 				end
 			end
 		end
-	end
+	end]]
 end
 
 function GemOfResonance(keys)
@@ -222,7 +222,7 @@ function EXScroll(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier1", {Duration = 1.0}) 
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier2", {Duration = 2.0}) 
 
-	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) -
+	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 	local forkCount = 0
 	local dist = target:GetAbsOrigin() - caster:GetAbsOrigin()

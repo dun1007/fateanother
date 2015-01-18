@@ -190,17 +190,25 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
                 if target.linkTable[i] == target then
                     print("Damage dealt to primary target : " .. dmgtable.damage .. " dealt by " .. dmgtable.attacker:GetName())
                     ApplyDamage(dmgtable)
-                   
+
+                    if target:GetHealth() == 0 then 
+                        print("Target reached 1 health inside link block")
+                    end
                 -- for other linked targets, we need DoDamage
                 else
                     print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. dmgtable.damage )
                     DoDamage(source, target.linkTable[i], dmgtable.damage,  DAMAGE_TYPE_MAGICAL, 0, abil, true) 
+
                  
                 end
             end
         else 
             dmgtable.victim = target
             ApplyDamage(dmgtable)
+
+            if target:GetHealth() == 0 and target:HasModifier("modifier_share_damage") then 
+                print("Target reached 1 health outside link block")
+            end
         end
         
     end

@@ -4,6 +4,7 @@ require("util")
 bolgdummy = nil
 
 function LancerOnTakeDamage(keys)
+	print("lethal")
 	local caster = keys.caster
 	local currentHealth = caster:GetHealth()
 	local ply = caster:GetPlayerOwner()

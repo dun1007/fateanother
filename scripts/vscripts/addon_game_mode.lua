@@ -283,6 +283,11 @@ function FateGameMode:OnNPCSpawned(keys)
 
       -- Create Command Seal master for hero
 	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*500,-7150,0), true, hero, hero, hero:GetTeamNumber())
+      CreateItemOnPositionSync(master:GetAbsOrigin() , CreateItem("item_b_scroll", nil, nil) --[[Returns:handle
+      Creates an item with classname <i>item_name</i> that <i>owner</i> can use.
+      ]]) --[[Returns:handle
+      Create a physical item at a given location
+      ]]
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit = master
       LevelAllAbility(master)
@@ -310,12 +315,15 @@ end
 
 -- An item was picked up off the ground
 function FateGameMode:OnItemPickedUp(keys)
-  print ( '[BAREBONES] OnItemPurchased' )
+  print ( '[BAREBONES] OnItemPickedUp' )
   PrintTable(keys)
 
-  local heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
-  local itemEntity = EntIndexToHScript(keys.ItemEntityIndex)
-  local player = PlayerResource:GetPlayer(keys.PlayerID)
+  local heroEntity = nil
+  local player = nil
+  if keys.HeroEntityIndex ~= nil then
+    heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
+    player = PlayerResource:GetPlayer(keys.PlayerID)
+  end
   local itemname = keys.itemname
 end
 
