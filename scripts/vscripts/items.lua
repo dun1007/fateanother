@@ -8,14 +8,31 @@ function OnManaEssenceAcquired(keys)
 end 
 
 function TransferItem(keys)
+	local item = keys.ability
+	local caster = keys.caster
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+
 	print("Transfering item to hero")
+	local stash_item = hero:GetItemInSlot(keys.Slot+5) -- This looks for slot 6/7/8/9/10/11(Stash)
+	-- If item is found, remove it from stash and add it to hero
+	if stash_item ~= nil then
+		--[[If hero has empty inventory slot, move item to hero
+		local hero_item = hero:GetItemInSlot(i)
+		for i=0, 5 do
+			if hero_item == nil then
+				hero:AddItem(stash_item) 
+				caster:RemoveItem(stash_item)
+				return
+			end
+		end]]
+		hero:AddItem(stash_item) 
+		caster:RemoveItem(stash_item)		
+	else
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Items Found in Chosen Slot of Stash" } )
+	end
+
 
 end
-
-function RetrieveItem(keys)
-	print("Retrieving item from hero")
-end
-
 
 function PotInstantHeal(keys)
 	local caster = keys.caster

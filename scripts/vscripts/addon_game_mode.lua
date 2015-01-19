@@ -276,8 +276,12 @@ function FateGameMode:OnNPCSpawned(keys)
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit = master
       LevelAllAbility(master)
-      master:AddItem(CreateItem("item_master_transfer_items", nil, nil))
-      master:AddItem(CreateItem("item_master_retrieve_items", nil, nil))
+      master:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
+      master:AddItem(CreateItem("item_master_transfer_items2", nil, nil))
+      master:AddItem(CreateItem("item_master_transfer_items3", nil, nil))
+      master:AddItem(CreateItem("item_master_transfer_items4", nil, nil))
+      master:AddItem(CreateItem("item_master_transfer_items5", nil, nil))
+      master:AddItem(CreateItem("item_master_transfer_items6", nil, nil))
 
       -- Create attribute/stat master for hero
       master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*350,-7350,0), true, hero, hero, hero:GetTeamNumber())
@@ -286,6 +290,7 @@ function FateGameMode:OnNPCSpawned(keys)
       AddMasterAbility(master2, hero:GetName())
       LevelAllAbility(master2)
 
+      -- Create personal stash for hero
       masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
       masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
       hero.MasterStash = masterStash
