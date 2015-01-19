@@ -207,6 +207,32 @@ function LoopThroughAttr(hero, attrTable)
 	hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
 end
 
+function FindName(name)
+	local heroName = nil
+	if name == "npc_dota_hero_legion_commander" then
+		heroName = "Saber"
+	elseif name == "npc_dota_hero_phantom_lancer" then
+		heroName = "Lancer(5th)"
+	elseif name == "npc_dota_hero_spectre" then
+		heroName = "Saber Alter(5th)"
+	elseif name == "npc_dota_hero_ember_spirit" then
+		heroName = "Archer(5th)"
+	elseif name == "npc_dota_hero_templar_assassin" then
+		heroName = "Rider(5th)"
+	elseif name == "npc_dota_hero_doom_bringer" then
+		heroName = "Berserker(5th)"
+	elseif name == "npc_dota_hero_juggernaut" then
+		heroName = "False Assassin(5th)"
+	elseif name == "npc_dota_hero_bounty_hunter" then
+		heroName = "True Assassin(5th)"
+	elseif name == "npc_dota_hero_crystal_maiden" then
+		heroName = "Caster(5th)"
+	elseif name == "npc_dota_hero_skywrath_mage" then
+		heroName = "Archer(4th)"
+	end
+	return heroName
+end
+
 function FindAttribute(name)
 	local attributes = nil
 	if name == "npc_dota_hero_legion_commander" then

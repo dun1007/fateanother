@@ -133,24 +133,14 @@ end
 function FateGameMode:OnHeroInGame(hero)
   print("[BAREBONES] Hero spawned in game for first time -- " .. hero:GetUnitName())
 
-  --[[ Multiteam configuration, currently unfinished
-  local team = "team1"
-  local playerID = hero:GetPlayerID()
-  if playerID > 3 then
-    team = "team2"
-  end
-  print("setting " .. playerID .. " to team: " .. team)
-  MultiTeam:SetPlayerTeam(playerID, team)]]
-
-  -- This line for example will set the starting gold of every hero to 500 unreliable gold
     hero:SetGold(0, false)
     LevelAllAbility(hero)
+    hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
   	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
-  --[[ --These lines if uncommented will replace the W ability of any hero that loads into the game
-    --with the "example_ability" ability
-  local abil = hero:GetAbilityByIndex(1)
-  hero:RemoveAbility(abil:GetAbilityName())
-  hero:AddAbility("example_ability")]]
+    local heroName = FindName(hero:GetName())
+    hero.name = heroName
+    GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
+
 end
 
 --[[
@@ -159,7 +149,7 @@ end
   is useful for starting any game logic timers/thinkers, beginning the first round, etc.
 ]]
 function FateGameMode:OnGameInProgress()
-	print("[BAREBONES] The game has officially begun")
+	print("[FATE] The game has officially begun")
 	Timers:CreateTimer(function()
       	local choice = RandomInt(1,4)
       	print(choice)
@@ -282,23 +272,24 @@ function FateGameMode:OnNPCSpawned(keys)
      })]]
 
       -- Create Command Seal master for hero
-	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*500,-7150,0), true, hero, hero, hero:GetTeamNumber())
-      CreateItemOnPositionSync(master:GetAbsOrigin() , CreateItem("item_b_scroll", nil, nil) --[[Returns:handle
-      Creates an item with classname <i>item_name</i> that <i>owner</i> can use.
-      ]]) --[[Returns:handle
-      Create a physical item at a given location
-      ]]
+	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit = master
       LevelAllAbility(master)
+      master:AddItem(CreateItem("item_master_transfer_items", nil, nil))
+      master:AddItem(CreateItem("item_master_retrieve_items", nil, nil))
 
       -- Create attribute/stat master for hero
-      master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*500,-7350,0), true, hero, hero, hero:GetTeamNumber())
+      master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*350,-7350,0), true, hero, hero, hero:GetTeamNumber())
       master2:SetControllableByPlayer(hero:GetPlayerID(), true) 
       hero.MasterUnit2 = master2
       AddMasterAbility(master2, hero:GetName())
       LevelAllAbility(master2)
 
+      masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
+      masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
+      hero.MasterStash = masterStash
+      LevelAllAbility(masterStash)
 
 
 	end
@@ -733,7 +724,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 
 	for _,ply in pairs(self.vPlayerList) do
 		if ply:GetAssignedHero():IsAlive() then
-			giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "jump_pause", 5.0)
+			giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
 		end
 	end
 

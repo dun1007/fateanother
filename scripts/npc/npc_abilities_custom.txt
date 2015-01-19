@@ -9105,6 +9105,32 @@
 		}
 	}
 
+	"stash_blink" 
+	{
+	    "BaseClass"    "ability_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityTextureName"			"antimage_blink"
+	    "AbilityCooldown"				"10"
+	    "AbilityCastRange"				"99999"
+	    "precache"
+	    {
+	    	"particle"	"particles/items_fx/blink_dagger_start.vpcf"
+	    	"particle"	"particles/items_fx/blink_dagger_end.vpcf"
+	    }
+
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"StashBlink"
+				"Target"		"POINT"
+			}
+	    }
+	}
+
+
 	//=================================================================================================================
 	// Ward Conversion
 	//=================================================================================================================

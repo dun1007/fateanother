@@ -2,6 +2,21 @@ require("physics")
 require("util")
 cdummy = nil
 
+function OnManaEssenceAcquired(keys)
+	PrintTable(keys)
+	keys.caster:RemoveItem(keys.ability)
+end 
+
+function TransferItem(keys)
+	print("Transfering item to hero")
+
+end
+
+function RetrieveItem(keys)
+	print("Retrieving item from hero")
+end
+
+
 function PotInstantHeal(keys)
 	local caster = keys.caster
 	caster:Heal(500, caster)
@@ -131,6 +146,7 @@ function GemOfResonance(keys)
 	-- body
 end
 
+
 function Blink(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
@@ -138,7 +154,6 @@ function Blink(keys)
 	if caster:HasModifier("modifier_purge") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
 		keys.ability:EndCooldown()
-		caster:AddItem(CreateItem("item_blink_scroll", nil, nil) ) 
 		return
 	end
 
@@ -155,6 +170,24 @@ function Blink(keys)
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 end
 
+function StashBlink(keys)
+	local caster = keys.caster
+	local casterinitloc = caster:GetAbsOrigin() 
+	local targetPoint = keys.target_points[1]
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	caster:SetAbsOrigin(hero:GetAbsOrigin())
+	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	
+	Timers:CreateTimer(8.0, function() 
+		caster:SetAbsOrigin(casterinitloc) 
+		return
+	end)
+
+	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
+	local particle2 = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(particle2, 1, caster:GetAbsOrigin()) -- target effect location
+	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+end
 
 function CScroll(keys)
 	local caster = keys.caster
