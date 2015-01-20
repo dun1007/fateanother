@@ -8,13 +8,15 @@ function OnDerangeStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	if ply.IsManaBlastAcquired then
-		local chance = RandomInt(1, 100) 
-		if chance > 1 and chance < 34 then
-			caster.ManaBlastCount = caster.ManaBlastCount + 1
-		elseif chance > 34 and chance < 67 then
-			caster.ManaBlastCount = caster.ManaBlastCount + 2
-		elseif chance > 67 and chance < 100 then
-			caster.ManaBlastCount = caster.ManaBlastCount + 3
+		if caster.ManaBlastCount < 7 then
+			local chance = RandomInt(1, 100) 
+			if chance > 1 and chance < 34 then
+				caster.ManaBlastCount = caster.ManaBlastCount + 1
+			elseif chance > 34 and chance < 67 then
+				caster.ManaBlastCount = caster.ManaBlastCount + 2
+			elseif chance > 67 and chance < 100 then
+				caster.ManaBlastCount = caster.ManaBlastCount + 3
+			end
 		end
 	end
 	DSCheckCombo(keys.caster, keys.ability)
@@ -26,7 +28,7 @@ end
 
 function OnUFStart(keys)
 	local caster = keys.caster
-	local UFCount = 0
+	local UFCount = 0ye
 	DSCheckCombo(caster, keys.ability)
 	Timers:CreateTimer(function()
 		if UFCount == 5 then return end
