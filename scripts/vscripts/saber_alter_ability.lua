@@ -91,12 +91,7 @@ function OnMMBStart(keys)
 
 	local dmg = caster:GetMaxMana()
 	if ply.IsManaShroudImproved == true then dmg = dmg + 200 end
-	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_e_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
-	local particle = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
-	local particle = ParticleManager:CreateParticle("particles/prototype_fx/item_linkens_buff_explosion_wave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+	
 	for k,v in pairs(targets) do
 	    DoDamage(caster, v, dmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability)
 	end
