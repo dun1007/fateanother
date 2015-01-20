@@ -8,8 +8,6 @@ function OnDerangeStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	
-	ply.IsManaBlastAcquired = true
-	
 	if ply.IsManaBlastAcquired then
 		--[[
 			Fix a bug where user can have more than 7 charges and add VFX
