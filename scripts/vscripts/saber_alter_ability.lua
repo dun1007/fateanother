@@ -7,10 +7,7 @@ require("util")
 function OnDerangeStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-<<<<<<< HEAD
 	
-=======
->>>>>>> parent of 9e5daf4... Updated Saber Alter to show Mana Catalyst's counter
 	if ply.IsManaBlastAcquired then
 		--[[
 			Fix a bug where user can have more than 7 charges and add VFX
@@ -46,6 +43,9 @@ function OnDerangeStart(keys)
 		for i = 1, next_charge do
 			keys.ability:ApplyDataDrivenModifier( caster, caster, "modifier_derange_mana_catalyst_VFX", {} )
 		end
+		
+		-- Update the charge
+		caster:SetModifierStackCount( "modifier_derange_counter", caster, caster.ManaBlastCount )
 	end
 	DSCheckCombo(keys.caster, keys.ability)
 end
@@ -105,6 +105,9 @@ function OnMBStart(keys)
 			ProjectileManager:CreateTrackingProjectile(info) 
 			caster.ManaBlastCount = caster.ManaBlastCount - 1
 		end
+		
+		-- Update the charge
+		caster:SetModifierStackCount( "modifier_derange_counter", caster, caster.ManaBlastCount )
 	end
 
 	for k,v in pairs(targets) do
