@@ -8,15 +8,39 @@ function OnDerangeStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	if ply.IsManaBlastAcquired then
-		if caster.ManaBlastCount < 7 then
-			local chance = RandomInt(1, 100) 
-			if chance > 1 and chance < 34 then
-				caster.ManaBlastCount = caster.ManaBlastCount + 1
-			elseif chance > 34 and chance < 67 then
-				caster.ManaBlastCount = caster.ManaBlastCount + 2
-			elseif chance > 67 and chance < 100 then
-				caster.ManaBlastCount = caster.ManaBlastCount + 3
+		--[[
+			Fix a bug where user can have more than 7 charges and add VFX
+		]]
+		local maximum_charges = keys.ability:GetLevelSpecialValueFor( "maximum_charges", keys.ability:GetLevel() - 1 )
+		
+		-- Check the amount of next charge
+		local chance = RandomInt( 1, 100 )
+		local next_charge = 0
+		if chance > 67 then
+			next_charge = 3
+		elseif chance > 34 then
+			next_charge = 2
+		elseif chance > 1 then
+			next_charge = 1
+		end
+		
+		-- Check if the charges will become over capacity
+		if not caster.ManaBlastCount then caster.ManaBlastCount = 0 end	-- This might be because I was debugging it to double check nil value
+
+		if caster.ManaBlastCount + next_charge > maximum_charges then
+			if caster.ManaBlastCount == maximum_charges then
+				next_charge = 0
+			else
+				next_charge = caster.ManaBlastCount + next_charge - maximum_charges
 			end
+			caster.ManaBlastCount = maximum_charges
+		else
+			caster.ManaBlastCount = caster.ManaBlastCount + next_charge
+		end
+		
+		-- Adding modifiers
+		for i = 1, next_charge do
+			keys.ability:ApplyDataDrivenModifier( caster, caster, "modifier_derange_mana_catalyst_VFX", {} )
 		end
 	end
 	DSCheckCombo(keys.caster, keys.ability)
@@ -67,6 +91,11 @@ function OnMBStart(keys)
 	}
 	
 	if ply.IsManaBlastAcquired then
+		-- Force remove all particles
+		while caster:HasModifier( "modifier_derange_mana_catalyst_VFX" ) do
+			caster:RemoveModifierByName( "modifier_derange_mana_catalyst_VFX" )
+		end
+		
 		while caster.ManaBlastCount ~= 0 do
 			info.Target = targets[math.random(#targets)]
 			ProjectileManager:CreateTrackingProjectile(info) 

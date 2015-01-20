@@ -2488,6 +2488,7 @@
 		"precache"
 		{
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+			"particle"				"particles/custom/saber_alter/saber_alter_mana_catalyst.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -2511,6 +2512,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"armor_reduction"		"-2 -4 -6 -8 -10"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_charges"		"7"
 			}
 		}
 		
@@ -2554,12 +2560,36 @@
 					}
 				}
 			}
+			
 			"modifier_armor_reduction"
 			{
 				"Duration"	"1.0"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"%armor_reduction"
+				}
+			}
+			
+			"modifier_derange_mana_catalyst_VFX"
+			{
+				"IsPurgable"	"0"
+				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/custom/saber_alter/saber_alter_mana_catalyst.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
 				}
 			}
 		}
