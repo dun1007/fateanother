@@ -136,6 +136,7 @@ function OnMMBStart(keys)
 	end
 end
 
+vortigernCount = 0
 function OnVortigernStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -148,7 +149,6 @@ function OnVortigernStart(keys)
 	end
 	EmitGlobalSound("Saber_Alter.Vortigern")
 
-	local vortigernCount = 0
 	local vortigernBeam =
 	{
 		Ability = keys.ability,
@@ -157,7 +157,7 @@ function OnVortigernStart(keys)
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		fDistance = 600,
 		Source = caster,
-		fStartRadius = 50,
+		fStartRadius = 75,
         fEndRadius = 250,
 		bHasFrontialCone = true,
 		bReplaceExisting = false,
@@ -215,6 +215,7 @@ function OnVortigernHit(keys)
 	local ply = caster:GetPlayerOwner()
 	local damage = keys.Damage
 	print("Vortigern hit")
+	damage = damage * (85 + vortigernCount * 5)/100
 	if ply.IsFerocityImproved then 
 		damage = damage + 100
 		keys.StunDuration = keys.StunDuration + 0.3
@@ -223,6 +224,7 @@ function OnVortigernHit(keys)
 		target.IsVortigernHit = true
 		Timers:CreateTimer(0.36, function() target.IsVortigernHit = false return end)
 		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		target:AddNewModifier(caster, caster, "modifier_stunned", {Duration = keys.StunDuration})
 	end
 
 end

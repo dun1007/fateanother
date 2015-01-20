@@ -2895,6 +2895,7 @@
 
 		"OnProjectileHitUnit"
 		{
+			"DeleteOnHit"			"false"
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
