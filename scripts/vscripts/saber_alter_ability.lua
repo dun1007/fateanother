@@ -129,11 +129,11 @@ function OnMMBStart(keys)
 	end
 end
 
---[[function OnVortigernStart(keys)
+function OnVortigernStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local damage = keys.Damage
-	local forward = caster:GetForwardVector() 
+	local forward = ( keys.target_points[1] - caster:GetAbsOrigin() ):Normalized() -- caster:GetForwardVector() 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 0.4)
 	if ply.IsFerocityImproved then 
 		damage = damage + 100
@@ -151,7 +151,7 @@ end
 		fDistance = 600,
 		Source = caster,
 		fStartRadius = 50,
-        fEndRadius = 200,
+        fEndRadius = 250,
 		bHasFrontialCone = true,
 		bReplaceExisting = false,
 		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
@@ -162,16 +162,42 @@ end
 		vVelocity = 0,
 	}
 
-	local casterAngle = QAngle(0,120,0)
+	
+	--[[local casterAngle = QAngle(0, 120 ,0)
 	Timers:CreateTimer(function() 
 			if vortigernCount == 10 then vortigernCount = 0 return end -- finish spell
-			vortigernBeam.vVelocity = RotatePosition(caster:GetAbsOrigin(), casterAngle, forward * 10000) 
+			vortigernBeam.vVelocity = RotatePosition(caster:GetAbsOrigin(), casterAngle, forward * 3000) 
 			local projectile = ProjectileManager:CreateLinearProjectile(vortigernBeam)
 			casterAngle.y = casterAngle.y - 24;
 			print(casterAngle.y)
 			vortigernCount = vortigernCount + 1; 
 			
 			return 0.040 
+		end
+	)]]
+	
+	-- Base variables
+	local angle = 120
+	local increment_factor = 30
+	local origin = caster:GetAbsOrigin()
+	local destination = origin + forward
+	Timers:CreateTimer( function()
+			-- Finish spell, need to include the last angle as well
+			-- Note that the projectile limit is currently at 9, to increment this, need to create either dummy or thinker to store them
+			if vortigernCount == 9 then vortigernCount = 0 return end
+			
+			-- Start rotating
+			local theta = ( angle - vortigernCount * increment_factor ) * math.pi / 180
+			local px = math.cos( theta ) * ( destination.x - origin.x ) - math.sin( theta ) * ( destination.y - origin.y ) + origin.x
+			local py = math.sin( theta ) * ( destination.x - origin.x ) + math.cos( theta ) * ( destination.y - origin.y ) + origin.y
+			local new_forward = ( Vector( px, py, origin.z ) - origin ):Normalized()
+			vortigernBeam.vVelocity = new_forward * 3000
+			
+			-- Fire the projectile
+			local projectile = ProjectileManager:CreateLinearProjectile( vortigernBeam )
+			vortigernCount = vortigernCount + 1
+			
+			return 0.04
 		end
 	)
 end
@@ -192,9 +218,9 @@ function OnVortigernHit(keys)
 		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	end
 
-end]]
+end
 
-function OnVortigernStart(keys)
+--[[ function OnVortigernStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local casterVec = caster:GetForwardVector()
@@ -231,7 +257,7 @@ function OnVortigernStart(keys)
         	v:AddNewModifier(caster, target, "modifier_stunned", {duration = keys.StunDuration})
         end
     end
-end
+end]]
 
 function OnDexStart(keys)
 	local caster = keys.caster
