@@ -2570,6 +2570,12 @@
 				}
 			}
 			
+			"modifier_derange_counter"
+			{
+				"Passive"		"1"
+				"IsPurgable"	"0"
+			}
+			
 			"modifier_derange_mana_catalyst_VFX"
 			{
 				"IsPurgable"	"0"
@@ -2887,16 +2893,16 @@
 			}
 		}
 
-//		"OnProjectileHitUnit"
-//		{
-//			"RunScript"
-//			{
-//				"ScriptFile"	"saber_alter_ability"
-//				"Function"		"OnVortigernHit"
-//				"Damage"		"%damage"
-//				"StunDuration"	"%stun_duration"
-//			}
-//		}
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnVortigernHit"
+				"Damage"		"%damage"
+				"StunDuration"	"%stun_duration"
+			}
+		}
 		
 		"Modifiers"
 		{
