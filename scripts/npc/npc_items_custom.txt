@@ -5,7 +5,7 @@
 	{
 	    "ID"           "1998"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" "master_transfer_items"
+	    "AbilityTextureName" "master_transfer_items1"
 	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"

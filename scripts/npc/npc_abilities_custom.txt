@@ -2698,6 +2698,7 @@
 			"particle"		"particles/units/heroes/hero_disruptor/disruptor_static_storm.vpcf"
 			"particle"		"particles/units/heroes/hero_slark/slark_dark_pact_pulses.vpcf"
 			"particle"		"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"		"particles/custom/screen_blue_splash.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.8"

@@ -88,6 +88,7 @@ function OnMMBStart(keys)
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	EmitGlobalSound("Saber_Alter.MMB" ) 
 	EmitGlobalSound("Saber_Alter.MMBAfter") 
+	ParticleManager:CreateParticle("particles/custom/screen_blue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
 	local dmg = caster:GetMaxMana()
 	if ply.IsManaShroudImproved == true then dmg = dmg + 200 end

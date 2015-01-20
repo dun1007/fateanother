@@ -293,6 +293,7 @@ function FateGameMode:OnNPCSpawned(keys)
       -- Create personal stash for hero
       masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
       masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
+      masterStash:SetAcquisitionRange(200)
       hero.MasterStash = masterStash
       LevelAllAbility(masterStash)
 

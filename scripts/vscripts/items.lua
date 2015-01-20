@@ -3,8 +3,6 @@ require("util")
 cdummy = nil
 
 function OnManaEssenceAcquired(keys)
-	PrintTable(keys)
-	keys.caster:RemoveItem(keys.ability)
 end 
 
 function TransferItem(keys)
@@ -14,6 +12,7 @@ function TransferItem(keys)
 
 	print("Transfering item to hero")
 	local stash_item = hero:GetItemInSlot(keys.Slot+5) -- This looks for slot 6/7/8/9/10/11(Stash)
+	PrintTable(stash_item)
 	-- If item is found, remove it from stash and add it to hero
 	if stash_item ~= nil then
 		--[[If hero has empty inventory slot, move item to hero
@@ -25,8 +24,8 @@ function TransferItem(keys)
 				return
 			end
 		end]]
-		hero:AddItem(stash_item) 
-		caster:RemoveItem(stash_item)		
+		hero:AddItem(CreateItem(stash_item:GetName(), nil, nil)) 
+		hero:RemoveItem(hero:GetItemInSlot(keys.Slot+5)) 
 	else
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Items Found in Chosen Slot of Stash" } )
 	end
