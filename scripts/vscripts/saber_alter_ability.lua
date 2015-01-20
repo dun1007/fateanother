@@ -28,7 +28,7 @@ end
 
 function OnUFStart(keys)
 	local caster = keys.caster
-	local UFCount = 0ye
+	local UFCount = 0
 	DSCheckCombo(caster, keys.ability)
 	Timers:CreateTimer(function()
 		if UFCount == 5 then return end
@@ -99,6 +99,71 @@ function OnMMBStart(keys)
 	    DoDamage(caster, v, dmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability)
 	end
 end
+
+--[[function OnVortigernStart(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local damage = keys.Damage
+	local forward = caster:GetForwardVector() 
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 0.4)
+	if ply.IsFerocityImproved then 
+		damage = damage + 100
+		keys.StunDuration = keys.StunDuration + 0.3
+	end
+	EmitGlobalSound("Saber_Alter.Vortigern")
+
+	local vortigernCount = 0
+	local vortigernBeam =
+	{
+		Ability = keys.ability,
+		EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+		iMoveSpeed = 3000,
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		fDistance = 600,
+		Source = caster,
+		fStartRadius = 50,
+        fEndRadius = 200,
+		bHasFrontialCone = true,
+		bReplaceExisting = false,
+		iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+		iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+		iUnitTargetType = DOTA_UNIT_TARGET_ALL,
+		fExpireTime = GameRules:GetGameTime() + 0.4,
+		bDeleteOnHit = false,
+		vVelocity = 0,
+	}
+
+	local casterAngle = QAngle(0,120,0)
+	Timers:CreateTimer(function() 
+			if vortigernCount == 10 then vortigernCount = 0 return end -- finish spell
+			vortigernBeam.vVelocity = RotatePosition(caster:GetAbsOrigin(), casterAngle, forward * 10000) 
+			local projectile = ProjectileManager:CreateLinearProjectile(vortigernBeam)
+			casterAngle.y = casterAngle.y - 24;
+			print(casterAngle.y)
+			vortigernCount = vortigernCount + 1; 
+			
+			return 0.040 
+		end
+	)
+end
+
+function OnVortigernHit(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	local damage = keys.Damage
+	print("Vortigern hit")
+	if ply.IsFerocityImproved then 
+		damage = damage + 100
+		keys.StunDuration = keys.StunDuration + 0.3
+	end
+	if target.IsVortigernHit ~= true then
+		target.IsVortigernHit = true
+		Timers:CreateTimer(0.36, function() target.IsVortigernHit = false return end)
+		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	end
+
+end]]
 
 function OnVortigernStart(keys)
 	local caster = keys.caster
@@ -216,34 +281,6 @@ end
 			return .01 -- tick every 0.01
 		end
 	)
-end
-
-function OnVortigernHit(keys)
-	local target = keys.target
-	local caster = keys.caster
-	
-	if keys.target:GetContext("IsVortigernHit") ~= nil or keys.target:GetContext("IsVortigernHit") == 1 then
-		print(vortigernCount .. " already hit")
-	else
-		local damageTable = {
-			victim = keys.target,
-			attacker = keys.caster,
-			damage = keys.Damage * (0.85+vortigernCount*0.01),
-			damage_type = DAMAGE_TYPE_MAGICAL,
-		}
-		ApplyDamage(damageTable)	
-		print("dealt "..damageTable.damage)
-		
-		target:AddNewModifier(caster, nil, "modifier_stunned", {duration = keys.StunDuration})
-		
-		target:SetContextNum("IsVortigernHit",1.0, 1.0)
-		Timers:CreateTimer(0.4, function() return VortigernThinker(target,1) end)
-	end
-end
-
-function VortigernThinker(target, runCount)
-	target:SetContextNum("IsVortigernHit",0,0)
-	return nil
 end]]
 
 DUsed = false

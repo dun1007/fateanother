@@ -313,20 +313,20 @@ function OnGBAOEStart(keys)
 	Timers:CreateTimer('gb_ascend', {
 		endTime = 0,
 		callback = function()
-	   	if ascendCount == 30 then return end
-		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+24))
+	   	if ascendCount == 10 then return end
+		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+50))
 		ascendCount = ascendCount + 1;
-		return 0.01
+		return 0.033
 	end
 	})
 
 	Timers:CreateTimer("gb_descend", {
 	    endTime = 0.3,
 	    callback = function()
-	    	if descendCount == 30 then return end
-			caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z-24))
+	    	if descendCount == 10 then return end
+			caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z-50))
 			descendCount = descendCount + 1;
-	      	return 0.01
+	      	return 0.033
 	    end
 	})
 end

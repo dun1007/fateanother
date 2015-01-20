@@ -12,7 +12,7 @@ function TransferItem(keys)
 
 	print("Transfering item to hero")
 	local stash_item = hero:GetItemInSlot(keys.Slot+5) -- This looks for slot 6/7/8/9/10/11(Stash)
-	PrintTable(stash_item)
+	--PrintTable(stash_item)
 	-- If item is found, remove it from stash and add it to hero
 	if stash_item ~= nil then
 		--[[If hero has empty inventory slot, move item to hero

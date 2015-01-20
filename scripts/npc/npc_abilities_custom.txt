@@ -2851,11 +2851,22 @@
 					"ScriptFile"    "saber_alter_ability"
 					"Function"      "OnVortigernStart"
 					"Target"		"POINT"
-					"Damage"		"%damage"
 					"Radius"		"%radius"
+					"Damage"		"%damage"
 					"StunDuration"	"%stun_duration"
 			}
 		}
+
+//		"OnProjectileHitUnit"
+//		{
+//			"RunScript"
+//			{
+//				"ScriptFile"	"saber_alter_ability"
+//				"Function"		"OnVortigernHit"
+//				"Damage"		"%damage"
+//				"StunDuration"	"%stun_duration"
+//			}
+//		}
 		
 		"Modifiers"
 		{
@@ -5070,14 +5081,11 @@
 				"Function"			"OnFissureStart"
 				"Target"			"POINT"
 				"Width"				"%width"
-				"Range"				"%range"
-				"Speed"				"%range"
 			}
 		}
 
 		"OnProjectileHitUnit"
 		{
-			"DeleteOnHit"			"false"
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"

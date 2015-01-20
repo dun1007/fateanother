@@ -269,6 +269,14 @@ function OnMaxStart(keys)
 	Timers:CreateTimer({
 		endTime = 3, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
 		callback = function()
+
+		--[[for i=0, 9 do
+			local player = PlayerResource:GetPlayer(i)
+			if player ~= nil then 
+				hero = PlayerResource:GetPlayer(i):GetAssignedHero()
+				ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, hero)
+			end
+		end]]
 		ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
 	    local projectile = ProjectileManager:CreateLinearProjectile( max_excal )

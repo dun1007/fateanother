@@ -47,7 +47,8 @@ function OnChainStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 	local targetloc = target:GetAbsOrigin()
-	giveUnitDataDrivenModifier(caster, target, "pause_sealdisabled", keys.Duration)
+	giveUnitDataDrivenModifier(caster, target, "pause_sealenabled", keys.Duration)
+	giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", keys.Duration)
 	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
 

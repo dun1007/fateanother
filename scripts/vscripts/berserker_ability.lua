@@ -3,30 +3,28 @@ require("util")
 
 function OnFissureStart(keys)
 	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-	BerCheckCombo(caster, keys.ability)
-	local fissure = {
-	    Ability        	 	=   keys.ability,
-		EffectName			=	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
-		iMoveSpeed			=   keys.Speed,
-		vSpawnOrigin		=	caster:GetAbsOrigin(),
-		fDistance			=	500,
-		fStartRadius		=	keys.Width,
-		fEndRadius			=	keys.Width,
-		Source         	 	=   caster,
-		bHasFrontalCone		=	true,
-		bRepalceExisting 	=  false,
-		iUnitTargetTeams		=	DOTA_UNIT_TARGET_TEAM_ENEMY,
-		iUnitTargetFlags		=	DOTA_UNIT_TARGET_FLAG_NONE,
-		iUnitTargetTypes		=	DOTA_UNIT_TARGET_ALL,
-		fExpireTime     =   GameRules:GetGameTime() + 2.0,
-		bDeleteOnHit    =   false,
-		vVelocity       =   caster:GetForwardVector() * keys.Speed
+	local frontward = caster:GetForwardVector()
+	local fiss = 
+	{
+		Ability = keys.ability,
+        EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
+        iMoveSpeed = 500,
+        vSpawnOrigin = nil,
+        fDistance = 500,
+        fStartRadius = 250,
+        fEndRadius = 250,
+        Source = caster,
+        bHasFrontalCone = true,
+        bReplaceExisting = false,
+        iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+        iUnitTargetType = DOTA_UNIT_TARGET_ALL,
+        fExpireTime = GameRules:GetGameTime() + 2.0,
+		bDeleteOnHit = false,
+		vVelocity = frontward * 500
 	}
-	local proj = ProjectileManager:CreateLinearProjectile(fissure)
-
-	--local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_earth_splitter_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-    --ParticleManager:SetParticleControl(particle, 1, targetPoint)
+	fiss.vSpawnOrigin = caster:GetAbsOrigin() 
+	projectile = ProjectileManager:CreateLinearProjectile(fiss)
 
 end
 
@@ -192,12 +190,12 @@ function OnNineLanded(caster, ability)
 		if caster:IsAlive() then -- only perform actions while caster stays alive
 			if nineCounter == 8 then -- if nine is finished
 				EmitGlobalSound("Berserker.Roar") 
-				caster:RemoveModifierByName("nine_pause") 
+				caster:RemoveModifierByName("pause_sealdisabled") 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-					giveUnitDataDrivenModifier(caster, v, "pause_sealdisabled", 1.0)
+					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
 				end
 				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
@@ -210,7 +208,7 @@ function OnNineLanded(caster, ability)
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-				giveUnitDataDrivenModifier(caster, v, "pause_sealdisabled", 1.0)
+				giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
 			end
 
 			local particle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
