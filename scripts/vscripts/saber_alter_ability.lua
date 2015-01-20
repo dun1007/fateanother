@@ -145,7 +145,7 @@ function OnDexStart(keys)
 	local dex = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+        EffectName = "particles/custom/saber_alter/saber_alter_excalibur.vpcf",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = nil,
         fDistance = keys.Range,

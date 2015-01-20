@@ -2879,12 +2879,18 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityTextureName"			"saber_alter_excalibur"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
-		"AnimationPlaybackRate" 		"1.0"
+		"AnimationPlaybackRate" 		"0.9"
 		"precache"
 		{
 			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"
 			"particle_folder"		"particles/units/heroes/hero_invoker"
 			"particle_folder"		"particles/units/heroes/hero_lina"
+			"particle"				"particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death_ring_d_black.vpcf"
+			"particle"				"particles/units/heroes/hero_enigma/enigma_blackhole_n.vpcf"
+			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_cast.vpcf"
+			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_overcharge.vpcf"
+			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam.vpcf"
+			"particle"				"particles/custom/saber_alter/saber_alter_excalibur.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -2901,31 +2907,8 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"800"
 		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"    "saber_alter_ability"
-				"Function"      "OnDexStart"
-				"Speed"			"%speed"
-				"Width"			"%width"
-				"Range"		"%length"
-			}
-		}
-		
-		
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"			"false"
-			"RunScript"
-			{
-				"ScriptFile"	"saber_alter_ability"
-				"Function"		"OnDexHit"
-				"Damage"		"%damage"
-			}
-		}
-				
-					
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
 			"01"
@@ -2948,10 +2931,175 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"900 1250 1600 1950 2300"
 			}
+			// Extra variables
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"pause_duration"		"4.0"
+			}
 		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"dark_excalibur_VFX_controller"
+				"Target"			"CASTER"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"    "saber_alter_ability"
+				"Function"      "OnDexStart"
+				"Speed"			"%speed"
+				"Width"			"%width"
+				"Range"		"%length"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+				"ScriptFile"	"saber_alter_ability"
+				"Function"		"OnDexHit"
+				"Damage"		"%damage"
+			}
+		}				
 		
 		"Modifiers"
 		{
+			"dark_excalibur_VFX_controller"
+			{
+				"Duration"		"%pause_duration"
+				
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"dark_excalibur_vfx_phase_1"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"		"TARGET"
+						"ModifierName"	"dark_excalibur_vfx_phase_3"
+					}
+				}
+			}
+			
+			// VFX section
+			"dark_excalibur_vfx_phase_1"
+			{
+				"IsHidden"					"1"
+				"Duration"					"1.5"
+			
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_alter/saber_alter_excalibur_cast.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_alter/saber_alter_excalibur_cast.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_alter/saber_alter_excalibur_cast.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+				}
+				
+				"ThinkInterval"				"1.1"
+				"OnIntervalThink"
+				{
+					"ApplyModifier"
+					{
+						"Target"			"TARGET"
+						"ModifierName"		"dark_excalibur_vfx_phase_2"
+					}
+				}
+			}
+			
+			"dark_excalibur_vfx_phase_2"
+			{
+				"IsHidden"					"1"
+				"Duration"					"1.9"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_alter/saber_alter_excalibur_beam.vpcf"
+						"EffectAttachType"	"attach_origin"
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_alter/saber_alter_excalibur_overcharge.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_sword"
+						}
+					}
+					
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_enigma/enigma_blackhole_n.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_origin"
+							"TARGET"		"attach_origin"
+						}
+					}
+				}
+			}
+			
+			"dark_excalibur_vfx_phase_3"
+			{
+				"IsHidden"					"1"
+				"Duration"					"3.0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death_ring_d_black.vpcf"
+						"EffectAttachType"	"start_at_origin"
+					}
+				}
+			}
 		}
 	}
 

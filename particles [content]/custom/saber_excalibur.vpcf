@@ -16,7 +16,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	string m_hFallback = ""
 	int m_nFallbackMaxCount = -1
 	string m_hLowViolenceDef = ""
-	uint(4) m_ConstantColor = ( 255, 238, 0, 255 )
+	uint(4) m_ConstantColor = ( 255, 255, 0, 255 )
 	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
 	float m_flConstantRadius = 2.000000
 	float m_flConstantRotation = 0.000000
@@ -47,54 +47,6 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	string m_Name = ""
 	ParticleChildrenInfo_t[] m_Children = 
 	[
-		ParticleChildrenInfo_t
-		{
-			string m_ChildRef = "particles/units/heroes/hero_magnataur/magnataur_shockwave_cracks_warp.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		},
-		ParticleChildrenInfo_t
-		{
-			string m_ChildRef = "particles/custom/saber_excalibur_cracks_background.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		},
-		ParticleChildrenInfo_t
-		{
-			string m_ChildRef = "particles/custom/saber_excalibur_cracks_center.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		},
-		ParticleChildrenInfo_t
-		{
-			string m_ChildRef = "particles/custom/saber_excalibur_crack_glow.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		},
-		ParticleChildrenInfo_t
-		{
-			string m_ChildRef = "particles/custom/saber_excalibur_glow.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		},
-		ParticleChildrenInfo_t
-		{
-			string m_ChildRef = "particles/custom/saber_excalibur_light.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = true
-		},
 		ParticleChildrenInfo_t
 		{
 			string m_ChildRef = "particles/custom/saber_excalibur_spark.vpcf"
