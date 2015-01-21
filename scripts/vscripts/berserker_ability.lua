@@ -29,7 +29,6 @@ function OnFissureStart(keys)
 end
 
 function OnFissureHit(keys)
-	print("does it ever hit")
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 

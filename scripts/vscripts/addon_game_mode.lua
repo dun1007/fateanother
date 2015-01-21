@@ -508,7 +508,7 @@ function FateGameMode:InitGameMode()
 	GameRules:SetPostGameTime(0)
 	GameRules:SetUseCustomHeroXPValues(true)
 	GameRules:SetGoldPerTick(0)
-	GameRules:GetGameModeEntity():SetCameraDistanceOverride(1700)
+	GameRules:GetGameModeEntity():SetCameraDistanceOverride(2200)
   GameRules:SetUseBaseGoldBountyOnHeroes(false)
 
 	-- Random seed for RNG
