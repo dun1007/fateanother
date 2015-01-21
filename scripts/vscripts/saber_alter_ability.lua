@@ -211,9 +211,9 @@ function OnVortigernStart(keys)
 			ParticleManager:SetParticleControl( fxIndex1, 1, vortigernBeam.vVelocity )
 			ParticleManager:SetParticleControl( fxIndex1, 2, Vector( 0.2, 0.2, 0.2 ) )
 			
-			local groundFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_vortigern_ground.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			--[[local groundFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_vortigern_ground.vpcf", PATTACH_CUSTOMORIGIN, caster )
 			ParticleManager:SetParticleControl( groundFxIndex, 0, caster:GetAbsOrigin() )
-			ParticleManager:SetParticleControl( groundFxIndex, 1, caster:GetAbsOrigin() + new_forward * 600 )
+			ParticleManager:SetParticleControl( groundFxIndex, 1, caster:GetAbsOrigin() + new_forward * 600 )]]
 			
 			Timers:CreateTimer( 0.2, function()
 					ParticleManager:DestroyParticle( fxIndex1, false )

@@ -2853,7 +2853,6 @@
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"particle"	"particles/custom/saber_alter/saber_alter_vortigern_ground.vpcf"
 			"particle"	"particles/custom/saber_alter/saber_alter_vortigern_line.vpcf"
 		}
 		
