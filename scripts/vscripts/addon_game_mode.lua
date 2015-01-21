@@ -136,6 +136,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetGold(0, false)
     LevelAllAbility(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
+    --RemoveWearables(hero)
   	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
     local heroName = FindName(hero:GetName())
     hero.name = heroName
@@ -211,6 +212,14 @@ function FateGameMode:PlayerSay(keys)
   if text == "-customping" then
     print("Testing custom ping")
     CustomPing(plyID, Vector(0,0,0))
+  end
+
+  if text == "-clearcosmetic" then
+    RemoveWearables(ply:GetAssignedHero())
+  end
+
+  if text == "-cam 150" then
+    GameRules:GetGameModeEntity():SetCameraDistanceOverride(1500)
   end
 end
 -- The overall game state has changed
@@ -508,7 +517,6 @@ function FateGameMode:InitGameMode()
 	GameRules:SetPostGameTime(0)
 	GameRules:SetUseCustomHeroXPValues(true)
 	GameRules:SetGoldPerTick(0)
-	GameRules:GetGameModeEntity():SetCameraDistanceOverride(2200)
   GameRules:SetUseBaseGoldBountyOnHeroes(false)
 
 	-- Random seed for RNG
@@ -767,9 +775,9 @@ function FateGameMode:CaptureGameMode()
 	print("First player loaded in, setting parameters")
   if mode == nil then
     -- Set FateGameMode parameters
-    mode = GameRules:GetGameModeEntity()        
+    mode = GameRules:GetGameModeEntity()    
     mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
-    mode:SetCameraDistanceOverride( CAMERA_DISTANCE_OVERRIDE )
+    mode:SetCameraDistanceOverride(1500)
     mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
     mode:SetCustomBuybackCooldownEnabled( CUSTOM_BUYBACK_COOLDOWN_ENABLED )
     mode:SetBuybackEnabled( BUYBACK_ENABLED )
@@ -814,7 +822,24 @@ function FateGameMode:OnConnectFull(keys)
   local entIndex = keys.index+1
   -- The Player entity of the joining user
   local ply = EntIndexToHScript(entIndex)
-  
+
+  if(ply~=nil)then
+    ply:SetContextThink(DoUniqueString("heroselected"),
+      function()
+        local hero = ply:GetAssignedHero()
+        if (hero ~= nil) then
+              hero:SetContextThink(DoUniqueString("removecosmetic"),
+                  function()
+                      RemoveWearables(hero)
+                      return 0.5
+                  end
+              ,0.5)
+          return nil
+        end
+        return 0.1
+      end
+    ,0.1)
+  end
   -- The Player ID of the joining player
   local playerID = ply:GetPlayerID()
 

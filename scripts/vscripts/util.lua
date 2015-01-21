@@ -471,3 +471,22 @@ function LogDeepPrint(debugInstance, prefix)
     LogEndLine(LogDeepToString(debugInstance, prefix))
 end
 
+function RemoveWearables( hero )
+    local wearables = {}
+    local model = hero:FirstMoveChild()
+    while model ~= nil do
+        if model ~= nil and model:GetClassname() ~= "" then 
+            if model:GetClassname() == "dota_item_wearable" then
+                table.insert(wearables, model)
+            elseif string.find(model:GetModelName(), "weapon") ~= nil then
+                table.insert(wearables, model)
+            end
+        end
+        model = model:NextMovePeer()
+    end
+
+    for i = 1, #wearables do
+        print("removed 1 wearable")
+        wearables[i]:RemoveSelf()
+    end
+end
