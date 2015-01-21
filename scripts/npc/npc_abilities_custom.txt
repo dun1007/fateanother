@@ -2850,10 +2850,9 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_windrunner/windrunner_spell_powershot.vpcf"
-			"particle"	"particles/units/heroes/hero_nevermore/nevermore_requiemofsouls_line_heads_trail_e.vpcf"
-			"particle"	"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
-			"particle"	"particles/econ/generic/generic_projectile_linear_1/generic_projectile_linear_1.vpcf"
+			"particle"	"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle"	"particles/custom/saber_alter/saber_alter_vortigern_ground.vpcf"
+			"particle"	"particles/custom/saber_alter/saber_alter_vortigern_line.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.15"
@@ -6827,7 +6826,7 @@
 						"Target"		"CASTER"
 						"HealAmount"	"%heal_amount/5"
 					}		
-				}	Search
+				}	// Search
 
 
 				"Duration"		"5.0"

@@ -152,7 +152,7 @@ function OnVortigernStart(keys)
 	local vortigernBeam =
 	{
 		Ability = keys.ability,
-		EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+		EffectName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
 		iMoveSpeed = 3000,
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		fDistance = 600,
@@ -199,10 +199,30 @@ function OnVortigernStart(keys)
 			local py = math.sin( theta ) * ( destination.x - origin.x ) + math.cos( theta ) * ( destination.y - origin.y ) + origin.y
 			local new_forward = ( Vector( px, py, origin.z ) - origin ):Normalized()
 			vortigernBeam.vVelocity = new_forward * 3000
+			vortigernBeam.fExpireTime = GameRules:GetGameTime() + 0.4
 			
 			-- Fire the projectile
 			local projectile = ProjectileManager:CreateLinearProjectile( vortigernBeam )
 			vortigernCount = vortigernCount + 1
+			
+			-- Create particles
+			local fxIndex1 = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_vortigern_line.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( fxIndex1, 0, caster:GetAbsOrigin() )
+			ParticleManager:SetParticleControl( fxIndex1, 1, vortigernBeam.vVelocity )
+			ParticleManager:SetParticleControl( fxIndex1, 2, Vector( 0.2, 0.2, 0.2 ) )
+			
+			local groundFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_vortigern_ground.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( groundFxIndex, 0, caster:GetAbsOrigin() )
+			ParticleManager:SetParticleControl( groundFxIndex, 1, caster:GetAbsOrigin() + new_forward * 600 )
+			
+			Timers:CreateTimer( 0.2, function()
+					ParticleManager:DestroyParticle( fxIndex1, false )
+					ParticleManager:DestroyParticle( groundFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( fxIndex1 )
+					ParticleManager:ReleaseParticleIndex( groundFxIndex )
+					return nil
+				end
+			)
 			
 			return 0.04
 		end
