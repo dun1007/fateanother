@@ -346,10 +346,9 @@
 		"Ability5"				"rubick_empty2"
 		"Ability6"				"false_assassin_tsubame_gaeshi"
 		"Ability7"				"false_assassin_illusory_wanderer"
-		"Ability8"				"false_assassin_combo_passive"
-		"Ability9"				"false_assassin_quickdraw"
-		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability8"				"false_assassin_quickdraw"
+		"Ability9"				"presence_detection_passive"
+		"Ability10"				"attribute_bonus"
 
 		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"2"

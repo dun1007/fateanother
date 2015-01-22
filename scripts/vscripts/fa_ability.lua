@@ -1,3 +1,5 @@
+IWActive = false
+
 function OnGKStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -16,26 +18,34 @@ end
 function OnIWStart(keys)
 	local caster = keys.caster
 	local pid = caster:GetPlayerID()
-
-	local illusion_caster = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
-	local dummy_passive = illusion_caster:FindAbilityByName("dummy_unit_passive")
-	dummy_passive:SetLevel(1)
-	local replicate = illusion_caster:FindAbilityByName("morphling_replicate")
-	replicate:SetLevel(1)
-	caster:SwapAbilities("rubick_empty1", "false_assassin_combo_passive", false, true) 
-
-	for i=0,3 do
-		print("is it cast?")
-		illusion_caster:CastAbilityOnTarget(keys.caster, replicate, pid)
-	end
-
+	local ability = keys.ability
+	local origin = caster:GetAbsOrigin() + RandomVector(100) 
+	caster.IllusionCast = true
 	Timers:CreateTimer({
-		endTime = 25.0,
+		endTime = 25,
 		callback = function()
-		caster:SwapAbilities("rubick_empty1", "false_assassin_combo_passive", true, false)
-		caster:RemoveModifierByName("modifier_psuedo_omnislash") 
+		caster.IllusionCast = false
 	end
 	})
+	for ilu = 0, 2 do
+		local illusion = CreateUnitByName(caster:GetUnitName(), origin, true, caster, nil, caster:GetTeamNumber()) 
+		print(illusion:GetPlayerOwner())
+		illusion:SetPlayerID(pid) 
+		illusion:SetControllableByPlayer(pid, true) 
+
+		for i=1,caster:GetLevel()-1 do
+			illusion:HeroLevelUp(false) 
+		end
+
+		illusion:SetBaseStrength(caster:GetStrength())
+		illusion:SetBaseAgility(caster:GetAgility())
+
+		illusion:SetAbilityPoints(0)
+
+		ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {}) 
+		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = keys.Duration, outgoing_damage = 70, incoming_damage = 200 })
+		illusion:MakeIllusion() 
+	end
 end
 
 function TPOnAttack(keys)

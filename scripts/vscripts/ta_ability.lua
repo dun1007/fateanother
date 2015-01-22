@@ -65,24 +65,30 @@ end
 
 function OnAmbushStart(keys)
 	local caster = keys.caster
-	caster:AddNewModifier(caster, caster, "modifier_invisible", {Duration = 12.0})
+	--caster:AddNewModifier(caster, caster, "modifier_invisible", {Duration = 12.0})
 	TACheckCombo(caster, keys.ability)
 end
 
 function OnFirstHitStart(keys)
-
-	Timers:CreateTimer({
-		endTime = 1.0,
-		callback = function()
-		keys.caster:RemoveModifierByName("modifier_first_hit")
-	end
-	})
+	keys.caster:RemoveModifierByName("modifier_ambush")
 end
 
 function OnFirstHitLanded(keys)
-	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_first_hit") return end -- Linken effect checker
 	print("dagger landed")
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	keys.caster:RemoveModifierByName("modifier_first_hit")
+end
+
+function OnAbilityCast(keys)
+	print("pls")
+	Timers:CreateTimer({
+		endTime = 0.033,
+		callback = function()
+		keys.caster:RemoveModifierByName("modifier_ambush")
+	end
+	})
+	keys.caster:RemoveModifierByName("modifier_first_hit")
 end
 
 function OnModStart(keys)
@@ -114,9 +120,11 @@ end
 function OnStealStart(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner() 
 	local target = keys.target
 
-	if caster:HasModifier("modifier_invisible") and ply.IsShadowStrikeAcquired then
+	if caster:HasModifier("modifier_ambush") and ply.IsShadowStrikeAcquired then
+		print("Shadow Strike activated")
 		keys.Damage = keys.Damage + 300
 	end
 
@@ -133,7 +141,7 @@ function OnZabStart(keys)
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 700
 	}
-	if caster:HasModifier("modifier_invisible") then caster.IsShadowStrikeActivated = true end
+	if caster:HasModifier("modifier_ambush") then caster.IsShadowStrikeActivated = true print("Shadow Strike activated") end
 
 	ProjectileManager:CreateTrackingProjectile(info) 
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)

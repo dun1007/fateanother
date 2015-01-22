@@ -5969,42 +5969,6 @@
 		}
 	}
 
-	//========================================
-	// False Assassin : Illusory Wanderer(Passive)
-	//========================================
-	"false_assassin_combo_passive"
-	{
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"false_assassin_illusion"
-
-		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
-		"AnimationPlaybackRate" 		"1.0"
-		"MaxLevel"						"1"
-
-		"AbilitySpecial"
-		{
-		}
-		
-		
-		"Modifiers"
-		{
-			"modifier_psuedo_omnislash"
-			{
-				"Passive"	"1"
-				"AllowIllusionDuplicate"	"1"
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"fa_ability"
-						"Function"			"TPOnAttack"
-					}
-				}
-
-			}
-		}
-	}
 
 	//========================================
 	// False Assassin : Illusory Wanderer
@@ -6016,7 +5980,7 @@
 		"AbilityTextureName"			"false_assassin_illusion"
 		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"AnimationPlaybackRate" 		"1.0"
-		"MaxLevel"						"5"
+		"MaxLevel"						"1"
 
 
 		// Casting
@@ -6046,11 +6010,30 @@
 			{
 				"ScriptFile"		"fa_ability"
 				"Function"			"OnIWStart"
+				"Duration"			"%duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_psuedo_omnislash"
+				"Target"			"CASTER"
 			}
 		}
 		
 		"Modifiers"
 		{
+			"modifier_psuedo_omnislash"
+			{
+				"AllowIllusionDuplicate"	"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"TPOnAttack"
+					}
+				}
+
+			}
 		}
 	}
 
@@ -6338,9 +6321,15 @@
 		"AbilityCastPoint"		"1.5"
 		"AbilityCooldown"		"0.0"
 		"MaxLevel"			"1"
+		"precache"
+		{
+			"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
+			
+		}
 
 		"OnSpellStart"
 		{
+
 			"ApplyModifier"
 			{
 				"Target"	"CASTER"
@@ -6358,6 +6347,13 @@
 		{
 			"modifier_ta_invis"
 			{
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"States"
+			    {
+				    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+				    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+			    }			
 				"OnAbilityExecuted"
 				{
 					"RunScript"
@@ -6381,10 +6377,6 @@
 						"ScriptFile"	"ta_ability"
 						"Function"		"OnPCDeactivate"
 					}
-				}
-				"States"
-				{
-					"MODIFIER_STATE_INVISIBLE"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -6612,7 +6604,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24"
+		"AbilityCooldown"				"24.0"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6632,36 +6624,90 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"100 200 300 400 500"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"10 15 20 25 30"
+			}
+		}
+
+		"precache"
+		{
+			"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk_smoke.vpcf"
+			"soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
 		}
 
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+			    "EffectName"    "Hero_TemplarAssassin.Meld"
+			    "Target" "CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnAmbushStart"
-				"Duration"			"%duration"
 			}
-			"ApplyModifier"
+			"DelayedAction"
 			{
-				"ModifierName"		"modifier_first_hit"
-				"Target"			"CASTER"
+				"Delay"		"1.0"
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_ambush"
+						"Target"			"CASTER"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_first_hit"
+						"Target"			"CASTER"
+					}
+				}
+
 			}
+
 		}
 
 		"Modifiers"
 		{
+			"modifier_ambush"
+			{
+			    "OnCreated"
+			    {
+				    "FireEffect"
+				    {
+					     "EffectName"  "particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk_smoke.vpcf"
+					     "EffectAttachType" "follow_origin"
+					     "Target" "CASTER"
+				    }
+			    }
+				"Duration"		"%duration"
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"States"
+			    {
+				    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+				    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+			    }
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movement_speed"
+			    }
+			}
 			"modifier_first_hit"
 			{
-				"Duration"		"%duration"
-				"OnAttack"
+				"Duration"		"%duration + 1.0"
+				"OnAttackStart"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"ta_ability"
 						"Function"			"OnFirstHitStart"
-					}
-				}
+					}					
+				}				
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -6670,6 +6716,14 @@
 						"Function"			"OnFirstHitLanded"
 						"Damage"			"%damage"
 					}					
+				}
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnAbilityCast"
+					}								
 				}
 			}
 		}
@@ -6715,13 +6769,13 @@
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"stat_chance"			"10 15 20 25 30"
+				"var_type"			"FIELD_INTEGER"
+				"heal_over_time"	"40 50 60 70 80"
 			}
 			"04"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"heal_over_time"	"40 50 60 70 80"
+				"var_type"				"FIELD_INTEGER"
+				"stat_chance"			"10 15 20 25 30"
 			}
 		}
 		
@@ -6933,6 +6987,7 @@
 		{
 			"modifier_steal_str_reduction"
 			{
+				"IsDebuff"		"1"
 				"Duration"		"%duration"
 				"Properties"
 				{

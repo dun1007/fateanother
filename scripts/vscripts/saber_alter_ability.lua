@@ -217,7 +217,7 @@ function OnVortigernStart(keys)
 			
 			Timers:CreateTimer( 0.2, function()
 					ParticleManager:DestroyParticle( fxIndex1, false )
-					ParticleManager:DestroyParticle( groundFxIndex, false )
+					--ParticleManager:DestroyParticle( groundFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( fxIndex1 )
 					ParticleManager:ReleaseParticleIndex( groundFxIndex )
 					return nil

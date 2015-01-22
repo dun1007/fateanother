@@ -136,7 +136,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetGold(0, false)
     LevelAllAbility(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
-    --RemoveWearables(hero)
+    --HideWearables(hero)
   	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
     local heroName = FindName(hero:GetName())
     hero.name = heroName
@@ -215,7 +215,7 @@ function FateGameMode:PlayerSay(keys)
   end
 
   if text == "-clearcosmetic" then
-    RemoveWearables(ply:GetAssignedHero())
+    HideWearables(ply:GetAssignedHero())
   end
 
   if text == "-cam 150" then
@@ -259,7 +259,7 @@ function FateGameMode:OnNPCSpawned(keys)
 	--PrintTable(keys)
 	local hero = EntIndexToHScript(keys.entindex)
 
-	if hero:IsRealHero() and hero.bFirstSpawned == nil then
+	if hero:IsRealHero() and hero.bFirstSpawned == nil and hero:GetPlayerOwner() ~= nil then
       hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
 	    hero.bFirstSpawned = true
       hero.PresenceTable = {}
@@ -271,14 +271,6 @@ function FateGameMode:OnNPCSpawned(keys)
         print((hero:GetPlayerID()+1) .." is a bot!") 
         self.vPlayerList[hero:GetPlayerID() + 1] = player
       end
-    --[[Timers:CreateTimer('asd', {
-         endTime =5,
-         callback = function()
-         local master = CreateUnitByName("master_dummy", Vector(1000, 1000, 50), true, nil, nil, hero:GetTeamNumber())
-         master:SetOwner(hero:GetOwnerEntity())
-         master:SetControllableByPlayer(hero:GetPlayerID(), true) 
-     end
-     })]]
 
       -- Create Command Seal master for hero
 	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
@@ -823,14 +815,14 @@ function FateGameMode:OnConnectFull(keys)
   -- The Player entity of the joining user
   local ply = EntIndexToHScript(entIndex)
 
-  if(ply~=nil)then
+  --[[if(ply~=nil)then
     ply:SetContextThink(DoUniqueString("heroselected"),
       function()
         local hero = ply:GetAssignedHero()
         if (hero ~= nil) then
               hero:SetContextThink(DoUniqueString("removecosmetic"),
                   function()
-                      RemoveWearables(hero)
+                      HideWearables(hero)
                       return 0.5
                   end
               ,0.5)
@@ -839,7 +831,7 @@ function FateGameMode:OnConnectFull(keys)
         return 0.1
       end
     ,0.1)
-  end
+  end]]
   -- The Player ID of the joining player
   local playerID = ply:GetPlayerID()
 
