@@ -23,10 +23,10 @@ function FarSightVision(keys)
 
 	if ply.IsHruntingAcquired then
 		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, true) 
-		Timers:CreateTimer(8, function() return caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false)  end)
+		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 
-	Timers:CreateTimer(8, function() return FarSightEnd(visiondummy) end)
+	Timers:CreateTimer(8, function() FarSightEnd(visiondummy) return end)
 end
 
 function FarSightEnd(dummy)

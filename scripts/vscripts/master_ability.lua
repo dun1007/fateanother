@@ -455,6 +455,15 @@ function PresenceDetection(keys)
 				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
 				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
 				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+				-- Process Eye of Serenity attribute
+				if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
+					print("Eye of Serenity activated")
+					enemy.IsSerenityOnCooldown = true
+					Timers:CreateTimer(10.0, function() 
+						enemy.IsSerenityOnCooldown = false
+					end)					
+					FAEyeAttribute(caster, enemy)
+				end
 			end
 		end
 		caster.PresenceTable = newEnemyTable
@@ -467,3 +476,25 @@ function CustomPing(playerid, location)
 	print("Custom Ping Issued")
 	GameRules:AddMinimapDebugPoint(playerid, location, 255, 0, 0, 300, 3.0)
 end 
+
+function FAEyeAttribute(caster, enemy)
+	local eye = ParticleManager:CreateParticleForPlayer("particles/items_fx/dust_of_appearance_true_sight.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+	ParticleManager:SetParticleControl(eye, 0, enemy:GetAbsOrigin())
+
+	local eyedummy = CreateUnitByName("sight_dummy_unit", enemy:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	eyedummy:SetDayTimeVisionRange(500)
+	eyedummy:SetNightTimeVisionRange(500)
+	eyedummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 100}) 
+
+	local eyedummypassive = eyedummy:FindAbilityByName("dummy_unit_passive")
+	eyedummypassive:SetLevel(1)
+
+	local eyeCounter = 0
+
+	Timers:CreateTimer(function() 
+		if eyeCounter > 3.0 then DummyEnd(eyedummy) return end
+		eyedummy:SetAbsOrigin(enemy:GetAbsOrigin()) 
+		eyeCounter = eyeCounter + 0.2
+		return 0.2
+	end)
+end

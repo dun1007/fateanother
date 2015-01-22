@@ -9,10 +9,50 @@ function OnGKStart(keys)
 		Timers:CreateTimer(5, function() return caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true)   end)
 	end
 
+	local gkdummy = CreateUnitByName("sight_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	gkdummy:SetDayTimeVisionRange(1300)
+	gkdummy:SetNightTimeVisionRange(1100)
+
+	local gkdummypassive = gkdummy:FindAbilityByName("dummy_unit_passive")
+	gkdummypassive:SetLevel(1)
+
+	local eyeCounter = 0
+
+	Timers:CreateTimer(function() 
+		if eyeCounter > 5.0 then DummyEnd(gkdummy) return end
+		gkdummy:SetAbsOrigin(caster:GetAbsOrigin()) 
+		eyeCounter = eyeCounter + 0.2
+		return 0.2
+	end)
+
 end
 
 function OnHeartStart(keys)
 	
+end
+
+function OnHeartAttackLanded(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local damage = keys.Damage
+	damage = damage * (target:GetPhysicalArmorValue() + target:GetStrength()) / 100
+	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+
+end
+
+function OnPCDeactivate(keys)
+	local caster = keys.caster
+	caster:RemoveModifierByName("modifier_fa_invis")
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_quickdraw_damage_amplifier", {}) 
+end
+
+function PCStopOrder(keys)
+	--keys.caster:Stop() 
+	local stopOrder = {
+		UnitIndex = keys.caster:entindex(),
+		OrderType = DOTA_UNIT_ORDER_HOLD_POSITION
+	}
+	ExecuteOrderFromTable(stopOrder) 
 end
 
 function OnIWStart(keys)
@@ -112,7 +152,9 @@ function OnQuickdrawStart(keys)
 end
 
 function OnQuickdrawHit(keys)
-	DoDamage(keys.caster, keys.target, 700 + keys.caster:GetAgility() * 10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	local damage = 700 + keys.caster:GetAgility() * 10
+	if keys.caster:HasModifier("modifier_quickdraw_damage_amplifier") then damage = damage + 300 end
+	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 
@@ -249,4 +291,6 @@ function OnVitrificationAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsVitrificationAcquired = true
+	hero:FindAbilityByName("false_assassin_presence_concealment"):SetLevel(1) 
+	hero:SwapAbilities("fate_empty2", "false_assassin_presence_concealment", true, true) 
 end

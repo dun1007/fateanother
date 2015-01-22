@@ -183,6 +183,7 @@ function OnNineLanded(caster, ability)
 	local lasthitradius = ability:GetSpecialValueFor("radius_lasthit")
 	local stun = ability:GetSpecialValueFor("stun_duration")
 	local nineCounter = 0
+	local casterInitOrigin = caster:GetAbsOrigin() 
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {})
 	Timers:CreateTimer(function()
@@ -190,12 +191,26 @@ function OnNineLanded(caster, ability)
 			if nineCounter == 8 then -- if nine is finished
 				EmitGlobalSound("Berserker.Roar") 
 				caster:RemoveModifierByName("pause_sealdisabled") 
+				-- do damage to targets
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
+					-- push enemies back
+					local pushback = Physics:Unit(v)
+					v:PreventDI()
+					v:SetPhysicsFriction(0)
+					v:SetPhysicsVelocity((v:GetAbsOrigin() - casterInitOrigin):Normalized() * 300)
+					v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+					v:FollowNavMesh(false)
+					Timers:CreateTimer(0.5, function()  
+						v:PreventDI(false)
+						v:SetPhysicsVelocity(Vector(0,0,0))
+						v:OnPhysicsFrame(nil)
+					return end)
 				end
+				-- add particles
 				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
 	   			local lasthitparticle2 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -203,6 +218,7 @@ function OnNineLanded(caster, ability)
 				return 
 			end
 			
+			-- if its not last hit, do regular hit stuffs
 			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)

@@ -26,6 +26,7 @@ donotlevel = {
   "berserker_5th_divinity_improved",
   "berserker_5th_berserk_attribute_passive",
   "berserker_5th_god_hand",
+  "false_assassin_presence_concealment",
   "true_assassin_weakening_venom_passive"
 }
 
