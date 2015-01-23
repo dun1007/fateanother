@@ -446,6 +446,10 @@ function PresenceDetection(keys)
 		-- Do the ping for everyone with IsPresenceDetected marked as true
 		for i=1, #newEnemyTable do
 			local enemy = newEnemyTable[i]
+			-- Filter TA from ping if he has improved presence concealment attribute
+			if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy:GetPlayerOwner().IsPCImproved  then 
+				if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
+			end
 
 			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
 				--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())

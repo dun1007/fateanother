@@ -60,13 +60,6 @@ function OnIWStart(keys)
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
-	caster.IllusionCast = true
-	Timers:CreateTimer({
-		endTime = 25,
-		callback = function()
-		caster.IllusionCast = false
-	end
-	})
 	for ilu = 0, 2 do
 		local illusion = CreateUnitByName(caster:GetUnitName(), origin, true, caster, nil, caster:GetTeamNumber()) 
 		print(illusion:GetPlayerOwner())

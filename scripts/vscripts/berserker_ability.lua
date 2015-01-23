@@ -77,8 +77,8 @@ function OnBerserkStart(keys)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
     	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
 		caster:SetHealth(hplock)
-		berserkCounter = berserkCounter + 0.25
-		return 0.25
+		berserkCounter = berserkCounter + 0.01
+		return 0.01
 		end
 	)
 

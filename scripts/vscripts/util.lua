@@ -27,7 +27,8 @@ donotlevel = {
   "berserker_5th_berserk_attribute_passive",
   "berserker_5th_god_hand",
   "false_assassin_presence_concealment",
-  "true_assassin_weakening_venom_passive"
+  "true_assassin_weakening_venom_passive",
+  "true_assassin_protection_from_wind"
 }
 
 -- Calculates the angle from caster to target(in radian, multiply it by 180/math.pi for degree)
@@ -105,6 +106,13 @@ function IsSpellBlocked(target)
     if target:HasModifier("modifier_instinct_active") then  --This abililty is blocked by the active/targeted Linken's effect.
         target:EmitSound("DOTA_Item.LinkensSphere.Activate")
         return true
+    elseif target:HasModifier("modifier_wind_protection_passive") then
+        if math.random(100) < 15 then
+            target:EmitSound("DOTA_Item.LinkensSphere.Activate") 
+            local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_windwalk.vpcf", PATTACH_ABSORIGIN, target)
+            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
+            return true 
+        end
     end
 end 
 

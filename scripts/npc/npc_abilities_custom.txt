@@ -6396,9 +6396,7 @@
 	{
 		"BaseClass"          			    "ability_datadriven"
 		"AbilityTextureName"           		"ta_presence_concealment"
-		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityCastPoint"		"1.5"
-		"AbilityCooldown"		"0.0"
+		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"MaxLevel"			"1"
 		"precache"
 		{
@@ -6408,22 +6406,53 @@
 
 		"OnSpellStart"
 		{
-
 			"ApplyModifier"
 			{
-				"Target"	"CASTER"
-				"ModifierName"		"modifier_ta_invis"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"ta_ability"
-				"Function"		"PCStopOrder"
+				"ModifierName"	"modifier_ta_invis"
+				"Target"		"CASTER"
 			}
 		}
 
 
 		"Modifiers"
 		{
+			"modifier_ta_invis_passive"
+			{
+				"Passive"		"1"	
+				"IsHidden"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnPCStart"
+					}
+				}
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCAbilityUsed"
+					}
+				}
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCAttacked"
+					}
+				}
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCMoved"
+					}
+				}
+			}
 			"modifier_ta_invis"
 			{
 				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
@@ -6432,31 +6461,7 @@
 			    {
 				    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
 				    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
-			    }			
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"ta_ability"
-						"Function"		"OnPCDeactivate"
-					}
-				}
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"ta_ability"
-						"Function"		"OnPCDeactivate"
-					}
-				}
-				"OnUnitMoved"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"ta_ability"
-						"Function"		"OnPCDeactivate"
-					}
-				}
+			    }	
 			}
 		}
 	}
@@ -6656,6 +6661,7 @@
 			"modifier_dirk_poison"
 			{
 				"Duration"		"%duration"
+				"IsDebuff"		"1"
 				"ThinkInterval"		"1.0"
 				"OnThinkInterval"
 				{
@@ -6669,7 +6675,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%poison_slow"
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-2"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"-2"
 				}
 			}
 		}
@@ -6779,6 +6785,7 @@
 			"modifier_first_hit"
 			{
 				"Duration"		"%duration + 1.0"
+				"IsHidden"		"1"
 				"OnAttackStart"
 				{
 					"RunScript"
@@ -6840,21 +6847,6 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"heal_amount"		"200 250 300 350 400"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"			"5"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"heal_over_time"	"40 50 60 70 80"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"stat_chance"			"10 15 20 25 30"
 			}
 		}
 		
@@ -6969,6 +6961,7 @@
 			"modifier_ta_self_mod_passive"
 			{
 				"Passive"		"1"
+				"IsHidden"		"1"
 				"OnKill"
 				{
 					"RunScript"
@@ -7205,6 +7198,29 @@
 		}
 	}
 
+	//=================================================================================================================
+	// TA : Protection from Wind
+	//=================================================================================================================
+	"true_assassin_protection_from_wind"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"ta_protection_from_wind"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_wind_protection_passive"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+			}
+		}
+	}
 	//=======================================
 	// TA Attribute : Improve Presence Concealment
 	//=======================================

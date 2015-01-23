@@ -45,10 +45,53 @@ function OnVenomHit(keys)
 	target:SetModifierStackCount("modifier_weakening_venom_debuff", keys.ability, currentStack + 1)
 end
 
-function OnPCDeactivate(keys)
+
+function OnPCStart(keys)
+end
+
+function OnPCAbilityUsed(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	caster.LastActionTime = GameRules:GetGameTime() 
+
 	caster:RemoveModifierByName("modifier_ta_invis")
-	--print("conventional")
+	Timers:CreateTimer(1.5, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
+			if not ply.IsPCImproved then PCStopOrder(keys) return end
+		end
+	end)
+end
+
+function OnPCAttacked(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	caster.LastActionTime = GameRules:GetGameTime() 
+
+	caster:RemoveModifierByName("modifier_ta_invis")
+	Timers:CreateTimer(1.5, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
+			if not ply.IsPCImproved then PCStopOrder(keys) return end
+		end
+	end)
+end
+
+function OnPCMoved(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	if ply.IsPCImproved then return end
+	caster.LastActionTime = GameRules:GetGameTime() 
+
+
+
+	caster:RemoveModifierByName("modifier_ta_invis")
+	Timers:CreateTimer(1.5, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
+			if not ply.IsPCImproved then PCStopOrder(keys) return end
+		end
+	end)
 end
 
 function PCStopOrder(keys)
@@ -207,6 +250,7 @@ function OnProtectionFromWindAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsPFWAcquired = true
+	hero:FindAbilityByName("true_assassin_protection_from_wind"):SetLevel(1) 
 end
 
 function OnWeakeningVenomAcquired(keys)
@@ -215,6 +259,7 @@ function OnWeakeningVenomAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsWeakeningVenomAcquired = true
 	hero:FindAbilityByName("true_assassin_weakening_venom_passive"):SetLevel(1)
+	hero:SwapAbilities("true_assassin_dirk_improved", "true_assassin_dirk", true, false) 
 end
 
 function OnShadowStrikeAcquired(keys)

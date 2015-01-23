@@ -399,8 +399,10 @@
 		"Ability6"				"true_assassin_zabaniya"
 		"Ability7"				"true_assassin_combo"
 		"Ability8"				"true_assassin_weakening_venom_passive"
-		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability9"				"true_assassin_protection_from_wind"
+		"Ability10"				"true_assassin_dirk_improved"
+		"Ability11"				"presence_detection_passive"
+		"Ability12"				"attribute_bonus"
 
 		"StatusHealth"					"950"
 		"StatusHeathRegen"				"2"
