@@ -356,8 +356,8 @@ C_OP_RenderSprites C_OP_RenderSprites_6
 
 C_INIT_RandomRadius C_INIT_RandomRadius_7
 {
-	float m_flRadiusMin = 200.000000
-	float m_flRadiusMax = 200.000000
+	float m_flRadiusMin = 10.000000
+	float m_flRadiusMax = 75.000000
 	float m_flRadiusRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
