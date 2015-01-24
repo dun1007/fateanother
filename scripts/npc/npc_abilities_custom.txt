@@ -4442,6 +4442,16 @@
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"1150"
 			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"tooltip_max_weapon"	"25"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"tooltip_channeling"	"2.0"
+			}
 		}
 		
 		"OnSpellStart"
