@@ -71,8 +71,8 @@ function OnChainStart(keys)
 	    )
 	end
 
+	print(caster.IsGOBUp)
 	if caster.IsGOBUp and ply.IsSumerAcquired then 
-
 		-- Casting by dummy doesn't work for some reason
 		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
@@ -81,7 +81,7 @@ function OnChainStart(keys)
 		local dummyAbility = dummy:FindAbilityByName("gilgamesh_power_of_sumer")
 		dummyAbility:SetLevel(1)
 		dummy:CastAbilityOnTarget(target, dummyAbility, 1) 
-		Timers:CreateTimer(0.5, function() dummy:RemoveSelf() return end)
+		Timers:CreateTimer(1.0, function() dummy:RemoveSelf() return end)
 	end
 end
 
@@ -193,7 +193,8 @@ function SumerArrowFire(keys)
 end
 
 function OnSumerArrowHit(keys)
-	DoDamage(keys.caster, keys.target, 50, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+
+	DoDamage(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, 50, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 

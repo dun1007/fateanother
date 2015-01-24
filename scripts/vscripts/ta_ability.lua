@@ -103,7 +103,90 @@ function PCStopOrder(keys)
 	ExecuteOrderFromTable(stopOrder) 
 end
 
+
 function OnDIStart(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerID()
+	local ability = keys.ability
+	local DICount = 0
+
+	Timers:CreateTimer(function()
+		if DICount > 8.0 then return end 
+		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 650
+	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
+		for k,v in pairs(targets) do
+			if v.IsDIOnCooldown ~= true then 
+				print("Target " .. v:GetName() .. " detected")
+				for ilu = 0, 2 do
+					v.IsDIOnCooldown = true
+
+					local origin = v:GetAbsOrigin() + RandomVector(650) 
+					local illusion = CreateUnitByName("ta_combo_dummy", origin, false, caster, caster, caster:GetTeamNumber()) 
+					local illusionzab = illusion:FindAbilityByName("true_assassin_combo_zab") 
+					illusionzab:SetLevel(1)
+					illusion:CastAbilityOnTarget(v, illusionzab, 1)
+
+					Timers:CreateTimer(3.0, function() 
+						illusion:RemoveSelf()
+						v.IsDIOnCooldown = false 
+					return end)
+				end
+			end
+		end
+		DICount = DICount + 0.33
+		return 0.33
+	end)
+end
+
+
+
+function OnDIZabStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	local ability = keys.ability
+
+	local info = {
+		Target = target,
+		Source = caster, 
+		Ability = keys.ability,
+		EffectName = "particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf",
+		vSpawnOrigin = caster,
+		iMoveSpeed = 700
+	}
+	ProjectileManager:CreateTrackingProjectile(info) 
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin()) -- target effect location
+	ParticleManager:SetParticleControl(particle, 2, target:GetAbsOrigin()) -- circle effect location
+	EmitGlobalSound("TA.Zabaniya") 
+end
+
+function OnDIZabHit(keys)
+	print("Projectile hit")
+	local caster = keys.caster
+	local ply = keys.caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	local damage = hero:FindAbilityByName("true_assassin_ambush"):GetLevel() * 60 + 100
+	if ply.IsShadowStrikeAcquired then 
+		damage = damage + 100
+	end
+	DoDamage(hero, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	keys.ability:ApplyDataDrivenModifier(caster, keys.target, "modifier_ta_bleed", {})
+end
+
+function DIBleed(keys)
+	local caster = keys.caster
+	local ply = keys.caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	local damage = hero:FindAbilityByName("true_assassin_ambush"):GetLevel() * 10 + 10
+	local bleedCounter = 0
+
+	Timers:CreateTimer(function() 
+		if bleedCounter == 5 then return end
+		DoDamage(hero, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		bleedCounter = bleedCounter + 1
+		return 1.0
+	end)	
 end
 
 function OnAmbushStart(keys)
@@ -118,13 +201,11 @@ end
 
 function OnFirstHitLanded(keys)
 	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_first_hit") return end -- Linken effect checker
-	print("dagger landed")
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	keys.caster:RemoveModifierByName("modifier_first_hit")
 end
 
 function OnAbilityCast(keys)
-	print("pls")
 	Timers:CreateTimer({
 		endTime = 0.033,
 		callback = function()
@@ -215,7 +296,6 @@ end
 AmbushUsed = false
 
 function TACheckCombo(caster, ability)
-	print("we got here")
 	if ability == caster:FindAbilityByName("true_assassin_self_modification") then
 		AmbushUsed = true
 		Timers:CreateTimer({

@@ -6829,8 +6829,10 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
-			"particle"				"particles/units/heroes/hero_bane/bane_fiendsgrip_ground_water.vpcf"
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 		}
+		
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -6860,6 +6862,76 @@
 		}
 		"Modifiers"
 		{
+		}
+	}
+
+	//=====================================
+	// True Assassin : Combo Zabaniya
+	//=====================================
+	"true_assassin_combo_zab"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"ta_zabaniya"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastPoint"				"0.0"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+		}
+		
+		"AbilityCastRange"				"800"
+		"AbilityCastRangeBuffer"		"300"
+		"AbilityCooldown"				"0"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnDIZabStart"
+			}
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+			"RunScript"
+			{
+				"ScriptFile"    "ta_ability"
+				"Function"      "OnDIZabHit"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_ta_bleed"
+			{
+				"Duration"		"5.0"
+				"IsDebuff"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "ta_ability"
+						"Function"      "DIBleed"						
+					}
+				}
+			}
 		}
 	}
 
@@ -7096,6 +7168,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 		}
 		
 		"AbilityCastPoint"				"1.0"

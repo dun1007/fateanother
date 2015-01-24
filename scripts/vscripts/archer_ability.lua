@@ -175,6 +175,7 @@ function OnUBWStart(keys)
 	local ubwTargetPos = nil
 	ubwCasterPos = caster:GetAbsOrigin()
 	
+	
 	local info = {
 		Target = nil,
 		Source = nil, 

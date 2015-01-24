@@ -92,6 +92,42 @@
 		"AttackDesire"				"1.5"		// How much bots want to attack them vs other non-hero things
 	}
 
+	"ta_combo_dummy"
+	{
+		"Model"				"models/true_assassin/ta.vmdl"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					"true_assassin_combo_zab"			// Ability 1
+		"Ability2"					"dummy_unit_passive"			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"300"		// Speed.
+		"MovementTurnRate"			"0.3"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_NO_ATTACK"	
+		"AttackRange"					"0"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
+		"AttackRate"					"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"500"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+	}
 
 	"dummy_unit"
 	{
@@ -107,8 +143,8 @@
 		//----------------------------------------------------------------
 		
 		"Ability1"					"dummy_unit_passive"			// Ability 1.
-		"Ability2"					"morphling_replicate"			// Ability 2.
-		"Ability3"					"dummy_c_scroll"			// Ability 3.
+		"Ability2"					"dummy_c_scroll"			// Ability 2.
+		"Ability3"					""			// Ability 3.
 		"Ability4"					""			// Ability 4.
 		"Ability5"					""			// Ability 5.
 		"Ability6"					""			// Ability 6 - Extra.
