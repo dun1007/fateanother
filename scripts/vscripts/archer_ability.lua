@@ -26,29 +26,38 @@ function FarSightVision(keys)
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 	
-	-- Particles
-	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
-	
-	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
-	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
-	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
-	
-	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
-	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
-	
-	visiondummy.circle_fx = circleFxIndex
-	visiondummy.dust_fx = dustFxIndex
-
 	Timers:CreateTimer(8, function() FarSightEnd(visiondummy) return end)
+	
+	-- Particles shown to teammate only
+	local allHeroes = HeroList:GetAllHeroes()
+	
+	for k, v in pairs( allHeroes ) do
+		if v:GetPlayerID() and v:GetTeam() == caster:GetTeam() then
+			local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
+	
+			local circleFxIndex = ParticleManager:CreateParticleForPlayer( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
+			ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
+			ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
+			
+			local dustFxIndex = ParticleManager:CreateParticleForPlayer( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, v, PlayerResource:GetPlayer( v:GetPlayerID() ) )
+			ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
+			ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
+			
+			-- Destroy particle after delay
+			Timers:CreateTimer( 8, function()
+					ParticleManager:DestroyParticle( circleFxIndex, false )
+					ParticleManager:DestroyParticle( dustFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( circleFxIndex )
+					ParticleManager:ReleaseParticleIndex( dustFxIndex )
+					return nil
+				end
+			)
+		end
+	end
 end
 
 function FarSightEnd(dummy)
-	ParticleManager:DestroyParticle( dummy.circle_fx, false )
-	ParticleManager:DestroyParticle( dummy.dust_fx, false )
-	ParticleManager:ReleaseParticleIndex( dummy.circle_fx )
-	ParticleManager:ReleaseParticleIndex( dummy.dust_fx )
 	dummy:RemoveSelf()
 	return nil
 end
