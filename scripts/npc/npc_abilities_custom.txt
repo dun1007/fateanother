@@ -4285,6 +4285,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			"particle"		"particles/custom/archer/archer_ubw_ring.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
@@ -4324,7 +4325,6 @@
 				"ModifierName"	"modifier_ubw_freeze"
 				"Target"		"CASTER"
 			}
-			
 		}
 
 		"OnProjectileHitUnit"
@@ -4343,6 +4343,18 @@
 			"modifier_ubw_freeze"
 			{
 				"Duration"		"2.0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/archer/archer_ubw_ring.vpcf"
+						"EffectAttachType"	"start_at_origin"
+						"EffectRadius"		"%radius"
+					}
+				}
+				
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -4352,7 +4364,19 @@
 			}
 			"modifier_ubw_death_checker"
 			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/archer/archer_ubw_ring.vpcf"
+						"EffectAttachType"	"start_at_origin"
+						"EffectRadius"		"%radius"
+					}
+				}
+			
 				"Duration"	"12.0"
+				
 				"OnDeath"
 				{
 					"RunScript"
