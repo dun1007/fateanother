@@ -444,22 +444,76 @@ function OnUBWBarrageStart(keys)
 	end	
 
 	local barrageCount = 0
-	Timers:CreateTimer(function()
+	
+	-- Vector
+	local forwardVec = ( targetPoint - caster:GetAbsOrigin() ):Normalized()
+	
+	Timers:CreateTimer( function()
 		if barrageCount == 25 then return end
-		if caster:HasModifier("modifier_sword_barrage") then
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		if caster:HasModifier("modifier_sword_barrage") then			
+			local swordVector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
 			
-			swordVector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-
-			ParticleManager:SetParticleControl(particle, 0, targetPoint + swordVector)
-			ParticleManager:SetParticleControl(particle, 1, targetPoint + swordVector)
-			ParticleManager:SetParticleControl(particle, 5, targetPoint + swordVector)
-			ParticleManager:SetParticleControl(particle, 6, targetPoint + swordVector)
-			local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + swordVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-			for k,v in pairs(targets) do
-	        	DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	        	v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+			-- Create sword particles
+			-- Main variables
+			local delay = 0.5				-- Delay before damage
+			local speed = 3000				-- Movespeed of the sword
+			
+			-- Side variables
+			local distance = delay * speed
+			local height = distance * math.tan( 30 / 180 * math.pi )
+			local spawn_location = ( targetPoint + swordVector ) - ( distance * forwardVec )
+			spawn_location = spawn_location + Vector( 0, 0, height )
+			local target_location = targetPoint + swordVector
+			local newForwardVec = ( target_location - spawn_location ):Normalized()
+			target_location = target_location + 100 * newForwardVec
+			
+			local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( swordFxIndex, 0, spawn_location )
+			ParticleManager:SetParticleControl( swordFxIndex, 1, newForwardVec * speed )
+			-- Set Angles
+			local angle = VectorToAngles( newForwardVec )
+			if angle.y < 180 then
+				angle.x = -angle.x
+			else
+				angle.y = 360 - angle.y
 			end
+			ParticleManager:SetParticleControl( swordFxIndex, 2, Vector( angle.x, math.abs( angle.y ), angle.z ) )
+			
+			-- Destroy all previous particles
+			Timers:CreateTimer( delay, function()
+					ParticleManager:DestroyParticle( swordFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( swordFxIndex )
+				end
+			)
+			
+			-- Delay damage
+			Timers:CreateTimer( delay, function()
+					local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + swordVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+					for k,v in pairs(targets) do
+						DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+						v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+					end
+					
+					-- Particles on impact
+					local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+					ParticleManager:SetParticleControl( explosionFxIndex, 0, targetPoint + swordVector )
+					
+					local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+					ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint + swordVector )
+					
+					-- Destroy Particle
+					Timers:CreateTimer( 0.5, function()
+							ParticleManager:DestroyParticle( explosionFxIndex, false )
+							ParticleManager:DestroyParticle( impactFxIndex, false )
+							ParticleManager:ReleaseParticleIndex( explosionFxIndex )
+							ParticleManager:ReleaseParticleIndex( impactFxIndex )
+						end
+					)
+					
+					return nil
+				end
+			)
+			
 		    barrageCount = barrageCount + 1
 			return 0.08
 		end

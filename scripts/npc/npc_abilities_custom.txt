@@ -4411,7 +4411,9 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+			"particle"		"particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+			"particle"		"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
+			"particle"		"particles/custom/archer/archer_sword_barrage_model.vpcf"
 		}
 		
 		// Casting
