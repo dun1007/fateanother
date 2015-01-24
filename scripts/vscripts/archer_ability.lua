@@ -29,12 +29,12 @@ function FarSightVision(keys)
 	-- Particles
 	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
 	
-	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
 	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
 	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
 	
-	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
 	

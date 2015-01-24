@@ -310,8 +310,14 @@ function OnHGStart(keys)
 	local boltvector = nil
 	local boltCount  = 0
 	local diff = targetPoint - caster:GetAbsOrigin()
-	EmitGlobalSound("Caster.Hecatic") 
 
+	if not GridNav:IsBlocked(targetPoint) then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		return 
+	end 
+	--EmitGlobalSound("Caster.Hecatic") 
+
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.0)
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
@@ -361,7 +367,7 @@ function OnHGStart(keys)
 		return 0.1
     end
     )
-	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic_Spread") caster:EmitSound("Misc.Crash") return end)
+	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic") EmitGlobalSound("Caster.Hecatic_Spread") caster:EmitSound("Misc.Crash") return end)
 end
 
 function OnHGPStart(keys)
