@@ -11,7 +11,7 @@ function FarSightVision(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 
-	visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 	if ply.IsEagleEyeAcquired then 
 		visiondummy:SetDayTimeVisionRange(1400)
 		visiondummy:SetNightTimeVisionRange(1400)
@@ -25,11 +25,30 @@ function FarSightVision(keys)
 		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, true) 
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
+	
+	-- Particles
+	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
+	
+	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
+	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
+	
+	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
+	
+	visiondummy.circle_fx = circleFxIndex
+	visiondummy.dust_fx = dustFxIndex
 
 	Timers:CreateTimer(8, function() FarSightEnd(visiondummy) return end)
 end
 
 function FarSightEnd(dummy)
+	ParticleManager:DestroyParticle( dummy.circle_fx, false )
+	ParticleManager:DestroyParticle( dummy.dust_fx, false )
+	ParticleManager:ReleaseParticleIndex( dummy.circle_fx )
+	ParticleManager:ReleaseParticleIndex( dummy.dust_fx )
 	dummy:RemoveSelf()
 	return nil
 end
