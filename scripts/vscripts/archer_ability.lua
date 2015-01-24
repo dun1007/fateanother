@@ -10,11 +10,13 @@ ubwCenter = Vector(5600, -4398, 200)
 function FarSightVision(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
 
 	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 	if ply.IsEagleEyeAcquired then 
 		visiondummy:SetDayTimeVisionRange(1400)
 		visiondummy:SetNightTimeVisionRange(1400)
+		radius = 1400
 		visiondummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1400}) 
 	end
 
@@ -26,10 +28,12 @@ function FarSightVision(keys)
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 	
-	-- Particles
-	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
+	Timers:CreateTimer(8, function() FarSightEnd(visiondummy) return end)
 	
-	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
+	-- Particles
+	
+	
+	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
 	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
@@ -40,15 +44,20 @@ function FarSightVision(keys)
 	
 	visiondummy.circle_fx = circleFxIndex
 	visiondummy.dust_fx = dustFxIndex
-
-	Timers:CreateTimer(8, function() FarSightEnd(visiondummy) return end)
+	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
+			
+	-- Destroy particle after delay
+	Timers:CreateTimer( 8, function()
+			ParticleManager:DestroyParticle( circleFxIndex, false )
+			ParticleManager:DestroyParticle( dustFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( circleFxIndex )
+			ParticleManager:ReleaseParticleIndex( dustFxIndex )
+			return nil
+		end
+	)
 end
 
 function FarSightEnd(dummy)
-	ParticleManager:DestroyParticle( dummy.circle_fx, false )
-	ParticleManager:DestroyParticle( dummy.dust_fx, false )
-	ParticleManager:ReleaseParticleIndex( dummy.circle_fx )
-	ParticleManager:ReleaseParticleIndex( dummy.dust_fx )
 	dummy:RemoveSelf()
 	return nil
 end
