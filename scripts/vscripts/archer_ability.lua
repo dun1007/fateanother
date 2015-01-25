@@ -409,25 +409,64 @@ function OnRainStart(keys)
 	end
 	})
 
+	-- Barrage attack
 	local barrageCount = 0
-	Timers:CreateTimer(0.3, function()
+	Timers:CreateTimer( 0.3, function()
 		if barrageCount == 30 then return end
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		local arrowVector = Vector( RandomFloat( -radius, radius ), RandomFloat( -radius, radius ), 0 )
 		
-		arrowVector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-
-		ParticleManager:SetParticleControl(particle, 0, ubwCenter + arrowVector)
-		ParticleManager:SetParticleControl(particle, 1, ubwCenter + arrowVector)
-		ParticleManager:SetParticleControl(particle, 5, ubwCenter + arrowVector)
-		ParticleManager:SetParticleControl(particle, 6, ubwCenter + arrowVector)
-		local targets = FindUnitsInRadius(caster:GetTeam(), ubwCenter + arrowVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-		for k,v in pairs(targets) do
-        	DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		end
+		-- Create Arrow particles
+		-- Main variables
+		local speed = 3000				-- Movespeed of the arrow
+		
+		-- Side variables
+		local spawn_location = caster:GetAbsOrigin()
+		local target_location = ubwCenter + arrowVector
+		local forwardVec = ( target_location - caster:GetAbsOrigin() ):Normalized()
+		local delay = ( target_location - caster:GetAbsOrigin() ):Length2D() / speed
+		local distance = delay * speed
+		
+		local arrowFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_arrow_rain_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( arrowFxIndex, 0, spawn_location )
+		ParticleManager:SetParticleControl( arrowFxIndex, 1, forwardVec * speed )
+		
+		-- Delay Damage
+		Timers:CreateTimer( delay, function()
+				-- Destroy arrow
+				ParticleManager:DestroyParticle( arrowFxIndex, false )
+				ParticleManager:ReleaseParticleIndex( arrowFxIndex )
+				
+				-- Delay damage
+				local targets = FindUnitsInRadius(caster:GetTeam(), ubwCenter + arrowVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+				for k,v in pairs(targets) do
+					DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				end
+				
+				-- Particles on impact
+				local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+				ParticleManager:SetParticleControl( explosionFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				
+				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+				ParticleManager:SetParticleControl( impactFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				
+				-- Destroy Particle
+				Timers:CreateTimer( 0.5, function()
+						ParticleManager:DestroyParticle( explosionFxIndex, false )
+						ParticleManager:DestroyParticle( impactFxIndex, false )
+						ParticleManager:ReleaseParticleIndex( explosionFxIndex )
+						ParticleManager:ReleaseParticleIndex( impactFxIndex )
+						return nil
+					end
+				)
+				return nil
+			end
+		)
+		
 	    barrageCount = barrageCount + 1
 		return 0.1
     end)
 
+	-- BP Attack
 	local bpCount = 0 
 	Timers:CreateTimer(2.8, function()
 		if bpCount == 5 then return end
@@ -520,15 +559,13 @@ function OnUBWBarrageStart(keys)
 			ParticleManager:SetParticleControl( swordFxIndex, 0, spawn_location )
 			ParticleManager:SetParticleControl( swordFxIndex, 1, newForwardVec * speed )
 			
-			-- Destroy all previous particles
+			-- Delay
 			Timers:CreateTimer( delay, function()
+					-- Destroy particles
 					ParticleManager:DestroyParticle( swordFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( swordFxIndex )
-				end
-			)
-			
-			-- Delay damage
-			Timers:CreateTimer( delay, function()
+					
+					-- Delay damage
 					local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + swordVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 					for k,v in pairs(targets) do
 						DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

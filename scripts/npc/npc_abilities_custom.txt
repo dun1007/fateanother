@@ -4686,7 +4686,10 @@
 		{
 			"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"particle"			"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-			"particles"			"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+			
+			"particle"			"particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+			"particle"			"particles/custom/archer/archer_arrow_rain_model.vpcf"
+			"particle"			"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
