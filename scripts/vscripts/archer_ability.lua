@@ -780,6 +780,32 @@ function OnOveredgeStart(keys)
 		caster:SetAutoUnstuck(true)
         FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 
+		-- Create particles
+		-- Variable for cross slash
+		local origin = caster:GetAbsOrigin()
+		local forwardVec = caster:GetForwardVector()
+		local rightVec = caster:GetRightVector()
+		local backPoint1 = origin - keys.Radius * forwardVec + keys.Radius * rightVec
+		local backPoint2 = origin - keys.Radius * forwardVec - keys.Radius * rightVec
+		local frontPoint1 = origin + keys.Radius * forwardVec - keys.Radius * rightVec
+		local frontPoint2 = origin + keys.Radius * forwardVec + keys.Radius * rightVec
+		backPoint1.z = backPoint1.z + 250
+		backPoint2.z = backPoint2.z + 250
+		
+		-- Cross slash
+		local slash1ParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_overedge_slash.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( slash1ParticleIndex, 2, backPoint1 )
+		ParticleManager:SetParticleControl( slash1ParticleIndex, 3, frontPoint1 )
+		
+		local slash2ParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_overedge_slash.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( slash2ParticleIndex, 2, backPoint2 )
+		ParticleManager:SetParticleControl( slash2ParticleIndex, 3, frontPoint2 )
+		
+		-- Stomp
+		local stompParticleIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_centaur/centaur_warstomp.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( stompParticleIndex, 0, caster:GetAbsOrigin() )
+		ParticleManager:SetParticleControl( stompParticleIndex, 1, Vector( keys.Radius, keys.Radius, keys.Radius ) )
+		
         local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do

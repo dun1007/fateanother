@@ -4747,9 +4747,10 @@
 		"AOERadius"						"%radius"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"3.0"	
-		
 		"precache"
 		{
+			"particle"					"particles/custom/archer/archer_overedge_slash.vpcf"
+			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
 		}
 		
 		// Casting
