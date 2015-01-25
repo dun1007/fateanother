@@ -4209,7 +4209,8 @@
 
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
+			"particle"	"particles/custom/archer/archer_rhoaias_shield.vpcf"
+			"particle"	"particles/units/heroes/hero_templar_assassin/templar_assassin_refract_hit_sphere.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -4245,6 +4246,7 @@
 				"IsDebuff"		"false"
 				"IsPurgable"	"false"
 				"Duration"		"7.0"
+				
 				"OnTakeDamage"
 				{
 					"RunScript"
@@ -4254,8 +4256,7 @@
 						"DamageTaken"	"%attack_damage"		
 					}
 				}
-				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor.vpcf"
-				"EffectAttachType"	"follow_overhead"
+				
 				"States"
 				{
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"

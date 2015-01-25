@@ -157,11 +157,51 @@ function OnRhoStart(keys)
 	EmitGlobalSound("Archer.RhoAias" ) --[[Returns:void
 	Play named sound for all players
 	]]
+	
+	-- Attach particle for shield facing the forward vector
+	local rhoShieldParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_rhoaias_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
+	-- Update the control point as long as modifer is up
+	Timers:CreateTimer( function()
+			-- Origin
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 0, target:GetAbsOrigin() )
+			
+			local origin = target:GetAbsOrigin()
+			local forwardVec = target:GetForwardVector()
+			local rightVec = target:GetRightVector()
+			
+			-- Hard coded value, these values have to be adjusted manually for core and end point of each petal
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 1, Vector( origin.x + 100 * forwardVec.x, origin.y + 100 * forwardVec.y, origin.z + 150 ) ) -- petal_core, center of petals
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 2, Vector( origin.x - 20 * forwardVec.x, origin.y - 20 * forwardVec.y, origin.z + 250 ) ) -- petal_a
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 3, Vector( origin.x + 100 * forwardVec.x, origin.y + 100 * forwardVec.y, origin.z ) ) -- petal_d
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 4, Vector( origin.x + 100 * rightVec.x, origin.y + 100 * rightVec.y, origin.z + 200 ) ) -- petal_b
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 5, Vector( origin.x - 100 * rightVec.x, origin.y - 100 * rightVec.y, origin.z + 200 ) ) -- petal_c
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 6, Vector( origin.x + 100 * rightVec.x + 40 * forwardVec.x, origin.y + 100 * rightVec.y + 40 * forwardVec.y, origin.z + 50 ) ) -- petal_e
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 7, Vector( origin.x - 100 * rightVec.x + 40 * forwardVec.x, origin.y - 100 * rightVec.y + 40 * forwardVec.y, origin.z + 50 ) ) -- petal_f
+			
+			-- Check if it should be destroyed
+			if target:HasModifier( "modifier_rho_aias_shield" ) then
+				return 0.1
+			else
+				ParticleManager:DestroyParticle( rhoShieldParticleIndex, false )
+				ParticleManager:ReleaseParticleIndex( rhoShieldParticleIndex )
+				return nil
+			end
+		end
+	)
 end
 
 function OnRhoDamaged(keys)
 	local currentHealth = rhoTarget:GetHealth() 
 
+	-- Create particles
+	local onHitParticleIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_templar_assassin/templar_assassin_refract_hit_sphere.vpcf", PATTACH_CUSTOMORIGIN, keys.unit )
+	ParticleManager:SetParticleControl( onHitParticleIndex, 2, keys.unit:GetAbsOrigin() )
+	
+	Timers:CreateTimer( 0.5, function()
+			ParticleManager:DestroyParticle( onHitParticleIndex, false )
+			ParticleManager:ReleaseParticleIndex( onHitParticleIndex )
+		end
+	)
 
 	rhoTarget.rhoShieldAmount = rhoTarget.rhoShieldAmount - keys.DamageTaken
 	if rhoTarget.rhoShieldAmount <= 0 then
