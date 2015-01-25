@@ -8,28 +8,55 @@ territory = nil
 function OnTerritoryCreated(keys)
 	local caster = keys.caster
 	local pid = caster:GetPlayerID()
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
 	local targetPoint = keys.target_points[1]
 
 	--if Entities:FindAllByName("caster_5th_territory") then print("Territory already exists") return end
 
+	-- Create territory unit at location
 	territory = CreateUnitByName("caster_5th_territory", targetPoint, true, caster, caster, caster:GetTeamNumber()) 
 	territory:SetControllableByPlayer(pid, true)
 	LevelAllAbility(territory)
 
-	-- Construct castle
+	local territoryHealth = 1000
+	if ply.IsTerritoryImproved then 
+		
+		territory:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 600, duration = 9999})
+		territory:SetMaxHealth(2000) 
+		Timers:CreateTimer(function()
+		    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			for k,v in pairs(targets) do
+		         if v ~= territory then 
+		         	keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_territory_mana_regen", {Duration = 1.0}) 
+		         end
+		    end
+			return 1.0
+			end
+		)
+	end
+
+	-- Initialize territory
 	territory:SetHealth(1)
 	territory:SetMana(0)
 	territory:SetBaseManaRegen(3) 
+	territory:AddItem(CreateItem("item_summon_skeleton_warrior" , nil, nil))
+	territory:AddItem(CreateItem("item_summon_skeleton_archer" , nil, nil))
+	if ply.IsTerritoryImproved then
+		territory:AddItem(CreateItem("item_summon_ancient_dragon"  , nil, nil))
+	end
 	giveUnitDataDrivenModifier(caster, territory, "pause_sealdisabled", 5.0)
 	territory:AddNewModifier(caster, nil, 'modifier_rooted', {})
 	local territoryConstTimer = 0
 	Timers:CreateTimer(function()
 		if territoryConstTimer == 10 then return end
-		territory:SetHealth(territory:GetHealth() + 100)
+		territory:SetHealth(territory:GetHealth() + territory:GetMaxHealth() / 10)
 		territoryConstTimer = territoryConstTimer + 1
 		return 0.5
 		end
 	)
+
+
 end
 
 function OnTerritoryOwnerDeath(keys)
@@ -38,17 +65,95 @@ end
 
 function OnTerritoryExplosion(keys)
 	local caster = keys.caster
-	caster:Kill(keys.ability, caster)
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	local damage = 300 + 10 * hero:GetIntellect() + caster:GetMana()/2
+
+
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
+	Timers:CreateTimer(1.0, function()
+		if caster:IsAlive() then
+			local damage = 300 + 10 * hero:GetIntellect() + caster:GetMana()/2
+			if ply.IsTerritoryImproved then damage = damage + 300 end
+		    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			for k,v in pairs(targets) do
+		         DoDamage(hero, v, damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		    end
+			caster:Kill(keys.ability, caster)
+		end
+	return end)
 end
+
+function OnManaDrainStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local particleName = "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+	caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
+
+	md = true
+	if target:GetTeamNumber() == caster:GetTeamNumber() then
+		Timers:CreateTimer(function()  
+			if md == false or caster:GetMana() == 0 or target:GetMana() == target:GetMaxMana() then return end
+			caster:ReduceMana(30) 
+			target:GiveMana(30) 
+		return 0.25
+		end)
+		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	else
+		Timers:CreateTimer(function()  
+			if md == false or target:GetMana() == 0 or caster:GetMana() == caster:GetMaxMana() then return end
+			target:ReduceMana(20) 
+			caster:GiveMana(20) 
+		return 0.25
+		end)
+		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+		ParticleManager:SetParticleControlEnt(caster.ManaDrainParticle, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true)
+	end
+
+end
+
+function OnManaDrainEnd(keys)
+	local target = keys.target
+	local caster = keys.caster
+	md = false
+	ParticleManager:DestroyParticle(caster.ManaDrainParticle,false) 
+end
+
 
 function OnSummonSkeleton(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local pid = caster:GetMainControllingPlayer()
-	local spooky = CreateUnitByName("caster_5th_skeleton", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
+	local unitname = nil
+	if ability:GetName()  == "item_summon_skeleton_warrior"  then
+		unitname =  "caster_5th_skeleton_warrior"
+	elseif ability:GetName()  == "item_summon_skeleton_archer" then
+		unitname = "caster_5th_skeleton_archer"
+	end
+
+	local spooky = CreateUnitByName(unitname, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
+	spooky:SetPlayerID(pid) 
 	spooky:SetControllableByPlayer(pid, true)
 	
 	LevelAllAbility(spooky)
 	FindClearSpaceForUnit(spooky, spooky:GetAbsOrigin(), true)
+	spooky:AddNewModifier(caster, nil, "modifier_kill", {duration = 60})
+end
+
+function OnSummonDragon(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local pid = caster:GetMainControllingPlayer()
+
+	local drag = CreateUnitByName("caster_5th_ancient_dragon", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
+	drag:SetPlayerID(pid) 
+	drag:SetControllableByPlayer(pid, true)
+	
+	LevelAllAbility(drag)
+	FindClearSpaceForUnit(drag, drag:GetAbsOrigin(), true)
+	drag:AddNewModifier(caster, nil, "modifier_kill", {duration = 60})
 end
 
 function OnTerritoryMobilize(keys)
@@ -56,8 +161,8 @@ function OnTerritoryMobilize(keys)
 	caster:RemoveModifierByName("modifier_rooted")
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, true) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", true, true)
-	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, true)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty1", true, true)
+	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty2", true, true)
 	caster:SwapAbilities("caster_5th_summon_skeleton", "fate_empty4", true, true)
 	caster:SwapAbilities("caster_5th_recall", "fate_empty5", true, true)
 end
@@ -379,9 +484,16 @@ function OnHGPStart(keys)
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
-	local diff = targetPoint - caster:GetAbsOrigin()
-	EmitGlobalSound("Caster.Hecatic") 
 
+	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
+		keys.ability:EndCooldown() 
+		caster:GiveMana(800) 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		return 
+	end 
+
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 6.0)
+	local diff = targetPoint - caster:GetAbsOrigin()
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
@@ -428,7 +540,17 @@ function OnHGPStart(keys)
 		return 0.1
     end
     )
-	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic_Spread") caster:EmitSound("Misc.Crash") return end)
+
+	Timers:CreateTimer(3.5, function()
+		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		for k,v in pairs(targets) do
+        	DoDamage(caster, v, 1500, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+        	--v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+		end
+		return
+    end
+    )
+	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic_Spread") EmitGlobalSound("Caster.Hecatic") caster:EmitSound("Misc.Crash") return end)
 end
 
 function CasterCheckCombo(caster, ability)

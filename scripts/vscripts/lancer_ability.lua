@@ -235,7 +235,7 @@ function OnGBComboHit(keys)
 	print(HBThreshold)
 	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 + target:GetStrength() end
 
-	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 5.0)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
 	EmitGlobalSound("Lancer.Heartbreak")
 
   	Timers:CreateTimer(1.5, function() 

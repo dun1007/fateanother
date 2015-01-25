@@ -4508,7 +4508,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"caster_rule_breaker"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"1.0"
+		"AnimationPlaybackRate" 		"2.0"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastRange"				"200"
 		"AbilityCastRangeBuffer"		"50"
@@ -8316,7 +8316,6 @@
 		"precache"
 		{
 			"model"			"models/props_structures/tower_good.vmdl"
-			"particle"		"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
 		}
 		
 		// Casting
@@ -8351,6 +8350,7 @@
 			"modifier_caster_death_checker"
 			{
 				"Passive"	"1"
+				"IsHidden"	"1"
 				"OnDeath"
 				{
 					"RunScript"
@@ -8361,6 +8361,13 @@
 					}
 				}
 			}
+			"modifier_territory_mana_regen"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"20"
+				}	
+			}
 		}
 	}
 
@@ -8369,30 +8376,25 @@
 	//=====================================
 	"caster_5th_mana_drain"
 	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"BaseClass" 					"lion_mana_drain"
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.3"
-		"AbilityChannelTime"			"5.1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lion_mana_drain"
+		"AbilityCastRange"				"2000"
+		"AbilityCastPoint"				"0.1"
 		"AbilityCooldown"				"30"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
+		"AbilityChannelTime"			"5.0"
+
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"particle"			"particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+		}
+
 		"AbilitySpecial"
 		{
 			"01"
@@ -8403,22 +8405,40 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"mana_per_second"			"60"
+				"mana_per_second"			"40"
 			}
 			"03"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"break_distance"			"1000"
+				"break_distance"			"2500"
 			}
 			"04"
 			{
 				"var_type"					"FIELD_FLOAT"
-				"illusion_kill_time"		"0.25"
-			}
-			"05"
-			{
-				"var_type"					"FIELD_FLOAT"
 				"tick_interval"				"0.25"
+			}
+		}
+			
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnManaDrainStart"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Lion.ManaDrain"
+				"Target"		"TARGET"
+			}
+		}
+
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnManaDrainEnd"
 			}
 		}
 	}
@@ -8431,7 +8451,7 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"caster_territory_explosion"
 		"AbilityCastPoint"				"1.0"
 		"AbilityCooldown"				"0"
@@ -8451,43 +8471,6 @@
 			{
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnTerritoryExplosion"
-			}
-		}
-
-		"Modifiers"
-		{
-		}
-	}
-
-	//=======================================
-	// Caster : Summon Skeleton
-	//=======================================
-	"caster_5th_summon_skeleton"
-	{
-		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"caster_summon_skeleton"
-		"AbilityCastPoint"				"4.0"
-		"AbilityCooldown"				"0"
-		"AbilityManaCost"				"10"
-
-		"precache"
-		{
-			"model"			"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
-		}
-
-		"AbilitySpecial"
-		{
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"OnSummonSkeleton"
 			}
 		}
 
@@ -9264,12 +9247,6 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"jump_invul"
-				"Target"		"CASTER"
-			}
-		
 			"RunScript"
 			{
 			 	"ScriptFile"	"caster_ability"
@@ -9354,12 +9331,6 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"jump_invul"
-				"Target"		"CASTER"
-			}
-		
 			"RunScript"
 			{
 			 	"ScriptFile"	"caster_ability"
@@ -9373,18 +9344,6 @@
 
 		"Modifiers"
 		{
-			"jump_invul"
-			{
-				"Duration"		"6.0"
-				"States"
-				{
-					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 

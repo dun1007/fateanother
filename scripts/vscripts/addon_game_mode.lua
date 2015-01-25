@@ -451,6 +451,9 @@ function FateGameMode:OnEntityKilled( keys )
   if killedUnit:IsRealHero() then
     --killerEntity:SetGold(0, false)
     local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()
+    if killerEntity:IsNeutralUnitType() then
+      killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
+    end
     killerEntity:ModifyGold(bounty , true, 0) 
     -- if killer has Golden Rule attribute, grant 50% more gold
     if killerEntity.IsGoldenRuleImproved then 

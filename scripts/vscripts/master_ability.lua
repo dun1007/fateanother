@@ -374,6 +374,7 @@ function OnAgilityGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseAgility(hero:GetBaseAgility()+1) 
+	print(hero:GetAgility())
 end
 
 function OnIntelligenceGain(keys)
@@ -402,7 +403,7 @@ function OnHPRegenGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2) 
+	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2)
 end
 
 function OnManaRegenGain(keys)

@@ -82,7 +82,7 @@ function WardFam(keys)
 	local targetPoint = keys.target_points[1]
 	local ward = CreateUnitByName("ward_familiar", targetPoint, true, caster, caster, caster:GetTeamNumber())
 	ward:AddNewModifier(caster, caster, "modifier_invisible", {}) 
-	ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600}) 
+	ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105}) 
     ward:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
 end
 
@@ -101,7 +101,7 @@ function BecomeWard(keys)
 	local transform = CreateUnitByName("ward_familiar", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
 
 	transform:AddNewModifier(caster, caster, "modifier_invisible", {}) 
-	transform:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600}) 
+	transform:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105}) 
 	transform:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
 	
 	Timers:CreateTimer({

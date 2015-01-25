@@ -331,21 +331,21 @@
 	{
 		"BaseClass"				 "npc_dota_creature"
 		"Model"					"models/props_structures/tower_good.vmdl"
+		"ModelScale"			"2.0"
 		"BoundsHullName"		"DOTA_HULL_SIZE_HUGE"
 
-		"AbilityLayout"				"6"
+		"AbilityLayout"				"4"
 		"Ability1"					"caster_5th_mana_drain"			// Ability 1
 		"Ability2"					"caster_5th_territory_explosion"			// Ability 2
-		"Ability3"					"caster_5th_summon_skeleton"			// Ability 3
-		"Ability4"					"caster_5th_mobilize"			// Ability 4
-		"Ability5"					"fate_empty1"
-		"Ability6"					"caster_5th_recall"
-		"Ability7"					"caster_5th_immobilize"
-		"Ability8"					"caster_5th_all_seeing_orb"
-		"Ability9"					"fate_empty2"
-		"Ability10"					"fate_empty3"
-		"Ability11"					"fate_empty4"
-		"Ability12"					"fate_empty5"
+		"Ability3"					"caster_5th_mobilize"			// Ability 4
+		"Ability4"					"caster_5th_recall"
+		"Ability5"					"caster_5th_immobilize"
+		"Ability6"					"caster_5th_all_seeing_orb"
+		"Ability7"					"fate_empty2"
+		"Ability8"					"fate_empty3"
+		"Ability9"					"fate_empty4"
+		"Ability10"					"fate_empty5"
+		"Ability11"					"fate_empty1"
 		"ArmorPhysical"				"0"			// Physical protection.
 
 		"BountyXP"					"200"	// Experience earn.
@@ -369,7 +369,7 @@
 		"VisionNighttimeRange"		"700"		// Range of vision at night time.
 	}
 
-	"caster_5th_skeleton"
+	"caster_5th_skeleton_warrior"
 	{
 		"Model"				"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
 		"BaseClass"			"npc_dota_creature"
@@ -383,7 +383,7 @@
 		"ArmorPhysical"				"-5"			// Physical protection.
 
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
-		"MovementSpeed"				"300"		// Speed.
+		"MovementSpeed"				"250"		// Speed.
 		"MovementTurnRate"			"0.3"		// Turning rate.
 
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
@@ -403,6 +403,88 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"800"		// Range of vision during day light.
 		"VisionNighttimeRange"		"600"		// Range of vision at night time.
+	}
+
+	"caster_5th_skeleton_archer"
+	{
+		"Model"				"models/heroes/clinkz/clinkz.vmdl"
+		"ModelScale"		"0.80"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					""			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"200"		// Speed.
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"15"								// Damage range min.
+		"AttackDamageMax"			"15"								// Damage range max.
+		"AttackRate"				"1.8"								// Speed of attack.
+		"AttackAnimationPoint"		"0.3"								// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"500"								// Range within a target can be acquired.
+		"AttackRange"				"500"								// Range within a target can be attacked.
+		"ProjectileModel"			"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"				// Particle system model for projectile.
+		"ProjectileSpeed"			"1000"	
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"200"		// Base health.
+		"StatusHealthRegen"			"1"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"600"		// Range of vision at night time.
+	}
+
+	"caster_5th_ancient_dragon"
+	{
+		"Model"				"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+		"ModelScale"		"2.0"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					""			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY" 
+		"MovementSpeed"				"350"		// Speed.
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"83"								// Damage range min.
+		"AttackDamageMax"			"300"								// Damage range max.
+		"AttackRate"				"1.2"								// Speed of attack.
+		"AttackAnimationPoint"		"0.3"								// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"300"								// Range within a target can be acquired.
+		"AttackRange"				"500"								// Range within a target can be attacked.
+		"ProjectileModel"			"particles/neutral_fx/black_dragon_attack.vpcf"				// Particle system model for projectile.
+		"ProjectileSpeed"			"1000"	
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"2000"		// Base health.
+		"StatusHealthRegen"			"1"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"800"		// Range of vision during day light.
+		"VisionNighttimeRange"		"800"		// Range of vision at night time.
 
 	}
 
@@ -780,6 +862,7 @@
 			"model"					"models/shirou/shirouanim.vmdl"
 			"model"					"models/tohsaka/tohsaka.vmdl"
 			"model"					"models/items/courier/catakeet/catakeet_boxes.vmdl"
+			"model"					"models/heroes/clinkz/clinkz.vmdl"
 
 
 
@@ -866,7 +949,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_furion"
 			//"particle_folder"				"particles/units/heroes/hero_life_stealer"
 			//"particle_folder"				"particles/units/heroes/hero_dark_seer"
-			//"particle_folder"				"particles/units/heroes/hero_clinkz"
+			"particle_folder"				"particles/units/heroes/hero_clinkz"
 			//"particle_folder"				"particles/units/heroes/hero_omniknight"
 			//"particle_folder"				"particles/units/heroes/hero_enchantress"
 			//"particle_folder"				"particles/units/heroes/hero_huskar"
