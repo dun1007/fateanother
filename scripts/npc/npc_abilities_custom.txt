@@ -4590,12 +4590,12 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_earthshaker"
-			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
-			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+			// "particle_folder"	"particles/units/heroes/hero_earthshaker" // should not be needed
+			"particle"			"particles/units/heroes/hero_centaur/centaur_warstomp_shockwave.vpcf"
+			"particle"			"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp.vpcf"
+			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_shockwave.vpcf"
+			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
 		}
 		
 		// Casting

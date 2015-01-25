@@ -569,7 +569,7 @@ function OnUBWNineStart(keys)
 
 	caster:OnPhysicsFrame(function(unit)
 		local diff = unit:GetAbsOrigin() - origin
-		print(distance .. " and " .. diff:Length2D())
+		-- print(distance .. " and " .. diff:Length2D())
 		if diff:Length2D() > distance then
 			unit:PreventDI(false)
 			unit:OnPhysicsFrame(nil)
@@ -615,10 +615,23 @@ function OnUBWNineLanded(caster, ability)
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 				end
-				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
-	   			local lasthitparticle2 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	   			ParticleManager:SetParticleControl(lasthitparticle2, 1, caster:GetAbsOrigin())
+				
+				-- Particles
+				local explosionParticleIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_phoenix/phoenix_supernova_reborn.vpcf", PATTACH_ABSORIGIN, caster )
+				ParticleManager:SetParticleControl( explosionParticleIndex, 1, Vector( lasthitradius, lasthitradius, lasthitradius ) )
+				
+				local magmaParticleIndex = ParticleManager:CreateParticle( "particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN, caster )
+	   			
+				-- Destroy particles
+				Timers:CreateTimer( 1.0, function()
+						ParticleManager:DestroyParticle( explosionParticleIndex, false )
+						ParticleManager:DestroyParticle( magmaParticleIndex, false )
+						ParticleManager:ReleaseParticleIndex( explosionParticleIndex )
+						ParticleManager:ReleaseParticleIndex( magmaParticleIndex )
+						return nil
+					end
+				)
+				
 				return 
 			end
 			
@@ -628,12 +641,25 @@ function OnUBWNineLanded(caster, ability)
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 			end
 
-			local particle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(particle1, 1, caster:GetAbsOrigin())
-			local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(particle2, 1, caster:GetAbsOrigin())
+			-- Particles
+			local fireParticleIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_ember_spirit/ember_spirit_hit_shockwave.vpcf", PATTACH_ABSORIGIN, caster )
+			local magmaParticleIndex = ParticleManager:CreateParticle( "particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN, caster )
+			local waveParticleIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_centaur/centaur_warstomp_shockwave.vpcf", PATTACH_ABSORIGIN, caster )
+
+			-- Destroy particles
+			Timers:CreateTimer( 1.0, function()
+					ParticleManager:DestroyParticle( fireParticleIndex, false )
+					ParticleManager:DestroyParticle( magmaParticleIndex, false )
+					ParticleManager:DestroyParticle( waveParticleIndex, false )
+					ParticleManager:ReleaseParticleIndex( fireParticleIndex )
+					ParticleManager:ReleaseParticleIndex( magmaParticleIndex )
+					ParticleManager:ReleaseParticleIndex( waveParticleIndex )
+					return nil
+				end
+			)
+			
 			nineCounter = nineCounter + 1
-			print(nineCounter)
+			-- print(nineCounter)
 			return 0.12
 		end 
 	end)
