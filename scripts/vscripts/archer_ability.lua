@@ -738,6 +738,14 @@ function OnHruntCast(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	Say(ply, "Hrunting targets " .. keys.target:GetName() .. ".", true)
+	
+	-- Show hrunting cast
+	if caster.hrunting_particle ~= nil then
+		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
+		ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
+	end
+	caster.hrunting_particle = ParticleManager:CreateParticle( "particles/econ/events/ti4/teleport_end_ti4.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControl( caster.hrunting_particle, 2, Vector( 255, 0, 0 ) )
 end
 
 function OnHruntStart(keys)
@@ -746,13 +754,21 @@ function OnHruntStart(keys)
 	Say(ply, "Hrunting fired at " .. keys.target:GetName() .. ".", true)
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
 	caster:SetMana(0) 
+	
+	-- Destroy Particle
+	if caster.hrunting_particle ~= nil then
+		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
+		ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
+	end
+	
 	local info = {
 		Target = keys.target,
 		Source = keys.caster, 
 		Ability = keys.ability,
-		EffectName = "particles/units/heroes/hero_chaos_knight/chaos_knight_chaos_bolt.vpcf",
+		EffectName = "particles/custom/archer/archer_hrunting_orb.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 3000
+		iMoveSpeed = 1500, -- 3000
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
 	}
 
 	ProjectileManager:CreateTrackingProjectile(info) 
@@ -760,6 +776,20 @@ end
 
 function OnHruntHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	
+	-- Create Particle
+	local explosionParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_hrunting_area.vpcf", PATTACH_CUSTOMORIGIN, keys.target )
+	ParticleManager:SetParticleControl( explosionParticleIndex, 0, keys.target:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( explosionParticleIndex, 1, Vector( 1000, 1000, 0 ) )
+	
+	-- Destroy Particle
+	Timers:CreateTimer( 1.0, function()
+			ParticleManager:DestroyParticle( explosionParticleIndex, false )
+			ParticleManager:ReleaseParticleIndex( explosionParticleIndex )
+			return nil
+		end
+	)
+	
 	local caster = keys.caster
 	DoDamage(keys.caster, keys.target, keys.caster.HruntDamage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local targets = FindUnitsInRadius(caster:GetTeam(), keys.target:GetAbsOrigin(), nil, 1000

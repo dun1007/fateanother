@@ -4822,6 +4822,9 @@
 		
 		"precache"
 		{
+			"particle"					"particles/econ/events/ti4/teleport_end_ti4.vpcf"
+			"particle"					"particles/custom/archer/archer_hrunting_orb.vpcf"
+			"particle"					"particles/custom/archer/archer_hrunting_area.vpcf"
 		}
 		
 		"AbilityCastPoint"				"4.0"
