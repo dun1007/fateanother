@@ -402,8 +402,8 @@ function OnRainStart(keys)
 	Timers:CreateTimer('rain_ascend', {
 		endTime = 0,
 		callback = function()
-	   	if ascendCount == 30 then return end
-		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+22))
+	   	if ascendCount == 20 then return end
+		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+40))
 		ascendCount = ascendCount + 1;
 		return 0.01
 	end
@@ -441,10 +441,10 @@ function OnRainStart(keys)
     end)
 
 	Timers:CreateTimer('rain_descend', {
-		endTime = 3.7,
+		endTime = 3.8,
 		callback = function()
-	   	if descendCount == 30 then return end
-		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z-22))
+	   	if descendCount == 20 then return end
+		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z-40))
 		descendCount = descendCount + 1;
 		return 0.01
 	end

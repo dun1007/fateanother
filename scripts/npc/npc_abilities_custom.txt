@@ -4686,6 +4686,7 @@
 		{
 			"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"particle"			"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"particles"			"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
