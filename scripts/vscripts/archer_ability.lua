@@ -397,6 +397,7 @@ function OnRainStart(keys)
 		iMoveSpeed = 3000
 	}
 
+	ParticleManager:CreateParticle("particles/custom/screen_brown_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.0)
 
 	Timers:CreateTimer('rain_ascend', {

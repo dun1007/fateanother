@@ -4689,6 +4689,7 @@
 			"particle"			"particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
 			"particle"			"particles/custom/archer/archer_arrow_rain_model.vpcf"
 			"particle"			"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
+			"particle"			"particles/custom/screen_brown_splash.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
