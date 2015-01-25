@@ -806,6 +806,17 @@ function OnOveredgeStart(keys)
 		ParticleManager:SetParticleControl( stompParticleIndex, 0, caster:GetAbsOrigin() )
 		ParticleManager:SetParticleControl( stompParticleIndex, 1, Vector( keys.Radius, keys.Radius, keys.Radius ) )
 		
+		-- Destroy particle
+		Timers:CreateTimer( 1.0, function()
+				ParticleManager:DestroyParticle( slash1ParticleIndex, false )
+				ParticleManager:DestroyParticle( slash2ParticleIndex, false )
+				ParticleManager:DestroyParticle( stompParticleIndex, false )
+				ParticleManager:ReleaseParticleIndex( slash1ParticleIndex )
+				ParticleManager:ReleaseParticleIndex( slash2ParticleIndex )
+				ParticleMAnager:ReleaseParticleIndex( stompParticleIndex )
+			end
+		)
+		
         local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
