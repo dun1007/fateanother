@@ -678,6 +678,13 @@ function OnOveredgeStart(keys)
 	local caster = keys.caster 
 	local targetPoint = keys.target_points[1]
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() * 10/6
+
+	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
+		keys.ability:EndCooldown() 
+		caster:GiveMana(600) 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		return 
+	end 
 	caster.OveredgeCount = 0
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.59)

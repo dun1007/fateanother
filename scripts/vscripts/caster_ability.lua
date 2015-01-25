@@ -311,7 +311,9 @@ function OnHGStart(keys)
 	local boltCount  = 0
 	local diff = targetPoint - caster:GetAbsOrigin()
 
-	if not GridNav:IsBlocked(targetPoint) then
+	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
+		keys.ability:EndCooldown() 
+		caster:GiveMana(800) 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
 		return 
 	end 
