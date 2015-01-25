@@ -57,7 +57,8 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	[
 		&C_OP_BasicMovement_0,
 		&C_OP_Decay_0,
-		&C_OP_Spin_0
+		&C_OP_Spin_0,
+		&C_OP_RemapVelocityToVector_0
 	]
 	CParticleOperatorInstance*[] m_Renderers = 
 	[
@@ -68,8 +69,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		&C_INIT_NormalAlignToCP_0,
 		&C_INIT_CreateWithinSphere_0,
 		&C_INIT_VelocityFromCP_0,
-		&C_INIT_RandomLifeTime_6,
-		&C_INIT_RemapQAnglesToRotation_4
+		&C_INIT_RandomLifeTime_6
 	]
 	CParticleOperatorInstance*[] m_Emitters = 
 	[
@@ -141,6 +141,31 @@ C_OP_Spin C_OP_Spin_0
 	int m_nSpinRateDegrees = 30
 	int m_nSpinRateMinDegrees = 0
 	float m_fSpinRateStopTime = 0.000000
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_RemapVelocityToVector C_OP_RemapVelocityToVector_0
+{
+	int m_nFieldOutput = 21
+	float m_flScale = 1.000000
+	bool m_bNormalize = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
 	float m_flOpStartFadeOutTime = 0.000000
@@ -323,30 +348,6 @@ C_INIT_RandomLifeTime C_INIT_RandomLifeTime_6
 	float m_fLifetimeMin = 6.000000
 	float m_fLifetimeMax = 6.000000
 	float m_fLifetimeRandExponent = 1.000000
-	bool m_bRunForParentApplyKillList = true
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_INIT_RemapQAnglesToRotation C_INIT_RemapQAnglesToRotation_4
-{
-	int m_nCP = 2
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000

@@ -519,14 +519,6 @@ function OnUBWBarrageStart(keys)
 			local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
 			ParticleManager:SetParticleControl( swordFxIndex, 0, spawn_location )
 			ParticleManager:SetParticleControl( swordFxIndex, 1, newForwardVec * speed )
-			-- Set Angles
-			local angle = VectorToAngles( newForwardVec )
-			if angle.y < 180 then
-				angle.x = -angle.x
-			else
-				angle.y = 360 - angle.y
-			end
-			ParticleManager:SetParticleControl( swordFxIndex, 2, Vector( angle.x, math.abs( angle.y ), angle.z ) )
 			
 			-- Destroy all previous particles
 			Timers:CreateTimer( delay, function()
