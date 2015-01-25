@@ -156,6 +156,9 @@ function OnSummonDragon(keys)
 	drag:AddNewModifier(caster, nil, "modifier_kill", {duration = 60})
 end
 
+function CasterFarSight(keys)
+end
+
 function OnTerritoryMobilize(keys)
 	local caster = keys.caster
 	caster:RemoveModifierByName("modifier_rooted")
