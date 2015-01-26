@@ -25,6 +25,7 @@ function OnFissureStart(keys)
 	}
 	fiss.vSpawnOrigin = caster:GetAbsOrigin() 
 	projectile = ProjectileManager:CreateLinearProjectile(fiss)
+	BerCheckCombo(caster, keys.ability)
 
 end
 
@@ -57,6 +58,7 @@ function OnRoarStart(keys)
 
 	    DoDamage(caster, v, finaldmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	end
+	ParticleManager:CreateParticle("particles/custom/screen_face_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
 end
 

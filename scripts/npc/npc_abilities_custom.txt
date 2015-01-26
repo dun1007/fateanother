@@ -5337,6 +5337,10 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"200"
+		"precache"
+		{
+			"particle"		"particles/custom/screen_face_splash.vpcf"
+		}
 		
 		"AbilitySpecial"
 		{
