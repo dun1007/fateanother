@@ -44,6 +44,7 @@ function OnTerritoryCreated(keys)
 	territory:AddItem(CreateItem("item_summon_skeleton_archer" , nil, nil))
 	if ply.IsTerritoryImproved then
 		territory:AddItem(CreateItem("item_summon_ancient_dragon"  , nil, nil))
+		territory:AddItem(CreateItem("item_all_seeing_orb" , nil, nil))
 	end
 	giveUnitDataDrivenModifier(caster, territory, "pause_sealdisabled", 5.0)
 	territory:AddNewModifier(caster, nil, 'modifier_rooted', {})
@@ -157,6 +158,50 @@ function OnSummonDragon(keys)
 end
 
 function CasterFarSight(keys)
+	local caster = keys.caster
+	local radius = keys.Radius
+	local hero = caster:GetPlayerOwner():GetAssignedHero() 
+	local dist = (hero:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+	print(dist)
+	if dist > 500 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Caster must be within 500 radius of Territory" } )
+		keys.ability:EndCooldown() 
+		caster:GiveMana(100)
+		return
+	end
+
+	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	visiondummy:SetDayTimeVisionRange(radius)
+	visiondummy:SetNightTimeVisionRange(radius)
+
+	local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+	unseen:SetLevel(1)
+
+	
+	Timers:CreateTimer(8, function() DummyEnd(visiondummy) return end)
+
+	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
+	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
+	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
+	
+	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
+	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
+	
+	visiondummy.circle_fx = circleFxIndex
+	visiondummy.dust_fx = dustFxIndex
+	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
+			
+	-- Destroy particle after delay
+	Timers:CreateTimer( 8, function()
+			ParticleManager:DestroyParticle( circleFxIndex, false )
+			ParticleManager:DestroyParticle( dustFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( circleFxIndex )
+			ParticleManager:ReleaseParticleIndex( dustFxIndex )
+			return nil
+		end
+	)
 end
 
 function OnTerritoryMobilize(keys)
@@ -166,8 +211,7 @@ function OnTerritoryMobilize(keys)
 
 	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty1", true, true)
 	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty2", true, true)
-	caster:SwapAbilities("caster_5th_summon_skeleton", "fate_empty4", true, true)
-	caster:SwapAbilities("caster_5th_recall", "fate_empty5", true, true)
+	caster:SwapAbilities("caster_5th_recall", "fate_empty3", true, true)
 end
 
 function OnTerritoryImmobilize(keys)
@@ -176,10 +220,9 @@ function OnTerritoryImmobilize(keys)
 	caster:AddNewModifier(caster, nil, 'modifier_rooted', {})
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, true) 	
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", true, true)
-	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, true)
-	caster:SwapAbilities("caster_5th_summon_skeleton", "fate_empty4", true, true)
-	caster:SwapAbilities("caster_5th_recall", "fate_empty5", true, true)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty1", true, true)
+	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty2", true, true)
+	caster:SwapAbilities("caster_5th_recall", "fate_empty3", true, true)
 end
 
 function OnTerritoryRecall(keys)

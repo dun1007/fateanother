@@ -1636,5 +1636,65 @@
 	    }
 	}
 
+	"item_all_seeing_orb" 
+	{
+	    "ID"           "1128"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "all_seeing_orb"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityCastRange"				"99999"
+	    "AbilityManaCost"				"100"
+	    "AbilityCooldown"				"25"
+	    "AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
+			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"8.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "caster_ability"
+				"Function"      "CasterFarSight"
+				"Radius"		"%radius"
+				"Target"		"POINT"
+			}
+		}
+	}
 
 }
