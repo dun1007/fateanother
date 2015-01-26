@@ -1910,6 +1910,7 @@
 		{
 			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+			"particle"		"particles/custom/screen_red_splash.vpcf"
 		}
 		
 		// Casting
@@ -3672,6 +3673,7 @@
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"		"particles/custom/screen_lightblue_splash.vpcf"
 		}
 		
 		"AbilityCastPoint"				"2.5"
@@ -9294,6 +9296,7 @@
 		{
 			"particle"			"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
 			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
+			"particle"			"particles/custom/screen_purple_splash.vpcf"
 		}
 		
 		// Casting

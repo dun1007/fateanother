@@ -260,6 +260,7 @@ function OnGBComboHit(keys)
 		        FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 
 		        if caster:IsAlive() then 
+		        	ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 			    	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 					target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 					print(target:GetHealth())

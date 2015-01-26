@@ -125,7 +125,7 @@ end
 function OnSummonSkeleton(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local pid = caster:GetMainControllingPlayer()
+	local pid = caster:GetPlayerOwner():GetPlayerID()
 	local unitname = nil
 	if ability:GetName()  == "item_summon_skeleton_warrior"  then
 		unitname =  "caster_5th_skeleton_warrior"
@@ -134,7 +134,7 @@ function OnSummonSkeleton(keys)
 	end
 
 	local spooky = CreateUnitByName(unitname, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
-	spooky:SetPlayerID(pid) 
+	--spooky:SetPlayerID(pid) 
 	spooky:SetControllableByPlayer(pid, true)
 	
 	LevelAllAbility(spooky)
@@ -145,10 +145,10 @@ end
 function OnSummonDragon(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local pid = caster:GetMainControllingPlayer()
+	local pid = caster:GetPlayerOwner():GetPlayerID()
 
 	local drag = CreateUnitByName("caster_5th_ancient_dragon", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
-	drag:SetPlayerID(pid) 
+	--drag:SetPlayerID(pid) 
 	drag:SetControllableByPlayer(pid, true)
 	
 	LevelAllAbility(drag)
@@ -505,6 +505,7 @@ function OnHGPStart(keys)
 	caster:FollowNavMesh(false)
 	caster:SetAutoUnstuck(false)
 	Timers:CreateTimer(1.0, function()  
+		ParticleManager:CreateParticle("particles/custom/screen_purple_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		caster:SetAutoUnstuck(true)
 	return end) 

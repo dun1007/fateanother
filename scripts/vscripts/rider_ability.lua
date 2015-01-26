@@ -127,6 +127,7 @@ function OnBelle2Start(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * 99999
 	}
+	ParticleManager:CreateParticle("particles/custom/screen_lightblue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	EmitGlobalSound("Rider.Bellerophon") 
 	local projectile = ProjectileManager:CreateLinearProjectile(belle2)
 	caster:SetAbsOrigin(caster:GetAbsOrigin() + caster:GetForwardVector() * keys.Range) 
