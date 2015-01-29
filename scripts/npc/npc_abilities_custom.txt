@@ -6006,7 +6006,6 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"MaxLevel"						"5"
 
-
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.3"
@@ -6117,7 +6116,10 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"AnimationPlaybackRate" 		"1.0"
 		"MaxLevel"						"1"
-
+		"precache"
+		{
+			"particle"					"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -6137,6 +6139,16 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"25.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"maximum_illusion"		"3"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"illusion_spawn_distance"	"100"
 			}
 		}
 		
@@ -6159,7 +6171,10 @@
 		{
 			"modifier_psuedo_omnislash"
 			{
+				"Duration"					"%duration"
+			
 				"AllowIllusionDuplicate"	"1"
+				
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -6168,7 +6183,15 @@
 						"Function"			"TPOnAttack"
 					}
 				}
-
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnIWDestroy"
+					}
+				}
 			}
 		}
 	}

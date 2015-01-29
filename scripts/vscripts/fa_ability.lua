@@ -60,8 +60,25 @@ function OnIWStart(keys)
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
-	for ilu = 0, 2 do
+	
+	-- Create delay to unable enemy to detect which is caster
+	Timers:CreateTimer( 0.1, function()
+			local swordFx = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf", PATTACH_POINT_FOLLOW, caster )
+			ParticleManager:SetParticleControlEnt( swordFx, 0, caster, PATTACH_POINT_FOLLOW, "attach_sword", caster:GetAbsOrigin(), true )
+			caster.illusory_wanderer_particle_index = swordFx
+		end
+	)
+	
+	-- For illusion location
+	local maximum_illusion = ability:GetLevelSpecialValueFor( "maximum_illusion", ability:GetLevel() - 1 )
+	local illusion_spawn_distance = ability:GetLevelSpecialValueFor( "illusion_spawn_distance", ability:GetLevel() - 1 )
+	local destination = caster:GetAbsOrigin() + caster:GetForwardVector()
+	local origin = caster:GetAbsOrigin()
+	local increment_factor = 360 / maximum_illusion
+	
+	for ilu = 0, maximum_illusion - 1 do
 		local illusion = CreateUnitByName(caster:GetUnitName(), origin, true, caster, nil, caster:GetTeamNumber()) 
+		
 		print(illusion:GetPlayerOwner())
 		illusion:SetPlayerID(pid) 
 		illusion:SetControllableByPlayer(pid, true) 
@@ -75,9 +92,24 @@ function OnIWStart(keys)
 
 		illusion:SetAbilityPoints(0)
 
-		ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {}) 
 		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = keys.Duration, outgoing_damage = 70, incoming_damage = 200 })
-		illusion:MakeIllusion() 
+		ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
+		illusion:MakeIllusion()
+		
+		-- Set location for illusion
+		local theta = ( ilu * increment_factor ) * math.pi / 180
+		local px = math.cos( theta ) * ( destination.x - origin.x ) - math.sin( theta ) * ( destination.y - origin.y ) + origin.x
+		local py = math.sin( theta ) * ( destination.x - origin.x ) + math.cos( theta ) * ( destination.y - origin.y ) + origin.y
+		local new_forward = ( Vector( px, py, origin.z ) - origin ):Normalized()
+		FindClearSpaceForUnit( illusion, origin + new_forward * illusion_spawn_distance, true )
+		
+		-- Create delay for particle to be able to attach properly
+		Timers:CreateTimer( 0.1, function()
+				local swordFx = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf", PATTACH_POINT_FOLLOW, illusion )
+				ParticleManager:SetParticleControlEnt( swordFx, 0, illusion, PATTACH_POINT_FOLLOW, "attach_sword", illusion:GetAbsOrigin(), true )
+				illusion.illusory_wanderer_particle_index = swordFx
+			end
+		)
 	end
 end
 
@@ -88,6 +120,14 @@ function TPOnAttack(keys)
 	local rand = RandomInt(1, #targets) 
 	caster:SetAbsOrigin(targets[1]:GetAbsOrigin() + Vector(RandomFloat(-100, 100),RandomFloat(-100, 100),RandomFloat(-100, 100) ))		
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+end
+
+-- Destroy effect particle
+function OnIWDestroy( keys )
+	if keys.caster.illusory_wanderer_particle_index ~= nil then
+		ParticleManager:DestroyParticle( keys.caster.illusory_wanderer_particle_index, false )
+		ParticleManager:ReleaseParticleIndex( keys.caster.illusory_wanderer_particle_index )
+	end
 end
 
 function OnQuickdrawStart(keys)
