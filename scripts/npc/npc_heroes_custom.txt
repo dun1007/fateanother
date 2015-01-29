@@ -9,7 +9,7 @@
 	"npc_dota_hero_saber"
 	{
 		"override_hero"				"npc_dota_hero_legion_commander"
-		"Model"						"models/saber/saber.vmdl"
+		"Model"						"models/development/invisiblebox.vmdl"
 		"ModelScale"				"0.95"
 		
 		"AbilityLayout"				"6"
@@ -66,7 +66,7 @@
 	"npc_dota_hero_lancer_5th"
 	{
 		"override_hero"			"npc_dota_hero_phantom_lancer"
-		"Model"					"models/lancer/lancer.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.15"
 
 		"AbilityLayout"				"6"
@@ -124,7 +124,7 @@
 	"npc_dota_hero_saber_alter"
 	{
 		"override_hero"			"npc_dota_hero_spectre"
-		"Model"					"models/saber_alter/sbr_alter.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		"AbilityLayout"			"6"
 		"Ability1"				"saber_alter_derange"
@@ -176,7 +176,7 @@
 	"npc_dota_hero_archer_5th"
 	{
 		"override_hero"			"npc_dota_hero_ember_spirit"
-		"Model"					"models/archer/archertest.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
 
 		"AbilityLayout"			"6"
@@ -231,7 +231,7 @@
 	"npc_dota_hero_rider_5th"
 	{
 		"override_hero"			"npc_dota_hero_templar_assassin"
-		"Model"					"models/rider/rider.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		
 		"AbilityLayout"			"6"
@@ -283,7 +283,7 @@
 	"npc_dota_hero_berserker_5th"
 	{
 		"override_hero"			"npc_dota_hero_doom_bringer"
-		"Model"					"models/berserker/berserker.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		
 		"AbilityLayout"			"6"
 		"Ability1"				"berserker_5th_fissure_strike"
@@ -334,7 +334,7 @@
 	"npc_dota_hero_false_assassin"
 	{
 		"override_hero"			"npc_dota_hero_juggernaut"
-		"Model"					"models/assassin/asn.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.0"
 		
 		"AbilityLayout"			"6"
@@ -388,7 +388,7 @@
 	"npc_dota_hero_true_assassin"
 	{
 		"override_hero"			"npc_dota_hero_bounty_hunter"
-		"Model"					"models/true_assassin/ta.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"AbilityLayout"			"6"
 		
 		"Ability1"				"true_assassin_ambush"
@@ -444,7 +444,7 @@
 	"npc_dota_hero_caster_5th"
 	{
 		"override_hero"			"npc_dota_hero_crystal_maiden"
-		"Model"					"models/caster/caster.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"AbilityLayout"			"6"
 		"Ability1"				"caster_5th_argos"
 		"Ability2"				"caster_5th_ancient_magic"
@@ -499,7 +499,7 @@
 	"npc_dota_hero_gilgamesh"
 	{
 		"override_hero"			"npc_dota_hero_skywrath_mage"
-		"Model"					"models/gilgamesh/gilgamesh.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 
 		"AbilityLayout"			"6"

@@ -77,9 +77,43 @@ function Activate()
 	GameRules.AddonTemplate:InitGameMode()
 end
 
+--[[
+	Lookup table
+	models/saber/saber.vmdl					npc_dota_hero_legion_commander
+	models/lancer/lancer.vmdl				npc_dota_hero_phantom_lancer
+	models/saber_alter/sbr_alter.vmdl		npc_dota_hero_spectre
+	models/archer/archertest.vmdl			npc_dota_hero_ember_spirit
+	models/rider/rider.vmdl					npc_dota_hero_templar_assassin
+	models/berserker/berserker.vmdl			npc_dota_hero_doom_bringer
+	models/assassin/asn.vmdl				npc_dota_hero_juggernaut
+	models/true_assassin/ta.vmdl			npc_dota_hero_bounty_hunter
+	models/caster/caster.vmdl				npc_dota_hero_crystal_maiden
+	models/gilgamesh/gilgamesh.vmdl			npc_dota_hero_skywrath_mage
+		
+	For adding more model
+	model_lookup[""] = ""
+]]
+model_lookup = {}
+model_lookup["npc_dota_hero_legion_commander"] = "models/saber/saber.vmdl"
+model_lookup["npc_dota_hero_phantom_lancer"] = "models/lancer/lancer.vmdl"
+model_lookup["npc_dota_hero_spectre"] = "models/saber_alter/sbr_alter.vmdl"
+model_lookup["npc_dota_hero_ember_spirit"] = "models/archer/archertest.vmdl"
+model_lookup["npc_dota_hero_templar_assassin"] = "models/rider/rider.vmdl"
+model_lookup["npc_dota_hero_doom_bringer"] = "models/berserker/berserker.vmdl"
+model_lookup["npc_dota_hero_juggernaut"] = "models/assassin/asn.vmdl"
+model_lookup["npc_dota_hero_bounty_hunter"] = "models/true_assassin/ta.vmdl"
+model_lookup["npc_dota_hero_crystal_maiden"] = "models/caster/caster.vmdl"
+model_lookup["npc_dota_hero_skywrath_mage"] = "models/gilgamesh/gilgamesh.vmdl"
+
 function Precache( context )
 	print("Starting precache")
 	PrecacheUnitByNameSync("npc_precache_everything", context)
+	
+	-- Precache models
+	for k, v in pairs( model_lookup ) do
+		PrecacheResource( "model", v, context )
+	end
+	
 	print("precache complete")
 end
 
@@ -300,6 +334,53 @@ function FateGameMode:OnNPCSpawned(keys)
 
 
 	end
+end
+
+-- This is for swapping hero models in
+function FateGameMode:OnHeroSpawned( keys )
+	-- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
+	Timers:CreateTimer( 0.05, function()
+			-- Setup variables
+			local hero = EntIndexToHScript( keys.entindex )
+			local model_name = ""
+			
+			-- Check if npc is hero
+			if not hero:IsHero() then return end
+			
+			-- Getting model name
+			if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
+				model_name = model_lookup[ hero:GetName() ]
+				-- print( "Swapping in: " .. model_name )
+			else
+				return nil
+			end
+			
+			-- Check if it's correct format
+			if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
+			
+			-- Never got changed before
+			local toRemove = {}
+			local wearable = hero:FirstMoveChild()
+			while wearable ~= nil do
+				if wearable:GetClassname() == "dota_item_wearable" then
+					-- print( "Removing wearable: " .. wearable:GetModelName() )
+					table.insert( toRemove, wearable )
+				end
+				wearable = wearable:NextMovePeer()
+			end
+			
+			-- Remove wearables
+			for k, v in pairs( toRemove ) do
+				v:SetModel( "models/development/invisiblebox.vmdl" )
+				v:RemoveSelf()
+			end
+			
+			-- Set model
+			hero:SetModel( model_name )
+			hero:SetOriginalModel( model_name )			-- This is needed because when state changes, model will revert back
+			hero:MoveToPosition( hero:GetAbsOrigin() )	-- This is needed because when model is spawned, it will be in T-pose
+		end
+	)
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -551,8 +632,9 @@ function FateGameMode:InitGameMode()
   --ListenToGameEvent('dota_combatlog', Dynamic_Wrap(FateGameMode, 'OnCombatLogEvent'), self)
   --ListenToGameEvent('dota_player_killed', Dynamic_Wrap(FateGameMode, 'OnPlayerKilled'), self)
   --ListenToGameEvent('player_team', Dynamic_Wrap(FateGameMode, 'OnPlayerTeam'), self)
-
-
+  
+  -- For models swapping
+  ListenToGameEvent( 'npc_spawned', Dynamic_Wrap( FateGameMode, 'OnHeroSpawned' ), self )
 
   -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
   Convars:RegisterCommand( "command_example", Dynamic_Wrap(FateGameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
