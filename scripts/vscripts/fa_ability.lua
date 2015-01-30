@@ -135,7 +135,7 @@ function OnQuickdrawStart(keys)
 	local quickdraw = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+        EffectName = "particles/custom/false_assassin/fa_quickdraw.vpcf",
         iMoveSpeed = 1500,
         vSpawnOrigin = caster:GetOrigin(),
         fDistance = 750,

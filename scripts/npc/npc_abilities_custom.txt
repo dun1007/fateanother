@@ -5879,6 +5879,7 @@
 
 		"precache"
 		{
+			"particle"					"particles/custom/false_assassin/fa_quickdraw.vpcf"
 		}
 		
 		// Casting
