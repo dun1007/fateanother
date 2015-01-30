@@ -242,6 +242,7 @@ function OnTGStart(keys)
 	local target = keys.target
 	EmitGlobalSound("FA.TG")
 	EmitGlobalSound("FA.Chop")
+	keys.Damage = 1
 
 	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
 	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
@@ -256,8 +257,13 @@ function OnTGStart(keys)
 			caster:SetAbsOrigin(target:GetAbsOrigin())
 			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			local tsu = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(tsu, 1, target:GetAbsOrigin())
+			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+			Timers:CreateTimer( 1.0, function()
+					ParticleManager:DestroyParticle( tsu, true )
+					ParticleManager:ReleaseParticleIndex( tsu )
+					return nil
+				end
+			)
 		end
 	return end)
 
@@ -266,8 +272,13 @@ function OnTGStart(keys)
 			caster:SetAbsOrigin(target:GetAbsOrigin())
 			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			local tsu = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(tsu, 1, target:GetAbsOrigin())
+			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+			Timers:CreateTimer( 1.0, function()
+					ParticleManager:DestroyParticle( tsu, true )
+					ParticleManager:ReleaseParticleIndex( tsu )
+					return nil
+				end
+			)
 		end
 	return end)
 
@@ -278,8 +289,13 @@ function OnTGStart(keys)
 			DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			local tsu = ParticleManager:CreateParticle("particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-			ParticleManager:SetParticleControl(tsu, 1, target:GetAbsOrigin())
+			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+			Timers:CreateTimer( 1.0, function()
+					ParticleManager:DestroyParticle( tsu, true )
+					ParticleManager:ReleaseParticleIndex( tsu )
+					return nil
+				end
+			)
 		end
 	return end)
 

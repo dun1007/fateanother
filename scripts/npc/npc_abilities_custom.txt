@@ -6323,7 +6323,10 @@
 		
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_terrorblade/terrorblade_reflection_slow_c.vpcf"
+			"particle"		"particles/units/heroes/hero_axe/axe_counterhelix_unused.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -6353,6 +6356,13 @@
 
 		"OnAbilityPhaseStart"
 		{
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_axe/axe_counterhelix_unused.vpcf"
+				"EffectAttachType"	"start_at_origin"
+			}
+		
 			"RunScript"
 			{
 				"ScriptFile"	"fa_ability"
