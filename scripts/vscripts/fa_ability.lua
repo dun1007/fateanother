@@ -242,7 +242,6 @@ function OnTGStart(keys)
 	local target = keys.target
 	EmitGlobalSound("FA.TG")
 	EmitGlobalSound("FA.Chop")
-	keys.Damage = 1
 
 	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
 	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
