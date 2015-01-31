@@ -138,12 +138,27 @@ function OnBloodfortStart(keys)
 	)
 end
 
+-- Particle for starting to cast belle2
+function OnBelle2Cast( keys )
+	local caster = keys.caster
+	local chargeFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_invoker/invoker_emp_charge.vpcf", PATTACH_ABSORIGIN, caster )
+	local eyeFxIndex = ParticleManager:CreateParticle( "particles/items_fx/dust_of_appearance_true_sight.vpcf", PATTACH_ABSORIGIN, caster )
+	
+	Timers:CreateTimer( 2.5, function()
+			ParticleManager:DestroyParticle( chargeFxIndex, false )
+			ParticleManager:DestroyParticle( eyeFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
+			ParticleManager:ReleaseParticleIndex( eyeFxIndex )
+		end
+	)
+end
+
 function OnBelle2Start(keys)
 	local caster = keys.caster
 	local belle2 = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+        EffectName = "",
         iMoveSpeed = 99999,
         vSpawnOrigin = caster:GetAbsOrigin(),
         fDistance = keys.Range,
@@ -162,6 +177,20 @@ function OnBelle2Start(keys)
 	ParticleManager:CreateParticle("particles/custom/screen_lightblue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	EmitGlobalSound("Rider.Bellerophon") 
 	local projectile = ProjectileManager:CreateLinearProjectile(belle2)
+	
+	-- Create Particle for projectile
+	local belle2FxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_2_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+	ParticleManager:SetParticleControl( belle2FxIndex, 0, caster:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( belle2FxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
+	ParticleManager:SetParticleControl( belle2FxIndex, 2, caster:GetForwardVector() * 3000 )
+	ParticleManager:SetParticleControl( belle2FxIndex, 6, Vector( 2, 0, 0 ) )
+			
+	Timers:CreateTimer( 2, function()
+			ParticleManager:DestroyParticle( belle2FxIndex, false )
+			ParticleManager:ReleaseParticleIndex( belle2FxIndex )
+		end
+	)
+	
 	caster:SetAbsOrigin(caster:GetAbsOrigin() + caster:GetForwardVector() * keys.Range) 
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 end

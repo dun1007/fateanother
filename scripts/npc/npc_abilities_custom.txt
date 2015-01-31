@@ -3692,8 +3692,11 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
-			"particle"		"particles/custom/screen_lightblue_splash.vpcf"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"					"particles/custom/screen_lightblue_splash.vpcf"
+			"particle"					"particles/custom/rider/rider_bellerophon_2_beam_charge.vpcf"
+			"particle"					"particles/units/heroes/hero_invoker/invoker_emp_charge.vpcf"
+			"particle"					"particles/items_fx/dust_of_appearance_true_sight.vpcf"
 		}
 		
 		"AbilityCastPoint"				"2.5"
@@ -3716,6 +3719,15 @@
 			{
 				"var_type"		"FIELD_INTEGER"
 				"width"		"500"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBelle2Cast"
 			}
 		}
 		
