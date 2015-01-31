@@ -3744,7 +3744,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"rider_bellerophon"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
-		"AnimationPlaybackRate" 		"0.5"
+		"AnimationPlaybackRate" 		"2.0"
 		"AOERadius"						"%radius"
 		
 		"precache"

@@ -146,24 +146,52 @@ function OnBelleStart(keys)
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
+	local ascendCount = 0
+	local descendCount = 0
+	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
+	local dmgdelay = 360/dist
 	if ply.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.0)
 	Timers:CreateTimer(0.5, function()
 		EmitGlobalSound("Rider.Bellerophon") 
 	end)
 
-	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
+	local descendVec = Vector(0,0,0)
+	descendVec = (targetPoint - Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, 1150)):Normalized()
+	Timers:CreateTimer(function()
+		if ascendCount == 23 then 
+		 	return
+		end
+		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+50))
+		ascendCount = ascendCount + 1
+		return 0.033
+	end)
+
+
+	Timers:CreateTimer(0.7, function()
+		if descendCount == 9 then return end
+
+		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x + descendVec.x * dist/6 ,
+									caster:GetAbsOrigin().y + descendVec.y * dist/6,
+									caster:GetAbsOrigin().z - 127))
+		descendCount = descendCount + 1
+		return 0.033
+	end)
+
+	-- this is when Rider makes a landing 
 	Timers:CreateTimer(1.0, function() 
+		caster:SetAbsOrigin(targetPoint)
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	end)
+
+	-- this is when the damage actually applies(Put slam effect here)
+	Timers:CreateTimer(1.0+dmgdelay, function()
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
 	        DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 2.0})
 	    end
-
-		caster:SetAbsOrigin(targetPoint)
-		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-
 	end)
 end
 
