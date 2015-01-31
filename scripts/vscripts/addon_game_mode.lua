@@ -175,6 +175,10 @@ function FateGameMode:OnHeroInGame(hero)
     local heroName = FindName(hero:GetName())
     hero.name = heroName
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
+    UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
+    Timers:CreateTimer(30.0, function() 
+      UTIL_ResetMessageText(hero:GetPlayerID()+1)
+    end)  
 
 end
 

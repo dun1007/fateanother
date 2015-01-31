@@ -152,6 +152,7 @@ function OnBelleStart(keys)
 		EmitGlobalSound("Rider.Bellerophon") 
 	end)
 
+	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
 	Timers:CreateTimer(1.0, function() 
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)

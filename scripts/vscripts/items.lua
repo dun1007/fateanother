@@ -166,6 +166,7 @@ end
 function Blink(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	print(targetPoint)
 
 	if caster:HasModifier("modifier_purge") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
@@ -178,6 +179,8 @@ function Blink(keys)
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
 		return 
 	end 
+
+	ProjectileManager:ProjectileDodge(caster) 
 
 	local diff = targetPoint - caster:GetAbsOrigin()
 	local particle = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)

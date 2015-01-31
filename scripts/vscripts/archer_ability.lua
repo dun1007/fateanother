@@ -769,7 +769,8 @@ function OnHruntStart(keys)
 		EffectName = "particles/custom/archer/archer_hrunting_orb.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 1500, -- 3000
-		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+		bDodgeable = true
 	}
 
 	ProjectileManager:CreateTrackingProjectile(info) 

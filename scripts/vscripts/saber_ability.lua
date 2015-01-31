@@ -56,9 +56,10 @@ function InvisibleAirPull(keys)
 	DoDamage(caster, target , keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 
     local pullTarget = Physics:Unit(keys.target)
+    local dist = (keys.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Length2D() 
     target:PreventDI()
     target:SetPhysicsFriction(0)
-    target:SetPhysicsVelocity((keys.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Normalized() * 800)
+    target:SetPhysicsVelocity((keys.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Normalized() * dist * 2)
     target:SetNavCollisionType(PHYSICS_NAV_NOTHING)
     target:FollowNavMesh(false)
 

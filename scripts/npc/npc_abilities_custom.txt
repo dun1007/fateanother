@@ -234,6 +234,7 @@
 				"Target"			"TARGET"
 				"MoveSpeed"			"%speed"
 				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Dodgeable"			"1"
 			}
 	
 			"FireSound"
@@ -3662,7 +3663,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityU11tTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"rider_bellerophon_two"
@@ -4159,6 +4160,7 @@
 				"EffectName"	"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
 				"MoveSpeed"		"3000"
 				"Target"		"TARGET"
+				"Dodgeable"		"1"
 			}
 			"RunScript"
 			{
