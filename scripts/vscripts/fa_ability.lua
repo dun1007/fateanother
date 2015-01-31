@@ -27,6 +27,28 @@ function OnGKStart(keys)
 
 end
 
+-- Create Gate keeper's particles
+function GKParticleStart( keys )
+	local caster = keys.caster
+	if caster.fa_gate_keeper_particle ~= nil then
+		return
+	end
+	
+	caster.fa_gate_keeper_particle = ParticleManager:CreateParticle( "particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControlEnt( caster.fa_gate_keeper_particle, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControl( caster.fa_gate_keeper_particle, 1, Vector( 100, 100, 100 ) )
+end
+
+-- Destroy Gate keeper's particles
+function GKParticleDestroy( keys )
+	local caster = keys.caster
+	if caster.fa_gate_keeper_particle ~= nil then
+		ParticleManager:DestroyParticle( caster.fa_gate_keeper_particle, false )
+		ParticleManager:ReleaseParticleIndex( caster.fa_gate_keeper_particle )
+		caster.fa_gate_keeper_particle = nil
+	end
+end
+
 function OnHeartStart(keys)
 	
 end

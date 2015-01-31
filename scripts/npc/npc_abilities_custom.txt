@@ -5779,7 +5779,7 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
-			"particle"					"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"particle"					"particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance.vpcf"
 		}
 		
 		"MaxLevel"						"5"
@@ -5843,8 +5843,23 @@
 			{
 				"Duration"		"%duration"
 				
-				"EffectName"		"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"GKParticleStart"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"GKParticleDestroy"
+					}
+				}
 				
 				"Properties"
 				{
