@@ -3331,10 +3331,6 @@
 			"rider_5th_mystic_eye_aura"
 			{
 				"IsDebuff"			"1"
-			
-				"EffectName"		"particles/custom/rider/rider_mystic_eye_debuff.vpcf"
-				"EffectAttachType"	"follow_origin"
-			
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"
