@@ -71,7 +71,8 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		&C_INIT_RandomAlpha_0,
 		&C_INIT_PositionOffset_0,
 		&C_INIT_CreateWithinSphere_0,
-		&C_INIT_RemapCPtoScalar_0
+		&C_INIT_RemapCPtoScalar_0,
+		&C_INIT_RandomColor_0
 	]
 	CParticleOperatorInstance*[] m_Emitters = 
 	[
@@ -447,6 +448,39 @@ C_INIT_RemapCPtoScalar C_INIT_RemapCPtoScalar_0
 	float m_flStartTime = -1.000000
 	float m_flEndTime = -1.000000
 	bool m_bScaleInitialRange = false
+	bool m_bRunForParentApplyKillList = true
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_INIT_RandomColor C_INIT_RandomColor_0
+{
+	uint(4) m_ColorMin = ( 170, 85, 255, 255 )
+	uint(4) m_ColorMax = ( 85, 0, 127, 255 )
+	uint(4) m_TintMin = ( 0, 0, 0, 0 )
+	uint(4) m_TintMax = ( 255, 255, 255, 255 )
+	float m_flTintPerc = 0.000000
+	float m_flUpdateThreshold = 32.000000
+	int m_nTintCP = 0
+	int m_nFieldOutput = 6
+	symbol m_nTintBlendMode = 0
+	float m_flLightAmplification = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
