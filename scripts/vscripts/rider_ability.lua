@@ -12,6 +12,16 @@ function NailPull(keys)
 	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 	RiderCheckCombo(caster, keys.ability)
 	caster:EmitSound("Rider.NailSwing")
+	
+	-- Create Particle
+	local pullFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_nail_swing.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( pullFxIndex, 0, caster:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( pullFxIndex, 1, Vector( radius, radius, radius ) )
+	Timers:CreateTimer( 1.5, function()
+			ParticleManager:DestroyParticle( pullFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( pullFxIndex )
+		end
+	)
 
 	for k,v in pairs(targets) do
 		giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
