@@ -2943,6 +2943,7 @@
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_overcharge.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur.vpcf"
+			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

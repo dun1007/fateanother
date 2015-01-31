@@ -49,7 +49,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	[
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/generic/fate_generic_beam_charge_circle.vpcf"
+			string m_ChildRef = "particles/custom/saber_alter/saber_alter_excalibur_beam_charge_circle.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
@@ -57,7 +57,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/generic/fate_generic_beam_charge_sparkle.vpcf"
+			string m_ChildRef = "particles/custom/saber_alter/saber_alter_excalibur_beam_charge_sparkle.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
@@ -65,7 +65,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/generic/fate_generic_beam_charge_core.vpcf"
+			string m_ChildRef = "particles/custom/saber_alter/saber_alter_excalibur_beam_charge_core.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
@@ -73,7 +73,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/generic/fate_generic_beam_charge_base_expanding.vpcf"
+			string m_ChildRef = "particles/custom/saber_alter/saber_alter_excalibur_beam_charge_expanding.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
@@ -81,7 +81,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/generic/fate_generic_beam_charge_core_sphere.vpcf"
+			string m_ChildRef = "particles/custom/saber_alter/saber_alter_excalibur_beam_charge_core_sphere.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
@@ -89,7 +89,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/generic/fate_generic_beam_charge_core_center.vpcf"
+			string m_ChildRef = "particles/custom/saber_alter/saber_alter_excalibur_beam_charge_core_center.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false

@@ -290,7 +290,7 @@ function OnDexStart(keys)
 	local dex = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/custom/saber_alter/saber_alter_excalibur.vpcf",
+        EffectName = "",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = nil,
         fDistance = keys.Range,
@@ -314,6 +314,19 @@ function OnDexStart(keys)
 			EmitGlobalSound("Saber.Excalibur_Ready")
 			dex.vSpawnOrigin = caster:GetAbsOrigin() 
 			projectile = ProjectileManager:CreateLinearProjectile(dex)
+			
+			-- Create Particle for projectile
+			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
+			ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
+			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+				
+			Timers:CreateTimer( 2.5, function()
+					ParticleManager:DestroyParticle( excalFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( excalFxIndex )
+				end
+			)
+			
 			return 
 		end
 	end)
