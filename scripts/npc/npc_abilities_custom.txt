@@ -3599,7 +3599,8 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"					"particles/custom/rider/rider_bloodfort_andromeda_sphere.vpcf"
+			"particle"					"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
 		}
 		
 		"AbilityCastPoint"				"2.5"
@@ -3632,6 +3633,15 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"absorb"			"30 40 50 60 70"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"rider_ability"
+				"Function"		"OnBloodfortCast"
 			}
 		}
 		

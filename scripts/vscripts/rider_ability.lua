@@ -58,6 +58,18 @@ function OnBGStart(keys)
 	end
 end
 
+-- Show particle on start
+function OnBloodfortCast( keys )
+	local sparkFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_invoker/invoker_emp_charge.vpcf", PATTACH_ABSORIGIN, keys.caster )
+	ParticleManager:SetParticleControl( sparkFxIndex, 0, keys.caster:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( sparkFxIndex, 1, keys.caster:GetAbsOrigin() )
+	Timers:CreateTimer( 2.5, function()
+			ParticleManager:DestroyParticle( sparkFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( sparkFxIndex )
+		end
+	)
+end
+
 function OnBloodfortStart(keys)
 
 	local caster = keys.caster
@@ -73,7 +85,7 @@ function OnBloodfortStart(keys)
 	local dummy_ability = dummy:FindAbilityByName("dummy_unit_passive")
 	dummy_ability:SetLevel(1)
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=5.0})
-	Timers:CreateTimer(5.0, function()  DummyEnd(dummy) return end)
+	Timers:CreateTimer( duration, function()  DummyEnd(dummy) return end )
 
 	local forcemove = {
 		UnitIndex = nil,
@@ -84,8 +96,6 @@ function OnBloodfortStart(keys)
 
 	Timers:CreateTimer(function()
 		if bloodfortCount ==  duration then return end
-		
-		local fort = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start_ring.vpcf", PATTACH_ABSORIGIN_FOLLOW, dummy)
 		
 		local targets = FindUnitsInRadius(caster:GetTeam(), initCasterPoint, nil, radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -100,6 +110,20 @@ function OnBloodfortStart(keys)
 	    end
 		bloodfortCount = bloodfortCount + 1
 		return 1.0
+		end
+	)
+	
+	-- Create Particle
+	local sphereFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bloodfort_andromeda_sphere.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( sphereFxIndex, 0, caster:GetAbsOrigin() )
+	ParticleManager:SetParticleControl( sphereFxIndex, 1, Vector( radius, radius, radius ) )
+	ParticleManager:SetParticleControl( sphereFxIndex, 6, Vector( radius, radius, radius ) )
+	ParticleManager:SetParticleControl( sphereFxIndex, 10, Vector( radius, radius, radius ) )
+	
+	Timers:CreateTimer( duration, function()
+			ParticleManager:DestroyParticle( sphereFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( sphereFxIndex )
+			return nil
 		end
 	)
 end
