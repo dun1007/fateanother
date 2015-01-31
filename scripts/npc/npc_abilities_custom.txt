@@ -482,6 +482,7 @@
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
 			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
 			"particle"				"particles/custom/saber_excalibur.vpcf"
+			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -1187,6 +1188,7 @@
 			"parictle"				"particles/custom/saber_excalibur_max_rock_emitter.vpcf"
 			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
 			"particle"				"particles/custom/screen_yellow_splash.vpcf"
+			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
 		}
 		
 		// Casting
@@ -3331,6 +3333,7 @@
 			"rider_5th_mystic_eye_aura"
 			{
 				"IsDebuff"			"1"
+			
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"

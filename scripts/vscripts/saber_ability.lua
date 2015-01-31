@@ -195,12 +195,12 @@ function OnExcaliburStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
-
+	
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.0)
 	local excal = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/custom/saber_excalibur.vpcf",
+        EffectName = "",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = casterloc,
         fDistance = keys.Range,
@@ -225,7 +225,22 @@ function OnExcaliburStart(keys)
 	Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
-			local projectile = ProjectileManager:CreateLinearProjectile(excal) return 
+			
+			-- Create Particle for projectile
+			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.EndRadius, keys.EndRadius, keys.EndRadius ) )
+			ParticleManager:SetParticleControl( excalFxIndex, 2, frontward * keys.Speed )
+			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+			
+			Timers:CreateTimer( 2.5, function()
+					ParticleManager:DestroyParticle( excalFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( excalFxIndex )
+				end
+			)
+			
+			local projectile = ProjectileManager:CreateLinearProjectile(excal)
+			
+			return 
 		end
 	end)
 end
@@ -245,7 +260,7 @@ function OnMaxStart(keys)
 	local max_excal = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/custom/saber_excalibur.vpcf",
+        EffectName = "",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = caster:GetAbsOrigin(),
         fDistance = keys.Range,
@@ -261,12 +276,14 @@ function OnMaxStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
+	
 	EmitGlobalSound("Saber.Excalibur_Ready")
 	Timers:CreateTimer({
 		endTime = 1.5, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
 		callback = function()
 	    EmitGlobalSound("Saber.Excalibur")
 	end})
+	
 	Timers:CreateTimer({
 		endTime = 3, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
 		callback = function()
@@ -281,6 +298,18 @@ function OnMaxStart(keys)
 		ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
 	    local projectile = ProjectileManager:CreateLinearProjectile( max_excal )
+		
+		-- Create Particle for projectile
+		local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
+		ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
+		ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+			
+		Timers:CreateTimer( 2.5, function()
+				ParticleManager:DestroyParticle( excalFxIndex, false )
+				ParticleManager:ReleaseParticleIndex( excalFxIndex )
+			end
+		)
 		
 		-- Function to create rock follow the projectile
 		local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, caster )
