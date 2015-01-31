@@ -56,8 +56,6 @@ function OnBGStart(keys)
 			giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
 		end
 	end
-	--keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_petrified", {Duration = 3.0})
-	--ParticleManager:CreateParticle("particles/status_fx/status_effect_medusa_stone_gaze.vpcf", PATTACH_ROOTBONE_FOLLOW, keys.caster)
 end
 
 function OnBloodfortStart(keys)

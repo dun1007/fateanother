@@ -3296,6 +3296,10 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"rider_mystic_eyes"
+		"precache"
+		{
+			"particle"					"particles/custom/rider/rider_mystic_eye_debuff.vpcf"
+		}
 		"MaxLevel"						"1"
 		
 		"AbilitySpecial"
@@ -3316,16 +3320,21 @@
 		{
 			"modifier_mystic_eye"
 			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-				"IsDebuff"	"1"
-				"Aura"		"rider_5th_mystic_eye_aura"
-				"Aura_Radius"	"%range"
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"IsDebuff"		"1"
+				"Aura"			"rider_5th_mystic_eye_aura"
+				"Aura_Radius"	"%Range"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
 			}
 			"rider_5th_mystic_eye_aura"
 			{
+				"IsDebuff"			"1"
+			
+				"EffectName"		"particles/custom/rider/rider_mystic_eye_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+			
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"
@@ -3501,6 +3510,7 @@
 		
 		"precache"
 		{
+			"particle"			"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
 			"particle"			"particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
 		}
 		
@@ -3553,18 +3563,17 @@
 		{
 			"modifier_breaker_gorgon"
 			{
-				"IsDebuff"	"true"
-				"Duration"	"%duration"
+				"IsDebuff"			"1"
+				"Duration"			"%duration"
+				
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 				}
-			}
-			"modifier_petrified"
-			{
-				"IsDebuff"	"true"
-				"EffectName"		"particles/status_fx/status_effect_medusa_stone_gaze.vpcf"
 			}
 		}
 	}
