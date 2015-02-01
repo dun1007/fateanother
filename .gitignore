@@ -43,7 +43,6 @@ Temporary Items
 .apdisk
 
 *.bin
-resource/flash3/images/spellicons
 resource/flash3/images/heroes
 resource/flash3/videos/*
 particles/*
