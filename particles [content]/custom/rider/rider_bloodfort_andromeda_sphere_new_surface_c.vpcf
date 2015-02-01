@@ -18,7 +18,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	string m_hLowViolenceDef = ""
 	uint(4) m_ConstantColor = ( 255, 99, 162, 255 )
 	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
-	float m_flConstantRadius = 128.000000
+	float m_flConstantRadius = 256.000000
 	float m_flConstantRotation = 0.000000
 	float m_flConstantRotationSpeed = 0.000000
 	float m_flConstantLifespan = 0.250000
@@ -159,7 +159,7 @@ C_OP_FadeOutSimple C_OP_FadeOutSimple_2
 
 C_OP_BasicMovement C_OP_BasicMovement_3
 {
-	float(3) m_Gravity = ( 0.000000, 0.000000, -900.000000 )
+	float(3) m_Gravity = ( 0.000000, 0.000000, -2000.000000 )
 	float m_fDrag = 0.000000
 	int m_nMaxConstraintPasses = 3
 	bool m_bLockULCorner = false
@@ -401,8 +401,8 @@ C_INIT_VelocityRandom C_INIT_VelocityRandom_9
 	int m_nControlPointNumber = 0
 	float m_fSpeedMin = 0.000000
 	float m_fSpeedMax = 0.000000
-	float(3) m_LocalCoordinateSystemSpeedMin = ( 0.000000, 0.000000, -330.000000 )
-	float(3) m_LocalCoordinateSystemSpeedMax = ( 0.000000, 0.000000, 630.000000 )
+	float(3) m_LocalCoordinateSystemSpeedMin = ( 0.000000, 0.000000, -800.000000 )
+	float(3) m_LocalCoordinateSystemSpeedMax = ( 0.000000, 0.000000, 1200.000000 )
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
@@ -458,7 +458,7 @@ C_OP_ContinuousEmitter C_OP_ContinuousEmitter_11
 {
 	float m_flEmissionDuration = 0.250000
 	float m_flStartTime = 0.000000
-	float m_flEmitRate = 1000.000000
+	float m_flEmitRate = 500.000000
 	float m_flEmissionScale = 0.000000
 	int m_nScaleControlPoint = -1
 	int m_nScaleControlPointField = 0
@@ -490,7 +490,7 @@ C_OP_TurbulenceForce C_OP_TurbulenceForce_12
 	float m_flNoiseCoordScale1 = 0.000000
 	float m_flNoiseCoordScale2 = 0.000000
 	float m_flNoiseCoordScale3 = 0.000000
-	float(3) m_vecNoiseAmount0 = ( 128.000000, 128.000000, 128.000000 )
+	float(3) m_vecNoiseAmount0 = ( 256.000000, 256.000000, 256.000000 )
 	float(3) m_vecNoiseAmount1 = ( 0.500000, 0.500000, 0.500000 )
 	float(3) m_vecNoiseAmount2 = ( 0.250000, 0.250000, 0.250000 )
 	float(3) m_vecNoiseAmount3 = ( 0.125000, 0.125000, 0.125000 )

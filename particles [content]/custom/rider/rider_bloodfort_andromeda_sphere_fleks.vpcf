@@ -384,8 +384,8 @@ C_INIT_RandomLifeTime C_INIT_RandomLifeTime_7
 
 C_INIT_RandomRadius C_INIT_RandomRadius_8
 {
-	float m_flRadiusMin = 1.000000
-	float m_flRadiusMax = 4.000000
+	float m_flRadiusMin = 14.112000
+	float m_flRadiusMax = 56.448002
 	float m_flRadiusRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
@@ -606,7 +606,7 @@ C_OP_ContinuousEmitter C_OP_ContinuousEmitter_15
 {
 	float m_flEmissionDuration = 0.100000
 	float m_flStartTime = 0.000000
-	float m_flEmitRate = 2000.000000
+	float m_flEmitRate = 150.000000
 	float m_flEmissionScale = 0.000000
 	int m_nScaleControlPoint = -1
 	int m_nScaleControlPointField = 0
@@ -634,7 +634,7 @@ C_OP_ContinuousEmitter C_OP_ContinuousEmitter_15
 
 C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_16
 {
-	int m_nParticlesToEmit = 200
+	int m_nParticlesToEmit = 100
 	int m_nMinParticlesToEmit = -1
 	float m_flStartTime = 0.000000
 	float m_flStartTimeMax = -1.000000

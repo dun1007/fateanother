@@ -649,7 +649,7 @@ C_INIT_RandomColor C_INIT_RandomColor_16
 
 C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_17
 {
-	int m_nParticlesToEmit = 32
+	int m_nParticlesToEmit = 8
 	int m_nMinParticlesToEmit = -1
 	float m_flStartTime = 0.000000
 	float m_flStartTimeMax = -1.000000

@@ -712,7 +712,7 @@ C_INIT_PositionPlaceOnGround C_INIT_PositionPlaceOnGround_18
 
 C_OP_InstantaneousEmitter C_OP_InstantaneousEmitter_19
 {
-	int m_nParticlesToEmit = 32
+	int m_nParticlesToEmit = 16
 	int m_nMinParticlesToEmit = -1
 	float m_flStartTime = 0.150000
 	float m_flStartTimeMax = -1.000000
