@@ -437,15 +437,31 @@ function OnMovementSpeedGain(keys)
 end
 
 function OnAvariceAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
 end
 
 function OnAMAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
+	
 end
 
 function OnReplenishmentAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
+	
 end
 
 function OnProsperityAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
 end
 
 function PresenceDetection(keys)
