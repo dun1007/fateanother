@@ -9993,6 +9993,133 @@
 		}
 	}
 
+
+
+	//=================================================================================================================
+	// Shard of Holy Grail
+	//=================================================================================================================
+	"master_shard_of_holy_grail"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"shard_of_holy_grail"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnShardOpen"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shard of Avarice
+	//=================================================================================================================
+	"master_shard_of_avarice"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"shard_of_avarice"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnAvariceAcquired"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shard of Anti-Magic
+	//=================================================================================================================
+	"master_shard_of_anti_magic"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"shard_of_anti_magic"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnAMAcquired"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Shard of Replenishment
+	//=================================================================================================================
+	"master_shard_of_replenishment"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"shard_of_replenishment"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnReplenishmentAcquired"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Shard of Prosperity
+	//=================================================================================================================
+	"master_shard_of_prosperity"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"shard_of_prosperity"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"master_ability"
+			 	"Function"		"OnProsperityAcquired"
+			}
+		}
+	}
 	//=================================================================================================================
 	// Gain Strength Stat
 	//=================================================================================================================

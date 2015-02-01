@@ -202,8 +202,8 @@ function LoopThroughAttr(hero, attrTable)
 	end
 	hero.ComboName = attrTable[#attrTable]
 	--print(attrTable[#attrTable])
-	hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(3):GetName(), true, true)
-	hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
+	hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(4):GetName(), true, true)
+	--hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
 	hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
 end
 
@@ -294,25 +294,10 @@ function OnListClose(keys)
 	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "master_attribute_list", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "master_stat_list1", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "master_stat_list2", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), caster.ComboName, true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "fate_empty1", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "master_shard_of_holy_grail", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), caster.ComboName, true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty2", true, true)
 end
-
-function OnStatListClose(keys)
-	local caster = keys.caster
-	for i=0,5 do
-		caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
-	end
-	for i=1, 20 do
-		if caster.SavedList[i] == nil then break
-		else
-			caster:AddAbility(caster.SavedList[i])
-		end
-		LevelAllAbility(caster)
-	end
-end
-
 
 function OnStatList1Open(keys)
 	local caster = keys.caster
@@ -346,6 +331,37 @@ function OnStatList2Open(keys)
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
 	caster:GetAbilityByIndex(3):SetLevel(1)
+end
+
+function OnShardOpen(keys)
+	local caster = keys.caster
+
+	RemoveAllAbility(caster)
+	caster:AddAbility("master_shard_of_avarice")
+	caster:AddAbility("master_shard_of_anti_magic")
+	caster:AddAbility("master_shard_of_replenishment")
+	caster:AddAbility("master_close_stat_list")
+	caster:AddAbility("master_shard_of_prosperity")
+	caster:AddAbility("fate_empty2")
+	caster:GetAbilityByIndex(0):SetLevel(1) 
+	caster:GetAbilityByIndex(1):SetLevel(1)
+	caster:GetAbilityByIndex(2):SetLevel(1)
+	caster:GetAbilityByIndex(3):SetLevel(1)
+	caster:GetAbilityByIndex(4):SetLevel(1)
+end
+
+function OnStatListClose(keys)
+	local caster = keys.caster
+	for i=0,5 do
+		caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
+	end
+	for i=1, 20 do
+		if caster.SavedList[i] == nil then break
+		else
+			caster:AddAbility(caster.SavedList[i])
+		end
+		LevelAllAbility(caster)
+	end
 end
 
 -- Remove all abilities and save it to caster handle
@@ -418,6 +434,18 @@ function OnMovementSpeedGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
+end
+
+function OnAvariceAcquired(keys)
+end
+
+function OnAMAcquired(keys)
+end
+
+function OnReplenishmentAcquired(keys)
+end
+
+function OnProsperityAcquired(keys)
 end
 
 function PresenceDetection(keys)

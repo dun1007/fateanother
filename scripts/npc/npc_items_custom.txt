@@ -1700,4 +1700,88 @@
 		}
 	}
 
+	"item_shard_of_anti_magic" 
+	{
+	    "ID"           "1129"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "shard_of_anti_magic"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "3"
+	    "ItemStackable" "1"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30.0"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"AntiMagic"
+			}
+	    }
+	}
+
+
+	"item_shard_of_replenishment" 
+	{
+	    "ID"           "1130"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "shard_of_replenishment"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "3"
+	    "ItemStackable" "1"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"0.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"FullHeal"
+			}
+	    }	
+	}
 }

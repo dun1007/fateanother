@@ -661,10 +661,11 @@
 		"Ability1"					"master_attribute_list"			// Ability 1.
 		"Ability2"					"master_stat_list1"			// Ability 2.
 		"Ability3"					"master_stat_list2"			// Ability 3.	
-		"Ability4"					"fate_empty1"		
-		"Ability5"					"fate_empty2"	
-		"Ability6"					"master_close_list"
-		"Ability7"					"master_passive"
+		"Ability4"					"master_shard_of_holy_grail"
+		"Ability5"					"fate_empty1"		
+		"Ability6"					"fate_empty2"	
+		"Ability7"					"master_close_list"
+		"Ability8"					"master_passive"
 
 		// Armor
 		//----------------------------------------------------------------

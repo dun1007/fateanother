@@ -315,10 +315,8 @@ function HealingScroll(keys)
     end
 end
 
-function satyr_purge(caster, target)
-	caster:AddAbility("satyr_trickster_purge")
-	local ability = caster:FindAbilityByName("satyr_trickster_purge")
-	ability:SetLevel(1)
-	caster:CastAbilityOnTarget(target, ability, caster:GetPlayerOwnerID())
-	caster:RemoveAbility("satyr_trickster_purge")
+function AntiMagic(keys)
+end
+
+function FullHeal(keys)
 end
