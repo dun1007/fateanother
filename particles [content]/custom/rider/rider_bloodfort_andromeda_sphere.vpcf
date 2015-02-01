@@ -157,7 +157,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = true
-			bool m_bDisableChild = true
+			bool m_bDisableChild = false
 		},
 		ParticleChildrenInfo_t
 		{
@@ -189,7 +189,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
-			bool m_bDisableChild = true
+			bool m_bDisableChild = false
 		},
 		ParticleChildrenInfo_t
 		{
@@ -237,7 +237,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
-			bool m_bDisableChild = false
+			bool m_bDisableChild = true
 		}
 	]
 	bool m_bShouldSort = false
