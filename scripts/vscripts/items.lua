@@ -231,7 +231,10 @@ function CScroll(keys)
 end
 
 function CScrollHit(keys)
-	keys.target:AddNewModifier(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, "modifier_stunned", {Duration = 1.0}) 
+	if IsSpellBlocked(keys.target) then return end
+	if not keys.target:IsMagicImmune() then
+		keys.target:AddNewModifier(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, "modifier_stunned", {Duration = 1.0}) 
+	end
 	--keys.caster:RemoveSelf()
 end
 
@@ -251,6 +254,8 @@ end
 function SScroll(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
+
 	local lightning = {
 		attacker = caster,
 		victim = target,
@@ -316,7 +321,15 @@ function HealingScroll(keys)
 end
 
 function AntiMagic(keys)
+	local caster = keys.caster
+	caster:EmitSound("DOTA_Item.BlackKingBar.Activate")
 end
 
 function FullHeal(keys)
+	local caster = keys.caster
+	caster:SetHealth(caster:GetMaxHealth()) 
+	caster:SetMana(caster:GetMaxMana())
+
+	caster:EmitSound("DOTA_Item.Mekansm.Activate")
+	ParticleManager:CreateParticle("particles/items2_fx/mekanism.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 end

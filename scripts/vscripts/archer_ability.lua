@@ -144,8 +144,9 @@ function OnBPHit(keys)
     local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
     ParticleManager:SetParticleControl(particle, 3, target:GetAbsOrigin())
 	--ParticleManager:SetParticleControl(particle, 3, target:GetAbsOrigin()) -- target location
-
-	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
+	if not target:IsMagicImmune() then
+		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
+	end
 end
 
 rhoTarget = nil

@@ -227,7 +227,7 @@ function OnWBStart(keys)
 	end
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), casterInitOrigin, nil, radius
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	local risingwind = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
 	if ply.IsGanryuAcquired then
@@ -276,7 +276,7 @@ function OnTGStart(keys)
 	Timers:CreateTimer(0.5, function()  
 		if caster:IsAlive() then
 			caster:SetAbsOrigin(target:GetAbsOrigin())
-			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 			Timers:CreateTimer( 1.0, function()
@@ -291,7 +291,7 @@ function OnTGStart(keys)
 	Timers:CreateTimer(0.7, function()  
 		if caster:IsAlive() then
 			caster:SetAbsOrigin(target:GetAbsOrigin())
-			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 			Timers:CreateTimer( 1.0, function()
@@ -307,7 +307,7 @@ function OnTGStart(keys)
 		if caster:IsAlive() then
 			caster:SetAbsOrigin(target:GetAbsOrigin())
 			if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-			DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+			DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )

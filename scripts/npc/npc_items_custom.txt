@@ -1722,13 +1722,14 @@
 
 	    "ItemInitialCharges" "3"
 	    "ItemStackable" "1"
-	    "ItemPermanent" "1"
+	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"30.0"
 	    "precache"
 	    {
+	    	"particle"		"particles/items_fx/black_king_bar_avatar.vpcf"
 	    }
 	    "OnSpellStart"
 	    {
@@ -1738,6 +1739,32 @@
 				"ScriptFile"	"items"
 				"Function"		"AntiMagic"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_magic_immunity"
+				"Target"		"CASTER"
+			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_magic_immunity"
+	    	{
+	    		"Duration"		"10.0"
+	    		"OnCreated"
+	    		{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+	    		}
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	    	}
 	    }
 	}
 
@@ -1764,7 +1791,7 @@
 
 	    "ItemInitialCharges" "5"
 	    "ItemStackable" "1"
-	    "ItemPermanent" "1"
+	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 
@@ -1773,6 +1800,7 @@
 	    //"AbilityCastRange"				"1000"
 	    "precache"
 	    {
+	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
 	    }
 	    "OnSpellStart"
 	    {

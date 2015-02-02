@@ -9,7 +9,7 @@ end
 function NailPull(keys)
 	local caster = keys.caster
 	local radius = keys.Radius
-	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+	local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 1, false)
 	RiderCheckCombo(caster, keys.ability)
 	caster:EmitSound("Rider.NailSwing")
 	
@@ -108,7 +108,7 @@ function OnBloodfortStart(keys)
 		if bloodfortCount ==  duration then return end
 		
 		local targets = FindUnitsInRadius(caster:GetTeam(), initCasterPoint, nil, radius
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
 			if ply.IsSealAcquired then  
 				forcemove.UnitIndex = v:entindex()

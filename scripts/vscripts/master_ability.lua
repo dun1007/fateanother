@@ -105,7 +105,15 @@ function OnSeal1Start(keys)
 		keys.ability:EndCooldown() 
 		return
 	end
+
+	-- Particle
+	hero:EmitSound("DOTA_Item.Dagon.Activate")
+	local particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_radial.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
+
+
 	ply.IsFirstSeal = true
+
 	caster:FindAbilityByName("cmd_seal_1"):StartCooldown(60)
 	Timers:CreateTimer({
 		endTime = 20.0,
@@ -127,15 +135,24 @@ function OnSeal2Start(keys)
 		keys.ability:EndCooldown() 
 		return
 	end
-	for i=0, 30 do 
+
+	-- Reset all resetable abilities
+	for i=0, 15 do 
 		local ability = hero:GetAbilityByIndex(i)
 		if ability ~= nil and ability.IsResetable ~= false then
 			ability:EndCooldown()
 		else break end
 	end
+
+	-- Particle
+	hero:EmitSound("DOTA_Item.Refresher.Activate")
+	local particle = ParticleManager:CreateParticle("particles/items2_fx/refresher.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
+
+
+	-- Set cooldown
 	if ply.IsFirstSeal == true then
 		keys.ability:EndCooldown()
-		--print("did it end?")
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
@@ -158,7 +175,11 @@ function OnSeal3Start(keys)
 		return
 	end
 
+	hero:EmitSound("DOTA_Item.HealingSalve.Activate")
+	local particle = ParticleManager:CreateParticle("particles/items2_fx/urn_of_shadows_heal_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
 	hero:Heal(hero:GetMaxHealth(), hero)
+
 	if ply.IsFirstSeal == true then
 		keys.ability:EndCooldown()
 	else
@@ -183,7 +204,15 @@ function OnSeal4Start(keys)
 		return
 	end
 
+	-- Particle
+	hero:EmitSound("DOTA_Item.ArcaneBoots.Activate")
+	local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
+
+
 	hero:SetMana(hero:GetMaxMana()) 
+
+
 	if ply.IsFirstSeal == true then
 		keys.ability:EndCooldown()
 	else

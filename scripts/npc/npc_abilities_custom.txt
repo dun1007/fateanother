@@ -1095,6 +1095,7 @@
 						"EndRadius"				"%width"
 						"FixedDistance"			"%length"
 						"HasFrontalCone"		"1"
+						"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 						"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 						"TargetTypes"			"DOTA_UNIT_TARGET_ALL"
 					}
@@ -6360,6 +6361,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"1.5"
 		"FightRecapLevel"				"1"
@@ -6660,7 +6662,7 @@
 		"AbilityTextureName"			"ta_dirk"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
-		
+		"AbilityUnitTargetFlag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastRange"				"700"
 		"AbilityCooldown"				"8"
@@ -9779,6 +9781,11 @@
 		"AbilityTextureName"			"cmd_seal_1"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"60"
+
+		"precache"
+		{
+			"particle"		"particles/items2_fx/hand_of_midas_radial.vpcf"
+		}
 		
 		"AbilitySpecial"
 		{
@@ -9811,6 +9818,10 @@
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
 		
+		"precache"
+		{
+			"particle"			"particles/items2_fx/refresher.vpcf"
+		}
 		
 		"OnSpellStart"
 		{
@@ -9833,6 +9844,10 @@
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
 		
+		"precache"
+		{
+			"particle"		"particles/items2_fx/urn_of_shadows_heal_c.vpcf"
+		}
 		
 		"OnSpellStart"
 		{
@@ -10343,16 +10358,16 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"saber_invisible_air"
-	    "precache"
-	    {
-	    	"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
-	    }
 		"AbilityCastRange"				"1000"
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"10.0"
 		"AbilityDamage"					"100"
 		"AbilityManaCost"				"0"
-		
+
+	    "precache"
+	    {
+	    	"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+	    }		
 		"OnSpellStart"
 		{
 			"TrackingProjectile"
