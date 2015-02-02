@@ -903,7 +903,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_bane"
 			//"particle_folder"				"particles/units/heroes/hero_bloodseeker"
 			"particle_folder"				"particles/units/heroes/hero_crystalmaiden"
-			//"particle_folder"				"particles/units/heroes/hero_drow"
+			"particle_folder"				"particles/units/heroes/hero_drow"
 			//"particle_folder"				"particles/units/heroes/hero_earthshaker"
 			"particle_folder"				"particles/units/heroes/hero_juggernaut"
 			//"particle_folder"				"particles/units/heroes/hero_mirana"

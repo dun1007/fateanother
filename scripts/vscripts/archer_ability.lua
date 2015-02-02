@@ -384,6 +384,7 @@ end
 -- combo
 function OnRainStart(keys)
 	local caster = keys.caster
+	caster:FindAbilityByName("archer_5th_rho_aias"):StartCooldown(27.0)
 	local ascendCount = 0
 	local descendCount = 0
 	local radius = 1200

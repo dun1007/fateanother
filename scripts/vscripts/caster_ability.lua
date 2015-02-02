@@ -597,7 +597,11 @@ function OnHGPStart(keys)
 		return
     end
     )
-	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic_Spread") EmitGlobalSound("Caster.Hecatic") caster:EmitSound("Misc.Crash") return end)
+	Timers:CreateTimer(1.0, function() 
+		EmitGlobalSound("Caster.Hecatic_Spread") 
+		--EmitGlobalSound("Caster.Hecatic") 
+		caster:EmitSound("Misc.Crash") 
+	return end)
 end
 
 function CasterCheckCombo(caster, ability)

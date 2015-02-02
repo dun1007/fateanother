@@ -39,6 +39,7 @@ end
 
 function OnRoarStart(keys)
 	local caster = keys.caster
+	caster:FindAbilityByName("berserker_5th_courage"):StartCooldown(27)
 	local casterloc = caster:GetAbsOrigin()
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)

@@ -256,6 +256,7 @@ end
 function OnMaxStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
 
 	local max_excal = 
 	{

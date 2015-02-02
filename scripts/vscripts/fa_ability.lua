@@ -82,6 +82,8 @@ function OnIWStart(keys)
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
+	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(17)
+
 	
 	-- Create delay to unable enemy to detect which is caster
 	Timers:CreateTimer( 0.1, function()

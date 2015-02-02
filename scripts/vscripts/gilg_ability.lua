@@ -112,7 +112,9 @@ function OnGramHit(keys)
 	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin())
 
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
+	if not target:IsMagicImmune() then
+		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
+	end
 end
 
 function OnGOBStart(keys)
@@ -144,24 +146,24 @@ function OnGOBStart(keys)
 		bDeleteOnHit = true,
 		vVelocity = frontward * 1300
 	}
+
+
 	local leftvec = Vector(-frontward.y, frontward.x, 0)
 	local rightvec = Vector(frontward.y, -frontward.x, 0)
-
 	local projectile = nil
 	local gobCount = 0
+
     Timers:CreateTimer(function()
     	if gobCount > duration then caster.IsGOBUp = false return end
-    	local random1 = RandomInt(0, 400)
-		local random2 = RandomInt(0,1)
+
+    	local random1 = RandomInt(0, 400) -- position of weapon spawn
+		local random2 = RandomInt(0,1) -- whether weapon will spawn on left or right side of hero
 
     	if random2 == 0 then 
     		gobWeapon.vSpawnOrigin = casterloc + leftvec*random1
     	else 
     		gobWeapon.vSpawnOrigin = casterloc + rightvec*random1
     	end
-    	local particle = ParticleManager:CreateParticle("particles/econ/items/tinker/boots_of_travel/teleport_start_bots_ground_glow.vpcf", PATTACH_ABSORIGIN_FOLLOW, gobWeapon)
-		ParticleManager:SetParticleControl(particle, 0, gobWeapon.vSpawnOrigin)
-
     	projectile = ProjectileManager:CreateLinearProjectile(gobWeapon)
     	gobCount = gobCount + 0.15
       	return 0.15
@@ -240,6 +242,7 @@ end
 
 function OnMaxEnumaStart(keys)
 	local caster = keys.caster
+	caster:FindAbilityByName("gilgamesh_enuma_elish"):StartCooldown(47)
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
 	local casterloc = caster:GetAbsOrigin()

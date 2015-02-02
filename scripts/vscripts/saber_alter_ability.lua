@@ -122,6 +122,8 @@ end
 function OnMMBStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	caster:FindAbilityByName("saber_alter_mana_burst"):StartCooldown(15.0)
+
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	EmitGlobalSound("Saber_Alter.MMB" ) 

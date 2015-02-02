@@ -155,6 +155,7 @@ end
 
 function OnBelle2Start(keys)
 	local caster = keys.caster
+	caster:FindAbilityByName("rider_5th_bloodfort_andromeda"):StartCooldown(27.0)
 	local belle2 = 
 	{
 		Ability = keys.ability,
