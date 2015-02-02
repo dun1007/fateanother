@@ -373,6 +373,10 @@ function OnImrpoveBCAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsBCImproved = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnImrpoveGaeBolgAcquired(keys)
@@ -380,6 +384,10 @@ function OnImrpoveGaeBolgAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsGaeBolgImproved = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnPFAAcquired(keys)
@@ -388,6 +396,10 @@ function OnPFAAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("lancer_5th_protection_from_arrows"):SetLevel(1) 
 	ply.IsPFAAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnHeartseekerAcquired(keys)
@@ -395,4 +407,8 @@ function OnHeartseekerAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsHeartSeekerAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end

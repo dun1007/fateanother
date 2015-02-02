@@ -908,6 +908,10 @@ function OnEagleEyeAcquired(keys)
 	hero:SetDayTimeVisionRange(hero:GetDayTimeVisionRange() + 200)
 	hero:SetNightTimeVisionRange(hero:GetNightTimeVisionRange() + 200) 
 	ply.IsEagleEyeAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnHruntingAcquired(keys)
@@ -915,6 +919,10 @@ function OnHruntingAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsHruntingAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnShroudOfMartinAcquired(keys)
@@ -924,6 +932,10 @@ function OnShroudOfMartinAcquired(keys)
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 10) 
 	hero:SetBaseMagicalResistanceValue(15)
 	ply.IsMartinAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnImproveProjectionAcquired(keys)
@@ -931,6 +943,10 @@ function OnImproveProjectionAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsProjectionImproved = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnOveredgeAcquired(keys)
@@ -939,6 +955,10 @@ function OnOveredgeAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsOveredgeAcquired = true
 	hero.OveredgeCount = 0
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 
 	Timers:CreateTimer(function()  
 		if ply.IsOveredgeAcquired and hero.OveredgeCount < 3 then

@@ -288,6 +288,10 @@ function OnImproveMysticEyesAcquired(keys)
 	ply.IsMysticEyeImproved = true
 	hero:FindAbilityByName("rider_5th_mystic_eye_improved"):SetLevel(1)
 	hero:SwapAbilities("rider_5th_mystic_eye","rider_5th_mystic_eye_improved", false, true)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnRidingAcquired(keys)
@@ -296,6 +300,10 @@ function OnRidingAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed() + 50) 
 	ply.IsRidingAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnSealAcquired(keys)
@@ -303,6 +311,10 @@ function OnSealAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsSealAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnMonstrousStrengthAcquired(keys)
@@ -313,4 +325,8 @@ function OnMonstrousStrengthAcquired(keys)
 	hero:SetBaseStrength(hero:GetBaseStrength()+10) 
 	hero:FindAbilityByName("rider_5th_monstrous_strength_passive"):SetLevel(1)
 	ply.IsMonstrousStrengthAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end

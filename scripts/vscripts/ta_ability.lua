@@ -323,6 +323,10 @@ function OnImprovePresenceConcealmentAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsPCImproved = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnProtectionFromWindAcquired(keys)
@@ -331,6 +335,10 @@ function OnProtectionFromWindAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsPFWAcquired = true
 	hero:FindAbilityByName("true_assassin_protection_from_wind"):SetLevel(1) 
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnWeakeningVenomAcquired(keys)
@@ -340,6 +348,10 @@ function OnWeakeningVenomAcquired(keys)
 	ply.IsWeakeningVenomAcquired = true
 	hero:FindAbilityByName("true_assassin_weakening_venom_passive"):SetLevel(1)
 	hero:SwapAbilities("true_assassin_dirk_improved", "true_assassin_dirk", true, false) 
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnShadowStrikeAcquired(keys)
@@ -347,4 +359,8 @@ function OnShadowStrikeAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsShadowStrikeAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end

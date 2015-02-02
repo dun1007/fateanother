@@ -411,6 +411,10 @@ function OnImproveManaShroundAcquired(keys)
 	hero:SetBaseMagicalResistanceValue(25)
 	hero:CalculateStatBonus()
 	ply.IsManaShroudImproved = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 -- needs particle
@@ -420,6 +424,10 @@ function OnManaBlastAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsManaBlastAcquired = true
 	hero.ManaBlastCount = 0
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnImproveFerocityAcquired(keys)
@@ -428,6 +436,10 @@ function OnImproveFerocityAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsFerocityImproved = true
 	hero:SwapAbilities("saber_alter_unleashed_ferocity","saber_alter_unleashed_ferocity_improved", false, true)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnDarklightAcquired(keys)
@@ -437,4 +449,7 @@ function OnDarklightAcquired(keys)
 	hero:FindAbilityByName("saber_alter_darklight_passive"):SetLevel(1)
 	ply.IsDarklightAcquired = true
 
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end

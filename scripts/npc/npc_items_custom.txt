@@ -363,11 +363,6 @@
 
 	    "OnEquip"
 	    {
-	    	"RunScript"
-	    	{
-	    		"ScriptFile"	"items"
-	    		"Function"		"OnManaEssenceAcquired"
-	    	}
 	    }
 
 	    "OnSpellStart"
@@ -378,6 +373,11 @@
 	    		"ModifierName"	"item_pot_regen"
 	    		"Target"	"CASTER"
 	    	}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.ClarityPotion.Activate"
+				"Target"		"CASTER"
+			}
 	    }
 	    "Modifiers"
 	    {
@@ -456,6 +456,12 @@
 			{
 				"ScriptFile"	"items"
 				"Function"		"PotInstantHeal"
+			}
+					
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.HealingSalve.Activate"
+				"Target"		"CASTER"
 			}
 	    }
 	} 
@@ -553,6 +559,11 @@
 	    	"ApplyModifier"
 	    	{
 	    		"ModifierName"	"modifier_speed_gem"
+	    		"Target"		"CASTER"
+	    	}
+	    	"FireSound"
+	    	{
+	    		"EffectName"		"DOTA_Item.PhaseBoots.Activate"
 	    		"Target"		"CASTER"
 	    	}
 	    }
@@ -668,6 +679,11 @@
 	    		"ModifierName"		"modifier_berserk_scroll"
 	    		"Target"			"CASTER"
 	    	}
+	    	"FireSound"
+	    	{
+	    		"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
+	    		"Target"			"CASTER"
+	    	}
 	    	"SpendCharge" {}
 	    }
 	    "Modifiers"
@@ -724,13 +740,19 @@
 		}
 		"OnSpellStart"
 		{
+			"SpendCharge" {}		
 			"RunScript"
 			{
 				"ScriptFile"	"items"
 				"Function"		"WardFam"
 				"Target"		"POINT"
 			}
-			"SpendCharge" {}
+
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.ObserverWard.Activate"
+				"Target"		"CASTER"
+			}	
 		}
 	}
 
@@ -1113,8 +1135,7 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-	    	"particle"			"particles/items2_fx/pipe_of_insight.vpcf"
-	    	"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+			"particle"			"particles/items_fx/courier_shield.vpcf"
 	    }
 
 	    "OnSpellStart"
@@ -1129,6 +1150,11 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_b_scroll"
+				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.ArcaneBoots.Activate"
 				"Target"		"CASTER"
 			}
 	    }
@@ -1147,8 +1173,17 @@
 	    	"modifier_b_scroll"
 	    	{
 	    		"Duration" "20.0"
-	  	    	"EffectName"	"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
-	    		"EffectAttachType"	"follow_origin"
+	    		"OnCreated"
+	    		{
+	    			"AttachEffect"
+	    			{
+	    				"Target"		"CASTER"
+	    				"EffectName"	"particles/items_fx/courier_shield.vpcf"
+	    				"EffectAttachType"		"follow_origin"
+	    				"EffectRadius"		"300"
+	    			}
+
+	    		}
 	    	}
 	    }
 	}
@@ -1196,9 +1231,7 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-	    	"particle"		"particles/units/heroes/hero_sven/sven_spell_warcry.vpcf"
-	    	"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
-	    	"particle"		"particles/units/heroes/hero_spirit_breaker/spirit_breaker_ambient_flame.vpcf"
+	    	"particle"		"particles/items2_fx/mjollnir_shield.vpcf"
 	    }
 
 	    "OnSpellStart"
@@ -1214,6 +1247,11 @@
 				"ScriptFile"	"items"
 				"Function"		"AScroll"
 			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.LinkensSphere.Target"
+				"Target"		"CASTER"
+			}
 	    }
 
 	    "Modifiers"
@@ -1221,8 +1259,17 @@
 	    	"item_a_scroll"
 	    	{
 	    		"Duration"		"10.0"
-	    		"EffectName"	"particles/units/heroes/hero_spirit_breaker/spirit_breaker_ambient_flame.vpcf"
-	    		"EffectAttachType"	"follow_overhead"
+	    		"OnCreated"
+	    		{
+	    			"AttachEffect"
+	    			{
+	    				"Target"		"CASTER"
+	    				"EffectName"	"particles/items2_fx/mjollnir_shield.vpcf"
+	    				"EffectAttachType"		"follow_origin"
+	    				"EffectRadius"		"300"
+	    			}
+
+	    		}
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -1384,6 +1431,11 @@
 				"ScriptFile"	"items"
 				"Function"		"SScroll"
 			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.DiffusalBlade.Target"
+				"Target"		"CASTER"
+			}
 	    }
 	    "Modifiers"
 	    {
@@ -1482,6 +1534,11 @@
 			{
 				"ScriptFile"	"items"
 				"Function"		"exScroll"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.DiffusalBlade.Target"
+				"Target"		"CASTER"
 			}
 	    }
 	    "Modifiers"

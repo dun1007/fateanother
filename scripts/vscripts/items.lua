@@ -103,7 +103,7 @@ function BecomeWard(keys)
 	transform:AddNewModifier(caster, caster, "modifier_invisible", {}) 
 	transform:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105}) 
 	transform:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
-	
+	caster:EmitSound("DOTA_Item.ObserverWard.Activate") 
 	Timers:CreateTimer({
 		endTime = 0.1,
 		callback = function()

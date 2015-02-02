@@ -175,7 +175,8 @@ function OnSeal3Start(keys)
 		return
 	end
 
-	hero:EmitSound("DOTA_Item.HealingSalve.Activate")
+	hero:EmitSound("DOTA_Item.UrnOfShadows.Activate")
+
 	local particle = ParticleManager:CreateParticle("particles/items2_fx/urn_of_shadows_heal_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
 	hero:Heal(hero:GetMaxHealth(), hero)
@@ -205,7 +206,7 @@ function OnSeal4Start(keys)
 	end
 
 	-- Particle
-	hero:EmitSound("DOTA_Item.ArcaneBoots.Activate")
+	hero:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
 	local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
 
@@ -491,6 +492,12 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	local master = hero.MasterUnit 
+	caster:SetMana(caster:GetMana()+20)
+	caster:SetMaxHealth(caster:GetMaxHealth()+1) 
+	master:SetMana(master:GetMana()+20)
+	master:SetMaxHealth(master:GetMaxHealth()+1) 
 end
 
 function PresenceDetection(keys)

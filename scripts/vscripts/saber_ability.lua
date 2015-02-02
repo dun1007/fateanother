@@ -486,7 +486,12 @@ end
 function OnImproveExcaliburAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsExcaliburAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnImproveInstinctAcquired(keys)
@@ -497,12 +502,21 @@ function OnImproveInstinctAcquired(keys)
 
 	hero:FindAbilityByName("saber_improved_instinct"):SetLevel(1)
 	hero:SwapAbilities("saber_instinct","saber_improved_instinct", false, true)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnChivalryAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsChivalryAcquired = true
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnStrikeAirAcquired(keys)
@@ -510,4 +524,8 @@ function OnStrikeAirAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SwapAbilities("saber_charisma","saber_strike_air", true, true)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
