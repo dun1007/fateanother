@@ -3781,7 +3781,8 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_huskar"
+			"particle"				"particles/custom/rider/rider_bellerophon_1.vpcf"
+			"particle"				"particles/custom/rider/rider_bellerophon_1_impact.vpcf"
 		}
 		
 		// Casting

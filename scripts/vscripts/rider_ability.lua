@@ -211,6 +211,12 @@ function OnBelleStart(keys)
 	local descendCount = 0
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
 	local dmgdelay = 360/dist
+	
+	-- Attach particle
+	local belleFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_1.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControlEnt( belleFxIndex, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
+	
 	if ply.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.0)
 	Timers:CreateTimer(0.5, function()
@@ -243,6 +249,20 @@ function OnBelleStart(keys)
 	Timers:CreateTimer(1.0, function() 
 		caster:SetAbsOrigin(targetPoint)
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		
+		-- Destroy particles
+		ParticleManager:DestroyParticle( belleFxIndex, false )
+		ParticleManager:ReleaseParticleIndex( belleFxIndex )
+		
+		-- Crete particle
+		local belleImpactFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_1_impact.vpcf", PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( belleImpactFxIndex, 1, Vector( keys.Radius, keys.Radius, keys.Radius ) )
+		
+		Timers:CreateTimer( 1, function()
+				ParticleManager:DestroyParticle( belleImpactFxIndex, false )
+				ParticleManager:ReleaseParticleIndex( belleImpactFxIndex )
+			end
+		)
 	end)
 
 	-- this is when the damage actually applies(Put slam effect here)
