@@ -359,8 +359,8 @@ C_INIT_RandomTrailLength C_INIT_RandomTrailLength_6
 
 C_INIT_RandomLifeTime C_INIT_RandomLifeTime_7
 {
-	float m_fLifetimeMin = 0.500000
-	float m_fLifetimeMax = 0.800000
+	float m_fLifetimeMin = 1.600000
+	float m_fLifetimeMax = 2.000000
 	float m_fLifetimeRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
