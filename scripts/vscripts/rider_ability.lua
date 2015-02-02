@@ -210,7 +210,7 @@ function OnBelleStart(keys)
 	local ascendCount = 0
 	local descendCount = 0
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
-	local dmgdelay = 360/dist
+	local dmgdelay = dist * 0.000416
 	
 	-- Attach particle
 	local belleFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_1.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster )
@@ -218,7 +218,7 @@ function OnBelleStart(keys)
 	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 	
 	if ply.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
-	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.0)
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.0)
 	Timers:CreateTimer(0.5, function()
 		EmitGlobalSound("Rider.Bellerophon") 
 	end)
@@ -249,7 +249,11 @@ function OnBelleStart(keys)
 	Timers:CreateTimer(1.0, function() 
 		caster:SetAbsOrigin(targetPoint)
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-		
+	end)
+
+	-- this is when the damage actually applies(Put slam effect here)
+	Timers:CreateTimer(1.0+dmgdelay, function()
+
 		-- Destroy particles
 		ParticleManager:DestroyParticle( belleFxIndex, false )
 		ParticleManager:ReleaseParticleIndex( belleFxIndex )
@@ -263,10 +267,6 @@ function OnBelleStart(keys)
 				ParticleManager:ReleaseParticleIndex( belleImpactFxIndex )
 			end
 		)
-	end)
-
-	-- this is when the damage actually applies(Put slam effect here)
-	Timers:CreateTimer(1.0+dmgdelay, function()
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
