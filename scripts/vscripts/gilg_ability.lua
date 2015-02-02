@@ -225,14 +225,16 @@ function OnEnumaStart(keys)
 	}
 	Timers:CreateTimer(2.0, function() 
 		if caster:IsAlive() then
-			EmitGlobalSound("Gilgamesh.Enuma" ) return 
+			EmitGlobalSound("Gilgamesh.Enuma" ) 
 		end
+		return
 	end)
 	Timers:CreateTimer(3.0, function() 
 		if caster:IsAlive() then
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
-			projectile = ProjectileManager:CreateLinearProjectile(enuma) return 
+			projectile = ProjectileManager:CreateLinearProjectile(enuma)  
 		end
+		return
 	end)
 end
 
@@ -267,14 +269,17 @@ function OnMaxEnumaStart(keys)
 	}
 	Timers:CreateTimer(2.75, function() 
 		if caster:IsAlive() then
-			EmitGlobalSound("Gilgamesh.Enuma" ) return 
+			EmitGlobalSound("Gilgamesh.Enuma" ) 
 		end
+		return
 	end)
 	Timers:CreateTimer(3.75, function()
 		if caster:IsAlive() then
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
-			projectile = ProjectileManager:CreateLinearProjectile(enuma) return 
+			projectile = ProjectileManager:CreateLinearProjectile(enuma)
+			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 		end
+		return
 	end)
 end
 
