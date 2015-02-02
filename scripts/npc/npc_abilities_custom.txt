@@ -2495,6 +2495,7 @@
 		"precache"
 		{
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
+			"particle"				"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_mana_catalyst.vpcf"
 		}
 		
@@ -2551,6 +2552,10 @@
 			"modifier_derange"
 			{
 				"Duration"		"15.0"
+				
+				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_modifier"
