@@ -3,7 +3,20 @@ require("util")
 cdummy = nil
 
 function OnManaEssenceAcquired(keys)
+	print("Mana Essence Purchased")
 end 
+
+function OnBaseEntered(trigger)
+	local hero = trigger.activator
+	hero:GetPlayerOwner().IsInBase = true
+	print("Base entered")
+end
+
+function OnBaseLeft(trigger)
+	local hero = trigger.activator
+	hero:GetPlayerOwner().IsInBase = false
+	print("Base left")
+end
 
 function TransferItem(keys)
 	local item = keys.ability

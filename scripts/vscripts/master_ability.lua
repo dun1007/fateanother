@@ -470,6 +470,28 @@ function OnAvariceAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	if ply.AvariceCount == nil then 
+		ply.AvariceCount = 1
+	else
+		ply.AvariceCount = ply.AvariceCount + 1
+	end
+
+	local teamTable = {}
+	for i=0, 9 do
+		local player = PlayerResource:GetPlayer(i)
+		if player ~= nil then 
+			hero = PlayerResource:GetPlayer(i):GetAssignedHero()
+			if hero:GetTeam() == caster:GetTeam() then
+				table.insert(teamTable, hero)
+			end
+		end
+	end
+
+	for i=1,#teamTable do
+		local goldperperson = 30000/#teamTable
+		print("Distributing " .. goldperperson .. " per person3")
+		teamTable[i]:ModifyGold(goldperperson, true, 0)
+	end
 end
 
 function OnAMAcquired(keys)

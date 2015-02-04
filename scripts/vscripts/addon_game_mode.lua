@@ -431,6 +431,26 @@ function FateGameMode:OnItemPurchased( keys )
   
   -- The cost of the item purchased
   local itemcost = keys.itemcost
+
+  local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
+  --[[Timers:CreateTimer({
+    endTime = 0.033, --wait 1 frame
+    callback = function()
+    for i=6, 11 do
+      local hero_item = hero:GetItemInSlot(i)
+      print(hero_item)
+      if hero_item ~= nil then
+        if hero_item:GetName()  == itemName then
+          print("Item removed")
+          hero:RemoveItem(hero:GetItemInSlot(i)) 
+        end
+      end
+    end
+    return
+  end
+  })]]
+
+
   
 end
 
@@ -754,15 +774,22 @@ function FateGameMode:InitializeRound()
 		duration = 4.0
 	}
 
-  -- currently bugged. when you spawn hero by cheat(-createhero), it registers player twice to vPlayerList
+  -- Grant EXP and starting gold
 	for _,ply in pairs(self.vPlayerList) do
 	    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0)
+
       ply:GetAssignedHero():SetGold(0, false)
-      print(" " .. ply:GetAssignedHero():GetName() .. " gained 3000 gold at the start of round")
-      ply:GetAssignedHero():ModifyGold(3000, true, 0) 
+      if ply:GetAssignedHero():GetGold() < 5000 then
+        print(" " .. ply:GetAssignedHero():GetName() .. " gained 3000 gold at the start of round")
+        if ply.AvariceCount ~= nil then
+          ply:GetAssignedHero():ModifyGold(3000 + ply.AvariceCount * 1500, true, 0) 
+        else
+          ply:GetAssignedHero():ModifyGold(3000, true, 0) 
+        end
+      end
+      print(" " .. ply:GetAssignedHero():GetName() .. " gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " at the start of round")
       ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
 	end
-	
   	Timers:CreateTimer('beginround', {
 		endTime = 15,
 		callback = function()
@@ -832,21 +859,23 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 	elseif winner == 2 then
 		GameRules:SendCustomMessage("This round is a draw.", 0, 0)
 	end
+  GameRules:SendCustomMessage("All players with less than 5,000 gold will receive starting gold in 5 seconds.", 0, 0)
 
-    mode:SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireScore )
-    mode:SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantScore )
-    self.nCurrentRound = self.nCurrentRound + 1
+  -- Set score 
+  mode:SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireScore )
+  mode:SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantScore )
+  self.nCurrentRound = self.nCurrentRound + 1
 
-  	Timers:CreateTimer('roundend', {
+  Timers:CreateTimer('roundend', {
 		endTime = 5,
 		callback = function()
-	    for _,ply in pairs(self.vPlayerList) do
-        if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
-          EndUBW(ply:GetAssignedHero())
-        end 
-	    	ply:GetAssignedHero():RespawnHero(false, false, false)
-	    end
-	    self:InitializeRound()
+    for _,ply in pairs(self.vPlayerList) do
+      if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
+        EndUBW(ply:GetAssignedHero())
+      end 
+      ply:GetAssignedHero():RespawnHero(false, false, false)
+    end
+    self:InitializeRound()
 	end
 	})
 end

@@ -126,7 +126,9 @@ function OnGOBStart(keys)
 	caster.GOBLocation = casterloc
 	caster.IsGOBUp = true
 	GilgaCheckCombo(caster, keys.ability)
-
+	EmitGlobalSound("Saber_Alter.Derange")
+	EmitGlobalSound("Gilgamesh.GOB" ) 
+	EmitGlobalSound("Archer.UBWAmbient")
 	local gobWeapon = 
 	{
 		Ability = keys.ability,

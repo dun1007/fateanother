@@ -363,6 +363,11 @@
 
 	    "OnEquip"
 	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"OnManaEssenceAcquired"
+			}
 	    }
 
 	    "OnSpellStart"
