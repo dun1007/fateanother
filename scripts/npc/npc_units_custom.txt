@@ -922,7 +922,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_kunkka"
 			"particle_folder"				"particles/units/heroes/hero_lina"
 			//"particle_folder"				"particles/units/heroes/hero_lich"
-			//"particle_folder"				"particles/units/heroes/hero_lion"
+			"particle_folder"				"particles/units/heroes/hero_lion"
 			//"particle_folder"				"particles/units/heroes/hero_shadowshaman"
 			//"particle_folder"				"particles/units/heroes/hero_slardar"
 			//"particle_folder"				"particles/units/heroes/hero_tidehunter"

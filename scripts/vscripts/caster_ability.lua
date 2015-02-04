@@ -12,17 +12,35 @@ function OnTerritoryCreated(keys)
 	local hero = ply:GetAssignedHero()
 	local targetPoint = keys.target_points[1]
 
-	--if Entities:FindAllByName("caster_5th_territory") then print("Territory already exists") return end
+
+	local terr = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+	for k,v in pairs(terr) do
+		if v:GetUnitName() == "caster_5th_territory" then
+			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Territory Already Exists" } )
+			return 
+		end
+	end
 
 	-- Create territory unit at location
 	territory = CreateUnitByName("caster_5th_territory", targetPoint, true, caster, caster, caster:GetTeamNumber()) 
 	territory:SetControllableByPlayer(pid, true)
 	LevelAllAbility(territory)
+	keys.ability:ApplyDataDrivenModifier(caster, territory, "modifier_territory_death_checker", {}) --[[Returns:void
+	No Description Set
+	]]
 
 	local territoryHealth = 1000
 	if ply.IsTerritoryImproved then 
-		
-		territory:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 600, duration = 9999})
+		-- add true sight
+		truesightdummy = CreateUnitByName("sight_dummy_unit", territory:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+		truesightdummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 600}) 
+		local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
+		unseen:SetLevel(1)
+		Timers:CreateTimer(function() 
+			truesightdummy:SetAbsOrigin(territory:GetAbsOrigin())
+			return 1.0
+		end)
+
 		territory:SetMaxHealth(2000) 
 		Timers:CreateTimer(function()
 		    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -62,6 +80,20 @@ end
 
 function OnTerritoryOwnerDeath(keys)
 	territory:Kill(keys.ability, territory)
+end
+
+function OnTerritoryDeath(keys)
+	local caster = keys.caster
+	local summons = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+	for k,v in pairs(summons) do
+		print("Found unit " .. v:GetUnitName())
+		if v:GetUnitName() == "caster_5th_skeleton_warrior" or v:GetUnitName() == "caster_5th_skeleton_archer" or v:GetUnitName() == "caster_5th_ancient_dragon" then
+			v:ForceKill(true) 
+		end
+	end
+	if truesightdummy ~= nil then 
+		truesightdummy:ForceKill(true)
+	end
 end
 
 function OnTerritoryExplosion(keys)
@@ -170,27 +202,27 @@ function CasterFarSight(keys)
 		return
 	end
 
-	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
-	visiondummy:SetDayTimeVisionRange(radius)
-	visiondummy:SetNightTimeVisionRange(radius)
+	local truesightdummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	truesightdummy:SetDayTimeVisionRange(radius)
+	truesightdummy:SetNightTimeVisionRange(radius)
 
-	local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
 
 	
-	Timers:CreateTimer(8, function() DummyEnd(visiondummy) return end)
+	Timers:CreateTimer(8, function() DummyEnd(truesightdummy) return end)
 
-	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
-	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
+	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, truesightdummy )
+	ParticleManager:SetParticleControl( circleFxIndex, 0, truesightdummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
 	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
 	
-	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
-	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
+	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, truesightdummy )
+	ParticleManager:SetParticleControl( dustFxIndex, 0, truesightdummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
 	
-	visiondummy.circle_fx = circleFxIndex
-	visiondummy.dust_fx = dustFxIndex
+	truesightdummy.circle_fx = circleFxIndex
+	truesightdummy.dust_fx = dustFxIndex
 	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
 			
 	-- Destroy particle after delay
@@ -251,13 +283,13 @@ end
 function OnTerritoryOrbStart(keys)
 	local caster = keys.caster
 
-	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
-	visiondummy:SetDayTimeVisionRange(900)
-	visiondummy:SetNightTimeVisionRange(900)
-	local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+	local truesightdummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	truesightdummy:SetDayTimeVisionRange(900)
+	truesightdummy:SetNightTimeVisionRange(900)
+	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
 
-	Timers:CreateTimer(8, function() return visiondummy:RemoveSelf() end)
+	Timers:CreateTimer(8, function() return truesightdummy:RemoveSelf() end)
 end
 
 
@@ -323,6 +355,15 @@ function OnAncientStart(keys)
 	caster:SwapAbilities("caster_5th_mana_transfer", a4:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_close_spellbook", a5:GetName(), true,true) 
 	caster:SwapAbilities("caster_5th_sacrifice", a6:GetName(), true, true) 
+end
+
+function AncientLevelUp(keys)
+	local caster = keys.caster
+	caster:FindAbilityByName("caster_5th_wall_of_flame"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("caster_5th_silence"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("caster_5th_divine_words"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("caster_5th_mana_transfer"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("caster_5th_sacrifice"):SetLevel(keys.ability:GetLevel())
 end
 
 function OnFirewallStart(keys)
@@ -396,6 +437,12 @@ function OnSacrificeStart(keys)
     )
 end
 
+function MaledictStop( event )
+	local caster = event.caster
+	
+	caster:StopSound("Hero_WitchDoctor.Maledict_Loop")
+end
+
 function OnSacrificeEnd(keys)
 	local caster = keys.caster
 	sac = false
@@ -456,11 +503,14 @@ end
 function OnHGStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local radius = 750
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
 	local diff = targetPoint - caster:GetAbsOrigin()
+	local maxBolt = 13
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
@@ -503,8 +553,12 @@ function OnHGStart(keys)
 		ability = ability
 	}
 
+	if ply.IsHGImproved then
+		maxBolt = 16
+	end 
+
 	Timers:CreateTimer(1.0, function()
-		if boltCount == 13 then return end
+		if boltCount == maxBolt then return end
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
   	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, caster)
 	    ParticleManager:SetParticleControl(particle, 0, Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,1500)) -- height of the bolt
@@ -526,10 +580,19 @@ end
 function OnHGPStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local radius = 750
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
+	local maxBolt = 13
+	local barrageRadius = keys.Radius
+
+	if ply.IsHGImproved then
+		maxBolt = 16
+		barrageRadius = keys.Radius+300
+	end 
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
@@ -571,7 +634,7 @@ function OnHGPStart(keys)
 	}
 
 	Timers:CreateTimer(1.0, function()
-		if boltCount == 13 then return end
+		if boltCount == maxBolt then return end
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
   	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, caster)
 	    ParticleManager:SetParticleControl(particle, 0, Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,1500)) -- height of the bolt
@@ -589,7 +652,7 @@ function OnHGPStart(keys)
     )
 
 	Timers:CreateTimer(3.5, function()
-		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, barrageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
         	DoDamage(caster, v, 1500, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
         	--v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
