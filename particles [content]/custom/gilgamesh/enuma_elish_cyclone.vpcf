@@ -222,7 +222,7 @@ C_OP_RemapCPOrientationToYaw C_OP_RemapCPOrientationToYaw_4
 {
 	int m_nCP = 1
 	int m_nFieldOutput = 12
-	float m_flRotOffset = 90.000000
+	float m_flRotOffset = 45.000000
 	float m_flSpinStrength = 1.000000
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
