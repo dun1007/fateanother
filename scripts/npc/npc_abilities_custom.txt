@@ -8082,7 +8082,8 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
-			"particle"	"particles/forked/dk_breathe_fire_test.vpcf"
+			"particle"		"particles/forked/dk_breathe_fire_test.vpcf"
+			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
 		}
 		
 		// Casting

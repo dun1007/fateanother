@@ -234,7 +234,21 @@ function OnEnumaStart(keys)
 	Timers:CreateTimer(3.0, function() 
 		if caster:IsAlive() then
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
-			projectile = ProjectileManager:CreateLinearProjectile(enuma)  
+			projectile = ProjectileManager:CreateLinearProjectile(enuma)
+
+			-- Create particle
+			local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 0, caster:GetAbsOrigin() )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 1, frontward * keys.Speed )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
+			
+			Timers:CreateTimer( 6.0, function()
+					ParticleManager:DestroyParticle( tornadoFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
+					return nil
+				end
+			)			
 		end
 		return
 	end)
