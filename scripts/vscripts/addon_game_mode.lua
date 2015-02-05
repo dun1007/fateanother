@@ -419,39 +419,56 @@ end
 
 -- An item was purchased by a player
 function FateGameMode:OnItemPurchased( keys )
-  print ( '[BAREBONES] OnItemPurchased' )
-  PrintTable(keys)
+    print ( '[BAREBONES] OnItemPurchased' )
+    PrintTable(keys)
 
-  -- The playerID of the hero who is buying something
-  local plyID = keys.PlayerID
-  if not plyID then return end
+    -- The playerID of the hero who is buying something
+    local plyID = keys.PlayerID
+    if not plyID then return end
 
-  -- The name of the item purchased
-  local itemName = keys.itemname 
-  
-  -- The cost of the item purchased
-  local itemcost = keys.itemcost
+    -- The name of the item purchased
+    local itemName = keys.itemname 
+      -- The cost of the item purchased
+    local itemcost = keys.itemcost
 
-  local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
-  --[[Timers:CreateTimer({
-    endTime = 0.033, --wait 1 frame
-    callback = function()
-    for i=6, 11 do
-      local hero_item = hero:GetItemInSlot(i)
-      print(hero_item)
-      if hero_item ~= nil then
-        if hero_item:GetName()  == itemName then
-          print("Item removed")
-          hero:RemoveItem(hero:GetItemInSlot(i)) 
-        end
+    local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
+
+    --[[ItemsKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
+    for k,v in pairs(ItemsKV) do
+      if string.find(v, "recipe") then
       end
+    end]]
+
+    Timers:CreateTimer({
+        endTime = 0.033, --wait 1 frame
+        callback = function()
+        for i=6, 11 do
+            local hero_item = hero:GetItemInSlot(i)
+            if hero_item ~= nil then 
+              print("Existing item : " .. hero_item:GetName())
+            end
+            if hero_item ~= nil then
+                if hero_item:GetName()  == itemName then
+                    print("Item removed")
+                    --hero:RemoveItem(hero:GetItemInSlot(i)) 
+                end
+            end
+        end
+        return
     end
-    return
+    })
+
+end
+
+function GetStashItems(hero)
+  local stashTable = {}
+  for i=6,11 do
+    local heroItem = hero:GetItemInSlot(i) 
+    if heroItem ~= nil then
+    end
   end
-  })]]
 
-
-  
+  return stashTable
 end
 
 -- An ability was used by a player

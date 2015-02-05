@@ -193,7 +193,11 @@ function OnGBTargetHit(keys)
 	if ply.IsGaeBolgImproved == true then keys.HBThreshold = keys.HBThreshold + 150 end
 
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	if target:GetHealth() < keys.HBThreshold then target:Kill(keys.ability, caster) end  -- check for HB
+	if target:GetHealth() < keys.HBThreshold then 
+		target:Kill(keys.ability, caster)
+		local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster) 
+		ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+	end  -- check for HB
 
 	-- if Gae Bolg is improved, do 3 second dot over time
 	if ply.IsGaeBolgImproved == true then 
@@ -211,7 +215,11 @@ function OnGBTargetHit(keys)
 		local dotCount = 0
 		Timers:CreateTimer(function() 
 			if dotCount == 10 then return end
-			if target:GetHealth() < keys.HBThreshold then target:Kill(keys.ability, caster) end 
+			if target:GetHealth() < keys.HBThreshold then 
+				target:Kill(keys.ability, caster) 
+				local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster) 
+				ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+			end 
 			return 0.3
 		end)
 	end
@@ -263,7 +271,11 @@ function OnGBComboHit(keys)
 			    	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 					target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 					print(target:GetHealth())
-					if target:GetHealth() < HBThreshold then target:Kill(keys.ability, caster) end
+					if target:GetHealth() < HBThreshold then 
+						target:Kill(keys.ability, caster)
+						local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_OVERHEAD_FOLLOW, target) 
+						ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+					end
 					-- attach blood effect
 					local blood = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 					ParticleManager:SetParticleControlEnt(blood, 1, target , 0, "attach_hitloc", target:GetAbsOrigin(), false)
