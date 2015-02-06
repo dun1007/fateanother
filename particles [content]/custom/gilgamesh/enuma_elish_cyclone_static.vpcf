@@ -70,9 +70,9 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		&C_INIT_RandomColor_9,
 		&C_INIT_RandomRotation_12,
 		&C_INIT_RandomSequence_13,
-		&C_INIT_CreateFromParentParticles_14,
-		&C_INIT_RemapCPtoScalar_0,
 		&C_INIT_RandomAlpha_0,
+		&C_INIT_RemapCPtoScalar_0,
+		&C_INIT_CreateFromParentParticles_14,
 		&C_INIT_PositionOffset_0
 	]
 	CParticleOperatorInstance*[] m_Emitters = 
@@ -416,12 +416,12 @@ C_INIT_RandomSequence C_INIT_RandomSequence_13
 	string m_Notes = ""
 }
 
-C_INIT_CreateFromParentParticles C_INIT_CreateFromParentParticles_14
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
 {
-	float m_flVelocityScale = 0.000000
-	float m_flIncrement = 1.000000
-	bool m_bRandomDistribution = false
-	bool m_bSubFrame = true
+	int m_nFieldOutput = 7
+	int m_nAlphaMin = 146
+	int m_nAlphaMax = 174
+	float m_flAlphaRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
@@ -476,12 +476,12 @@ C_INIT_RemapCPtoScalar C_INIT_RemapCPtoScalar_0
 	string m_Notes = ""
 }
 
-C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+C_INIT_CreateFromParentParticles C_INIT_CreateFromParentParticles_14
 {
-	int m_nFieldOutput = 7
-	int m_nAlphaMin = 146
-	int m_nAlphaMax = 174
-	float m_flAlphaRandExponent = 1.000000
+	float m_flVelocityScale = 0.000000
+	float m_flIncrement = 1.000000
+	bool m_bRandomDistribution = false
+	bool m_bSubFrame = true
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
@@ -533,7 +533,7 @@ C_INIT_PositionOffset C_INIT_PositionOffset_0
 
 C_OP_ContinuousEmitter C_OP_ContinuousEmitter_16
 {
-	float m_flEmissionDuration = 0.000000
+	float m_flEmissionDuration = 4.000000
 	float m_flStartTime = 0.000000
 	float m_flEmitRate = 200.000000
 	float m_flEmissionScale = 0.000000
