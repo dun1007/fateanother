@@ -78,7 +78,6 @@ function LevelAllAbility(hero)
         local ability = hero:GetAbilityByIndex(i)
         if ability == nil then return end
         local level0 = false
-        local cannotreset = false
         -- If skill shouldn't be leveled, do not set level to 1
         for i=1, #donotlevel do
             if ability:GetName() == donotlevel[i] then level0 = true end
@@ -91,6 +90,78 @@ function LevelAllAbility(hero)
         
     end
 end
+
+
+function LoopThroughAttr(hero, attrTable)
+    for i=1, #attrTable do
+        print("Added " .. attrTable[i])
+        hero:AddAbility(attrTable[i])
+    end
+    hero.ComboName = attrTable[#attrTable]
+    --print(attrTable[#attrTable])
+    hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(4):GetName(), true, true)
+    --hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
+    hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
+end
+
+function FindName(name)
+    local heroName = nil
+    if name == "npc_dota_hero_legion_commander" then
+        heroName = "Saber"
+    elseif name == "npc_dota_hero_phantom_lancer" then
+        heroName = "Lancer(5th)"
+    elseif name == "npc_dota_hero_spectre" then
+        heroName = "Saber Alter(5th)"
+    elseif name == "npc_dota_hero_ember_spirit" then
+        heroName = "Archer(5th)"
+    elseif name == "npc_dota_hero_templar_assassin" then
+        heroName = "Rider(5th)"
+    elseif name == "npc_dota_hero_doom_bringer" then
+        heroName = "Berserker(5th)"
+    elseif name == "npc_dota_hero_juggernaut" then
+        heroName = "False Assassin(5th)"
+    elseif name == "npc_dota_hero_bounty_hunter" then
+        heroName = "True Assassin(5th)"
+    elseif name == "npc_dota_hero_crystal_maiden" then
+        heroName = "Caster(5th)"
+    elseif name == "npc_dota_hero_skywrath_mage" then
+        heroName = "Archer(4th)"
+    end
+    return heroName
+end
+
+function FindAttribute(name)
+    local attributes = nil
+    if name == "npc_dota_hero_legion_commander" then
+        attributes = SaberAttribute
+    elseif name == "npc_dota_hero_phantom_lancer" then
+        attributes = LancerAttribute
+    elseif name == "npc_dota_hero_spectre" then
+        attributes = SaberAlterAttribute
+    elseif name == "npc_dota_hero_ember_spirit" then
+        attributes = ArcherAttribute
+    elseif name == "npc_dota_hero_templar_assassin" then
+        attributes = RiderAttribute
+    elseif name == "npc_dota_hero_doom_bringer" then
+        attributes = BerserkerAttribute
+    elseif name == "npc_dota_hero_juggernaut" then
+        attributes = FAAttribute
+    elseif name == "npc_dota_hero_bounty_hunter" then
+        attributes = TAAttribute
+    elseif name == "npc_dota_hero_crystal_maiden" then
+        attributes = CasterAttribute
+    elseif name == "npc_dota_hero_skywrath_mage" then
+        attributes = GilgaAttribute
+    end
+    return attributes
+end 
+
+function AddMasterAbility(master, name)
+    --local ply = master:GetPlayerOwner()
+    local attributeTable = FindAttribute(name)
+    LoopThroughAttr(master, attributeTable)
+end
+
 
 function AddValueToTable(table, value)
     for i=1, 100 do

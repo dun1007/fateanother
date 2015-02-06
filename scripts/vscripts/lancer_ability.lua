@@ -102,26 +102,30 @@ function Trap(keys)
 	local radius = keys.Radius
 
 	local lancertrap = CreateUnitByName("lancer_trap", targetPoint, true, caster, caster, caster:GetTeamNumber())
+	Timers:CreateTimer(1.0, function()
+		LevelAllAbility(lancertrap)
+		return
+	end)
 
 
 	local targets = nil
 	
     Timers:CreateTimer(function()
+    	if not lancertrap:IsAlive() then return end
         targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) -- find enemies in radius
+
         -- if enemy is found, spring the trap
         for k,v in pairs(targets) do
         	if v ~= nil then
-        		print("spring the trap")
 				SpringTrap(lancertrap, caster, stunDuration, targetPoint, radius) -- activate trap
 				return
 			end
 		end
 
         trapDuration = trapDuration + 1;
-        print("trap duration incremented")
         if trapDuration == 450 then
         	trapDuration =0 
-        	TrapEnd(lancertrap)
+        	lancertrap:ForceKill(true)
         	return 
         end
       	return 0.1
@@ -130,21 +134,20 @@ function Trap(keys)
 end
 
 function SpringTrap(trap, caster, stunduration, targetpoint, radius)
+	trap:RemoveAbility("lancer_trap_passive") 
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()
-		local targets = FindUnitsInRadius(caster:GetTeam(), targetpoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-		for k,v in pairs(targets) do
-			v:AddNewModifier(caster, v, "modifier_stunned", {Duration = stunduration})
+		if trap:IsAlive() then
+			trap:EmitSound("Hero_Techies.StasisTrap.Stun")
+			local targets = FindUnitsInRadius(caster:GetTeam(), targetpoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			for k,v in pairs(targets) do
+				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = stunduration})
+			end
+			trap:ForceKill(true) 
 		end
-		TrapEnd(trap)
 	end
 	})
-end
-
-function TrapEnd(dummy)
-	dummy:RemoveSelf()
-	return nil
 end
 
 function Conversion(keys)
@@ -295,7 +298,7 @@ function OnGBAOEStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local ascendCount = 0
 	local descendCount = 0
-
+	print(keys.ability.IsResetable)
 
 	bolgdummy = CreateUnitByName("dummy_unit", targetPoint, false, caster, caster, caster:GetTeamNumber())
 	local dummy_ability = bolgdummy:FindAbilityByName("dummy_unit_passive")

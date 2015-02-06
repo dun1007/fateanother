@@ -152,6 +152,7 @@ function OnManaDrainEnd(keys)
 	local caster = keys.caster
 	md = false
 	ParticleManager:DestroyParticle(caster.ManaDrainParticle,false) 
+	caster:StopSound("Hero_Lion.ManaDrain")
 end
 
 

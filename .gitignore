@@ -49,7 +49,6 @@ particles/*
 maps/*
 materials/*
 models/*
-soundevents/*
 sounds/*
 scripts/spell_shop_ui/*
 scripts/custom_events.txt

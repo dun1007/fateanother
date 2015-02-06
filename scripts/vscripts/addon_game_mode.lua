@@ -170,6 +170,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetGold(0, false)
     LevelAllAbility(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
+    hero.RespawnPos = hero:GetAbsOrigin() 
     --HideWearables(hero)
   	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
     local heroName = FindName(hero:GetName())
@@ -179,6 +180,7 @@ function FateGameMode:OnHeroInGame(hero)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
     end)  
+
 
 end
 
@@ -242,22 +244,8 @@ function FateGameMode:PlayerSay(keys)
     -- Act on the match
   end
 
-  if text == "-createdummy" then
+  if text == "-" then
     print("We got here! yay!!")
-  end
-  
-  -- testing if the dot can be seen by other people
-  if text == "-customping" then
-    print("Testing custom ping")
-    CustomPing(plyID, Vector(0,0,0))
-  end
-
-  if text == "-clearcosmetic" then
-    HideWearables(ply:GetAssignedHero())
-  end
-
-  if text == "-cam 150" then
-    GameRules:GetGameModeEntity():SetCameraDistanceOverride(1500)
   end
 end
 -- The overall game state has changed
@@ -419,56 +407,174 @@ end
 
 -- An item was purchased by a player
 function FateGameMode:OnItemPurchased( keys )
-    print ( '[BAREBONES] OnItemPurchased' )
-    PrintTable(keys)
+    print ( '[BAREBONES] OnItemPurchased : Purchased ' .. keys.itemname )
+    --PrintTable(keys)
 
     -- The playerID of the hero who is buying something
     local plyID = keys.PlayerID
+    local ply = PlayerResource:GetPlayer(plyID)
     if not plyID then return end
 
     -- The name of the item purchased
     local itemName = keys.itemname 
       -- The cost of the item purchased
-    local itemcost = keys.itemcost
+    local itemCost = keys.itemcost
 
     local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
-
     --[[ItemsKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
     for k,v in pairs(ItemsKV) do
       if string.find(v, "recipe") then
       end
     end]]
+    local oldStash = GetStashItems(hero)
 
-    Timers:CreateTimer({
-        endTime = 0.033, --wait 1 frame
-        callback = function()
-        for i=6, 11 do
-            local hero_item = hero:GetItemInSlot(i)
-            if hero_item ~= nil then 
-              print("Existing item : " .. hero_item:GetName())
-            end
-            if hero_item ~= nil then
-                if hero_item:GetName()  == itemName then
-                    print("Item removed")
-                    --hero:RemoveItem(hero:GetItemInSlot(i)) 
-                end
-            end
+
+
+
+    if hero.IsInBase == false then
+      if hero:GetGold() + itemCost < itemCost * 1.5 then
+        -- This will take care of non-component items
+        for i = 1, #oldStash do
+          if oldStash[i]:GetName() == itemName then
+            FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
+            hero:RemoveItem(oldStash[i])
+            hero:ModifyGold(itemCost, true, 0)
+          end
         end
-        return
+      else
+        print("Deducing extra cost" .. itemCost*0.5 .. "from player gold")
+        hero:ModifyGold(-itemCost*0.5, true , 0) 
+      end
     end
-    })
+
+    --[[Timers:CreateTimer(0.033, function()
+      local purchasedItem = FindItemInStash(hero, itemName)
+      local IsComponent = false
+      local newStash = GetStashItems(hero)
+      local itemDifference = FindStashDifference(oldStash, newStash)
+      for i = 1, #newStash do
+        print("New Item in Stash : " .. newStash[i]:GetName())
+      end
+      for i = 1, #itemDifference do
+        print("Item Difference : " .. itemDifference[i]:GetName())
+      end
+
+      -- If hero is out of base and does not have enough gold
+      if hero.IsInBase == false and hero:GetGold() + itemCost < itemCost * 1.5 then
+        print("Hero owning gold : " .. hero:GetGold())
+        print("Item cost outside of base : " .. itemCost*1.5)
+        FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
+        -- process component items
+        if itemName == "item_c_scroll" then
+          local BScroll = FindItemInStash(hero, "item_b_scroll") -- check if c scroll is already combined
+          if BScroll ~= nil then 
+            IsComponent = true
+            print("B Scroll found, removing it and creating C scroll")
+            hero:RemoveItem(BScroll)
+            CreateItemAtSlot(hero, "item_c_scroll", 6)
+          end
+        end
+        if itemName == "item_mana_essence" then
+          local pot = FindItemInStash(hero, "item_condensed_mana_essence")
+          if pot ~= nil then
+            IsComponent = true
+            print("Condesned Mana Essence found, removing it and creating regular pot")
+            hero:RemoveItem(pot)
+            CreateItemAtSlot(hero,"item_mana_essence", 6)
+          end
+        end
+        if itemName == "item_recipe_healing_scroll" then
+          print("reached")
+          local healScroll =  FindItemInStash(hero, "item_healing_scroll")
+          if healScroll ~= nil then
+            IsComponent = true
+            print("Heal Scroll found, removing it and creating mana essence")
+            hero:RemoveItem(healScroll)
+            CreateItemAtSlot(hero,"item_mana_essence", 6)
+          end
+        end
+        if itemName == "item_recipe_a_plus_scroll" then
+          local APlusScroll =  FindItemInStash(hero, "item_a_plus_scroll")
+          if APlusScroll ~= nil then
+            IsComponent = true
+            print("A Plus Scroll found, removing it and creating A scroll")
+            hero:RemoveItem(APlusScroll)
+            CreateItemAtSlot(hero,"item_a_scroll", 6)
+          end
+        end
+        if not IsComponent then
+          hero:RemoveItem(purchasedItem)
+        end
+
+        hero:ModifyGold(itemCost, true, 0)
+
+      -- if hero has enough gold, deduce the extra cost
+      else
+        hero:ModifyGold(-itemCost*0.5, true , 0) 
+      end
+      
+      return 
+    end
+    )]]
 
 end
+
 
 function GetStashItems(hero)
   local stashTable = {}
   for i=6,11 do
     local heroItem = hero:GetItemInSlot(i) 
     if heroItem ~= nil then
+      table.insert(stashTable, heroItem)
+    end
+  end
+  return stashTable
+end
+
+function FindItemInStash(hero, itemname)
+  for i=6, 11 do
+    local heroItem = hero:GetItemInSlot(i) 
+    if heroItem == nil then return nil end
+    if heroItem:GetName() == itemname then
+      return heroItem
+    end
+  end
+  return nil
+end 
+
+function CreateItemAtSlot(hero, itemname, slot)
+  local dummyitemtable = {}
+  for i = 0, slot-1 do
+    if hero:GetItemInSlot(i) == nil then
+      local dummyitem = CreateItem("item_blink_scroll", nil, nil)
+      table.insert(dummyitemtable, dummyitem)
+      hero:AddItem(dummyitem)
+    end
+  end
+  hero:AddItem(CreateItem(itemname, hero, hero))
+
+  for i = 1, #dummyitemtable do
+    hero:RemoveItem(dummyitemtable[i]) 
+  end
+
+end
+
+-- stash1 : old stash
+-- stash2 : new stash
+function FindStashDifference(stash1, stash2)
+  local addedItems = {}
+  for i=1, #stash2 do
+    local IsItemFound = false
+    for j=1, #stash1 do
+      if stash1[j] == stash2[i] then IsItemFound = true break end -- Set flag to true and break from inner loop if same item is found
+    end
+    -- If item was not found, add item to return table
+    if IsItemFound == false then 
+      table.insert(addedItems, stash2[i])
     end
   end
 
-  return stashTable
+  return addedItems
 end
 
 -- An ability was used by a player
@@ -478,6 +584,7 @@ function FateGameMode:OnAbilityUsed(keys)
 
   local player = EntIndexToHScript(keys.PlayerID)
   local abilityname = keys.abilityname
+  --print("Is this ability resetable? : " .. player:GetAssignedHero():FindAbilityByName(abilityname).IsResetable)
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
@@ -887,7 +994,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 		endTime = 5,
 		callback = function()
     for _,ply in pairs(self.vPlayerList) do
-      if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
+      if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero().IsUBWActive then
         EndUBW(ply:GetAssignedHero())
       end 
       ply:GetAssignedHero():RespawnHero(false, false, false)

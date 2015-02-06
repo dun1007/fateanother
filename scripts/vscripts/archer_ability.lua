@@ -13,6 +13,7 @@ function FarSightVision(keys)
 	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
 
 	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
 	if ply.IsEagleEyeAcquired then 
 		visiondummy:SetDayTimeVisionRange(1400)
 		visiondummy:SetNightTimeVisionRange(1400)
@@ -117,13 +118,17 @@ end
 function OnBPCast(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	Say(ply, "Broken Phantasm targets " .. keys.target:GetName() .. ".", true)
+	if keys.target:IsHero() then
+		Say(ply, "Broken Phantasm targets " .. FindName(keys.target:GetName()) .. ".", true)
+	end
 end
 
 function OnBPStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	Say(ply, "Broken Phantasm fired at " .. keys.target:GetName() .. ".", true)
+	if keys.target:IsHero() then
+		Say(ply, "Broken Phantasm fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
 end
 
 function OnBPHit(keys)
@@ -131,7 +136,7 @@ function OnBPHit(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-
+	keys.target:EmitSound("Misc.Crash")
 	DoDamage(caster, target, keys.TargetDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), target:GetOrigin(), nil, keys.Radius
@@ -220,6 +225,7 @@ function OnRhoDamaged(keys)
 	end
 end
 
+-- Starts casting UBW
 function OnUBWCastStart(keys)
 	EmitGlobalSound("Archer.UBW")
 	Timers:CreateTimer({
@@ -233,7 +239,7 @@ function OnUBWCastStart(keys)
 	})
 	ArcherCheckCombo(keys.caster, keys.ability)
 
-
+	-- Flame spread particle
 	local caster = keys.caster
 	local angle = 0
 	local increment_factor = 45
@@ -271,6 +277,7 @@ function OnUBWCastStart(keys)
 	
 end
 
+-- Begins UBW 
 function OnUBWStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -280,6 +287,7 @@ function OnUBWStart(keys)
 	local diff = nil
 	local ubwTargetPos = nil
 	ubwCasterPos = caster:GetAbsOrigin()
+	caster.IsUBWActive = true
 	
 	
 	local info = {
@@ -305,21 +313,25 @@ function OnUBWStart(keys)
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
     -- DUN DUN DUN DUN
+    local dunCounter = 0
 	Timers:CreateTimer(function() 
-		if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
-			EmitGlobalSound("Archer.UBWAmbient")
-		else return end 
+		if dunCounter == 5 then return end 
+		if caster:IsAlive() then EmitGlobalSound("Archer.UBWAmbient") else return end 
+		dunCounter = dunCounter + 1
 		return 3.0 
 	end)
 
-
-	local ubwdummy1 = CreateUnitByName("dummy_unit", Vector(5500,-3500,500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy2 = CreateUnitByName("dummy_unit", Vector(5500,-4500, 500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy3 = CreateUnitByName("dummy_unit", Vector(6500,-3500, 500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy4 = CreateUnitByName("dummy_unit", Vector(6500,-4500, 500), false, caster, caster, caster:GetTeamNumber())
+	-- Add sword shooting dummies
+	local ubwdummy1 = CreateUnitByName("dummy_unit", Vector(5000,-4000,500), false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy2 = CreateUnitByName("dummy_unit", Vector(5000,-5000, 500), false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy3 = CreateUnitByName("dummy_unit", Vector(6000,-4000, 500), false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy4 = CreateUnitByName("dummy_unit", Vector(6000,-5000, 500), false, caster, caster, caster:GetTeamNumber())
 	local ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
 	for i=1, #ubwdummies do
 		ubwdummies[i]:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+		ubwdummies[i]:SetDayTimeVisionRange(1000)
+		ubwdummies[i]:SetNightTimeVisionRange(1000)
+		ubwdummies[i]:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1000})
 	end
 
 	Timers:CreateTimer(function() 
@@ -341,14 +353,22 @@ function OnUBWStart(keys)
 	Timers:CreateTimer("ubw_timer", {
 	    endTime = 12,
 	    callback = function()
-		if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker")  then 
+		if caster:IsAlive() and caster.IsUBWActive then 
 			EndUBW(caster)
 		end
 	end
 	})
 end
 
+
+function OnUBWDeath(keys)
+	local caster = keys.caster
+	EndUBW(caster)
+end
+
 function EndUBW(caster)
+	caster.IsUBWActive = false
+
     caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
@@ -518,11 +538,6 @@ function OnUBWWeaponHit(keys)
 		keys.Damage = keys.Damage + 10
 	end	
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
-end
-
-function OnUBWDeath(keys)
-	local caster = keys.caster
-	EndUBW(caster)
 end
 
 function OnUBWBarrageStart(keys)
@@ -740,13 +755,22 @@ end
 function OnHruntCast(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	Say(ply, "Hrunting targets " .. keys.target:GetName() .. ".", true)
-	
+	if keys.target:IsHero() then
+		Say(ply, "Hrunting targets " .. FindName(keys.target:GetName()) .. ".", true)
+	end
+	caster:EmitSound("Hero_Invoker.EMP.Charge") 
 	-- Show hrunting cast
 	if caster.hrunting_particle ~= nil then
 		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
 		ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
 	end
+	Timers:CreateTimer(4.0, function() 
+		if caster.hrunting_particle ~= nil then
+			ParticleManager:DestroyParticle( caster.hrunting_particle, false )
+			ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
+		end
+		return
+	end)
 	caster.hrunting_particle = ParticleManager:CreateParticle( "particles/econ/events/ti4/teleport_end_ti4.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	ParticleManager:SetParticleControl( caster.hrunting_particle, 2, Vector( 255, 0, 0 ) )
 end
@@ -754,23 +778,21 @@ end
 function OnHruntStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	Say(ply, "Hrunting fired at " .. keys.target:GetName() .. ".", true)
+	if keys.target:IsHero() then
+		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
+	print(caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100 .. " " .. caster:GetMana())
 	caster:SetMana(0) 
 	
-	-- Destroy Particle
-	if caster.hrunting_particle ~= nil then
-		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
-		ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
-	end
-	
+	caster:EmitSound("Hero_Mirana.ArrowCast")
 	local info = {
 		Target = keys.target,
 		Source = keys.caster, 
 		Ability = keys.ability,
 		EffectName = "particles/custom/archer/archer_hrunting_orb.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 1500, -- 3000
+		iMoveSpeed = 3000,
 		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
 		bDodgeable = true
 	}
@@ -780,7 +802,7 @@ end
 
 function OnHruntHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-	
+	keys.target:EmitSound("Misc.Crash")
 	-- Create Particle
 	local explosionParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_hrunting_area.vpcf", PATTACH_CUSTOMORIGIN, keys.target )
 	ParticleManager:SetParticleControl( explosionParticleIndex, 0, keys.target:GetAbsOrigin() )
@@ -799,7 +821,10 @@ function OnHruntHit(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), keys.target:GetAbsOrigin(), nil, 1000
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
-		DoDamage(keys.caster, v, keys.caster.HruntDamage/2, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		if v ~= keys.target then DoDamage(keys.caster, v, keys.caster.HruntDamage/2, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) end
+	end
+	if not target:IsMagicImmune() then
+		target:AddNewModifier(caster, keys.target, "modifier_stunned", {Duration = 2.0})
 	end
 end
 
@@ -807,6 +832,7 @@ function OnOveredgeStart(keys)
 	local caster = keys.caster 
 	local targetPoint = keys.target_points[1]
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() * 10/6
+	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
@@ -838,6 +864,7 @@ function OnOveredgeStart(keys)
 		endTime = 0.6,
 		callback = function()
 		print("descend")
+		caster:EmitSound("Hero_Centaur.DoubleEdge") 
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		caster:SetAutoUnstuck(true)
@@ -876,7 +903,7 @@ function OnOveredgeStart(keys)
 				ParticleManager:DestroyParticle( stompParticleIndex, false )
 				ParticleManager:ReleaseParticleIndex( slash1ParticleIndex )
 				ParticleManager:ReleaseParticleIndex( slash2ParticleIndex )
-				ParticleMAnager:ReleaseParticleIndex( stompParticleIndex )
+				ParticleManager:ReleaseParticleIndex( stompParticleIndex )
 			end
 		)
 		

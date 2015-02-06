@@ -271,17 +271,19 @@ end
 
 function OnGodHandDeath(keys)
 	local caster = keys.caster
-	local respawnPos = caster:GetOrigin()
+	local newRespawnPos = caster:GetOrigin()
 	local ply = caster:GetPlayerOwner()
+	local oldRespawnPos = caster.RespawnPos
 	print("God Hand activated, respawning")
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()
 		EmitGlobalSound("Berserker.Roar") 
-		caster:SetRespawnPosition(respawnPos)
+		caster:SetRespawnPosition(newRespawnPos)
 		caster:RespawnHero(false,false,false)
 
 		if ply.IsReincarnationAcquired then 
+			local resExp = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			local targets = FindUnitsInRadius(caster:GetTeam(), caster, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
 		        DoDamage(caster, v, caster:GetMaxHealth() * 3/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

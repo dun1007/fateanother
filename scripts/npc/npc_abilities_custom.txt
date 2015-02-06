@@ -1510,7 +1510,7 @@
 	}
 
 	//=================================================================================================================
-	// Lancer : Rune Magic Spellbook
+	// Lancer : Rune of Disengage
 	//=================================================================================================================
 	"lancer_5th_rune_of_disengage"
 	{
@@ -1548,6 +1548,11 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"RuneMagicUsed"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_PhantomLancer.Doppelwalk"
+				"Target"		"CASTER"
+			}
 		}
 	}
 
@@ -1583,6 +1588,10 @@
 			{
 				"ScriptFile"	"lancer_ability"
 				"Function"		"RuneMagicUsed"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.Purification"
 			}
 		}
 	}
@@ -1634,6 +1643,11 @@
 			{
 				"ScriptFile"	"lancer_ability"
 				"Function"		"RuneMagicUsed"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_TemplarAssassin.Trap.Cast"
+				"Target"			"CASTER"
 			}
 		}
 	}
@@ -1839,6 +1853,7 @@
 			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
 			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
 		}
 		
 		// Casting
@@ -1915,6 +1930,7 @@
 			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
 			"particle"		"particles/custom/screen_red_splash.vpcf"
+			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
 		}
 		
 		// Casting
@@ -4422,6 +4438,11 @@
 				
 				"OnDeath"
 				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_ubw_death_checker"
+						"Target"			"CASTER"
+					}
 					"RunScript"
 					{
 						"ScriptFile"	"archer_ability"
@@ -5656,6 +5677,7 @@
 		"MaxLevel"						"1"
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
 		}
 
 		
@@ -9281,6 +9303,11 @@
 						"Function"		"MaledictStop"
 					}
 
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
 				}
 
 				"Aura"          	"modifier_big_bad_voodoo_invulnerability"

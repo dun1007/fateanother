@@ -551,7 +551,7 @@
 	    "SecretShop"   "0"
 
 	    "ItemInitialCharges" "1"
-	    "ItemStackable" "1"
+	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
 

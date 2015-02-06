@@ -8,13 +8,13 @@ end
 
 function OnBaseEntered(trigger)
 	local hero = trigger.activator
-	hero:GetPlayerOwner().IsInBase = true
+	hero.IsInBase = true
 	print("Base entered")
 end
 
 function OnBaseLeft(trigger)
 	local hero = trigger.activator
-	hero:GetPlayerOwner().IsInBase = false
+	hero.IsInBase = false
 	print("Base left")
 end
 
