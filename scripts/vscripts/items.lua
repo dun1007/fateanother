@@ -39,8 +39,21 @@ function TransferItem(keys)
 				return
 			end
 		end]]
-		hero:AddItem(CreateItem(stash_item:GetName(), nil, nil)) 
-		hero:RemoveItem(hero:GetItemInSlot(keys.Slot+5)) 
+		local itemName = stash_item:GetName()
+		hero:RemoveItem(stash_item) 
+		Timers:CreateTimer('gb_ascend', {
+			endTime = 0.01,
+			callback = function()
+		   	hero:AddItem(CreateItem(itemName, hero, hero)) 
+		end
+		})
+
+		
+		
+		--[[hero:DropItemAtPosition(hero:GetAbsOrigin() , stash_item) 
+		local dropitem = Entities:FindAllByClassname("dota_item_drop")
+		print(#dropitem)
+		hero:PickupDroppedItem(dropitem[1]) ]]
 	else
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Items Found in Chosen Slot of Stash" } )
 	end

@@ -17,8 +17,8 @@
 
 	"weapons_armor"
 	{
-		"item"		"item_spirit_link"
 		"item"		"item_a_plus_scroll" 
+		"item"		"item_healing_scroll"
 	}
 
 	"misc"

@@ -107,11 +107,48 @@ function OnChainStart(keys)
 	        for k,v in pairs(targets) do
 	        	DoDamage(caster, v, 25, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			end
-			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(particle, 0, targetloc)
-			ParticleManager:SetParticleControl(particle, 1, targetloc)
-			ParticleManager:SetParticleControl(particle, 5, targetloc)
-			ParticleManager:SetParticleControl(particle, 6, targetloc)
+			-- Create sword particles
+			-- Main variables
+			local delay = 0.5				-- Delay before damage
+			local speed = 3000				-- Movespeed of the sword
+				
+			-- Side variables
+			local distance = delay * speed
+			local height = distance * math.tan( 60 / 180 * math.pi )
+			local spawn_location = targetloc - ( distance * caster:GetForwardVector() )
+			spawn_location = spawn_location + Vector( 0, 0, height )
+			local target_location = targetloc
+			local newForwardVec = ( target_location - spawn_location ):Normalized()
+			target_location = target_location + 100 * newForwardVec
+				
+			local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_sword_barrage_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( swordFxIndex, 0, spawn_location )
+			ParticleManager:SetParticleControl( swordFxIndex, 1, newForwardVec * speed )
+			
+			-- Delay
+			Timers:CreateTimer( delay, function()
+					-- Destroy particles
+					ParticleManager:DestroyParticle( swordFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( swordFxIndex )
+	    	
+					
+					-- Particles on impact
+					local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+					ParticleManager:SetParticleControl( explosionFxIndex, 0, targetloc )
+						
+					local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+					ParticleManager:SetParticleControl( impactFxIndex, 0, targetloc )
+						
+					-- Destroy Particle
+					Timers:CreateTimer( 0.5, function()
+							ParticleManager:DestroyParticle( explosionFxIndex, false )
+							ParticleManager:DestroyParticle( impactFxIndex, false )
+							ParticleManager:ReleaseParticleIndex( explosionFxIndex )
+							ParticleManager:ReleaseParticleIndex( impactFxIndex )
+						end
+					)
+				end
+			)
 			rainCount = rainCount + 1
 	      	return 0.15
 	    end
@@ -181,13 +218,13 @@ function OnGOBStart(keys)
 	caster:EmitSound("Archer.UBWAmbient")
 	
 	-- Create particle
-	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() + 250 * frontward, false, caster, caster, caster:GetTeamNumber())
+	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() - 250 * frontward, false, caster, caster, caster:GetTeamNumber())
 	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
 	dummy:SetForwardVector( caster:GetForwardVector() )
 	
 	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
 	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
-	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 500, 500, 500 ) )
+	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 500, 400, 500 ) )
 	
 	Timers:CreateTimer( duration, function()
 			ParticleManager:DestroyParticle( portalFxIndex, false )

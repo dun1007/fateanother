@@ -253,13 +253,16 @@ function FateGameMode:PlayerSay(keys)
   end
 
   if text == "-unpause" then
-    hero:RemoveModifierByName("round_pause")
+    for _,plyr in pairs(self.vPlayerList) do
+      local hr = plyr:GetAssignedHero()
+      hr:RemoveModifierByName("round_pause")
+    end
   end
 
 
   local pID, goldAmt = string.match(text, "^-(%d) (%d+)")
   if pID ~= nil and goldAmt ~= nil then
-    if hero:GetReliableGold() > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
+    if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
       local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
       hero:ModifyGold(-tonumber(goldAmt), true , 0) 
       targetHero:ModifyGold(tonumber(goldAmt), true, 0)
@@ -456,9 +459,8 @@ function FateGameMode:OnItemPurchased( keys )
 
 
 
-
     if hero.IsInBase == false then
-      if hero:GetReliableGold() + itemCost < itemCost * 1.5 then
+      if PlayerResource:GetReliableGold(plyID) + itemCost < itemCost * 1.5 then
         -- This will take care of non-component items
         for i = 1, #oldStash do
           if oldStash[i]:GetName() == itemName then
@@ -692,6 +694,7 @@ function FateGameMode:OnTeamKillCredit(keys)
   local killerTeamNumber = keys.teamnumber
 end
 
+
 -- An entity died
 function FateGameMode:OnEntityKilled( keys )
 	print( '[BAREBONES] OnEntityKilled Called' )
@@ -707,6 +710,7 @@ function FateGameMode:OnEntityKilled( keys )
 	end
 
   if killedUnit:IsRealHero() then
+    self.bIsCasuallyOccured = true
     -- Add to death count
     if killedUnit.DeathCount == nil then
       killedUnit.DeathCount = 1
@@ -736,8 +740,8 @@ function FateGameMode:OnEntityKilled( keys )
     end 
     print("Player collected bounty : " .. 1000 - killedUnit:GetGoldBounty())
   
-
-
+    -- Need condition check for GH
+    -- if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
   	if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
   		self.nRadiantDead = self.nRadiantDead + 1
   	else 
@@ -899,6 +903,8 @@ function FateGameMode:InitGameMode()
   self.nLastKilled = nil
   self.fRoundStartTime = 0
 
+  self.bIsCasualtyOccured = false
+
   -- userID map
   self.vUserNames = {}
   self.vPlayerList = {}
@@ -920,11 +926,28 @@ function FateGameMode:InitGameMode()
 end
 
 
+IsGameStarted = false
 
 function FateGameMode:InitializeRound()
+  -- do first round stuff
 	if self.nCurrentRound == 1 then
+    IsGameStarted = true
 		GameRules:SendCustomMessage("The game has begun!", 0, 0)
+    Timers:CreateTimer('round_10min_bonus', {
+      endTime = 600,
+      callback = function()
+      for _,ply in pairs(self.vPlayerList) do
+        local hero = ply:GetAssignedHero()
+        hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
+        hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+10) 
+        hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
+        hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+10)
+      end
+      GameRules:SendCustomMessage("Every 10 minutes, your Master is fully healed and gains 10 additional Mana.", 0, 0)
+      return 600
+    end})
 	end
+
 
 	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false)
 	-- Remove pause 
@@ -1002,7 +1025,16 @@ function FateGameMode:InitializeRound()
 	    end
 
 	    if nRadiantAlive == nDireAlive then
-	    	self:FinishRound(true, 2)
+        -- if no one died this round, delcare winner based on current score standing
+        if self.bIsCasuallyOccured == false  then
+          if self.nRadiantScore > self.nDireScore then
+            self:FinishRound(true,3)
+          elseif self.nRadiantScore < self.nDireScore then
+            self:FinishRound(true,4)
+          end
+        else
+	    	  self:FinishRound(true, 2)
+        end
 	    elseif nRadiantAlive > nDireAlive then
 	    	self:FinishRound(true, 0)
 	    elseif nRadiantAlive < nDireAlive then
@@ -1011,7 +1043,13 @@ function FateGameMode:InitializeRound()
 	end
 	})
 end
--- 0 : Radiant 1 : Dire 2 : Draw
+
+--[[ 
+0 : Radiant 
+1 : Dire 
+2 : Draw 
+3 : Radiant(by default)
+4 : Dire(by default)]]
 function FateGameMode:FinishRound(IsTimeOut, winner)
 	print("[FATE] Winner decided")
 
@@ -1024,6 +1062,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     end
 	end
 
+  -- decide the winner
 	if winner == 0 then 
 		GameRules:SendCustomMessage("The Radiant has won the round!", 0, 0)
 		self.nRadiantScore = self.nRadiantScore + 1
@@ -1032,6 +1071,12 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 		self.nDireScore = self.nDireScore + 1
 	elseif winner == 2 then
 		GameRules:SendCustomMessage("This round is a draw.", 0, 0)
+  elseif winner == 3 then
+    GameRules:SendCustomMessage("Because no kills occured, the losing team(Radiant) has won.", 0, 0)
+    self.nRadiantScore = self.nRadiantScore + 1
+  elseif winner == 4 then
+    GameRules:SendCustomMessage("Because no kills occured, the losing team(Dire) has won.", 0, 0)
+    self.nDireScore = self.nDireScore + 1
 	end
   GameRules:SendCustomMessage("All players with less than 5,000 gold will receive starting gold in 5 seconds.", 0, 0)
 
@@ -1039,6 +1084,19 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
   mode:SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireScore )
   mode:SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantScore )
   self.nCurrentRound = self.nCurrentRound + 1
+
+  -- check for win condition
+  if self.nRadiantScore == 12 then
+    Say(nil, "Radiant Victory!", false)
+    GameRules:SetSafeToLeave( true )
+    GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
+    return
+  elseif self.nDireScore == 12 then
+    Say(nil, "Dire Victory!", false)
+    GameRules:SetSafeToLeave( true )
+    GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
+    return
+  end
 
   Timers:CreateTimer('roundend', {
 		endTime = 5,
@@ -1052,6 +1110,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     self:InitializeRound()
 	end
 	})
+
 end
 
 -- This function is called as the first player loads and sets up the FateGameMode parameters
