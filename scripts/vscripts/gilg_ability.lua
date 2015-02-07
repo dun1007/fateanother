@@ -11,22 +11,59 @@ function OnBarrageStart(keys)
 	local rainCount = 0
 
     Timers:CreateTimer(function()
-    	if rainCount == 15 then return end
-        targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-        for k,v in pairs(targets) do
-        	DoDamage(caster, v, dot, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		end
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(particle, 0, targetPoint)
-		ParticleManager:SetParticleControl(particle, 1, targetPoint)
-		ParticleManager:SetParticleControl(particle, 5, targetPoint)
-		ParticleManager:SetParticleControl(particle, 6, targetPoint)
+		if rainCount == 15 then return end
+	
+		-- Create sword particles
+		-- Main variables
+		local delay = 0.5				-- Delay before damage
+		local speed = 3000				-- Movespeed of the sword
+			
+		-- Side variables
+		local distance = delay * speed
+		local height = distance * math.tan( 60 / 180 * math.pi )
+		local spawn_location = targetPoint - ( distance * caster:GetForwardVector() )
+		spawn_location = spawn_location + Vector( 0, 0, height )
+		local target_location = targetPoint
+		local newForwardVec = ( target_location - spawn_location ):Normalized()
+		target_location = target_location + 100 * newForwardVec
+			
+		local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_sword_barrage_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( swordFxIndex, 0, spawn_location )
+		ParticleManager:SetParticleControl( swordFxIndex, 1, newForwardVec * speed )
+		
+		-- Delay
+		Timers:CreateTimer( delay, function()
+				-- Destroy particles
+				ParticleManager:DestroyParticle( swordFxIndex, false )
+				ParticleManager:ReleaseParticleIndex( swordFxIndex )
+    	
+				-- Damage
+				local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+				for k,v in pairs(targets) do
+					DoDamage(caster, v, dot, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				end
+				
+				-- Particles on impact
+				local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+				ParticleManager:SetParticleControl( explosionFxIndex, 0, targetPoint )
+					
+				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+				ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint )
+					
+				-- Destroy Particle
+				Timers:CreateTimer( 0.5, function()
+						ParticleManager:DestroyParticle( explosionFxIndex, false )
+						ParticleManager:DestroyParticle( impactFxIndex, false )
+						ParticleManager:ReleaseParticleIndex( explosionFxIndex )
+						ParticleManager:ReleaseParticleIndex( impactFxIndex )
+					end
+				)
+			end
+		)
 		rainCount = rainCount + 1
       	return 0.15
     end
     )
-	--local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_mystic_flare_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	--ParticleManager:SetParticleControl(particle, 3, targetPoint) -- target effect location
 end
 
 function OnGoldenRuleStart(keys)
