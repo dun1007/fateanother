@@ -255,6 +255,22 @@ function FateGameMode:PlayerSay(keys)
   if text == "-unpause" then
     hero:RemoveModifierByName("round_pause")
   end
+
+
+  local pID, goldAmt = string.match(text, "^-(%d) (%d+)")
+  if pID ~= nil and goldAmt ~= nil then
+    if hero:GetReliableGold() > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
+      local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
+      hero:ModifyGold(-tonumber(goldAmt), true , 0) 
+      targetHero:ModifyGold(tonumber(goldAmt), true, 0)
+
+      GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , ply:GetTeam(), 0)
+    end
+  end
+
+  if text == "-goldpls" then
+    GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , ply:GetTeam(), 0)
+  end
 end
 -- The overall game state has changed
 function FateGameMode:OnGameRulesStateChange(keys)
@@ -442,7 +458,7 @@ function FateGameMode:OnItemPurchased( keys )
 
 
     if hero.IsInBase == false then
-      if hero:GetGold() + itemCost < itemCost * 1.5 then
+      if hero:GetReliableGold() + itemCost < itemCost * 1.5 then
         -- This will take care of non-component items
         for i = 1, #oldStash do
           if oldStash[i]:GetName() == itemName then
@@ -638,8 +654,11 @@ function FateGameMode:OnPlayerLevelUp(keys)
   PrintTable(keys)
 
   local player = EntIndexToHScript(keys.player)
+  local hero = player:GetAssignedHero() 
   local level = keys.level
-  player:GetAssignedHero():SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[player:GetAssignedHero():GetLevel()])
+  hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[player:GetAssignedHero():GetLevel()])
+  hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 4)
+  hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 4)
 end
 
 -- A player last hit a creep, a tower, or a hero
