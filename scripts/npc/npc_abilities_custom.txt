@@ -8044,6 +8044,7 @@
 			"particle"		"particles/units/heroes/hero_dark_seer/dark_seer_wall_of_replica.vpcf"
 			"particle"		"particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf"
 			"particle"		"particles/econ/items/tinker/boots_of_travel/teleport_start_bots_ground_glow.vpcf"
+			"particle"		"particles/custom/gilgamesh/gilgamesh_gob_model.vpcf"
 		}
 		
 		// Casting

@@ -182,9 +182,9 @@ function OnGOBStart(keys)
 	local gobWeapon = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/econ/items/mirana/mirana_crescent_arrow/mirana_spell_crescent_arrow.vpcf",
+        EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
         iMoveSpeed = 1300,
-        vSpawnOrigin = casterloc,
+        vSpawnOrigin = casterloc + 50 * frontward,
         fDistance = 1300,
         fStartRadius = 100,
         fEndRadius = 100,
