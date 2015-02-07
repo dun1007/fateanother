@@ -239,7 +239,7 @@ function OnGOBStart(keys)
 		Ability = keys.ability,
         EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
         iMoveSpeed = 1300,
-        vSpawnOrigin = casterloc + 50 * frontward,
+        vSpawnOrigin = casterloc - 150 * frontward,
         fDistance = 1300,
         fStartRadius = 100,
         fEndRadius = 100,
