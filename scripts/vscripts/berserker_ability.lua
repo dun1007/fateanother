@@ -245,26 +245,28 @@ QUsed = false
 QTime = 0
 
 function BerCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("berserker_5th_fissure_strike") then
-		QUsed = true
-		QTime = GameRules:GetGameTime()
-		Timers:CreateTimer({
-			endTime = 4,
-			callback = function()
-			QUsed = false
-		end
-		})
-	elseif ability == caster:FindAbilityByName("berserker_5th_berserk") then
-		if QUsed == true then 
-			caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
-			local newTime =  GameRules:GetGameTime()
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("berserker_5th_fissure_strike") then
+			QUsed = true
+			QTime = GameRules:GetGameTime()
 			Timers:CreateTimer({
-				endTime = 4 - (newTime - QTime),
+				endTime = 4,
 				callback = function()
-				caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
 				QUsed = false
 			end
 			})
+		elseif ability == caster:FindAbilityByName("berserker_5th_berserk") then
+			if QUsed == true then 
+				caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+				local newTime =  GameRules:GetGameTime()
+				Timers:CreateTimer({
+					endTime = 4 - (newTime - QTime),
+					callback = function()
+					caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+					QUsed = false
+				end
+				})
+			end
 		end
 	end
 end

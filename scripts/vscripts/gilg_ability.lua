@@ -439,16 +439,17 @@ function OnMaxEnumaHit(keys)
 end
 
 function GilgaCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") then
-		caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") then
+			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+		end
+		Timers:CreateTimer({
+			endTime = 5,
+			callback = function()
+			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+		end
+		})
 	end
-	Timers:CreateTimer({
-		endTime = 5,
-		callback = function()
-		caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
-	end
-	})
-
 end
 
 function OnImproveGoldenRuleAcquired(keys)

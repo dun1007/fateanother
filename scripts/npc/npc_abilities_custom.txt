@@ -2625,6 +2625,10 @@
 						}
 					}
 				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"10"
+				}
 			}
 		}
 	}
@@ -9073,6 +9077,7 @@
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_fire.vpcf"
+			"particle"	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -9132,7 +9137,7 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf"
+			"particle"		"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"
 		}
 		
 		// Casting

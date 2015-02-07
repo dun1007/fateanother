@@ -278,26 +278,28 @@ function OnBelleStart(keys)
 end
 
 function RiderCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("rider_5th_nail_swing") then
-		nailUsed = true
-		nailTime = GameRules:GetGameTime()
-		Timers:CreateTimer({
-			endTime = 7,
-			callback = function()
-			nailUsed = false
-		end
-		})
-	elseif ability == caster:FindAbilityByName("rider_5th_breaker_gorgon") then
-		if nailUsed == true then 
-			caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", false, true)
-			local newTime =  GameRules:GetGameTime()
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("rider_5th_nail_swing") then
+			nailUsed = true
+			nailTime = GameRules:GetGameTime()
 			Timers:CreateTimer({
-				endTime = 7 - (newTime - nailTime),
+				endTime = 7,
 				callback = function()
-				caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", true, false)
 				nailUsed = false
 			end
 			})
+		elseif ability == caster:FindAbilityByName("rider_5th_breaker_gorgon") then
+			if nailUsed == true then 
+				caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", false, true)
+				local newTime =  GameRules:GetGameTime()
+				Timers:CreateTimer({
+					endTime = 7 - (newTime - nailTime),
+					callback = function()
+					caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", true, false)
+					nailUsed = false
+				end
+				})
+			end
 		end
 	end
 end

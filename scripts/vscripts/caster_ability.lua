@@ -373,6 +373,43 @@ function OnFirewallStart(keys)
 	local caster = keys.caster
 	local casterPos = caster:GetAbsOrigin()
 
+	-- Flame spread particle
+	local caster = keys.caster
+	local angle = 0
+	local increment_factor = 45
+	local origin = caster:GetAbsOrigin()
+	local forward = caster:GetForwardVector() * 1150
+	local destination = origin + forward
+	local ubwflame = 
+	{
+		Ability = keys.ability,
+        EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
+        iMoveSpeed = 500,
+        vSpawnOrigin = origin,
+        fDistance = 300,
+        fStartRadius = 500,
+        fEndRadius = 500,
+        Source = caster,
+        bHasFrontalCone = true,
+        bReplaceExisting = false,
+        iUnitTargetTeam = DOTA_UNIT_TARGET_NONE,
+        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+        iUnitTargetType = DOTA_UNIT_TARGET_ALL,
+        fExpireTime = GameRules:GetGameTime() + 2.0,
+		bDeleteOnHit = false,
+		vVelocity = forward 
+	}
+	for i=1, 8 do
+		-- Start rotating
+		local theta = ( angle - i * increment_factor ) * math.pi / 180
+		local px = math.cos( theta ) * ( destination.x - origin.x ) - math.sin( theta ) * ( destination.y - origin.y ) + origin.x
+		local py = math.sin( theta ) * ( destination.x - origin.x ) + math.cos( theta ) * ( destination.y - origin.y ) + origin.y
+		local new_forward = ( Vector( px, py, origin.z ) - origin ):Normalized()
+		ubwflame.vVelocity = new_forward * 500
+		local projectile = ProjectileManager:CreateLinearProjectile(ubwflame)
+	end 
+	
+
     local targets = FindUnitsInRadius(caster:GetTeam(), casterPos, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false) 
 
     for k,v in pairs(targets) do
@@ -401,6 +438,8 @@ function OnSilenceStart(keys)
     for k,v in pairs(targets) do
 		v:AddNewModifier(caster, nil, "modifier_silence", {duration=keys.Duration})
 	end
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(particle, 0 , targetPoint)
 end
 
 function OnDWStart(keys)
@@ -702,16 +741,17 @@ function OnHGPStart(keys)
 end
 
 function CasterCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("caster_5th_rule_breaker") then
-		caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") then
+			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
+		end
+		Timers:CreateTimer({
+			endTime = 5,
+			callback = function()
+			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", true, false) 
+		end
+		})
 	end
-	Timers:CreateTimer({
-		endTime = 5,
-		callback = function()
-		caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", true, false) 
-	end
-	})
-
 end
 
 function OnImproveTerritoryCreationAcquired(keys)

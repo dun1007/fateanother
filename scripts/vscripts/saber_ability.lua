@@ -440,7 +440,7 @@ end
 function StrikeAirPush(keys)
 	local target = keys.target
 	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
-	
+
 	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_avalon"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	giveUnitDataDrivenModifier(keys.caster, keys.target, "pause_sealenabled", 0.5)
 
@@ -475,15 +475,17 @@ function StrikeAirPush(keys)
 end
 
 function SaberCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("saber_avalon") then
-		caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true) 
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("saber_avalon") then
+			caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true) 
+		end
+		Timers:CreateTimer({
+			endTime = 3,
+			callback = function()
+			caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true)
+		end
+		})
 	end
-	Timers:CreateTimer({
-		endTime = 3,
-		callback = function()
-		caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true)
-	end
-	})
 end
 
 

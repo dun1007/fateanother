@@ -380,26 +380,28 @@ DUsed = false
 DTime = GameRules:GetGameTime()
 UFTime = 0
 function DSCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("saber_alter_derange") then
-		DUsed = true
-		DTime = GameRules:GetGameTime()
-		Timers:CreateTimer({
-			endTime = 4,
-			callback = function()
-			DUsed = false
-		end
-		})
-	elseif ability == caster:FindAbilityByName("saber_alter_unleashed_ferocity") then
-		if DUsed == true then 
-			caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", false, true)
-			local newTime =  GameRules:GetGameTime()
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("saber_alter_derange") then
+			DUsed = true
+			DTime = GameRules:GetGameTime()
 			Timers:CreateTimer({
-				endTime = 4 - (newTime - DTime),
+				endTime = 4,
 				callback = function()
-				caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", true, false)
 				DUsed = false
 			end
 			})
+		elseif ability == caster:FindAbilityByName("saber_alter_unleashed_ferocity") then
+			if DUsed == true then 
+				caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", false, true)
+				local newTime =  GameRules:GetGameTime()
+				Timers:CreateTimer({
+					endTime = 4 - (newTime - DTime),
+					callback = function()
+					caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", true, false)
+					DUsed = false
+				end
+				})
+			end
 		end
 	end
 end

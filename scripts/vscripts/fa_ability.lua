@@ -331,15 +331,17 @@ end
 
 
 function FACheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("false_assassin_gate_keeper") then
-		caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") then
+			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+		end
+		Timers:CreateTimer({
+			endTime = 3,
+			callback = function()
+			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+		end
+		})
 	end
-	Timers:CreateTimer({
-		endTime = 3,
-		callback = function()
-		caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
-	end
-	})
 end
 
 function OnGanryuAcquired(keys)

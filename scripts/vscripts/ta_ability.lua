@@ -296,23 +296,25 @@ end
 AmbushUsed = false
 
 function TACheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("true_assassin_self_modification") then
-		AmbushUsed = true
-		Timers:CreateTimer({
-			endTime = 5,
-			callback = function()
-			AmbushUsed = false
-		end
-		})
-	elseif ability == caster:FindAbilityByName("true_assassin_ambush") then
-		if AmbushUsed == true then 
-			caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("true_assassin_self_modification") then
+			AmbushUsed = true
 			Timers:CreateTimer({
-				endTime = 8,
+				endTime = 5,
 				callback = function()
-				caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+				AmbushUsed = false
 			end
 			})
+		elseif ability == caster:FindAbilityByName("true_assassin_ambush") then
+			if AmbushUsed == true then 
+				caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+				Timers:CreateTimer({
+					endTime = 8,
+					callback = function()
+					caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+				end
+				})
+			end
 		end
 	end
 end

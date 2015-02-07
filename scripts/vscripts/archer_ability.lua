@@ -918,15 +918,17 @@ end
 
 
 function ArcherCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("archer_5th_ubw") then
-		caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("archer_5th_ubw") then
+			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+		end
+		Timers:CreateTimer({
+			endTime = 5,
+			callback = function()
+			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+		end
+		})
 	end
-	Timers:CreateTimer({
-		endTime = 5,
-		callback = function()
-		caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
-	end
-	})
 end
 
 function OnEagleEyeAcquired(keys)

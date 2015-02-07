@@ -244,7 +244,7 @@ function OnGBComboHit(keys)
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
 	print(HBThreshold)
 	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 + target:GetStrength() end
-	
+
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
 	EmitGlobalSound("Lancer.Heartbreak")
 	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
@@ -371,15 +371,17 @@ function GaeBolgDummyEnd(dummy)
 end
 
 function LancerCheckCombo(caster, ability)
-	if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") then
-		caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") then
+			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+		end
+		Timers:CreateTimer({
+			endTime = 3,
+			callback = function()
+			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+		end
+		})
 	end
-	Timers:CreateTimer({
-		endTime = 3,
-		callback = function()
-		caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
-	end
-	})
 end
 
 function OnImrpoveBCAcquired(keys)
