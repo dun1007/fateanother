@@ -51,6 +51,12 @@ function OnChainStart(keys)
 	giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", keys.Duration)
 	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
+	
+	-- Check if caster already had particle
+	if caster.enkiduBind ~= nil then
+		ParticleManager:DestroyParticle( caster.enkiduBind, false )
+		ParticleManager:ReleaseParticleIndex( caster.enkiduBind )
+	end
 
 	caster.enkiduBind = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 	ParticleManager:SetParticleControl(caster.enkiduBind, 0, targetloc)
