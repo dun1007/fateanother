@@ -72,7 +72,6 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		&C_INIT_RandomLifeTime_0,
 		&C_INIT_RandomSequence_0,
 		&C_INIT_RandomRotation_0,
-		&C_INIT_RandomAlpha_0,
 		&C_INIT_PositionOffset_0,
 		&C_INIT_RandomColor_0
 	]
@@ -172,8 +171,8 @@ C_OP_BasicMovement C_OP_BasicMovement_0
 C_OP_VectorNoise C_OP_VectorNoise_0
 {
 	int m_nFieldOutput = 0
-	float(3) m_vecOutputMin = ( -0.500000, -0.500000, -0.500000 )
-	float(3) m_vecOutputMax = ( 0.500000, 0.500000, 0.500000 )
+	float(3) m_vecOutputMin = ( -3.000000, -3.000000, 3.000000 )
+	float(3) m_vecOutputMax = ( 3.000000, 3.000000, 3.000000 )
 	float m_fl4NoiseScale = 0.100000
 	bool m_bAdditive = true
 	bool m_bOffset = false
@@ -191,7 +190,7 @@ C_OP_VectorNoise C_OP_VectorNoise_0
 	int m_nOpTimeScaleSeed = 0
 	float m_flOpTimeScaleMin = 1.000000
 	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = true
+	bool m_bDisableOperator = false
 	int m_nOpEndCapState = -1
 	int m_nOpScaleCP = -1
 	string m_Notes = ""
@@ -451,33 +450,6 @@ C_INIT_RandomRotation C_INIT_RandomRotation_0
 	int m_nFieldOutput = 4
 	float m_flRotationRandExponent = 1.000000
 	bool m_bRandomlyFlipDirection = true
-	bool m_bRunForParentApplyKillList = true
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_INIT_RandomAlpha C_INIT_RandomAlpha_0
-{
-	int m_nFieldOutput = 7
-	int m_nAlphaMin = 50
-	int m_nAlphaMax = 100
-	float m_flAlphaRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
