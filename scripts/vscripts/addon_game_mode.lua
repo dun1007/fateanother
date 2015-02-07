@@ -972,6 +972,9 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 		if ply:GetAssignedHero():IsAlive() then
 			giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
 		end
+    if ply:GetAssignedHero():GetName() == "npc_dota_hero_doom_bringer" then
+      ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
+    end
 	end
 
 	if winner == 0 then 

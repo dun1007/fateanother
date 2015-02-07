@@ -240,20 +240,25 @@ function OnWBStart(keys)
 	end
 
 	for k,v in pairs(targets) do
-		giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
-		DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		local pushback = Physics:Unit(v)
-		v:PreventDI()
-		v:SetPhysicsFriction(0)
-		v:SetPhysicsVelocity((v:GetAbsOrigin() - casterInitOrigin):Normalized() * 300)
-		v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
-		v:FollowNavMesh(false)
-		Timers:CreateTimer(0.5, function()  
-			print("kill it")
-			v:PreventDI(false)
-			v:SetPhysicsVelocity(Vector(0,0,0))
-			v:OnPhysicsFrame(nil)
-		return end)
+		print(v:GetName())
+		if v:GetName() == "npc_dota_hero_bounty_hunter" and v:GetPlayerOwner().IsPFWAcquired then 
+			-- do nothing
+		else
+			giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
+			DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			local pushback = Physics:Unit(v)
+			v:PreventDI()
+			v:SetPhysicsFriction(0)
+			v:SetPhysicsVelocity((v:GetAbsOrigin() - casterInitOrigin):Normalized() * 300)
+			v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+			v:FollowNavMesh(false)
+			Timers:CreateTimer(0.5, function()  
+				print("kill it")
+				v:PreventDI(false)
+				v:SetPhysicsVelocity(Vector(0,0,0))
+				v:OnPhysicsFrame(nil)
+			return end)
+		end
 	end
 end
 

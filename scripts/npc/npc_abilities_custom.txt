@@ -5239,6 +5239,11 @@
 				"Target"			"POINT"
 				"Width"				"%width"
 			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_ElderTitan.EarthSplitter.Destroy"
+				"Target"			"CASTER"
+			}
 		}
 
 		"OnProjectileHitUnit"
@@ -5342,6 +5347,11 @@
 			{
 				"ModifierName"	"modifier_courage_self_buff"
 				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Axe.Berserkers_Call"
+				"Target"			"CASTER"
 			}
 		}
 		
@@ -5584,7 +5594,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"berserker_nine"
 		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
-		"AnimationPlaybackRate" 		"1.0"		
+		"AnimationPlaybackRate" 		"1.2"		
 		"AOERadius"						"%radius"
 		
 		"precache"
@@ -5678,6 +5688,7 @@
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+			"particle"			"particles/items_fx/aegis_respawn.vpcf"
 		}
 
 		
@@ -5690,6 +5701,7 @@
 			"modifier_berserk_god_hand"
 			{
 				"Passive"				"1"
+				"IsHidden"				"1"
 				"OnDeath"
 				{
 					"RunScript"
@@ -5699,6 +5711,11 @@
 					}
 				}
 			}
+			"modifier_god_hand_stock"
+			{
+				"IsHidden"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+			}			
 		}
 	}
 
@@ -6753,6 +6770,11 @@
 				"Damage"			"%damage"
 				"MaxTarget"		"%max_target"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_PhantomAssassin.Dagger.Cast"
+				"Target"		"CASTER"
+			}
 		}
 
 		"OnProjectileHitUnit"
@@ -6859,6 +6881,11 @@
 				"Damage"			"%damage"
 				"MaxTarget"		"%max_target"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_PhantomAssassin.Dagger.Cast"
+				"Target"		"CASTER"
+			}
 		}
 
 		"OnProjectileHitUnit"
@@ -6907,7 +6934,6 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"BaseClass"			"ability_datadriven"
 		"AbilityTextureName"			"ta_ambush"
-
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"24.0"
@@ -6940,7 +6966,7 @@
 		"precache"
 		{
 			"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
-			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk_smoke.vpcf"
+			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
 			"soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
 		}
 
@@ -6948,8 +6974,14 @@
 		{
 			"FireSound"
 			{
-			    "EffectName"    "Hero_TemplarAssassin.Meld"
+			    "EffectName"	"Hero_BountyHunter.WindWalk"
 			    "Target" "CASTER"
+			}
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
+				"EffectAttachType"	"attach_origin"
 			}
 			"RunScript"
 			{
@@ -7080,6 +7112,11 @@
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnDIStart"
 			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Nightstalker.Darkness"
+				"Target"			"CASTER"
+			}
 		}
 		"Modifiers"
 		{
@@ -7127,6 +7164,11 @@
 			{
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnDIZabStart"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Nightstalker.Trickling_Fear"
+				"Target"			"CASTER"
 			}
 		}
 		"OnProjectileHitUnit"
@@ -7207,6 +7249,11 @@
 		
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_LifeStealer.OpenWounds.Cast"
+				"Target"			"CASTER"
+			}
 			"Heal"
 			{
 				"Target"		"CASTER"
@@ -7331,6 +7378,11 @@
 
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Nightstalker.Void"
+				"Target"			"CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"ta_ability"
@@ -7418,6 +7470,11 @@
 
 		"OnSpellStart"
 		{
+			"FireSound"
+			{
+				"EffectName"		"Hero_Nightstalker.Trickling_Fear"
+				"Target"			"CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"ta_ability"
@@ -7846,7 +7903,7 @@
 		
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_shadowshaman/shadowshaman_shackle.vpcf"
+			"particle"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -7939,6 +7996,11 @@
 			{
 				"ScriptFile"		"gilg_ability"
 				"Function"			"OnGramStart"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_SkywrathMage.ConcussiveShot.Cast"
+				"Target"			"CASTER"
 			}
 		}
 		"OnProjectileHitUnit"
@@ -8104,7 +8166,6 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
-			"particle"		"particles/forked/dk_breathe_fire_test.vpcf"
 			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
 		}
 		
@@ -8223,6 +8284,8 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"		"particles/custom/screen_scarlet_splash.vpcf"
+			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
 		}
 		
 		// Casting
@@ -8534,6 +8597,11 @@
 			{
 				"ModifierName"	"modifier_caster_death_checker"
 				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Rubick.Telekinesis.Cast"
+				"Target"			"CASTER"
 			}
 		}
 
@@ -8901,6 +8969,11 @@
 				"ModifierName"	"modifier_argos_shield"
 				"Target"		"CASTER"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Medusa.ManaShield.On" 
+				"Target"		"CASTER"
+			}
 		}
 
 		
@@ -9020,6 +9093,11 @@
 				"Pushback"		"%pushback"
 				"Radius"		"%radius"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_EmberSpirit.FlameGuard.Cast"
+				"Target"		"CASTER"
+			}
 		}
 	}
 
@@ -9084,6 +9162,11 @@
 			 	"Radius"		"%radius"
 			 	"Duration"		"%duration"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_DeathProphet.Silence"
+				"Target"		"CASTER"
+			}
 		}
 	}
 
@@ -9108,7 +9191,7 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
+			"particle"		""particles/units/heroes/hero_luna/luna_lucent_beam.vpcf""
 		}
 		
 		// Casting
@@ -9319,7 +9402,7 @@
 
 			"modifier_big_bad_voodoo_invulnerability"
 			{
-				"EffectName"		"particles/custom/warlock_shadow_word_buff_c.vpcf"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
 				"EffectAttachType"	"follow_origin"
 		
 				"States"
@@ -9329,6 +9412,7 @@
 			}
 		}
 	}
+
 	//=====================================
 	// Caster : Mana Transfer
 	//=====================================
@@ -9441,6 +9525,8 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"particle"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -9470,6 +9556,17 @@
 				"ModifierName"		"modifier_rule_breaker"
 				"Target"			"TARGET"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"            "TARGET"
+
+				"ControlPoints"
+				{
+					"01"	"200 0 0"
+				}
+			}
 		}
 
 		"Modifiers"
@@ -9491,6 +9588,22 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE"	"-100"
 					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"			"1"
 					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"				"1"
+				}
+			}
+			"modifier_dagger_of_treachery"
+			{
+				"Duration"	"3.0"
+				"IsDebuff"			"1"
+				"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"caster_ability"
+						"Function"		"OnRBSealStolen"
+						"Target"		"TARGET"
+					}
 				}
 			}
 		}
@@ -9604,6 +9717,7 @@
 			"particle"			"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
 			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
 			"particle"			"particles/custom/screen_purple_splash.vpcf"
+			"particle"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
 		}
 		
 		// Casting
@@ -9961,6 +10075,7 @@
 		"AbilityTextureName"			"cmd_seal_1"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"2"
 
 		"precache"
 		{
@@ -9997,6 +10112,7 @@
 		"AbilityTextureName"			"cmd_seal_2"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"2"
 		
 		"precache"
 		{
@@ -10023,6 +10139,7 @@
 		"AbilityTextureName"			"cmd_seal_3"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"1"
 		
 		"precache"
 		{
@@ -10049,6 +10166,7 @@
 		"AbilityTextureName"			"cmd_seal_4"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
+		"AbilityManaCost"				"1"
 		
 		
 		"OnSpellStart"

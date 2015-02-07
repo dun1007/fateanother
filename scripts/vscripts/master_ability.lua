@@ -106,6 +106,10 @@ function OnSeal1Start(keys)
 		return
 	end
 
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+
 	-- Particle
 	hero:EmitSound("DOTA_Item.Dagon.Activate")
 	local particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_radial.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
@@ -135,6 +139,10 @@ function OnSeal2Start(keys)
 		keys.ability:EndCooldown() 
 		return
 	end
+
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 
 	-- Reset all resetable abilities
 	for i=0, 30 do 
@@ -181,6 +189,10 @@ function OnSeal3Start(keys)
 
 	hero:EmitSound("DOTA_Item.UrnOfShadows.Activate")
 
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+
 	local particle = ParticleManager:CreateParticle("particles/items2_fx/urn_of_shadows_heal_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
 	hero:Heal(hero:GetMaxHealth(), hero)
@@ -209,6 +221,9 @@ function OnSeal4Start(keys)
 		return
 	end
 
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 	-- Particle
 	hero:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
 	local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
@@ -347,6 +362,9 @@ function OnStrengthGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseStrength(hero:GetBaseStrength()+1) 
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnAgilityGain(keys)
@@ -355,6 +373,9 @@ function OnAgilityGain(keys)
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseAgility(hero:GetBaseAgility()+1) 
 	print(hero:GetAgility())
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnIntelligenceGain(keys)
@@ -362,6 +383,9 @@ function OnIntelligenceGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseIntellect(hero:GetBaseIntellect()+1) 
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnDamageGain(keys)
@@ -370,6 +394,9 @@ function OnDamageGain(keys)
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseDamageMin(hero:GetBaseDamageMin()+3)
 	hero:SetBaseDamageMax(hero:GetBaseDamageMax()+3)
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnArmorGain(keys)
@@ -377,6 +404,9 @@ function OnArmorGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+2)
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnHPRegenGain(keys)
@@ -384,6 +414,9 @@ function OnHPRegenGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2)
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnManaRegenGain(keys)
@@ -391,6 +424,9 @@ function OnManaRegenGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseManaRegen(hero:GetManaRegen()+1)
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnMovementSpeedGain(keys)
@@ -398,6 +434,9 @@ function OnMovementSpeedGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
+	-- Set master 2's mana 
+	local master2 = hero.MasterUnit2
+	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnAvariceAcquired(keys)

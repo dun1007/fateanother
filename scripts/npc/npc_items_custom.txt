@@ -1698,6 +1698,11 @@
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnSummonDragon"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_DragonKnight.ElderDragonForm"
+				"Target"		"CASTER"
+			}
 	    }
 	}
 

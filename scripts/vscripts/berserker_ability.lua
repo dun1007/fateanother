@@ -93,10 +93,12 @@ function OnBerserkStart(keys)
 		Timers:CreateTimer(function()
 			if caster:HasModifier("modifier_berserk_self_buff") == false then return end
 			if explosionCounter == duration then return end
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
 		        DoDamage(caster, v, 150, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			end
+			local berserkExp = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControl(berserkExp, 1, caster:GetAbsOrigin())
 
 			explosionCounter = explosionCounter + 1.0
 			return 1.0
@@ -104,14 +106,12 @@ function OnBerserkStart(keys)
 		)
 
 		Timers:CreateTimer(function()
-			if caster:HasModifier("modifier_berserk_self_buff") == false then return end
-			if manaregenCounter == 2.0 then return end
+			if manaregenCounter > 2.0 then return end
 			caster:SetMana(caster:GetMana() + 30) 
 
 			manaregenCounter = manaregenCounter + 0.2
 			return 0.2
-			end
-		)
+		end)
 	end
 end
 
@@ -269,25 +269,50 @@ function BerCheckCombo(caster, ability)
 	end
 end
 
+-- Check if anyone on this hero's team is still alive. 
+function IsTeamWiped(hero)
+	for i=0, 9 do
+		local player = PlayerResource:GetPlayer(i)
+		if player ~= nil then 
+			servant = PlayerResource:GetPlayer(i):GetAssignedHero()
+			if servant:GetTeam() == hero:GetTeam() and servant:IsAlive() then 
+				return false
+			end
+		end
+	end
+	return true
+end
+
 function OnGodHandDeath(keys)
 	local caster = keys.caster
 	local newRespawnPos = caster:GetOrigin()
 	local ply = caster:GetPlayerOwner()
-	local oldRespawnPos = caster.RespawnPos
-	print("God Hand activated, respawning")
+	print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()
-		EmitGlobalSound("Berserker.Roar") 
-		caster:SetRespawnPosition(newRespawnPos)
-		caster:RespawnHero(false,false,false)
 
-		if ply.IsReincarnationAcquired then 
-			local resExp = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster, nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-			for k,v in pairs(targets) do
-		        DoDamage(caster, v, caster:GetMaxHealth() * 3/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-			end	
+		if IsTeamWiped(caster) == false and ply.GodHandStock > 0 then
+			EmitGlobalSound("Berserker.Roar") 
+			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ply.GodHandStock = ply.GodHandStock - 1
+			GameRules:SendCustomMessage("<font color='#FF0000'>----------!!!!!</font> Remaining God Hand stock : " .. ply.GodHandStock , 0, 0)
+			caster:SetRespawnPosition(newRespawnPos)
+			caster:RespawnHero(false,false,false)
+			caster:RemoveModifierByName("modifier_god_hand_stock") 
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {}) 
+			caster:SetModifierStackCount("modifier_god_hand_stock", caster, ply.GodHandStock)
+
+			if ply.IsReincarnationAcquired then 
+				local resExp = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+				ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+				local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+				for k,v in pairs(targets) do
+			        DoDamage(caster, v, caster:GetMaxHealth() * 3/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				end	
+			end
+		else
+			caster:SetRespawnPosition(caster.RespawnPos)
 		end
 		--caster:SetRespawnPosition(Vector(7000, 2000, 320)) need to set the respawn base after reviving
 	end
@@ -324,8 +349,13 @@ function OnGodHandAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:FindAbilityByName("berserker_5th_god_hand"):SetLevel(1)
+	local ability = hero:FindAbilityByName("berserker_5th_god_hand")
+	ability:SetLevel(1)
 	ply.IsGodHandAcquired = true
+	ply.GodHandStock = 11
+	ability:ApplyDataDrivenModifier(hero, hero, "modifier_god_hand_stock", {}) 
+	hero:SetModifierStackCount("modifier_god_hand_stock", hero, 11)
+
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

@@ -106,6 +106,7 @@ function OnTerritoryExplosion(keys)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 	Timers:CreateTimer(1.0, function()
 		if caster:IsAlive() then
+			caster:EmitSound("Hero_ObsidianDestroyer.SanityEclipse.Cast")
 			local damage = 300 + 10 * hero:GetIntellect() + caster:GetMana()/2
 			if ply.IsTerritoryImproved then damage = damage + 300 end
 		    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -206,6 +207,7 @@ function CasterFarSight(keys)
 	local truesightdummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 	truesightdummy:SetDayTimeVisionRange(radius)
 	truesightdummy:SetNightTimeVisionRange(radius)
+	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
 
 	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
@@ -409,6 +411,13 @@ function OnDWStart(keys)
 
     Timers:CreateTimer(0.5, function()
     	if rainCount == 3 then return end
+    	caster:EmitSound("Hero_Luna.LucentBeam.Target")
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControl(particle, 0, targetPoint)
+		ParticleManager:SetParticleControl(particle, 1, targetPoint)
+		ParticleManager:SetParticleControl(particle, 5, targetPoint)
+		ParticleManager:SetParticleControl(particle, 6, targetPoint)
+
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 
         for k,v in pairs(targets) do
@@ -494,11 +503,32 @@ function OnAncientClosed(keys)
 end
 
 function OnRBStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+
 	EmitGlobalSound("Caster.RuleBreaker") 
 	CasterCheckCombo(keys.caster,keys.ability)
+	if ply.IsRBImproved then
+		giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", 3.0)
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dagger_of_treachery", {}) 
+	end
+
 	keys.target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
 
+end
+
+function OnRBSealStolen(keys)
+	local victim = keys.unit
+	local caster = keys.caster
+
+	victim:EmitSound("Hero_Silencer.LastWord.Cast")
+	victim.MasterUnit:SetMana(victim.MasterUnit:GetMana() - 1) 
+	victim.MasterUnit2:SetMana(victim.MasterUnit2:GetMana() - 1) 
+	
+	caster.MasterUnit:SetMana(caster.MasterUnit:GetMana() + 1)
+	caster.MasterUnit2:SetMana(caster.MasterUnit2:GetMana() + 1)
 end
 
 function OnHGStart(keys)
@@ -658,6 +688,9 @@ function OnHGPStart(keys)
         	DoDamage(caster, v, 1500, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
         	--v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 		end
+  	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf", PATTACH_CUSTOMORIGIN, caster)
+  	  	ParticleManager:SetParticleControl(particle, 0, targetPoint) -- height of the bolt
+	    ParticleManager:SetParticleControl(particle, 1, Vector(barrageRadius, 0, 0)) -- height of the bolt
 		return
     end
     )

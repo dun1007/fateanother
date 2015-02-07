@@ -35,7 +35,7 @@ function OnGoldenRuleStart(keys)
 	local goldgain = 10
     Timers:CreateTimer(function()
     	if ply.IsGoldenRuleImproved == true then goldgain = 20 end
-    	keys.caster:ModifyGold(goldgain, true, 0) 
+    	if caster:IsAlive() then keys.caster:ModifyGold(goldgain, true, 0) end
       	return 1.0
     end)
 end
@@ -51,6 +51,10 @@ function OnChainStart(keys)
 	giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", keys.Duration)
 	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
+
+	caster.enkiduBind = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(caster.enkiduBind, 0, targetloc)
+	ParticleManager:SetParticleControl(caster.enkiduBind, 1, targetloc)
 
 	if ply.IsRainAcquired then
 		local rainCount = 0
@@ -86,7 +90,10 @@ function OnChainStart(keys)
 end
 
 function OnChainBroken(keys)
+	local caster = keys.caster
 	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("pause_sealdisabled") end
+	ParticleManager:DestroyParticle( caster.enkiduBind, false )
+	ParticleManager:ReleaseParticleIndex( caster.enkiduBind )
 end
 
 function OnGramStart(keys)
@@ -126,9 +133,9 @@ function OnGOBStart(keys)
 	caster.GOBLocation = casterloc
 	caster.IsGOBUp = true
 	GilgaCheckCombo(caster, keys.ability)
-	EmitGlobalSound("Saber_Alter.Derange")
-	EmitGlobalSound("Gilgamesh.GOB" ) 
-	EmitGlobalSound("Archer.UBWAmbient")
+	caster:EmitSound("Saber_Alter.Derange")
+	caster:EmitSound("Gilgamesh.GOB" ) 
+	caster:EmitSound("Archer.UBWAmbient")
 	local gobWeapon = 
 	{
 		Ability = keys.ability,
@@ -204,8 +211,10 @@ end
 
 function OnEnumaStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
+
 	local enuma = 
 	{
 		Ability = keys.ability,
@@ -225,6 +234,11 @@ function OnEnumaStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = frontward * keys.Speed
 	}
+	if ply.IsEnumaImproved then 
+		enuma.fEndRadius = enuma.fEndRadius * 2
+		enuma.fDistance = enuma.fDistance + 300
+	end
+
 	Timers:CreateTimer(2.0, function() 
 		if caster:IsAlive() then
 			EmitGlobalSound("Gilgamesh.Enuma" ) 
@@ -260,6 +274,7 @@ end
 
 function OnMaxEnumaStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	caster:FindAbilityByName("gilgamesh_enuma_elish"):StartCooldown(47)
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
@@ -283,6 +298,10 @@ function OnMaxEnumaStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = frontward * keys.Speed
 	}
+	if ply.IsEnumaImproved then 
+		enuma.fEndRadius = enuma.fEndRadius * 1.5
+	end
+
 	Timers:CreateTimer(2.75, function() 
 		if caster:IsAlive() then
 			EmitGlobalSound("Gilgamesh.Enuma" ) 
@@ -294,12 +313,30 @@ function OnMaxEnumaStart(keys)
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+			-- Create particle
+			local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 0, caster:GetAbsOrigin() )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 1, frontward * keys.Speed )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
+			ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
+			
+			Timers:CreateTimer( 6.0, function()
+					ParticleManager:DestroyParticle( tornadoFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
+					return nil
+				end
+			)
 		end
 		return
 	end)
 end
 
 function OnMaxEnumaHit(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	if ply.IsEnumaImproved then
+		keys.Damage = keys.Damage * 2
+	end
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 

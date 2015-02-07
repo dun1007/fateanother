@@ -244,10 +244,10 @@ function OnGBComboHit(keys)
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
 	print(HBThreshold)
 	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 + target:GetStrength() end
-
+	
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
 	EmitGlobalSound("Lancer.Heartbreak")
-
+	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
   	Timers:CreateTimer(1.5, function() 
 	    local lancer = Physics:Unit(caster)
 	    caster:PreventDI()
@@ -351,8 +351,6 @@ function OnGBAOEHit(keys)
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
-	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
-
 	if ply.IsGaeBolgImproved == true then keys.Damage = keys.Damage + 250 end
 
 	local crack = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)

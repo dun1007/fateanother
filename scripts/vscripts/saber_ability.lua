@@ -50,6 +50,7 @@ function InvisibleAirPull(keys)
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 
+	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
 	if ply.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
@@ -437,6 +438,9 @@ function OnStrikeAirStart(keys)
 end
 
 function StrikeAirPush(keys)
+	local target = keys.target
+	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
+	
 	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_avalon"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	giveUnitDataDrivenModifier(keys.caster, keys.target, "pause_sealenabled", 0.5)
 
