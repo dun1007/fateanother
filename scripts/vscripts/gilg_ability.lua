@@ -179,6 +179,24 @@ function OnGOBStart(keys)
 	caster:EmitSound("Saber_Alter.Derange")
 	caster:EmitSound("Gilgamesh.GOB" ) 
 	caster:EmitSound("Archer.UBWAmbient")
+	
+	-- Create particle
+	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() + 250 * frontward, false, caster, caster, caster:GetTeamNumber())
+	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
+	dummy:SetForwardVector( caster:GetForwardVector() )
+	
+	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 500, 500, 500 ) )
+	
+	Timers:CreateTimer( duration, function()
+			ParticleManager:DestroyParticle( portalFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( portalFxIndex )
+			dummy:RemoveSelf()
+			return nil
+		end
+	)
+	
 	local gobWeapon = 
 	{
 		Ability = keys.ability,
