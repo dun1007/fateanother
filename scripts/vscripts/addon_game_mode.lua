@@ -172,7 +172,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
     hero.RespawnPos = hero:GetAbsOrigin() 
     --HideWearables(hero)
-  	--giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
+  	giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
     local heroName = FindName(hero:GetName())
     hero.name = heroName
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
@@ -227,7 +227,7 @@ function FateGameMode:PlayerSay(keys)
 
   -- Get the player entity for the user speaking
   local ply = keys.ply
-  
+  local hero = ply:GetAssignedHero()
   -- Get the player ID for the user speaking
   local plyID = ply:GetPlayerID()
   if not PlayerResource:IsValidPlayer(plyID) then
@@ -244,8 +244,16 @@ function FateGameMode:PlayerSay(keys)
     -- Act on the match
   end
 
-  if text == "-" then
-    print("We got here! yay!!")
+  if text == "-testsetup" then
+    hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
+    hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
+    hero:SetBaseStrength(20) 
+    hero:SetBaseAgility(20) 
+    hero:SetBaseIntellect(20) 
+  end
+
+  if text == "-unpause" then
+    hero:RemoveModifierByName("round_pause")
   end
 end
 -- The overall game state has changed
@@ -301,6 +309,7 @@ function FateGameMode:OnNPCSpawned(keys)
       -- Create Command Seal master for hero
 	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
+      master:SetMana(0)
       hero.MasterUnit = master
       LevelAllAbility(master)
       master:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
@@ -313,6 +322,7 @@ function FateGameMode:OnNPCSpawned(keys)
       -- Create attribute/stat master for hero
       master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*350,-7350,0), true, hero, hero, hero:GetTeamNumber())
       master2:SetControllableByPlayer(hero:GetPlayerID(), true) 
+      master2:SetMana(0)
       hero.MasterUnit2 = master2
       AddMasterAbility(master2, hero:GetName())
       LevelAllAbility(master2)
@@ -678,11 +688,28 @@ function FateGameMode:OnEntityKilled( keys )
 	end
 
   if killedUnit:IsRealHero() then
-    --killerEntity:SetGold(0, false)
+    -- Add to death count
+    if killedUnit.DeathCount == nil then
+      killedUnit.DeathCount = 1
+    else
+      killedUnit.DeathCount = killedUnit.DeathCount + 1
+    end
+    print("Current death count for " .. killedUnit.name .. " : " .. killedUnit.DeathCount)
+
+    -- check if unit can receive a shard
+    if killedUnit.DeathCount == 7 then
+      killedUnit.DeathCount = 0
+      if killedUnit.ShardAmount == nil then 
+        killedUnit.ShardAmount = 1
+      else
+        killedUnit.ShardAmount = killedUnit.ShardAmount + 1
+      end
+    end
     local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()
     if killerEntity:IsNeutralUnitType() then
       killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
     end
+
     killerEntity:ModifyGold(bounty , true, 0) 
     -- if killer has Golden Rule attribute, grant 50% more gold
     if killerEntity.IsGoldenRuleImproved then 
@@ -690,6 +717,7 @@ function FateGameMode:OnEntityKilled( keys )
     end 
     print("Player collected bounty : " .. 1000 - killedUnit:GetGoldBounty())
   
+
 
   	if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
   		self.nRadiantDead = self.nRadiantDead + 1

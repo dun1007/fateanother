@@ -9,12 +9,14 @@ end
 function OnBaseEntered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
 	print("Base entered")
 end
 
 function OnBaseLeft(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 	print("Base left")
 end
 

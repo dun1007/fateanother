@@ -98,6 +98,11 @@ function OnSeal1Start(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
+	if caster:GetHealth() == 1 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		return 
+	end
+
 	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
@@ -109,6 +114,8 @@ function OnSeal1Start(keys)
 	-- Set master 2's mana 
 	local master2 = hero.MasterUnit2
 	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master's health
+	caster:SetHealth(caster:GetHealth()-1) 
 
 	-- Particle
 	hero:EmitSound("DOTA_Item.Dagon.Activate")
@@ -132,6 +139,11 @@ function OnSeal2Start(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
+	if caster:GetHealth() == 1 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		return 
+	end
+
 	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
@@ -143,6 +155,8 @@ function OnSeal2Start(keys)
 	-- Set master 2's mana 
 	local master2 = hero.MasterUnit2
 	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master's health
+	caster:SetHealth(caster:GetHealth()-1) 
 
 	-- Reset all resetable abilities
 	for i=0, 30 do 
@@ -178,6 +192,11 @@ function OnSeal3Start(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
+	if caster:GetHealth() == 1 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		return 
+	end
+
 	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
@@ -192,6 +211,8 @@ function OnSeal3Start(keys)
 	-- Set master 2's mana 
 	local master2 = hero.MasterUnit2
 	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master's health
+	caster:SetHealth(caster:GetHealth()-1) 
 
 	local particle = ParticleManager:CreateParticle("particles/items2_fx/urn_of_shadows_heal_c.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
@@ -212,6 +233,11 @@ function OnSeal4Start(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
+	if caster:GetHealth() == 1 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		return 
+	end
+
 	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
@@ -224,6 +250,9 @@ function OnSeal4Start(keys)
 	-- Set master 2's mana 
 	local master2 = hero.MasterUnit2
 	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master's health
+	caster:SetHealth(caster:GetHealth()-1) 
+
 	-- Particle
 	hero:EmitSound("Hero_KeeperOfTheLight.ChakraMagic.Target")
 	local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
@@ -443,6 +472,14 @@ function OnAvariceAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		return 
+	else 
+		ply.ShardAmount = ply.ShardAmount - 1
+	end
+
+
 	if ply.AvariceCount == nil then 
 		ply.AvariceCount = 1
 	else
@@ -471,6 +508,13 @@ function OnAMAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		return
+	else 
+		ply.ShardAmount = ply.ShardAmount - 1
+	end
+
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
 	
 end
@@ -479,6 +523,13 @@ function OnReplenishmentAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		return
+	else 
+		ply.ShardAmount = ply.ShardAmount - 1
+	end
+
 	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
 	
 end
@@ -487,12 +538,21 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		return
+	else 
+		ply.ShardAmount = ply.ShardAmount - 1
+	end
+
 
 	local master = hero.MasterUnit 
 	caster:SetMana(caster:GetMana()+20)
 	caster:SetMaxHealth(caster:GetMaxHealth()+1) 
+	caster:SetHealth(caster:GetHealth()+1)
 	master:SetMana(master:GetMana()+20)
 	master:SetMaxHealth(master:GetMaxHealth()+1) 
+	master:SetHealth(master:GetHealth()+1)
 end
 
 function PresenceDetection(keys)
