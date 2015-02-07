@@ -573,7 +573,7 @@ C_OP_ContinuousEmitter C_OP_ContinuousEmitter_15
 {
 	float m_flEmissionDuration = 0.000000
 	float m_flStartTime = 0.000000
-	float m_flEmitRate = 120.000000
+	float m_flEmitRate = 180.000000
 	float m_flEmissionScale = 0.000000
 	int m_nScaleControlPoint = -1
 	int m_nScaleControlPointField = 0

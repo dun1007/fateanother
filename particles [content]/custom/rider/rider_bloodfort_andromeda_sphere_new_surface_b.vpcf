@@ -18,7 +18,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	string m_hLowViolenceDef = ""
 	uint(4) m_ConstantColor = ( 85, 0, 0, 255 )
 	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
-	float m_flConstantRadius = 128.000000
+	float m_flConstantRadius = 256.000000
 	float m_flConstantRotation = 0.000000
 	float m_flConstantRotationSpeed = 0.000000
 	float m_flConstantLifespan = 2.000000
@@ -714,7 +714,7 @@ C_OP_ContinuousEmitter C_OP_ContinuousEmitter_17
 {
 	float m_flEmissionDuration = 0.000000
 	float m_flStartTime = 0.000000
-	float m_flEmitRate = 100.000000
+	float m_flEmitRate = 120.000000
 	float m_flEmissionScale = 0.000000
 	int m_nScaleControlPoint = -1
 	int m_nScaleControlPointField = 0
