@@ -388,8 +388,8 @@ C_INIT_RandomSequence C_INIT_RandomSequence_0
 
 C_INIT_RandomRadius C_INIT_RandomRadius_0
 {
-	float m_flRadiusMin = 200.000000
-	float m_flRadiusMax = 240.000000
+	float m_flRadiusMin = 100.000000
+	float m_flRadiusMax = 120.000000
 	float m_flRadiusRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
@@ -529,8 +529,8 @@ C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
 
 C_INIT_PositionOffset C_INIT_PositionOffset_0
 {
-	float(3) m_OffsetMin = ( 0.000000, 0.000000, 250.000000 )
-	float(3) m_OffsetMax = ( 0.000000, 0.000000, 250.000000 )
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 150.000000 )
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 150.000000 )
 	int m_nControlPointNumber = 0
 	bool m_bLocalCoords = false
 	bool m_bProportional = false

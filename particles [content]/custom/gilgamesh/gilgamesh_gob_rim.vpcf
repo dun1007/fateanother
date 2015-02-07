@@ -564,8 +564,8 @@ C_INIT_RandomRotation C_INIT_RandomRotation_0
 C_INIT_RandomAlpha C_INIT_RandomAlpha_0
 {
 	int m_nFieldOutput = 7
-	int m_nAlphaMin = 192
-	int m_nAlphaMax = 234
+	int m_nAlphaMin = 50
+	int m_nAlphaMax = 100
 	float m_flAlphaRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
@@ -616,8 +616,8 @@ C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
 
 C_INIT_PositionOffset C_INIT_PositionOffset_0
 {
-	float(3) m_OffsetMin = ( 0.000000, 0.000000, 250.000000 )
-	float(3) m_OffsetMax = ( 0.000000, 0.000000, 250.000000 )
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 150.000000 )
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 150.000000 )
 	int m_nControlPointNumber = 0
 	bool m_bLocalCoords = false
 	bool m_bProportional = false

@@ -318,7 +318,20 @@ function OnDexStart(keys)
 			projectile = ProjectileManager:CreateLinearProjectile(dex)
 			
 			-- Create Particle for projectile
-			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+			Timers:CreateTimer( function()
+					if dummy ~= nil then
+						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
+						dummy:SetAbsOrigin( newLoc )
+						return 0.03
+					else
+						return nil
+					end
+				end
+			)
+			
+			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
 			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
 			ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
 			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
@@ -326,6 +339,12 @@ function OnDexStart(keys)
 			Timers:CreateTimer( 2.5, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( excalFxIndex )
+					Timers:CreateTimer( 0.5, function()
+							dummy:RemoveSelf()
+							return nil
+						end
+					)
+					return nil
 				end
 			)
 			

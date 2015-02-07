@@ -228,7 +228,20 @@ function OnExcaliburStart(keys)
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			
 			-- Create Particle for projectile
-			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+			Timers:CreateTimer( function()
+					if dummy ~= nil then
+						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
+						dummy:SetAbsOrigin( newLoc )
+						return 0.03
+					else
+						return nil
+					end
+				end
+			)
+			
+			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
 			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.EndRadius, keys.EndRadius, keys.EndRadius ) )
 			ParticleManager:SetParticleControl( excalFxIndex, 2, frontward * keys.Speed )
 			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
@@ -236,6 +249,12 @@ function OnExcaliburStart(keys)
 			Timers:CreateTimer( 2.5, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( excalFxIndex )
+					Timers:CreateTimer( 0.5, function()
+							dummy:RemoveSelf()
+							return nil
+						end
+					)
+					return nil
 				end
 			)
 			
@@ -302,7 +321,20 @@ function OnMaxStart(keys)
 	    local projectile = ProjectileManager:CreateLinearProjectile( max_excal )
 		
 		-- Create Particle for projectile
-		local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
+		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+		Timers:CreateTimer( function()
+				if dummy ~= nil then
+					local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
+					dummy:SetAbsOrigin( newLoc )
+					return 0.03
+				else
+					return nil
+				end
+			end
+		)
+		
+		local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
 		ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
 		ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
 		ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
@@ -310,25 +342,33 @@ function OnMaxStart(keys)
 		Timers:CreateTimer( 2.5, function()
 				ParticleManager:DestroyParticle( excalFxIndex, false )
 				ParticleManager:ReleaseParticleIndex( excalFxIndex )
+				Timers:CreateTimer( 0.5, function()
+						dummy:RemoveSelf()
+						return nil
+					end
+				)
+				return nil
 			end
 		)
 		
 		-- Function to create rock follow the projectile
-		local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, caster )
-		local burnFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_burn.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+		local burnFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_burn.vpcf", PATTACH_CUSTOMORIGIN, dummy )
 		local currentLocation = caster:GetAbsOrigin()
 		local forwardVec = caster:GetForwardVector()
 		local distance_traverse = 0
 		Timers:CreateTimer( 0.2, function()
 				if distance_traverse < keys.Range then
-					currentLocation = currentLocation + forwardVec * ( keys.Speed / 10 )
+					currentLocation = currentLocation + forwardVec * keys.Speed * 0.03
 					ParticleManager:SetParticleControl( rockFxIndex, 0, currentLocation )
 					ParticleManager:SetParticleControl( burnFxIndex, 3, currentLocation )
 					distance_traverse = distance_traverse + keys.Speed / 10
-					return 0.1
+					return 0.03
 				else
 					ParticleManager:DestroyParticle( rockFxIndex, false )
 					ParticleManager:DestroyParticle( burnFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( rockFxIndex )
+					ParticleManager:ReleaseParticleIndex( burnFxIndex )
 					return nil
 				end
 			end

@@ -73,7 +73,8 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		&C_INIT_RandomSequence_0,
 		&C_INIT_RandomRotation_0,
 		&C_INIT_PositionOffset_0,
-		&C_INIT_RandomColor_0
+		&C_INIT_RandomColor_0,
+		&C_INIT_RandomAlpha_0
 	]
 	CParticleOperatorInstance*[] m_Emitters = 
 	[
@@ -171,8 +172,8 @@ C_OP_BasicMovement C_OP_BasicMovement_0
 C_OP_VectorNoise C_OP_VectorNoise_0
 {
 	int m_nFieldOutput = 0
-	float(3) m_vecOutputMin = ( -3.000000, -3.000000, 3.000000 )
-	float(3) m_vecOutputMax = ( 3.000000, 3.000000, 3.000000 )
+	float(3) m_vecOutputMin = ( -3.000000, -3.000000, 1.500000 )
+	float(3) m_vecOutputMax = ( 3.000000, 3.000000, 1.500000 )
 	float m_fl4NoiseScale = 0.100000
 	bool m_bAdditive = true
 	bool m_bOffset = false
@@ -365,8 +366,8 @@ C_INIT_RingWave C_INIT_RingWave_0
 
 C_INIT_RandomRadius C_INIT_RandomRadius_0
 {
-	float m_flRadiusMin = 100.000000
-	float m_flRadiusMax = 150.000000
+	float m_flRadiusMin = 80.000000
+	float m_flRadiusMax = 120.000000
 	float m_flRadiusRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
@@ -473,8 +474,8 @@ C_INIT_RandomRotation C_INIT_RandomRotation_0
 
 C_INIT_PositionOffset C_INIT_PositionOffset_0
 {
-	float(3) m_OffsetMin = ( 0.000000, 0.000000, 250.000000 )
-	float(3) m_OffsetMax = ( 0.000000, 0.000000, 250.000000 )
+	float(3) m_OffsetMin = ( 0.000000, 0.000000, 150.000000 )
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 150.000000 )
 	int m_nControlPointNumber = 0
 	bool m_bLocalCoords = false
 	bool m_bProportional = false
@@ -511,6 +512,33 @@ C_INIT_RandomColor C_INIT_RandomColor_0
 	int m_nFieldOutput = 6
 	symbol m_nTintBlendMode = 0
 	float m_flLightAmplification = 1.000000
+	bool m_bRunForParentApplyKillList = true
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	bool m_bDisableOperator = false
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_INIT_RandomAlpha C_INIT_RandomAlpha_0
+{
+	int m_nFieldOutput = 7
+	int m_nAlphaMin = 100
+	int m_nAlphaMax = 150
+	float m_flAlphaRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000

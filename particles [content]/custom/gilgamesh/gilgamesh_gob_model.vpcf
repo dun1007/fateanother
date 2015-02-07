@@ -538,7 +538,7 @@ C_INIT_RandomSequence C_INIT_RandomSequence_0
 C_INIT_PositionOffset C_INIT_PositionOffset_0
 {
 	float(3) m_OffsetMin = ( 0.000000, 0.000000, 0.000000 )
-	float(3) m_OffsetMax = ( 0.000000, 0.000000, 600.000000 )
+	float(3) m_OffsetMax = ( 0.000000, 0.000000, 400.000000 )
 	int m_nControlPointNumber = 0
 	bool m_bLocalCoords = false
 	bool m_bProportional = false

@@ -57,7 +57,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/gilgamesh/enuma_elish_cyclone_static.vpcf"
+			string m_ChildRef = "particles/custom/gilgamesh/enuma_elish_cyclone_outline.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
@@ -65,7 +65,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/gilgamesh/enuma_elish_cyclone_outline.vpcf"
+			string m_ChildRef = "particles/custom/gilgamesh/enuma_elish_cyclone_static.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
