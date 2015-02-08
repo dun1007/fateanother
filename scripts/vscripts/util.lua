@@ -91,6 +91,15 @@ function LevelAllAbility(hero)
     end
 end
 
+function EmitSoundOnAllClient(songname)
+    for i=0, 9 do
+        local player = PlayerResource:GetPlayer(i)
+        if player ~= nil then
+            EmitSoundOnClient(songname, player)
+        end
+    end
+end
+
 
 function LoopThroughAttr(hero, attrTable)
     for i=1, #attrTable do

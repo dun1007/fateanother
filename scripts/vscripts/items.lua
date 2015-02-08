@@ -193,6 +193,7 @@ end
 
 function Blink(keys)
 	local caster = keys.caster
+	local casterPos = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
 	print(targetPoint)
 
@@ -212,7 +213,7 @@ function Blink(keys)
 
 	local diff = targetPoint - caster:GetAbsOrigin()
 	local particle = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin()) -- target effect location
+	ParticleManager:SetParticleControl(particle, 1, casterPos) -- target effect location
 	caster:EmitSound("DOTA_Item.BlinkDagger.Activate")
 
 	if diff:Length() <= 1000 then caster:SetAbsOrigin(targetPoint)

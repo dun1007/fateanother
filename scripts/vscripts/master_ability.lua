@@ -391,9 +391,9 @@ function OnStrengthGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseStrength(hero:GetBaseStrength()+1) 
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnAgilityGain(keys)
@@ -402,9 +402,9 @@ function OnAgilityGain(keys)
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseAgility(hero:GetBaseAgility()+1) 
 	print(hero:GetAgility())
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnIntelligenceGain(keys)
@@ -412,20 +412,21 @@ function OnIntelligenceGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseIntellect(hero:GetBaseIntellect()+1) 
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnDamageGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Current base damage : " .. hero:GetBaseDamageMin()  .. " to " .. hero:GetBaseDamageMax())
 	hero:SetBaseDamageMin(hero:GetBaseDamageMin()+3)
 	hero:SetBaseDamageMax(hero:GetBaseDamageMax()+3)
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnArmorGain(keys)
@@ -433,9 +434,9 @@ function OnArmorGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+2)
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnHPRegenGain(keys)
@@ -443,9 +444,9 @@ function OnHPRegenGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2)
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnManaRegenGain(keys)
@@ -453,9 +454,9 @@ function OnManaRegenGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseManaRegen(hero:GetManaRegen()+1)
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnMovementSpeedGain(keys)
@@ -463,9 +464,9 @@ function OnMovementSpeedGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
-	-- Set master 2's mana 
-	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	-- Set master 1's mana 
+	local master1 = hero.MasterUnit
+	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnAvariceAcquired(keys)

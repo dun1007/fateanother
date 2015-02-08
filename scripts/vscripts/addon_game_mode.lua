@@ -191,21 +191,39 @@ end
 ]]
 function FateGameMode:OnGameInProgress()
 	print("[FATE] The game has officially begun")
-	Timers:CreateTimer(function()
-      	local choice = RandomInt(1,4)
-      	print(choice)
-		print("playing music!")
-		if choice == 1 then EmitGlobalSound("BGM.Excalibur")
-			elseif choice == 2 then EmitGlobalSound("BGM.Mightywind")
-			elseif choice == 3 then EmitGlobalSound("BGM.Emiya")
-			else EmitGlobalSound("BGM.Unmeinoyoru")
-		end
-		return 180
-    end
-  	)
+  local lastChoice = 0
+  local delayInBetween = 2.0
+  for i=0, 9 do
+      local player = PlayerResource:GetPlayer(i)
+      if player ~= nil then
+        PlayBGM(player)
+      end
+  end
 end
 
+choice = 0 --
+function PlayBGM(player)
+  local delayInBetween = 2.0
+  
+  Timers:CreateTimer('BGMTimer', {
+    endTime = 0,
+    callback = function()
+    choice = RandomInt(1,8)
+    if choice == lastChoice then return 0.1 end
+    print("Playing BGM No. " .. choice)
+    local songName = "BGM." .. choice
 
+    if choice == 1 then EmitSoundOnClient(songName, player) lastChoice = 1 return 186+delayInBetween
+    elseif choice == 2 then EmitSoundOnClient(songName, player) lastChoice = 2 return 327+delayInBetween
+    elseif choice == 3 then EmitSoundOnClient(songName, player)  lastChoice = 3 return 138+delayInBetween
+    elseif choice == 4 then  EmitSoundOnClient(songName, player) lastChoice = 4 return 149+delayInBetween
+    elseif choice == 5 then  EmitSoundOnClient(songName, player) lastChoice = 5 return 183+delayInBetween
+    elseif choice == 6 then  EmitSoundOnClient(songName, player) lastChoice = 6 return 143+delayInBetween
+    elseif choice == 7 then  EmitSoundOnClient(songName, player) lastChoice = 7 return 184+delayInBetween
+    else EmitSoundOnClient(songName, player) lastChoice = 8 return 181+delayInBetween end
+
+  end})
+end
 
 
 -- Cleanup a player when they leave
@@ -257,6 +275,16 @@ function FateGameMode:PlayerSay(keys)
       local hr = plyr:GetAssignedHero()
       hr:RemoveModifierByName("round_pause")
     end
+  end
+
+  if text == "-bgmoff" then
+    print("Turning BGM off")
+    Timers:RemoveTimer("BGMTimer")
+    ply:StopSound("BGM." .. choice)
+  end
+
+  if text == "-bgmon" then
+    PlayBGM(ply)
   end
 
 
@@ -984,7 +1012,8 @@ function FateGameMode:InitializeRound()
       print(" " .. ply:GetAssignedHero():GetName() .. " gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " at the start of round")
       ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
 	end
-  	Timers:CreateTimer('beginround', {
+
+  Timers:CreateTimer('beginround', {
 		endTime = 15,
 		callback = function()
 	    for _,ply in pairs(self.vPlayerList) do
@@ -994,53 +1023,55 @@ function FateGameMode:InitializeRound()
 	end
 	})
 
-  	Timers:CreateTimer('round_30sec_alert', {
+  Timers:CreateTimer('round_30sec_alert', {
 		endTime = 135,
 		callback = function()
 	    FireGameEvent("show_center_message",alertmsg)
 	end
 	})
 
-  	Timers:CreateTimer('round_10sec_alert', {
+  Timers:CreateTimer('round_10sec_alert', {
 		endTime = 155,
 		callback = function()
 	    FireGameEvent("show_center_message",alertmsg2)
 	end
 	})
 
-  	Timers:CreateTimer('round_timer', {
+  Timers:CreateTimer('round_timer', {
 		endTime = 165,
 		callback = function()
 		FireGameEvent("show_center_message",timeoutmsg)
 		local nRadiantAlive = 0
 		local nDireAlive = 0
-	    for _,ply in pairs(self.vPlayerList) do
-	    	if ply:GetAssignedHero():IsAlive() then
-	    		if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
-	    			nRadiantAlive = nRadiantAlive + 1
-	    		else 
-	    			nDireAlive = nDireAlive + 1
-	    		end
-	    	end
-	    end
+    -- Check how many people are alive in each team
+    for _,ply in pairs(self.vPlayerList) do
+    	if ply:GetAssignedHero():IsAlive() then
+    		if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
+    			nRadiantAlive = nRadiantAlive + 1
+    		else 
+    			nDireAlive = nDireAlive + 1
+    		end
+    	end
+    end
 
-	    if nRadiantAlive == nDireAlive then
-        print(self.bIsCasualtyOccured)
-        -- if no one died this round, delcare winner based on current score standing
-        if self.bIsCasualtyOccured == false  then
-          if self.nRadiantScore > self.nDireScore then
-            self:FinishRound(true,3)
-          elseif self.nRadiantScore < self.nDireScore then
-            self:FinishRound(true,4)
-          end
-        else
-	    	  self:FinishRound(true, 2)
+    if nRadiantAlive == nDireAlive then
+      print(self.bIsCasualtyOccured)
+      -- if no one died this round, delcare winner based on current score standing
+      if self.bIsCasualtyOccured == false  then
+        if self.nRadiantScore > self.nDireScore then
+          self:FinishRound(true,3)
+        elseif self.nRadiantScore < self.nDireScore then
+          self:FinishRound(true,4)
         end
-	    elseif nRadiantAlive > nDireAlive then
-	    	self:FinishRound(true, 0)
-	    elseif nRadiantAlive < nDireAlive then
-	    	self:FinishRound(true, 1)
-	    end
+      else
+    	  self:FinishRound(true, 2)
+      end
+
+    elseif nRadiantAlive > nDireAlive then
+    	self:FinishRound(true, 0)
+    elseif nRadiantAlive < nDireAlive then
+    	self:FinishRound(true, 1)
+    end
 	end
 	})
 end
