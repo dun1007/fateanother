@@ -1057,9 +1057,6 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
-		"ItemStockMax"					"7"
-		"ItemStockInitial"				"7"
-		"ItemStockTime"					"10.0"
 	    "ItemInitialCharges" "1"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
@@ -1515,6 +1512,10 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+		}
 
 	    "OnSpellStart"
 	    {
@@ -1538,7 +1539,7 @@
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
-				"Function"		"exScroll"
+				"Function"		"EXScroll"
 			}
 			"FireSound"
 			{

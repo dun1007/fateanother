@@ -261,6 +261,7 @@ end
 
 function CScrollHit(keys)
 	if IsSpellBlocked(keys.target) then return end
+	DoDamage(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, 100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	if not keys.target:IsMagicImmune() then
 		keys.target:AddNewModifier(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, "modifier_stunned", {Duration = 1.0}) 
 	end
@@ -285,15 +286,7 @@ function SScroll(keys)
 	local target = keys.target
 	if IsSpellBlocked(keys.target) then return end
 
-	local lightning = {
-		attacker = caster,
-		victim = target,
-		damage = 400,
-		damage_type = DAMAGE_TYPE_MAGICAL,
-		damage_flags = 0,
-		ability = keys.ability
-	}
-	ApplyDamage(lightning) 
+	DoDamage(caster, target, 400, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	ApplyPurge(target)
 	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
@@ -310,23 +303,20 @@ function EXScroll(keys)
 		damage_flags = 0,
 		ability = keys.ability
 	}
+	DoDamage(caster, target, 600, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	ApplyPurge(target)
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier1", {Duration = 1.0}) 
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier2", {Duration = 2.0}) 
 
 	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
+
 	local forkCount = 0
 	local dist = target:GetAbsOrigin() - caster:GetAbsOrigin()
-	ApplyDamage(lightning)
-
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin() + dist:Normalized() * dist:Length2D() + 350 , nil, 700
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
 		if forkCount == 4 then return end
 		if v ~= target then 
-	        lightning.victim = v
-	        ApplyDamage(lightning) 
+	        DoDamage(caster, v, 600, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	        ParticleManager:SetParticleControl(bolt, 1, Vector(v:GetAbsOrigin().x,v:GetAbsOrigin().y,v:GetAbsOrigin().z+((v:GetBoundingMaxs().z - v:GetBoundingMins().z)/2)))
 	        forkCount = forkCount + 1

@@ -193,7 +193,7 @@ function FateGameMode:OnGameInProgress()
 	print("[FATE] The game has officially begun")
   local lastChoice = 0
   local delayInBetween = 2.0
-  for i=0, 9 do
+  for i=0, 10 do
       local player = PlayerResource:GetPlayer(i)
       if player ~= nil then
         PlayBGM(player)
@@ -204,7 +204,7 @@ end
 choice = 0 --
 function PlayBGM(player)
   local delayInBetween = 2.0
-  
+
   Timers:CreateTimer('BGMTimer', {
     endTime = 0,
     callback = function()
@@ -221,7 +221,6 @@ function PlayBGM(player)
     elseif choice == 6 then  EmitSoundOnClient(songName, player) lastChoice = 6 return 143+delayInBetween
     elseif choice == 7 then  EmitSoundOnClient(songName, player) lastChoice = 7 return 184+delayInBetween
     else EmitSoundOnClient(songName, player) lastChoice = 8 return 181+delayInBetween end
-
   end})
 end
 
@@ -262,6 +261,7 @@ function FateGameMode:PlayerSay(keys)
     -- Act on the match
   end
 
+  -- Below two commands are solely for test purpose, not to be used in normal games
   if text == "-testsetup" then
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
@@ -277,6 +277,7 @@ function FateGameMode:PlayerSay(keys)
     end
   end
 
+  -- Turns BGM on and off
   if text == "-bgmoff" then
     print("Turning BGM off")
     Timers:RemoveTimer("BGMTimer")
@@ -287,7 +288,7 @@ function FateGameMode:PlayerSay(keys)
     PlayBGM(ply)
   end
 
-
+  -- Sends a message to request gold
   local pID, goldAmt = string.match(text, "^-(%d) (%d+)")
   if pID ~= nil and goldAmt ~= nil then
     if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
@@ -299,6 +300,7 @@ function FateGameMode:PlayerSay(keys)
     end
   end
 
+  -- Asks team for gold
   if text == "-goldpls" then
     GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , ply:GetTeam(), 0)
   end
@@ -1085,6 +1087,7 @@ end
 function FateGameMode:FinishRound(IsTimeOut, winner)
 	print("[FATE] Winner decided")
 
+  -- Pause every unit
 	for _,ply in pairs(self.vPlayerList) do
 		if ply:GetAssignedHero():IsAlive() then
 			giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
@@ -1093,6 +1096,15 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
       ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
     end
 	end
+
+  -- Remove all units
+  local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+  for k,v in pairs(units) do
+    print("Checking unit " .. v:GetName() )
+    if not v:IsRealHero() then
+      v:ForceKill(true)
+    end
+  end
 
   -- decide the winner
 	if winner == 0 then 

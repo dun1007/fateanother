@@ -15,6 +15,7 @@ function OnTerritoryCreated(keys)
 
 	local terr = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	for k,v in pairs(terr) do
+		print(v:GetClassname())
 		if v:GetUnitName() == "caster_5th_territory" then
 			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Territory Already Exists" } )
 			return 
@@ -113,6 +114,10 @@ function OnTerritoryExplosion(keys)
 			for k,v in pairs(targets) do
 		         DoDamage(hero, v, damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 		    end
+		    -- particle
+	  	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	  	  	ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin()) -- height of the bolt
+		    ParticleManager:SetParticleControl(particle, 1, Vector(1000, 0, 0)) -- height of the bolt
 			caster:Kill(keys.ability, caster)
 		end
 	return end)

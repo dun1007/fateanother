@@ -9207,7 +9207,7 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle"		""particles/units/heroes/hero_luna/luna_lucent_beam.vpcf""
+			"particle"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
 		}
 		
 		// Casting
@@ -10697,12 +10697,6 @@
 		"OnProjectileHitUnit"
 		{
 			"DeleteOnHit"			"true"
-			"Damage"
-			{
-				"Damage"		"100"
-				"Target"		"TARGET"
-				"Type"			"DAMAGE_TYPE_MAGICAL"			
-			}
             "RunScript"
             {
  			 	"ScriptFile"	"items"
