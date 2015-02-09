@@ -175,6 +175,7 @@ function FateGameMode:OnHeroInGame(hero)
   	giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
     local heroName = FindName(hero:GetName())
     hero.name = heroName
+    hero.CStock = 10
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
     UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
     Timers:CreateTimer(30.0, function() 
@@ -502,11 +503,26 @@ function FateGameMode:OnItemPurchased( keys )
             FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
             hero:RemoveItem(oldStash[i])
             hero:ModifyGold(itemCost, true, 0)
+            break
           end
         end
       else
         print("Deducing extra cost" .. itemCost*0.5 .. "from player gold")
         hero:ModifyGold(-itemCost*0.5, true , 0) 
+      end
+    -- If hero is in base, check for C scroll stock
+    else
+      if hero.CStock > 0 then 
+        hero.CStock = hero.CStock - 1
+      else 
+        for i = 1, #oldStash do
+          if oldStash[i]:GetName() == "item_c_scroll" then
+            FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Out Of Stock" } )
+            hero:RemoveItem(oldStash[i])
+            hero:ModifyGold(itemCost, true, 0)
+            break
+          end
+        end
       end
     end
 
@@ -1005,18 +1021,19 @@ function FateGameMode:InitializeRound()
 
   -- Grant EXP and starting gold
 	for _,ply in pairs(self.vPlayerList) do
-	    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0)
-
-      ply:GetAssignedHero():SetGold(0, false)
-      if ply:GetAssignedHero():GetGold() < 5000 then
+	    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0) -- Pause all heroes
+      ply:GetAssignedHero():SetGold(0, false) 
+      ply:GetAssignedHero().CStock = 10
+      if ply:GetAssignedHero():GetGold() < 5000 then -- 
         print(" " .. ply:GetAssignedHero():GetName() .. " gained 3000 gold at the start of round")
+        -- Grant gold 
         if ply.AvariceCount ~= nil then
           ply:GetAssignedHero():ModifyGold(3000 + ply.AvariceCount * 1500, true, 0) 
         else
           ply:GetAssignedHero():ModifyGold(3000, true, 0) 
         end
       end
-      print(" " .. ply:GetAssignedHero():GetName() .. " gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " at the start of round")
+      print(" " .. ply:GetAssignedHero():GetName() .. " gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " experience at the start of round")
       ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
 	end
 

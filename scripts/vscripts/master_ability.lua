@@ -421,8 +421,20 @@ function OnAgilityGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.AGIgained == nil then
+		hero.AGIgained = 1
+	else 
+		if hero.AGIgained < 50 then
+			hero.AGIgained = hero.AGIgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	hero:SetBaseAgility(hero:GetBaseAgility()+1) 
-	print(hero:GetAgility())
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -433,6 +445,18 @@ function OnIntelligenceGain(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	hero:SetBaseIntellect(hero:GetBaseIntellect()+1) 
+
+	if hero.INTgained == nil then
+		hero.INTgained = 1
+	else 
+		if hero.INTgained < 50 then
+			hero.INTgained = hero.INTgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -442,6 +466,19 @@ function OnDamageGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.DMGgained == nil then
+		hero.DMGgained = 1
+	else 
+		if hero.DMGgained < 50 then
+			hero.DMGgained = hero.DMGgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	print("Current base damage : " .. hero:GetBaseDamageMin()  .. " to " .. hero:GetBaseDamageMax())
 	hero:SetBaseDamageMin(hero:GetBaseDamageMin()+3)
 	hero:SetBaseDamageMax(hero:GetBaseDamageMax()+3)
@@ -454,6 +491,19 @@ function OnArmorGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.ARMORgained == nil then
+		hero.ARMORgained = 1
+	else 
+		if hero.ARMORgained < 50 then
+			hero.ARMORgained = hero.ARMORgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+2)
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
@@ -464,6 +514,19 @@ function OnHPRegenGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.HPREGgained == nil then
+		hero.HPREGgained = 1
+	else 
+		if hero.HPREGgained < 50 then
+			hero.HPREGgained = hero.HPREGgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2)
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
@@ -474,6 +537,19 @@ function OnManaRegenGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.MPREGgained == nil then
+		hero.MPREGgained = 1
+	else 
+		if hero.MPREGgained < 50 then
+			hero.MPREGgained = hero.MPREGgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	hero:SetBaseManaRegen(hero:GetManaRegen()+1)
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
@@ -484,6 +560,19 @@ function OnMovementSpeedGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.MSgained == nil then
+		hero.MSgained = 1
+	else 
+		if hero.MSgained < 50 then
+			hero.MSgained = hero.MSgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
