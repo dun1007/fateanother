@@ -265,9 +265,14 @@ function FateGameMode:PlayerSay(keys)
   if text == "-testsetup" then
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
-    hero:SetBaseStrength(20) 
-    hero:SetBaseAgility(20) 
-    hero:SetBaseIntellect(20) 
+    if hero:GetName() == "npc_dota_hero_juggernaut" then
+      hero:SetBaseStrength(25)
+      hero:SetBaseAgility(25) 
+    else 
+      hero:SetBaseStrength(20) 
+      hero:SetBaseAgility(20) 
+      hero:SetBaseIntellect(20) 
+    end
   end
 
   if text == "-unpause" then

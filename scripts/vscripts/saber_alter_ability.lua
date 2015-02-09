@@ -409,7 +409,7 @@ function DSCheckCombo(caster, ability)
 				DUsed = false
 			end
 			})
-		elseif ability == caster:FindAbilityByName("saber_alter_unleashed_ferocity") then
+		elseif ability == caster:FindAbilityByName("saber_alter_unleashed_ferocity") and caster:FindAbilityByName("saber_alter_mana_burst"):IsCooldownReady() then
 			if DUsed == true then 
 				caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", false, true)
 				local newTime =  GameRules:GetGameTime()

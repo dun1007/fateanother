@@ -79,9 +79,27 @@ end
 
 function OnIWStart(keys)
 	local caster = keys.caster
+
+	if not caster:IsRealHero() then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast With Unit" } )
+		ability:EndCooldown()
+		return
+	end
+
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
+
+
+	if not caster:IsRealHero() then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast With Unit" } )
+		ability:EndCooldown()
+		return
+	end
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
 	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(17)
 
 	
@@ -331,16 +349,16 @@ end
 
 
 function FACheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") then
+	if caster:GetStrength() >= 25 and caster:GetAgility() >= 25 then
+		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") and caster:FindAbilityByName("false_assassin_heart_of_harmony"):IsCooldownReady() then
 			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+			Timers:CreateTimer({
+				endTime = 3,
+				callback = function()
+				caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+			end
+			})			
 		end
-		Timers:CreateTimer({
-			endTime = 3,
-			callback = function()
-			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
-		end
-		})
 	end
 end
 

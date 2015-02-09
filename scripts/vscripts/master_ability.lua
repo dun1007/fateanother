@@ -398,6 +398,19 @@ function OnStrengthGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+
+	if hero.STRgained == nil then
+		hero.STRgained = 1
+	else 
+		if hero.STRgained < 50 then
+			hero.STRgained = hero.STRgained + 1
+		else
+			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			caster:GiveMana(1)
+			return
+		end
+	end 
+
 	hero:SetBaseStrength(hero:GetBaseStrength()+1) 
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit

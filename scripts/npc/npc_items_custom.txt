@@ -1058,8 +1058,8 @@
 	    "SecretShop"   "0"
 
 		"ItemStockMax"					"50"
-		"ItemStockInitial"				"25"
-		"ItemStockTime"					"5.0"
+		"ItemStockInitial"				"50"
+		"ItemStockTime"					"10.0"
 	    "ItemInitialCharges" "1"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
@@ -1447,6 +1447,7 @@
 	    	"modifier_purge"
 	    	{
 	    		"Duration"			"1.0"
+	    		"IsDebuff"			"1"
 	    		"States"
 	    		{
 	    			"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -1455,6 +1456,7 @@
 	    	"modifier_slow_tier1"
 	    	{
 	    		"Duration"			"2.5"
+	    		"IsDebuff"			"1"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-80"
@@ -1463,6 +1465,7 @@
 	    	"modifier_slow_tier2"
 	    	{
 	    		"Duration"			"4.0"
+	    		"IsDebuff"			"1"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
@@ -1555,6 +1558,7 @@
 	    	"modifier_purge"
 	    	{
 	    		"Duration"			"1.0"
+	    		"IsDebuff"			"1"
 	    		"States"
 	    		{
 	    			"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
@@ -1563,6 +1567,7 @@
 	    	"modifier_slow_tier1"
 	    	{
 	    		"Duration"			"2.5"
+	    		"IsDebuff"			"1"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-80"
@@ -1571,6 +1576,7 @@
 	    	"modifier_slow_tier2"
 	    	{
 	    		"Duration"			"4.0"
+	    		"IsDebuff"			"1"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"

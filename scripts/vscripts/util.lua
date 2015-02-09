@@ -7,7 +7,8 @@ purgable = {"modifier_aspd_increase",
         "modifier_share_damage",
         "modifier_a_plus_armor",
         "modifier_speed_gem",
-        "modifier_share_damage"}
+        "modifier_share_damage",
+        "modifier_rule_breaker"}
 
 goesthruB = {"saber_avalon",
             "archer_5th_hrunting",

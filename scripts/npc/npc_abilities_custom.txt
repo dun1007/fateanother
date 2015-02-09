@@ -2255,7 +2255,7 @@
 			"modifier_mana_shroud_aura"
 			{
 				"Passive"	"1"
-				"IsHidden"	"0"
+				"IsHidden"	"1"
 				"Aura"		"saber_alter_mana_shroud_aura_effect"
 				"Aura_Radius"	"%Range"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
@@ -9532,7 +9532,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"caster_rule_breaker"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"1.0"
+		"AnimationPlaybackRate" 		"2.0"
 		"AbilityCastPoint"				"0.5"
 		"AbilityCastRange"				"100"
 		"AbilityCastRangeBuffer"		"50"
@@ -9590,8 +9590,8 @@
 		{
 			"modifier_rule_breaker"
 			{
-				"IsDebuff"					"true"
-				"IsPurgable"				"true"
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
 				"Duration"					"%duration"
 				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
 				"EffectAttachType"			"follow_overhead"

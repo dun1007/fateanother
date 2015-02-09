@@ -919,15 +919,15 @@ end
 
 function ArcherCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("archer_5th_ubw") then
+		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() then
 			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+			Timers:CreateTimer({
+				endTime = 5,
+				callback = function()
+				caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+			end
+			})			
 		end
-		Timers:CreateTimer({
-			endTime = 5,
-			callback = function()
-			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
-		end
-		})
 	end
 end
 

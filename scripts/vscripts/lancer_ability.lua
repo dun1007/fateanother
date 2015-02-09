@@ -379,15 +379,15 @@ end
 
 function LancerCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") then
+		if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") and caster:FindAbilityByName("lancer_5th_gae_bolg"):IsCooldownReady() then
 			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+			Timers:CreateTimer({
+				endTime = 3,
+				callback = function()
+				caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+			end
+			})
 		end
-		Timers:CreateTimer({
-			endTime = 3,
-			callback = function()
-			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
-		end
-		})
 	end
 end
 
