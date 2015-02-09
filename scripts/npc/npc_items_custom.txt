@@ -1017,12 +1017,11 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"30"
 	    "AbilityCastRange"				"1000"
-	    "precache"
-	    {
-	    	"particle"	"particles/items_fx/blink_dagger_start.vpcf"
-	    	"particle"	"particles/items_fx/blink_dagger_end.vpcf"
-	    }
-
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+		}
 
 	    "OnSpellStart"
 	    {
@@ -1032,7 +1031,8 @@
 				"Function"		"Blink"
 				"Target"		"POINT"
 			}
-	    }
+		}
+
 	}
 
 

@@ -159,7 +159,7 @@ function OnSeal2Start(keys)
 	caster:SetHealth(caster:GetHealth()-1) 
 
 	-- Reset all resetable abilities
-	for i=0, 30 do 
+	for i=0, 15 do 
 		local ability = hero:GetAbilityByIndex(i)
 		if ability ~= nil then
 			if ability.IsResetable ~= false then
@@ -167,6 +167,14 @@ function OnSeal2Start(keys)
 			end
 		else 
 			break
+		end
+	end
+
+	-- Reset all items
+	for i=0, 11 do
+		local item = hero:GetItemInSlot(i) 
+		if item ~= nil then
+			item:EndCooldown()
 		end
 	end
 

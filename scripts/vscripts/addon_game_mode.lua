@@ -1060,9 +1060,9 @@ function FateGameMode:InitializeRound()
       print(self.bIsCasualtyOccured)
       -- if no one died this round, delcare winner based on current score standing
       if self.bIsCasualtyOccured == false  then
-        if self.nRadiantScore > self.nDireScore then
+        if self.nRadiantScore < self.nDireScore then
           self:FinishRound(true,3)
-        elseif self.nRadiantScore < self.nDireScore then
+        elseif self.nRadiantScore > self.nDireScore then
           self:FinishRound(true,4)
         end
       else

@@ -6801,6 +6801,7 @@
 		{
 			"modifier_dirk_poison"
 			{
+				"IsDebuff"		"1"
 				"Duration"		"%duration"
 				"ThinkInterval"		"1.0"
 				"OnThinkInterval"
