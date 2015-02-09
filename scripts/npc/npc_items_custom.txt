@@ -1057,6 +1057,9 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
+		"ItemStockMax"					"50"
+		"ItemStockInitial"				"25"
+		"ItemStockTime"					"5.0"
 	    "ItemInitialCharges" "1"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
