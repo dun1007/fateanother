@@ -289,7 +289,17 @@ function OnUBWStart(keys)
 	ubwCasterPos = caster:GetAbsOrigin()
 	caster.IsUBWActive = true
 	
-	
+	--[[local ubwTimerCounter = 0
+	Timers:CreateTimer(3.0, function() 
+		if ubwTimerCounter > 9 then return end
+		local ubwTimer = ParticleManager:CreateParticle("particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
+		ParticleManager:SetParticleControl( ubwTimer, 0, caster:GetAbsOrigin() )
+		ParticleManager:SetParticleControl( ubwTimer, 1, Vector( 0, 19 - ubwTimerCounter, 1) )
+		ParticleManager:SetParticleControl( ubwTimer, 2, Vector( 2, 0, 0) )
+		ubwTimerCounter = ubwTimerCounter + 1 
+		return 1.0 
+	end)]]
+
 	local info = {
 		Target = nil,
 		Source = nil, 

@@ -4349,6 +4349,7 @@
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 			"particle"		"particles/custom/archer/archer_ubw_ring.vpcf"
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"		particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf
 		}
 		
 		"AbilityCastPoint"				"0.0"

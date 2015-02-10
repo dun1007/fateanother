@@ -135,12 +135,12 @@ function FateGameMode:OnAllPlayersLoaded()
 	GameRules:SendCustomMessage("Fate/Another " .. FATE_VERSION .. " by Dun1007", 0, 0)
 	GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
 	GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
-
+  GameStartTimerStart()
 
   	Timers:CreateTimer('30secondalert', {
 		endTime = 30,
 		callback = function()
-  		GameRules:SendCustomMessage("The game will start in 30 seconds. Anyone who haven't picked hero by then will be assigned a random hero.", 0, 0)
+  	GameRules:SendCustomMessage("The game will start in 30 seconds. Anyone who haven't picked hero by then will be assigned a random hero.", 0, 0)
 	end
 	})
   	Timers:CreateTimer('startgame', {
@@ -172,15 +172,14 @@ function FateGameMode:OnHeroInGame(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
     hero.RespawnPos = hero:GetAbsOrigin() 
     --HideWearables(hero)
-  	giveUnitDataDrivenModifier(hero, hero, "round_pause", 999)
+  	giveUnitDataDrivenModifier(hero, hero, "round_pause", 75)
     local heroName = FindName(hero:GetName())
     hero.name = heroName
-    hero.CStock = 10
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
-    UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
+    --[[UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
-    end)  
+    end)  ]]
 
 
 end
@@ -225,7 +224,63 @@ function PlayBGM(player)
   end})
 end
 
+function RoundTimerStart()
+  local entQuest = SpawnEntityFromTableSynchronous( "quest", { name = "Quest", title = "Round " .. self.nCurrentRound .. "Timer" } )
+  --add   "QuestTimer"  "Survive for %quest_current_value% seconds"   in addon_english
+  
+  local questTimeEnd = GameRules:GetGameTime() + 150 --Time to Finish the quest
 
+  --bar system
+  local entKillCountSubquest = SpawnEntityFromTableSynchronous( "subquest_base", {
+    show_progress_bar = true,
+    progress_bar_hue_shift = -119
+  } )
+  entQuest:AddSubquest( entKillCountSubquest )
+  entQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, 150 ) --text on the quest timer at start
+  entQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, 150 ) --text on the quest timer
+  entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, 150 ) --value on the bar at start
+  entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, 150 ) --value on the bar
+  
+  Timers:CreateTimer(0.9, function()
+      entQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questTimeEnd - GameRules:GetGameTime() )
+      entKillCountSubquest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questTimeEnd - GameRules:GetGameTime() ) --update the bar with the time passed        
+      if (questTimeEnd - GameRules:GetGameTime())<=0 then
+        UTIL_RemoveImmediate( entQuest )
+        entKillCountSubquest = nil
+      end
+      return 1      
+  end
+  )
+end
+
+function GameStartTimerStart()
+  local beginQuest = SpawnEntityFromTableSynchronous( "quest", { name = "Quest", title = "Hero Pick Time Remaining" } )
+  --add   "QuestTimer"  "Survive for %quest_current_value% seconds"   in addon_english
+  
+  local questTimeEnd = GameRules:GetGameTime() + 60 --Time to Finish the quest
+
+  --bar system
+  local entKillCountSubquest = SpawnEntityFromTableSynchronous( "subquest_base", {
+    show_progress_bar = true,
+    progress_bar_hue_shift = -119
+  } )
+  beginQuest:AddSubquest( entKillCountSubquest )
+  beginQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, 60 ) --text on the quest timer at start
+  beginQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, 60 ) --text on the quest timer
+  entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, 60 ) --value on the bar at start
+  entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, 60 ) --value on the bar
+  
+  Timers:CreateTimer(0.9, function()
+      beginQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questTimeEnd - GameRules:GetGameTime() )
+      entKillCountSubquest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questTimeEnd - GameRules:GetGameTime() ) --update the bar with the time passed        
+      if (questTimeEnd - GameRules:GetGameTime())<=0 then
+        UTIL_RemoveImmediate( beginQuest )
+        entKillCountSubquest = nil
+      end
+      return 1      
+  end
+  )
+end
 -- Cleanup a player when they leave
 function FateGameMode:OnDisconnect(keys)
   print('[BAREBONES] Player Disconnected ' .. tostring(keys.userid))
@@ -750,7 +805,7 @@ end
 function FateGameMode:OnEntityKilled( keys )
 	print( '[BAREBONES] OnEntityKilled Called' )
 	PrintTable( keys )
-	  
+
 	  -- The Unit that was Killed
 	local killedUnit = EntIndexToHScript( keys.entindex_killed )
 	  -- The Killing entity
@@ -999,8 +1054,8 @@ function FateGameMode:InitializeRound()
     end})
 	end
 
-
-	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false)
+  
+	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false) -- 
 	-- Remove pause 
     local msg = {
 		message = "Round " .. self.nCurrentRound .. " has begun!",
@@ -1040,10 +1095,11 @@ function FateGameMode:InitializeRound()
   Timers:CreateTimer('beginround', {
 		endTime = 15,
 		callback = function()
-	    for _,ply in pairs(self.vPlayerList) do
-	    	ply:GetAssignedHero():RemoveModifierByName("round_pause")
-	    end
-	    FireGameEvent("show_center_message",msg)
+    RoundTimerStart() -- Start round timer
+    for _,ply in pairs(self.vPlayerList) do
+    	ply:GetAssignedHero():RemoveModifierByName("round_pause")
+    end
+    FireGameEvent("show_center_message",msg)
 	end
 	})
 
