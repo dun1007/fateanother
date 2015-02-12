@@ -255,7 +255,7 @@ function BerCheckCombo(caster, ability)
 				QUsed = false
 			end
 			})
-		elseif ability == caster:FindAbilityByName("berserker_5th_berserk") and caster:FindAbilityByName("berserker_5th_courage"):IsCooldownReady() then
+		elseif ability == caster:FindAbilityByName("berserker_5th_berserk") and caster:FindAbilityByName("berserker_5th_courage"):IsCooldownReady() and caster:FindAbilityByName("berserker_5th_madmans_roar"):IsCooldownReady()  then
 			if QUsed == true then 
 				caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
 				local newTime =  GameRules:GetGameTime()

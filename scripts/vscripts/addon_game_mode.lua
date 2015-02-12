@@ -224,8 +224,9 @@ function PlayBGM(player)
   end})
 end
 
-function RoundTimerStart()
-  local entQuest = SpawnEntityFromTableSynchronous( "quest", { name = "Quest", title = "Round " .. self.nCurrentRound .. "Timer" } )
+
+function RoundTimerStart(curRound)
+  local entQuest = SpawnEntityFromTableSynchronous( "quest", { name = "Quest", title = "Round " .. curRound .. " Timer" } )
   --add   "QuestTimer"  "Survive for %quest_current_value% seconds"   in addon_english
   
   local questTimeEnd = GameRules:GetGameTime() + 150 --Time to Finish the quest
@@ -247,6 +248,7 @@ function RoundTimerStart()
       if (questTimeEnd - GameRules:GetGameTime())<=0 then
         UTIL_RemoveImmediate( entQuest )
         entKillCountSubquest = nil
+        return
       end
       return 1      
   end
@@ -347,6 +349,14 @@ function FateGameMode:PlayerSay(keys)
 
   if text == "-bgmon" then
     PlayBGM(ply)
+  end
+
+  if text == "-xptable" then
+    PrintTable(XP_PER_LEVEL_TABLE)
+  end
+
+  if text == "-xpbountytable" then
+    PrintTable(XP_BOUNTY_PER_LEVEL_TABLE)
   end
 
   -- Sends a message to request gold
@@ -567,15 +577,18 @@ function FateGameMode:OnItemPurchased( keys )
       end
     -- If hero is in base, check for C scroll stock
     else
-      if hero.CStock > 0 then 
-        hero.CStock = hero.CStock - 1
-      else 
-        for i = 1, #oldStash do
-          if oldStash[i]:GetName() == "item_c_scroll" then
-            FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Out Of Stock" } )
-            hero:RemoveItem(oldStash[i])
-            hero:ModifyGold(itemCost, true, 0)
-            break
+       -- If hero is in base, check for C scroll stock
+      if itemName == "item_c_scroll" then
+        if hero.CStock > 0 then 
+          hero.CStock = hero.CStock - 1
+        else 
+          for i = 1, #oldStash do
+            if oldStash[i]:GetName() == "item_c_scroll" then
+              FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Out Of Stock" } )
+              hero:RemoveItem(oldStash[i])
+              hero:ModifyGold(itemCost, true, 0)
+              break
+            end
           end
         end
       end
@@ -895,7 +908,7 @@ function FateGameMode:InitGameMode()
 	GameRules:SetSameHeroSelectionEnabled(false)
 	GameRules:SetHeroSelectionTime(1)
 	GameRules:SetPreGameTime(0)
-	GameRules:SetPostGameTime(0)
+	GameRules:SetPostGameTime(60)
 	GameRules:SetUseCustomHeroXPValues(true)
 	GameRules:SetGoldPerTick(0)
   GameRules:SetUseBaseGoldBountyOnHeroes(false)
@@ -1033,6 +1046,7 @@ end
 
 
 IsGameStarted = false
+roundQuest = nil 
 
 function FateGameMode:InitializeRound()
   -- do first round stuff
@@ -1049,7 +1063,7 @@ function FateGameMode:InitializeRound()
         hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
         hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+10)
       end
-      GameRules:SendCustomMessage("Every 10 minutes, your Master is fully healed and gains 10 additional Mana.", 0, 0)
+      GameRules:SendCustomMessage("10 minutes passed. The Holy Grail's blessings restore all Master to full health and grant 10 Mana to them.", 0, 0)
       return 600
     end})
 	end
@@ -1079,23 +1093,28 @@ function FateGameMode:InitializeRound()
 	    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0) -- Pause all heroes
       ply:GetAssignedHero():SetGold(0, false) 
       ply:GetAssignedHero().CStock = 10
+
+      -- Grant gold 
       if ply:GetAssignedHero():GetGold() < 5000 then -- 
         print(" " .. ply:GetAssignedHero():GetName() .. " gained 3000 gold at the start of round")
-        -- Grant gold 
         if ply.AvariceCount ~= nil then
           ply:GetAssignedHero():ModifyGold(3000 + ply.AvariceCount * 1500, true, 0) 
         else
           ply:GetAssignedHero():ModifyGold(3000, true, 0) 
         end
       end
-      print(" " .. ply:GetAssignedHero():GetName() .. " gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " experience at the start of round")
-      ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
+
+      if self.nCurrentRound ~= 1 then 
+        print(" " .. ply:GetAssignedHero():GetName() .. " gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " experience at the start of round")
+        ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
+      end
 	end
+
 
   Timers:CreateTimer('beginround', {
 		endTime = 15,
 		callback = function()
-    RoundTimerStart() -- Start round timer
+    RoundTimerStart(self.nCurrentRound) -- Start round timer
     for _,ply in pairs(self.vPlayerList) do
     	ply:GetAssignedHero():RemoveModifierByName("round_pause")
     end

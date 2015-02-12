@@ -210,7 +210,6 @@ function Blink(keys)
 	end 
 
 	ProjectileManager:ProjectileDodge(caster) 
-
 	
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0, casterPos)

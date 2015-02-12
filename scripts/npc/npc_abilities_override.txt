@@ -286,31 +286,17 @@
 	}
 
 	//=================================================================================================================
-	// Morphling: Replicate
+	// Ability: Attribute Bonus
 	//=================================================================================================================
-	"morphling_replicate"
+	"attribute_bonus"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"					"5057"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"SpellImmunityType"				"SPELL_IMMUNITY_ENEMIES_YES"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"99999"
-		"AbilityCastPoint"				"0.1"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.1"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0.1"		
-
+		"ID"					"5002"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
+		"AbilityType"					"DOTA_ABILITY_TYPE_ATTRIBUTES"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"MaxLevel"						"7"
+		
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
@@ -318,32 +304,7 @@
 			"01"
 			{
 				"var_type"						"FIELD_FLOAT"
-				"duration"						"25.0"
-			}
-			"02"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"illusion_damage_out_pct"		"-30"
-			}
-			"03"
-			{
-				"var_type"						"FIELD_FLOAT"
-				"tooltip_illusion_damage_out_pct"		"70"
-			}
-			"04"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"illusion_incoming_dmg_pct_tooltip"		"200"
-			}
-			"05"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"illusion_damage_in_pct"		"200"
-			}
-			"06"
-			{
-				"var_type"						"FIELD_INTEGER"
-				"tooltip_cast_range"			"99999"
+				"attribute_bonus_per_level"		"2.0"
 			}
 		}
 	}

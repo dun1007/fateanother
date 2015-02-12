@@ -555,6 +555,7 @@ function OnRBStart(keys)
 	EmitGlobalSound("Caster.RuleBreaker") 
 	CasterCheckCombo(keys.caster,keys.ability)
 	if ply.IsRBImproved then
+		keys.ability:StartCooldown(25)
 		giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", 3.0)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dagger_of_treachery", {}) 
 	end
@@ -747,7 +748,7 @@ end
 
 function CasterCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") and caster:FindAbilityByName("caster_5th_hecatic_graea"):IsCooldownReady() then
+		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") and caster:FindAbilityByName("caster_5th_hecatic_graea"):IsCooldownReady() and caster:FindAbilityByName("caster_5th_hecatic_graea_powered"):IsCooldownReady() then
 			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
 			Timers:CreateTimer({
 				endTime = 5,

@@ -671,53 +671,55 @@ function PresenceDetection(keys)
 	print("Presence detection started by " .. caster:GetName())
 
 	Timers:CreateTimer(function()  
-		local oldEnemyTable = caster.PresenceTable
-		local newEnemyTable = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
+		if caster:IsAlive() then 
+			local oldEnemyTable = caster.PresenceTable
+			local newEnemyTable = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 
-		-- Flag everyone in range as true before comparing two tables
-		for i=1, #newEnemyTable do
-			newEnemyTable[i].IsPresenceDetected = true
-		end
+			-- Flag everyone in range as true before comparing two tables
+			for i=1, #newEnemyTable do
+				newEnemyTable[i].IsPresenceDetected = true
+			end
 
-		-- If enemy has not moved out of range since last presence detection, flag them as false
-		for i=1,#oldEnemyTable do
-			for j=1, #newEnemyTable do
-				if oldEnemyTable[i] == newEnemyTable[j] then 
-					--print(" " .. newEnemyTable[j]:GetName() .. " has not been out of range since last presence detection")
-					newEnemyTable[j].IsPresenceDetected = false
-					break
+			-- If enemy has not moved out of range since last presence detection, flag them as false
+			for i=1,#oldEnemyTable do
+				for j=1, #newEnemyTable do
+					if oldEnemyTable[i] == newEnemyTable[j] then 
+						--print(" " .. newEnemyTable[j]:GetName() .. " has not been out of range since last presence detection")
+						newEnemyTable[j].IsPresenceDetected = false
+						break
+					end
 				end
 			end
-		end
 
-		-- Do the ping for everyone with IsPresenceDetected marked as true
-		for i=1, #newEnemyTable do
-			local enemy = newEnemyTable[i]
-			-- Filter TA from ping if he has improved presence concealment attribute
-			if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy:GetPlayerOwner().IsPCImproved  then 
-				if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
-			end
+			-- Do the ping for everyone with IsPresenceDetected marked as true
+			for i=1, #newEnemyTable do
+				local enemy = newEnemyTable[i]
+				-- Filter TA from ping if he has improved presence concealment attribute
+				if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy:GetPlayerOwner().IsPCImproved  then 
+					if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
+				end
 
-			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
-				--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
-				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
-				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
-				ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
-				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
-				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
-				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
-				-- Process Eye of Serenity attribute
-				if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
-					print("Eye of Serenity activated")
-					enemy.IsSerenityOnCooldown = true
-					Timers:CreateTimer(10.0, function() 
-						enemy.IsSerenityOnCooldown = false
-					end)					
-					FAEyeAttribute(caster, enemy)
+				if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
+					--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
+					local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+					ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
+					ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
+					--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
+					EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+					-- Process Eye of Serenity attribute
+					if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
+						print("Eye of Serenity activated")
+						enemy.IsSerenityOnCooldown = true
+						Timers:CreateTimer(10.0, function() 
+							enemy.IsSerenityOnCooldown = false
+						end)					
+						FAEyeAttribute(caster, enemy)
+					end
 				end
 			end
+			caster.PresenceTable = newEnemyTable
 		end
-		caster.PresenceTable = newEnemyTable
 		return 0.3
 	end)
 end

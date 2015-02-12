@@ -288,7 +288,7 @@ function RiderCheckCombo(caster, ability)
 				nailUsed = false
 			end
 			})
-		elseif ability == caster:FindAbilityByName("rider_5th_breaker_gorgon") and caster:FindAbilityByName("rider_5th_bloodfort_andromeda"):IsCooldownReady() then
+		elseif ability == caster:FindAbilityByName("rider_5th_breaker_gorgon") and caster:FindAbilityByName("rider_5th_bloodfort_andromeda"):IsCooldownReady() and caster:FindAbilityByName("rider_5th_bellerophon_2"):IsCooldownReady() then
 			if nailUsed == true then 
 				caster:SwapAbilities("rider_5th_bloodfort_andromeda", "rider_5th_bellerophon_2", false, true)
 				local newTime =  GameRules:GetGameTime()

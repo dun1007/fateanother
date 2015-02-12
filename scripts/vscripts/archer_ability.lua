@@ -385,7 +385,7 @@ function EndUBW(caster)
 
 
     local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300
-    , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+    , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
     for i=1, #units do
     	ProjectileManager:ProjectileDodge(units[i])
@@ -929,7 +929,7 @@ end
 
 function ArcherCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() then
+		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() and caster:FindAbilityByName("archer_5th_arrow_rain"):IsCooldownReady() then
 			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
 			Timers:CreateTimer({
 				endTime = 5,

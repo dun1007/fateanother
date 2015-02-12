@@ -13,7 +13,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_HIDDEN | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"saber_charisma"
 		"MaxLevel"						"1"
-		"DisplayAdditionalHeroes"   	"1"
+		//"DisplayAdditionalHeroes"   	"1"
 		"precache"
 		{
 			"particle"					"particles/items2_fx/rod_of_atos_debuff_glow.vpcf"
@@ -10692,7 +10692,7 @@
 				"EffectName"		"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
 				"MoveSpeed"			"750"
 				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Dodgeable"			"true"
+				"Dodgeable"			"1"
 			}
 		}
 		

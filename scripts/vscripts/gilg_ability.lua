@@ -70,11 +70,14 @@ function OnGoldenRuleStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local goldgain = 10
-    Timers:CreateTimer(function()
+	
+	Timers:CreateTimer("goldenrule_timer", {
+		endTime = 0, 	
+		callback = function()
     	if ply.IsGoldenRuleImproved == true then goldgain = 20 end
-    	if caster:IsAlive() then keys.caster:ModifyGold(goldgain, true, 0) end
-      	return 1.0
-    end)
+    	if caster:IsAlive() and GameRules:GetGameTime() > 75 then keys.caster:ModifyGold(goldgain, true, 0) end
+      	return 1.0		
+	end})
 end
 
 
@@ -477,7 +480,7 @@ end
 
 function GilgaCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") and caster:FindAbilityByName("gilgamesh_enuma_elish"):IsCooldownReady() then
+		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") and caster:FindAbilityByName("gilgamesh_enuma_elish"):IsCooldownReady() and caster:FindAbilityByName("gilgamesh_max_enuma_elish"):IsCooldownReady() then
 			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
 			Timers:CreateTimer({
 				endTime = 5,

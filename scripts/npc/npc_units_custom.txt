@@ -888,7 +888,7 @@
 			//"model"			"models/heroes/lone_druid/true_form.vmdl"
 			//"model"			"models/heroes/undying/undying_flesh_golem.vmdl"
 
-			//"particle_folder"				"particles/units/heroes/hero_antimage"
+			"particle_folder"				"particles/units/heroes/hero_antimage"
 			//"particle_folder"				"particles/units/heroes/hero_axe"
 			//"particle_folder"				"particles/units/heroes/hero_bane"
 			//"particle_folder"				"particles/units/heroes/hero_bloodseeker"

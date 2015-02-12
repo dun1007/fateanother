@@ -704,6 +704,8 @@
 	    }
 	}
 
+
+
 	"item_ward_familiar" 
 	{
 	    "ID"           "1107"
@@ -715,9 +717,9 @@
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"1.0"
-		
+
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"800"
@@ -726,7 +728,7 @@
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
 		"ItemPermanent"					"0"
 		"ItemInitialCharges"			"1"
-		"ItemStockMax"					"5"
+		"ItemStockMax"					"10"
 		"ItemStockInitial"				"5"
 		"ItemStockTime"					"30.0"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
@@ -1057,9 +1059,9 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
-		"ItemStockMax"					"35"
-		"ItemStockInitial"				"35"
-		"ItemStockTime"					"10.0"
+		//"ItemStockMax"					"35"
+		//"ItemStockInitial"				"35"
+		//"ItemStockTime"					"10.0"
 	    "ItemInitialCharges" "1"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
