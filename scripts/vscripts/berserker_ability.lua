@@ -329,6 +329,7 @@ function OnImproveDivinityAcquired(keys)
 	ply.IsDivinityImproved = true
 	hero:SetBaseMagicalResistanceValue(25)
 	hero:SwapAbilities("berserker_5th_divinity","berserker_5th_divinity_improved", false, true)
+	hero:FindAbilityByName("berserker_5th_divinity_improved"):SetLevel(1)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

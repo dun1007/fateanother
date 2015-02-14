@@ -80,7 +80,7 @@ end
 function OnIWStart(keys)
 	local caster = keys.caster
 
-	if not caster:IsRealHero() then
+	if not caster:IsHero() then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast With Unit" } )
 		ability:EndCooldown()
 		return
@@ -90,12 +90,6 @@ function OnIWStart(keys)
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
 
-
-	if not caster:IsRealHero() then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast With Unit" } )
-		ability:EndCooldown()
-		return
-	end
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))

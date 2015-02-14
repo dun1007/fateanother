@@ -277,8 +277,10 @@ function OnUBWCastStart(keys)
 	
 end
 
+ubwQuest = nil
 -- Begins UBW 
 function OnUBWStart(keys)
+	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
@@ -377,6 +379,7 @@ function OnUBWDeath(keys)
 end
 
 function EndUBW(caster)
+	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
 
     caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 

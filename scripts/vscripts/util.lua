@@ -54,6 +54,37 @@ function DummyEnd(dummy)
     return nil
 end
 
+function StartQuestTimer(questname, questtitle, questendtime)
+  local entQuest = SpawnEntityFromTableSynchronous( "quest", { name = questname, title = questtitle } )
+  --add   "QuestTimer"  "Survive for %quest_current_value% seconds"   in addon_english
+  
+  local questTimeEnd = GameRules:GetGameTime() + questendtime --Time to Finish the quest
+
+  --bar system
+  local entKillCountSubquest = SpawnEntityFromTableSynchronous( "subquest_base", {
+    show_progress_bar = true
+  } )
+  entQuest:AddSubquest( entKillCountSubquest )
+  entQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, questendtime ) --text on the quest timer at start
+  entQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questendtime ) --text on the quest timer
+  entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questendtime ) --value on the bar at start
+  entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, questendtime ) --value on the bar
+  
+  Timers:CreateTimer(0.9, function()
+    if (questTimeEnd - GameRules:GetGameTime())<=0 then
+      UTIL_RemoveImmediate( entQuest )
+      entKillCountSubquest = nil
+      return
+    end
+    entQuest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questTimeEnd - GameRules:GetGameTime() )
+    entKillCountSubquest:SetTextReplaceValue( QUEST_TEXT_REPLACE_VALUE_CURRENT_VALUE, questTimeEnd - GameRules:GetGameTime() ) --update the bar with the time passed        
+    return 1      
+  end
+  )
+
+  return entQuest
+end
+
 
 CannotReset = {
     "saber_improved_instinct",
