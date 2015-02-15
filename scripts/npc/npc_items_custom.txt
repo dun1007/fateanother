@@ -710,7 +710,7 @@
 	{
 	    "ID"           "1107"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"Model"							"models/props_gameplay/observer_ward_bundle.mdl"
 		"AbilityTextureName" "item_observer_ward"
 

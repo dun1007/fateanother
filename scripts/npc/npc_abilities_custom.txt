@@ -3821,7 +3821,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"750 950 1150 1350 1550"
+		"AbilityDamage"					"700 1000 1300 1600 1900"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -3832,7 +3832,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"750 950 1150 1350 1550"
+				"damage"			"700 1000 1300 1600 1900"
 			}
 			
 			"02"
@@ -5198,8 +5198,7 @@
 		
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_earth_splitter.vpcf"
-			"particle"	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"		"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
 		}
 		
 		// Casting
@@ -5464,12 +5463,26 @@
 				"Damage3"			"%damage3"
 				"StunDuration"		"%stun_duration"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_madmans_roar_silence"
+				"Target"			"CASTER"
+			}
 		}
 		
 		
 		
 		"Modifiers"
 		{
+			"modifier_madmans_roar_silence"
+			{
+				"Duration"			"10.0"
+				"IsDebuff"			"1"
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 	//========================================
@@ -5598,8 +5611,8 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"berserker_nine"
-		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
-		"AnimationPlaybackRate" 		"1.2"		
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_5"
+		"AnimationPlaybackRate" 		"0.5"		
 		"AOERadius"						"%radius"
 		
 		"precache"
@@ -5669,12 +5682,32 @@
 				"Function"			"OnNineStart"
 				"Target"			"POINT"
 			}
+			"DelayedAction"
+			{
+				"Delay"		"0.5"
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nine_lives_dash"
+						"Target"		"CASTER"
+					}
+				}
+			}
 		}
 		
 		"Modifiers"
 		{
+
+			"modifier_dash_anim"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+			}
+
 			"modifier_nine_anim"
 			{
+				"IsHidden"			"1"
 				"Duration"			"3.0"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
 			}
@@ -8948,7 +8981,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_argos"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"				"10"
 		"AbilityManaCost"				"100"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"

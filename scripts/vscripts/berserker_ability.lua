@@ -7,7 +7,7 @@ function OnFissureStart(keys)
 	local fiss = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
+        EffectName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
         iMoveSpeed = 500,
         vSpawnOrigin = nil,
         fDistance = 500,
@@ -39,7 +39,13 @@ end
 
 function OnRoarStart(keys)
 	local caster = keys.caster
+	giveUnitDataDrivenModifier(caster, caster, "rb_sealdisabled", 10.0)
 	caster:FindAbilityByName("berserker_5th_courage"):StartCooldown(27)
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
 	local casterloc = caster:GetAbsOrigin()
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -49,6 +55,7 @@ function OnRoarStart(keys)
 		if dist <= 300 then
 			finaldmg = keys.Damage1
 			v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 3.0})
+			giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 3.0)
 		elseif dist > 300 and dist <= 1000 then
 			finaldmg = keys.Damage2
 		elseif dist > 1000 and dist <= 2000 then
@@ -191,8 +198,10 @@ function OnNineLanded(caster, ability)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {})
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
+			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
 			if nineCounter == 8 then -- if nine is finished
 				EmitGlobalSound("Berserker.Roar") 
+				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				-- do damage to targets
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 1, false)

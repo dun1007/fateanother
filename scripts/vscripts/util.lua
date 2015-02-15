@@ -32,6 +32,18 @@ donotlevel = {
   "true_assassin_protection_from_wind"
 }
 
+tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
+    "<font color='#58ACFA'>Tip : </font>Work towards gathering 20 all stats in order to acquire <font color='#58ACFA'>Combo</font>, a defining move of hero that can turn the tides of battle. You can level  Stat Bonus of your hero or buy stats with Master's mana  to boost the timing of acquisition.",
+    "<font color='#58ACFA'>Tip : </font>To increase your survivability, consider carrying <font color='#58ACFA'>A Scroll and B Scroll</font> that grant you significant damage mitigation for duration.",
+    "<font color='#58ACFA'>Tip : </font>Using <font color='#58ACFA'>Scout Familiar and Ward Familiar</font> is an excellent way to develop a vision control, allowing your team to plan ahead for enemy moves.",
+    "<font color='#58ACFA'>Tip : </font>You will get a warning ping when enemy Servant's presence is detected within 2500 range around your hero.",
+    "<font color='#58ACFA'>Tip : </font>Master can cast only up to 12 Command Seals per 10 minutes due to limited health, which resets every 10 minutes.",
+    "<font color='#58ACFA'>Tip : </font>Bind your Master to key unit via [CTRL+Number Key] in order to provide quick support to your hero by transfering items or casting Command Seal.",
+    "<font color='#58ACFA'>Tip : </font>Upon dying 7 times, player will be granted a chance to use Shard of Holy Grail that offers diverse array of advantages. Check the details in Master 2.",
+    "<font color='#58ACFA'>Tip : </font>You can check the detail and cooldown of your Combo on Master 2.",
+    "<font color='#58ACFA'>Tip : </font>When you are desperately short on gold, consider using <font color='#58ACFA'>-goldpls</font> command to ask for a financial assistance from your team.",
+    "<font color='#58ACFA'>Tip : </font>A well-timed use of <font color='#58ACFA'>Command Seal</font> can give you decisive advantage over your foes, both defensively and offensively."
+}
 -- Calculates the angle from caster to target(in radian, multiply it by 180/math.pi for degree)
 function CalculateAngle(u, v)
     local angle = 0
@@ -228,6 +240,20 @@ function IsSpellBlocked(target)
     end
 end 
 
+
+
+lastTipChoice = 0
+function DisplayTip()
+    print("Displaying tip!")
+    local tipchoice = 0
+    while tipchoice == lastTipChoice do
+        print("Rerolling tip choice")
+        tipchoice = RandomInt(1, #tipTable) 
+    end
+
+    GameRules:SendCustomMessage(tipTable[tipchoice], 0, 0) 
+    lastTipChoice = tipchoice
+end
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 

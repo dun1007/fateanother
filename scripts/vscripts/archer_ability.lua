@@ -379,6 +379,8 @@ function OnUBWDeath(keys)
 end
 
 function EndUBW(caster)
+	if caster.IsUBWActive == false then return end
+
 	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
 
@@ -393,14 +395,16 @@ function EndUBW(caster)
     for i=1, #units do
     	ProjectileManager:ProjectileDodge(units[i])
     	local IsUnitGeneratedInUBW = true
-    	for j=1, #ubwTargets do
-    		if units[i] == ubwTargets[j] then
-    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
-    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
-    			IsUnitGeneratedInUBW = false
-    			break 
-    		end
-    	end 
+    	if ubwTargets ~= nil then
+	    	for j=1, #ubwTargets do
+	    		if units[i] == ubwTargets[j] then
+	    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+	    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
+	    			IsUnitGeneratedInUBW = false
+	    			break 
+	    		end
+	    	end 
+    	end
     	if IsUnitGeneratedInUBW then
     		diff = ubwCenter - units[i]:GetAbsOrigin()
     		units[i]:SetAbsOrigin(ubwCasterPos - diff)
@@ -421,6 +425,11 @@ function OnRainStart(keys)
 	local ascendCount = 0
 	local descendCount = 0
 	local radius = 1200
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
 	caster:EmitSound("Archer.Combo") 
 	local info = {

@@ -277,7 +277,11 @@ function OnMaxStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
-
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	
 	local max_excal = 
 	{
 		Ability = keys.ability,

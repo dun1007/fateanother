@@ -981,7 +981,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_medusa"
 			//"particle_folder"				"particles/units/heroes/hero_troll_warlord"
 			//"particle_folder"				"particles/units/heroes/hero_centaur"
-			//"particle_folder"				"particles/units/heroes/hero_magnataur"
+			"particle_folder"				"particles/units/heroes/hero_magnataur"
 			//"particle_folder"				"particles/units/heroes/hero_shredder"
 			//"particle_folder"				"particles/units/heroes/hero_bristleback"
 			//"particle_folder"				"particles/units/heroes/hero_tusk"

@@ -247,7 +247,12 @@ function OnGBComboHit(keys)
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
-	print(HBThreshold)
+	
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
 	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 + target:GetStrength() end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)

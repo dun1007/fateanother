@@ -122,6 +122,12 @@ end
 function OnMMBStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
 	caster:FindAbilityByName("saber_alter_mana_burst"):StartCooldown(15.0)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius

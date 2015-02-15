@@ -156,6 +156,11 @@ end
 function OnBelle2Start(keys)
 	local caster = keys.caster
 	caster:FindAbilityByName("rider_5th_bloodfort_andromeda"):StartCooldown(27.0)
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	
 	local belle2 = 
 	{
 		Ability = keys.ability,

@@ -109,7 +109,11 @@ function OnDIStart(keys)
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local DICount = 0
-
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	
 	Timers:CreateTimer(function()
 		if DICount > 8.0 then return end 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 650

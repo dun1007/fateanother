@@ -196,6 +196,7 @@ function Blink(keys)
 	local caster = keys.caster
 	local casterPos = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
+	local newTargetPoint = nil
 
 	if caster:HasModifier("modifier_purge") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
@@ -209,18 +210,28 @@ function Blink(keys)
 		return 
 	end 
 
-	ProjectileManager:ProjectileDodge(caster) 
+	 
 	
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0, casterPos)
 	caster:EmitSound("Hero_Antimage.Blink_out")
 
 	local diff = targetPoint - caster:GetAbsOrigin()
-	if diff:Length() <= 1000 then caster:SetAbsOrigin(targetPoint)
-	else  caster:SetAbsOrigin(caster:GetAbsOrigin() + diff:Normalized() * 1000) end
+	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
-	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end.vpcf", PATTACH_CUSTOMORIGIN, caster)
-	ParticleManager:SetParticleControl(particle2, 0, targetPoint)
+	if diff:Length() <= 1000 then 
+		caster:SetAbsOrigin(targetPoint)
+		ProjectileManager:ProjectileDodge(caster)
+		ParticleManager:SetParticleControl(particle2, 0, targetPoint)
+
+	else  
+		newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * 1000
+		caster:SetAbsOrigin(newTargetPoint) 
+		ProjectileManager:ProjectileDodge(caster)
+		ParticleManager:SetParticleControl(particle2, 0, caster:GetAbsOrigin())
+	end
+
+	
 	caster:EmitSound("Hero_Antimage.Blink_in")
 
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)

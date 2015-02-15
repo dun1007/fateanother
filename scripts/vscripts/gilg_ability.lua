@@ -398,6 +398,12 @@ function OnMaxEnumaStart(keys)
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
 	local casterloc = caster:GetAbsOrigin()
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	
 	local enuma = 
 	{
 		Ability = keys.ability,

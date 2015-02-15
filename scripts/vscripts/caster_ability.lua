@@ -665,6 +665,11 @@ function OnHGPStart(keys)
 	local maxBolt = 13
 	local barrageRadius = keys.Radius
 
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	
 	if ply.IsHGImproved then
 		maxBolt = 16
 		barrageRadius = keys.Radius+300

@@ -134,6 +134,30 @@ function OnSeal1Start(keys)
 	})
 end
 
+function ResetAbilities(hero)
+	-- Reset all resetable abilities
+	for i=0, 15 do 
+		local ability = hero:GetAbilityByIndex(i)
+		if ability ~= nil then
+			if ability.IsResetable ~= false then
+				ability:EndCooldown()
+			end
+		else 
+			break
+		end
+	end
+end
+
+function ResetItems(hero)
+	-- Reset all items
+	for i=0, 11 do
+		local item = hero:GetItemInSlot(i) 
+		if item ~= nil then
+			item:EndCooldown()
+		end
+	end
+end
+
 function OnSeal2Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -158,25 +182,8 @@ function OnSeal2Start(keys)
 	-- Set master's health
 	caster:SetHealth(caster:GetHealth()-1) 
 
-	-- Reset all resetable abilities
-	for i=0, 15 do 
-		local ability = hero:GetAbilityByIndex(i)
-		if ability ~= nil then
-			if ability.IsResetable ~= false then
-				ability:EndCooldown()
-			end
-		else 
-			break
-		end
-	end
-
-	-- Reset all items
-	for i=0, 11 do
-		local item = hero:GetItemInSlot(i) 
-		if item ~= nil then
-			item:EndCooldown()
-		end
-	end
+	ResetAbilities(hero)
+	ResetItems(hero)
 
 	-- Particle
 	hero:EmitSound("DOTA_Item.Refresher.Activate")
@@ -479,9 +486,19 @@ function OnDamageGain(keys)
 		end
 	end 
 
+	local primaryStat = 0
+	local attr = hero:GetPrimaryAttribute() -- 0 strength / 1 agility / 2 intelligence
+	if attr == 0 then
+		primaryStat = hero:GetStrength()
+	elseif attr == 1 then
+		primaryStat = hero:GetAgility()
+	elseif attr == 2 then
+		primaryStat = hero:GetIntellect()
+	end
+
+	hero:SetBaseDamageMax(hero:GetBaseDamageMax() - primaryStat + 3)
+	hero:SetBaseDamageMin(hero:GetBaseDamageMin() - primaryStat + 3)
 	print("Current base damage : " .. hero:GetBaseDamageMin()  .. " to " .. hero:GetBaseDamageMax())
-	hero:SetBaseDamageMin(hero:GetBaseDamageMin()+3)
-	hero:SetBaseDamageMax(hero:GetBaseDamageMax()+3)
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
