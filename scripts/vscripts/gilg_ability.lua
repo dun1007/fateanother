@@ -94,13 +94,13 @@ function OnChainStart(keys)
 	
 	-- Check if caster already had particle
 	if caster.enkiduBind ~= nil then
-		ParticleManager:DestroyParticle( caster.enkiduBind, false )
+		ParticleManager:DestroyParticle( caster.enkiduBind, true )
 		ParticleManager:ReleaseParticleIndex( caster.enkiduBind )
 	end
 
-	caster.enkiduBind = ParticleManager:CreateParticle("particles/units/heroes/hero_skywrath_mage/skywrath_mage_ancient_seal_debuff.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(caster.enkiduBind, 0, targetloc)
-	ParticleManager:SetParticleControl(caster.enkiduBind, 1, targetloc)
+	caster.enkiduBind = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enkidu.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
+	ParticleManager:SetParticleControlEnt( caster.enkiduBind, 0, target, PATTACH_POINT_FOLLOW, "attach_origin", targetloc, true )
+	ParticleManager:SetParticleControl( caster.enkiduBind, 1, targetloc )
 
 	if ply.IsRainAcquired then
 		local rainCount = 0
@@ -175,7 +175,7 @@ end
 function OnChainBroken(keys)
 	local caster = keys.caster
 	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("pause_sealdisabled") end
-	ParticleManager:DestroyParticle( caster.enkiduBind, false )
+	ParticleManager:DestroyParticle( caster.enkiduBind, true )
 	ParticleManager:ReleaseParticleIndex( caster.enkiduBind )
 end
 
@@ -315,6 +315,9 @@ function OnEnumaStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
+	
+	-- Create casting particle
+	local chargeFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 
 	local enuma = 
 	{
@@ -351,6 +354,10 @@ function OnEnumaStart(keys)
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 
+			-- Destroy particle
+			ParticleManager:DestroyParticle( chargeFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
+			
 			-- Create particle
 			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
@@ -398,6 +405,10 @@ function OnMaxEnumaStart(keys)
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
 	local casterloc = caster:GetAbsOrigin()
+	
+	-- Create charge particle
+	local chargeFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enuma_elish_charge.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	
 	local enuma = 
 	{
 		Ability = keys.ability,
@@ -432,6 +443,10 @@ function OnMaxEnumaStart(keys)
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+			
+			-- Destroy particle
+			ParticleManager:DestroyParticle( chargeFxIndex, false )
+			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 			
 			-- Create particle
 			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
