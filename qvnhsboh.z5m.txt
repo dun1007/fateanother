@@ -1,0 +1,48 @@
+﻿Merge remote-tracking branch 'origin/master'
+
+Conflicts:
+	scripts/vscripts/gilg_ability.lua
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch and 'origin/master' have diverged,
+# and have 1 and 1 different commit each, respectively.
+#   (use "git pull" to merge the remote branch into yours)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   particles [content]/custom/archer/archer_clairvoyance_dust.vpcf
+#	modified:   particles [content]/custom/generic/fate_generic_beam_charge_core_center.vpcf
+#	modified:   particles [content]/custom/generic/fate_generic_beam_charge_core_sphere.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_anchor.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_body_anchor.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_body_anchor_no_glow.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_chain.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_chain_glow.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_chain_no_glow.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enkidu_ground_anchor.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_dust.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_expand.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_foot_glow.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_glow.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_mist.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_smoke.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_tornado.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave_c.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave_d.vpcf
+#	new file:   particles [content]/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave_e.vpcf
+#	modified:   scripts/npc/npc_abilities_custom.txt
+#	modified:   scripts/vscripts/gilg_ability.lua
+#
+

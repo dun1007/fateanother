@@ -7953,6 +7953,7 @@
 			"particle"		"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_sword_barrage_model.vpcf"
 			"particle"		"particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+			"particle"		"particles/custom/gilgamesh/gilgamesh_enkidu.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -8217,6 +8218,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
 			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
+			"particle"		"particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf"
 		}
 		
 		// Casting
@@ -8336,6 +8338,7 @@
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
 			"particle"		"particles/custom/screen_scarlet_splash.vpcf"
 			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
+			"particle"		"particles/custom/gilgamesh/gilgamesh_enuma_elish_charge.vpcf"
 		}
 		
 		// Casting
