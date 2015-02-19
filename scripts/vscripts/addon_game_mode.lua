@@ -143,6 +143,7 @@ function FateGameMode:OnAllPlayersLoaded()
   	Timers:CreateTimer('30secondalert', {
 		endTime = 30,
 		callback = function()
+
   	GameRules:SendCustomMessage("The game will start in 30 seconds. Anyone who haven't picked hero by then will be assigned a random hero.", 0, 0)
     DisplayTip()
 	end
@@ -185,8 +186,6 @@ function FateGameMode:OnHeroInGame(hero)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
     end)  ]]
-
-
 end
 
 --[[
@@ -240,6 +239,8 @@ function FateGameMode:OnDisconnect(keys)
   local networkid = keys.networkid
   local reason = keys.reason
   local userid = keys.userid
+  
+  table.remove(self.vPlayerList, userid) -- remove player from list
 
 end
 
@@ -282,10 +283,15 @@ function FateGameMode:PlayerSay(keys)
   end
 
   if text == "-unpause" then
-    for _,plyr in pairs(self.vPlayerList) do
+    --[[for _,plyr in pairs(self.vPlayerList) do
       local hr = plyr:GetAssignedHero()
       hr:RemoveModifierByName("round_pause")
-    end
+    end]]
+    self:LoopOverPlayers(function(player, playerID)
+      local hr = player:GetAssignedHero()
+      hr:RemoveModifierByName("round_pause")
+      --print("Looping through player" .. ply)
+    end)
   end
 
   -- Turns BGM on and off
@@ -480,7 +486,8 @@ end
 -- state as necessary
 function FateGameMode:OnPlayerReconnect(keys)
   print ( '[BAREBONES] OnPlayerReconnect' )
-  --PrintTable(keys) 
+  PrintTable(keys) 
+  local userid = keys.PlayerID
 end
 
 -- An item was purchased by a player
@@ -1007,6 +1014,7 @@ function FateGameMode:InitializeRound()
     Timers:CreateTimer('round_10min_bonus', {
       endTime = 600,
       callback = function()
+
       for _,ply in pairs(self.vPlayerList) do
         local hero = ply:GetAssignedHero()
         hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
@@ -1041,28 +1049,28 @@ function FateGameMode:InitializeRound()
 		message = "Timeout!",
 		duration = 4.0
 	}
-  -- Grant EXP and starting gold
-	for _,ply in pairs(self.vPlayerList) do
-      ResetAbilities(ply:GetAssignedHero())
-	    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0) -- Pause all heroes
-      ply:GetAssignedHero():SetGold(0, false) 
-      ply:GetAssignedHero().CStock = 10
 
-      -- Grant gold 
-      if ply:GetAssignedHero():GetGold() < 5000 then -- 
-        print("[FateGameMode] " .. ply:GetAssignedHero():GetName() .. " gained 3000 gold at the start of round")
-        if ply.AvariceCount ~= nil then
-          ply:GetAssignedHero():ModifyGold(3000 + ply.AvariceCount * 1500, true, 0) 
-        else
-          ply:GetAssignedHero():ModifyGold(3000, true, 0) 
-        end
-      end
+  self:LoopOverPlayers(function(ply, plyID)
+    ResetAbilities(ply:GetAssignedHero())
+    giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 15.0) -- Pause all heroes
+    ply:GetAssignedHero():SetGold(0, false) 
+    ply:GetAssignedHero().CStock = 10
 
-      if self.nCurrentRound ~= 1 then 
-        print("[FateGameMode]" .. ply:GetAssignedHero():GetName() .. " of player " .. ply:GetAssignedHero():GetPlayerID() .. "  gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " experience at the start of round")
-        ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
+    -- Grant gold 
+    if ply:GetAssignedHero():GetGold() < 5000 then -- 
+      print("[FateGameMode] " .. ply:GetAssignedHero():GetName() .. " gained 3000 gold at the start of round")
+      if ply.AvariceCount ~= nil then
+        ply:GetAssignedHero():ModifyGold(3000 + ply.AvariceCount * 1500, true, 0) 
+      else
+        ply:GetAssignedHero():ModifyGold(3000, true, 0) 
       end
-	end
+    end
+
+    if self.nCurrentRound ~= 1 then 
+      print("[FateGameMode]" .. ply:GetAssignedHero():GetName() .. " of player " .. ply:GetAssignedHero():GetPlayerID() .. "  gained " .. XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 ..  " experience at the start of round")
+      ply:GetAssignedHero():AddExperience(XP_PER_LEVEL_TABLE[ply:GetAssignedHero():GetLevel()] * 4/10 , false, false) 
+    end
+  end)
 
 
   Timers:CreateTimer('beginround', {
@@ -1216,6 +1224,18 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 	end
 	})
 
+end
+
+function FateGameMode:LoopOverPlayers(callback)
+  for _,ply in pairs(self.vPlayerList) do
+    if ply ~= nil then
+      print("Player is not nill")
+      -- Run the callback
+      if callback(ply, ply:GetPlayerID()) then
+        break
+      end
+    end
+  end
 end
 
 -- This function is called as the first player loads and sets up the FateGameMode parameters
