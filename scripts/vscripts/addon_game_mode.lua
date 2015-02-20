@@ -46,6 +46,7 @@ USE_CUSTOM_HERO_LEVELS = true           -- Should we allow heroes to have custom
 MAX_LEVEL = 24                          -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = true             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
+XP_TABLE = {}
 XP_PER_LEVEL_TABLE = {}
 BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
@@ -54,9 +55,16 @@ FATE_VERSION = "Alpha Version"
 IsPickPhase = true
 IsPreRound = false
 
-XP_PER_LEVEL_TABLE[1] = 200
+XP_TABLE[1] = 200
 for i=2,MAX_LEVEL do
-  XP_PER_LEVEL_TABLE[i] = XP_PER_LEVEL_TABLE[i-1] + i * 100  -- XP required per level formula : Previous level XP requirement + Level * 100
+  XP_TABLE[i] = XP_TABLE[i-1] + i * 100  -- XP required per level formula : Previous level XP requirement + Level * 100
+end
+
+-- EXP required to reach next level
+XP_PER_LEVEL_TABLE[1] = 200
+XP_PER_LEVEL_TABLE[24] = 0
+for i=2,MAX_LEVEL-1 do
+  XP_PER_LEVEL_TABLE[i] = XP_TABLE[i+1] - XP_TABLE[i]  -- XP required per level formula : Previous level XP requirement + Level * 100
 end
 
 for i=1, MAX_LEVEL do
@@ -306,6 +314,10 @@ function FateGameMode:PlayerSay(keys)
   end
 
   if text == "-xptable" then
+    PrintTable(XP_TABLE)
+  end
+
+  if text == "-xplvltable" then
     PrintTable(XP_PER_LEVEL_TABLE)
   end
 
@@ -368,6 +380,7 @@ function FateGameMode:OnNPCSpawned(keys)
 	local hero = EntIndexToHScript(keys.entindex)
 
 	if hero:IsRealHero() and hero.bFirstSpawned == nil and hero:GetPlayerOwner() ~= nil then
+      print("Set unit's EXP bounty to " .. XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
       hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
 	    hero.bFirstSpawned = true
       hero.PresenceTable = {}
@@ -732,7 +745,8 @@ function FateGameMode:OnPlayerLevelUp(keys)
   local player = EntIndexToHScript(keys.player)
   local hero = player:GetAssignedHero() 
   local level = keys.level
-  hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[player:GetAssignedHero():GetLevel()])
+  print("Set unit's EXP bounty to " .. XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
+  hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
   hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 4)
   hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 4)
 end
@@ -1253,7 +1267,7 @@ function FateGameMode:CaptureGameMode()
     mode:SetTopBarTeamValuesVisible( TOP_BAR_VISIBLE )
     mode:SetUseCustomHeroLevels ( true )
     mode:SetCustomHeroMaxLevel ( MAX_LEVEL )
-    mode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+    mode:SetCustomXPRequiredToReachNextLevel( XP_TABLE )
 
     --mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
     mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )

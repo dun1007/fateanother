@@ -44,7 +44,8 @@ function OnTerritoryCreated(keys)
 
 		territory:SetMaxHealth(2000) 
 		Timers:CreateTimer(function()
-		    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			if not territory:IsAlive() then return end
+		    local targets = FindUnitsInRadius(caster:GetTeam(), territory:GetOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 			for k,v in pairs(targets) do
 		         if v ~= territory then 
 		         	keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_territory_mana_regen", {Duration = 1.0}) 
@@ -212,7 +213,7 @@ function CasterFarSight(keys)
 	local truesightdummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 	truesightdummy:SetDayTimeVisionRange(radius)
 	truesightdummy:SetNightTimeVisionRange(radius)
-	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
+	truesightdummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
 
 	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
