@@ -262,7 +262,6 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsBScrollIgnored = false
     local targetMR = target:GetMagicalArmorValue()
 
-    -- check if target has B scroll on
     if dmg_type == DAMAGE_TYPE_MAGICAL then
         for k,v in pairs(goesthruB) do
             if abil:GetAbilityName() == v then IsBScrollIgnored = true break end
@@ -302,6 +301,23 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         end
     end
 
+
+    if target:GetName() == "npc_dota_hero_legion_commander" and target:HasModifier("modifier_avalon") then
+        if dmg_type == DAMAGE_TYPE_MAGICAL then
+            MR = target:GetMagicalArmorValue() 
+        end 
+        if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" then
+            target.IsAvalonPenetrated = true
+        else
+            if damageTaken * (1-MR) > 300 then 
+                target.IsAvalonProc = true
+            else 
+                target.IsAvalonProc = false
+            end
+            damageTaken = 0
+            target.IsAvalonPenetrated = false
+        end
+    end 
     -- check if target has Argos
     if not IsAbsorbed and target:HasModifier("modifier_argos_shield") then
         local MR = 0

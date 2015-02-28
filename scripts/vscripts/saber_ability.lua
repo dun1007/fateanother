@@ -406,7 +406,21 @@ function AvalonOnTakeDamage(keys)
 	local damageTaken = keys.DamageTaken
 	local newCurrentHealth = caster:GetHealth()
 	local emitwhichsound = RandomInt(1, 2)
-	if (damageTaken > keys.Threshold) then
+
+	if caster.IsAvalonPenetrated then return end
+
+	if caster.IsAvalonProc == true and caster.IsAvalonOnCooldown ~= true then 
+		if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
+		AvalonDash(caster, attacker, keys.Damage, keys.ability)
+		caster.IsAvalonOnCooldown = true
+		Timers:CreateTimer({
+			endTime = 3, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
+			callback = function()
+		    caster.IsAvalonOnCooldown = false
+		    end
+		})
+	end 
+	--[[if (damageTaken > keys.Threshold) then
 		if avalonCooldown and not caster:HasModifier("pause_sealdisabled") then
 			if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
 			
@@ -426,7 +440,7 @@ function AvalonOnTakeDamage(keys)
 		caster:SetHealth(currentHealth)
 	else
 		caster:SetHealth(newCurrentHealth + damageTaken)
-	end
+	end]]
 end -- function end
 
 function AvalonDash(caster, attacker, counterdamage, ability)

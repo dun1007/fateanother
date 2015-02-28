@@ -145,7 +145,7 @@ end
 function FateGameMode:OnAllPlayersLoaded()
   	print("[BAREBONES] All Players have loaded into the game")
 	GameRules:SendCustomMessage("Fate/Another " .. FATE_VERSION .. " by Dun1007", 0, 0)
-	GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
+	--GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
 	GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
   --GameStartTimerStart()
   StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
