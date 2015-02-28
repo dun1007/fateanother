@@ -453,7 +453,7 @@
 		"BaseClass"			"npc_dota_creature"
 		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
 
-		"Ability1"					""			// Ability 1
+		"Ability1"					"caster_5th_dragon_chilling_breath"			// Ability 1
 		"Ability2"					""			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4

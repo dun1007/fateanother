@@ -188,9 +188,19 @@ function OnSummonDragon(keys)
 	local ability = keys.ability
 	local pid = caster:GetPlayerOwner():GetPlayerID()
 
+	-- Kill the existing dragon
+	local dragFind = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+	for k,v in pairs(dragFind) do
+		print(v:GetClassname())
+		if v:GetUnitName() == "caster_5th_ancient_dragon" then
+			v:ForceKill(true)
+		end
+	end
+
 	local drag = CreateUnitByName("caster_5th_ancient_dragon", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
 	--drag:SetPlayerID(pid) 
 	drag:SetControllableByPlayer(pid, true)
+
 	
 	LevelAllAbility(drag)
 	FindClearSpaceForUnit(drag, drag:GetAbsOrigin(), true)

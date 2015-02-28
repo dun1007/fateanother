@@ -163,6 +163,7 @@ function OnDIZabStart(keys)
 	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin()) -- target effect location
 	ParticleManager:SetParticleControl(particle, 2, target:GetAbsOrigin()) -- circle effect location
 	EmitGlobalSound("TA.Zabaniya") 
+	caster:EmitSound("Hero_Nightstalker.Darkness") 
 end
 
 function OnDIZabHit(keys)
@@ -272,10 +273,16 @@ function OnZabStart(keys)
 	if caster:HasModifier("modifier_ambush") then caster.IsShadowStrikeActivated = true print("Shadow Strike activated") end
 
 	ProjectileManager:CreateTrackingProjectile(info) 
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
-	ParticleManager:SetParticleControl(particle, 2, keys.target:GetAbsOrigin()) -- circle effect location
-	EmitGlobalSound("TA.Zabaniya") 
+	Timers:CreateTimer({
+		endTime = 0.033,
+		callback = function()
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
+		ParticleManager:SetParticleControl(particle, 2, keys.target:GetAbsOrigin()) -- circle effect location
+		EmitGlobalSound("TA.Zabaniya") 
+		caster:EmitSound("Hero_Nightstalker.Darkness") 
+	end
+	})
 end
 
 function OnZabHit(keys)

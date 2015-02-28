@@ -273,7 +273,9 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             if target.BShieldAmount <= 0 then
                 damageTaken = -target.BShieldAmount
                 target:RemoveModifierByName("modifier_b_scroll")
-
+            else 
+                damageTaken = 0
+                IsAbsorbed = true
             end
         end
     end
@@ -288,13 +290,13 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 
         -- if damage is beyond the shield's block amount, update remaining damage
         if target.rhoShieldAmount <= 0 then
-            print("Rho Aias has been broken through by " .. -target.rhoShieldAmount)
+            --print("Rho Aias has been broken through by " .. -target.rhoShieldAmount)
             damageTaken = -target.rhoShieldAmount
             target:RemoveModifierByName("modifier_rho_aias_shield")
             target.argosShieldAmount = 0
         -- if shield has enough durability, set a flag that the damage is fully absorbed
         else 
-            print("Rho Aias absorbed full damage")
+            --print("Rho Aias absorbed full damage")
             damageTaken = 0
             IsAbsorbed = true
         end

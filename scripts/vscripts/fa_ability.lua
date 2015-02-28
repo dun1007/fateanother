@@ -189,7 +189,7 @@ function OnQuickdrawStart(keys)
 	}
 	local projectile = ProjectileManager:CreateLinearProjectile(quickdraw)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.4)
-
+	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
 	local sin = Physics:Unit(caster)
 	caster:SetPhysicsFriction(0)
 	caster:SetPhysicsVelocity(caster:GetForwardVector()*1500)

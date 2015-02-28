@@ -403,6 +403,7 @@
 				"Target"			"TARGET"
 				"MoveSpeed"			"%speed"
 				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Dodgeable"			"1"
 			}
 		}
 		
@@ -1079,29 +1080,6 @@
 					}
 				}
 			}
-			
-			"DelayedAction"
-			{
-				"Delay"				"1.75"
-				
-				"Action"
-				{
-					"LinearProjectile"
-					{
-						"Target"				"POINT"
-						"EffectName"			"particles/custom/saber_strike_air_blast.vpcf"
-						"MoveSpeed"				"%speed"
-						"StartRadius"			"%width"
-						"EndRadius"				"%width"
-						"FixedDistance"			"%length"
-						"HasFrontalCone"		"1"
-						"TargetFlags"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-						"TargetTeams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-						"TargetTypes"			"DOTA_UNIT_TARGET_ALL"
-					}
-				}
-			}
-			
 			"FireSound"
 			{
 				"Target"		"CASTER"
@@ -2431,6 +2409,12 @@
 		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"Target"		"CASTER"
+				"ModifierName"	"modifier_unleashed_ferocity_caster_VFX_controller"
+			}
+			
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
@@ -2443,7 +2427,59 @@
 			
 		"Modifiers"
 		{
-			//"modifier_temporal_slow"
+			"modifier_unleashed_ferocity_caster_VFX_controller"
+			{
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+				"Duration"						"2.0"	
+			
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"Target"				"TARGET"
+						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+					}
+				}
+				
+				"ThinkInterval"					"0.5"
+				"OnIntervalThink"
+				{
+					"RemoveModifier"
+					{
+						"Target"				"TARGET"
+						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+					}
+					
+					"ApplyModifier"
+					{
+						"Target"				"TARGET"
+						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+					}
+				}
+			}
+			
+			"modifier_unleashed_ferocity_caster_VFX"
+			{
+				"IsHidden"						"1"
+				"IsPurgable"					"0"
+				"Duration"						"0.1"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/custom/saber_alter/saber_alter_unleashed_ferocity.vpcf"
+						"EffectAttachType"		"follow_origin"
+						"EffectRadius"			"%radius"
+						"ControlPoints"
+						{
+							"01"				"%radius+150 3 0"
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -5887,7 +5923,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"berserker_ability"
-				"Function"		"OnReincarnationdAcquired"
+				"Function"		"OnReincarnationAcquired"
 			}
 		}
 	}
@@ -8970,6 +9006,44 @@
 			 	"Function"		"OnTerritoryOrbStart"
 			 	"Target"		"POINT"
 			}
+		}
+	}
+
+	//================================================
+	// simple dummy passive
+	//================================================
+	"caster_5th_dragon_chilling_breath"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"modifier_chilling_breath"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"OnAttackLanded"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"chilling_breath_slow"
+						"Target"			"TARGET"
+					}
+				}
+		  	}
+		  	"chilling_breath_slow"
+		  	{
+		  		"IsDebuff"						"1"
+		  		"Duration"						"1.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-50"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-50"
+				}	
+		  	}
 		}
 	}
 

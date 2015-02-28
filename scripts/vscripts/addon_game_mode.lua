@@ -51,16 +51,18 @@ XP_PER_LEVEL_TABLE = {}
 BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
 mode = nil
-FATE_VERSION = "Alpha Version"
+FATE_VERSION = "Beta Version"
 IsPickPhase = true
 IsPreRound = false
 
+XP_TABLE[0] = 0
 XP_TABLE[1] = 200
 for i=2,MAX_LEVEL do
   XP_TABLE[i] = XP_TABLE[i-1] + i * 100  -- XP required per level formula : Previous level XP requirement + Level * 100
 end
 
 -- EXP required to reach next level
+XP_PER_LEVEL_TABLE[0] = 0
 XP_PER_LEVEL_TABLE[1] = 200
 XP_PER_LEVEL_TABLE[24] = 0
 for i=2,MAX_LEVEL-1 do
@@ -160,13 +162,11 @@ function FateGameMode:OnAllPlayersLoaded()
 		endTime = 60,
 		callback = function()
     IsPickPhase = false
-    for _,ply in pairs(self.vPlayerList) do
-    	local playerID = ply:GetPlayerID()
-    	if PlayerResource:IsValidPlayerID(playerID) and ply:GetAssignedHero() == nil then
-    		ply:MakeRandomHeroSelection()
-    		PlayerResource:SetHasRepicked(playerID)
-    	end
-    end
+    self:LoopOverPlayers(function(player, playerID)
+      if PlayerResource:IsValidPlayerID(playerID) and player:GetAssignedHero() == nil then
+        player:MakeRandomHeroSelection()
+      end
+    end)
     self:InitializeRound() -- Start the game after forcing a pick for every player
 	end
 	})
@@ -838,15 +838,15 @@ function FateGameMode:OnEntityKilled( keys )
 
   	local nRadiantAlive = 0
   	local nDireAlive = 0
-      for _,ply in pairs(self.vPlayerList) do
-      	if ply:GetAssignedHero():IsAlive() then -- BUGG(already deleted from C++)
-      		if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
-      			nRadiantAlive = nRadiantAlive + 1
-      		else 
-      			nDireAlive = nDireAlive + 1
-      		end
-      	end
+    self:LoopOverPlayers(function(player, playerID)
+      if player:GetAssignedHero():IsAlive() then
+        if player:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
+          nRadiantAlive = nRadiantAlive + 1
+        else 
+          nDireAlive = nDireAlive + 1
+        end
       end
+    end)
    	
    	if nRadiantAlive == 0 then
       print("All Radiant heroes eliminated, removing existing timers and declaring winner...")
@@ -1029,13 +1029,13 @@ function FateGameMode:InitializeRound()
       endTime = 600,
       callback = function()
 
-      for _,ply in pairs(self.vPlayerList) do
-        local hero = ply:GetAssignedHero()
+      self:LoopOverPlayers(function(player, playerID)
+        local hero = player:GetAssignedHero()
         hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
         hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+10) 
         hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
         hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+10)
-      end
+      end)
       GameRules:SendCustomMessage("10 minutes passed. The Holy Grail's blessings restore all Master to full health and grant 10 Mana to them.", 0, 0)
       return 600
     end})
@@ -1093,9 +1093,11 @@ function FateGameMode:InitializeRound()
     print("[FateGameMode]Round started.")
     IsPreRound = false
     roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
-    for _,ply in pairs(self.vPlayerList) do
-    	ply:GetAssignedHero():RemoveModifierByName("round_pause")
-    end
+
+    self:LoopOverPlayers(function(player, playerID)
+      player:GetAssignedHero():RemoveModifierByName("round_pause")
+    end)
+
     FireGameEvent("show_center_message",msg)
 	end
 	})
@@ -1122,15 +1124,15 @@ function FateGameMode:InitializeRound()
 		local nRadiantAlive = 0
 		local nDireAlive = 0
     -- Check how many people are alive in each team
-    for _,ply in pairs(self.vPlayerList) do
-    	if ply:GetAssignedHero():IsAlive() then -- BUGG(C++)
-    		if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
-    			nRadiantAlive = nRadiantAlive + 1
-    		else 
-    			nDireAlive = nDireAlive + 1
-    		end
-    	end
-    end
+    self:LoopOverPlayers(function(ply, plyID)
+      if ply:GetAssignedHero():IsAlive() then -- BUGG(C++)
+        if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
+          nRadiantAlive = nRadiantAlive + 1
+        else 
+          nDireAlive = nDireAlive + 1
+        end
+      end
+    end)
     -- if remaining players are equal
     if nRadiantAlive == nDireAlive then
       print("Same number of players remaining on both teams.")
@@ -1169,25 +1171,29 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 	print("[FATE] Winner decided")
   UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
 
-  -- Pause every unit
-	for _,ply in pairs(self.vPlayerList) do
-		if ply:GetAssignedHero():IsAlive() then
-			giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
-		end
+  self:LoopOverPlayers(function(ply, plyID)
+    if ply:GetAssignedHero():IsAlive() then
+      giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
+    end
     if ply:GetAssignedHero():GetName() == "npc_dota_hero_doom_bringer" then
       ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
     end
-	end
-
+  end)
   -- Remove all units
   local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+  local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
   for k,v in pairs(units) do
     print("Checking unit " .. v:GetName() )
     if not v:IsRealHero() then
       v:ForceKill(true)
     end
   end
-
+  for k,v in pairs(units2) do
+    print("Checking unit " .. v:GetName() )
+    if not v:IsRealHero() then
+      v:ForceKill(true)
+    end
+  end
   -- decide the winner
 	if winner == 0 then 
 		GameRules:SendCustomMessage("The Radiant has won the round!", 0, 0)
@@ -1228,12 +1234,9 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 		endTime = 5,
 		callback = function()
     IsPreRound = true
-    for _,ply in pairs(self.vPlayerList) do
-      --[[if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero().IsUBWActive then
-        EndUBW(ply:GetAssignedHero())
-      end ]]
+    self:LoopOverPlayers(function(ply, plyID)
       ply:GetAssignedHero():RespawnHero(false, false, false)
-    end
+    end)
     self:InitializeRound()
 	end
 	})
@@ -1241,13 +1244,12 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 end
 
 function FateGameMode:LoopOverPlayers(callback)
-  for _,ply in pairs(self.vPlayerList) do
-    if ply ~= nil then
-      print("Player is not nill")
-      -- Run the callback
-      if callback(ply, ply:GetPlayerID()) then
+  for i=0, 9 do
+    local player = PlayerResource:GetPlayer(i)
+    if player ~= nil then 
+      if callback(player, player:GetPlayerID()) then
         break
-      end
+      end 
     end
   end
 end

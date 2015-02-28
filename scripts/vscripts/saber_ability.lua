@@ -23,7 +23,9 @@ function CreateWind(keys)
 	caster.invisible_air_reach_target = false
 	caster.invisible_air_pos = caster:GetAbsOrigin()
 	
+	local invisAirCounter = 0
 	Timers:CreateTimer( function() 
+		if invisAirCounter > 3.0 then ParticleManager:DestroyParticle( fxIndex, false ) return end
 			local targetPos = target:GetAbsOrigin()
 			local forwardVec = targetPos - caster.invisible_air_pos
 			forwardVec = forwardVec:Normalized()
@@ -36,6 +38,7 @@ function CreateWind(keys)
 				ParticleManager:DestroyParticle( fxIndex, false )
 				return nil
 			else
+				invisAirCounter = invisAirCounter + 1.0
 				return 1.0 / movespeed
 			end
 		end
@@ -437,7 +440,8 @@ function AvalonDash(caster, attacker, counterdamage, ability)
     caster:SetPhysicsVelocity(distance:Normalized() * distance:Length2D()*2)
     caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
     caster:FollowNavMesh(true)
-
+	caster:SetAutoUnstuck(false)
+	
 	Timers:CreateTimer({
 		endTime = 0.5,
 		callback = function()
@@ -472,6 +476,35 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 end
 
 function OnStrikeAirStart(keys)
+	local caster = keys.caster
+	local strikeair = 
+	{
+		Ability = keys.ability,
+        EffectName = "particles/custom/saber_strike_air_blast.vpcf",
+        iMoveSpeed = 5000,
+        vSpawnOrigin = caster:GetAbsOrigin(),
+        fDistance = 1200,
+        fStartRadius = 400,
+        fEndRadius = 400,
+        Source = caster,
+        bHasFrontalCone = true,
+        bReplaceExisting = false,
+        iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+        iUnitTargetType = DOTA_UNIT_TARGET_ALL,
+        fExpireTime = GameRules:GetGameTime() + 6.0,
+		bDeleteOnHit = false,
+		vVelocity = caster:GetForwardVector() * 5000
+	}
+	
+	Timers:CreateTimer({
+		endTime = 1.75, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
+		callback = function()
+		if caster:IsAlive() then 
+			local projectile = ProjectileManager:CreateLinearProjectile(strikeair)
+		end
+	end})
+
 	EmitGlobalSound("Saber.StrikeAir_Cast")
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.75)
 	Timers:CreateTimer(1.75, function()  
