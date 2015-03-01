@@ -845,8 +845,8 @@ function OnHruntHit(keys)
 	for k,v in pairs(targets) do
 		if v ~= keys.target then DoDamage(keys.caster, v, keys.caster.HruntDamage/2, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) end
 	end
-	if not target:IsMagicImmune() then
-		target:AddNewModifier(caster, keys.target, "modifier_stunned", {Duration = 2.0})
+	if not keys.target:IsMagicImmune() then
+		keys.target:AddNewModifier(caster, keys.target, "modifier_stunned", {Duration = 2.0})
 	end
 end
 

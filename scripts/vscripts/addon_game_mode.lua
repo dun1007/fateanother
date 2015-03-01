@@ -3,6 +3,12 @@ require( 'util' )
 require( 'archer_ability')
 require( 'master_ability')
 
+-- Load Stat collection (statcollection should be available from any script scope)
+require('lib.statcollection')
+statcollection.addStats({
+  modID = '8b2dca1df6a65593f2eb2c5a1d8038f1' --GET THIS FROM http://getdotastats.com/#d2mods__my_mods
+})
+
 ENABLE_HERO_RESPAWN = false             -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = true             -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = false        -- Should we let people select the same hero as each other
@@ -276,6 +282,10 @@ function FateGameMode:PlayerSay(keys)
     -- Act on the match
   end
 
+  if text == "-endgame" then 
+    GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+    GameRules:Defeated()
+  end 
   -- Below two commands are solely for test purpose, not to be used in normal games
   if text == "-testsetup" then
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
