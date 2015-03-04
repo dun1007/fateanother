@@ -81,6 +81,10 @@ function KBStart(keys)
 	
 	if ply.IsOveredgeAcquired and caster.OveredgeCount < 3 then
 		caster.OveredgeCount = caster.OveredgeCount + 1
+		caster:RemoveModifierByName("modifier_overedge_stack") 
+		caster:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(caster, caster, "modifier_overedge_stack", {}) 
+		caster:SetModifierStackCount("modifier_overedge_stack", caster, caster.OveredgeCount)
+
 	elseif caster.OveredgeCount == 3 then 
 		if caster:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
 			caster:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
@@ -312,11 +316,13 @@ function OnUBWStart(keys)
 	}
 	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
 	for i=1, #ubwTargets do
-		ubwTargetPos = ubwTargets[i]:GetAbsOrigin()
-        ubwTargetLoc[i] = ubwTargetPos
-        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
-        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
-		FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
+		if ubwTargets[i]:GetName() ~= "npc_dota_ward_base" then
+			ubwTargetPos = ubwTargets[i]:GetAbsOrigin()
+	        ubwTargetLoc[i] = ubwTargetPos
+	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
+	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
+			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
+		end
     end
 
     -- swap Archer's skillset with UBW ones
@@ -855,7 +861,7 @@ function OnOveredgeStart(keys)
 	local targetPoint = keys.target_points[1]
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() * 10/6
 	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
-
+	caster:RemoveModifierByName("modifier_overedge_stack") 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(600) 
@@ -1013,10 +1019,14 @@ function OnOveredgeAcquired(keys)
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 
 	Timers:CreateTimer(function()  
+		print("Adding overedge stack")
 		if ply.IsOveredgeAcquired and hero.OveredgeCount < 3 then
-			caster.OveredgeCount = caster.OveredgeCount + 1
+			hero.OveredgeCount = hero.OveredgeCount + 1
+			hero:RemoveModifierByName("modifier_overedge_stack") 
+			hero:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(hero, hero, "modifier_overedge_stack", {}) 
+			hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
 		elseif hero.OveredgeCount == 3 then 
-			if caster:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
+			if hero:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
 				hero:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
 			end
 		end

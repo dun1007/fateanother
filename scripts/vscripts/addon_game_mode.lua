@@ -827,7 +827,8 @@ function FateGameMode:OnEntityKilled( keys )
       end
     end
     local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()
-    if killerEntity:IsNeutralUnitType() then
+    if not killerEntity:IsHero() then
+      print("Killed by neutral unit")
       killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
     end
 

@@ -177,6 +177,7 @@ function OnSummonSkeleton(keys)
 	local spooky = CreateUnitByName(unitname, caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
 	--spooky:SetPlayerID(pid) 
 	spooky:SetControllableByPlayer(pid, true)
+	spooky:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
 	
 	LevelAllAbility(spooky)
 	FindClearSpaceForUnit(spooky, spooky:GetAbsOrigin(), true)
@@ -200,7 +201,7 @@ function OnSummonDragon(keys)
 	local drag = CreateUnitByName("caster_5th_ancient_dragon", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
 	--drag:SetPlayerID(pid) 
 	drag:SetControllableByPlayer(pid, true)
-
+	drag:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
 	
 	LevelAllAbility(drag)
 	FindClearSpaceForUnit(drag, drag:GetAbsOrigin(), true)
