@@ -3602,20 +3602,12 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_breaker_gorgon"
-				"Target"
-				{
-					"Center"	"POINT"
-					"Radius"	"%radius"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				}
-			}
 			"RunScript"
 			{
 				"ScriptFile"	"rider_ability"
 				"Function"		"OnBGStart"
+				"Target" 	"POINT"
+				"Duration"	"duration"
 			}
 		}
 		
@@ -3626,8 +3618,6 @@
 			"modifier_breaker_gorgon"
 			{
 				"IsDebuff"			"1"
-				"Duration"			"%duration"
-				
 				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
 				"EffectAttachType"	"follow_origin"
 				
@@ -5402,6 +5392,18 @@
 				"EffectName"		"Hero_Axe.Berserkers_Call"
 				"Target"			"CASTER"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+
+				"ControlPointEntities"
+				{
+					"CASTER"	"follow_origin"
+					"CASTER"	"follow_origin"
+					"CASTER"	"follow_origin"
+				}
+			}
 		}
 		
 		
@@ -5738,6 +5740,11 @@
 						"Target"		"CASTER"
 					}
 				}
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_OgreMagi.Ignite.Cast"
+				"Target"			"CASTER"
 			}
 		}
 		
@@ -6205,7 +6212,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		
+
 		"precache"
 		{
 			"particle"					"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
@@ -10059,7 +10066,286 @@
 		}
 	}
 	
+	//=================================================================================================================
+	// Lancelot : Eternal Arms Mastership
+	//=================================================================================================================
+	"lancelot_arms_mastership"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"lancelot_knight_of_honor"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_eternal_arms_mastership"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+			}
+		}
+	}
+	//=====================================
+	// Lancelot : SMG Barrage
+	//=====================================
+	"lancelot_smg_barrage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"lancelot_smg"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700 900 1100 1300 1500"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"120 160 200 240 280"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"120 160 200 240 280"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"start_radius"		"100"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"end_radius"		"500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"2000"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"500 650 800 950 1100"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"lancelot_ability"
+			 	"Function"		"OnSMGtart"
+			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
+			}
+		}
+	}
+
+	//========================================
+	// Lancelot : Double Edge
+	//========================================
+	"lancelot_double_edge"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"lancelot_double_edge"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"17"
+		"AbilityCastPoint"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_speed"			"20 40 60 80 100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"extra_damage_taken"	"25"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnDEStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_double_edge"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_double_edge"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_speed"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"20"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%extra_damage_taken"
+				}
+			}
+		}
+	}
+
+	//========================================
+	// Lancelot : Knight of Honor
+	//========================================
+	"lancelot_knight_of_honor"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"lancelot_knight_of_honor"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"0"
+		"AbilityCastPoint"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnSpellbookOpen"
+			}
+		}
+
+		"Modifiers"
+		{
+		}
+	}
+
+	//========================================
+	// Lancelot : Arondite
+	//========================================
+	"lancelot_arondite"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"lancelot_arondite"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"49"
+		"AbilityCastPoint"				"0.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_stat"			"10 15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"30 35 40 45 50"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnAronditeStart"
+				"Duration"			"%duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_arondite"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_arondite"
+			{
+				"Duration"	"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+					"MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS"	"%bonus_stat"
+					"MODIFIER_PROPERTY_EXTRA_AGILITY_BONUS"	"%bonus_stat"
+					"MODIFIER_PROPERTY_EXTRA_INTELLECT_BONUS"	"%bonus_stat"
+				}
+			}
+		}
+	}
 
 	//================================================
 	// simple dummy passive

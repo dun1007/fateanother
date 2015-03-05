@@ -59,11 +59,22 @@ end
 function OnBGStart(keys)
 	RiderCheckCombo(keys.caster, keys.ability)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = keys.caster:GetPlayerOwner()
+	local targetPoint = keys.target_points[1]
+
 	caster:EmitSound("Rider.BreakerGorgon") 
-	if ply.IsSealAcquired then  
-		if math.random(100) < 20 then
-			giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 200
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+		ability:ApplyDataDrivenModifier(caster, v, "modifier_breaker_gorgon", {Duration = keys.duration})
+		if ply.IsSealAcquired then  
+			local rngesus = math.random(100)
+			if rngesus < 30 then
+				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 2.5})
+				ParticleManager:CreateParticle("particles/status_fx/status_effect_medusa_stone_gaze.vpcf", PATTACH_ROOTBONE_FOLLOW, v)
+
+			end
 		end
 	end
 end
