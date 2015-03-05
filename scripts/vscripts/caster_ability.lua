@@ -648,10 +648,28 @@ function OnHGStart(keys)
 	Timers:CreateTimer(1.0, function()
 		if boltCount == maxBolt then return end
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-  	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, caster)
-	    ParticleManager:SetParticleControl(particle, 0, Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,1500)) -- height of the bolt
-	    ParticleManager:SetParticleControl(particle, 1, targetPoint + boltvector) -- point landing
-	    ParticleManager:SetParticleControl(particle, 2, targetPoint + boltvector) -- point origin
+--  	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, caster)
+--	    ParticleManager:SetParticleControl(particle, 0, Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,1500)) -- height of the bolt
+--	    ParticleManager:SetParticleControl(particle, 1, targetPoint + boltvector) -- point landing
+--	    ParticleManager:SetParticleControl(particle, 2, targetPoint + boltvector) -- point origin
+		
+		-- Particle
+		-- These two values for making the bolt starts randomly from sky
+		local randx = RandomInt( 0, 200 )
+		if randx < 100 then randx = -100 - randx end
+		local randy = RandomInt( 0, 200 )
+		if randy < 100 then randy = -100 - randy end
+		
+		local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
+		ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 1000 ) ) -- This is where the bolt will start
+		
+		Timers:CreateTimer( 2.0, function()
+				ParticleManager:DestroyParticle( fxIndex, false )
+				ParticleManager:ReleaseParticleIndex( fxIndex )
+				return nil
+			end
+		)
 
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, keys.RadiusBolt, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do

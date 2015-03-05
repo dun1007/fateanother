@@ -9774,6 +9774,7 @@
 		{
 			"particle"			"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
 			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
+			"particle"			"particles/custom/caster/caster_hecatic_graea.vpcf"
 		}
 		
 		// Casting
