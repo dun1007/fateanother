@@ -337,6 +337,10 @@ function OnArgosStart(keys)
 	if caster.argosShieldAmount > keys.MaxShield then
 		caster.argosShieldAmount = keys.MaxShield
 	end
+	
+	-- To force particle creation
+	keys.DamageTaken = 0
+	OnArgosDamaged( keys )
 end
 
 function OnArgosDamaged(keys)
@@ -354,10 +358,40 @@ function OnArgosDamaged(keys)
 			caster:SetHealth(currentHealth + keys.DamageTaken + caster.argosShieldAmount)
 			caster.argosShieldAmount = 0
 		end
+		
+		-- Destroy completely
+		if caster.argosDurabilityParticleIndex ~= nil then
+			ParticleManager:DestroyParticle( caster.argosDurabilityParticleIndex, true )
+			ParticleManager:ReleaseParticleIndex( caster.argosDurabilityParticleIndex )
+			caster.argosDurabilityParticleIndex = nil
+		end
 	else
 		print("argos not broken, remaining shield : " .. caster.argosShieldAmount)
 		caster:SetHealth(currentHealth + keys.DamageTaken)
 	end
+	
+	-- Change particle
+	local digit = 0
+	if caster.argosShieldAmount > 999 then
+		digit = 4
+	elseif caster.argosShieldAmount > 99 then
+		digit = 3
+	elseif caster.argosShieldAmount > 9 then
+		digit = 2
+	else
+		digit = 1
+	end
+	if caster.argosDurabilityParticleIndex ~= nil then
+		-- Destroy previous
+		ParticleManager:DestroyParticle( caster.argosDurabilityParticleIndex, true )
+		ParticleManager:ReleaseParticleIndex( caster.argosDurabilityParticleIndex )
+	end
+	-- Create new one
+	caster.argosDurabilityParticleIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_argos_durability.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControlEnt( caster.argosDurabilityParticleIndex, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 1, Vector( 0, math.floor( caster.argosShieldAmount ), 0 ) )
+	ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 2, Vector( 1, digit, 0 ) )
+	ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 3, Vector( 100, 100, 255 ) )
 end
 
 function OnAncientStart(keys)

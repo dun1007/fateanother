@@ -9087,6 +9087,7 @@
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+			"particle"	"particles/custom/caster/caster_argos_durability.vpcf"
 		}
 
 		"AbilitySpecial"
