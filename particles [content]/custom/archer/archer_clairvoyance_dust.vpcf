@@ -53,7 +53,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
 			bool m_bEndCap = false
-			bool m_bDisableChild = false
+			bool m_bDisableChild = true
 		}
 	]
 	bool m_bShouldSort = true
@@ -344,7 +344,7 @@ C_OP_RenderTrails C_OP_RenderTrails_6
 	int m_nOpTimeScaleSeed = 0
 	float m_flOpTimeScaleMin = 1.000000
 	float m_flOpTimeScaleMax = 1.000000
-	bool m_bDisableOperator = false
+	bool m_bDisableOperator = true
 	int m_nOpEndCapState = -1
 	int m_nOpScaleCP = -1
 	string m_Notes = ""
@@ -623,7 +623,7 @@ C_OP_ContinuousEmitter C_OP_ContinuousEmitter_16
 {
 	float m_flEmissionDuration = 0.100000
 	float m_flStartTime = 0.000000
-	float m_flEmitRate = 10000.000000
+	float m_flEmitRate = 1000.000000
 	float m_flEmissionScale = 0.000000
 	int m_nScaleControlPoint = -1
 	int m_nScaleControlPointField = 0
