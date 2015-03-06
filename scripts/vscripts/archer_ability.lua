@@ -282,6 +282,7 @@ function OnUBWCastStart(keys)
 end
 
 ubwQuest = nil
+ubwdummies = nil
 -- Begins UBW 
 function OnUBWStart(keys)
 	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
@@ -344,7 +345,7 @@ function OnUBWStart(keys)
 	local ubwdummy2 = CreateUnitByName("dummy_unit", Vector(5000,-5000, 500), false, caster, caster, caster:GetTeamNumber())
 	local ubwdummy3 = CreateUnitByName("dummy_unit", Vector(6000,-4000, 500), false, caster, caster, caster:GetTeamNumber())
 	local ubwdummy4 = CreateUnitByName("dummy_unit", Vector(6000,-5000, 500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
+	ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
 	for i=1, #ubwdummies do
 		ubwdummies[i]:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 		ubwdummies[i]:SetDayTimeVisionRange(1000)
@@ -393,6 +394,10 @@ function EndUBW(caster)
     caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
+
+	for i=1, #ubwdummies do
+		ubwdummies[i]:ForceKill(true) 
+	end
 
 
     local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300

@@ -10122,7 +10122,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"400"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
@@ -10358,7 +10358,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_argos"
+		"AbilityTextureName"			"lancelot_eternal_arms_mastership"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -10392,7 +10392,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_argos"
+		"AbilityTextureName"			"lancelot_bless_of_fairy"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -10426,12 +10426,12 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_argos"
+		"AbilityTextureName"			"lancelot_knight_of_honor_2"
 		
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"11"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -10460,12 +10460,12 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_argos"
+		"AbilityTextureName"			"lancelot_total_assault"
 		
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"12"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
