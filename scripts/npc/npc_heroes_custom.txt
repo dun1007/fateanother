@@ -549,6 +549,9 @@
 	"npc_dota_hero_lancelot"
 	{
 		"override_hero"			"npc_dota_hero_sven"
+
+		"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.50"
 		
 		"AbilityLayout"			"6"
 		"Ability1"				"lancelot_smg_barrage"

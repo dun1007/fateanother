@@ -122,6 +122,7 @@ model_lookup["npc_dota_hero_juggernaut"] = "models/assassin/asn.vmdl"
 model_lookup["npc_dota_hero_bounty_hunter"] = "models/true_assassin/ta.vmdl"
 model_lookup["npc_dota_hero_crystal_maiden"] = "models/caster/caster.vmdl"
 model_lookup["npc_dota_hero_skywrath_mage"] = "models/gilgamesh/gilgamesh.vmdl"
+model_lookup["noc_dota_hero_sven"] = "models/lancelot/lancelot.vmdl"
 
 function Precache( context )
 	print("Starting precache")

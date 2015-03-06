@@ -846,6 +846,7 @@
 			"model"					"models/true_assassin/ta.vmdl"
 			"model"					"models/caster/caster.vmdl"
 			"model"					"models/gilgamesh/gilgamesh.vmdl"
+			"model"					"models/lancelot/lancelot.vmdl"
 			"model"					"models/items/courier/mighty_chicken/mighty_chicken.vmdl"
 			"model"					"models/props_gameplay/rune_haste01.vmdl"
 			"model"					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"

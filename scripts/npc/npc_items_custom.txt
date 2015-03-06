@@ -1799,7 +1799,7 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
-	    "ItemInitialCharges" "3"
+	    "ItemInitialCharges" "2"
 	    "ItemStackable" "1"
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"

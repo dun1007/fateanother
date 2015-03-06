@@ -92,6 +92,15 @@ CasterAttribute = {
 	attrCount = 4
 }
 
+LancelotAttribute = {
+	"lancelot_attribute_blessing_of_fairy",
+	"lancelot_attribute_improve_eternal",
+	"lancelot_attribute_improve_knight_of_honor",
+	"lancelot_attribute_total_assault",
+	"lancelot_nuke",
+	attrCount = 4
+}
+
 
 function OnSeal1Start(keys)
 	local caster = keys.caster
@@ -626,8 +635,8 @@ function OnAvariceAcquired(keys)
 	end
 
 	for i=1,#teamTable do
-		local goldperperson = 30000/#teamTable
-		print("Distributing " .. goldperperson .. " per person3")
+		local goldperperson = 20000/#teamTable
+		print("Distributing " .. goldperperson .. " per person")
 		teamTable[i]:ModifyGold(goldperperson, true, 0)
 	end
 end

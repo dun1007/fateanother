@@ -8,7 +8,8 @@ purgable = {"modifier_aspd_increase",
         "modifier_a_plus_armor",
         "modifier_speed_gem",
         "modifier_share_damage",
-        "modifier_rule_breaker"}
+        "modifier_rule_breaker"
+}
 
 goesthruB = {"saber_avalon",
             "archer_5th_hrunting",
@@ -16,7 +17,8 @@ goesthruB = {"saber_avalon",
             "gilgamesh_gate_of_babylon",
             "false_assassin_quickdraw",
             "saber_alter_max_mana_burst",
-            "archer_5th_overedge"}
+            "archer_5th_overedge"
+}
 donotlevel = {
   "attribute_bonus",
   "saber_improved_instinct",
@@ -179,6 +181,8 @@ function FindName(name)
         heroName = "Caster(5th)"
     elseif name == "npc_dota_hero_skywrath_mage" then
         heroName = "Archer(4th)"
+    elseif name == "npc_dota_hero_sven" then
+        heroName = "Berserker(4th)"
     end
     return heroName
 end
@@ -205,6 +209,8 @@ function FindAttribute(name)
         attributes = CasterAttribute
     elseif name == "npc_dota_hero_skywrath_mage" then
         attributes = GilgaAttribute
+    elseif name == "npc_dota_hero_sven" then
+        attributes = LancelotAttribute
     end
     return attributes
 end 
