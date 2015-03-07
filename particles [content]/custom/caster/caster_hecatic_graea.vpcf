@@ -49,6 +49,14 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	[
 		ParticleChildrenInfo_t
 		{
+			string m_ChildRef = "particles/custom/caster/caster_hecatic_graea_ground.vpcf"
+			bool m_bPreventNameBasedLookup = false
+			float m_flDelay = 0.200000
+			bool m_bEndCap = false
+			bool m_bDisableChild = false
+		},
+		ParticleChildrenInfo_t
+		{
 			string m_ChildRef = "particles/custom/caster/caster_hecatic_graea_line.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.200000

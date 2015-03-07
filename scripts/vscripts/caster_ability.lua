@@ -390,7 +390,6 @@ function OnArgosDamaged(keys)
 	local caster = keys.caster 
 	local currentHealth = caster:GetHealth() 
 
-
 	caster.argosShieldAmount = caster.argosShieldAmount - keys.DamageTaken
 	if caster.argosShieldAmount <= 0 then
 		if currentHealth + caster.argosShieldAmount <= 0 then
@@ -670,12 +669,14 @@ function OnHGStart(keys)
 		caster:SetAutoUnstuck(true)
 	return end) 
 	Timers:CreateTimer(3.0, function()  
-		caster:SetPhysicsVelocity(Vector(0,0,-750))
+		local dummy = CreateUnitByName( "sight_dummy_unit", caster:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber() );
+		caster:SetPhysicsVelocity( Vector( 0, 0, dummy:GetAbsOrigin().z - caster:GetAbsOrigin().z ) )
+		dummy:RemoveSelf()
 	return end) 
-	Timers:CreateTimer(4.0, function()  
+	Timers:CreateTimer(4.0, function()
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
-		
+		FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 	return end)
 
 
@@ -695,10 +696,6 @@ function OnHGStart(keys)
 	Timers:CreateTimer(1.0, function()
 		if boltCount == maxBolt then return end
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
---  	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, caster)
---	    ParticleManager:SetParticleControl(particle, 0, Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,1500)) -- height of the bolt
---	    ParticleManager:SetParticleControl(particle, 1, targetPoint + boltvector) -- point landing
---	    ParticleManager:SetParticleControl(particle, 2, targetPoint + boltvector) -- point origin
 		
 		-- Particle
 		-- These two values for making the bolt starts randomly from sky
@@ -710,6 +707,7 @@ function OnHGStart(keys)
 		local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
 		ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
 		ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 1000 ) ) -- This is where the bolt will start
+		ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
 		
 		Timers:CreateTimer( 2.0, function()
 				ParticleManager:DestroyParticle( fxIndex, false )
@@ -774,11 +772,14 @@ function OnHGPStart(keys)
 		caster:SetAutoUnstuck(true)
 	return end) 
 	Timers:CreateTimer(5.0, function()  
-		caster:SetPhysicsVelocity(Vector(0,0,-750))
+		local dummy = CreateUnitByName( "sight_dummy_unit", caster:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber() );
+		caster:SetPhysicsVelocity( Vector( 0, 0, dummy:GetAbsOrigin().z - caster:GetAbsOrigin().z ) )
+		dummy:RemoveSelf()
 	return end) 
 	Timers:CreateTimer(6.0, function()  
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
+		FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 	return end)
 
 
@@ -794,10 +795,25 @@ function OnHGPStart(keys)
 	Timers:CreateTimer(1.0, function()
 		if boltCount == maxBolt then return end
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-  	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf", PATTACH_WORLDORIGIN, caster)
-	    ParticleManager:SetParticleControl(particle, 0, Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,1500)) -- height of the bolt
-	    ParticleManager:SetParticleControl(particle, 1, targetPoint + boltvector) -- point landing
-	    ParticleManager:SetParticleControl(particle, 2, targetPoint + boltvector) -- point origin
+  	  	
+		-- Particle
+		-- These two values for making the bolt starts randomly from sky
+		local randx = RandomInt( 0, 200 )
+		if randx < 100 then randx = -100 - randx end
+		local randy = RandomInt( 0, 200 )
+		if randy < 100 then randy = -100 - randy end
+		
+		local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
+		ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 1000 ) ) -- This is where the bolt will start
+		ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
+		
+		Timers:CreateTimer( 2.0, function()
+				ParticleManager:DestroyParticle( fxIndex, false )
+				ParticleManager:ReleaseParticleIndex( fxIndex )
+				return nil
+			end
+		)
 
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, keys.RadiusBolt, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
