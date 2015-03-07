@@ -191,6 +191,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetGold(0, false)
     LevelAllAbility(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) )  -- Give blink scroll
+    hero.CStock = 10
     hero.RespawnPos = hero:GetAbsOrigin() 
     --HideWearables(hero)
   	giveUnitDataDrivenModifier(hero, hero, "round_pause", 75)
@@ -1258,7 +1259,7 @@ end
 function FateGameMode:LoopOverPlayers(callback)
   for i=0, 9 do
     local player = PlayerResource:GetPlayer(i)
-    if player ~= nil then 
+    if player ~= nil and player:GetAssignedHero() ~= nil then 
       if callback(player, player:GetPlayerID()) then
         break
       end 

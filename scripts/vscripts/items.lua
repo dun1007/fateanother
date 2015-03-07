@@ -42,15 +42,11 @@ function TransferItem(keys)
 		end]]
 		local itemName = stash_item:GetName()
 		hero:RemoveItem(stash_item) 
-		Timers:CreateTimer('gb_ascend', {
-			endTime = 0.01,
-			callback = function()
+		--Timers:CreateTimer( 0.033, function()
 		   	hero:AddItem(CreateItem(itemName, hero, hero)) 
-		end
-		})
+		   	--return 
+		--end)
 
-		
-		
 		--[[hero:DropItemAtPosition(hero:GetAbsOrigin() , stash_item) 
 		local dropitem = Entities:FindAllByClassname("dota_item_drop")
 		print(#dropitem)

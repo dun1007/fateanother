@@ -563,33 +563,33 @@
 
 		
 		
-		"StatusHealth"					"1100"
-		"StatusHeathRegen"				"2"
-		"StatusMana"					"0"
-		"StatusManaRegen"				"0"
+		"StatusHealth"					"1500"
+		"StatusHeathRegen"				"10"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"1"
 		
-		"ArmorPhysical"					"2"
+		"ArmorPhysical"					"5"
 		"MagicalResistance"				"0"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackRange"					"200"
-		"AttackDamageMin"				"27"
-		"AttackDamageMax"				"35"
-		"AttackRate"					"0.95"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"30"
+		"AttackDamageMax"				"42"
+		"AttackRate"					"1.1"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"0.7"
+		"AttributeStrengthGain"			"1.0"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.8"
+		"AttributeAgilityGain"			"1.7"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0"
+		"AttributeIntelligenceGain"		"0.3"
 		
-		"MovementSpeed"					"350"
+		"MovementSpeed"					"375"
 		"MovementTurnRate"				"0.3"
 
-		"VisionDaytimeRange"			"1000"
-		"VisionNighttimeRange"			"800"
+		"VisionDaytimeRange"			"850"
+		"VisionNighttimeRange"			"850"
 	}
 
 	//=======================================

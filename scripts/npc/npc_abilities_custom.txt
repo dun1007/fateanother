@@ -10101,15 +10101,20 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"lancelot_smg"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+		}
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700 900 1100 1300 1500"
+		"AbilityCastRange"				"500 650 800 950 1100"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -10118,7 +10123,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"120 160 200 240 280"
+		"AbilityDamage"					"250 300 350 400 450"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10129,7 +10134,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"120 160 200 240 280"
+				"damage"			"140 180 220 260 300"
 			}
 			
 			"02"
@@ -10140,7 +10145,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"end_radius"		"500"
+				"end_radius"		"200 275 350 425 500"
 			}
 			"04"
 			{
@@ -10152,6 +10157,16 @@
 				"var_type"			"FIELD_INTEGER"
 				"range"				"500 650 800 950 1100"
 			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"5.0"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction_percentage"			"30 35 40 45 50"
+			}
 		}
 		
 		"OnSpellStart"
@@ -10159,9 +10174,48 @@
 			"RunScript"
 			{
 			 	"ScriptFile"	"lancelot_ability"
-			 	"Function"		"OnSMGtart"
+			 	"Function"		"OnSMGStart"
 			 	"Target"		"POINT"
-			 	"Damage"		"%damage"
+			 	"EndRadius"		"%end_radius"
+			}
+			"LinearProjectile"
+			{
+				"Target"			"POINT"
+				"EffectName"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+				"StartRadius"		"100"
+				"EndRadius"			"%end_radius"
+				"MoveSpeed"			"%speed"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"TargetTypes"		"DOTA_UNIT_TARGET_ALL"
+				"FixedDistance"		"%range"
+				"ProvidesVision"	"0"
+				"HasFrontalCone"	"0"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnSMGHit"
+				"Damage"		"%damage"
+				"ArmorShred"	"%armor_reduction_percentage"
+				"Duration"		"%duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_smg_armor_reduction"
+				"Target"		"TARGET"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_smg_armor_reduction"
+			{
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
 			}
 		}
 	}
@@ -10204,7 +10258,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"extra_damage_taken"	"25"
+				"extra_damage_taken"	"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_ms_halved"		"10 20 30 40 50"
 			}
 		}
 		
@@ -10220,6 +10279,16 @@
 				"ModifierName"		"modifier_double_edge"
 				"Target"			"CASTER"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_double_edge_ms_tier1"
+				"Target"			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_double_edge_ms_tier2"
+				"Target"			"CASTER"
+			}
 		}
 
 		"Modifiers"
@@ -10230,8 +10299,26 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_speed"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"20"
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%extra_damage_taken"
+				}
+			}
+
+			"modifier_double_edge_ms_tier1"
+			{
+				"Duration"		"3.0"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms_halved"
+				}
+			}
+			"modifier_double_edge_ms_tier2"
+			{
+				"Duration"		"1.5"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms_halved"
 				}
 			}
 		}
@@ -10243,21 +10330,21 @@
 	"lancelot_knight_of_honor"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"lancelot_knight_of_honor"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0"
-		"AbilityCastPoint"				"0.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
 		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
 		"AbilitySpecial"
 		{
 		}
@@ -10266,13 +10353,17 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"lancelot_ability"
-				"Function"			"OnSpellbookOpen"
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnAncientStart"
 			}
 		}
-
-		"Modifiers"
+		"OnUpgrade"
 		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"AncientLevelUp"
+			}
 		}
 	}
 
