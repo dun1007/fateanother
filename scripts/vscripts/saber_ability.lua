@@ -16,7 +16,7 @@ function CreateWind(keys)
 	local ability = keys.ability
 	local movespeed = ability:GetLevelSpecialValueFor( "speed", ability:GetLevel() - 1 )
 	
-	local particleName = "particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
+	local particleName = "particles/custom/saber/saber_invisible_air_trail.vpcf"
 	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
 	ParticleManager:SetParticleControl( fxIndex, 3, caster:GetAbsOrigin() )
 	
@@ -25,21 +25,27 @@ function CreateWind(keys)
 	
 	local invisAirCounter = 0
 	Timers:CreateTimer( function() 
-		if invisAirCounter > 3.0 then ParticleManager:DestroyParticle( fxIndex, false ) return end
-			local targetPos = target:GetAbsOrigin()
-			local forwardVec = targetPos - caster.invisible_air_pos
-			forwardVec = forwardVec:Normalized()
-			
-			caster.invisible_air_pos = caster.invisible_air_pos + forwardVec * 25
-			
+			-- If over 3 seconds
+			if invisAirCounter > 3.0 then
+				ParticleManager:DestroyParticle( fxIndex, false )
+				ParticleManager:ReleaseParticleIndex( fxIndex )
+				return
+			end
+				
+			local forwardVec = ( target:GetAbsOrigin() - caster.invisible_air_pos ):Normalized()
+				
+			caster.invisible_air_pos = caster.invisible_air_pos + forwardVec * movespeed * 0.05
+				
 			ParticleManager:SetParticleControl( fxIndex, 3, caster.invisible_air_pos )
 			
+			-- Reach first
 			if caster.invisible_air_reach_target then
 				ParticleManager:DestroyParticle( fxIndex, false )
+				ParticleManager:ReleaseParticleIndex( fxIndex )
 				return nil
 			else
-				invisAirCounter = invisAirCounter + 1.0
-				return 1.0 / movespeed
+				invisAirCounter = invisAirCounter + 0.05
+				return 0.05
 			end
 		end
 	)

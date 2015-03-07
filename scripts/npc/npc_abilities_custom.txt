@@ -216,8 +216,8 @@
 		"precache"						
 		{
 			"particle"				"particles/econ/items/windrunner/windrunner_cape_sparrowhawk/windrunner_windrun_blur_sparrowhawk.vpcf"
-			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
-			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
+			"particle"				"particles/custom/saber/saber_invisible_air.vpcf"
+			"particle"				"particles/custom/saber/saber_invisible_air_trail.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 		}
 		
@@ -292,7 +292,7 @@
 					"AttachEffect"
 					{
 						"Target"				"TARGET"
-						"EffectName"			"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
+						"EffectName"			"particles/custom/saber/saber_invisible_air.vpcf"
 						"EffectAttachType"		"start_at_customorigin"
 						"ControlPointEntities"
 						{
