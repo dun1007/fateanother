@@ -338,9 +338,52 @@ function OnArgosStart(keys)
 		caster.argosShieldAmount = keys.MaxShield
 	end
 	
-	-- To force particle creation
-	keys.DamageTaken = 0
-	OnArgosDamaged( keys )
+	-- Create particle
+	if caster.argosDurabilityParticleIndex == nil then
+		local prev_amount = 0.0
+		Timers:CreateTimer( function()
+				-- Check if shield still valid
+				if caster.argosShieldAmount > 0 and caster:HasModifier( "modifier_argos_shield" ) then
+					-- Check if it should update
+					if prev_amount ~= caster.argosShieldAmount then
+						-- Change particle
+						local digit = 0
+						if caster.argosShieldAmount > 999 then
+							digit = 4
+						elseif caster.argosShieldAmount > 99 then
+							digit = 3
+						elseif caster.argosShieldAmount > 9 then
+							digit = 2
+						else
+							digit = 1
+						end
+						if caster.argosDurabilityParticleIndex ~= nil then
+							-- Destroy previous
+							ParticleManager:DestroyParticle( caster.argosDurabilityParticleIndex, true )
+							ParticleManager:ReleaseParticleIndex( caster.argosDurabilityParticleIndex )
+						end
+						-- Create new one
+						caster.argosDurabilityParticleIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_argos_durability.vpcf", PATTACH_CUSTOMORIGIN, caster )
+						ParticleManager:SetParticleControlEnt( caster.argosDurabilityParticleIndex, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true )
+						ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 1, Vector( 0, math.floor( caster.argosShieldAmount ), 0 ) )
+						ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 2, Vector( 1, digit, 0 ) )
+						ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 3, Vector( 100, 100, 255 ) )
+						
+						prev_amount = caster.argosShieldAmount	
+					end
+					
+					return 0.1
+				else
+					if caster.argosDurabilityParticleIndex ~= nil then
+						ParticleManager:DestroyParticle( caster.argosDurabilityParticleIndex, true )
+						ParticleManager:ReleaseParticleIndex( caster.argosDurabilityParticleIndex )
+						caster.argosDurabilityParticleIndex = nil
+					end
+					return nil
+				end
+			end
+		)
+	end
 end
 
 function OnArgosDamaged(keys)
@@ -358,40 +401,10 @@ function OnArgosDamaged(keys)
 			caster:SetHealth(currentHealth + keys.DamageTaken + caster.argosShieldAmount)
 			caster.argosShieldAmount = 0
 		end
-		
-		-- Destroy completely
-		if caster.argosDurabilityParticleIndex ~= nil then
-			ParticleManager:DestroyParticle( caster.argosDurabilityParticleIndex, true )
-			ParticleManager:ReleaseParticleIndex( caster.argosDurabilityParticleIndex )
-			caster.argosDurabilityParticleIndex = nil
-		end
 	else
 		print("argos not broken, remaining shield : " .. caster.argosShieldAmount)
 		caster:SetHealth(currentHealth + keys.DamageTaken)
 	end
-	
-	-- Change particle
-	local digit = 0
-	if caster.argosShieldAmount > 999 then
-		digit = 4
-	elseif caster.argosShieldAmount > 99 then
-		digit = 3
-	elseif caster.argosShieldAmount > 9 then
-		digit = 2
-	else
-		digit = 1
-	end
-	if caster.argosDurabilityParticleIndex ~= nil then
-		-- Destroy previous
-		ParticleManager:DestroyParticle( caster.argosDurabilityParticleIndex, true )
-		ParticleManager:ReleaseParticleIndex( caster.argosDurabilityParticleIndex )
-	end
-	-- Create new one
-	caster.argosDurabilityParticleIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_argos_durability.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	ParticleManager:SetParticleControlEnt( caster.argosDurabilityParticleIndex, 0, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true )
-	ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 1, Vector( 0, math.floor( caster.argosShieldAmount ), 0 ) )
-	ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 2, Vector( 1, digit, 0 ) )
-	ParticleManager:SetParticleControl( caster.argosDurabilityParticleIndex, 3, Vector( 100, 100, 255 ) )
 end
 
 function OnAncientStart(keys)
