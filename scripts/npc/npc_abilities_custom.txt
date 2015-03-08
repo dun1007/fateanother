@@ -216,8 +216,8 @@
 		"precache"						
 		{
 			"particle"				"particles/econ/items/windrunner/windrunner_cape_sparrowhawk/windrunner_windrun_blur_sparrowhawk.vpcf"
-			"particle"				"particles/custom/saber/saber_invisible_air.vpcf"
-			"particle"				"particles/custom/saber/saber_invisible_air_trail.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
 		}
 		
@@ -292,7 +292,7 @@
 					"AttachEffect"
 					{
 						"Target"				"TARGET"
-						"EffectName"			"particles/custom/saber/saber_invisible_air.vpcf"
+						"EffectName"			"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
 						"EffectAttachType"		"start_at_customorigin"
 						"ControlPointEntities"
 						{
@@ -10090,6 +10090,102 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Lancelot : Eternal Arms Mastership(improved)
+	//=================================================================================================================
+	"lancelot_arms_mastership_improved"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"lancelot_eternal_arms_mastership"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"45"
+		"precache"
+		{
+			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnEternalStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_instinct_evasion"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Lancelot : Blessing of Fairy
+	//=================================================================================================================
+	"lancelot_blessing_of_fairy"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"lancelot_bless_of_fairy"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_threshold"			"500"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_blessing_of_fairy"
+			{
+				"passive"		"1"
+				"IsHidden"		"1"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "lancelot_ability"
+						"Function"      "OnFairyDmgTaken"
+						"Threshold"		"%damage_threshold"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+			}
+	    	"modifier_fairy_magic_immunity"
+	    	{
+	    		"Duration"		"3.0"
+	    		"OnCreated"
+	    		{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+	    		}
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	    	}
+		}
+	}
+
+
 	//=====================================
 	// Lancelot : SMG Barrage
 	//=====================================
@@ -10178,6 +10274,11 @@
 			 	"Target"		"POINT"
 			 	"EndRadius"		"%end_radius"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Lancelot.SMG" 
+				"Target"		"CASTER"
+			}
 			"LinearProjectile"
 			{
 				"Target"			"POINT"
@@ -10195,6 +10296,7 @@
 
 		"OnProjectileHitUnit"
 		{
+			"DeleteOnHit"			"false"
 			"RunScript"
 			{
 				"ScriptFile"	"lancelot_ability"
@@ -10289,6 +10391,11 @@
 				"ModifierName"		"modifier_double_edge_ms_tier2"
 				"Target"			"CASTER"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Sven.WarCry"
+				"Target"		"CASTER"
+			}
 		}
 
 		"Modifiers"
@@ -10353,19 +10460,571 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"OnAncientStart"
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnKnightStart"
 			}
 		}
 		"OnUpgrade"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"AncientLevelUp"
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"KnightLevelUp"
 			}
 		}
 	}
+
+
+	//=================================================================================================================
+	// Lancelot : Caliburn
+	//=================================================================================================================
+	"lancelot_caliburn"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"3"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"saber_caliburn"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK" // Change the animation from "ACT_DOTA_CAST_ABILITY_1" to match the timing of the ability
+		"AnimationPlaybackRate" 		"0.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_impact.vpcf"
+			"particle"				"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
+			"particle"				"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
+			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt_birds.vpcf"
+		}
+		
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"200"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCastPoint"				"0.8"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0"
+
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"300"
+		
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"460 540 620"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_damage_percent"	"0.4 0.5 0.6"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"200"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"speed"				"700"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"aoe_damage_percent_tooltip"	"40 50 60"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"saber_ability"
+				"Function"			"CaliburnSlash"
+			}
+		
+			"TrackingProjectile"
+			{
+				"Target"			"TARGET"
+				"MoveSpeed"			"%speed"
+				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Dodgeable"			"1"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"saber_ability"
+				"Function"			"CaliburnExplode"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"		"saber_ability"
+				"Function"			"OnCaliburnHit"
+				"Damage"			"%damage"
+				"AoEDamage"			"%aoe_damage_percent"
+				"Radius"			"%radius"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Lancer : Gae Bolg - The Spear of Impaling Barbed Death
+	//=================================================================================================================
+	"lancelot_gae_bolg"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"3"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gae_bolg_target"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"0.6"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastPoint"				"1.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"550 660 770"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"300"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"550 660 770"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heartbreak_threshold"		"200 240 280"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"lancer_ability"
+			 	"Function"		"OnGBTargetHit"
+			 	"Damage"		"%damage"
+			 	"HBThreshold"	"%heartbreak_threshold"
+			 }
+			 "FireSound"
+			 {
+			 	"EffectName"	"Hero_Lion.Impale"
+			 	"Target"		"CASTER"
+			 }
+		}
+	}
+
+
+	//===================================================
+	// Lancelot : Nine Lives
+	//===================================================
+	"lancelot_nine_lives"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"3"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"berserker_nine"
+		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
+		"AnimationPlaybackRate" 		"0.5"		
+		"AOERadius"						"%radius"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_earthshaker"
+			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
+			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"450"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"350"
+			}
+
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_lasthit"	"500"
+			}
+
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"60 70 80"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_lasthit"	"400 500 600"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"700"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnNineStart"
+				"Target"			"POINT"
+			}
+			"DelayedAction"
+			{
+				"Delay"		"0.5"
+				"Action"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_nine_lives_dash"
+						"Target"		"CASTER"
+					}
+				}
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_OgreMagi.Ignite.Cast"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+
+			"modifier_dash_anim"
+			{
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+			}
+
+			"modifier_nine_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.2"
+				"OverrideAnimation"		"ACT_DOTA_ATTACK"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
+				}
+			}
+			"modifier_nine_anim2"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"2.0"
+				}
+			}
+			"modifier_nine_anim3"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.2"
+				"OverrideAnimation"		"ACT_DOTA_ATTACK2"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Lancelot : Rule Breaker
+	//=====================================
+	"lancelot_rule_breaker"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"3"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"caster_rule_breaker"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCastPoint"				"0.5"
+		"AbilityCastRange"				"100"
+		"AbilityCastRangeBuffer"		"50"
+		"AbilityCooldown"				"35"
+		"AbilityManaCost"				"450"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"particle"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.2 1.45 1.7"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0 4.0 5.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"caster_ability"
+				"Function"			"OnRBStart"
+				"StunDuration"		"%stun_duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_rule_breaker"
+				"Target"			"TARGET"
+			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+				"EffectAttachType"  "start_at_customorigin"
+				"TargetPoint"            "TARGET"
+
+				"ControlPoints"
+				{
+					"01"	"200 0 0"
+				}
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_rule_breaker"
+			{
+				"IsDebuff"					"1"
+				"IsPurgable"				"1"
+				"Duration"					"%duration"
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE"						"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"							"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE"	"-100"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"			"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"				"1"
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Lancelot : Tsubame Gaeshi
+	//=====================================
+	"lancelot_tsubame_gaeshi"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"3"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"
+		
+		"AbilityCastPoint"				"0.7"
+		"AbilityCastRange"				"150"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCooldown"				"50"
+		"AbilityManaCost"				"450"
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_axe/axe_counterhelix_unused.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 250 300"
+			}
+
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lasthit_damage"		"300 400 500"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"			"1.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"global_cooldown"		"45 43 41 39 37"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_axe/axe_counterhelix_unused.vpcf"
+				"EffectAttachType"	"start_at_origin"
+			}
+		
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"TGPlaySound"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnTGStart"
+				"Damage"			"%damage"
+				"LastDamage"		"%lasthit_damage"
+				"StunDuration"		"%stun_duration"
+				"GCD"				"%global_cooldown"
+			}
+		}
+	}
+
+	"lancelot_close_spellbook"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"silencer_last_word"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnKnightClosed"
+			}
+		}
+	}
+
 
 	//========================================
 	// Lancelot : Arondite
@@ -10394,7 +11053,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_stat"			"10 15 20 25 30"
+				"damage"			"500 575 650 725 800"
 			}
 			"02"
 			{
@@ -10404,7 +11063,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"30 35 40 45 50"
+				"bonus_damage"			"50 60 70 80 90"
 			}
 		}
 		
@@ -10415,11 +11074,17 @@
 				"ScriptFile"		"lancelot_ability"
 				"Function"			"OnAronditeStart"
 				"Duration"			"%duration"
+				"Damage"			"%damage"
 			}
 			"ApplyModifier"
 			{
 				"ModifierName"		"modifier_arondite"
 				"Target"			"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Sven.GodsStrength"
+				"Target"		"CASTER"
 			}
 		}
 
@@ -10431,9 +11096,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-					"MODIFIER_PROPERTY_EXTRA_STRENGTH_BONUS"	"%bonus_stat"
-					"MODIFIER_PROPERTY_EXTRA_AGILITY_BONUS"	"%bonus_stat"
-					"MODIFIER_PROPERTY_EXTRA_INTELLECT_BONUS"	"%bonus_stat"
 				}
 			}
 		}
@@ -10468,8 +11130,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"OnImproveArgosAcquired"
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnEternalImproved"
 			}
 		}
 	}
@@ -10502,8 +11164,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"OnImproveArgosAcquired"
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnBlessingAcquired"
 			}
 		}
 	}
@@ -10536,8 +11198,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"OnImproveArgosAcquired"
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnKnightImproved"
 			}
 		}
 	}
@@ -10570,8 +11232,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability"
-				"Function"		"OnImproveArgosAcquired"
+				"ScriptFile"	"lancelot_ability"
+				"Function"		"OnTAAcquired"
 			}
 		}
 	}

@@ -236,6 +236,9 @@ function IsSpellBlocked(target)
     if target:HasModifier("modifier_instinct_active") then  --This abililty is blocked by the active/targeted Linken's effect.
         target:EmitSound("DOTA_Item.LinkensSphere.Activate")
         return true
+    elseif target:HasModifier("modifier_arondite") then
+        target:EmitSound("DOTA_Item.LinkensSphere.Activate")
+        return true
     elseif target:HasModifier("modifier_wind_protection_passive") then
         if math.random(100) < 15 then
             target:EmitSound("DOTA_Item.LinkensSphere.Activate") 

@@ -195,12 +195,26 @@ function OnNineLanded(caster, ability)
 	local nineCounter = 0
 	local casterInitOrigin = caster:GetAbsOrigin() 
 
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {})
+	if caster:GetName() == "npc_dota_hero_doom_bringer" then ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) end
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
+
+			if caster:GetName() == "npc_dota_hero_sven" then 
+				if math.random(0,1) == 0 then 
+					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
+				else
+					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim3", {}) 
+				end
+			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
 			if nineCounter == 8 then -- if nine is finished
-				EmitGlobalSound("Berserker.Roar") 
+				if caster:GetName() == "npc_dota_hero_doom_bringer" then
+					EmitGlobalSound("Berserker.Roar")
+				elseif caster:GetName() == "npc_dota_hero_sven" then
+					EmitGlobalSound("Lancelot.Roar1" )
+					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
+				end
+				 
 				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				-- do damage to targets

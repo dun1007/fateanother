@@ -275,18 +275,30 @@ function OnWBStart(keys)
 end
 
 function TGPlaySound(keys)
-	EmitGlobalSound("FA.TGReady")
+	local caster = keys.caster
+	if caster:GetName() == "npc_dota_hero_juggernaut" then
+		EmitGlobalSound("FA.TGReady")
+	elseif caster:GetName() == "npc_dota_hero_sven" then
+		EmitGlobalSound("Lancelot.Growl" )
+	end
 end
 
 function OnTGStart(keys)
 	local caster = keys.caster
 	local target = keys.target
-	EmitGlobalSound("FA.TG")
 	EmitGlobalSound("FA.Chop")
-
-	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
-	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
-	caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
+	-- Check if caster is FA or Lancelot
+	if caster:GetName() == "npc_dota_hero_juggernaut" then
+		EmitGlobalSound("FA.TG")
+		caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
+		caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
+		caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
+	elseif caster:GetName() == "npc_dota_hero_sven" then
+		Timers:CreateTimer(0.15, function() 
+			EmitGlobalSound("Lancelot.Roar2")
+			return
+		end)
+	end
 
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
