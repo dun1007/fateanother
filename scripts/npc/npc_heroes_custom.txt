@@ -551,7 +551,7 @@
 		"override_hero"			"npc_dota_hero_sven"
 
 		"Model"					"models/development/invisiblebox.vmdl"
-		"ModelScale"			"1.50"
+		"ModelScale"			"1.60"
 		
 		"AbilityLayout"			"6"
 		"Ability1"				"lancelot_smg_barrage"
@@ -561,8 +561,14 @@
 		"Ability5"				"lancelot_arms_mastership"
 		"Ability6"				"lancelot_arondite"
 		"Ability7"				"lancelot_close_spellbook"
-		"Ability8"				"presence_detection_passive"
-		"Ability9"				"attribute_bonus"
+		"Ability8"				"lancelot_caliburn"
+		"Ability9"				"lancelot_gae_bolg"
+		"Ability10"				"lancelot_nine_lives"
+		"Ability11"				"lancelot_rule_breaker"
+		"Ability12"				"lancelot_tsubame_gaeshi"
+		"Ability13"				"lancelot_nuke"
+		"Ability14"				"presence_detection_passive"
+		"Ability15"				"attribute_bonus"
 		
 		
 		"StatusHealth"					"1500"

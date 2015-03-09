@@ -44,9 +44,17 @@ end
 function OnDEStart(keys)
 end
 
+
 function OnKnightStart(keys)
         local caster = keys.caster
+        local ply = caster:GetPlayerOwner()
         local ability = keys.ability
+        if caster:HasModifier("modifier_arondite") then
+                FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
+                return 
+        end
+
+
         local a1 = caster:GetAbilityByIndex(0)
         local a2 = caster:GetAbilityByIndex(1)
         local a3 = caster:GetAbilityByIndex(2)
@@ -54,29 +62,22 @@ function OnKnightStart(keys)
         local a5 = caster:GetAbilityByIndex(4)
         local a6 = caster:GetAbilityByIndex(5)
 
+        local NPLevel = 1
+        if ply.KnightLevel ~= nil then NPLevel = NPLevel + ply.KnightLevel end
+        
         caster:SwapAbilities("lancelot_close_spellbook", a5:GetName(), true,true) 
-        caster:AddAbility("lancelot_caliburn")
-
         caster:GetAbilityByIndex(5):SetLevel(1)
         if ability:GetLevel() == 1 then
-                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(1) 
-                caster:AddAbility("fate_empty1")
-                caster:AddAbility("fate_empty2")
-                caster:AddAbility("fate_empty3")
-                caster:AddAbility("fate_empty4")
+                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
+                caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true)
 
-                caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty1", a2:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty2", a3:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty3", a4:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty4", a6:GetName(), true, true) 
         elseif ability:GetLevel() == 2 then
-                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(1) 
-                caster:AddAbility("lancelot_gae_bolg")
-                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(1)
-                caster:AddAbility("fate_empty2")
-                caster:AddAbility("fate_empty3")
-                caster:AddAbility("fate_empty4")
+                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
+                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
 
                 caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
@@ -84,13 +85,9 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("fate_empty3", a4:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty4", a6:GetName(), true, true)                 
         elseif ability:GetLevel() == 3 then
-                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(1) 
-                caster:AddAbility("lancelot_gae_bolg")
-                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(1)
-                caster:AddAbility("lancelot_nine_lives")
-                caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(1)
-                caster:AddAbility("fate_empty3")
-                caster:AddAbility("fate_empty4")
+                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
+                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
+                caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(NPLevel)
 
                 caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
@@ -98,13 +95,10 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("lancelot_nine_lives", a4:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty4", a6:GetName(), true, true)               
         elseif ability:GetLevel() == 4 then
-                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(1) 
-                caster:AddAbility("lancelot_gae_bolg")
-                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(1)
-                caster:AddAbility("lancelot_nine_lives")
-                caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(1)
-                caster:AddAbility("lancelot_rule_breaker")
-                caster:FindAbilityByName("lancelot_rule_breaker"):SetLevel(1)
+                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
+                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
+                caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(NPLevel)
+                caster:FindAbilityByName("lancelot_rule_breaker"):SetLevel(NPLevel)
                 caster:AddAbility("fate_empty4")
 
                 caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true) 
@@ -113,15 +107,11 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("lancelot_nine_lives", a4:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty4", a6:GetName(), true, true)                    
         elseif ability:GetLevel() == 5 then
-                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(1) 
-                caster:AddAbility("lancelot_gae_bolg")
-                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(1)
-                caster:AddAbility("lancelot_nine_lives")
-                caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(1)
-                caster:AddAbility("lancelot_rule_breaker")
-                caster:FindAbilityByName("lancelot_rule_breaker"):SetLevel(1)
-                caster:AddAbility("lancelot_tsubame_gaeshi")
-                caster:FindAbilityByName("lancelot_tsubame_gaeshi"):SetLevel(1)
+                caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
+                caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
+                caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(NPLevel)
+                caster:FindAbilityByName("lancelot_rule_breaker"):SetLevel(NPLevel)
+                caster:FindAbilityByName("lancelot_tsubame_gaeshi"):SetLevel(NPLevel)
 
                 caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
@@ -146,19 +136,63 @@ function OnKnightClosed(keys)
         caster:SwapAbilities(a4:GetName(), "rubick_empty1", true, true) 
         caster:SwapAbilities(a5:GetName(), "lancelot_arms_mastership", true, true) 
         caster:SwapAbilities(a6:GetName(), "lancelot_arondite", true, true )       
-
-        caster:RemoveAbility("lancelot_caliburn") 
-        caster:RemoveAbility("lancelot_gae_bolg") 
-        caster:RemoveAbility("lancelot_rule_breaker") 
-        caster:RemoveAbility("lancelot_nine_lives")
-        caster:RemoveAbility("lancelot_tsubame_gaeshi")  
-        caster:RemoveAbility("fate_empty1")  
-        caster:RemoveAbility("fate_empty2") 
-        caster:RemoveAbility("fate_empty3") 
-        caster:RemoveAbility("fate_empty4") 
 end
 
-function OnKnightLevelUp(keys)
+function KnightInitialize(keys)
+        local caster = keys.caster
+        local ability = keys.ability
+
+        if caster.KnightInitialized ~= true then
+                print("knight initialized")
+                caster:RemoveAbility("lancelot_caliburn") 
+                caster:RemoveAbility("lancelot_gae_bolg") 
+                caster:RemoveAbility("lancelot_nine_lives") 
+                caster:RemoveAbility("lancelot_rule_breaker") 
+                caster:RemoveAbility("lancelot_tsubame_gaeshi") 
+                caster.KnightInitialized = true
+        end
+
+        if ability:GetLevel() == 1 then
+                print("ability lvl 1")
+                caster:AddAbility("lancelot_caliburn")
+                caster:AddAbility("fate_empty1")
+                caster:AddAbility("fate_empty2")
+                caster:AddAbility("fate_empty3")
+                caster:AddAbility("fate_empty4")
+        elseif ability:GetLevel() == 2 then
+                caster:RemoveAbility("fate_empty1")
+                --caster:AddAbility("lancelot_caliburn")
+                caster:AddAbility("lancelot_gae_bolg")
+        elseif ability:GetLevel() == 3 then
+                caster:RemoveAbility("fate_empty2")
+                --caster:AddAbility("lancelot_caliburn")
+               -- caster:AddAbility("lancelot_gae_bolg")
+                caster:AddAbility("lancelot_nine_lives")
+        elseif ability:GetLevel() == 4 then
+                caster:RemoveAbility("fate_empty3") 
+                --caster:AddAbility("lancelot_caliburn")
+                --caster:AddAbility("lancelot_gae_bolg")
+                --caster:AddAbility("lancelot_nine_lives")
+                caster:AddAbility("lancelot_rule_breaker")
+        elseif ability:GetLevel() == 5 then
+                caster:RemoveAbility("fate_empty4")
+                --caster:AddAbility("lancelot_caliburn")
+                --caster:AddAbility("lancelot_gae_bolg")
+                --caster:AddAbility("lancelot_nine_lives")
+                --caster:AddAbility("lancelot_rule_breaker")
+                caster:AddAbility("lancelot_tsubame_gaeshi")
+        end
+end
+
+function OnKnightUsed(keys)
+        print("dududu")
+        local caster = keys.caster
+        local ply = caster:GetPlayerOwner()
+        local ability = keys.ability
+        if ply.KnightLevel == nil then
+                OnKnightClosed(keys)
+                caster:FindAbilityByName("lancelot_knight_of_honor"):StartCooldown(ability:GetCooldown(ability:GetLevel())) 
+        end
 end
 
 function OnAronditeStart(keys)
@@ -177,6 +211,9 @@ function OnFairyDmgTaken(keys)
                 keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_fairy_magic_immunity", {}) 
                 keys.ability:StartCooldown(45)
         end
+end
+
+function OnNukeStart(keys)
 end
 
 function OnEternalImproved(keys)
@@ -202,6 +239,7 @@ function OnKnightImproved(keys)
         local hero = caster:GetPlayerOwner():GetAssignedHero()
         if ply.KnightLevel == nil then
                 ply.KnightLevel = 1
+                keys.ability:EndCooldown()
         else
                 ply.KnightLevel = 2
         end 

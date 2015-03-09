@@ -116,7 +116,9 @@ CannotReset = {
     "false_assassin_illusory_wanderer",
     "true_assassin_combo",
     "gilgamesh_max_enuma_elish",
-    "caster_5th_hecatic_graea_powered"
+    "caster_5th_hecatic_graea_powered",
+    "lancelot_blessing_of_fairy",
+    "lancelot_arms_mastership_improved"
 }
 
 function LevelAllAbility(hero)
@@ -312,13 +314,15 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 
 
     if target:GetName() == "npc_dota_hero_legion_commander" and target:HasModifier("modifier_avalon") then
+        local incomingDmg = damageTaken
         if dmg_type == DAMAGE_TYPE_MAGICAL then
             MR = target:GetMagicalArmorValue() 
+            incomingDmg = incomingDmg * (1-MR)
         end 
         if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" then
             target.IsAvalonPenetrated = true
         else
-            if damageTaken * (1-MR) > 300 then 
+            if incomingDmg > 300 then 
                 target.IsAvalonProc = true
             else 
                 target.IsAvalonProc = false

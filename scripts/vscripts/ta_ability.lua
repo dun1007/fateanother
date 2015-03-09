@@ -200,6 +200,10 @@ function OnAmbushStart(keys)
 	TACheckCombo(caster, keys.ability)
 end
 
+function OnAmbushBroken(keys)
+	keys.caster:RemoveModifierByName("modifier_ambush")
+end
+
 function OnFirstHitStart(keys)
 	keys.caster:RemoveModifierByName("modifier_ambush")
 end
@@ -207,6 +211,7 @@ end
 function OnFirstHitLanded(keys)
 	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_first_hit") return end -- Linken effect checker
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	keys.caster:EmitSound("Hero_TemplarAssassin.Meld.Attack")
 	keys.caster:RemoveModifierByName("modifier_first_hit")
 end
 

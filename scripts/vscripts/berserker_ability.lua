@@ -144,7 +144,7 @@ function OnNineStart(keys)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
 	Timers:CreateTimer(1.00, function() 
-		if caster:HasModifier("modifier_nine_anim") == false then
+		if caster.NineLanded ~= true then
 			OnNineLanded(caster, keys.ability) 
 		end
 	return end)
@@ -155,20 +155,20 @@ function OnNineStart(keys)
 		if diff:Length2D() > distance then
 			unit:PreventDI(false)
 			unit:OnPhysicsFrame(nil)
+			unit:OnPreBounce(nil)
 			unit:SetPhysicsVelocity(Vector(0,0,0))
 			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
-			unit:OnPhysicsFrame(nil)
 		end
 	end)
 
 	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
 		OnNineLanded(caster, keys.ability)
 		unit:OnPreBounce(nil)
+		unit:OnPhysicsFrame(nil)
 		unit:SetBounceMultiplier(0)
 		unit:PreventDI(false)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
-		unit:OnPreBounce(nil)
 	end)
 
 	
@@ -194,6 +194,7 @@ function OnNineLanded(caster, ability)
 	local stun = ability:GetSpecialValueFor("stun_duration")
 	local nineCounter = 0
 	local casterInitOrigin = caster:GetAbsOrigin() 
+	caster.NineLanded = true
 
 	if caster:GetName() == "npc_dota_hero_doom_bringer" then ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) end
 	Timers:CreateTimer(function()
@@ -214,7 +215,7 @@ function OnNineLanded(caster, ability)
 					EmitGlobalSound("Lancelot.Roar1" )
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
 				end
-				 
+				caster.NineLanded = false
 				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				-- do damage to targets

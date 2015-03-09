@@ -1832,6 +1832,7 @@
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
 			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+			"particle"		"particles/items_fx/dagon.vpcf"
 		}
 		
 		// Casting
@@ -3617,6 +3618,7 @@
 		{
 			"modifier_breaker_gorgon"
 			{
+				"Duration"			"16.0"
 				"IsDebuff"			"1"
 				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -5312,7 +5314,8 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"2.0"
 		"MaxLevel"						"5"
-
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"400"
@@ -7030,6 +7033,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"BaseClass"			"ability_datadriven"
 		"AbilityTextureName"			"ta_ambush"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"24.0"
@@ -7118,6 +7124,14 @@
 					     "Target" "CASTER"
 				    }
 			    }
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnAmbushBroken"
+					}					
+				}	
 				"Duration"		"%duration"
 				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
 				"EffectAttachType"			"follow_overhead"
@@ -7150,7 +7164,13 @@
 						"ScriptFile"		"ta_ability"
 						"Function"			"OnFirstHitLanded"
 						"Damage"			"%damage"
-					}					
+					}	
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_jinada_sparks.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+					}				
 				}
 				"OnAbilityExecuted"
 				{
@@ -7190,7 +7210,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
@@ -7303,6 +7323,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"ta_self_modification"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
@@ -7989,6 +8011,8 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
@@ -8062,6 +8086,8 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
@@ -9076,6 +9102,8 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_argos"
 		"AbilityCastPoint"				"0.3"
@@ -9156,6 +9184,8 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityTextureName"			"caster_magic"
 		
@@ -10241,7 +10271,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"end_radius"		"200 275 350 425 500"
+				"end_radius"		"200 225 250 275 300"
 			}
 			"04"
 			{
@@ -10350,7 +10380,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_speed"			"20 40 60 80 100"
+				"bonus_speed"			"25 50 75 100 125"
 			}
 			"02"
 			{
@@ -10365,7 +10395,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_ms_halved"		"10 20 30 40 50"
+				"bonus_ms_halved"		"25"
 			}
 		}
 		
@@ -10469,7 +10499,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"lancelot_ability"
-				"Function"		"KnightLevelUp"
+				"Function"		"KnightInitialize"
 			}
 		}
 	}
@@ -10580,7 +10610,12 @@
 				"ScriptFile"		"saber_ability"
 				"Function"			"CaliburnExplode"
 			}
-		
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnKnightUsed"
+			}
+				
 			"RunScript"
 			{
 				"ScriptFile"		"saber_ability"
@@ -10609,7 +10644,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gae_bolg_target"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
-		"AnimationPlaybackRate" 		"0.6"
+		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
 		{
@@ -10617,6 +10652,7 @@
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
 			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+			"particle"		"particles/items_fx/dagon.vpcf"
 		}
 		
 		// Casting
@@ -10668,6 +10704,11 @@
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold"
 			 }
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnKnightUsed"
+			}
 			 "FireSound"
 			 {
 			 	"EffectName"	"Hero_Lion.Impale"
@@ -10764,6 +10805,11 @@
 				"Function"			"OnNineStart"
 				"Target"			"POINT"
 			}
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnKnightUsed"
+			}
 			"DelayedAction"
 			{
 				"Delay"		"0.5"
@@ -10799,7 +10845,7 @@
 				"OverrideAnimation"		"ACT_DOTA_ATTACK"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"2.5"
 				}
 			}
 			"modifier_nine_anim2"
@@ -10809,7 +10855,7 @@
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"2.0"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
 				}
 			}
 			"modifier_nine_anim3"
@@ -10819,7 +10865,7 @@
 				"OverrideAnimation"		"ACT_DOTA_ATTACK2"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"2.5"
 				}
 			}
 		}
@@ -10875,6 +10921,11 @@
 				"ScriptFile"		"caster_ability"
 				"Function"			"OnRBStart"
 				"StunDuration"		"%stun_duration"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnKnightUsed"
 			}
 			"ApplyModifier"
 			{
@@ -10996,6 +11047,11 @@
 		{
 			"RunScript"
 			{
+				"ScriptFile"		"lancelot_ability"
+				"Function"			"OnKnightUsed"
+			}
+			"RunScript"
+			{
 				"ScriptFile"		"fa_ability"
 				"Function"			"OnTGStart"
 				"Damage"			"%damage"
@@ -11037,7 +11093,10 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
-
+		"precache"
+		{
+			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
+		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11253,9 +11312,9 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gae_bolg_aoe"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
-		"AnimationPlaybackRate" 		"1.2"
+		"AbilityTextureName"			"lancelot_nuke"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"
 		"precache"
 		{
@@ -11268,7 +11327,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"3000"
-		"AbilityCastPoint"				"0.8"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11283,18 +11342,18 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"750 950 1150 1350 1550"
+				"damage"			"200"
 			}
 			
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"500"
+				"radius"			"800"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"1000"
+				"range"				"3000"
 			}
 		}
 
@@ -11303,7 +11362,7 @@
 			"RunScript"
 			{
 			 	"ScriptFile"	"lancer_ability"
-			 	"Function"		"OnGBAOEStart"
+			 	"Function"		"OnNukeStart"
 			 	"Target"		"POINT"
 			}
 		}

@@ -197,6 +197,13 @@ function OnGBTargetHit(keys)
 	local ply = caster:GetPlayerOwner()
 	if ply.IsGaeBolgImproved == true then keys.HBThreshold = keys.HBThreshold + 150 end
 
+	-- Add dagon particle
+	local dagon_particle = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf",  PATTACH_ABSORIGIN_FOLLOW, keys.caster)
+	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
+	local particle_effect_intensity = 600
+	ParticleManager:SetParticleControl(dagon_particle, 2, Vector(particle_effect_intensity))
+	
+
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	if target:GetHealth() < keys.HBThreshold then 
 		if target:GetHealth() ~= 0 then 
