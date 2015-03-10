@@ -11318,10 +11318,11 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
-			"particle"		"particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
-			"particle"		"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf"
-			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf"
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"				"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
+			"particle"				"particles/units/heroes/hero_gyrocopter/gyro_calldown_explosion_second.vpcf"
+			"particle"				"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_calldown_first.vpcf"
+			"particle"				"particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf"
 		}
 		
 		// Casting
@@ -11331,7 +11332,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"9999"
+		"AbilityCooldown"				"150"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -11361,7 +11362,7 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	"lancer_ability"
+			 	"ScriptFile"	"lancelot_ability"
 			 	"Function"		"OnNukeStart"
 			 	"Target"		"POINT"
 			}
@@ -11399,6 +11400,40 @@
 		  	}
 		}
 	}
+
+	//================================================
+	// simple dummy passive(for visible unit)
+	//================================================
+	"dummy_visible_unit_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_MAX"	"900"
+					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"900"
+				}
+		  	}
+		}
+	}
+
 
 	//================================================
 	// master passive

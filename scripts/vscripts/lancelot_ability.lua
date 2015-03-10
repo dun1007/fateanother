@@ -2,6 +2,7 @@ function OnEternalStart(keys)
 end
 
 function OnSMGStart(keys)
+    LancelotCheckCombo(keys.caster, keys.ability)
        --[[print("dudududu")
 	local caster = keys.caster
 	local frontward = caster:GetForwardVector()
@@ -42,6 +43,7 @@ function OnSMGHit(keys)
 end
 
 function OnDEStart(keys)
+    LancelotCheckCombo(keys.caster, keys.ability)
 end
 
 
@@ -214,6 +216,96 @@ function OnFairyDmgTaken(keys)
 end
 
 function OnNukeStart(keys)
+    local caster = keys.caster
+    local targetPoint = keys.target_points[1]
+    EmitGlobalSound("Lancelot.Nuke_Alert") 
+
+    local nukemsg = {
+        message = "Engaging Enemy, HQ.",
+        duration = 2.0
+    }
+    FireGameEvent("show_center_message",nukemsg)
+
+
+    local visiondummy = CreateUnitByName("sight_dummy_unit", targetPoint, false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+    visiondummy:SetDayTimeVisionRange(1500)
+    visiondummy:SetNightTimeVisionRange(1500)
+    visiondummy:AddNewModifier(caster, nil, "modifier_kill", {duration = 8})
+
+    local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+    unseen:SetLevel(1)
+    local nukeMarker = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf", PATTACH_CUSTOMORIGIN, caster )
+    ParticleManager:SetParticleControl( nukeMarker, 0, targetPoint)
+    ParticleManager:SetParticleControl( nukeMarker, 1, Vector(300, 300, 300))
+
+    -- Create F16 nunit
+    Timers:CreateTimer(1.97, function()
+        EmitGlobalSound("Lancelot.Nuke_Beep")
+        -- Set up unit
+        f16 = CreateUnitByName("f16_dummy", targetPoint, true, nil, nil, caster:GetTeamNumber())
+        LevelAllAbility(f16)
+        FindClearSpaceForUnit(f16, f16:GetAbsOrigin(), true)
+        f16:SetAbsOrigin(targetPoint)
+        Timers:CreateTimer(0.033, function()
+            f16:EmitSound("Hero_Gyrocopter.Rocket_Barrage")
+        end)
+    end)
+    
+    
+    -- Move jet around
+    local flyCount = 0
+    local t = 0
+    Timers:CreateTimer(2.0, function()
+        if flyCount == 121 then f16:ForceKill(true) return end
+        t = t+0.12
+        SpinInCircle(f16, targetPoint, t, 650)
+        flyCount = flyCount + 1
+        return 0.033
+    end)
+
+    local barrageCount = 0
+    Timers:CreateTimer(2.0, function()
+        if flyCount == 121 then f16:ForceKill(true) return end
+        local barrageVec1 = RandomVector(RandomInt(100, 800))
+        local targets1 = FindUnitsInRadius(caster:GetTeam(), targetPoint + barrageVec1, nil, 200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+        for k,v in pairs(targets1) do
+            DoDamage(caster, v, 300, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+            v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.50})
+        end
+        -- particle
+        local barrageImpact1 = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        ParticleManager:SetParticleControl( barrageImpact1, 0, targetPoint+barrageVec1)
+        visiondummy:EmitSound("Hero_Gyrocopter.Rocket_Barrage.Launch")
+        barrageCount = barrageCount + 1
+        return 0.033
+    end)
+
+    Timers:CreateTimer(4.5, function()
+        EmitGlobalSound("Lancelot.TacticalNuke") 
+    end)
+
+    Timers:CreateTimer(7.0, function()
+        EmitGlobalSound("Hero_Gyrocopter.CallDown.Damage") 
+        local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 1500, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+        for k,v in pairs(targets) do
+            DoDamage(caster, v, 2000, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+            v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+        end
+        -- particle
+        local impactFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_explosion_second.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint)
+        ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(2500, 2500, 1500))
+        ParticleManager:SetParticleControl( impactFxIndex, 2, Vector(2500, 2500, 2500))
+        ParticleManager:SetParticleControl( impactFxIndex, 3, targetPoint)
+        ParticleManager:SetParticleControl( impactFxIndex, 4, Vector(2500, 2500, 2500))
+        ParticleManager:SetParticleControl( impactFxIndex, 5, Vector(2500, 2500, 2500))
+    end)
+end
+
+function SpinInCircle(unit, center, t, multiplier)
+    local x = math.cos(t) * multiplier
+    local y = math.sin(t) * multiplier
+    unit:SetAbsOrigin(Vector(center.x + x, center.y + y, 750))
 end
 
 function OnEternalImproved(keys)
@@ -250,4 +342,31 @@ function OnTAAcquired(keys)
         local ply = caster:GetPlayerOwner()
         local hero = caster:GetPlayerOwner():GetAssignedHero()
         ply.IsTAAcquired = true
+end
+
+function LancelotCheckCombo(caster, ability)
+    if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+        if ability == caster:FindAbilityByName("lancelot_double_edge") then
+            WUsed = true
+            WTime = GameRules:GetGameTime()
+            Timers:CreateTimer({
+                endTime = 3,
+                callback = function()
+                WUsed = false
+            end
+            })
+        elseif ability == caster:FindAbilityByName("lancelot_smg_barrage") and caster:FindAbilityByName("lancelot_nuke"):IsCooldownReady()  then
+            if WUsed == true then 
+                caster:SwapAbilities("lancelot_nuke", "rubick_empty1", true, true) 
+                local newTime =  GameRules:GetGameTime()
+                Timers:CreateTimer({
+                    endTime = 3,
+                    callback = function()
+                    caster:SwapAbilities("lancelot_nuke", "rubick_empty1", true, true) 
+                    WUsed = false
+                end
+                })
+            end
+        end
+    end
 end
