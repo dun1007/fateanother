@@ -10198,7 +10198,7 @@
 
 		"precache"
 		{
-			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf"
+			"particle"		"particles/custom/lancelot/lancelot_smg.vpcf"
 		}
 
 		// Casting

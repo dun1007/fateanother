@@ -41,6 +41,7 @@ function OnSMGStart(keys)
 	smg.vSpawnOrigin = caster:GetAbsOrigin() 
 	ProjectileManager:CreateLinearProjectile(smg)]]
 	
+	
 	-- Store inheritted variables
 	local caster = keys.caster
 	local ability = keys.ability
@@ -60,11 +61,11 @@ function OnSMGStart(keys)
 	-- Loop creating particles
 	while current_distance < range do
 		-- Create particle
-		local particleIndex = ParticleManager:CreateParticle( "particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		local particleIndex = ParticleManager:CreateParticle( "particles/custom/lancelot/lancelot_smg.vpcf", PATTACH_CUSTOMORIGIN, caster )
 		ParticleManager:SetParticleControl( particleIndex, 0, current_point )
 		ParticleManager:SetParticleControl( particleIndex, 1, Vector( current_radius, 0, 0 ) )
 		
-		Timers:CreateTimer( 2.0, function()
+		Timers:CreateTimer( 1.0, function()
 				ParticleManager:DestroyParticle( particleIndex, false )
 				ParticleManager:ReleaseParticleIndex( particleIndex )
 				return nil
@@ -78,11 +79,11 @@ function OnSMGStart(keys)
 	end
 	
 	-- Create particle
-	local particleIndex = ParticleManager:CreateParticle( "particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	local particleIndex = ParticleManager:CreateParticle( "particles/custom/lancelot/lancelot_smg.vpcf", PATTACH_CUSTOMORIGIN, caster )
 	ParticleManager:SetParticleControl( particleIndex, 0, end_point )
 	ParticleManager:SetParticleControl( particleIndex, 1, Vector( end_radius, 0, 0 ) )
 		
-	Timers:CreateTimer( 2.0, function()
+	Timers:CreateTimer( 1.0, function()
 			ParticleManager:DestroyParticle( particleIndex, true )
 			ParticleManager:ReleaseParticleIndex( particleIndex )
 			return nil
