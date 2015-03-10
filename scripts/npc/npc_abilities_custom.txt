@@ -10235,7 +10235,7 @@
 
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf"
 		}
 
 		// Casting
@@ -10312,7 +10312,7 @@
 			"LinearProjectile"
 			{
 				"Target"			"POINT"
-				"EffectName"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+				"EffectName"		""
 				"StartRadius"		"100"
 				"EndRadius"			"%end_radius"
 				"MoveSpeed"			"%speed"

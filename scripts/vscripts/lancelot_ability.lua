@@ -27,6 +27,54 @@ function OnSMGStart(keys)
 	}
 	smg.vSpawnOrigin = caster:GetAbsOrigin() 
 	ProjectileManager:CreateLinearProjectile(smg)]]
+	
+	-- Store inheritted variables
+	local caster = keys.caster
+	local ability = keys.ability
+	local range = ability:GetLevelSpecialValueFor( "range", ability:GetLevel() - 1 )
+	local start_radius = ability:GetLevelSpecialValueFor( "start_radius", ability:GetLevel() - 1 )
+	local end_radius = ability:GetLevelSpecialValueFor( "end_radius", ability:GetLevel() - 1 )
+	
+	-- Initialize local variables
+	local current_point = caster:GetAbsOrigin()
+	local currentForwardVec = forwardVec
+	local current_radius = start_radius
+	local current_distance = 0
+	local forwardVec = ( keys.target_points[1] - current_point ):Normalized()
+	local end_point = current_point + range * forwardVec
+	local difference = end_radius - start_radius
+	
+	-- Loop creating particles
+	while current_distance < range do
+		-- Create particle
+		local particleIndex = ParticleManager:CreateParticle( "particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( particleIndex, 0, current_point )
+		ParticleManager:SetParticleControl( particleIndex, 1, Vector( current_radius, 0, 0 ) )
+		
+		Timers:CreateTimer( 2.0, function()
+				ParticleManager:DestroyParticle( particleIndex, false )
+				ParticleManager:ReleaseParticleIndex( particleIndex )
+				return nil
+			end
+		)
+		
+		-- Update current point
+		current_point = current_point + current_radius * forwardVec
+		current_distance = current_distance + current_radius
+		current_radius = start_radius + current_distance / range * difference
+	end
+	
+	-- Create particle
+	local particleIndex = ParticleManager:CreateParticle( "particles/econ/items/sniper/sniper_charlie/sniper_shrapnel_charlie.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( particleIndex, 0, end_point )
+	ParticleManager:SetParticleControl( particleIndex, 1, Vector( end_radius, 0, 0 ) )
+		
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particleIndex, true )
+			ParticleManager:ReleaseParticleIndex( particleIndex )
+			return nil
+		end
+	)
 end
 
 function OnSMGHit(keys)
