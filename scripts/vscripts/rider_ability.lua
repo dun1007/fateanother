@@ -67,7 +67,7 @@ function OnBGStart(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 200
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
-		ability:ApplyDataDrivenModifier(caster, v, "modifier_breaker_gorgon", {Duration = keys.duration})
+		if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster, v, "modifier_breaker_gorgon", {Duration = keys.duration}) end
 		if ply.IsSealAcquired then  
 			local rngesus = math.random(100)
 			if rngesus < 30 then
@@ -127,7 +127,7 @@ function OnBloodfortStart(keys)
 				giveUnitDataDrivenModifier(caster, v, "pause_sealenabled", 0.5)
 			end
 	        DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	        ability:ApplyDataDrivenModifier(caster,v, "modifier_bloodfort_slow", {})
+	        if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster,v, "modifier_bloodfort_slow", {}) end
 	    end
 		bloodfortCount = bloodfortCount + 1
 		return 1.0

@@ -1026,7 +1026,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_bristleback"
 			//"particle_folder"				"particles/units/heroes/hero_tusk"
 			"particle_folder"				"particles/units/heroes/hero_skywrath_mage"
-			//"particle_folder"				"particles/units/heroes/hero_abaddon"
+			"particle_folder"				"particles/units/heroes/hero_abaddon"
 			//"particle_folder"				"particles/units/heroes/hero_elder_titan"
 			"particle_folder"				"particles/units/heroes/hero_legion_commander"
 			//"particle_folder"				"particles/units/heroes/hero_ember_spirit"

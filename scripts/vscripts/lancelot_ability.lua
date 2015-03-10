@@ -1,4 +1,17 @@
 function OnEternalStart(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    if ply.IsEternalImproved ~= true then
+        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
+        keys.ability:EndCooldown()
+        return
+    end
+
+    caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
+    HardCleanse(caster)
+    local dispel = ParticleManager:CreateParticle( "particles/units/heroes/hero_abaddon/abaddon_death_coil_explosion.vpcf", PATTACH_ABSORIGIN, caster )
+    ParticleManager:SetParticleControl( dispel, 1, caster:GetAbsOrigin())
+
 end
 
 function OnSMGStart(keys)
@@ -247,11 +260,16 @@ end
 
 function OnAronditeStart(keys)
         local caster = keys.caster
-
+        local ply = caster:GetPlayerOwner()
+        
         local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
         for k,v in pairs(targets) do
                 DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
         end
+        if ply.IsTAAcquired then
+            keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite_crit", {}) 
+        end
+        
 end
 
 function OnFairyDmgTaken(keys)
@@ -274,7 +292,7 @@ function OnNukeStart(keys)
     }
     FireGameEvent("show_center_message",nukemsg)
 
-
+    local f16 = CreateUnitByName("f16_dummy", Vector(20000, 20000, 0), true, nil, nil, caster:GetTeamNumber())
     local visiondummy = CreateUnitByName("sight_dummy_unit", targetPoint, false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
     visiondummy:SetDayTimeVisionRange(1500)
     visiondummy:SetNightTimeVisionRange(1500)
@@ -290,7 +308,6 @@ function OnNukeStart(keys)
     Timers:CreateTimer(1.97, function()
         EmitGlobalSound("Lancelot.Nuke_Beep")
         -- Set up unit
-        f16 = CreateUnitByName("f16_dummy", targetPoint, true, nil, nil, caster:GetTeamNumber())
         LevelAllAbility(f16)
         FindClearSpaceForUnit(f16, f16:GetAbsOrigin(), true)
         f16:SetAbsOrigin(targetPoint)
@@ -318,11 +335,13 @@ function OnNukeStart(keys)
         local targets1 = FindUnitsInRadius(caster:GetTeam(), targetPoint + barrageVec1, nil, 200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
         for k,v in pairs(targets1) do
             DoDamage(caster, v, 300, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-            v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.50})
+            if not v:IsMagicImmune() then v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.50}) end
         end
         -- particle
         local barrageImpact1 = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
         ParticleManager:SetParticleControl( barrageImpact1, 0, targetPoint+barrageVec1)
+        local barrageImpact2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_impact_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        ParticleManager:SetParticleControl( barrageImpact2, 0, targetPoint+barrageVec1)
         visiondummy:EmitSound("Hero_Gyrocopter.Rocket_Barrage.Launch")
         barrageCount = barrageCount + 1
         return 0.033
@@ -337,7 +356,7 @@ function OnNukeStart(keys)
         local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 1500, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
         for k,v in pairs(targets) do
             DoDamage(caster, v, 2000, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-            v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+            if not v:IsMagicImmune() then v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0}) end
         end
         -- particle
         local impactFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_explosion_second.vpcf", PATTACH_CUSTOMORIGIN, caster )
@@ -347,13 +366,24 @@ function OnNukeStart(keys)
         ParticleManager:SetParticleControl( impactFxIndex, 3, targetPoint)
         ParticleManager:SetParticleControl( impactFxIndex, 4, Vector(2500, 2500, 2500))
         ParticleManager:SetParticleControl( impactFxIndex, 5, Vector(2500, 2500, 2500))
+
+        local mushroom = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        ParticleManager:SetParticleControl( mushroom, 0, targetPoint)
+
+        
     end)
 end
 
+lastPos = Vector(0,0,0)
 function SpinInCircle(unit, center, t, multiplier)
     local x = math.cos(t) * multiplier
     local y = math.sin(t) * multiplier
+    lastPos = unit:GetAbsOrigin()
     unit:SetAbsOrigin(Vector(center.x + x, center.y + y, 750))
+    local diff = (unit:GetAbsOrigin() - lastPos):Normalized() 
+    unit:SetForwardVector(diff) 
+
+
 end
 
 function OnEternalImproved(keys)
@@ -405,12 +435,16 @@ function LancelotCheckCombo(caster, ability)
             })
         elseif ability == caster:FindAbilityByName("lancelot_smg_barrage") and caster:FindAbilityByName("lancelot_nuke"):IsCooldownReady()  then
             if WUsed == true then 
-                caster:SwapAbilities("lancelot_nuke", "rubick_empty1", true, true) 
+                local abilname = "rubick_empty1"
+                if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
+
+                caster:SwapAbilities("lancelot_nuke", abilname, true, true) 
                 local newTime =  GameRules:GetGameTime()
                 Timers:CreateTimer({
                     endTime = 3,
                     callback = function()
-                    caster:SwapAbilities("lancelot_nuke", "rubick_empty1", true, true) 
+                    if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
+                    caster:SwapAbilities("lancelot_nuke", abilname, true, true) 
                     WUsed = false
                 end
                 })

@@ -25,6 +25,7 @@ end
 
 function OnDirkHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	if not IsImmuneToSlow(keys.target) then keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dirk_poison", {}) end
 	if keys.ability:GetName() == "true_assassin_dirk" then
 		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	else
@@ -35,6 +36,8 @@ end
 function OnVenomHit(keys)
 	local caster = keys.caster
 	local target = keys.target 
+
+	if IsImmuneToSlow(target) then return end
 
 	local currentStack = target:GetModifierStackCount("modifier_weakening_venom_debuff", keys.ability)
 

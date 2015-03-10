@@ -180,7 +180,7 @@ function OnCaliburnHit(keys)
 
 	if ply.IsChivalryAcquired == true then 
 		keys.Damage = keys.Damage + 200 
-		ability:ApplyDataDrivenModifier(caster, target, "modifier_caliburn_slow", {})
+		if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_caliburn_slow", {}) end
 	end
 	local aoedmg = keys.Damage * keys.AoEDamage
 

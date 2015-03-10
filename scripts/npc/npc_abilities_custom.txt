@@ -6884,11 +6884,6 @@
 				"Function"      "OnDirkHit"
 				"Damage"		"%damage"
 			}
-            "ApplyModifier"
-            {
-            	"ModifierName"	"modifier_dirk_poison"
-            	"Target"		"TARGET"
-            }
 		}
 
 		"Modifiers"
@@ -6996,11 +6991,6 @@
 				"Function"      "OnDirkHit"
 				"Damage"		"%damage"
 			}
-            "ApplyModifier"
-            {
-            	"ModifierName"	"modifier_dirk_poison"
-            	"Target"		"TARGET"
-            }
 		}
 
 		"Modifiers"
@@ -10097,43 +10087,21 @@
 		}
 	}
 	
+
 	//=================================================================================================================
 	// Lancelot : Eternal Arms Mastership
 	//=================================================================================================================
 	"lancelot_arms_mastership"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"lancelot_eternal_arms_mastership"
-		"MaxLevel"						"1"
-		
-		"AbilitySpecial"
-		{
-		}
-		
-		"Modifiers"
-		{
-			"modifier_eternal_arms_mastership"
-			{
-				"passive"		"1"
-				"IsHidden"		"0"
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Lancelot : Eternal Arms Mastership(improved)
-	//=================================================================================================================
-	"lancelot_arms_mastership_improved"
-	{
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
 		"AbilityTextureName"			"lancelot_eternal_arms_mastership"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"45"
 		"precache"
 		{
 			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
+			"particle"		"particles/custom/abaddon_death_coil_explosion.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -10151,11 +10119,6 @@
 		
 		"Modifiers"
 		{
-			"modifier_instinct_evasion"
-			{
-				"Passive"		"1"
-				"IsHidden"		"0"
-			}
 		}
 	}
 	
@@ -10385,7 +10348,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"bonus_ms"				"50"
 			}
 			"03"
 			{
@@ -10396,6 +10359,12 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_ms_halved"		"25"
+			}
+
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
 			}
 		}
 		
@@ -11117,12 +11086,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"10"
+				"bonus_damage"			"50 60 70 80 90"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"50 60 70 80 90"
+				"duration"				"10"
 			}
 		}
 		
@@ -11157,6 +11126,55 @@
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
 			}
+			"modifier_arondite_crit"
+			{
+				"Duration"	"%duration"
+				"IsHidden"	"1"
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_arondite_crit_hit"
+						"Target"		"CASTER"
+					}
+
+					"Random"
+					{
+						"Chance"	"25"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_arondite_crit_hit"
+								"Target"			"CASTER"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_arondite_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "250"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_arondite_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
+				}
+			}
 		}
 	}
 
@@ -11175,7 +11193,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"16"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -11323,6 +11341,7 @@
 			"particle"				"particles/units/heroes/hero_gyrocopter/gyro_calldown_explosion_second.vpcf"
 			"particle"				"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_calldown_first.vpcf"
 			"particle"				"particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf"
+			"particle"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf"
 		}
 		
 		// Casting
@@ -11343,7 +11362,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200"
+				"damage"			"300"
 			}
 			
 			"02"
@@ -11355,6 +11374,17 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"range"				"3000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"nuke_damage"			"2000"
+			}
+			
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"nuke_radius"			"1500"
 			}
 		}
 

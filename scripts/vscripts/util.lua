@@ -19,6 +19,18 @@ goesthruB = {"saber_avalon",
             "saber_alter_max_mana_burst",
             "archer_5th_overedge"
 }
+
+cleansable = {
+    "modifier_stunned",
+    "modifier_rule_breaker",
+    "modifier_purge",
+    "modifier_breaker_gorgon",
+    "rb_sealdisabled",
+    "modifier_dagger_of_treachery",
+    "modifier_slow_tier1",
+    "modifier_slow_tier2"
+}
+
 donotlevel = {
   "attribute_bonus",
   "saber_improved_instinct",
@@ -248,8 +260,27 @@ function IsSpellBlocked(target)
             ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
             return true 
         end
+    else 
+        return false
     end
 end 
+
+function IsImmuneToSlow(target)
+    if target:GetName() == "npc_dota_hero_sven" then
+        target:EmitSound("DOTA_Item.LinkensSphere.Activate")
+        return true 
+    else 
+        return false
+    end
+end
+
+function HardCleanse(target)
+    for i=1, #cleansable do
+        if target:HasModifier(cleansable[i]) then
+            target:RemoveModifierByName(cleansable[i])
+        end
+    end
+end
 
 
 

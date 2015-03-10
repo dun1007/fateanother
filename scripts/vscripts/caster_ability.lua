@@ -612,6 +612,8 @@ function OnRBStart(keys)
 
 	EmitGlobalSound("Caster.RuleBreaker") 
 	CasterCheckCombo(keys.caster,keys.ability)
+
+	ApplyPurge(target)
 	if ply.IsRBImproved then
 		keys.ability:StartCooldown(25)
 		giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", 3.0)
