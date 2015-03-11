@@ -89,9 +89,11 @@ end
 function Disengage(keys)
 	local caster = keys.caster
 	local backward = caster:GetForwardVector() * keys.Distance
-	caster:SetAbsOrigin(caster:GetAbsOrigin() - backward)
-	ProjectileManager:ProjectileDodge(caster) 
-	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	Timers:CreateTimer(0.033, function() 
+		caster:SetAbsOrigin(caster:GetAbsOrigin() - backward)
+		ProjectileManager:ProjectileDodge(caster) 
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	end)
 end
 
 function Trap(keys)

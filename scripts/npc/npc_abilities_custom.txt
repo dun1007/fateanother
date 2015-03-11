@@ -120,6 +120,7 @@
 		"precache"
 		{
 			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
+			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -159,6 +160,55 @@
 			"modifier_instinct_active"
 			{
 				"Duration"		"1.0"
+			}
+			"modifier_instinct_crit"
+			{
+				"IsHidden"	"1"
+				"Passive"	"1"
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_instinct_crit_hit"
+						"Target"		"CASTER"
+					}
+
+					"Random"
+					{
+						"Chance"	"30"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_instinct_crit_hit"
+								"Target"			"CASTER"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_instinct_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "300"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_instinct_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
+				}
 			}
 		}
 	}
@@ -901,7 +951,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"12"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -1503,6 +1553,10 @@
 		"AbilityManaCost"				"100"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+		}
 		"AbilitySpecial"
 		{
 			"01"
@@ -1531,6 +1585,12 @@
 				"EffectName"	"Hero_PhantomLancer.Doppelwalk"
 				"Target"		"CASTER"
 			}
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
 		}
 	}
 
@@ -1546,6 +1606,10 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+		}
 		"AbilitySpecial"
 		{
 			"01"
@@ -1570,6 +1634,17 @@
 			"FireSound"
 			{
 				"EffectName"	"Hero_Omniknight.Purification"
+			}
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"ControlPoints"
+				{
+					"00"	"0 0 0"
+					"01"	"300 300 300"
+				}
 			}
 		}
 	}
@@ -2500,7 +2575,7 @@
 		
 		"Modifiers"
 		{
-			"modifier_instinct_evasion"
+			"modifier_darklight"
 			{
 				"passive"		"1"
 				"IsHidden"		"0"
@@ -2508,20 +2583,48 @@
 				{
 					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"50"
 				}
-				"OnAttackLanded"
+				"OnAttackStart"
 				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_darklight_crit_hit"
+						"Target"		"CASTER"
+					}
+
 					"Random"
 					{
-						"Chance"		"15"
+						"Chance"	"15"
 						"OnSuccess"
 						{
-							"RunScript"
+							"ApplyModifier"
 							{
-								"ScriptFile"	"saber_alter_ability"
-								"Function"		"OnDarklightProc"
+								"ModifierName"		"modifier_darklight_crit_hit"
+								"Target"			"CASTER"
 							}
-						}						
+						}
 					}
+				}
+			}
+			"modifier_darklight_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "400"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_darklight_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
 				}
 			}
 		}

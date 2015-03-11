@@ -34,8 +34,8 @@
 		"MagicalResistance"				"25"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"				"34"
-		"AttackDamageMax"				"42"
+		"AttackDamageMin"				"64"
+		"AttackDamageMax"				"72"
 		"AttackRate"					"1.35"
 		"AttackAnimationPoint"			"0.75"
 		"AttackAcquisitionRange"		"250"
@@ -52,7 +52,7 @@
 		"AttributeIntelligenceGain"		"0.9"
 		
 		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"					"325"
+		"MovementSpeed"					"315"
 		"MovementTurnRate"				"0.3"
 		
 		"VisionDaytimeRange"			"900"
@@ -96,8 +96,8 @@
 		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"				"23"
-		"AttackDamageMax"				"31"
+		"AttackDamageMin"				"44"
+		"AttackDamageMax"				"51"
 		"AttackRate"					"0.8"
 		"AttackRange"					"250"
 		"AttackAcquisitionRange"		"350"
@@ -111,7 +111,7 @@
 		"AttributeIntelligenceGain"		"0.7"
 		
 		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"					"365"
+		"MovementSpeed"					"370"
 		"MovementTurnRate"				"0.3"
 		
 		"VisionDaytimeRange"			"1100"
@@ -149,8 +149,8 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"150"
 		"AttackAcquisitionRange"		"200"
-		"AttackDamageMin"				"38"
-		"AttackDamageMax"				"50"
+		"AttackDamageMin"				"100"
+		"AttackDamageMax"				"100"
 		"AttackRate"					"1.5"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
@@ -162,7 +162,7 @@
 		"AttributeIntelligenceGain"		"1.0"
 		
 		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"					"310"
+		"MovementSpeed"					"300"
 		"MovementTurnRate"				"0.3"
 		
 		"VisionDaytimeRange"			"700"
@@ -205,8 +205,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"25"
-		"AttackDamageMax"				"33"
+		"AttackDamageMin"				"38"
+		"AttackDamageMax"				"52"
 		"AttackRate"					"1.1"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
@@ -257,8 +257,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"29"
-		"AttackDamageMax"				"37"
+		"AttackDamageMin"				"52"
+		"AttackDamageMax"				"62"
 		"AttackRate"					"1.2"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
@@ -269,7 +269,7 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"0.8"
 		
-		"MovementSpeed"					"335"
+		"MovementSpeed"					"340"
 		"MovementTurnRate"				"0.3"
 
 		"VisionDaytimeRange"			"1000"
@@ -309,8 +309,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"200"
-		"AttackDamageMin"				"36"
-		"AttackDamageMax"				"52"
+		"AttackDamageMin"				"70"
+		"AttackDamageMax"				"90"
 		"AttackRate"					"1.50"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
@@ -362,8 +362,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"200"
-		"AttackDamageMin"				"27"
-		"AttackDamageMax"				"35"
+		"AttackDamageMin"				"48"
+		"AttackDamageMax"				"62"
 		"AttackRate"					"0.95"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
@@ -414,8 +414,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackRange"					"550"
-		"AttackDamageMin"				"27"
-		"AttackDamageMax"				"35"
+		"AttackDamageMin"				"46"
+		"AttackDamageMax"				"60"
 		"AttackRate"					"0.9"
 		"AttackAnimationPoint"			"0.3"
 		"AttackAcquisitionRange"		"800"
@@ -485,7 +485,7 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"1.4"
 		
-		"MovementSpeed"					"330"
+		"MovementSpeed"					"320"
 		"MovementTurnRate"				"0.3"
 
 		"VisionDaytimeRange"			"900"
@@ -524,8 +524,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"37"
-		"AttackDamageMax"				"45"
+		"AttackDamageMin"				"40"
+		"AttackDamageMax"				"50"
 		"AttackRate"					"1.00"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
@@ -581,8 +581,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"30"
-		"AttackDamageMax"				"42"
+		"AttackDamageMin"				"47"
+		"AttackDamageMax"				"69"
 		"AttackRate"					"1.1"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
@@ -593,7 +593,7 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"0.3"
 		
-		"MovementSpeed"					"375"
+		"MovementSpeed"					"335"
 		"MovementTurnRate"				"0.3"
 
 		"VisionDaytimeRange"			"850"
