@@ -10402,6 +10402,14 @@
 			"modifier_double_edge"
 			{
 				"Duration"		"%duration"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lancelot_ability"
+						"Function"		"OnDEAttack"
+					}
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_speed"
@@ -10425,6 +10433,15 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_ms_halved"
+				}
+			}
+			"modifier_double_edge_slow"
+			{
+				"Duration"		"0.2"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-90"
 				}
 			}
 		}

@@ -108,6 +108,14 @@ function OnDEStart(keys)
     LancelotCheckCombo(keys.caster, keys.ability)
 end
 
+function OnDEAttack(keys)
+    local caster = keys.caster
+    local target = keys.target
+    local ply = caster:GetPlayerOwner()
+    if ply.IsTAAcquired then
+        keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_double_edge_slow", {}) 
+    end
+end
 
 function OnKnightStart(keys)
         local caster = keys.caster
