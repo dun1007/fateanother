@@ -11184,7 +11184,8 @@
 		"LevelsBetweenUpgrades"			"2"
 		"precache"
 		{
-			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
+			"particle"		"particles/custom/lancelot/lancelot_arondite.vpcf"
+			"particle"		"particles/custom/lancelot/lancelot_arondite_ambient.vpcf"
 		}
 
 		// Time		
@@ -11241,6 +11242,43 @@
 			"modifier_arondite"
 			{
 				"Duration"	"%duration"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/lancelot/lancelot_arondite.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/lancelot/lancelot_arondite.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+							"CASTER"		"attach_sword"
+						}
+					}
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/lancelot/lancelot_arondite_ambient.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_origin"
+						}
+					}
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
