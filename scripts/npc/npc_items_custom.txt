@@ -790,6 +790,10 @@
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"60"
+	    "precache"
+	    {
+	    	"particle"		"particles/items2_fx/mask_of_madness.vpcf"
+	    }
 
 	    "OnSpellStart"
 	    {
@@ -810,6 +814,8 @@
 	    	"modifier_berserk_scroll"
 	    	{
 	    		"Duration"		"10.0"
+				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"100"

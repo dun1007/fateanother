@@ -149,7 +149,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"150"
 		"AttackAcquisitionRange"		"200"
-		"AttackDamageMin"				"100"
+		"AttackDamageMin"				"1"
 		"AttackDamageMax"				"100"
 		"AttackRate"					"1.5"
 		
@@ -606,7 +606,9 @@
 	"npc_dota_hero_avenger"
 	{
 		"override_hero"			"npc_dota_hero_vengefulspirit"
-		
+		"Model"					"models/avenger/avenger.vmdl"
+		"ModelScale"			"0.80"
+				
 		"Ability1"				"false_assassin_gate_keeper"
 		"Ability2"				"false_assassin_heart_of_harmony"
 		"Ability3"				"false_assassin_windblade"
@@ -650,7 +652,9 @@
 	"npc_dota_hero_zl"
 	{
 		"override_hero"			"npc_dota_hero_huskar"
-		
+		"Model"					"models/diarmuid/diarmuid.vmdl"
+		"ModelScale"			"1.10"
+
 		"Ability1"				"false_assassin_gate_keeper"
 		"Ability2"				"false_assassin_heart_of_harmony"
 		"Ability3"				"false_assassin_windblade"
@@ -658,33 +662,33 @@
 		"Ability5"				""
 		"Ability6"				"false_assassin_tsubame_gaeshi"
 		
-		"StatusHealth"					"1100"
-		"StatusHeathRegen"				"2"
-		"StatusMana"					"0"
-		"StatusManaRegen"				"0"
+		"StatusHealth"					"1150"
+		"StatusHeathRegen"				"7.5"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"1.5"
 		
 		"ArmorPhysical"					"2"
 		"MagicalResistance"				"0"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackRange"					"200"
-		"AttackDamageMin"				"27"
-		"AttackDamageMax"				"35"
-		"AttackRate"					"0.95"
+		"AttackRange"					"250"
+		"AttackDamageMin"				"38"
+		"AttackDamageMax"				"44"
+		"AttackRate"					"0.7"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"0.7"
+		"AttributeStrengthGain"			"0.8"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.8"
+		"AttributeAgilityGain"			"1.6"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0"
+		"AttributeIntelligenceGain"		"0.6"
 		
 		"MovementSpeed"					"350"
 		"MovementTurnRate"				"0.3"
 
-		"VisionDaytimeRange"			"1000"
-		"VisionNighttimeRange"			"800"
+		"VisionDaytimeRange"			"900"
+		"VisionNighttimeRange"			"900"
 	}
 
 	//=======================================

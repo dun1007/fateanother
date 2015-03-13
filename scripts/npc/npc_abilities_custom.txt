@@ -10315,7 +10315,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"250 300 350 400 450"
+		"AbilityDamage"					"140 180 220 260 300"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10430,7 +10430,10 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 
-
+		"precache"
+		{
+			"particle"			"particles/items2_fx/satanic_buff.vpcf"
+		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -10505,6 +10508,8 @@
 			"modifier_double_edge"
 			{
 				"Duration"		"%duration"
+				"EffectName" "particles/items2_fx/satanic_buff.vpcf"
+	            "EffectAttachType" "follow_origin"				
 				"OnAttackLanded"
 				{
 					"RunScript"
