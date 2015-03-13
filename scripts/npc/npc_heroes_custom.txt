@@ -343,7 +343,7 @@
 		"Ability1"				"false_assassin_gate_keeper"
 		"Ability2"				"false_assassin_heart_of_harmony"
 		"Ability3"				"false_assassin_windblade"
-		"Ability4"				"fate_empty1"
+		"Ability4"				"false_assassin_minds_eye"
 		"Ability5"				"fate_empty2"
 		"Ability6"				"false_assassin_tsubame_gaeshi"
 		"Ability7"				"false_assassin_illusory_wanderer"

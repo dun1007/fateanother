@@ -136,13 +136,15 @@ function OnKnightStart(keys)
 
         local NPLevel = 1
         if ply.KnightLevel ~= nil then NPLevel = NPLevel + ply.KnightLevel end
+
         
         caster:SwapAbilities("lancelot_close_spellbook", a5:GetName(), true,true) 
         caster:GetAbilityByIndex(5):SetLevel(1)
         if ability:GetLevel() == 1 then
+
                 caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
                 caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true)
-
+                print("opening spellbook")
                 caster:SwapAbilities("fate_empty1", a2:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty2", a3:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty3", a4:GetName(), true, true) 
@@ -205,7 +207,11 @@ function OnKnightClosed(keys)
         caster:SwapAbilities(a1:GetName(), "lancelot_smg_barrage", true ,true) 
         caster:SwapAbilities(a2:GetName(), "lancelot_double_edge", true, true) 
         caster:SwapAbilities(a3:GetName(), "lancelot_knight_of_honor", true, true) 
-        caster:SwapAbilities(a4:GetName(), "rubick_empty1", true, true) 
+        if caster:HasAbility("lancelot_blessing_of_fairy") then 
+            caster:SwapAbilities(a4:GetName(), "lancelot_blessing_of_fairy", true, true) 
+        else 
+            caster:SwapAbilities(a4:GetName(), "rubick_empty1", true, true) 
+        end
         caster:SwapAbilities(a5:GetName(), "lancelot_arms_mastership", true, true) 
         caster:SwapAbilities(a6:GetName(), "lancelot_arondite", true, true )       
 end

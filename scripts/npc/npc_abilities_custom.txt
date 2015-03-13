@@ -6050,6 +6050,91 @@
 		}
 	}
 
+	//=================================================================================================================
+	// False Assassin : Mind's Eye
+	//=================================================================================================================
+	"false_assassin_minds_eye"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"false_assassin_minds_eye"
+		"MaxLevel"						"1"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"critical_rate"			"15"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_minds_eye_crit"
+			{
+				"IsHidden"	"0"
+				"Passive"	"1"
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_minds_eye_crit_hit"
+						"Target"		"CASTER"
+					}
+
+					"Random"
+					{
+						"Chance"	"%critical_rate"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_minds_eye_crit_hit"
+								"Target"			"CASTER"
+							}
+						}
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_minds_eye_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "250"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_minds_eye_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
+				}
+			}
+		}
+	}
+
 	//========================================
 	// False Assassin : Gate Keeper
 	//========================================
@@ -6420,10 +6505,6 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
 					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
 				}
-				"States"
-				{
-					"MODIFIER_STATE_CANNOT_MISS"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -6637,6 +6718,7 @@
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
+			"particle"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -6690,6 +6772,35 @@
 				"LastDamage"		"%lasthit_damage"
 				"StunDuration"		"%stun_duration"
 				"GCD"				"%global_cooldown"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_tg_overcharge_effect"
+				"Target"			"TARGET"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_tg_overcharge_effect"
+			{
+				"IsHidden"	"1"
+				"Duration"	"1.0"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_hitloc"
+						}
+					}
+				}
 			}
 		}
 	}
@@ -11488,7 +11599,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
-		"RequiredLevel"					"1"
+		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
@@ -11564,6 +11675,76 @@
 		
 		"Modifiers"
 		{
+		}
+	}
+
+
+	//=====================================
+	// Avenger : Dark Passage
+	//=====================================
+	"avenger_dark_passage"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"avenger_dark_passage"
+		"MaxLevel"						"1"
+
+		"precache"
+		{
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"9999"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health_cost"		"100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"800"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"avenger_ability"
+			 	"Function"		"OnDPStart"
+			 	"Target"		"POINT"
+			 	"Range"			"%range"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Lancelot.SMG" 
+				"Target"		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_dark_passage"
+			{
+				"Duration"		"10"
+				"IsDebuff"		"1"
+			}
 		}
 	}
 	//================================================

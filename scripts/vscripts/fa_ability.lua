@@ -57,7 +57,9 @@ function OnHeartAttackLanded(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local damage = keys.Damage
-	damage = damage * (target:GetPhysicalArmorValue() + target:GetStrength()) / 100
+	local targetSTR = 0
+	if target:IsRealHero() then targetSTR = target:GetStrength() end
+	damage = damage * (target:GetPhysicalArmorValue() + targetSTR) / 100
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 
 end
@@ -241,13 +243,15 @@ function OnWBStart(keys)
 	end
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), casterInitOrigin, nil, radius
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 	local risingwind = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
 	if ply.IsGanryuAcquired then
 		Timers:CreateTimer(0.3, function()
-			caster:SetAbsOrigin(targets[math.random(#targets)]:GetAbsOrigin())
-			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+			if targets[1] ~= nil then
+				caster:SetAbsOrigin(targets[1]:GetAbsOrigin())
+				FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+			end
 		return end)
 	end
 
