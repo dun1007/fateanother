@@ -11191,6 +11191,7 @@
 		{
 			"particle"		"particles/custom/lancelot/lancelot_arondite.vpcf"
 			"particle"		"particles/custom/lancelot/lancelot_arondite_ambient.vpcf"
+			"particle"		"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
 		}
 
 		// Time		

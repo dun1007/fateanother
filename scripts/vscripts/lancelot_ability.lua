@@ -270,6 +270,7 @@ end
 function OnAronditeStart(keys)
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
+        local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
         
         local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
         for k,v in pairs(targets) do
@@ -294,6 +295,11 @@ function OnNukeStart(keys)
     local caster = keys.caster
     local targetPoint = keys.target_points[1]
     EmitGlobalSound("Lancelot.Nuke_Alert") 
+
+    -- Set master's combo cooldown
+    local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+    masterCombo:EndCooldown()
+    masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
     local nukemsg = {
         message = "Engaging Enemy, HQ.",
