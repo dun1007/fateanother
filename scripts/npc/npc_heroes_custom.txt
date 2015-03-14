@@ -606,15 +606,16 @@
 	"npc_dota_hero_avenger"
 	{
 		"override_hero"			"npc_dota_hero_vengefulspirit"
-		"Model"					"models/avenger/avenger.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"0.80"
 				
-		"Ability1"				"false_assassin_gate_keeper"
-		"Ability2"				"false_assassin_heart_of_harmony"
-		"Ability3"				"false_assassin_windblade"
-		"Ability4"				""
-		"Ability5"				""
-		"Ability6"				"false_assassin_tsubame_gaeshi"
+		"AbilityLayout"			"6"
+		"Ability1"				"avenger_murderous_instinct"
+		"Ability2"				"avenger_tawrich_zarich"
+		"Ability3"				"avenger_true_form"
+		"Ability4"				"fate_empty1"
+		"Ability5"				"avenger_dark_passage"
+		"Ability6"				"avenger_verg_avesta"
 		
 		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"2"

@@ -1,7 +1,7 @@
 function OnDPStart(keys)
 end
 
-function OnInstinctStart(keys)
+function OnMurderStart(keys)
 end
 
 function OnTZStart(keys)
@@ -11,4 +11,10 @@ function OnTFStart(keys)
 end
 
 function OnVergStart(keys)
+end
+
+function OnDarkPassageImproved(keys)
+end
+
+function OnBloodMarkAcquired(keys)
 end

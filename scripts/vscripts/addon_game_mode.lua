@@ -123,6 +123,7 @@ model_lookup["npc_dota_hero_bounty_hunter"] = "models/true_assassin/ta.vmdl"
 model_lookup["npc_dota_hero_crystal_maiden"] = "models/caster/caster.vmdl"
 model_lookup["npc_dota_hero_skywrath_mage"] = "models/gilgamesh/gilgamesh.vmdl"
 model_lookup["npc_dota_hero_sven"] = "models/lancelot/lancelot.vmdl"
+model_lookup["npc_dota_hero_vengefulspirit"] = "models/avenger/avenger.vmdl"
 
 function Precache( context )
 	print("Starting precache")
@@ -1188,6 +1189,9 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     if ply:GetAssignedHero():IsAlive() then
       giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
     end
+    if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
+      ply:GetAssignedHero():RemoveModifierByName("modifier_ubw_death_checker")
+    end
     if ply:GetAssignedHero():GetName() == "npc_dota_hero_doom_bringer" then
       ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
     end
@@ -1249,6 +1253,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     IsPreRound = true
     self:LoopOverPlayers(function(ply, plyID)
       ply:GetAssignedHero():RespawnHero(false, false, false)
+      ProjectileManager:ProjectileDodge(ply:GetAssignedHero())
     end)
     self:InitializeRound()
 	end

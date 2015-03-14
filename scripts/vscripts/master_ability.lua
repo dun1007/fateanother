@@ -101,6 +101,16 @@ LancelotAttribute = {
 	attrCount = 4
 }
 
+AvengerAttribute = {
+	"avenger_attribute_improve_dark_passage",
+	"avenger_attribute_blood_mark",
+	"avenger_attribute_overdrive",
+	"avenger_attribute_demon_incarnate",
+	"avenger_endless_loop",
+	attrCount = 4
+
+}
+
 
 function OnSeal1Start(keys)
 	local caster = keys.caster

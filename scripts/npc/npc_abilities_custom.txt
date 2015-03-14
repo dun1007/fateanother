@@ -4522,6 +4522,15 @@
 			}
 		}
 
+		"OnRespawn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnUBWDeath"
+			}
+		}
+
 		"OnProjectileHitUnit"
 		{
 			"RunScript"
@@ -11733,7 +11742,7 @@
 			}
 			"FireSound"
 			{
-				"EffectName"	"Lancelot.SMG" 
+				"EffectName"	"Hero_ShadowDemon.ShadowPoison.Release"
 				"Target"		"CASTER"
 			}
 		}
@@ -11744,6 +11753,408 @@
 			{
 				"Duration"		"10"
 				"IsDebuff"		"1"
+			}
+		}
+	}
+
+	//========================================
+	// Avenger : Murderous Instinct
+	//========================================
+	"avenger_murderous_instinct"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			""
+		"MaxLevel"						"5"
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"19"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"				"8 9 10 11 12"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnMurderStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_murderous_instinct"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_murderous_instinct"
+			{
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
+				}
+			}
+		}
+	}
+
+
+	//=====================================
+	// Avenger : Tawrich Zarich
+	//=====================================
+	"avenger_tawrich_zarich"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"avenger_tawrich"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"400"
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"200"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.0 1.5 2.0 2.5 3.0 3.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50 60 70 80 90 100"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnTZStart"
+				"Damage"			"%damage"
+				"Duration"			"%duration"
+			}
+		}
+	}
+
+	//========================================
+	// Avenger : True Form
+	//========================================
+	"avenger_true_form"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"avenger_true_form"
+		"MaxLevel"						"5"
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"200 275 350 425 500"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"8 10 12 14 16"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnTFStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_true_form"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_true_form"
+			{
+				"Duration"			"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS"	"%bonus_health"
+					//"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
+					//"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+				}
+			}
+		}
+	}
+
+	//========================================
+	// Avenger : Verg Avesta
+	//========================================
+	"avenger_verg_avesta"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"avenger_verg_avesta"
+		"MaxLevel"						"5"
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"45"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"multiplier"		"150"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"1.5 3.0 4.5 6.0 7.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnVergStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_verg_avesta"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_verg_avesta"
+			{
+			}
+		}
+	}
+
+	//========================================
+	// Avenger : Endless Loop(combo)
+	//========================================
+	"avenger_endless_loop"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"avenger_endless_loop"
+		"MaxLevel"						"1"
+
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"90"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnVergStart"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_endless_loop"
+			{
+			}
+		}
+	}
+
+	//=======================================
+	// Avenger Attribute : Improve Dark Passage
+	//=======================================
+	"avenger_attribute_improve_dark_passage"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"avenger_dark_passage"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnDarkPassageImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Avenger Attribute : Blood Mark
+	//=======================================
+	"avenger_attribute_blood_mark"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"avenger_blood_mark"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"9"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnBloodMarkAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Avenger Attribute : Overdrive
+	//=======================================
+	"avenger_attribute_overdrive"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"avenger_overdrive"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnOverdriveAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Avenger Attribute : Demon Incarnate
+	//=======================================
+	"avenger_attribute_demon_incarnate"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"avenger_true_form"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnDIAcquired"
 			}
 		}
 	}

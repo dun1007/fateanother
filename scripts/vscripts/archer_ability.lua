@@ -387,6 +387,7 @@ end
 
 function EndUBW(caster)
 	if caster.IsUBWActive == false then return end
+	print("UBW ended")
 
 	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
