@@ -139,6 +139,7 @@ function BecomeWard(keys)
 end
 
 function SpiritLink(keys)
+	print("Spirit Link Used")
 	local caster = keys.caster
 	local targets = keys.target_entities
 	--local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
@@ -146,41 +147,32 @@ function SpiritLink(keys)
 	-- set up table for link
 	for i=1,#targets do
 		linkTargets[i] = targets[i]
-		print("Linked hero detected :" .. targets[i]:GetName())
+		--print("Added hero to link table : " .. targets[i]:GetName())
+		RemoveHeroFromLinkTables(targets[i])
 	end
+
 	-- add list of linked targets to hero table
 	for i=1,#targets do	
 		targets[i].linkTable = linkTargets
-		print(targets[i]:GetName())
+		print("Table Contents " .. i .. " : " .. targets[i]:GetName())
 		keys.ability:ApplyDataDrivenModifier(caster, targets[i], "modifier_share_damage", {}) 
 	end
 end
 
 function OnLinkDamageTaken(keys)
-	local target = keys.target
-	print(target:GetName())
+    LoopOverHeroes(function(hero)
+        if hero:HasModifier("modifier_share_damage") and hero:GetHealth() == 0 then
+            print("Spirit Link broken on " .. hero:GetName())
+            hero:SetHealth(1)
+            hero:RemoveModifierByName("modifier_share_damage")
+            RemoveHeroFromLinkTables(hero)
+        end    
+    end)
 end
 
 function OnLinkDestroyed(keys)
-	print("Link destroyed")
+	local caster = keys.caster
 	local target = keys.target
-	--[[local caster = keys.caster
-	local target = keys.target
-	for i=0, 9 do
-		local player = PlayerResource:GetPlayer(i)
-		if player ~= nil then 
-			hero = PlayerResource:GetPlayer(i):GetAssignedHero()
-			print("Looping through " .. hero:GetName())
-			if hero.linkTable ~= nil then
-				for j=1,#hero.linkTable do
-					if hero.linkTable[j] == target then
-						table.remove(hero.linkTable, j)
-						print("Removed " .. target:GetName() .. " from link table")
-					end 
-				end
-			end
-		end
-	end]]
 end
 
 function GemOfResonance(keys)

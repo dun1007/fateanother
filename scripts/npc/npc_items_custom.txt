@@ -915,6 +915,10 @@
 	    "AbilityCastRange"				"1000"
 
 	    "ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	    "precache"
+	    {
+	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    }
 
 	    "OnSpellStart"
 	    {
@@ -937,6 +941,8 @@
 	    	"modifier_share_damage"
 	    	{
 	    		"Duration"		"10.0"
+	    		"EffectName"	"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    		"EffectAttachType"		"attach_hitloc"
 	    		"OnTakeDamage"
 	    		{
 				    "RunScript"

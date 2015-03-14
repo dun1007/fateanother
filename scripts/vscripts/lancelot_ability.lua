@@ -173,7 +173,6 @@ function OnKnightStart(keys)
                 caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
                 caster:FindAbilityByName("lancelot_nine_lives"):SetLevel(NPLevel)
                 caster:FindAbilityByName("lancelot_rule_breaker"):SetLevel(NPLevel)
-                caster:AddAbility("fate_empty4")
 
                 caster:SwapAbilities("lancelot_caliburn", a1:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 

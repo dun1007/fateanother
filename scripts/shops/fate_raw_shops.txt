@@ -19,6 +19,7 @@
 	{
 		"item"		"item_a_plus_scroll" 
 		"item"		"item_healing_scroll"
+		"item"		"item_spirit_link"
 	}
 
 	"misc"

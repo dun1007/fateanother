@@ -391,6 +391,11 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             damage_flags = dmg_flag,
             ability = abil
         }
+        if dmg_type == DAMAGE_TYPE_MAGICAL then
+            MR = target:GetMagicalArmorValue() 
+            dmgtable.damage = dmgtable.damage * (1-MR)
+        end 
+        
         -- if target is linked, distribute damages 
         if target:HasModifier("modifier_share_damage") and not isLoop and target.linkTable ~= nil then
             if #target.linkTable ~= 0 then dmgtable.damage = dmgtable.damage/#target.linkTable end
@@ -398,26 +403,19 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
                 -- do ApplyDamage if it's primary target since the shield processing is already done
                 if target.linkTable[i] == target then
                     print("Damage dealt to primary target : " .. dmgtable.damage .. " dealt by " .. dmgtable.attacker:GetName())
-                    ApplyDamage(dmgtable)
-
-                    if target:GetHealth() == 0 then 
-                        print("Target reached 1 health inside link block")
-                    end
+                    ApplyDamage(dmgtable)                
                 -- for other linked targets, we need DoDamage
                 else
-                    print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. dmgtable.damage )
-                    DoDamage(source, target.linkTable[i], dmgtable.damage,  DAMAGE_TYPE_MAGICAL, 0, abil, true) 
-
-                 
+                    if target.linkTable[i] ~= nil then 
+                        print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. dmgtable.damage )
+                        DoDamage(source, target.linkTable[i], dmgtable.damage,  DAMAGE_TYPE_MAGICAL, 0, abil, true)
+                    end 
                 end
             end
+        -- if target is not linked, apply damage normally
         else 
             dmgtable.victim = target
             ApplyDamage(dmgtable)
-
-            if target:GetHealth() == 0 and target:HasModifier("modifier_share_damage") then 
-                print("Target reached 1 health outside link block")
-            end
         end
         
     end
@@ -679,75 +677,26 @@ function LogDeepPrint(debugInstance, prefix)
     LogEndLine(LogDeepToString(debugInstance, prefix))
 end
 
-function RemoveWearables( hero )
-    local wearables = {}
-    local model = hero:FirstMoveChild()
-    --print(model:GetName())
-    while model ~= nil do
-        if model ~= nil and model:GetClassname() ~= "" then 
-            if model:GetClassname() == "dota_item_wearable" then
-                table.insert(wearables, model)
-            elseif string.find(model:GetModelName(), "weapon") ~= nil then
-                table.insert(wearables, model)
+function LoopOverHeroes(callback)
+  for i=0, 9 do
+    local player = PlayerResource:GetPlayer(i)
+    if player ~= nil and player:GetAssignedHero() ~= nil then 
+      if callback(player:GetAssignedHero()) then
+        break
+      end 
+    end
+  end
+end
+
+function RemoveHeroFromLinkTables(targethero)
+    LoopOverHeroes(function(hero)
+        if hero.linkTable ~= nil then
+            for i=1, #hero.linkTable do
+                if hero.linkTable[i] == targethero then
+                    print("Removed " .. hero.linkTable[i]:GetName() .. " from table")
+                    table.remove(hero.linkTable, i)
+                end
             end
         end
-        model = model:NextMovePeer()
-    end
-
-    for i = 1, #wearables do
-        print("removed 1 wearable")
-        wearables[i]:RemoveSelf()
-    end
-end
-
-
-function HideWearables(hero)
- print("Hiding Wearables")
-    local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() ~= "" and model:GetClassname() == "dota_item_wearable" then
-             model:SetModel("models/development/invisiblebox.vmdl")
-        end
-        model = model:NextMovePeer()
-        if model ~= nil then
-         print("Next Peer:" .. model:GetModelName())
-        end
-    end
-end
-
-function ShowWearables( event )
- local hero = event.caster
- print("Showing Wearables on ".. hero:GetModelName())
-
- -- Iterate on both tables to set each item back to their original modelName
- for i,v in ipairs(hero.hiddenWearables) do
-  for index,modelName in ipairs(hero.wearableNames) do
-   if i==index then
-    print("Changed "..v:GetModelName().. " back to "..modelName)
-    v:SetModel(modelName)
-   end
-
-   -- Here we can also change to any different cosmetic we want, in the proper slot
-   if v:GetModelName() == "models/heroes/abaddon/weapon.vmdl" then
-    v:SetModel("models/items/abaddon/feathers/feathers_weapon.vmdl")
-   end
-
-   if v:GetModelName() == "models/heroes/abaddon/mount.vmdl" then
-    v:SetModel("models/items/abaddon/mount_drake_evercold/mount_drake_evercold.vmdl")
-   end
-
-   if v:GetModelName() == "models/heroes/abaddon/cape.vmdl" then
-    v:SetModel("models/items/abaddon/hood_of_the_font_guard/hood_of_the_font_guard.vmdl")
-   end
-
-   if v:GetModelName() == "models/heroes/abaddon/shoulders.vmdl" then
-    v:SetModel("models/items/abaddon/winged_shroud_of_ruin/winged_shroud_of_ruin.vmdl")
-   end
-
-   if v:GetModelName() == "models/heroes/abaddon/mount.vmdl" then
-    v:SetModel("models/items/abaddon/feathers/feathers_weapon.vmdl")
-   end
-
-  end
- end
+    end)
 end
