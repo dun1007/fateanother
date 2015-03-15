@@ -894,6 +894,7 @@
 			"model"					"models/items/courier/catakeet/catakeet_boxes.vmdl"
 			"model"					"models/heroes/clinkz/clinkz.vmdl"
 			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"model"					"models/avenger/trueform/trueform.vmdl"
 
 
 
@@ -985,7 +986,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_enchantress"
 			//"particle_folder"				"particles/units/heroes/hero_huskar"
 			//"particle_folder"				"particles/units/heroes/hero_night_stalker"
-			//"particle_folder"				"particles/units/heroes/hero_broodmother"
+			"particle_folder"				"particles/units/heroes/hero_broodmother"
 			"particle_folder"				"particles/units/heroes/hero_bounty_hunter"
 			//"particle_folder"				"particles/units/heroes/hero_weaver"
 			//"particle_folder"				"particles/units/heroes/hero_jakiro"

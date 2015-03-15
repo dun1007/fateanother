@@ -4222,6 +4222,7 @@
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
 			"particle"	"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+			"particle"	"particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.3"
@@ -11702,32 +11703,33 @@
 
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"9999"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.15"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"10"
+		"AbilityCooldown"				"5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"75"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_cost"		"100"
+				"health_cost"		"75"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"800"
+				"range"				"500"
 			}
 		}
 		
@@ -11739,11 +11741,18 @@
 			 	"Function"		"OnDPStart"
 			 	"Target"		"POINT"
 			 	"Range"			"%range"
+			 	"HealthCost"	"%health_cost"
 			}
 			"FireSound"
 			{
 				"EffectName"	"Hero_ShadowDemon.ShadowPoison.Release"
 				"Target"		"CASTER"
+			}
+			"AttachEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
 			}
 		}
 
@@ -11751,8 +11760,10 @@
 		{
 			"modifier_dark_passage"
 			{
-				"Duration"		"10"
+				"IsHidden"		"0"
 				"IsDebuff"		"1"
+				"Duration"		"15.0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 			}
 		}
 	}
@@ -11766,11 +11777,187 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"avenger_murderous_instinct"
 		"MaxLevel"						"5"
-
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+			"particle"			"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+			"particle"			"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"19"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"crit_multiplier"	"160 200 240 280 320"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"critical_rate"		"35"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"				"8 10 12 14 16"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_regen_percentage"	"2.0 3.5 5 6.5 8.0"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_regen_percentage_herokill"	"20.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnMurderStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_murderous_instinct"
+				"Target"			"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_OgreMagi.Bloodlust.Cast"
+				"Target"		"CASTER"
+			}
+			"FireEffect"
+			{
+				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"Target"		"CASTER"
+			}
+		}
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnMurderLevelUp"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_murderous_instinct"
+			{
+				"Duration"		"%duration"
+				"EffectName" 	"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
+	            "EffectAttachType" "follow_origin"	
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_murderous_instinct_crit_hit"
+						"Target"		"CASTER"
+					}
+
+					"Random"
+					{
+						"Chance"	"%critical_rate"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_murderous_instinct_crit_hit"
+								"Target"			"CASTER"
+							}							
+						}
+					}
+				}	      	
+			}
+			"modifier_murderous_instinct_bash_checker"
+			{
+				"Duration"		"3.0"
+				"IsHidden"		"0"
+			}
+			"modifier_murderous_instinct_passive"
+			{
+				"Passive"       "1"
+				"IsHidden"      "1"
+				"OnKill"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnMurder"
+						"ManaRegen"			"%mana_regen_percentage"
+						"ManaRegenHero"		"%mana_regen_percentage_herokill"
+					}
+					"FireEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"		"CASTER"
+					}
+				}
+			}
+			"modifier_murderous_instinct_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnBashSuccess"
+					}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_murderous_instinct_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
+				}
+			}
+		}
+	}
+
+	//========================================
+	// Avenger : Unlimited Remains
+	//========================================
+	"avenger_unlimited_remains"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"avenger_remains"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"8"
 		"AbilityCastPoint"				"0.3"
 
 		// Cost
@@ -11791,38 +11978,14 @@
 			"RunScript"
 			{
 				"ScriptFile"		"avenger_ability"
-				"Function"			"OnMurderStart"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_murderous_instinct"
-				"Target"			"CASTER"
+				"Function"			"OnRemainStart"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_murderous_instinct"
-			{
-				"Duration"		"%duration"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
-				}
-			}
-			"modifier_murderous_instinct"
-			{
-				"Passive"       "1"
-				"IsHidden"      "1"
-				"OnKill"
-				{
-					
-				}
-			}
 		}
 	}
-
 
 	//=====================================
 	// Avenger : Tawrich Zarich
@@ -11832,10 +11995,13 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"avenger_tawrich"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastRange"				"400"
@@ -11844,19 +12010,25 @@
 		
 		"precache"
 		{
+			"particle"			"particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf"
 		}
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"1.0 1.5 2.0 2.5 3.0 3.5"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"50 60 70 80 90 100"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"50 60 70 80 90 100"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.4 0.8 1.2 1.6 2.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"			"0.7 1.4 2.1 2.8 3.5"
 			}
 		}
 
@@ -11869,19 +12041,191 @@
 				"Damage"			"%damage"
 				"Duration"			"%duration"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_tawrich_slow"
+				"Target"		"TARGET"
+			}
+		}
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnTZLevelUp"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_tawrich_slow"
+			{
+				"Duration"		"%slow_duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-50"
+				}
+			}
 		}
 	}
 
+	//=====================================
+	// Avenger : Vengeance Mark
+	//=====================================
+	"avenger_vengeance_mark"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"avenger_vengence_mark"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"300"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCooldown"				"26"
+		"AbilityManaCost"				"200"
+		
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"delay"				"3.5 2.75 2.0 1.25 0.5"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnVengeanceStart"
+				"Damage"			"%damage"
+				"Delay"				"%delay"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_vengeance_mark"
+				"Target"			"TARGET"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_DoomBringer.Devour"
+				"Target"			"TARGET"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"TARGET"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_vengeance_mark"
+			{
+				"Duration"		"%delay"
+				"IsDebuff"		"1"
+				"EffectName"		"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnVengeanceEnd"
+						"Damage"			"%damage"				
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"			"CASTER"
+					}
+					"FireSound"
+					{
+						"EffectName"		"Hero_DoomBringer.Devour"
+						"Target"			"CASTER"
+					}
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Avenger : Blood Mark
+	//=====================================
+	"avenger_blood_mark"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"avenger_blood_mark"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"300"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCooldown"				"26"
+		"AbilityManaCost"				"200"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"1.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"500"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnVengeanceStart"
+			}
+		}
+	}
 	//========================================
 	// Avenger : True Form
 	//========================================
 	"avenger_true_form"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"avenger_true_form"
 		"MaxLevel"						"5"
-
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11891,6 +12235,12 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"400"
+		"precache"
+		{
+			"model"		"models/avenger/trueform/trueform.vmdl"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+		}
 		
 		"AbilitySpecial"
 		{
@@ -11898,6 +12248,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_health"			"200 275 350 425 500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_percentage"		"14 18 22 26 30"
 			}
 			"02"
 			{
@@ -11918,18 +12273,123 @@
 				"ModifierName"		"modifier_true_form"
 				"Target"			"CASTER"
 			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Terrorblade.Metamorphosis"
+				"Target"			"CASTER"
+			}
 		}
-
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"avenger_ability"
+				"Function"		"OnTFLevelUp"
+			}
+		}
 		"Modifiers"
 		{
 			"modifier_true_form"
 			{
 				"Duration"			"%duration"
+				"EffectName" 		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
+				"EffectAttachType"  "follow_origin"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_EXTRA_HEALTH_BONUS"	"%bonus_health"
-					//"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
-					//"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnTFEnd"
+					}				
+				}
+			}
+		}
+	}
+
+	//========================================
+	// Avenger : Demon Core
+	//========================================
+	"avenger_demon_core"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityTextureName"			"avenger_demon_core"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"health_regen_percentage"		"3.0 4.5 6.0 7.5 9.0"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_cost_per_second"			"100"
+			}
+		}
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnDCToggleOn"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Huskar.Inner_Vitality"
+				"Target"			"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_demon_core"
+				"Target"			"CASTER"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnDCToggleOff"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"		"modifier_demon_core"
+				"Target"			"CASTER"
+			}
+		}		
+
+		"Modifiers"
+		{
+			"modifier_demon_core"
+			{
+				"EffectName"	"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"	"%health_regen_percentage"
 				}
 			}
 		}
@@ -11944,7 +12404,9 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"avenger_verg_avesta"
 		"MaxLevel"						"5"
-
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11960,12 +12422,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"multiplier"		"150"
+				"multiplier"		"125 130 145 160 175"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1.5 3.0 4.5 6.0 7.5"
+				"duration"			"8.0 9.0 10.0 11.0 12.0"
 			}
 		}
 		
@@ -12000,6 +12462,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"avenger_endless_loop"
 		"MaxLevel"						"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 
 
 		// Time		
@@ -12042,7 +12505,7 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityTextureName"			"avenger_dark_passage"
-		
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"

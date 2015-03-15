@@ -412,7 +412,6 @@ function OnImrpoveBCAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsBCImproved = true
-
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

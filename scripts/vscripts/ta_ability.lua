@@ -42,7 +42,6 @@ function OnVenomHit(keys)
 	local currentStack = target:GetModifierStackCount("modifier_weakening_venom_debuff", keys.ability)
 
 	if currentStack == 0 and target:HasModifier("modifier_weakening_venom_debuff") then currentStack = 1 end
-	print(currentStack)
 	target:RemoveModifierByName("modifier_weakening_venom_debuff") 
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_weakening_venom_debuff", {}) 
 	target:SetModifierStackCount("modifier_weakening_venom_debuff", keys.ability, currentStack + 1)

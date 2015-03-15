@@ -112,7 +112,8 @@ function KBHit(keys)
 	Timers:CreateTimer(function() 
 		if KBCount == 4 then return end
 		DoDamage(keys.caster, keys.target, keys.DamagePerTick , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-
+		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
 		caster:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
 		KBCount = KBCount + 1
 		return 0.25
