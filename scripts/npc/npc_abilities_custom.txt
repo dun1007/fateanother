@@ -11764,7 +11764,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			""
+		"AbilityTextureName"			"avenger_murderous_instinct"
 		"MaxLevel"						"5"
 
 
@@ -11809,6 +11809,15 @@
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
+				}
+			}
+			"modifier_murderous_instinct"
+			{
+				"Passive"       "1"
+				"IsHidden"      "1"
+				"OnKill"
+				{
+					
 				}
 			}
 		}

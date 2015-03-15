@@ -407,39 +407,51 @@ function SpinInCircle(unit, center, t, multiplier)
 end
 
 function OnEternalImproved(keys)
-        local caster = keys.caster
-        local ply = caster:GetPlayerOwner()
-        local hero = caster:GetPlayerOwner():GetAssignedHero()
-        ply.IsEternalImproved = true
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsEternalImproved = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnBlessingAcquired(keys)
-        local caster = keys.caster
-        local ply = caster:GetPlayerOwner()
-        local hero = caster:GetPlayerOwner():GetAssignedHero()
-        hero:AddAbility("lancelot_blessing_of_fairy") 
-        hero:FindAbilityByName("lancelot_blessing_of_fairy"):SetLevel(1) 
-        hero:SwapAbilities("rubick_empty1", "lancelot_blessing_of_fairy", true, true) 
-        hero:RemoveAbility("rubick_empty1") 
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    hero:AddAbility("lancelot_blessing_of_fairy") 
+    hero:FindAbilityByName("lancelot_blessing_of_fairy"):SetLevel(1) 
+    hero:SwapAbilities("rubick_empty1", "lancelot_blessing_of_fairy", true, true) 
+    hero:RemoveAbility("rubick_empty1") 
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnKnightImproved(keys)
-        local caster = keys.caster
-        local ply = caster:GetPlayerOwner()
-        local hero = caster:GetPlayerOwner():GetAssignedHero()
-        if ply.KnightLevel == nil then
-                ply.KnightLevel = 1
-                keys.ability:EndCooldown()
-        else
-                ply.KnightLevel = 2
-        end 
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    if ply.KnightLevel == nil then
+            ply.KnightLevel = 1
+            keys.ability:EndCooldown()
+    else
+            ply.KnightLevel = 2
+    end 
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnTAAcquired(keys)
-        local caster = keys.caster
-        local ply = caster:GetPlayerOwner()
-        local hero = caster:GetPlayerOwner():GetAssignedHero()
-        ply.IsTAAcquired = true
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsTAAcquired = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function LancelotCheckCombo(caster, ability)
