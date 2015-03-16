@@ -963,7 +963,7 @@
 			//"particle_folder"				"particles/units/heroes/hero_tinker"
 			//"particle_folder"				"particles/units/heroes/hero_sniper"
 			//"particle_folder"				"particles/units/heroes/hero_necrolyte"
-			//"particle_folder"				"particles/units/heroes/hero_warlock"
+			"particle_folder"				"particles/units/heroes/hero_warlock"
 			//"particle_folder"				"particles/units/heroes/hero_queenofpain"
 			//"particle_folder"				"particles/units/heroes/hero_venomancer"
 			//"particle_folder"				"particles/units/heroes/hero_faceless_void"

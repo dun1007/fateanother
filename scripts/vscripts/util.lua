@@ -311,7 +311,6 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsAbsorbed = false
     local damageTaken = dmg
     local IsBScrollIgnored = false
-    local targetMR = target:GetMagicalArmorValue()
 
     if dmg_type == DAMAGE_TYPE_MAGICAL then
         for k,v in pairs(goesthruB) do
@@ -400,14 +399,22 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             damage_flags = dmg_flag,
             ability = abil
         }
-        if dmg_type == DAMAGE_TYPE_MAGICAL then
-            MR = target:GetMagicalArmorValue() 
-            dmgtable.damage = dmgtable.damage * (1-MR)
-        end 
+
         
         -- if target is linked, distribute damages 
         if target:HasModifier("modifier_share_damage") and not isLoop and target.linkTable ~= nil then
-            if #target.linkTable ~= 0 then dmgtable.damage = dmgtable.damage/#target.linkTable end
+            -- Calculate the damage to secondary targets separately, in order to prevent MR from being twice as effective on primary target.
+            local damageToAllies =  dmgtable.damage
+
+            if dmg_type == DAMAGE_TYPE_PHYSICAL then
+                -- calculate reduction from physical armor
+            elseif dmg_type == DAMAGE_TYPE_MAGICAL then
+                MR = target:GetMagicalArmorValue() 
+                damageToAllies = dmgtable.damage * (1-MR)
+            end   
+            damageToAllies = dmgtable.damage/#target.linkTable
+            dmgtable.damage = dmgtable.damage/#target.linkTable
+            -- Loop through linked heroes
             for i=1, #target.linkTable do
                 -- do ApplyDamage if it's primary target since the shield processing is already done
                 if target.linkTable[i] == target then
@@ -416,8 +423,8 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
                 -- for other linked targets, we need DoDamage
                 else
                     if target.linkTable[i] ~= nil then 
-                        print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. dmgtable.damage )
-                        DoDamage(source, target.linkTable[i], dmgtable.damage,  DAMAGE_TYPE_MAGICAL, 0, abil, true)
+                        print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. damageToAllies )
+                        DoDamage(source, target.linkTable[i], damageToAllies,  DAMAGE_TYPE_MAGICAL, 0, abil, true)
                     end 
                 end
             end
@@ -425,6 +432,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         else 
             dmgtable.victim = target
             ApplyDamage(dmgtable)
+            --print(dmgtable.attacker:GetName() .. " dealt " .. dmgtable.damage .. " damage to " .. dmgtable.victim:GetName())
         end
         
     end

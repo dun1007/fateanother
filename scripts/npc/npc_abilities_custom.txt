@@ -11847,6 +11847,7 @@
 				"EffectName"	"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
 				"EffectAttachType"	"attach_origin"
 				"Target"		"CASTER"
+
 			}
 		}
 		"OnUpgrade"
@@ -12041,11 +12042,6 @@
 				"Damage"			"%damage"
 				"Duration"			"%duration"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_tawrich_slow"
-				"Target"		"TARGET"
-			}
 		}
 		"OnUpgrade"
 		{
@@ -12118,11 +12114,6 @@
 				"Function"			"OnVengeanceStart"
 				"Damage"			"%damage"
 				"Delay"				"%delay"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_vengeance_mark"
-				"Target"			"TARGET"
 			}
 			"FireSound"
 			{
@@ -12407,6 +12398,10 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"precache"
+		{
+			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
+		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12450,6 +12445,16 @@
 			"modifier_verg_avesta"
 			{
 				"Duration"		"%duration"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "avenger_ability"
+						"Function"      "OnVergTakeDamage"
+						"Multiplier"		"%multiplier"
+						"DamageTaken"	"%attack_damage"
+					}
+				}				
 			}
 		}
 	}

@@ -92,6 +92,8 @@ function OnTZStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local TZCount = 0
+	if IsSpellBlocked(keys.target) then return end
+	if not IsImmuneToSlow(keys.target) then keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_tawrich_slow", {}) end
 	Timers:CreateTimer(0.033, function() 
 		if TZCount == 6 then return end
 		caster:EmitSound("Hero_BountyHunter.Jinada")
@@ -114,6 +116,8 @@ end
 function OnVengeanceStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
+	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_vengeance_mark", {})
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -124,6 +128,9 @@ function OnVengeanceEnd(keys)
 end
 
 function OnBloodStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
 end
 
 function OnTFStart(keys)
@@ -180,6 +187,20 @@ end
 function OnVergStart(keys)
 	local caster = keys.caster
 	EmitGlobalSound("Avenger.Berg")
+end
+
+function OnVergTakeDamage(keys)
+	local caster = keys.caster
+	local attacker = keys.attacker
+	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
+	print(returnDamage)
+	if caster:GetHealth() ~= 0 then
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick")
+		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
+		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
+	end
+ 
 end
 
 function OnDarkPassageImproved(keys)
