@@ -8,7 +8,8 @@ purgable = {"modifier_aspd_increase",
         "modifier_a_plus_armor",
         "modifier_speed_gem",
         "modifier_share_damage",
-        "modifier_rule_breaker"
+        "modifier_rule_breaker",
+        "modifier_double_edge",
 }
 
 goesthruB = {"saber_avalon",
@@ -17,7 +18,8 @@ goesthruB = {"saber_avalon",
             "gilgamesh_gate_of_babylon",
             "false_assassin_quickdraw",
             "saber_alter_max_mana_burst",
-            "archer_5th_overedge"
+            "archer_5th_overedge",
+            "avenger_verg_avesta"
 }
 
 cleansable = {
@@ -28,22 +30,47 @@ cleansable = {
     "rb_sealdisabled",
     "modifier_dagger_of_treachery",
     "modifier_slow_tier1",
-    "modifier_slow_tier2"
+    "modifier_slow_tier2",
+    "modifier_silence",
+    "modifier_disarmed"
 }
 
 donotlevel = {
-  "attribute_bonus",
-  "saber_improved_instinct",
-  "lancer_5th_protection_from_arrows",
-  "saber_alter_darklight_passive",
-  "rider_5th_mystic_eye_improved",
-  "rider_5th_monstrous_strength_passive",
-  "berserker_5th_divinity_improved",
-  "berserker_5th_berserk_attribute_passive",
-  "berserker_5th_god_hand",
-  "false_assassin_presence_concealment",
-  "true_assassin_weakening_venom_passive",
-  "true_assassin_protection_from_wind"
+    "attribute_bonus",
+    "saber_improved_instinct",
+    "lancer_5th_protection_from_arrows",
+    "saber_alter_darklight_passive",
+    "rider_5th_mystic_eye_improved",
+    "rider_5th_monstrous_strength_passive",
+    "berserker_5th_divinity_improved",
+    "berserker_5th_berserk_attribute_passive",
+    "berserker_5th_god_hand",
+    "false_assassin_presence_concealment",
+    "true_assassin_weakening_venom_passive",
+    "true_assassin_protection_from_wind"
+}
+
+CannotReset = {
+    "saber_improved_instinct",
+    "saber_strike_air",
+    "saber_max_excalibur",
+    "lancer_5th_battle_continuation",
+    "lancer_5th_wesen_gae_bolg",
+    "saber_alter_max_mana_burst",
+    "rider_5th_bellerophon_2",
+    "archer_5th_hrunting",
+    "archer_5th_overedge",
+    "archer_5th_arrow_rain",
+    "berserker_5th_madmans_roar",
+    "false_assassin_quickdraw",
+    "false_assassin_illusory_wanderer",
+    "true_assassin_combo",
+    "gilgamesh_max_enuma_elish",
+    "caster_5th_hecatic_graea_powered",
+    "lancelot_blessing_of_fairy",
+    "lancelot_arms_mastership_improved",
+    "lancelot_nuke",
+    "avenger_endless_loop"
 }
 
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
@@ -110,28 +137,6 @@ function StartQuestTimer(questname, questtitle, questendtime)
 
   return entQuest
 end
-
-
-CannotReset = {
-    "saber_improved_instinct",
-    "saber_strike_air",
-    "saber_max_excalibur",
-    "lancer_5th_battle_continuation",
-    "lancer_5th_wesen_gae_bolg",
-    "saber_alter_max_mana_burst",
-    "rider_5th_bellerophon_2",
-    "archer_5th_hrunting",
-    "archer_5th_overedge",
-    "archer_5th_arrow_rain",
-    "berserker_5th_madmans_roar",
-    "false_assassin_quickdraw",
-    "false_assassin_illusory_wanderer",
-    "true_assassin_combo",
-    "gilgamesh_max_enuma_elish",
-    "caster_5th_hecatic_graea_powered",
-    "lancelot_blessing_of_fairy",
-    "lancelot_arms_mastership_improved"
-}
 
 function LevelAllAbility(hero)
     for i=0, 30 do

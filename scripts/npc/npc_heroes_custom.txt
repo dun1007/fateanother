@@ -624,8 +624,8 @@
 		"Ability12"				"presence_detection_passive"
 		"Ability13"				"attribute_bonus"
 		
-		"StatusHealth"					"1000"
-		"StatusHeathRegen"				"0"
+		"StatusHealth"					"1150"
+		"StatusHeathRegen"				"12"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"0"
 		

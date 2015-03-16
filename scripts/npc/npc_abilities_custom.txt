@@ -12422,7 +12422,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"multiplier"		"125 130 145 160 175"
+				"multiplier"		"120 130 140 150 160"
 			}
 			"02"
 			{
@@ -12449,6 +12449,7 @@
 		{
 			"modifier_verg_avesta"
 			{
+				"Duration"		"%duration"
 			}
 		}
 	}
