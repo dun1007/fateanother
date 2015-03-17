@@ -144,11 +144,17 @@ function SpiritLink(keys)
 	local targets = keys.target_entities
 	--local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 	local linkTargets = {}
+	caster:EmitSound("Hero_Warlock.FatalBonds" )
 	-- set up table for link
 	for i=1,#targets do
 		linkTargets[i] = targets[i]
 		--print("Added hero to link table : " .. targets[i]:GetName())
 		RemoveHeroFromLinkTables(targets[i])
+
+		-- particle
+    	local pulse = ParticleManager:CreateParticle( "particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	    ParticleManager:SetParticleControl( pulse, 0, caster:GetAbsOrigin())
+	    ParticleManager:SetParticleControl( pulse, 1, targets[i]:GetAbsOrigin())
 	end
 
 	-- add list of linked targets to hero table
@@ -263,6 +269,7 @@ end
 function CScrollHit(keys)
 	if IsSpellBlocked(keys.target) then return end
 	DoDamage(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, 100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	keys.target:EmitSound("Hero_EmberSpirit.FireRemnant.Explode")
 	if not keys.target:IsMagicImmune() then
 		keys.target:AddNewModifier(keys.caster:GetPlayerOwner():GetAssignedHero(), keys.target, "modifier_stunned", {Duration = 1.0}) 
 	end

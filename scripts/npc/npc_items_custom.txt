@@ -919,6 +919,7 @@
 	    "precache"
 	    {
 	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
 	    }
 
 	    "OnSpellStart"
@@ -943,7 +944,7 @@
 	    	{
 	    		"Duration"		"10.0"
 	    		"EffectName"	"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
-	    		"EffectAttachType"		"attach_hitloc"
+	    		"EffectAttachType"		"follow_overhead"
 	    		"OnTakeDamage"
 	    		{
 				    "RunScript"

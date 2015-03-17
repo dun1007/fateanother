@@ -8398,6 +8398,7 @@
 			"particle"		"particles/econ/items/tinker/boots_of_travel/teleport_start_bots_ground_glow.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_gob_model.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_gob.vpcf"
+			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
 		}
 		
 		// Casting
@@ -8408,10 +8409,6 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"30"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"30 45 60 75 90"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -9954,11 +9951,6 @@
 				"ScriptFile"		"caster_ability"
 				"Function"			"OnRBStart"
 				"StunDuration"		"%stun_duration"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_rule_breaker"
-				"Target"			"TARGET"
 			}
 			"FireEffect"
 			{
@@ -13468,7 +13460,7 @@
 			{
 				"Target"			"TARGET"
 				"EffectName"		"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
-				"MoveSpeed"			"750"
+				"MoveSpeed"			"1000"
 				"TargetTeams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Dodgeable"			"1"
 			}

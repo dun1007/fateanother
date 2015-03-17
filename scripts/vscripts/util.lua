@@ -292,6 +292,14 @@ function HardCleanse(target)
     end
 end
 
+function GetPhysicalDamageReduction(armor)
+    local reduction = 0.06*armor / (1+0.06*armor)
+    if armor >= 0 then 
+        return reduction
+    else
+        return -reduction
+    end
+end
 
 
 lastTipChoice = 0
@@ -332,11 +340,13 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 
     -- check if target has Rho Aias shield 
     if not IsAbsorbed and target:HasModifier("modifier_rho_aias_shield") then
-        local MR = 0
-        if dmg_type == DAMAGE_TYPE_MAGICAL then
-            MR = target:GetMagicalArmorValue() 
+        local reduction = 0
+        if dmg_type == DAMAGE_TYPE_PHYSICAL then
+            reduction = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
+        elseif dmg_type == DAMAGE_TYPE_MAGICAL then
+            reduction = target:GetMagicalArmorValue() 
         end 
-        target.rhoShieldAmount = target.rhoShieldAmount - damageTaken * (1-MR)
+        target.rhoShieldAmount = target.rhoShieldAmount - damageTaken * (1-reduction)
 
         -- if damage is beyond the shield's block amount, update remaining damage
         if target.rhoShieldAmount <= 0 then
@@ -373,11 +383,13 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     end 
     -- check if target has Argos
     if not IsAbsorbed and target:HasModifier("modifier_argos_shield") then
-        local MR = 0
-        if dmg_type == DAMAGE_TYPE_MAGICAL then
-            MR = target:GetMagicalArmorValue() 
+        local reduction = 0
+        if dmg_type == DAMAGE_TYPE_PHYSICAL then
+            reduction = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
+        elseif dmg_type == DAMAGE_TYPE_MAGICAL then
+            reduction = target:GetMagicalArmorValue() 
         end 
-        target.argosShieldAmount = target.argosShieldAmount - damageTaken * (1-MR)
+        target.argosShieldAmount = target.argosShieldAmount - damageTaken * (1-reduction)
         if target.argosShieldAmount <= 0 then
             print("Argos has been broken through by " .. -target.argosShieldAmount)
             damageTaken = -target.argosShieldAmount
@@ -408,9 +420,10 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             local damageToAllies =  dmgtable.damage
 
             if dmg_type == DAMAGE_TYPE_PHYSICAL then
-                -- calculate reduction from physical armor
+                local AR = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
+                damageToAllies = dmgtable.damage * (1-AR)
             elseif dmg_type == DAMAGE_TYPE_MAGICAL then
-                MR = target:GetMagicalArmorValue() 
+                local MR = target:GetMagicalArmorValue() 
                 damageToAllies = dmgtable.damage * (1-MR)
             end   
             damageToAllies = dmgtable.damage/#target.linkTable

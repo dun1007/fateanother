@@ -9,7 +9,7 @@ function OnBarrageStart(keys)
 	local dot = keys.Damage
 
 	local rainCount = 0
-
+	caster:EmitSound("Archer.UBWAmbient")
     Timers:CreateTimer(function()
 		if rainCount == 15 then return end
 	
@@ -46,9 +46,10 @@ function OnBarrageStart(keys)
 				-- Particles on impact
 				local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
 				ParticleManager:SetParticleControl( explosionFxIndex, 0, targetPoint )
-					
+
 				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
 				ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint )
+				ParticleManager:SetParticleControl( impactFxIndex, 2, Vector(800,800,800) )
 					
 				-- Destroy Particle
 				Timers:CreateTimer( 0.5, function()
@@ -284,6 +285,9 @@ end
 
 function OnGOBHit(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, keys.target)
+	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin())
+	keys.target:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
 end
 
 function SumerArrowFire(keys)

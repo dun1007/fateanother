@@ -470,9 +470,9 @@ function OnRainStart(keys)
 	-- Barrage attack
 	local barrageCount = 0
 	Timers:CreateTimer( 0.3, function()
-		if barrageCount == 30 then return end
+		if barrageCount == 30 or not caster:IsAlive() then return end
 		local arrowVector = Vector( RandomFloat( -radius, radius ), RandomFloat( -radius, radius ), 0 )
-		
+		caster:EmitSound("Hero_DrowRanger.FrostArrows")
 		-- Create Arrow particles
 		-- Main variables
 		local speed = 3000				-- Movespeed of the arrow
@@ -583,7 +583,7 @@ function OnUBWBarrageStart(keys)
 	if ply.IsProjectionImproved then 
 		keys.Damage = keys.Damage + 100
 	end	
-
+	caster:EmitSound("Archer.UBWAmbient")
 	local barrageCount = 0
 	
 	-- Vector
@@ -718,6 +718,7 @@ function OnUBWNineLanded(caster, ability)
 	local radius = ability:GetSpecialValueFor("radius")
 	local lasthitradius = ability:GetSpecialValueFor("radius_lasthit")
 	local stun = ability:GetSpecialValueFor("stun_duration")
+	local casterInitOrigin = caster:GetAbsOrigin() 
 	local nineCounter = 0
 
 	local ply = caster:GetPlayerOwner()
@@ -730,12 +731,25 @@ function OnUBWNineLanded(caster, ability)
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
 			if nineCounter == 8 then -- if nine is finished
+				caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
 				caster:EmitSound("Archer.NineFinish") 
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+					-- push enemies back
+					local pushback = Physics:Unit(v)
+					v:PreventDI()
+					v:SetPhysicsFriction(0)
+					v:SetPhysicsVelocity((v:GetAbsOrigin() - casterInitOrigin):Normalized() * 300)
+					v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+					v:FollowNavMesh(false)
+					Timers:CreateTimer(0.5, function()  
+						v:PreventDI(false)
+						v:SetPhysicsVelocity(Vector(0,0,0))
+						v:OnPhysicsFrame(nil)
+					return end)		
 				end
 				
 				-- Particles
@@ -753,10 +767,11 @@ function OnUBWNineLanded(caster, ability)
 						return nil
 					end
 				)
-				
+		
 				return 
 			end
 			
+			caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
