@@ -360,6 +360,7 @@ function OnNukeStart(keys)
         -- particle
         local barrageImpact1 = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
         ParticleManager:SetParticleControl( barrageImpact1, 0, targetPoint+barrageVec1)
+         ParticleManager:SetParticleControl( barrageImpact1, 1, Vector(300, 300, 300))
         local barrageImpact2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_impact_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster )
         ParticleManager:SetParticleControl( barrageImpact2, 0, targetPoint+barrageVec1)
         visiondummy:EmitSound("Hero_Gyrocopter.Rocket_Barrage.Launch")

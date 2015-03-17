@@ -162,6 +162,18 @@ function OnRemainExplode(keys)
 end
 
 function OnRemainMultiplyStart(keys)
+	local caster = keys.caster
+	Timers:CreateTimer(0.033, function()
+		local avenger = caster:GetPlayerOwner():GetAssignedHero()
+		local remainabil = avenger:FindAbilityByName("avenger_unlimited_remains")
+		local period = remainabil:GetLevelSpecialValueFor("multiply_period", remainabil:GetLevel())	
+		Timers:CreateTimer(period, function() 
+			if caster == nil or not caster:IsAlive() then return end
+			OnRemainMultiply(keys)
+			return period
+		end)	
+	end)
+
 end
 
 function OnRemainMultiply(keys)
@@ -362,12 +374,33 @@ function AvengerCheckCombo(caster, ability)
 end
 
 function OnDarkPassageImproved(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsDPImproved = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnBloodMarkAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    -- swap vengeance mark with blood mark
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnOverdriveAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    -- enable overdrive passive
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnDIAcquired(keys)

@@ -506,6 +506,7 @@ function OnRainStart(keys)
 				
 				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
 				ParticleManager:SetParticleControl( impactFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(300, 300, 300))
 				
 				-- Destroy Particle
 				Timers:CreateTimer( 0.5, function()
@@ -631,6 +632,7 @@ function OnUBWBarrageStart(keys)
 					
 					local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
 					ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint + swordVector )
+					ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(300, 300, 300))
 					
 					-- Destroy Particle
 					Timers:CreateTimer( 0.5, function()

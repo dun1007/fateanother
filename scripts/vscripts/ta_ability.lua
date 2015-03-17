@@ -25,7 +25,9 @@ end
 
 function OnDirkHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-	if not IsImmuneToSlow(keys.target) then keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dirk_poison", {}) end
+	if not IsImmuneToSlow(keys.target) then 
+		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
+	end
 	if keys.ability:GetName() == "true_assassin_dirk" then
 		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	else

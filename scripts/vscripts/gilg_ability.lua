@@ -49,7 +49,7 @@ function OnBarrageStart(keys)
 
 				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
 				ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint )
-				ParticleManager:SetParticleControl( impactFxIndex, 2, Vector(800,800,800) )
+				ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(keys.Radius,keys.Radius,keys.Radius) )
 					
 				-- Destroy Particle
 				Timers:CreateTimer( 0.5, function()
@@ -141,6 +141,7 @@ function OnChainStart(keys)
 						
 					local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
 					ParticleManager:SetParticleControl( impactFxIndex, 0, targetloc )
+					ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(500,500,500) )
 						
 					-- Destroy Particle
 					Timers:CreateTimer( 0.5, function()
