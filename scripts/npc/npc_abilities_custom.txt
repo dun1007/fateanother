@@ -10668,7 +10668,7 @@
 			}
 			"modifier_double_edge_slow"
 			{
-				"Duration"		"0.2"
+				"Duration"		"0.3"
 				"IsHidden"		"1"
 				"Properties"
 				{
@@ -11818,7 +11818,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"mana_regen_percentage"	"2.0 3.5 5 6.5 8.0"
+				"mana_regen_percentage"	"8.0"
 			}
 			"05"
 			{
@@ -11914,6 +11914,14 @@
 						"Target"		"CASTER"
 					}
 				}
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnAttackRemain"
+					}					
+				}
 			}
 			"modifier_murderous_instinct_crit_hit"
 			{
@@ -11958,9 +11966,13 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+		}
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"8"
+		"AbilityCooldown"				"7"
 		"AbilityCastPoint"				"0.3"
 
 		// Cost
@@ -11972,7 +11984,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"				"8 9 10 11 12"
+				"spawn_number"		"3 4 4 5 5"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"120 135 150 165 180"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"multiply_period"		"40 40 36 36 32"
 			}
 		}
 		
@@ -11982,11 +12004,102 @@
 			{
 				"ScriptFile"		"avenger_ability"
 				"Function"			"OnRemainStart"
+				"SpawnNumber"		"%spawn_number"
+				"Period"			"%multiply_period"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_avenger_death_checker"
+				"Target"			"CASTER"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_avenger_death_checker"
+			{
+				"IsHidden"      "1"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnRemainDeath"
+					}
+				}
+			}	
+		}
+	}
+
+	//================================================
+	// Unlimited Remain passive
+	//================================================
+	"avenger_remain_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "avenger_remains"
+		"MaxLevel"                      "5"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"		"120 135 150 165 180"
+			}
+			"02"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"multiply_period"		"40 40 36 36 32"
+			}
+		}	
+		"Modifiers"
+		{
+			"avenger_remain_self_destruct"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"		
+
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"avenger_ability"
+						"Function"		"OnRemainMultiplyStart"
+					}
+				}
+				"OnAttackStart"
+				{
+					"FireEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+
+						"ControlPointEntities"
+						{
+							"CASTER"	"follow_origin"
+							"CASTER"	"follow_origin"
+							"CASTER"	"follow_origin"
+						}
+					}
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnRemainExplode"
+						"Damage"			"%damage"
+						"Period"			"%multiply_period"
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				}						
+		  	}
 		}
 	}
 
@@ -12403,6 +12516,7 @@
 		"precache"
 		{
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
 		}
 
 		// Time		
@@ -12440,6 +12554,12 @@
 				"ModifierName"		"modifier_verg_avesta"
 				"Target"			"CASTER"
 			}
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+				"EffectAttachType"	"start_at_origin"
+			}
 		}
 
 		"Modifiers"
@@ -12471,7 +12591,12 @@
 		"AbilityTextureName"			"avenger_endless_loop"
 		"MaxLevel"						"1"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
-
+		"precache"
+		{
+			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
+			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"particle"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12484,6 +12609,11 @@
 		
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"12.0"
+			}
 		}
 		
 		"OnSpellStart"
@@ -12491,14 +12621,37 @@
 			"RunScript"
 			{
 				"ScriptFile"		"avenger_ability"
-				"Function"			"OnVergStart"
+				"Function"			"OnEndlessStart"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_endless_loop"
+				"Target"			"CASTER"
+			}
+			"FireEffect"
+			{
+				"Target"			"CASTER"
+				"EffectName"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+				"EffectAttachType"	"start_at_origin"
+			}			
 		}
 
 		"Modifiers"
 		{
 			"modifier_endless_loop"
 			{
+				"Duration"		"%duration"
+				"EffectName"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "avenger_ability"
+						"Function"      "OnEndlessTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}	
 			}
 		}
 	}

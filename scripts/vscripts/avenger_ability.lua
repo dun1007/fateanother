@@ -64,13 +64,24 @@ function OnMurder(keys)
 	local caster = keys.caster
 	local target = keys.unit
 	local manareg = 0
-
-	if target:IsHero() then 
+	if target:GetName() == "npc_dota_creature" then 
+		--print("Avenger killed a unit")
 		manareg = caster:GetMaxMana() * keys.ManaRegen / 100
-	else 
+	elseif target:IsHero() then
+		--print("Avenger killed a hero")
 		manareg = caster:GetMaxMana() * keys.ManaRegenHero / 100
 	end
 	caster:SetMana(caster:GetMana() + manareg)
+end
+
+function OnAttackRemain(keys)
+	local caster = keys.caster
+	local target = keys.target
+	print(target:GetName())
+	if target:GetUnitName() == "avenger_remain" then
+		DoDamage(caster, target, 9999, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+
+	end
 end
 
 function OnBashSuccess(keys)
@@ -86,6 +97,82 @@ function OnBashSuccess(keys)
 end
 
 function OnRemainStart(keys)
+	local caster = keys.caster
+	local attackmove = {
+		UnitIndex = nil,
+		OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+		Position = nil
+	}
+	caster:EmitSound("Hero_Nevermore.Shadowraze")
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin() + caster:GetForwardVector() * 200) 
+
+	for i=1, keys.SpawnNumber do
+		local remain = CreateUnitByName("avenger_remain", caster:GetAbsOrigin() + caster:GetForwardVector() * 200, true, nil, nil, caster:GetTeamNumber()) 
+		--remain:SetControllableByPlayer(caster:GetPlayerID(), true)
+		remain:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
+		LevelAllAbility(remain)
+		FindClearSpaceForUnit(remain, remain:GetAbsOrigin(), true)
+		remain:FindAbilityByName("avenger_remain_passive"):SetLevel(keys.ability:GetLevel())
+		remain:AddNewModifier(caster, nil, "modifier_kill", {duration = 75})
+		Timers:CreateTimer(3.0, function() 
+			if not remain:IsAlive() then return end
+			attackmove.UnitIndex = remain:entindex()
+			attackmove.Position = remain:GetAbsOrigin() + RandomVector(1000) 
+			ExecuteOrderFromTable(attackmove)
+			return 3.0
+		end)
+	end
+
+
+end
+
+function OnRemainDeath(keys)
+	local caster = keys.caster
+	local summons = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+	for k,v in pairs(summons) do
+		--print("Found unit " .. v:GetUnitName())
+		if v:GetUnitName() == "avenger_remain" then
+			v:ForceKill(true) 
+		end
+	end
+end
+
+function OnRemainExplode(keys)
+	local caster = keys.caster
+	caster:EmitSound("Hero_Broodmother.SpawnSpiderlingsImpact")
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 250
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+         DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+    end
+    caster:ForceKill(true)
+end
+
+function OnRemainMultiplyStart(keys)
+end
+
+function OnRemainMultiply(keys)
+	local caster = keys.caster
+	local attackmove = {
+		UnitIndex = nil,
+		OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+		Position = nil
+	}
+	local remain = CreateUnitByName("avenger_remain", caster:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber()) 
+	--remain:SetControllableByPlayer(caster:GetPlayerID(), true)
+	remain:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
+	LevelAllAbility(remain)
+	FindClearSpaceForUnit(remain, remain:GetAbsOrigin(), true)
+	remain:FindAbilityByName("avenger_remain_passive"):SetLevel(keys.ability:GetLevel())
+	remain:AddNewModifier(caster, nil, "modifier_kill", {duration = 75})
+	Timers:CreateTimer(3.0, function() 
+		if not remain:IsAlive() then return end
+		attackmove.UnitIndex = remain:entindex()
+		attackmove.Position = remain:GetAbsOrigin() + RandomVector(1000) 
+		ExecuteOrderFromTable(attackmove)
+		return 3.0
+	end)
 end
 
 function OnTZStart(keys)
@@ -135,7 +222,7 @@ end
 
 function OnTFStart(keys)
 	local caster = keys.caster
-
+	AvengerCheckCombo(keys.caster, keys.ability)
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
     caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", false, true) 
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
@@ -187,6 +274,7 @@ end
 function OnVergStart(keys)
 	local caster = keys.caster
 	EmitGlobalSound("Avenger.Berg")
+
 end
 
 function OnVergTakeDamage(keys)
@@ -200,7 +288,65 @@ function OnVergTakeDamage(keys)
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
 	end
- 
+end
+
+function OnEndlessStart(keys)
+	local caster = keys.caster
+	local resetCounter = 0
+	local initHealth = caster:GetHealth()
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
+	EmitGlobalSound("Avenger.Berg")
+	EmitGlobalSound("Hero_Nightstalker.Darkness")
+	Timers:CreateTimer(3.0, function() 
+		if resetCounter == 4 or not caster:IsAlive() then return end
+		caster:SetHealth(initHealth) 
+		ResetAbilities(caster)
+		ResetItems(caster)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+		caster:EmitSound("Hero_LifeStealer.Consume")
+		resetCounter = resetCounter + 1
+		return 3.0
+	end)
+end
+
+function OnEndlessTakeDamage(keys)
+	local caster = keys.caster
+	local attacker = keys.attacker
+	local verg = caster:FindAbilityByName("avenger_verg_avesta")
+	local multiplier = verg:GetLevelSpecialValueFor("multiplier", verg:GetLevel())
+	local returnDamage = keys.DamageTaken * multiplier / 100
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
+	if caster:GetHealth() ~= 0 then
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, 0, verg, false)
+		attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick")
+		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
+		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
+	end
+end
+
+function AvengerCheckCombo(caster, ability)
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("avenger_true_form") and caster:FindAbilityByName("avenger_verg_avesta"):IsCooldownReady() and caster:FindAbilityByName("avenger_endless_loop"):IsCooldownReady()  then
+			caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", false, true) 
+			Timers:CreateTimer({
+				endTime = 3,
+				callback = function()
+				caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", true, true) 
+			end
+			})
+		end
+	end
 end
 
 function OnDarkPassageImproved(keys)
