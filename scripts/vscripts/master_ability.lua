@@ -122,7 +122,7 @@ function OnSeal1Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		caster:SetHealth(caster:GetHealth()+1) 
@@ -137,11 +137,13 @@ function OnSeal1Start(keys)
 	caster:SetHealth(caster:GetHealth()-1) 
 
 	-- Particle
-	hero:EmitSound("DOTA_Item.Dagon.Activate")
-	local particle = ParticleManager:CreateParticle("particles/items2_fx/hand_of_midas_radial.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+	hero:EmitSound("Misc.CmdSeal")
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_cast.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
+	ParticleManager:SetParticleControl(particle, 2, hero:GetAbsOrigin())
 
 
+	keys.ability:ApplyDataDrivenModifier(keys.caster, hero, "modifier_command_seal_1",{})
 	ply.IsFirstSeal = true
 
 	caster:FindAbilityByName("cmd_seal_1"):StartCooldown(60)
@@ -187,7 +189,7 @@ function OnSeal2Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("jump_pause") then
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		caster:SetHealth(caster:GetHealth()+1) 
@@ -218,6 +220,7 @@ function OnSeal2Start(keys)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
+		keys.ability:ApplyDataDrivenModifier(keys.caster, hero, "modifier_command_seal_2",{})
 	end
 end
 
@@ -231,7 +234,7 @@ function OnSeal3Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
@@ -259,6 +262,7 @@ function OnSeal3Start(keys)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
+		keys.ability:ApplyDataDrivenModifier(keys.caster, hero, "modifier_command_seal_3",{})
 	end
 end
 
@@ -272,7 +276,7 @@ function OnSeal4Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") then
+	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
@@ -303,6 +307,7 @@ function OnSeal4Start(keys)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_3"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
+		keys.ability:ApplyDataDrivenModifier(keys.caster, hero, "modifier_command_seal_4",{})
 	end
 end
 

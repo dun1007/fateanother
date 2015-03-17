@@ -8289,6 +8289,16 @@
 
 		"Modifiers"
 		{
+			"modifier_enkidu_hold"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
@@ -12834,6 +12844,7 @@
 		"precache"
 		{
 			"particle"		"particles/items2_fx/hand_of_midas_radial.vpcf"
+			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_cast.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -12852,6 +12863,13 @@
 			 	"ScriptFile"	"master_ability"
 			 	"Function"		"OnSeal1Start"
 			 	"Duration"		"%duration"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_command_seal_1"
+			{
+				"Duration"		"%duration"
 			}
 		}
 	}
@@ -12881,6 +12899,14 @@
 			 	"Function"		"OnSeal2Start"
 			}
 		}
+		"Modifiers"
+		{
+			"modifier_command_seal_2"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"30"
+			}
+		}		
 	}
 
 	//=================================================================================================================
@@ -12908,6 +12934,14 @@
 			 	"Function"		"OnSeal3Start"
 			}
 		}
+		"Modifiers"
+		{
+			"modifier_command_seal_3"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"30"
+			}
+		}	
 	}
 
 	//=================================================================================================================
@@ -12931,6 +12965,14 @@
 			 	"Function"		"OnSeal4Start"
 			}
 		}
+		"Modifiers"
+		{
+			"modifier_command_seal_4"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"30"
+			}
+		}	
 	}
 
 	//=================================================================================================================

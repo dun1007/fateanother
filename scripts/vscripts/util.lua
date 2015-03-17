@@ -32,7 +32,8 @@ cleansable = {
     "modifier_slow_tier1",
     "modifier_slow_tier2",
     "modifier_silence",
-    "modifier_disarmed"
+    "modifier_disarmed",
+    "modifier_enkidu_hold" -- enkidu
 }
 
 donotlevel = {

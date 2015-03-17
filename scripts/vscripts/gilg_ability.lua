@@ -87,8 +87,7 @@ function OnChainStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 	local targetloc = target:GetAbsOrigin()
-	giveUnitDataDrivenModifier(caster, target, "pause_sealenabled", keys.Duration)
-	giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", keys.Duration)
+	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_enkidu_hold", {})
 	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
 	
@@ -174,7 +173,7 @@ end
 
 function OnChainBroken(keys)
 	local caster = keys.caster
-	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("pause_sealdisabled") end
+	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("modifier_enkidu_hold") end
 	ParticleManager:DestroyParticle( caster.enkiduBind, true )
 	ParticleManager:ReleaseParticleIndex( caster.enkiduBind )
 end

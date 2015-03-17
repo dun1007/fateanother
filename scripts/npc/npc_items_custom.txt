@@ -302,6 +302,7 @@
 			"rb_sealdisabled"
 			{
 				"IsDebuff"		"1"
+				"IsHidden"		"1"
 			}
 			"jump_pause"
 			{
