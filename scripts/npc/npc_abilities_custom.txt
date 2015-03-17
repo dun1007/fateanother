@@ -11705,7 +11705,9 @@
 
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			//"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			"particle"		"particles/custom/avenger/avenger_dark_passage_start.vpcf"
+			"particle"		"particles/custom/avenger/avenger_dark_passage_end.vpcf"
 		}
 
 		// Casting

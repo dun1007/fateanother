@@ -2,7 +2,6 @@ function OnDPStart(keys)
 	local caster = keys.caster
 	local casterPos = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
-	local newTargetPoint = nil
 	local currentHealthCost = 0
 
 	local currentStack = caster:GetModifierStackCount("modifier_dark_passage", keys.ability)
@@ -11,7 +10,6 @@ function OnDPStart(keys)
 	caster:RemoveModifierByName("modifier_dark_passage") 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_dark_passage", {}) 
 	caster:SetModifierStackCount("modifier_dark_passage", keys.ability, currentStack + 1)
-
 
 	if caster:HasModifier("modifier_purge") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
@@ -32,24 +30,38 @@ function OnDPStart(keys)
 		caster:SetHealth(caster:GetHealth() - currentHealthCost)
 	end
 	
+	-- Create particle at start point
+	local startParticleIndex = ParticleManager:CreateParticle( "particles/custom/avenger/avenger_dark_passage_start.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( startParticleIndex, 0, caster:GetAbsOrigin() )
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( startParticleIndex, false )
+			ParticleManager:ReleaseParticleIndex( startParticleIndex )
+		end
+	)
+	
 	caster:EmitSound("Hero_Antimage.Blink_out")
+	
 	local diff = targetPoint - caster:GetAbsOrigin()
-	if diff:Length() <= keys.Range then 
-		Timers:CreateTimer(0.033, function() 
+	Timers:CreateTimer(0.033, function()
+			if diff:Length2D() > keys.Range then
+				targetPoint = caster:GetAbsOrigin() + diff:Normalized() * keys.Range
+			end
 			caster:SetAbsOrigin(targetPoint)
+			FindClearSpaceForUnit(caster, targetPoint, true)
 			ProjectileManager:ProjectileDodge(caster)
 			caster:EmitSound("Hero_Antimage.Blink_in")
-			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-		end)
-	else  
-		newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * keys.Range
-		Timers:CreateTimer(0.033, function() 
-			caster:SetAbsOrigin(newTargetPoint) 
-			ProjectileManager:ProjectileDodge(caster)
-			caster:EmitSound("Hero_Antimage.Blink_in")
-			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-		end)
-	end
+			
+			-- Create end particle
+			-- Create particle at start point
+			local endParticleIndex = ParticleManager:CreateParticle( "particles/custom/avenger/avenger_dark_passage_end.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( endParticleIndex, 0, caster:GetAbsOrigin() )
+			Timers:CreateTimer( 2.0, function()
+					ParticleManager:DestroyParticle( endParticleIndex, false )
+					ParticleManager:ReleaseParticleIndex( endParticleIndex )
+				end
+			)
+		end
+	)
 end
 
 function OnMurderStart(keys)
