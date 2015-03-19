@@ -623,6 +623,7 @@
 		"Ability11"				"avenger_endless_loop"
 		"Ability12"				"presence_detection_passive"
 		"Ability13"				"attribute_bonus"
+		"Ability14"				"avenger_overdrive"
 		
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"12"

@@ -3,6 +3,12 @@ function OnDPStart(keys)
 	local casterPos = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
 	local currentHealthCost = 0
+    local ply = caster:GetPlayerOwner()
+    if ply.IsDPImproved then
+    	keys.Range = 1000
+    	keys.ability:EndCooldown() 
+    	keys.ability:StartCooldown(1)
+    end
 
 	local currentStack = caster:GetModifierStackCount("modifier_dark_passage", keys.ability)
 	currentHealthCost = keys.HealthCost * 2 ^ currentStack
@@ -25,7 +31,7 @@ function OnDPStart(keys)
 
 	if caster:GetHealth() < currentHealthCost then
 		caster:SetHealth(1)
-		keys.ability:StartCooldown(30)
+		keys.ability:StartCooldown(45)
 	else
 		caster:SetHealth(caster:GetHealth() - currentHealthCost)
 	end
@@ -242,13 +248,31 @@ function OnBloodStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	if IsSpellBlocked(keys.target) then return end
+	local initHealth = caster:GetHealth() 
+	local initTargetHealth = target:GetHealth()
+
+	if initHealth > caster:GetMaxHealth() then
+		target:SetHealth(caster:GetMaxHealth())
+	else
+		target:SetHealth(initHealth)
+	end
+	if initTargetHealth > target:GetMaxHealth() then
+		caster:SetHealth(target:GetMaxHealth())
+	else
+		caster:SetHealth(initTargetHealth)
+	end
 end
 
 function OnTFStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	AvengerCheckCombo(keys.caster, keys.ability)
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
-    caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", false, true) 
+    if ply.IsBloodMarkAcquired then 
+    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
+    else
+    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
+   	end
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
     caster:SetModelScale(1.1)
@@ -261,8 +285,13 @@ end
 
 function OnTFEnd(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
-    caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, false) 
+    if ply.IsBloodMarkAcquired then 
+    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
+    else
+    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
+   	end
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     local demoncore = caster:FindAbilityByName("avenger_demon_core")
     if demoncore:GetToggleState() then
@@ -278,12 +307,20 @@ function OnDCToggleOn(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local demoncore = caster:FindAbilityByName("avenger_demon_core")
+	local ply = caster:GetPlayerOwner()
 
 	Timers:CreateTimer(function() 
 		if not demoncore:GetToggleState() then return end
 		if caster:GetMana() < 25 then 
 			demoncore:ToggleAbility()  
 			return 
+		end
+		if ply.IsDIAcquired then 
+			local trueform = caster:FindAbilityByName("avenger_true_form")
+			local trueformcd = trueform:GetCooldownTimeRemaining() 
+			trueform:EndCooldown()
+			trueform:StartCooldown(trueformcd - 0.5)
+			print(trueform:GetCooldownTimeRemaining())
 		end
 		caster:SetMana(caster:GetMana() - 25) 
 		return 0.25
@@ -303,12 +340,14 @@ end
 
 function OnVergTakeDamage(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
+	if ply.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
 	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
 	print(returnDamage)
 	if caster:GetHealth() ~= 0 then
-		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick")
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, keys.ability, false)
+		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
 	end
@@ -341,9 +380,11 @@ end
 
 function OnEndlessTakeDamage(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
 	local verg = caster:FindAbilityByName("avenger_verg_avesta")
 	local multiplier = verg:GetLevelSpecialValueFor("multiplier", verg:GetLevel())
+	if ply.IsDIAcquired then multiplier = multiplier + 25 end
 	local returnDamage = keys.DamageTaken * multiplier / 100
 
 	-- Set master's combo cooldown
@@ -352,10 +393,20 @@ function OnEndlessTakeDamage(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
 	if caster:GetHealth() ~= 0 then
-		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, 0, verg, false)
-		attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick")
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, verg, false)
+		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
+	end
+end
+
+function OnOverdriveAttack(keys)
+	local caster = keys.caster
+	if caster:HasModifier("modifier_overdrive_tier1") or caster:HasModifier("modifier_overdrive_tier2") or caster:HasModifier("modifier_overdrive_tier3") or caster:HasModifier("modifier_overdrive_tier4") or caster:HasModifier("modifier_overdrive_tier5") or caster:HasModifier("modifier_overdrive_tier6") then
+		print("overdrive already present")
+	else
+		print("applying speed buff")
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_overdrive_tier1", {}) 
 	end
 end
 
@@ -387,7 +438,9 @@ function OnBloodMarkAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsBloodMarkAcquired = true
     -- swap vengeance mark with blood mark
+    caster:SwapAbilities("avenger_vengeance_mark", "avenger_blood_mark", false, true) 
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -397,6 +450,7 @@ function OnOverdriveAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
+    hero:FindAbilityByName("avenger_overdrive"):SetLevel(1)
     -- enable overdrive passive
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -404,4 +458,11 @@ function OnOverdriveAcquired(keys)
 end
 
 function OnDIAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsDIAcquired = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end

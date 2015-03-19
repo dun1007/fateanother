@@ -11717,7 +11717,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"10"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -11805,7 +11805,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"crit_multiplier"	"160 200 240 280 320"
+				"crit_multiplier"	"200 210 220 230 240"
 			}
 			"02"
 			{
@@ -11825,7 +11825,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"mana_regen_percentage_herokill"	"20.0"
+				"mana_regen_percentage_herokill"	"11 12 13 14 15"
 			}
 		}
 		
@@ -12290,10 +12290,10 @@
 		"AbilityTextureName"			"avenger_blood_mark"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.7"
 		"AbilityCastRange"				"300"
 		"AbilityCastRangeBuffer"		"100"
-		"AbilityCooldown"				"26"
+		"AbilityCooldown"				"50"
 		"AbilityManaCost"				"200"
 		
 		"precache"
@@ -12319,7 +12319,7 @@
 			"RunScript"
 			{
 				"ScriptFile"		"avenger_ability"
-				"Function"			"OnVengeanceStart"
+				"Function"			"OnBloodStart"
 			}
 		}
 	}
@@ -12706,7 +12706,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"9"
+		"AbilityManaCost"				"17"
 
 		"precache"
 		{
@@ -12740,7 +12740,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -12759,6 +12759,180 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Avenger : Overdrive
+	//=================================================================================================================
+	"avenger_overdrive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"avenger_overdrive"
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"aspd_bonus"			"20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"1.0"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_overdrive"
+			{
+				"passive"		"1"
+				"IsHidden"		"0"
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"avenger_ability"
+						"Function"			"OnOverdriveAttack"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"%evasion_rate"
+				}
+			}
+			"modifier_overdrive_tier1"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier2"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier1"
+						"Target"			"CASTER"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"20"
+				}
+			}
+			"modifier_overdrive_tier2"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"		
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier3"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier2"
+						"Target"			"CASTER"
+					}
+				}			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"40"
+				}
+			}
+			"modifier_overdrive_tier3"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier4"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier3"
+						"Target"			"CASTER"
+					}
+				}		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"80"
+				}
+			}
+			"modifier_overdrive_tier4"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier5"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier4"
+						"Target"			"CASTER"
+					}
+				}		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"160"
+				}
+			}
+			"modifier_overdrive_tier5"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"	
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier6"
+						"Target"			"CASTER"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier5"
+						"Target"			"CASTER"
+					}
+				}			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"320"
+				}
+			}
+			"modifier_overdrive_tier6"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"	
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier6"
+						"Target"			"CASTER"
+					}
+				}			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"640"
+				}
+			}
+		}
+	}
+
 
 	//=======================================
 	// Avenger Attribute : Demon Incarnate

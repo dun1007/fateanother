@@ -573,7 +573,9 @@ function OnUBWWeaponHit(keys)
 	if keys.caster:GetPlayerOwner().IsProjectionImproved then 
 		keys.Damage = keys.Damage + 10
 	end	
-	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	if ubwdummies ~= nil then
+		DoDamage(ubwdummies[1], keys.target, keys.Damage , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	end
 end
 
 function OnUBWBarrageStart(keys)

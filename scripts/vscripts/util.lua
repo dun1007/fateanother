@@ -48,7 +48,8 @@ donotlevel = {
     "berserker_5th_god_hand",
     "false_assassin_presence_concealment",
     "true_assassin_weakening_venom_passive",
-    "true_assassin_protection_from_wind"
+    "true_assassin_protection_from_wind",
+    "avenger_overdrive"
 }
 
 CannotReset = {
@@ -71,7 +72,8 @@ CannotReset = {
     "lancelot_blessing_of_fairy",
     "lancelot_arms_mastership_improved",
     "lancelot_nuke",
-    "avenger_endless_loop"
+    "avenger_endless_loop",
+    "avenger_dark_passage"
 }
 
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
