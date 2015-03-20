@@ -367,7 +367,7 @@ function OnEndlessStart(keys)
 	EmitGlobalSound("Hero_Nightstalker.Darkness")
 	Timers:CreateTimer(3.0, function() 
 		if resetCounter == 4 or not caster:IsAlive() then return end
-		caster:SetHealth(initHealth) 
+	caster:SetHealth(initHealth) 
 		ResetAbilities(caster)
 		ResetItems(caster)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, caster)

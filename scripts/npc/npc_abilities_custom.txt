@@ -2581,7 +2581,7 @@
 				"IsHidden"		"0"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"50"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"75"
 				}
 				"OnAttackStart"
 				{
@@ -5395,7 +5395,7 @@
 			}
 			"FireSound"
 			{
-				"EffectName"		"Hero_ElderTitan.EarthSplitter.Destroy"
+				"EffectName"		"Hero_Magnataur.ShockWave.Cast"
 				"Target"			"CASTER"
 			}
 		}
@@ -11986,17 +11986,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"spawn_number"		"3 4 4 5 5"
+				"spawn_number"		"3 3 3 3 3"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"120 135 150 165 180"
+				"damage"			"150 160 170 180 190"
 			}
 			"03"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"multiply_period"		"40 40 36 36 32"
+				"multiply_period"		"40 38 36 34 32"
 			}
 		}
 		
@@ -12052,12 +12052,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"		"120 135 150 165 180"
+				"damage"		"150 160 170 180 190"
 			}
 			"02"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"multiply_period"		"40 40 36 36 32"
+				"multiply_period"		"40 38 36 34 32"
 			}
 		}	
 		"Modifiers"
@@ -12214,7 +12214,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"500"
+				"damage"				"500 550 600 650 700"
 			}
 			"02"
 			{
@@ -12519,6 +12519,7 @@
 		{
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"particle"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
 		}
 
 		// Time		
@@ -12568,6 +12569,8 @@
 		{
 			"modifier_verg_avesta"
 			{
+				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
 				"Duration"		"%duration"
 				"OnTakeDamage"
 				{
@@ -12740,7 +12743,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"16"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{

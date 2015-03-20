@@ -139,7 +139,6 @@ function OnKnightStart(keys)
 
         
         caster:SwapAbilities("lancelot_close_spellbook", a5:GetName(), true,true) 
-        caster:GetAbilityByIndex(5):SetLevel(1)
         if ability:GetLevel() == 1 then
 
                 caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
