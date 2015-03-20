@@ -6602,16 +6602,31 @@
 				"ModifierName"		"modifier_psuedo_omnislash"
 				"Target"			"CASTER"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_fa_death_checker"
+				"Target"			"CASTER"
+			}
 		}
 		
 		"Modifiers"
 		{
+			"modifier_fa_death_checker"
+			{
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnFADeath"
+					}
+				}
+			}
 			"modifier_psuedo_omnislash"
 			{
 				"Duration"					"%duration"
 			
 				"AllowIllusionDuplicate"	"1"
-				
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -9967,7 +9982,7 @@
 
 		"Modifiers"
 		{
-			"modifier_rule_breaker"
+			"modifier_caster_rule_breaker"
 			{
 				"IsDebuff"					"1"
 				"IsPurgable"				"1"
@@ -11164,7 +11179,7 @@
 
 		"Modifiers"
 		{
-			"modifier_rule_breaker"
+			"modifier_lancelot_rule_breaker"
 			{
 				"IsDebuff"					"1"
 				"IsPurgable"				"1"

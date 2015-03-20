@@ -447,7 +447,9 @@ function FateGameMode:OnHeroSpawned( keys )
 			local model_name = ""
 			
 			-- Check if npc is hero
-			if not hero:IsHero() then return end
+      if hero ~= nil then
+			 if not hero:IsHero() then return end
+      end
 			
 			-- Getting model name
 			if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
@@ -1200,13 +1202,11 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
   local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
   local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
   for k,v in pairs(units) do
-    print("Checking unit " .. v:GetName() )
     if not v:IsRealHero() then
       v:ForceKill(true)
     end
   end
   for k,v in pairs(units2) do
-    print("Checking unit " .. v:GetName() )
     if not v:IsRealHero() then
       v:ForceKill(true)
     end

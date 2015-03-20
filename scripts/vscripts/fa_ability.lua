@@ -79,6 +79,14 @@ function PCStopOrder(keys)
 	ExecuteOrderFromTable(stopOrder) 
 end
 
+function OnFADeath(keys)
+	local caster = keys.caster
+	for i=1, #caster.IllusionTable do
+		caster.IllusionTable[i]:ForceKill(true)
+	end
+
+end
+
 function OnIWStart(keys)
 	local caster = keys.caster
 
@@ -87,7 +95,6 @@ function OnIWStart(keys)
 		ability:EndCooldown()
 		return
 	end
-
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
@@ -114,9 +121,10 @@ function OnIWStart(keys)
 	local origin = caster:GetAbsOrigin()
 	local increment_factor = 360 / maximum_illusion
 	
+	caster.IllusionTable = {}
 	for ilu = 0, maximum_illusion - 1 do
 		local illusion = CreateUnitByName(caster:GetUnitName(), origin, true, caster, nil, caster:GetTeamNumber()) 
-		
+		caster.IllusionTable[ilu+1] = illusion
 		print(illusion:GetPlayerOwner())
 		illusion:SetPlayerID(pid) 
 		illusion:SetControllableByPlayer(pid, true) 

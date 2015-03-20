@@ -610,7 +610,11 @@ function OnRBStart(keys)
 	local ply = caster:GetPlayerOwner()
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_rule_breaker", {}) 
+	if caster:GetName() == "npc_dota_hero_crystal_maiden" then
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_caster_rule_breaker", {}) 
+	else
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_lancelot_rule_breaker", {}) 
+	end
 	EmitGlobalSound("Caster.RuleBreaker") 
 	CasterCheckCombo(keys.caster,keys.ability)
 
