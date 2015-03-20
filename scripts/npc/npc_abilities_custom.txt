@@ -12985,6 +12985,386 @@
 			}
 		}
 	}
+
+	//========================================
+	// Diarmuid - Love Spot
+	//========================================
+	"diarmuid_love_spot"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"diarmuid_love_spot"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"precache"
+		{
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"diarmuid_ability"
+				"Function"			"OnLoveSpotStart"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_love_spot"
+			{
+				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"		"%duration"			
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Diarmuid : Warrior's Charge
+	//=================================================================================================================
+	"diarmuid_warriors_charge"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"diarmuid_warriors_charge"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"650"
+		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"9.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"550"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"150 180 210 240 270"
+			}
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"diarmuid_ability"
+			 	"Function"		"OnChargeStart"
+			 	"Damage"		"%damage"
+			 }
+		}
+	}
+	//========================================
+	// Diarmuid - Double Spearmanship
+	//========================================
+	"diarmuid_double_spearmanship"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"diarmuid_double_spearmanship"
+		"MaxLevel"						"5"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"precache"
+		{
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"19"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"12.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"diarmuid_ability"
+				"Function"			"OnLoveSpotStart"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_double_spearmanship"
+			{
+				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"		"%duration"			
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Diarmuid : Gae Buidhe
+	//=================================================================================================================
+	"diarmuid_gae_buidhe"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"diarmuid_gae_buidhe"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+			"particle"		"particles/items_fx/dagon.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"250"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCastPoint"				"1.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"32.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"550"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"300 400 500 600 700"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"diarmuid_ability"
+				"Function"		"OnBuidheCastStart"
+			}
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"diarmuid_ability"
+			 	"Function"		"OnBuidheStart"
+			 	"Damage"		"%damage"
+			 }
+		}
+	}
+
+	//=================================================================================================================
+	// Diarmuid : Gae Dearg
+	//=================================================================================================================
+	"diarmuid_gae_dearg"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
+		"AbilityTextureName"			"diarmuid_gae_dearg"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+			"particle"		"particles/items_fx/dagon.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastPoint"				"1.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"32.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"550"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"550 675 800 925 1050"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"diarmuid_ability"
+				"Function"		"OnDeargCastStart"
+			}
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"diarmuid_ability"
+			 	"Function"		"OnDeargStart"
+			 	"Damage"		"%damage"
+			 }
+		}
+	}
+	//=================================================================================================================
+	// Lancer : Gae Bolg - The Spear of Impaling Barbed Death
+	//=================================================================================================================
+	"lancer_5th_gae_bolg"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"gae_bolg_target"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
+			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf"
+			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
+			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+			"particle"		"particles/items_fx/dagon.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"300"
+		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastPoint"				"1.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"27.0"
+
+		// Damage.
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityDamage"					"550 660 770 880 990"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"550 660 770 880 990"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heartbreak_threshold"		"200 240 280 320 360"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+		}
+		"OnSpellStart"
+		{
+			 "RunScript"
+			 {
+			 	"ScriptFile"	"lancer_ability"
+			 	"Function"		"OnGBTargetHit"
+			 	"Damage"		"%damage"
+			 	"HBThreshold"	"%heartbreak_threshold"
+			 }
+		}
+	}
+
+
 	//================================================
 	// simple dummy passive
 	//================================================
