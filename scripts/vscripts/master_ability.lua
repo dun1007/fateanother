@@ -108,7 +108,15 @@ AvengerAttribute = {
 	"avenger_attribute_demon_incarnate",
 	"avenger_endless_loop",
 	attrCount = 4
+}
 
+DiarmuidAttribute = {
+	"diarmuid_attribute_improve_love_spot",
+	"diarmuid_attribute_minds_eye",
+	"diarmuid_attribute_rosebloom",
+	"diarmuid_attribute_double_spear_strike",
+	"diarmuid_rampant_warrior",
+	attrCount = 4
 }
 
 

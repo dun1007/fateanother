@@ -207,6 +207,8 @@ function FindName(name)
         heroName = "Berserker(4th)"
     elseif name == "npc_dota_hero_vengefulspirit" then
         heroName = "Avenger"
+    elseif name == "npc_dota_hero_huskar" then
+        heroName = "Lancer(4th)"
     end
     return heroName
 end
@@ -237,6 +239,8 @@ function FindAttribute(name)
         attributes = LancelotAttribute
     elseif name == "npc_dota_hero_vengefulspirit" then
         attributes = AvengerAttribute
+    elseif name == "npc_dota_hero_huskar" then
+        attributes = DiarmuidAttribute
     end
     return attributes
 end 

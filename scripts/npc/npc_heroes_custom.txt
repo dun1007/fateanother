@@ -664,25 +664,29 @@
 		"Model"					"models/diarmuid/diarmuid.vmdl"
 		"ModelScale"			"1.10"
 
-		"Ability1"				"false_assassin_gate_keeper"
-		"Ability2"				"false_assassin_heart_of_harmony"
-		"Ability3"				"false_assassin_windblade"
-		"Ability4"				""
-		"Ability5"				""
-		"Ability6"				"false_assassin_tsubame_gaeshi"
+		"AbilityLayout"			"6"
+		"Ability1"				"diarmuid_warriors_charge"
+		"Ability2"				"diarmuid_double_spearmanship"
+		"Ability3"				"diarmuid_gae_buidhe"
+		"Ability4"				"diarmuid_love_spot"
+		"Ability5"				"fate_empty1"
+		"Ability6"				"diarmuid_gae_dearg"
+		"Ability7"				"diarmuid_rampant_warrior"
+		"Ability8"				"presence_detection_passive"
+		"Ability9"				"attribute_bonus"
 		
 		"StatusHealth"					"1150"
-		"StatusHeathRegen"				"7.5"
+		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1000"
-		"StatusManaRegen"				"1.5"
+		"StatusManaRegen"				"1.2"
 		
-		"ArmorPhysical"					"2"
+		"ArmorPhysical"					"3"
 		"MagicalResistance"				"0"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"250"
-		"AttackDamageMin"				"38"
-		"AttackDamageMax"				"44"
+		"AttackDamageMin"				"40"
+		"AttackDamageMax"				"46"
 		"AttackRate"					"0.7"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
@@ -693,11 +697,11 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"0.6"
 		
-		"MovementSpeed"					"350"
+		"MovementSpeed"					"400"
 		"MovementTurnRate"				"0.3"
 
-		"VisionDaytimeRange"			"900"
-		"VisionNighttimeRange"			"900"
+		"VisionDaytimeRange"			"850"
+		"VisionNighttimeRange"			"850"
 	}
 
 	//=======================================

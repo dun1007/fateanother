@@ -16,7 +16,7 @@
 	"npc_dota_hero_doom_bringer"		"1"		//berserker(5th)	
 	"npc_dota_hero_skywrath_mage"		"1"		//archer(4th)
 	"npc_dota_hero_vengefulspirit"		"1"		//avenger
-	"npc_dota_hero_huskar"				"0"		//Lancer(4th)
+	"npc_dota_hero_huskar"				"1"		//Lancer(4th)
 	"npc_dota_hero_sven"				"1"		//berserker(4th)
 	"npc_dota_hero_shadow_shaman"		"0"		//caster(4th)
 	"npc_dota_hero_chen"				"0"		//rider(4th)

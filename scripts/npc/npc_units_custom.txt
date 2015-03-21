@@ -937,6 +937,7 @@
 			"model"					"models/heroes/clinkz/clinkz.vmdl"
 			"model"					"models/lancelot/lancelot_f16.vmdl"
 			"model"					"models/avenger/trueform/trueform.vmdl"
+			"model"					"models/diarmuid/diarmuid.vmdl"
 
 
 
