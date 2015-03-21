@@ -1,15 +1,37 @@
-purgable = {"modifier_aspd_increase",
-        "modifier_derange",
-        "modifier_courage_self_buff",
-        "modifier_berserk_self_buff",
-        "modifier_ta_self_mod",
-        "modifier_berserk_scroll",
-        "modifier_share_damage",
-        "modifier_a_plus_armor",
-        "modifier_speed_gem",
-        "modifier_share_damage",
-        "modifier_rule_breaker",
-        "modifier_double_edge",
+purgable = {
+    "modifier_aspd_increase",
+    "modifier_derange",
+    "modifier_courage_self_buff",
+    "modifier_berserk_self_buff",
+    "modifier_ta_self_mod",
+    "modifier_berserk_scroll",
+    "modifier_share_damage",
+    "modifier_a_plus_armor",
+    "modifier_speed_gem",
+    "modifier_share_damage",
+    "modifier_rule_breaker",
+    "modifier_double_edge",
+    "modifier_murderous_instinct"
+}
+
+strongdispelable = {
+    "modifier_aspd_increase",
+    "modifier_derange",
+    "modifier_courage_self_buff",
+    "modifier_berserk_self_buff",
+    "modifier_ta_self_mod",
+    "modifier_berserk_scroll",
+    "modifier_share_damage",
+    "modifier_a_plus_armor",
+    "modifier_speed_gem",
+    "modifier_share_damage",
+    "modifier_rule_breaker",
+    "modifier_double_edge",
+    "modifier_b_scroll",
+    "modifier_argos_shield",
+    "modifier_rho_aias_shield",
+    "modifier_murderous_instinct"
+
 }
 
 goesthruB = {"saber_avalon",
@@ -74,6 +96,13 @@ CannotReset = {
     "lancelot_nuke",
     "avenger_endless_loop",
     "avenger_dark_passage"
+}
+
+femaleservant = {
+    "npc_dota_hero_legion_commander",
+    "npc_dota_hero_spectre",
+    "npc_dota_hero_templar_assassin",
+    "npc_dota_hero_crystal_maiden"
 }
 
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
@@ -281,6 +310,16 @@ function IsSpellBlocked(target)
     end
 end 
 
+function IsFemaleServant(target)
+    for i=1, #femaleservant do
+        if target:GetName() == femaleservant[i] then
+            return true
+        end
+    end
+    
+    return false
+end
+
 function IsImmuneToSlow(target)
     if target:GetName() == "npc_dota_hero_sven" then
         target:EmitSound("DOTA_Item.LinkensSphere.Activate")
@@ -461,6 +500,12 @@ end
 
 function ApplyPurge(target)
     for k,v in pairs(purgable) do
+        target:RemoveModifierByName(v)
+    end
+end
+
+function ApplyStrongDispel(target)
+    for k,v in pairs(strongdispelable) do
         target:RemoveModifierByName(v)
     end
 end

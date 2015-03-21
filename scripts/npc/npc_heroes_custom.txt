@@ -666,7 +666,7 @@
 
 		"AbilityLayout"			"6"
 		"Ability1"				"diarmuid_warriors_charge"
-		"Ability2"				"diarmuid_double_spearmanship"
+		"Ability2"				"diarmuid_double_spearsmanship"
 		"Ability3"				"diarmuid_gae_buidhe"
 		"Ability4"				"diarmuid_love_spot"
 		"Ability5"				"fate_empty1"
@@ -677,7 +677,7 @@
 		
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"9.0"
-		"StatusMana"					"1000"
+		"StatusMana"					"1050"
 		"StatusManaRegen"				"1.2"
 		
 		"ArmorPhysical"					"3"

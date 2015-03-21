@@ -89,6 +89,7 @@ end
 function Disengage(keys)
 	local caster = keys.caster
 	local backward = caster:GetForwardVector() * keys.Distance
+	HardCleanse(caster)
 	Timers:CreateTimer(0.033, function() 
 		caster:SetAbsOrigin(caster:GetAbsOrigin() - backward)
 		ProjectileManager:ProjectileDodge(caster) 
@@ -204,13 +205,12 @@ function OnGBTargetHit(keys)
 	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
 	local particle_effect_intensity = 600
 	ParticleManager:SetParticleControl(dagon_particle, 2, Vector(particle_effect_intensity))
-	
+	target:EmitSound("Hero_Lion.Impale")
 
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	if target:GetHealth() < keys.HBThreshold then 
 		if target:GetHealth() ~= 0 then 
-			local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+			PlayHeartBreakEffect(target)
 		end 
 		target:Kill(keys.ability, caster)
 	end  -- check for HB
@@ -233,8 +233,8 @@ function OnGBTargetHit(keys)
 			if dotCount == 10 then return end
 			if target:GetHealth() < keys.HBThreshold then 
 				if target:GetHealth() ~= 0 then 
-					local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-					ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+					PlayHeartBreakEffect(target)
+
 				end 
 				target:Kill(keys.ability, caster) 
 			end 
@@ -243,14 +243,34 @@ function OnGBTargetHit(keys)
 		end)
 	end
 	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
-	-- attach blood effect
-	local blood = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControlEnt(blood, 1, target , 0, "attach_hitloc", target:GetAbsOrigin(), false)
-	ParticleManager:SetParticleControl(blood, 4, target:GetAbsOrigin())
 
-	local splat = ParticleManager:CreateParticle("particles/generic_gameplay/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, caster)
+	PlayNormalGBEffect(target)
+	local splat = ParticleManager:CreateParticle("particles/generic_gameplay/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
 
 end
+
+function PlayHeartBreakEffect(target)
+	local culling_kill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 2, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 4, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(culling_kill_particle)
+
+	local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+end
+
+function PlayNormalGBEffect(target)
+	local culling_kill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 2, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 4, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:SetParticleControlEnt(culling_kill_particle, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
+	ParticleManager:ReleaseParticleIndex(culling_kill_particle)
+end 
 
 function OnGBComboHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
@@ -292,20 +312,18 @@ function OnGBComboHit(keys)
 
 		        if caster:IsAlive() then 
 		        	ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+		        	target:EmitSound("Hero_Lion.Impale")
 			    	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 					target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 					print(target:GetHealth())
 					if target:GetHealth() < HBThreshold then 
 						if target:GetHealth() ~= 0 then 
-							local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-							ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+							PlayHeartBreakEffect(target)
 						end 
 						target:Kill(keys.ability, caster)
+					else
+						PlayNormalGBEffect(target)
 					end
-					-- attach blood effect
-					local blood = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-					ParticleManager:SetParticleControlEnt(blood, 1, target , 0, "attach_hitloc", target:GetAbsOrigin(), false)
-					ParticleManager:SetParticleControl(blood, 4, target:GetAbsOrigin())
 				end
 			end
 		end)
