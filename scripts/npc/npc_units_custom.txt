@@ -1027,7 +1027,7 @@
 			"particle_folder"				"particles/units/heroes/hero_clinkz"
 			//"particle_folder"				"particles/units/heroes/hero_omniknight"
 			//"particle_folder"				"particles/units/heroes/hero_enchantress"
-			//"particle_folder"				"particles/units/heroes/hero_huskar"
+			"particle_folder"				"particles/units/heroes/hero_huskar"
 			//"particle_folder"				"particles/units/heroes/hero_night_stalker"
 			"particle_folder"				"particles/units/heroes/hero_broodmother"
 			"particle_folder"				"particles/units/heroes/hero_bounty_hunter"

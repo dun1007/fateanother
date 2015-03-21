@@ -12995,7 +12995,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"diarmuid_love_spot"
 		"MaxLevel"						"1"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
 		"precache"
 		{
 		}
@@ -13049,12 +13049,13 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"diarmuid_warriors_charge"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AOERadius"						"%radius"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
@@ -13073,7 +13074,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"550"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
@@ -13081,6 +13082,11 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"150 180 210 240 270"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
 			}
 		}
 		"OnSpellStart"
@@ -13090,6 +13096,7 @@
 			 	"ScriptFile"	"diarmuid_ability"
 			 	"Function"		"OnChargeStart"
 			 	"Damage"		"%damage"
+			 	"Radius"		"%radius"
 			 }
 		}
 	}
@@ -13102,7 +13109,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"diarmuid_double_spearmanship"
 		"MaxLevel"						"5"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
 		"precache"
 		{
 		}
@@ -13154,7 +13161,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"diarmuid_rampant_warrior"
 		"MaxLevel"						"5"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
 		"precache"
 		{
 		}
@@ -13213,7 +13220,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"diarmuid_gae_buidhe"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"

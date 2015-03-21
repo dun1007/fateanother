@@ -661,7 +661,7 @@
 	"npc_dota_hero_diarmuid"
 	{
 		"override_hero"			"npc_dota_hero_huskar"
-		"Model"					"models/diarmuid/diarmuid.vmdl"
+		"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.10"
 
 		"AbilityLayout"			"6"

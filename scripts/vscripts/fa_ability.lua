@@ -318,7 +318,8 @@ function OnTGStart(keys)
 
 	Timers:CreateTimer(0.5, function()  
 		if caster:IsAlive() then
-			caster:SetAbsOrigin(target:GetAbsOrigin())
+			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
+			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
@@ -333,7 +334,8 @@ function OnTGStart(keys)
 
 	Timers:CreateTimer(0.7, function()  
 		if caster:IsAlive() then
-			caster:SetAbsOrigin(target:GetAbsOrigin())
+			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
+			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
@@ -348,7 +350,8 @@ function OnTGStart(keys)
 
 	Timers:CreateTimer(0.9, function()  
 		if caster:IsAlive() then
-			caster:SetAbsOrigin(target:GetAbsOrigin())
+			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
+			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 			DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
