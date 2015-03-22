@@ -174,7 +174,7 @@ function OnRemainMultiplyStart(keys)
 		local remainabil = avenger:FindAbilityByName("avenger_unlimited_remains")
 		local period = remainabil:GetLevelSpecialValueFor("multiply_period", remainabil:GetLevel())	
 		Timers:CreateTimer(period, function() 
-			if caster == nil or not caster:IsAlive() then return end
+			if not IsValidEntity(caster) or not caster:IsAlive() then return end
 			OnRemainMultiply(keys)
 			return period
 		end)	

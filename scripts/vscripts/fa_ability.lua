@@ -82,7 +82,9 @@ end
 function OnFADeath(keys)
 	local caster = keys.caster
 	for i=1, #caster.IllusionTable do
-		caster.IllusionTable[i]:ForceKill(true)
+		if IsValidEntity(caster.IllusionTable[i]) then
+			caster.IllusionTable[i]:ForceKill(true)
+		end
 	end
 
 end
