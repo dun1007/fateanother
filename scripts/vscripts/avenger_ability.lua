@@ -10,24 +10,24 @@ function OnDPStart(keys)
     	keys.ability:StartCooldown(1)
     end
 
-	local currentStack = caster:GetModifierStackCount("modifier_dark_passage", keys.ability)
-	currentHealthCost = keys.HealthCost * 2 ^ currentStack
-	if currentStack == 0 and caster:HasModifier("modifier_dark_passage") then currentStack = 1 end
-	caster:RemoveModifierByName("modifier_dark_passage") 
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_dark_passage", {}) 
-	caster:SetModifierStackCount("modifier_dark_passage", keys.ability, currentStack + 1)
-
 	if caster:HasModifier("modifier_purge") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
 		keys.ability:EndCooldown()
 		return
 	end
 
+
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown()  
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
 		return 
 	end 
+	local currentStack = caster:GetModifierStackCount("modifier_dark_passage", keys.ability)
+	currentHealthCost = keys.HealthCost * 2 ^ currentStack
+	if currentStack == 0 and caster:HasModifier("modifier_dark_passage") then currentStack = 1 end
+	caster:RemoveModifierByName("modifier_dark_passage") 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_dark_passage", {}) 
+	caster:SetModifierStackCount("modifier_dark_passage", keys.ability, currentStack + 1)
 
 	if caster:GetHealth() < currentHealthCost then
 		caster:SetHealth(1)
@@ -51,6 +51,12 @@ function OnDPStart(keys)
 	Timers:CreateTimer(0.033, function()
 			if diff:Length2D() > keys.Range then
 				targetPoint = caster:GetAbsOrigin() + diff:Normalized() * keys.Range
+			end
+
+			local i = 1
+			while GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) do
+				i = i+1
+				targetPoint = caster:GetAbsOrigin() + diff:Normalized() * (keys.Range - i*50)
 			end
 			caster:SetAbsOrigin(targetPoint)
 			FindClearSpaceForUnit(caster, targetPoint, true)

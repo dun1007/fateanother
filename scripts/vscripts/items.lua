@@ -205,14 +205,14 @@ function Blink(keys)
 	end 
 
 	 
-	
+	-- particle
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0, casterPos)
 	caster:EmitSound("Hero_Antimage.Blink_out")
-
 	local diff = targetPoint - caster:GetAbsOrigin()
 	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
+	-- blink
 	if diff:Length() <= 1000 then 
 		caster:SetAbsOrigin(targetPoint)
 		ProjectileManager:ProjectileDodge(caster)
@@ -220,6 +220,12 @@ function Blink(keys)
 
 	else  
 		newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * 1000
+		local i = 1
+		while GridNav:IsBlocked(newTargetPoint) or not GridNav:IsTraversable(newTargetPoint) do
+			i = i+1
+			newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * (1000 - i*50)
+		end
+
 		caster:SetAbsOrigin(newTargetPoint) 
 		ProjectileManager:ProjectileDodge(caster)
 		ParticleManager:SetParticleControl(particle2, 0, caster:GetAbsOrigin())
