@@ -10075,7 +10075,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius_bolt"			"250"
+				"radius_bolt"			"300"
 			}
 			"03"
 			{
@@ -10161,7 +10161,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius_bolt"			"250"
+				"radius_bolt"			"300"
 			}
 			"03"
 			{

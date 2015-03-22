@@ -652,6 +652,11 @@ function OnHGStart(keys)
 	local boltCount  = 0
 	local diff = targetPoint - caster:GetAbsOrigin()
 	local maxBolt = 13
+	if ply.IsHGImproved then
+		maxBolt = 16
+	end 
+
+	local initTargets = 0
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
@@ -696,43 +701,64 @@ function OnHGStart(keys)
 		ability = ability
 	}
 
-	if ply.IsHGImproved then
-		maxBolt = 16
-	end 
-
+	local isFirstLoop = false
 	Timers:CreateTimer(1.0, function()
-		if boltCount == maxBolt then return end
-		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-		
-		-- Particle
-		-- These two values for making the bolt starts randomly from sky
-		local randx = RandomInt( 0, 200 )
-		if randx < 100 then randx = -100 - randx end
-		local randy = RandomInt( 0, 200 )
-		if randy < 100 then randy = -100 - randy end
-		
-		local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
-		ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
-		ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 1000 ) ) -- This is where the bolt will start
-		ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
-		
-		Timers:CreateTimer( 2.0, function()
-				ParticleManager:DestroyParticle( fxIndex, false )
-				ParticleManager:ReleaseParticleIndex( fxIndex )
-				return nil
+		if isFirstLoop == false then 
+			isFirstLoop = true
+			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			for k,v in pairs(initTargets) do
+				print("inital ray")
+				DropRay(keys, Vector(0,0,0))
 			end
-		)
-
-		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, keys.RadiusBolt, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-		for k,v in pairs(targets) do
-        	DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-        	v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+			maxBolt = maxBolt - #initTargets
+		else
+			if maxBolt <= boltCount then return end
 		end
+
+		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
+		while GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) do
+			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
+		end
+		DropRay(keys, boltvector)
+
 	    boltCount = boltCount + 1
 		return 0.1
     end
     )
 	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic") EmitGlobalSound("Caster.Hecatic_Spread") caster:EmitSound("Misc.Crash") return end)
+end
+
+function DropInitialRay(keys)
+
+end
+
+function DropRay(keys, boltvector)
+	local caster = keys.caster
+	local targetPoint = caster:GetAbsOrigin() 
+	-- Particle
+	-- These two values for making the bolt starts randomly from sky
+	local randx = RandomInt( 0, 200 )
+	if randx < 100 then randx = -100 - randx end
+	local randy = RandomInt( 0, 200 )
+	if randy < 100 then randy = -100 - randy end
+	
+	local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
+	ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
+	ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 1000 ) ) -- This is where the bolt will start
+	ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
+	
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( fxIndex, false )
+			ParticleManager:ReleaseParticleIndex( fxIndex )
+			return nil
+		end
+	)
+
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, keys.RadiusBolt, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	for k,v in pairs(targets) do
+    	DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+    	v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+	end
 end
 
 function OnHGPStart(keys)
