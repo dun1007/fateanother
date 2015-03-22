@@ -624,6 +624,7 @@
 		"Ability12"				"presence_detection_passive"
 		"Ability13"				"attribute_bonus"
 		"Ability14"				"avenger_overdrive"
+		"Ability15"				"avenger_autoattack"
 		
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"12"
@@ -672,8 +673,10 @@
 		"Ability5"				"fate_empty1"
 		"Ability6"				"diarmuid_gae_dearg"
 		"Ability7"				"diarmuid_rampant_warrior"
-		"Ability8"				"presence_detection_passive"
-		"Ability9"				"attribute_bonus"
+		"Ability8"				"diarmuid_double_spear_strike"
+		"Ability9"				"presence_detection_passive"
+		"Ability10"				"attribute_bonus"
+		"Ability11"			"diarmuid_autoattack"
 		
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"9.0"

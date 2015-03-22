@@ -1935,10 +1935,15 @@
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"550 660 770 880 990"
 			}
-			"03"
+			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"heartbreak_threshold"		"200 240 280 320 360"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cast_time"			"1.2"
 			}
 		}
 		
@@ -11707,6 +11712,33 @@
 	}
 
 
+	//================================================
+	// Avenger Passive for autoattack
+	//================================================
+	"avenger_autoattack"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "diarmuid_minds_eye"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"avenger_autoattack_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_PhantomAssassin.Attack"
+						"Target"			"CASTER"
+					}
+				}
+		  	}
+		}
+	}
 	//=====================================
 	// Avenger : Dark Passage
 	//=====================================
@@ -12987,6 +13019,35 @@
 		}
 	}
 
+	//================================================
+	// Diarmuid Passive for autoattack
+	//================================================
+	"diarmuid_autoattack"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "diarmuid_minds_eye"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"diarmuid_autoattack_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_PhantomLancer.Attack"
+						"Target"			"CASTER"
+					}
+				}
+		  	}
+		}
+	}
+
+
 	//========================================
 	// Diarmuid - Love Spot
 	//========================================
@@ -13147,7 +13208,7 @@
 			"RunScript"
 			{
 				"ScriptFile"		"diarmuid_ability"
-				"Function"			"OnLoveSpotStart"
+				"Function"			"OnDSStart"
 			}
 			"ApplyModifier"
 			{
@@ -13184,10 +13245,13 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"diarmuid_rampant_warrior"
-		"MaxLevel"						"5"
+		"MaxLevel"						"1"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			"particle"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+			"particle"		"particles/items_fx/aegis_respawn.vpcf"
 		}
 
 		// Time		
@@ -13215,15 +13279,64 @@
 				"ScriptFile"		"diarmuid_ability"
 				"Function"			"OnRampantWarriorStart"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_rampant_warrior"
+				"Target"			"CASTER"
+			}
 		}
 
 		"Modifiers"
 		{
 			"modifier_rampant_warrior"
 			{
-				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+				"EffectName"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Duration"		"%duration"			
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_rampant_warrior_crit_hit"
+						"Target"		"CASTER"
+					}
+
+					"Random"
+					{
+						"Chance"	"100"
+						"OnSuccess"
+						{
+							"ApplyModifier"
+							{
+								"ModifierName"		"modifier_rampant_warrior_crit_hit"
+								"Target"			"CASTER"
+							}
+						}
+					}
+				}
+			}
+
+			"modifier_rampant_warrior_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "200"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_rampant_warrior_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
+				}
 			}
 		}
 	}
@@ -13321,8 +13434,32 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%health_reduction"
 				}
 			}
+			"modifier_gae_buidhe_passive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnDeath"
+				{
+					 "RunScript"
+					 {
+					 	"ScriptFile"	"diarmuid_ability"
+					 	"Function"		"OnBuidheOwnerDeath"
+					 }
+				}
+				"OnRespawn"
+				{
+					 "RunScript"
+					 {
+					 	"ScriptFile"	"diarmuid_ability"
+					 	"Function"		"OnBuidheOwnerDeath"
+					 }
+				}
+			}
 			"modifier_mark_of_mortality"
 			{
+				"EffectName" 	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_trail_circle.vpcf"
+	            "EffectAttachType" "follow_origin"	
+				"Duration"		"10"
 				"IsDebuff"		"1"
 			}
 			"modifier_diarmuid_gae_buidhe_anim"
@@ -13505,6 +13642,51 @@
 		}
 	}
 
+
+	//================================================
+	// Diarmuid Attribute : Mind's Eye
+	//================================================
+	"diarmuid_minds_eye"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "diarmuid_minds_eye"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"diarmuid_minds_eye_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "0"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"diarmuid_ability"
+						"Function"		"OnMindEyeStart"
+					}
+				}
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"diarmuid_ability"
+						"Function"		"OnMindEyeStart"
+					}
+				}	
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"diarmuid_ability"
+						"Function"		"OnMindEyeEnd"
+					}					
+				}
+		  	}
+		}
+	}
+
 	//=======================================
 	// Diarmuid Attribute : Rosebloom
 	//=======================================
@@ -13554,7 +13736,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"19"
+		"AbilityManaCost"				"20"
 
 		"precache"
 		{
@@ -13572,6 +13754,44 @@
 				"Function"		"OnDoubleSpearAcquired"
 			}
 		}
+	}
+
+	//========================================
+	// Diarmuid : Double Spear Strike
+	//========================================
+	"diarmuid_double_spear_strike"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityTextureName"			"diarmuid_double_spear"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+		}
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"diarmuid_ability"
+				"Function"			"OnDSToggleOn"
+			}
+		}
+
+		"OnToggleOff"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"diarmuid_ability"
+				"Function"			"OnDSToggleOff"
+			}
+		}		
 	}
 
 	//================================================

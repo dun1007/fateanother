@@ -11,7 +11,8 @@ purgable = {
     "modifier_share_damage",
     "modifier_rule_breaker",
     "modifier_double_edge",
-    "modifier_murderous_instinct"
+    "modifier_murderous_instinct",
+    "modifier_double_spearsmanship"
 }
 
 strongdispelable = {
@@ -30,8 +31,8 @@ strongdispelable = {
     "modifier_b_scroll",
     "modifier_argos_shield",
     "modifier_rho_aias_shield",
-    "modifier_murderous_instinct"
-
+    "modifier_murderous_instinct",
+    "modifier_double_spearsmanship"
 }
 
 goesthruB = {"saber_avalon",
@@ -95,7 +96,9 @@ CannotReset = {
     "lancelot_arms_mastership_improved",
     "lancelot_nuke",
     "avenger_endless_loop",
-    "avenger_dark_passage"
+    "avenger_dark_passage",
+    "diarmuid_double_spear_strike",
+    "diarmuid_rampant_warrior"
 }
 
 femaleservant = {

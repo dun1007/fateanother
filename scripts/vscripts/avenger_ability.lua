@@ -178,7 +178,7 @@ function OnRemainMultiplyStart(keys)
 	Timers:CreateTimer(0.033, function()
 		local avenger = caster:GetPlayerOwner():GetAssignedHero()
 		local remainabil = avenger:FindAbilityByName("avenger_unlimited_remains")
-		local period = remainabil:GetLevelSpecialValueFor("multiply_period", remainabil:GetLevel())	
+		local period = remainabil:GetLevelSpecialValueFor("multiply_period", remainabil:GetLevel()-1)	
 		Timers:CreateTimer(period, function() 
 			if not IsValidEntity(caster) or not caster:IsAlive() then return end
 			OnRemainMultiply(keys)
@@ -200,7 +200,7 @@ function OnRemainMultiply(keys)
 	remain:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
 	LevelAllAbility(remain)
 	FindClearSpaceForUnit(remain, remain:GetAbsOrigin(), true)
-	remain:FindAbilityByName("avenger_remain_passive"):SetLevel(keys.ability:GetLevel())
+	remain:FindAbilityByName("avenger_remain_passive"):SetLevel(keys.ability:GetLevel()-1)
 	remain:AddNewModifier(caster, nil, "modifier_kill", {duration = 75})
 	Timers:CreateTimer(3.0, function() 
 		if not remain:IsAlive() then return end
@@ -389,7 +389,7 @@ function OnEndlessTakeDamage(keys)
 	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
 	local verg = caster:FindAbilityByName("avenger_verg_avesta")
-	local multiplier = verg:GetLevelSpecialValueFor("multiplier", verg:GetLevel())
+	local multiplier = verg:GetLevelSpecialValueFor("multiplier", verg:GetLevel()-1)
 	if ply.IsDIAcquired then multiplier = multiplier + 25 end
 	local returnDamage = keys.DamageTaken * multiplier / 100
 
