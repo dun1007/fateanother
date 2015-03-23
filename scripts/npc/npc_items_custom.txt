@@ -601,7 +601,10 @@
 	    "ItemPurchasable" "1"
 	    "ItemDroppable" "1"
 	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
-
+	    "precache"
+	    {
+	    	"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+	    }
 
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"

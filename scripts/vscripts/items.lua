@@ -68,34 +68,59 @@ function PotInstantHeal(keys)
 
 end
 
-local TPLoc = nil 
 function TPScroll(keys)
-	print("TP initiated")
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 3000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, 0, FIND_CLOSEST, false) 
 
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 2000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, 0, FIND_CLOSEST, false) 
+	if targets[1] == nil then
+		caster.TPLoc = nil
+	else 
+		caster.TPLoc = targets[1]:GetAbsOrigin()
+		local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster )
+		ParticleManager:SetParticleControlEnt( pfx, 0, caster, PATTACH_POINT, "attach_hitloc", caster:GetAbsOrigin(), true )
 
-	TPLoc = targets[1]:GetAbsOrigin() 
+	    local particledummy = CreateUnitByName("sight_dummy_unit", targets[1]:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	    particledummy:SetDayTimeVisionRange(0)
+	    particledummy:SetNightTimeVisionRange(0)
+	    particledummy:AddNewModifier(caster, nil, "modifier_kill", {duration = 1.0})
+
+		local pfx2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, particledummy )
+		ParticleManager:SetParticleControlEnt( pfx2, 0, particledummy, PATTACH_POINT, "attach_hitloc", particledummy:GetAbsOrigin(), true )
+
+		caster:EmitSound("Hero_Wisp.Relocate")
+		particledummy:EmitSound("Hero_Wisp.Relocate")
+	end
 end
 
 function TPSuccess(keys)
 	print("TP successful")
 	local caster = keys.caster
-	caster:SetAbsOrigin(TPLoc)
-	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	if caster.TPLoc == nil then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Have Ward Nearby Targeted Location" } )
+		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
+	else
+		caster:EmitSound("Hero_Wisp.Return")
+		caster:SetAbsOrigin(caster.TPLoc)
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	end
 end
 
 function MassTPSuccess(keys)
 	local caster = keys.caster
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000
             , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)	
-	for k,v in pairs(targets) do
-		v:SetAbsOrigin(TPLoc)
-		FindClearSpaceForUnit(v, v:GetAbsOrigin(), true)
+	if caster.TPLoc == nil then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Have Ward Nearby Targeted Location" } )
+		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
+	else
+		caster:EmitSound("Hero_Wisp.Return")
+		for k,v in pairs(targets) do
+			v:SetAbsOrigin(caster.TPLoc)
+			FindClearSpaceForUnit(v, v:GetAbsOrigin(), true)
+		end
 	end
-
 end
 
 function TPFail(keys)
