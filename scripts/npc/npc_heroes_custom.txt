@@ -713,7 +713,9 @@
 	"npc_dota_hero_zc"
 	{
 		"override_hero"			"npc_dota_hero_shadow_shaman"
-		
+		"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.00"
+
 		"Ability1"				"false_assassin_gate_keeper"
 		"Ability2"				"false_assassin_heart_of_harmony"
 		"Ability3"				"false_assassin_windblade"
@@ -752,7 +754,7 @@
 	}
 
 	//=======================================
-	//	Rider(4th) - Alexander the Great
+	//	Rider(4th) - Iskander
 	//=======================================
 	"npc_dota_hero_iskander"
 	{

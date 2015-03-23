@@ -30,7 +30,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_modifier"		"20"
+				"speed_modifier"		"10"
 			}
 		}
 		
@@ -13792,6 +13792,34 @@
 				"Function"			"OnDSToggleOff"
 			}
 		}		
+	}
+
+	//================================================
+	// Iskander : Charisma
+	//================================================
+	"iskander_charisma"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "diarmuid_minds_eye"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"iskander_charisma_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "0"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"diarmuid_ability"
+						"Function"		"OnMindEyeStart"
+					}
+				}
+		  	}
+		}
 	}
 
 	//================================================
