@@ -12567,7 +12567,7 @@
 		{
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
-			"particle"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
+			"particle"		"particles/custom/avenger/avenger_verg_avesta.vpcf"
 		}
 
 		// Time		
@@ -12617,9 +12617,18 @@
 		{
 			"modifier_verg_avesta"
 			{
-				"EffectName"		"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
-				"EffectAttachType"	"follow_origin"
 				"Duration"		"%duration"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/avenger/avenger_verg_avesta.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+				
 				"OnTakeDamage"
 				{
 					"RunScript"
