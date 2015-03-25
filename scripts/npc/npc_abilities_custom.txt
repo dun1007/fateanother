@@ -13810,9 +13810,17 @@
 	{
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "diarmuid_minds_eye"
+		"AbilityTextureName"            "iskander_charisma"
 		"MaxLevel"                      "1"
-		
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"750"
+			}
+		}	
 		"Modifiers"
 		{
 			"iskander_charisma_passive"
@@ -13823,11 +13831,843 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"diarmuid_ability"
-						"Function"		"OnMindEyeStart"
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnIskanderCharismaStart"
 					}
 				}
 		  	}
+		}
+	}
+
+	//========================================
+	// Iskander - Forward!
+	//========================================
+	"iskander_forward"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"iskander_forward"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16 15 14 13 12"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"1 1.4 1.8 2.2 2.6"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"30"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"iskander_ability"
+				"Function"			"OnForwardStart"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_forward"
+			{		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed"
+				}
+			}
+		}
+	}
+
+	//====================================
+	// Iskander - Phalanx
+	//====================================
+	"iskander_phalanx"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"iskander_phalanx"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"900"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"17"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200 275 350 425 500"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"width"				"500"
+			}			
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"300"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnPhalanxStart"
+			 	"Target"		"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//========================================
+	// Iskander - Gordius Wheel
+	//========================================
+	"iskander_gordius_wheel"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"iskander_gordius_wheel"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"34"
+		"AbilityCastPoint"				"0.01"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10.0"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed_per_second"			"8"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_damage"			"400 450 500 550 600"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"min_damage"			"100 150 200 250 300"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"iskander_ability"
+				"Function"			"OnChariotStart"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Invoker.Alacrity"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_gordius_wheel"
+			{		
+			}
+		}
+	}
+
+	//====================================
+	// Iskander - Via Expugnatio
+	//====================================
+	"iskander_via_expugnatio"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"iskander_via_expugnatio"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"36"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge_damage"			"100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"trail_damage"			"20"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1200"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnChariotChargeStart"
+			 	"Target"		"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//========================================
+	// Iskander - Army of the King
+	//========================================
+	"iskander_army_of_the_king"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"iskander_army_of_the_king"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"56"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"1150"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"12.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"iskander_ability"
+				"Function"			"OnAOTKStart"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Invoker.Alacrity"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_army_of_the_king"
+			{		
+			}
+		}
+	}
+
+	//====================================
+	// Iskander - Battle Horn
+	//====================================
+	"iskander_battle_horn"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"legion_commander_press_the_attack"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_bonus"			"15 20 25 30 35"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_reduction"			"-2/-4/-6/-8/-10"
+			}
+			"03"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnBattleHornStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//====================================
+	// Iskander - Summon Hephaestion
+	//====================================
+	"iskander_summon_hephaestion"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"iskander_summon_hephaestion"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hero_health"			"700/825/950/1075/1200"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cavalry_health"			"500/600/700/800/900"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnCavalrySummon"
+			 	"Target"		"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+	//====================================
+	// Iskander - Hammer and Anvil
+	//====================================
+	"iskander_hammer_and_anvil"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"chaos_knight_phantasm"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"300"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnHammerStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//====================================
+	// Iskander - Summon Waver
+	//====================================
+	"iskander_summon_waver"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"iskander_summon_waver"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"hero_health"			"500/600/700/800/900"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cavalry_health"			"250/325/400/475/550"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnMageSummon"
+			 	"Target"		"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//====================================
+	// Iskander - Brilliance of the King
+	//====================================
+	"iskander_brilliance_of_the_king"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"keeper_of_the_light_illuminate"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"
+		"precache"
+		{
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+		}
+		
+		"AbilityCastPoint"				"0.5"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"16"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"0.5 1.0 1.5 2.0 2.5"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"iskander_ability"
+			 	"Function"		"OnBrillianceStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//========================================
+	// Iskander : Annihilate!
+	//========================================
+	"iskander_annihilate"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"iskander_army_of_the_king"
+		"MaxLevel"						"5"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"19"
+		"AbilityCastPoint"				"0.3"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"200"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"12.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"iskander_ability"
+				"Function"			"OnAnnihilateStart"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Invoker.Alacrity"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_army_of_the_king"
+			{		
+			}
+		}
+	}
+	//=======================================
+	// Iskander : Improve Charisma
+	//=======================================
+	"iskander_attribute_improve_charisma"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"iskander_charisma"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"iskander_ability"
+				"Function"		"OnIskanderCharismaImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Iskander : Thundergod's Wrath
+	//=======================================
+	"iskander_attribute_thundergods_wrath"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"iskander_thundergods_wrath"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"17"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"iskander_ability"
+				"Function"		"OnThundergodAcquired"
+			}
+		}
+	}
+
+
+	//=======================================
+	// Iskander : Via Expugnatio
+	//=======================================
+	"iskander_attribute_via_expugnatio"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"iskander_via_expugnatio"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"9"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"iskander_ability"
+				"Function"		"OnChariotChargeAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Iskander : Bond Beyond Time
+	//=======================================
+	"iskander_attribute_bond_beyond_time"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"iskander_army_of_the_king"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"iskander_ability"
+				"Function"		"OnBeyondTimeAcquired"
+			}
 		}
 	}
 

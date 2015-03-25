@@ -119,6 +119,14 @@ DiarmuidAttribute = {
 	attrCount = 4
 }
 
+IskanderAttribute = {
+	"iskander_attribute_improve_charisma",
+	"iskander_attribute_thundergods_wrath",
+	"iskander_attribute_via_expugnatio",
+	"iskander_attribute_bond_beyond_time",
+	"iskander_annihilate",
+	attrCount = 4
+}
 
 function OnSeal1Start(keys)
 	local caster = keys.caster
