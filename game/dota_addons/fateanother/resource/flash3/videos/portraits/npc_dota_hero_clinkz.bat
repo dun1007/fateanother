@@ -1,0 +1,1 @@
+"C:\Users\Stevee\Desktop\Scaleform VideoEncoder\medianoche.exe"    -gop_closed=on -gop_i=1 -gop_p=4 -gop_b=2 -video00="C:\Users\Stevee\Desktop\Untitled-3.tga" -output="C:\Users\Stevee\Desktop\Untitled-3.usm" -bitrate=16000000 -framerate=30000,1001

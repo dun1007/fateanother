@@ -1,0 +1,2025 @@
+"DOTAAbilities"
+{
+
+	"item_master_transfer_items1" 
+	{
+	    "ID"           "1998"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "master_transfer_items1"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"1"
+			}
+	    }
+	}
+
+	"item_master_transfer_items2" 
+	{
+	    "ID"           "1997"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "master_transfer_items"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"2"
+			}
+	    }
+	}
+
+	"item_master_transfer_items3" 
+	{
+	    "ID"           "1996"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "master_transfer_items"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"3"
+			}
+	    }
+	}
+
+	"item_master_transfer_items4" 
+	{
+	    "ID"           "1995"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "master_transfer_items"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"4"
+			}
+	    }
+	}
+
+	"item_master_transfer_items5" 
+	{
+	    "ID"           "1994"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "master_transfer_items"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"5"
+			}
+	    }
+	}
+
+	"item_master_transfer_items6" 
+	{
+	    "ID"           "1993"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "master_transfer_items"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    }
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"6"
+			}
+	    }
+	}
+
+
+	"item_apply_modifiers"
+	{
+	    // General
+	    //-------------------------------------------------------------------------------------------------------------
+	    "ID"                            "1999"  
+	    "BaseClass"                     "item_datadriven"
+	    "ItemBaseLevel"                 "1"
+
+	    // Stats
+	    //-------------------------------------------------------------------------------------------------------------
+	    "AbilityCastRange"              "9999"
+	    "AbilityCastPoint"                      "0.0"    
+
+	    "Modifiers"
+	    {
+			"pause_sealenabled"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			
+			"drag_pause"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"pause_sealdisabled"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"rb_sealdisabled"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+			}
+			"jump_pause"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"round_pause"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+	    }
+
+	}
+
+	"item_hregen_modifier"
+	{
+		"ID"							"2102"
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"BaseClass"						"item_datadriven"
+ 
+		"Modifiers"
+		{
+			"modifier_hregen_mod_1"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.25"
+				}
+			}
+			"modifier_hregen_mod_2"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.5"
+				}
+			}
+			"modifier_hregen_mod_4"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"1.0"
+				}
+			}
+			"modifier_hregen_mod_8"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"2.0"
+				}
+			}
+			"modifier_hregen_mod_16"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"4.0"
+				}
+			}
+			"modifier_hregen_mod_32"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"8.0"
+				}
+			}
+			"modifier_hregen_mod_64"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"16.0"
+				}
+			}
+			"modifier_hregen_mod_128"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"32.0"
+				}
+			}
+			"modifier_hregen_mod_256"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"64.0"
+				}
+			}
+			"modifier_hregen_mod_512"
+			{
+				"Passive"           	"1"
+				"IsHidden"				"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"128.0"
+				}
+			}
+		}
+	}
+
+
+
+	"item_mana_essence" 
+	{
+		//		GENERAL
+		//-------------------------------------
+	    "ID"           			"1100"
+	    "BaseClass"    			"item_datadriven"
+	    "AbilityTextureName" 	"item_greater_salve"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"	
+	    
+	    "AbilityCooldown"		"10"
+
+	    "Model"        "models/props_gameplay/salve_red.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "precache"
+	    {
+	    	"particle"		"particles/items_fx/healing_flask.vpcf"
+	    }
+
+	    "ItemCost"     "800"
+	    "ItemQuality"  "component"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+	    "ItemInitialCharges" "2"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "OnEquip"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"OnManaEssenceAcquired"
+			}
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"	"item_pot_regen"
+	    		"Target"	"CASTER"
+	    	}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.ClarityPotion.Activate"
+				"Target"		"CASTER"
+			}
+	    }
+	    "Modifiers"
+	    {
+	        "item_pot_regen"
+	        {	
+	        	"Duration"	"10.0"
+	        	"EffectName"	"particles/items_fx/healing_flask.vpcf"
+	        	"EffectAttachType"	"attach_hitloc"
+	            "Properties"
+	            {
+	            	"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"50"
+	            	"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"30"
+	            }
+	            "OnAttacked"
+	            {
+	            	"RemoveModifier"
+	            	{
+	            		"Target"	"CASTER"
+	            		"ModifierName"		"item_pot_regen"
+	            	}
+	            }
+	        } 
+	    }
+	} 
+
+	"item_recipe_condensed_mana_essence"
+	{
+	    "ID" "1101"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"0" //if its 0, it will combine without needing a recipe.
+	    "ItemResult"         	"item_condensed_mana_essence" //the result of combining the ItemRequirements
+	    "ItemRequirements"
+	    {
+	        "01" "item_mana_essence;item_mana_essence"
+	    }
+	}
+
+	"item_condensed_mana_essence" 
+	{
+	    "ID"           "1102"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_bottle_haste"
+	    "Model"        "models/props_gameplay/salve_red.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "common"
+
+	    "ItemCost"     "1600"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "2"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"40"
+	    "precache"
+	    {
+	    	"particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf"
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"PotInstantHeal"
+			}
+					
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.HealingSalve.Activate"
+				"Target"		"CASTER"
+			}
+	    }
+	} 
+
+	"item_teleport_scroll" 
+	{
+	    "ID"           "1103"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_tpscroll"
+	    "Model"        "models/props_gameplay/recipe.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "500"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+	    "precache"
+	    {
+	    	"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+	    }
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	    "AbilityCooldown"				"90"
+	    "AbilityChannelTime"			"1.0"		
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TPScroll"
+				"Target"		"POINT"
+			}
+	    }
+	    "OnChannelSucceeded"
+		{
+	    	"SpendCharge" {}
+			"RunScript"
+			{
+				"ScriptFile"		"items"
+				"Function"			"TPSuccess"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+	    	"SpendCharge" {}
+			"RunScript"
+			{
+				"ScriptFile"		"items"
+				"Function"			"TPFail"
+			}
+		}
+
+	} 
+
+	"item_gem_of_speed" 
+	{
+	    "ID"           "1104"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_sphere"
+	    "Model"        "models/props_gameplay/crystal_ring01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "300"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"8"
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"	"modifier_speed_gem"
+	    		"Target"		"CASTER"
+	    	}
+	    	"FireSound"
+	    	{
+	    		"EffectName"		"DOTA_Item.PhaseBoots.Activate"
+	    		"Target"		"CASTER"
+	    	}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_speed_gem"
+	    	{
+	    		"Duration"		"15.0"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"30"
+	    		}
+	    	}
+	    }
+	} 
+
+	"item_scout_familiar" 
+	{
+	    "ID"           "1105"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_flying_courier"
+	    "Model"        "models/props_gameplay/roquelaire/roquelaire.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "300"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "1"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"20"
+	    "precache"
+	    {
+	    	"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"ScoutFam"
+			}
+	    }
+	    "Modifiers"
+	    {
+			"modifier_banished"
+			{
+				"IsDebuff"					"false"
+				"IsPurgable"				"false"
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_ATTACK_IMMUNE"						"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"							"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_DECREPIFY_UNIQUE"	"-100"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PHYSICAL"			"1"
+					"MODIFIER_PROPERTY_ABSOLUTE_NO_DAMAGE_PURE"				"1"
+				}
+			}
+	    }
+	}
+
+	"item_berserk_scroll" 
+	{
+	    "ID"           "1106"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "berserk_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "600"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"60"
+	    "precache"
+	    {
+	    	"particle"		"particles/items2_fx/mask_of_madness.vpcf"
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_berserk_scroll"
+	    		"Target"			"CASTER"
+	    	}
+	    	"FireSound"
+	    	{
+	    		"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
+	    		"Target"			"CASTER"
+	    	}
+	    	"SpendCharge" {}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_berserk_scroll"
+	    	{
+	    		"Duration"		"10.0"
+				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
+				"EffectAttachType"	"follow_origin"
+	    		"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"100"
+				}
+	    	}
+	    }
+	}
+
+
+
+	"item_ward_familiar" 
+	{
+	    "ID"           "1107"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"Model"							"models/props_gameplay/observer_ward_bundle.mdl"
+		"AbilityTextureName" "item_observer_ward"
+
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"1.0"
+
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"800"
+		"ItemQuality"					"consumable"
+		"ItemStackable"					"0"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"1"
+		"ItemStockMax"					"10"
+		"ItemStockInitial"				"5"
+		"ItemStockTime"					"30.0"
+		"ItemDeclarations"				"DECLARE_PURCHASES_TO_TEAMMATES"
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"105"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_range"			"1600"
+			}
+		}
+		"OnSpellStart"
+		{
+			"SpendCharge" {}		
+			"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"WardFam"
+				"Target"		"POINT"
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.ObserverWard.Activate"
+				"Target"		"CASTER"
+			}	
+		}
+	}
+
+	"item_spirit_link" 
+	{
+	    "ID"           "1108"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "spirit_link"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "1500"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+	    "AbilityCooldown"				"45.0"
+	    "AbilityCastRange"				"1000"
+
+	    "ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
+	    "precache"
+	    {
+	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"SpiritLink"
+				"Target"
+				{
+					"Center"	"TARGET"
+			        "Radius"	"1000"
+					"Teams"		"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+					"Types"		"DOTA_UNIT_TARGET_HERO"
+				}
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_share_damage"
+	    	{
+	    		"Duration"		"10.0"
+	    		"EffectName"	"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    		"EffectAttachType"		"follow_overhead"
+	    		"OnTakeDamage"
+	    		{
+				    "RunScript"
+					{
+						"ScriptFile"	"items"
+						"Function"		"OnLinkDamageTaken"
+						"DamageTaken"	"%attack_damage"	
+					}
+	    		}
+
+	    		"OnDestroy"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"	"items"
+	    				"Function"		"OnLinkDestroyed"
+	    			}
+	    		}
+	    	}
+	    }
+	}
+
+	"item_mass_teleport_scroll" 
+	{
+	    "ID"           "1109"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_recipe_scroll"
+	    "Model"        "models/props_gameplay/recipe.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "2000"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+	    "AbilityCooldown"				"90"
+	    "AbilityChannelTime"			"3.0"		
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TPScroll"
+				"Target"		"POINT"
+			}
+	    }
+	    "OnChannelSucceeded"
+		{
+	    	"SpendCharge" {}
+			"RunScript"
+			{
+				"ScriptFile"		"items"
+				"Function"			"MassTPSuccess"
+			}
+		}
+		"OnChannelInterrupted"
+		{
+	    	"SpendCharge" {}
+			"RunScript"
+			{
+				"ScriptFile"		"items"
+				"Function"			"TPFail"
+			}
+		}
+	} 
+
+	"item_gem_of_resonance" 
+	{
+	    "ID"           "1110"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_talisman_of_evasion"
+	    "Model"        "models/props_gameplay/gem01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "1200"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30"
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"GemOfResonance"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    }
+	}
+
+	"item_recipe_healing_scroll"
+	{
+	    "ID" 					"1111"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"400" 
+	    "ItemResult"         	"item_healing_scroll" //the result of combining the ItemRequirements
+	    "ItemRequirements"
+	    {
+	        "01" "item_mana_essence"
+	    }
+	}
+
+	"item_healing_scroll" 
+	{
+	    "ID"           "1112"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_healing_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "1200"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "2"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"20"
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"HealingScroll"
+			}
+	    }
+	}
+
+	"item_blink_scroll" 
+	{
+	    "ID"           "1113"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "blink_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30"
+	    "AbilityCastRange"				"1000"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"Blink"
+				"Target"		"POINT"
+			}
+		}
+
+	}
+
+
+	"item_c_scroll" 
+	{
+	    "ID"           "1114"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_c_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "150"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+		//"ItemStockMax"					"35"
+		//"ItemStockInitial"				"35"
+		//"ItemStockTime"					"10.0"
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+
+	    "AbilityCastRange"				"1000"
+	    "AbilityCooldown"				"10"
+	    "AbilityDamage"					"100"
+	    "precache"
+	    {
+	    	"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+	    }
+
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"					"100"
+			}
+		}
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"CScroll"
+			}
+	    	"SpendCharge" {}
+	    }
+	}
+
+	"item_recipe_b_scroll"
+	{
+	    "ID" 					"1115"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"0" //if its 0, it will combine without needing a recipe.
+	    "ItemResult"         	"item_b_scroll" 
+	    "ItemRequirements"
+	   	{
+	        "01" "item_c_scroll;item_c_scroll"
+	    }
+	}
+
+	"item_b_scroll" 
+	{
+	    "ID"           "1116"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_b_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "300"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30"
+	    "precache"
+	    {
+			"particle"			"particles/items_fx/courier_shield.vpcf"
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"BScroll"
+				"ShieldAmount"	"%barrier_block"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_b_scroll"
+				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.ArcaneBoots.Activate"
+				"Target"		"CASTER"
+			}
+	    }
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"barrier_block"			"600"
+			}
+		}
+		
+	    "Modifiers"
+	    {
+	    	"modifier_b_scroll"
+	    	{
+	    		"Duration" "20.0"
+	    		"OnCreated"
+	    		{
+	    			"AttachEffect"
+	    			{
+	    				"Target"		"CASTER"
+	    				"EffectName"	"particles/items_fx/courier_shield.vpcf"
+	    				"EffectAttachType"		"follow_origin"
+	    				"EffectRadius"		"300"
+	    			}
+
+	    		}
+	    	}
+	    }
+	}
+
+	"item_recipe_a_scroll"
+	{
+	    "ID" 					"1117"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"0" //if its 0, it will combine without needing a recipe.
+	    "ItemResult"         	"item_a_scroll" 
+	    "ItemRequirements"
+	   	{
+	        "01" "item_b_scroll;item_b_scroll"
+	    }
+	}
+
+	"item_a_scroll" 
+	{
+	    "ID"           "1118"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_a_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "600"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30"
+	    "precache"
+	    {
+	    	"particle"		"particles/items2_fx/mjollnir_shield.vpcf"
+	    }
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"ApplyModifier"
+			{
+				"ModifierName"	"item_a_scroll"
+				"Target"		"CASTER"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"AScroll"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.LinkensSphere.Target"
+				"Target"		"CASTER"
+			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"item_a_scroll"
+	    	{
+	    		"Duration"		"10.0"
+	    		"OnCreated"
+	    		{
+	    			"AttachEffect"
+	    			{
+	    				"Target"		"CASTER"
+	    				"EffectName"	"particles/items2_fx/mjollnir_shield.vpcf"
+	    				"EffectAttachType"		"follow_origin"
+	    				"EffectRadius"		"300"
+	    			}
+
+	    		}
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
+	    		}
+	    	}
+	    }
+	}
+
+	"item_recipe_a_plus_scroll"
+	{
+	    "ID" 					"1119"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"400" 
+	    "ItemResult"         	"item_a_plus_scroll" 
+	    "ItemRequirements"
+	   	{
+	        "01" "item_a_scroll"
+	    }
+	}
+
+	"item_a_plus_scroll" 
+	{
+	    "ID"           "1120"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_a_plus_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "1000"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30"
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"ApplyModifier"
+			{
+				"ModifierName"	"modifier_a_plus_mr"
+				"Target"		"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_a_plus_armor"
+				"Target"		"CASTER"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_a_plus_mr"
+	    	{
+	    		"Duration"		"10.0"
+	    		"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+	    		"EffectAttachType"	"follow_overhead"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
+	    		}
+	    	}
+	    	"modifier_a_plus_armor"
+	    	{
+	    		"Duration"		"10.0"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"30"
+	    		}
+	    	}
+	    }
+	}
+
+	"item_recipe_s_scroll"
+	{
+	    "ID" 					"1121"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"0" 
+	    "ItemResult"         	"item_s_scroll" 
+	    "ItemRequirements"
+	   	{
+	        "01" "item_a_scroll;item_a_scroll"
+	    }
+	}
+
+	"item_s_scroll" 
+	{
+	    "ID"           "1122"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_s_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "1200"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastPoint"				"0.0"
+		"precache"
+		{
+			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_purge"
+	    		"Target"			"TARGET"
+	    	}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_slow_tier1"
+	    		"Target"			"TARGET"
+	    	}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_slow_tier2"
+	    		"Target"			"TARGET"
+	    	}
+	    		    		
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"SScroll"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.DiffusalBlade.Target"
+				"Target"		"CASTER"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_purge"
+	    	{
+	    		"Duration"			"1.0"
+	    		"IsDebuff"			"1"
+	    		"States"
+	    		{
+	    			"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+	    		}
+	    	}
+	    	"modifier_slow_tier1"
+	    	{
+	    		"Duration"			"2.5"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-80"
+	    		}
+	    	}
+	    	"modifier_slow_tier2"
+	    	{
+	    		"Duration"			"4.0"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
+	    		}
+	    	}
+	    }
+	}
+
+	"item_recipe_ex_scroll"
+	{
+	    "ID" 					"1123"
+	    "BaseClass"           	"item_datadriven"
+	    "ItemRecipe"         	"1" //destroyed after combine
+	    "ItemShopTags"			""
+	    "ItemCost"           	"0" 
+	    "ItemResult"         	"item_ex_scroll" 
+	    "ItemRequirements"
+	   	{
+	        "01" "item_s_scroll;item_s_scroll"
+	    }
+	}
+
+	"item_ex_scroll" 
+	{
+	    "ID"           "1124"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "item_ex_scroll"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "2400"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "1"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"35"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_purge"
+	    		"Target"			"TARGET"
+	    	}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_slow_tier1"
+	    		"Target"			"TARGET"
+	    	}
+	    	"ApplyModifier"
+	    	{
+	    		"ModifierName"		"modifier_slow_tier2"
+	    		"Target"			"TARGET"
+	    	}
+	    		    		
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"EXScroll"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.DiffusalBlade.Target"
+				"Target"		"CASTER"
+			}
+	    }
+	    "Modifiers"
+	    {
+	    	"modifier_purge"
+	    	{
+	    		"Duration"			"1.0"
+	    		"IsDebuff"			"1"
+	    		"States"
+	    		{
+	    			"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+	    		}
+	    	}
+	    	"modifier_slow_tier1"
+	    	{
+	    		"Duration"			"2.5"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-80"
+	    		}
+	    	}
+	    	"modifier_slow_tier2"
+	    	{
+	    		"Duration"			"4.0"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
+	    		}
+	    	}
+	    }
+	}
+
+	"item_summon_skeleton_warrior" 
+	{
+	    "ID"           "1125"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "summon_skeleton_warrior"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"10"
+	    "precache"
+	    {
+	    	"model"			"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
+	    }
+
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnSummonSkeleton"
+			}
+	    }
+	}
+
+	"item_summon_skeleton_archer" 
+	{
+	    "ID"           "1126"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "summon_skeleton_archer"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"10"
+	    "precache"
+	    {
+	    	"model"			"models/heroes/clinkz/clinkz.vmdl"
+	    }
+
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnSummonSkeleton"
+			}
+	    }
+	}
+
+	"item_summon_ancient_dragon" 
+	{
+	    "ID"           "1127"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "summon_ancient_dragon"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityManaCost"				"500"
+	    "precache"
+	    {
+	    	"model"			"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+	    }
+
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnSummonDragon"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_DragonKnight.ElderDragonForm"
+				"Target"		"CASTER"
+			}
+	    }
+	}
+
+	"item_all_seeing_orb" 
+	{
+	    "ID"           "1128"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "all_seeing_orb"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityCastRange"				"99999"
+	    "AbilityManaCost"				"100"
+	    "AbilityCooldown"				"25"
+	    "AOERadius"						"%radius"
+		"precache"
+		{
+			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
+			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"8.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "caster_ability"
+				"Function"      "CasterFarSight"
+				"Radius"		"%radius"
+				"Target"		"POINT"
+			}
+		}
+	}
+
+	"item_shard_of_anti_magic" 
+	{
+	    "ID"           "1129"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "shard_of_anti_magic"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "2"
+	    "ItemStackable" "1"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"30.0"
+	    "precache"
+	    {
+	    	"particle"		"particles/items_fx/black_king_bar_avatar.vpcf"
+	    }
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"AntiMagic"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_magic_immunity"
+				"Target"		"CASTER"
+			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_magic_immunity"
+	    	{
+	    		"Duration"		"10.0"
+	    		"OnCreated"
+	    		{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+	    		}
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	    	}
+	    }
+	}
+
+
+	"item_shard_of_replenishment" 
+	{
+	    "ID"           "1130"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "shard_of_replenishment"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemInitialCharges" "5"
+	    "ItemStackable" "1"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityCooldown"				"0.0"
+	    //"AbilityCastRange"				"1000"
+	    "precache"
+	    {
+	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
+	    }
+	    "OnSpellStart"
+	    {
+	    	"SpendCharge" {}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"FullHeal"
+			}
+	    }	
+	}
+}

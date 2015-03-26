@@ -1,0 +1,18 @@
+"CustomUI"
+{
+	"1"
+	{
+		"File" "StatsCollection"
+		"Depth" "1"
+	}
+	"2"
+	{
+	"File"		"PlayerSay"
+	"Depth"		"12"
+	}
+	"3"
+	{
+	"File"		"CustomError"
+	"Depth"		"50"
+	}
+}
