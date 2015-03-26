@@ -1,0 +1,308 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CVModel CVModel_0
+{
+	CVmeshList m_meshList = CVmeshList
+	{
+		CVmesh[] m_meshList = 
+		[
+			CVmesh
+			{
+				string m_meshName = "shirouanim"
+				string m_meshFile = "models/shirou/shirouanim.fbx"
+				string m_materialSearchPath = ""
+				bool m_bSkinParentedObjects = true
+				bool m_bExpensiveTangents = false
+				bool m_bExpensiveVertices = false
+				CVmorphInfo* m_pMorphInfo = NULL
+			}
+		]
+	}
+	CVClothProxyMeshList m_clothProxyMeshList = CVClothProxyMeshList
+	{
+		CVClothProxyMesh[] m_clothProxyMeshList = 
+		[
+			
+		]
+		float m_flClothEnableThreshold = 0.050000
+		bool m_bCreateStaticBone = false
+		int m_nMaxBonesPerVertex = 4
+		bool m_bRemoveUnusedBonesEnabled = false
+		bool m_bUseOnlyRealMeshBones = false
+		float m_flMatchProxiesToMeshes = 1.000000
+		float m_flReservedFloat = 0.000000
+		int m_nReservedInt = 0
+		bool m_bReservedBool1 = false
+		bool m_bReservedBool2 = false
+		bool m_bReservedBool3 = false
+		bool m_bReservedBool4 = false
+	}
+	CVphysicsMeshList m_physicsMeshList = CVphysicsMeshList
+	{
+		CVphysicsMesh[] m_meshList = 
+		[
+			
+		]
+	}
+	CVmodelInfo* m_pModelInfo = NULL
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
+	[
+		CVhitBoxSetListReference
+		{
+			CVhitBoxSetList* m_pObject = &CVhitBoxSetList_0
+			string m_sFileName = ""
+		}
+	]
+	CVattachmentListReference[] m_pAttachmentLists = 
+	[
+		
+	]
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
+	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
+	{
+		NodeMaterialGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVMeshGroupListReference m_pMeshGroupList = CVMeshGroupListReference
+	{
+		MeshGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVLODGroupListReference m_pLodGroupList = CVLODGroupListReference
+	{
+		LODGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropBreakableListReference m_pPropBreakableList = CVpropBreakableListReference
+	{
+		CVpropBreakableList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropDataListReference m_pPropDataList = CVpropDataListReference
+	{
+		CVpropDataList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVConstraintListReference[] m_pConstraintLists = 
+	[
+		
+	]
+	string m_collision = ""
+	string m_sMDLFilename = ""
+	string[] m_scriptFiles = 
+	[
+		
+	]
+	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
+	float m_flFbxScale = 1.000000
+	float m_flQCScale = 1.000000
+	CVPsf* m_pvPsf = NULL
+	string m_keyValueText = ""
+	bool m_bStaticProp = false
+	bool m_bEnableClothProcessing = true
+	float m_flClothEnableThreshold = 0.050000
+	int m_nMaxClothVertsPerMesh = 2048
+}
+
+CVhitBoxSetList CVhitBoxSetList_0
+{
+	CVhitBoxSet[] m_HitBoxSets = 
+	[
+		CVhitBoxSet
+		{
+			string m_name = "default"
+			CVhitBox[] m_HitBoxes = 
+			[
+				CVhitBox
+				{
+					string m_name = "bone_new0"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new0"
+					float(3) m_vMinBounds = ( -17.302299, -5.093760, 97.910439 )
+					float(3) m_vMaxBounds = ( 16.973373, 18.304871, 116.083626 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new0"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new0"
+					float(3) m_vMinBounds = ( -17.302299, -5.093760, 97.910439 )
+					float(3) m_vMaxBounds = ( 16.973373, 18.304871, 116.083626 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new9"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new9"
+					float(3) m_vMinBounds = ( -15.196486, -4.412720, 121.676666 )
+					float(3) m_vMaxBounds = ( 14.870966, 15.706228, 137.161469 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new10"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new10"
+					float(3) m_vMinBounds = ( -20.654119, -3.947490, 137.890228 )
+					float(3) m_vMaxBounds = ( 20.328577, 17.130249, 161.702179 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new11"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new11"
+					float(3) m_vMinBounds = ( -47.615627, 1.670718, 147.474487 )
+					float(3) m_vMaxBounds = ( -18.932476, 14.184131, 159.716370 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new12"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new12"
+					float(3) m_vMinBounds = ( 18.609295, 1.667001, 147.476563 )
+					float(3) m_vMaxBounds = ( 47.292469, 14.180415, 159.718445 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new1"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new1"
+					float(3) m_vMinBounds = ( -16.656731, -2.624159, 58.408115 )
+					float(3) m_vMaxBounds = ( -1.092974, 14.612946, 100.754425 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new16"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new16"
+					float(3) m_vMinBounds = ( -76.531120, 1.952545, 148.053589 )
+					float(3) m_vMaxBounds = ( -46.989220, 12.710944, 157.884033 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new13"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new13"
+					float(3) m_vMinBounds = ( 46.663834, 1.952535, 148.053589 )
+					float(3) m_vMaxBounds = ( 76.205597, 12.710935, 157.884033 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new3"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new3"
+					float(3) m_vMinBounds = ( 1.622571, -1.574295, 6.195789 )
+					float(3) m_vMaxBounds = ( 15.455072, 16.914337, 59.232876 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new2"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new2"
+					float(3) m_vMinBounds = ( -15.780577, -1.574293, 6.195759 )
+					float(3) m_vMaxBounds = ( -1.948077, 16.914341, 59.232876 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new17"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new17"
+					float(3) m_vMinBounds = ( -85.895279, 1.438183, 147.011658 )
+					float(3) m_vMaxBounds = ( -76.166153, 11.535247, 156.606445 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new15"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new15"
+					float(3) m_vMinBounds = ( 76.478546, 1.438171, 147.011658 )
+					float(3) m_vMaxBounds = ( 85.569778, 11.535233, 156.606445 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new18"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new18"
+					float(3) m_vMinBounds = ( -12.574330, -7.008450, 162.061859 )
+					float(3) m_vMaxBounds = ( 11.489335, 18.361639, 192.087280 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				}
+			]
+		}
+	]
+}
+
+CVMaterialRemapList CVMaterialRemapList_0
+{
+	CVMaterialRemap[] m_vMaterialRemapList = 
+	[
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model1.vmat"
+			string m_sReplaceMaterial = "materials/shirou/shirou.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model2.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model4.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vma"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model5.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vma"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model7.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vma"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model3.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vma"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model6.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vma"
+		}
+	]
+}

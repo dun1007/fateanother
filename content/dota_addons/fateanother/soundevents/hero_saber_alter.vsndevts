@@ -1,0 +1,398 @@
+"Saber_Alter.Derange"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_derange.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"2.000000"
+					}
+					"volume_max"
+					{
+						"value"		"2.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"200.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"200.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Saber_Alter.Unleashed"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_unleashed.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Saber_Alter.ManaBurst"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_mana_burst.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Saber_Alter.Excalibur"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_excalibur.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Saber_Alter.Vortigern"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_vortigern.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Saber_Alter.MMB"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_mmb.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Saber_Alter.MMBAfter"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/saberalter/saber_alter_mmb_after.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}

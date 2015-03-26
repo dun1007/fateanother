@@ -1,0 +1,519 @@
+
+"Rider.Entry1"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_entry1.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+
+"Rider.Entry2"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_entry2.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+
+"Rider.Entry3"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_entry3.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+
+"Rider.Entry4"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_entry4.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Rider.NailSwing"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_nail_swing.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+
+"Rider.BreakerGorgon"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_breaker_gorgon.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+
+"Rider.BloodFort"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_bloodfort.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"Rider.Bellerophon"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_start_bellerophon.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}
+
+
+"Rider.Dead"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/rider/rider_dead.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"1.000000"
+					}
+					"volume_max"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+					"soundlevel_min"
+					{
+						"value"		"100.00000"
+					}
+					"soundlevel_max"
+					{
+						"value"		"100.00000"
+					}
+				}
+			}
+		}
+	}
+}

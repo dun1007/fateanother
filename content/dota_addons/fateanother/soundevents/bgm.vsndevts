@@ -1,0 +1,391 @@
+"BGM.1"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/1.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.2"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/2.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.3"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/3.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.4"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/4.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.5"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/5.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.6"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/6.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.7"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/7.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}
+
+"BGM.8"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/bgm/8.vsnd"
+						}
+					}
+					"volume_min"
+					{
+						"value"		"0.7"
+					}
+					"volume_max"
+					{
+						"value"		"0.7"
+					}
+					"pitch_min"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_max"
+					{
+						"value"		"1.000000"
+					}
+					"chan_type"
+					{
+						"value"		"0"
+					}
+					"memory_type"
+					{
+						"value"		"0"
+					}
+				}
+			}
+		}
+	}
+}

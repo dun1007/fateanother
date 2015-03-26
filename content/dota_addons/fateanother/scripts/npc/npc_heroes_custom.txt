@@ -1,0 +1,414 @@
+// Dota Heroes File
+// NOTE: This is not for creating new heroes, this is for taking a currently existing hero as a template and overriding
+// the specified key-value combinations.  Use override_hero <hero_to_override> for this.
+"DOTAHeroes"
+{
+	//=================================================================================================================
+	//	Saber - Arthuria
+	//=================================================================================================================
+	"npc_dota_hero_saber"
+	{
+		"override_hero"				"npc_dota_hero_legion_commander"
+		"Portrait"					"saber"
+		"PickSound"					"Hero_Saber.Spawn"
+		
+		"AbilityLayout"				"6"
+		"Ability1"					"saber_invisible_air"
+		"Ability2"					"saber_caliburn"
+		"Ability3"					"saber_excalibur"
+		"Ability4"					"saber_strike_air"
+		"Ability5"					"saber_instinct"
+		"Ability6"					"saber_avalon"
+		"Ability7"					"saber_charisma"
+		"Ability8"					"saber_max_excalibur"
+		"Ability9"					"saber_instinct_empowered"
+		"Ability10"					"saber_charisma_empowered"
+		"Ability11"					"saber_avalon_counter"
+		
+		"StatusHealth"					"1300"
+		"StatusHeathRegen"				"3"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5"
+		
+		"ArmorPhysical"					"5"
+		"MagicalResistance"				"25"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"				"34"
+		"AttackDamageMax"				"42"
+		"AttackRate"					"1.35"
+		"AttackAnimationPoint"			"0.75"
+		"AttackAcquisitionRange"		"250"
+		"AttackRange"					"150"
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.8"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.3"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.9"
+		
+		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"					"325"
+		"MovementTurnRate"				"0.3"
+		
+		"VisionDaytimeRange"			"1300"
+		"VisionNighttimeRange"			"700"
+		"precache"
+		{
+			"soundfile"				"soundevents/hero_saber.vsndevts"
+		}
+		
+	}
+	
+	//=================================================================================================================
+	//	Lancer(5th) - Cu Chulainn
+	//=================================================================================================================
+	"npc_dota_hero_lancer_5th"
+	{
+		"override_hero"			"npc_dota_hero_phantom_lancer"
+		
+		"AbilityLayout"				"6"
+		"Ability1"					"lancer_5th_rune_magic"
+		"Ability2"					"lancer_5th_relentless_spear"
+		"Ability3"					"lancer_5th_gae_bolg"
+		"Ability4" 					"lancer_5th_battle_continuation"
+		"Ability5"					"lancer_5th_gae_bolg_jump"
+		
+		"StatusHealth"					"1200"
+		"StatusHeathRegen"				"2.7"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"4.2"
+		
+		"ArmorPhysical"					"3"
+		"MagicalResistance"				"10"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"				"23"
+		"AttackDamageMax"				"31"
+		"AttackRate"					"0.8"
+		"AttackRange"					"250"
+		"AttackAcquisitionRange"		"350"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.0"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.3"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.7"
+		
+		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"					"365"
+		"MovementTurnRate"				"0.3"
+		
+		"VisionDaytimeRange"			"1100"
+		"VisionNighttimeRange"			"650"
+		"precache"
+		{
+			"soundfile"				"soundevents/hero_lancer.vsndevts"
+		}
+	}
+	
+	//=================================================================================================================
+	//	Saber Alter - Arthuria(Corrupted)
+	//=================================================================================================================	
+	"npc_dota_hero_saber_alter"
+	{
+		"override_hero"			"npc_dota_hero_spectre"
+		
+		"AbilityLayout"			"6"
+		"Ability1"				"saber_alter_derange"
+		"Ability2"				"saber_alter_prana_burst"
+		"Ability3"				"saber_alter_vortigern"
+		"Ability4"				"saber_alter_mana_shroud"
+		"Ability5"				"saber_alter_unleashed_ferocity"
+		"Ability6"				"saber_alter_excalibur"
+		
+		"StatusHealth"					"1500"
+		"StatusHeathRegen"				"3.5"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"6"
+		
+		"ArmorPhysical"					"6"
+		"MagicalResistance"				"20"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"150"
+		"AttackAcquisitionRange"		"200"
+		"AttackDamageMin"				"38"
+		"AttackDamageMax"				"50"
+		"AttackRate"					"1.5"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.5"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.5"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"1.0"
+		
+		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"					"310"
+		"MovementTurnRate"				"0.3"
+		
+		"VisionDaytimeRange"			"1000"
+		"VisionNighttimeRange"			"600"
+	}
+	
+	//=================================================================================================================
+	//	Archer(5th) - Emiya
+	//=================================================================================================================
+	"npc_dota_hero_archer_5th"
+	{
+		"override_hero"			"npc_dota_hero_clinkz"
+		
+		"AbilityLayout"			"6"
+		"Ability1"				"archer_5th_kanshou_bakuya"
+		"Ability2"				"archer_5th_broken_phantasm"
+		"Ability3"				"archer_5th_rho_aias"
+		"Ability4"				"archer_5th_overedge"
+		"Ability5"				"archer_5th_clairvoyance"
+		"Ability6"				"archer_5th_ubw"
+		
+		"StatusHealth"					"1250"
+		"StatusHeathRegen"				"2.4"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"4.4"
+		
+		"ArmorPhysical"					"4"
+		"MagicalResistance"				"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"25"
+		"AttackDamageMax"				"33"
+		"AttackRate"					"1.1"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.0"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.8"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"1.1"
+		
+		"MovementSpeed"					"360"
+		"MovementTurnRate"				"0.3"
+		
+		"VisionDaytimeRange"			"1800"
+		"VisionNighttimeRange"			"1100"
+	}
+	
+	//=================================================================================================================
+	//	Rider(5th) - Medusa
+	//=================================================================================================================
+	"npc_dota_hero_rider_5th"
+	{
+		"override_hero"			"npc_dota_hero_templar_assassin"
+		
+		"AbilityLayout"			"6"
+		"Ability1"				"rider_5th_nail_swing"
+		"Ability2"				"rider_5th_breaker_gorgon"
+		"Ability3"				"rider_5th_bloodfort_andromeda"
+		"Ability4"				""
+		"Ability5"				"rider_5th_mystic_eye"
+		"Ability6"				"rider_5th_bellerophon"
+		
+		"StatusHealth"					"1300"
+		"StatusHeathRegen"				"3"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5.2"
+		
+		"ArmorPhysical"					"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"29"
+		"AttackDamageMax"				"37"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.1"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.1"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.8"
+		
+		"MovementSpeed"					"335"
+		"MovementTurnRate"				"0.3"
+	}
+	
+	//=================================================================================================================
+	//	Berserker(5th) - Hercules 
+	//=================================================================================================================
+	"npc_dota_hero_berserker_5th"
+	{
+		"override_hero"			"npc_dota_hero_doom_bringer"
+		
+		"AbilityLayout"			"6"
+		
+		"StatusHealth"					"1600"
+		"StatusHeathRegen"				"4"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5"
+		
+		"ArmorPhysical"					"2"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"200"
+		"AttackDamageMin"				"36"
+		"AttackDamageMax"				"52"
+		"AttackRate"					"1.50"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"2.0"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.7"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.3"
+		
+		"MovementSpeed"					"370"
+		"MovementTurnRate"				"0.3"
+	}
+	
+	//=================================================================================================================
+	//	False Assassin(5th) - Sasaki Kojirou
+	//=================================================================================================================
+	"npc_dota_hero_false_assassin"
+	{
+		"override_hero"			"npc_dota_hero_juggernaut"
+		
+		"AbilityLayout"			"6"
+		
+		"StatusHealth"					"1300"
+		"StatusHeathRegen"				"3"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5.2"
+		
+		"ArmorPhysical"					"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"29"
+		"AttackDamageMax"				"37"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.1"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.1"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.8"
+		
+		"MovementSpeed"					"335"
+		"MovementTurnRate"				"0.3"
+	}
+	
+	//=================================================================================================================
+	//	True Assassin(5th) - Hasan
+	//=================================================================================================================
+	"npc_dota_hero_true_assassin"
+	{
+		"override_hero"			"npc_dota_hero_bounty_hunter"
+		
+		"AbilityLayout"			"6"
+		
+		"StatusHealth"					"1300"
+		"StatusHeathRegen"				"3"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5.2"
+		
+		"ArmorPhysical"					"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"29"
+		"AttackDamageMax"				"37"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.1"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.1"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.8"
+		
+		"MovementSpeed"					"335"
+		"MovementTurnRate"				"0.3"
+	}
+	
+	//=================================================================================================================
+	//	Caster(5th) - Medea
+	//=================================================================================================================
+	"npc_dota_hero_caster_5th"
+	{
+		"override_hero"			"npc_dota_hero_queenofpain"
+		
+		"AbilityLayout"			"6"
+		
+		"StatusHealth"					"1300"
+		"StatusHeathRegen"				"3"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5.2"
+		
+		"ArmorPhysical"					"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"29"
+		"AttackDamageMax"				"37"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.1"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.1"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.8"
+		
+		"MovementSpeed"					"335"
+		"MovementTurnRate"				"0.3"
+	}
+	
+	//=================================================================================================================
+	//	Archer(4th) - Gilgamesh
+	//=================================================================================================================
+	"npc_dota_hero_gilgamesh"
+	{
+		"override_hero"			"npc_dota_hero_zuus"
+		
+		"AbilityLayout"			"6"
+		
+		"StatusHealth"					"1300"
+		"StatusHeathRegen"				"3"
+		"StatusMana"					"1000"
+		"StatusManaRegen"				"5.2"
+		
+		"ArmorPhysical"					"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"29"
+		"AttackDamageMax"				"37"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.1"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.1"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.8"
+		
+		"MovementSpeed"					"335"
+		"MovementTurnRate"				"0.3"
+	}
+}

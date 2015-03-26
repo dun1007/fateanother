@@ -1,0 +1,1048 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CVModel CVModel_0
+{
+	CVmeshList m_meshList = CVmeshList
+	{
+		CVmesh[] m_meshList = 
+		[
+			CVmesh
+			{
+				string m_meshName = "tohsaka"
+				string m_meshFile = "models/tohsaka/tohsaka.fbx"
+				string m_materialSearchPath = ""
+				bool m_bSkinParentedObjects = true
+				bool m_bExpensiveTangents = false
+				bool m_bExpensiveVertices = false
+				CVmorphInfo* m_pMorphInfo = NULL
+			}
+		]
+	}
+	CVClothProxyMeshList m_clothProxyMeshList = CVClothProxyMeshList
+	{
+		CVClothProxyMesh[] m_clothProxyMeshList = 
+		[
+			
+		]
+		float m_flClothEnableThreshold = 0.050000
+		bool m_bCreateStaticBone = false
+		int m_nMaxBonesPerVertex = 4
+		bool m_bRemoveUnusedBonesEnabled = false
+		bool m_bUseOnlyRealMeshBones = false
+		float m_flMatchProxiesToMeshes = 1.000000
+		float m_flReservedFloat = 0.000000
+		int m_nReservedInt = 0
+		bool m_bReservedBool1 = false
+		bool m_bReservedBool2 = false
+		bool m_bReservedBool3 = false
+		bool m_bReservedBool4 = false
+	}
+	CVphysicsMeshList m_physicsMeshList = CVphysicsMeshList
+	{
+		CVphysicsMesh[] m_meshList = 
+		[
+			
+		]
+	}
+	CVmodelInfo* m_pModelInfo = NULL
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
+	[
+		CVhitBoxSetListReference
+		{
+			CVhitBoxSetList* m_pObject = &CVhitBoxSetList_0
+			string m_sFileName = ""
+		}
+	]
+	CVattachmentListReference[] m_pAttachmentLists = 
+	[
+		
+	]
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
+	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
+	{
+		NodeMaterialGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVMeshGroupListReference m_pMeshGroupList = CVMeshGroupListReference
+	{
+		MeshGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVLODGroupListReference m_pLodGroupList = CVLODGroupListReference
+	{
+		LODGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropBreakableListReference m_pPropBreakableList = CVpropBreakableListReference
+	{
+		CVpropBreakableList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropDataListReference m_pPropDataList = CVpropDataListReference
+	{
+		CVpropDataList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVConstraintListReference[] m_pConstraintLists = 
+	[
+		
+	]
+	string m_collision = ""
+	string m_sMDLFilename = ""
+	string[] m_scriptFiles = 
+	[
+		
+	]
+	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
+	float m_flFbxScale = 1.000000
+	float m_flQCScale = 1.000000
+	CVPsf* m_pvPsf = NULL
+	string m_keyValueText = ""
+	bool m_bStaticProp = false
+	bool m_bEnableClothProcessing = true
+	float m_flClothEnableThreshold = 0.050000
+	int m_nMaxClothVertsPerMesh = 2048
+}
+
+CVhitBoxSetList CVhitBoxSetList_0
+{
+	CVhitBoxSet[] m_HitBoxSets = 
+	[
+		CVhitBoxSet
+		{
+			string m_name = "default"
+			CVhitBox[] m_HitBoxes = 
+			[
+				CVhitBox
+				{
+					string m_name = "bone_new65"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new65"
+					float(3) m_vMinBounds = ( -11.859518, -5.780178, 92.091721 )
+					float(3) m_vMaxBounds = ( 7.588064, 8.958039, 96.293289 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new64"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new64"
+					float(3) m_vMinBounds = ( -10.803228, -5.081242, 97.189201 )
+					float(3) m_vMaxBounds = ( 6.531774, 7.717779, 103.231941 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new3"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new3"
+					float(3) m_vMinBounds = ( -15.187440, -6.788049, 104.606354 )
+					float(3) m_vMaxBounds = ( 10.914649, 9.341242, 122.703217 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new2"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new2"
+					float(3) m_vMinBounds = ( -7.300905, 0.203926, 121.405518 )
+					float(3) m_vMaxBounds = ( 3.028623, 8.502351, 128.324280 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new1"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new1"
+					float(3) m_vMinBounds = ( -11.470974, -6.132606, -0.038666 )
+					float(3) m_vMaxBounds = ( 7.197124, 13.665488, 144.234665 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new46"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new46"
+					float(3) m_vMinBounds = ( 3.566947, 2.806075, 138.899902 )
+					float(3) m_vMaxBounds = ( 8.557962, 7.578995, 143.274323 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new47"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new47"
+					float(3) m_vMinBounds = ( -12.829417, 2.806077, 138.899902 )
+					float(3) m_vMaxBounds = ( -7.838401, 7.578997, 143.274323 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new48"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new48"
+					float(3) m_vMinBounds = ( -11.059916, 5.128309, 126.526566 )
+					float(3) m_vMaxBounds = ( 6.788463, 12.090807, 131.557877 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new4"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new4"
+					float(3) m_vMinBounds = ( 10.675770, -0.610754, 112.728943 )
+					float(3) m_vMaxBounds = ( 30.396778, 7.728092, 120.914093 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new6"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new6"
+					float(3) m_vMinBounds = ( -34.665054, -0.610751, 112.728790 )
+					float(3) m_vMaxBounds = ( -14.944054, 7.728095, 120.913940 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new60"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new60"
+					float(3) m_vMinBounds = ( 5.504371, 4.103678, 135.814651 )
+					float(3) m_vMaxBounds = ( 9.434434, 8.055048, 137.072495 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new62"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new62"
+					float(3) m_vMinBounds = ( -13.705798, 4.103589, 135.814651 )
+					float(3) m_vMaxBounds = ( -9.775735, 8.054957, 137.072495 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new49"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new49"
+					float(3) m_vMinBounds = ( -11.532195, 7.983356, 121.308746 )
+					float(3) m_vMaxBounds = ( 7.260819, 12.971358, 125.583557 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new5"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new5"
+					float(3) m_vMinBounds = ( 30.187302, -0.050573, 111.957367 )
+					float(3) m_vMaxBounds = ( 45.764351, 7.978819, 119.847778 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new7"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new7"
+					float(3) m_vMinBounds = ( -50.038116, -0.047839, 111.957825 )
+					float(3) m_vMaxBounds = ( -34.461060, 7.981554, 119.848236 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new67"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new67"
+					float(3) m_vMinBounds = ( -2.000000, -2.000000, -2.000000 )
+					float(3) m_vMaxBounds = ( 2.000000, 2.000000, 2.000000 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new57"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new57"
+					float(3) m_vMinBounds = ( 6.367690, 5.177456, 131.180176 )
+					float(3) m_vMaxBounds = ( 10.120074, 8.862627, 132.248627 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new54"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new54"
+					float(3) m_vMinBounds = ( -14.391527, 5.177367, 131.180176 )
+					float(3) m_vMaxBounds = ( -10.639143, 8.862539, 132.248627 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new50"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new50"
+					float(3) m_vMinBounds = ( -12.263578, 9.369728, 117.332710 )
+					float(3) m_vMaxBounds = ( 7.991652, 14.403637, 121.623360 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new8"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new8"
+					float(3) m_vMinBounds = ( 49.909653, 1.542664, 113.103394 )
+					float(3) m_vMaxBounds = ( 55.507584, 7.026299, 117.753601 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new30"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new30"
+					float(3) m_vMinBounds = ( -59.779037, 1.542677, 113.103394 )
+					float(3) m_vMaxBounds = ( -54.181091, 7.026312, 117.753601 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new68"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new68"
+					float(3) m_vMinBounds = ( -1.725786, -3.351221, 46.516663 )
+					float(3) m_vMaxBounds = ( 8.992385, 9.500563, 84.028351 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new69"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new69"
+					float(3) m_vMinBounds = ( -13.263840, -3.351220, 46.516663 )
+					float(3) m_vMaxBounds = ( -2.545668, 9.500564, 84.028351 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new61"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new61"
+					float(3) m_vMinBounds = ( 6.747898, 6.434366, 125.785835 )
+					float(3) m_vMaxBounds = ( 10.432428, 9.847029, 126.456413 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new63"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new63"
+					float(3) m_vMinBounds = ( -14.703793, 6.434279, 125.785835 )
+					float(3) m_vMaxBounds = ( -11.019352, 9.846941, 126.456413 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new51"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new51"
+					float(3) m_vMinBounds = ( -12.870577, 10.671955, 112.253647 )
+					float(3) m_vMaxBounds = ( 8.041965, 17.345392, 118.465927 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new9"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new9"
+					float(3) m_vMinBounds = ( 56.954586, 1.550311, 115.827728 )
+					float(3) m_vMaxBounds = ( 59.256039, 3.054136, 117.461227 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new23"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new23"
+					float(3) m_vMinBounds = ( 56.354912, 5.905860, 115.487625 )
+					float(3) m_vMaxBounds = ( 58.086693, 7.074538, 117.327255 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new22"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new22"
+					float(3) m_vMinBounds = ( 56.667305, 4.539822, 115.603447 )
+					float(3) m_vMaxBounds = ( 59.033531, 5.926323, 117.655952 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new21"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new21"
+					float(3) m_vMinBounds = ( 56.956776, 3.039228, 115.826927 )
+					float(3) m_vMaxBounds = ( 59.435329, 4.568933, 117.655022 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new31"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new31"
+					float(3) m_vMinBounds = ( -63.513741, 1.550325, 115.827728 )
+					float(3) m_vMaxBounds = ( -61.226036, 3.054150, 117.461227 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new32"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new32"
+					float(3) m_vMinBounds = ( -63.706764, 3.039243, 115.826927 )
+					float(3) m_vMaxBounds = ( -61.228233, 4.568947, 117.655022 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new33"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new33"
+					float(3) m_vMinBounds = ( -63.278999, 4.539836, 115.603447 )
+					float(3) m_vMaxBounds = ( -60.938759, 5.926337, 117.655952 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new34"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new34"
+					float(3) m_vMinBounds = ( -62.362549, 6.068708, 115.487625 )
+					float(3) m_vMaxBounds = ( -60.626358, 7.074552, 116.610672 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new73"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new73"
+					float(3) m_vMinBounds = ( -0.088691, -0.644308, 8.906597 )
+					float(3) m_vMaxBounds = ( 7.588820, 9.104904, 49.402851 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new70"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new70"
+					float(3) m_vMinBounds = ( -11.863574, -0.656948, 8.907356 )
+					float(3) m_vMaxBounds = ( -4.186065, 9.092264, 49.403610 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new84"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new84"
+					float(3) m_vMinBounds = ( -11.896840, -6.515971, 86.683624 )
+					float(3) m_vMaxBounds = ( -2.079501, -1.014320, 90.571991 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new77"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new77"
+					float(3) m_vMinBounds = ( -2.191954, -6.515971, 86.683624 )
+					float(3) m_vMaxBounds = ( 7.625386, -1.014322, 90.571991 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new78"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new78"
+					float(3) m_vMinBounds = ( 6.740132, -1.532042, 90.070396 )
+					float(3) m_vMaxBounds = ( 9.026457, 6.926964, 91.840874 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new79"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new79"
+					float(3) m_vMinBounds = ( -2.187872, 6.034335, 89.981766 )
+					float(3) m_vMaxBounds = ( 7.391434, 11.111493, 91.833450 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new80"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new80"
+					float(3) m_vMinBounds = ( -11.518403, 6.034337, 89.981766 )
+					float(3) m_vMaxBounds = ( -2.083580, 11.111493, 91.833450 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new83"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new83"
+					float(3) m_vMinBounds = ( -13.297913, -1.280563, 90.070396 )
+					float(3) m_vMaxBounds = ( -11.011585, 6.926967, 91.840874 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new58"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new58"
+					float(3) m_vMinBounds = ( 6.372457, 7.032286, 115.868919 )
+					float(3) m_vMaxBounds = ( 10.523451, 11.333162, 121.831459 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new55"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new55"
+					float(3) m_vMinBounds = ( -14.794907, 7.032197, 115.868919 )
+					float(3) m_vMaxBounds = ( -10.643909, 11.333074, 121.831459 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new52"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new52"
+					float(3) m_vMinBounds = ( -12.958954, 9.979530, 107.314667 )
+					float(3) m_vMaxBounds = ( 8.600203, 18.060225, 112.460968 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new15"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new15"
+					float(3) m_vMinBounds = ( 59.032558, 1.902820, 116.855026 )
+					float(3) m_vMaxBounds = ( 60.781277, 2.899047, 117.735550 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new19"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new19"
+					float(3) m_vMinBounds = ( 53.279114, 0.400165, 113.988922 )
+					float(3) m_vMaxBounds = ( 56.850159, 1.553478, 116.759003 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new28"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new28"
+					float(3) m_vMinBounds = ( 58.197632, 6.276829, 115.867767 )
+					float(3) m_vMaxBounds = ( 59.482162, 7.048118, 116.823212 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new26"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new26"
+					float(3) m_vMinBounds = ( 59.150993, 4.671987, 115.788925 )
+					float(3) m_vMaxBounds = ( 60.592293, 5.773945, 117.340591 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new24"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new24"
+					float(3) m_vMinBounds = ( 59.549652, 3.371560, 116.741943 )
+					float(3) m_vMaxBounds = ( 61.187531, 4.361550, 117.804260 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new37"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new37"
+					float(3) m_vMinBounds = ( -65.039116, 1.863651, 116.855026 )
+					float(3) m_vMaxBounds = ( -63.290413, 2.859881, 117.735550 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new39"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new39"
+					float(3) m_vMinBounds = ( -65.458969, 3.248671, 116.741943 )
+					float(3) m_vMaxBounds = ( -63.821087, 4.238662, 117.804260 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new41"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new41"
+					float(3) m_vMinBounds = ( -65.048645, 4.929375, 116.645500 )
+					float(3) m_vMaxBounds = ( -63.356541, 5.782209, 117.340584 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new35"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new35"
+					float(3) m_vMinBounds = ( -63.527794, 6.166505, 115.061310 )
+					float(3) m_vMaxBounds = ( -62.422554, 7.046720, 116.823212 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new43"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new43"
+					float(3) m_vMinBounds = ( -61.121117, 0.397554, 113.631683 )
+					float(3) m_vMaxBounds = ( -57.550072, 2.090397, 116.763336 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new74"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new74"
+					float(3) m_vMinBounds = ( 0.357597, -2.505569, 0.423202 )
+					float(3) m_vMaxBounds = ( 7.212003, 8.789900, 9.546189 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new71"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new71"
+					float(3) m_vMinBounds = ( -11.483459, -2.505568, 0.423202 )
+					float(3) m_vMaxBounds = ( -4.629051, 8.789902, 9.546189 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new85"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new85"
+					float(3) m_vMinBounds = ( -13.640617, -6.939681, 79.896072 )
+					float(3) m_vMaxBounds = ( -1.761358, -1.365330, 85.498672 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new88"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new88"
+					float(3) m_vMinBounds = ( -2.511493, -6.936547, 79.896713 )
+					float(3) m_vMaxBounds = ( 9.367765, -1.362199, 85.499313 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new90"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new90"
+					float(3) m_vMinBounds = ( 8.127386, -2.095421, 80.741852 )
+					float(3) m_vMaxBounds = ( 11.160368, 7.722010, 86.737488 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new92"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new92"
+					float(3) m_vMinBounds = ( -2.480521, 6.896731, 81.780174 )
+					float(3) m_vMaxBounds = ( 9.745955, 12.936908, 87.296822 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new94"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new94"
+					float(3) m_vMinBounds = ( -14.017409, 6.896733, 81.780174 )
+					float(3) m_vMaxBounds = ( -1.790931, 12.936908, 87.296822 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new96"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new96"
+					float(3) m_vMinBounds = ( -15.431822, -2.095418, 80.741852 )
+					float(3) m_vMaxBounds = ( -12.398840, 7.722013, 86.737488 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new59"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new59"
+					float(3) m_vMinBounds = ( 5.939533, 8.123787, 106.995041 )
+					float(3) m_vMaxBounds = ( 9.802656, 11.756836, 115.262863 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new56"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new56"
+					float(3) m_vMinBounds = ( -14.074020, 8.123697, 106.995148 )
+					float(3) m_vMaxBounds = ( -10.210987, 11.756746, 115.262863 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new53"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new53"
+					float(3) m_vMinBounds = ( -13.982220, 9.002354, 94.143417 )
+					float(3) m_vMaxBounds = ( 10.541332, 17.129776, 107.877213 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new0"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new0"
+					float(3) m_vMinBounds = ( -0.065916, -0.026850, -0.047855 )
+					float(3) m_vMaxBounds = ( 0.332083, 0.026222, 0.039377 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new16"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new16"
+					float(3) m_vMinBounds = ( 60.781677, 2.038384, 117.160568 )
+					float(3) m_vMaxBounds = ( 62.648987, 2.833765, 117.948746 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new20"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new20"
+					float(3) m_vMinBounds = ( 56.627678, 0.031083, 114.865616 )
+					float(3) m_vMaxBounds = ( 58.834267, 1.198570, 116.478806 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new29"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new29"
+					float(3) m_vMinBounds = ( 59.243004, 6.111928, 114.735069 )
+					float(3) m_vMaxBounds = ( 60.738373, 6.850661, 115.619347 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new27"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new27"
+					float(3) m_vMinBounds = ( 60.782249, 4.672859, 115.524704 )
+					float(3) m_vMaxBounds = ( 62.575813, 5.561515, 116.804398 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new25"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new25"
+					float(3) m_vMinBounds = ( 61.267841, 3.451949, 116.721207 )
+					float(3) m_vMaxBounds = ( 63.145039, 4.290232, 117.708725 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new99"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new99"
+					float(3) m_vMinBounds = ( 46.342300, -0.360242, 111.817657 )
+					float(3) m_vMaxBounds = ( 53.712646, 8.114766, 119.073242 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new38"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new38"
+					float(3) m_vMinBounds = ( -66.906830, 1.999218, 117.160568 )
+					float(3) m_vMaxBounds = ( -65.039520, 2.794600, 117.948746 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new40"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new40"
+					float(3) m_vMinBounds = ( -67.416473, 3.329061, 116.721207 )
+					float(3) m_vMaxBounds = ( -65.539276, 4.167344, 117.708725 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new42"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new42"
+					float(3) m_vMinBounds = ( -66.814331, 4.757512, 115.524704 )
+					float(3) m_vMaxBounds = ( -64.750870, 5.756821, 116.215668 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new36"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new36"
+					float(3) m_vMinBounds = ( -64.986908, 6.282929, 114.735062 )
+					float(3) m_vMaxBounds = ( -63.660461, 7.022683, 116.204147 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new45"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new45"
+					float(3) m_vMinBounds = ( -63.105713, 0.031097, 114.865616 )
+					float(3) m_vMaxBounds = ( -60.899124, 1.198585, 116.478806 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new98"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new98"
+					float(3) m_vMinBounds = ( -57.985180, -0.359345, 111.816002 )
+					float(3) m_vMaxBounds = ( -50.614834, 8.115663, 119.212318 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new75"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new75"
+					float(3) m_vMinBounds = ( 0.159925, -10.161101, 0.476396 )
+					float(3) m_vMaxBounds = ( 7.464702, -4.754095, 5.865289 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new72"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new72"
+					float(3) m_vMinBounds = ( -11.739600, -10.161717, 0.478616 )
+					float(3) m_vMaxBounds = ( -4.434821, -4.754712, 5.867509 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new87"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new87"
+					float(3) m_vMinBounds = ( -15.124223, -8.072830, 69.853363 )
+					float(3) m_vMaxBounds = ( -1.525418, -1.505288, 75.999451 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new89"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new89"
+					float(3) m_vMinBounds = ( -2.767769, -8.076085, 69.852539 )
+					float(3) m_vMaxBounds = ( 10.831036, -1.508546, 75.998627 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new91"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new91"
+					float(3) m_vMinBounds = ( 9.300404, -2.614102, 70.893997 )
+					float(3) m_vMaxBounds = ( 12.711605, 8.547124, 77.162247 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new93"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new93"
+					float(3) m_vMinBounds = ( -2.672865, 7.266389, 71.815651 )
+					float(3) m_vMaxBounds = ( 11.114042, 14.536876, 77.582405 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new95"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new95"
+					float(3) m_vMinBounds = ( -15.386397, 7.265966, 71.815636 )
+					float(3) m_vMaxBounds = ( -1.599488, 14.536449, 77.582390 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "bone_new97"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "bone_new97"
+					float(3) m_vMinBounds = ( -16.983120, -2.615005, 70.894005 )
+					float(3) m_vMaxBounds = ( -13.571922, 8.546221, 77.162254 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				}
+			]
+		}
+	]
+}
+
+CVMaterialRemapList CVMaterialRemapList_0
+{
+	CVMaterialRemap[] m_vMaterialRemapList = 
+	[
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported1.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported3.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported6.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported7.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported2.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported4.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported5.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported8.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported9.vmat"
+			string m_sReplaceMaterial = "materials/tohsaka/tohsaka.vmat"
+		}
+	]
+}
