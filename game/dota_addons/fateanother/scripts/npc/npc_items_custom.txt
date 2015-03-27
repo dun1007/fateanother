@@ -998,7 +998,10 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityCooldown"				"90"
 	    "AbilityChannelTime"			"3.0"		
-
+	    "precache"
+	    {
+	    	"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+	    }
 	    "OnSpellStart"
 	    {
 	    	"RunScript"
@@ -1317,7 +1320,7 @@
 	    			{
 	    				"Target"		"CASTER"
 	    				"EffectName"	"particles/items_fx/courier_shield.vpcf"
-	    				"EffectAttachType"		"follow_origin"
+	    				"EffectAttachType"		"attach_hitloc"
 	    				"EffectRadius"		"300"
 	    			}
 

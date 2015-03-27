@@ -13812,13 +13812,14 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "iskander_charisma"
 		"MaxLevel"                      "1"
+		"AbilityCastRange"				"1000"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"750"
+				"radius"			"1000"
 			}
 		}	
 		"Modifiers"
@@ -13833,9 +13834,36 @@
 					{
 						"ScriptFile"	"iskander_ability"
 						"Function"		"OnIskanderCharismaStart"
+						"Radius"		"%radius"
 					}
 				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnIskanderCharismaDeath"
+					}
+				}
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnIskanderCharismaRespawn"
+						"Radius"		"%radius"
+					}
+				}				
 		  	}
+			"modifier_charisma_movespeed"
+			{	
+				"Duration"				"0.25"		
+				"IsHidden"				"1"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"20"
+				}
+			}
 		}
 	}
 
@@ -13853,12 +13881,14 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"particle"			"particles/units/heroes/hero_legion_commander/legion_commander_press_sphere.vpcf"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
 		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"16 15 14 13 12"
+		"AbilityCastRange"				"500 575 650 725 800"
 		"AbilityCastPoint"				"0.3"
 
 		// Cost
@@ -13870,12 +13900,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1 1.4 1.8 2.2 2.6"
+				"duration"			"1 1.5 2.0 2.5 3.0"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"movespeed"			"30"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500 575 650 725 800"
 			}
 		}
 		
@@ -13885,13 +13920,17 @@
 			{
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnForwardStart"
+				"Radius"			"%radius"
 			}
 		}
 
 		"Modifiers"
 		{
 			"modifier_forward"
-			{		
+			{	
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"		"follow_origin"	
+				"Duration"				"%duration"			
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed"
@@ -13911,17 +13950,15 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"iskander_phalanx"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
-		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
 		}
 		
 		// Casting
@@ -13947,20 +13984,23 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"300"
+				"width"				"525"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"width"				"500"
-			}			
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movespeed"			"300"
+				"health"			""
 			}
 		}
 
+		"OnAbilityPhaseStart"
+		{
+			"FireSound"
+			{
+				"EffectName"	"Hero_LegionCommander.Overwhelming.Cast"
+				"Target"		"CASTER"
+			}
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -14582,7 +14622,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{

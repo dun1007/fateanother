@@ -130,15 +130,36 @@ model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
 function Precache( context )
 	print("Starting precache")
 	PrecacheUnitByNameSync("npc_precache_everything", context)
-	
-	-- Precache models
+
+	--[[ Precache models
 	for k, v in pairs( model_lookup ) do
 		PrecacheResource( "model", v, context )
-	end
+	end]]
 	
 	print("precache complete")
 end
 
+function FateGameMode:PostLoadPrecache()
+  print("[BAREBONES] Performing Post-Load precache")    
+  --PrecacheItemByNameAsync("item_example_item", function(...) end)
+  --PrecacheItemByNameAsync("example_ability", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_legion_commander", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_phantom_lancer", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_spectre", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_ember_spirit", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_templar_assassin", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_doom_bringer", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_juggernaut", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_bounty_hunter", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_crystal_maiden", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_skywrath_mage", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_sven", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_vengefulspirit", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_huskar", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_chen", function(...) end)
+  PrecacheUnitByNameAsync("npc_dota_hero_shadow_shaman", function(...) end)
+  --PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
+end
 
 --[[
   This function is called once and only once as soon as the first player (almost certain to be the server in local lobbies) loads in.
@@ -172,11 +193,13 @@ function FateGameMode:OnAllPlayersLoaded()
 		endTime = 60,
 		callback = function()
     IsPickPhase = false
-    self:LoopOverPlayers(function(player, playerID)
-      if PlayerResource:IsValidPlayerID(playerID) and player:GetAssignedHero() == nil then
-        player:MakeRandomHeroSelection()
+    for i=0,9 do
+      local ply = PlayerResource:GetPlayer(i)
+      if ply and ply:GetAssignedHero() == nil then
+        --ply:MakeRandomHeroSelection()
+        AssignRandomHero(ply)
       end
-    end)
+    end
     self:InitializeRound() -- Start the game after forcing a pick for every player
 	end
 	})
@@ -377,6 +400,7 @@ function FateGameMode:OnGameRulesStateChange(keys)
       endTime = et,
       callback = function()
         if PlayerResource:HaveAllPlayersJoined() then
+          FateGameMode:PostLoadPrecache()
           FateGameMode:OnAllPlayersLoaded()
           return 
         end
@@ -1043,10 +1067,11 @@ function FateGameMode:InitializeRound()
     print("[FateGameMode]First round started, initiating 10 minute timer...")
     IsGameStarted = true
 		GameRules:SendCustomMessage("The game has begun!", 0, 0)
+    local blessingQuest = StartQuestTimer("roundTimerQuest", "Time Remaining until Next Holy Grail's Blessing", 599)
     Timers:CreateTimer('round_10min_bonus', {
       endTime = 600,
       callback = function()
-
+      blessingQuest = StartQuestTimer("roundTimerQuest", "Time Remaining until Next Holy Grail's Blessing", 599)
       self:LoopOverPlayers(function(player, playerID)
         local hero = player:GetAssignedHero()
         hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 

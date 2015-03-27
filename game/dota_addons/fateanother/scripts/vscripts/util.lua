@@ -1,3 +1,21 @@
+heroes = {
+    "npc_dota_hero_legion_commander",
+    "npc_dota_hero_phantom_lancer",
+    "npc_dota_hero_spectre",
+    "npc_dota_hero_ember_spirit", 
+    "npc_dota_hero_templar_assassin",
+    "npc_dota_hero_doom_bringer",
+    "npc_dota_hero_juggernaut",
+    "npc_dota_hero_bounty_hunter",
+    "npc_dota_hero_crystal_maiden",
+    "npc_dota_hero_skywrath_mage",
+    "npc_dota_hero_sven", 
+    "npc_dota_hero_vengefulspirit",
+    "npc_dota_hero_huskar"
+    --"npc_dota_hero_chen"
+    --"npc_dota_hero_shadow_shaman"
+}
+
 purgable = {
     "modifier_aspd_increase",
     "modifier_derange",
@@ -333,6 +351,32 @@ function IsImmuneToSlow(target)
         return true 
     else 
         return false
+    end
+end
+
+function IsFacingUnit(source, target, angle)
+    local sourceangle = math.abs(RotationDelta(VectorToAngles((target:GetAbsOrigin() - source:GetAbsOrigin()):Normalized()), VectorToAngles(source:GetForwardVector())).y)
+    if sourceangle < angle/2 then
+        return true
+    else
+        return false
+    end
+end
+
+function AssignRandomHero(player)
+    local heroesTable = heroes
+    for i=0,9 do
+        local ply = PlayerResource:GetPlayer(i)
+        if ply and ply:GetAssignedHero() ~= nil then
+            for i=1, #heroesTable do
+                if heroesTable[i] == ply:GetAssignedHero():GetName() then
+                    table.remove(heroesTable, i)
+                    print("removed " .. ply:GetAssignedHero():GetName() .. " from table")
+                end
+            end
+        elseif ply and ply:GetAssignedHero() == nil then
+            CreateHeroForPlayer(heroesTable[math.random(#heroesTable)], ply)
+        end
     end
 end
 

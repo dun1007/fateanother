@@ -567,6 +567,98 @@
 		"VisionNighttimeRange"		"350"		// Range of vision at night time.
 	}
 
+	"iskander_phalanx_soldier"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
+		"ModelScale"				"1.0"
+		"Level"						"2"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 
+		"Ability2"					""	 
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"2"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"12.0"
+		"AttackDamageMax"			"13.0"
+		"AttackRate"				"1.35"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"500"
+		"AttackRange"				"90"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"200"
+		"CollisionSize"				"200"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"270"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"420"
+		"StatusHealthRegen"			"0.25"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"63"		}
+				"Wearable2"		{	"ItemDef"		"64"		}
+				"Wearable3" 	{	"ItemDef"		"65"		}
+				"Wearable4"		{	"ItemDef"		"66"		}
+				"Wearable5"		{	"ItemDef"		"67"		}
+				"Wearable6"		{	"ItemDef"		"68"		}
+			}
+			//{
+			//	"Wearable1"		{	"ItemDef"		"6789"		} //"Shield of Ascension"
+			//	"Wearable2"		{	"ItemDef"		"6791"		} //"Pauldrons of Ascension"
+			//	"Wearable3" 	{	"ItemDef"		"6790"		} //"Gauntlets of Ascension"
+			//	"Wearable4"		{	"ItemDef"		"6788"		} //"Drapes of Ascension"
+			//	"Wearable5"		{	"ItemDef"		"6787"		} //"Sword of Ascension"
+			//	"Wearable6"		{	"ItemDef"		"6792"		} //"Helm of Ascension"
+			//}
+		}
+	}
+
 	"lancer_trap"
 	{
 		// General
@@ -926,163 +1018,54 @@
 			"model"					"models/caster/caster.vmdl"
 			"model"					"models/gilgamesh/gilgamesh.vmdl"
 			"model"					"models/lancelot/lancelot.vmdl"
+			"model"					"models/avenger/trueform/trueform.vmdl"
 			"model"					"models/avenger/avenger.vmdl"
-			"model"					"models/items/courier/mighty_chicken/mighty_chicken.vmdl"
-			"model"					"models/props_gameplay/rune_haste01.vmdl"
+			"model"					"models/diarmuid/diarmuid.vmdl"
+			"model"					"models/iskander/iskander.vmdl"
+			"model"					"models/iskander/iskander_chariot.vmdl"
+
 			"model"					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
 			"model"					"models/development/invisiblebox.vmdl"
 			"model"					"models/shirou/shirouanim.vmdl"
 			"model"					"models/tohsaka/tohsaka.vmdl"
+			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"model"					"models/heroes/dragon_knight/dragon_knight.vmdl"
+			"model"					"models/heroes/dragon_knight/helmet.vmdl"
+			"model"					"models/heroes/dragon_knight/shoulders.vmdl"
+			"model"					"models/heroes/dragon_knight/bracers.vmdl"
+			"model"					"models/heroes/dragon_knight/weapon.vmdl"
+			"model"					"models/heroes/dragon_knight/shield.vmdl"
+			"model"					"models/heroes/dragon_knight/skirt.vmdl"
+
+			//units
+			"model"					"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
 			"model"					"models/items/courier/catakeet/catakeet_boxes.vmdl"
 			"model"					"models/heroes/clinkz/clinkz.vmdl"
-			"model"					"models/lancelot/lancelot_f16.vmdl"
-			"model"					"models/avenger/trueform/trueform.vmdl"
-			"model"					"models/diarmuid/diarmuid.vmdl"
+			"model"					"models/items/courier/mighty_chicken/mighty_chicken.vmdl"
+			"model"					"models/props_gameplay/rune_haste01.vmdl"
+			"model"			"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
 
 
+			//precache lines from npc_items_custom.txt
+			"particle"		"particles/items_fx/healing_flask.vpcf"
+			"particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf"
+			"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+			"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
+			"particle"		"particles/items2_fx/mask_of_madness.vpcf"
+	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
+			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"	    
+			"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"	
+			"particle"			"particles/items_fx/courier_shield.vpcf"
+			"particle"		"particles/items2_fx/mjollnir_shield.vpcf"
+			"particle"		"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+			"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
+			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+	    	"particle"		"particles/items_fx/black_king_bar_avatar.vpcf"
+	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
 
-			//"model"			"models/heroes/juggernaut/jugg_healing_ward.vmdl"
-			//"model"			"models/heroes/tiny_01/tiny_01.vmdl"
-			//"model"			"models/heroes/tiny_02/tiny_02.vmdl"
-			//"model"			"models/heroes/tiny_03/tiny_03.vmdl"
-			//"model"			"models/heroes/tiny_04/tiny_04.vmdl"
-			//"model"			"models/heroes/tiny_01/tiny_01_tree.vmdl"
-			//"model"			"models/props_gameplay/frog.vmdl"
-			//"model"			"models/props_gameplay/chicken.vmdl"
-			//"model"			"models/heroes/shadowshaman/shadowshaman_totem.vmdl"
-			//"model"			"models/heroes/witchdoctor/witchdoctor_ward.vmdl"
-			//"model"			"models/heroes/enigma/eidelon.vmdl"
-			//"model"			"models/heroes/enigma/eidelon.vmdl"
-			//"model"			"models/heroes/beastmaster/beastmaster_bird.vmdl"
-			//"model"			"models/heroes/beastmaster/beastmaster_beast.vmdl"
-			//"model"			"models/heroes/venomancer/venomancer_ward.vmdl"
-			//"model"			"models/heroes/death_prophet/death_prophet_ghost.vmdl"
-			//"model"			"models/heroes/pugna/pugna_ward.vmdl"
-			//"model"			"models/heroes/witchdoctor/witchdoctor_ward.vmdl"
-			//"model"			"models/heroes/dragon_knight/dragon_knight_dragon.vmdl"
-			//"model"			"models/heroes/rattletrap/rattletrap_cog.vmdl"
-			//"model"			"models/heroes/furion/treant.vmdl"
-			//"model"			"models/heroes/nightstalker/nightstalker_night.vmdl"
-			//"model"			"models/heroes/nightstalker/nightstalker.vmdl"
-			//"model"			"models/heroes/broodmother/spiderling.vmdl"
-			//"model"			"models/heroes/weaver/weaver_bug.vmdl"
-			//"model"			"models/heroes/gyro/gyro_missile.vmdl"
-			//"model"			"models/heroes/invoker/forge_spirit.vmdl"
-			//"model"			"models/heroes/lycan/lycan_wolf.vmdl"
-			//"model"			"models/heroes/lone_druid/true_form.vmdl"
-			//"model"			"models/heroes/undying/undying_flesh_golem.vmdl"
-
-			"particle_folder"				"particles/units/heroes/hero_antimage"
-			"particle_folder"				"particles/units/heroes/hero_axe"
-			//"particle_folder"				"particles/units/heroes/hero_bane"
-			//"particle_folder"				"particles/units/heroes/hero_bloodseeker"
-			"particle_folder"				"particles/units/heroes/hero_crystalmaiden"
-			"particle_folder"				"particles/units/heroes/hero_drow"
-			//"particle_folder"				"particles/units/heroes/hero_earthshaker"
-			"particle_folder"				"particles/units/heroes/hero_juggernaut"
-			//"particle_folder"				"particles/units/heroes/hero_mirana"
-			//"particle_folder"				"particles/units/heroes/hero_nevermore"
-			//"particle_folder"				"particles/units/heroes/hero_morphling"
-			"particle_folder"				"particles/units/heroes/hero_phantom_lancer"
-			//"particle_folder"				"particles/units/heroes/hero_puck"
-			//"particle_folder"				"particles/units/heroes/hero_pudge"
-			//"particle_folder"				"particles/units/heroes/hero_razor"
-			//"particle_folder"				"particles/units/heroes/hero_sandking"
-			//"particle_folder"				"particles/units/heroes/hero_stormspirit"
-			//"particle_folder"				"particles/units/heroes/hero_sven"
-			//"particle_folder"				"particles/units/heroes/hero_tiny"
-			//"particle_folder"				"particles/units/heroes/hero_vengeful"
-			"particle_folder"				"particles/units/heroes/hero_zuus"
-			//"particle_folder"				"particles/units/heroes/hero_kunkka"
-			"particle_folder"				"particles/units/heroes/hero_lina"
-			//"particle_folder"				"particles/units/heroes/hero_lich"
-			"particle_folder"				"particles/units/heroes/hero_lion"
-			//"particle_folder"				"particles/units/heroes/hero_shadowshaman"
-			//"particle_folder"				"particles/units/heroes/hero_slardar"
-			//"particle_folder"				"particles/units/heroes/hero_tidehunter"
-			//"particle_folder"				"particles/units/heroes/hero_witchdoctor"
-			//"particle_folder"				"particles/units/heroes/hero_riki"
-			//"particle_folder"				"particles/units/heroes/hero_enigma"
-			//"particle_folder"				"particles/units/heroes/hero_tinker"
-			//"particle_folder"				"particles/units/heroes/hero_sniper"
-			//"particle_folder"				"particles/units/heroes/hero_necrolyte"
-			"particle_folder"				"particles/units/heroes/hero_warlock"
-			//"particle_folder"				"particles/units/heroes/hero_queenofpain"
-			//"particle_folder"				"particles/units/heroes/hero_venomancer"
-			//"particle_folder"				"particles/units/heroes/hero_faceless_void"
-			//"particle_folder"				"particles/units/heroes/hero_skeletonking"
-			//"particle_folder"				"particles/units/heroes/hero_death_prophet"
-			//"particle_folder"				"particles/units/heroes/hero_phantom_assassin"
-			//"particle_folder"				"particles/units/heroes/hero_pugna"
-			//"particle_folder"				"particles/units/heroes/hero_templar_assassin"
-			//"particle_folder"				"particles/units/heroes/hero_viper"
-			//"particle_folder"				"particles/units/heroes/hero_luna"
-			//"particle_folder"				"particles/units/heroes/hero_dragon_knight"
-			//"particle_folder"				"particles/units/heroes/hero_dazzle"
-			//"particle_folder"				"particles/units/heroes/hero_rattletrap"
-			//"particle_folder"				"particles/units/heroes/hero_leshrac"
-			//"particle_folder"				"particles/units/heroes/hero_furion"
-			//"particle_folder"				"particles/units/heroes/hero_life_stealer"
-			//"particle_folder"				"particles/units/heroes/hero_dark_seer"
-			"particle_folder"				"particles/units/heroes/hero_clinkz"
-			//"particle_folder"				"particles/units/heroes/hero_omniknight"
-			//"particle_folder"				"particles/units/heroes/hero_enchantress"
-			"particle_folder"				"particles/units/heroes/hero_huskar"
-			//"particle_folder"				"particles/units/heroes/hero_night_stalker"
-			"particle_folder"				"particles/units/heroes/hero_broodmother"
-			"particle_folder"				"particles/units/heroes/hero_bounty_hunter"
-			//"particle_folder"				"particles/units/heroes/hero_weaver"
-			//"particle_folder"				"particles/units/heroes/hero_jakiro"
-			//"particle_folder"				"particles/units/heroes/hero_batrider"
-			//"particle_folder"				"particles/units/heroes/hero_chen"
-			//"particle_folder"				"particles/units/heroes/hero_spectre"
-			//"particle_folder"				"particles/units/heroes/hero_doom_bringer"
-			//"particle_folder"				"particles/units/heroes/hero_ancient_apparition"
-			//"particle_folder"				"particles/units/heroes/hero_ursa"
-			//"particle_folder"				"particles/units/heroes/hero_spirit_breaker"
-			//"particle_folder"				"particles/units/heroes/hero_gyrocopter"
-			//"particle_folder"				"particles/units/heroes/hero_alchemist"
-			//"particle_folder"				"particles/units/heroes/hero_invoker"
-			//"particle_folder"				"particles/units/heroes/hero_silencer"
-			//"particle_folder"				"particles/units/heroes/hero_obsidian_destroyer"
-			//"particle_folder"				"particles/units/heroes/hero_lycan"
-			//"particle_folder"				"particles/units/heroes/hero_brewmaster"
-			//"particle_folder"				"particles/units/heroes/hero_shadow_demon"
-			//"particle_folder"				"particles/units/heroes/hero_lone_druid"
-			//"particle_folder"				"particles/units/heroes/hero_chaos_knight"
-			//"particle_folder"				"particles/units/heroes/hero_meepo"
-			//"particle_folder"				"particles/units/heroes/hero_treant"
-			//"particle_folder"				"particles/units/heroes/hero_ogre_magi"
-			//"particle_folder"				"particles/units/heroes/hero_undying"
-			//"particle_folder"				"particles/units/heroes/hero_rubick"
-			//"particle_folder"				"particles/units/heroes/hero_disruptor"
-			//"particle_folder"				"particles/units/heroes/hero_nyx_assassin"
-			//"particle_folder"				"particles/units/heroes/hero_siren"
-			//"particle_folder"				"particles/units/heroes/hero_keeper_of_the_light"
-			//"particle_folder"				"particles/units/heroes/hero_wisp"
-			//"particle_folder"				"particles/units/heroes/hero_visage"
-			//"particle_folder"				"particles/units/heroes/hero_slark"
-			//"particle_folder"				"particles/units/heroes/hero_medusa"
-			//"particle_folder"				"particles/units/heroes/hero_troll_warlord"
-			//"particle_folder"				"particles/units/heroes/hero_centaur"
-			"particle_folder"				"particles/units/heroes/hero_magnataur"
-			//"particle_folder"				"particles/units/heroes/hero_shredder"
-			//"particle_folder"				"particles/units/heroes/hero_bristleback"
-			//"particle_folder"				"particles/units/heroes/hero_tusk"
-			"particle_folder"				"particles/units/heroes/hero_skywrath_mage"
-			"particle_folder"				"particles/units/heroes/hero_abaddon"
-			//"particle_folder"				"particles/units/heroes/hero_elder_titan"
-			"particle_folder"				"particles/units/heroes/hero_legion_commander"
-			//"particle_folder"				"particles/units/heroes/hero_ember_spirit"
-			//"particle_folder"				"particles/units/heroes/hero_earth_spirit"
-			//"particle_folder"				"particles/units/heroes/hero_abyssal_underlord"
-			//"particle_folder"				"particles/units/heroes/hero_terrorblade"
-			//"particle_folder"				"particles/units/heroes/hero_phoenix"
-			//"particle_folder"				"particles/units/heroes/hero_windrunner"
-			//"particle_folder"				"particles/frostivus_herofx"
-			//"particle_folder"				"particles/frostivus_gameplay"
-			//"particle_folder"				"particles/test_particle"
-			
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bane.vsndevts"
