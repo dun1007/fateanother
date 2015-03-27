@@ -229,12 +229,8 @@ pip-log.txt
 *.vanim_c
 *.vagrp_c
 *.bin
-*.bin
-*.vpcf
-*.vmap
-*.tga
-
-!contents/dota_addons/fateanother/custom/*
-contents/dota_addons/fateanother/materials/*
-contents/dota_addons/fateanother/sounds/*
+content/dota_addons/fateanother/particles/*
+!content/dota_addons/fateanother/particles/custom/
+content/dota_addons/fateanother/materials/*
+content/dota_addons/fateanother/sounds/*
 content/dota_addons/fateanother/maps/fate_raw.vmap
