@@ -231,6 +231,9 @@ pip-log.txt
 *.bin
 *.bin
 *.vpcf
+*.vmap
+*.tga
+
 !contents/dota_addons/fateanother/custom/*
 contents/dota_addons/fateanother/materials/*
 contents/dota_addons/fateanother/sounds/*
