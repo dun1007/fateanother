@@ -329,6 +329,10 @@ function SScroll(keys)
 	ApplyPurge(target)
 	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
+
+	local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf", PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(lightningBolt,0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(lightningBolt,1, target:GetAbsOrigin())
 end
 
 function EXScroll(keys)
@@ -346,6 +350,7 @@ function EXScroll(keys)
 	ApplyPurge(target)
 
 	local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
+	local lightningBolt = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf", PATTACH_ABSORIGIN, target)
 	ParticleManager:SetParticleControl(bolt, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 
 	local forkCount = 0
@@ -358,6 +363,10 @@ function EXScroll(keys)
 	        DoDamage(caster, v, 600, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	        ParticleManager:SetParticleControl(bolt, 1, Vector(v:GetAbsOrigin().x,v:GetAbsOrigin().y,v:GetAbsOrigin().z+((v:GetBoundingMaxs().z - v:GetBoundingMins().z)/2)))
+
+			
+			ParticleManager:SetParticleControl(lightningBolt,0, caster:GetAbsOrigin())
+			ParticleManager:SetParticleControl(lightningBolt,1, v:GetAbsOrigin())
 	        forkCount = forkCount + 1
     	end
     end

@@ -574,17 +574,17 @@
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
 		"ModelScale"				"1.0"
-		"Level"						"2"
+		"Level"						"1"
 		"HealthBarOffset"			"140"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					""	 
+		"Ability1"					"phalanx_soldier_passive"	 
 		"Ability2"					""	 
 		
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"2"
+		"ArmorPhysical"				"5"
 		"MagicalResistance"			"0"
 		
 		// Attack
@@ -1052,19 +1052,21 @@
 			"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
 			"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
 			"particle"		"particles/items2_fx/mask_of_madness.vpcf"
-	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
-	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
+	    	"particle"		"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
+	    	"particle"		"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"	    
-			"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"	
-			"particle"			"particles/items_fx/courier_shield.vpcf"
+			"particle"		"particles/units/heroes/hero_lina/lina_base_attack.vpcf"	
+			"particle"		"particles/items_fx/courier_shield.vpcf"
 			"particle"		"particles/items2_fx/mjollnir_shield.vpcf"
 			"particle"		"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
 			"particle"		"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
-			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
-			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+			"particle"		"particles/custom/archer/archer_clairvoyance_dust.vpcf"
+			"particle"		"particles/custom/archer/archer_clairvoyance_circle.vpcf"
 	    	"particle"		"particles/items_fx/black_king_bar_avatar.vpcf"
 	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
+	    	"particle"		"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+	    	"particle"		"particles/generic_gameplay/generic_purge.vpcf"
 
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"

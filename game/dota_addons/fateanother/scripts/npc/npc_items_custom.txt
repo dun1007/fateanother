@@ -1542,10 +1542,11 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastPoint"				"0.0"
+
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
 		}
 
 	    "OnSpellStart"
@@ -1574,14 +1575,21 @@
 			}
 			"FireSound"
 			{
-				"EffectName"	"DOTA_Item.DiffusalBlade.Target"
+				"EffectName"	"Hero_Zuus.GodsWrath.Target"
 				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Zuus.GodsWrath.Target"
+				"Target"		"TARGET"
 			}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_purge"
 	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"1.0"
 	    		"IsDebuff"			"1"
 	    		"States"
@@ -1591,6 +1599,8 @@
 	    	}
 	    	"modifier_slow_tier1"
 	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"2.5"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1600,6 +1610,8 @@
 	    	}
 	    	"modifier_slow_tier2"
 	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"	
 	    		"Duration"			"4.0"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1685,14 +1697,21 @@
 			}
 			"FireSound"
 			{
-				"EffectName"	"DOTA_Item.DiffusalBlade.Target"
+				"EffectName"	"Hero_Zuus.GodsWrath.Target"
 				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Zuus.GodsWrath.Target"
+				"Target"		"TARGET"
 			}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_purge"
 	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"1.0"
 	    		"IsDebuff"			"1"
 	    		"States"
@@ -1702,6 +1721,8 @@
 	    	}
 	    	"modifier_slow_tier1"
 	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"2.5"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1711,6 +1732,8 @@
 	    	}
 	    	"modifier_slow_tier2"
 	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"	
 	    		"Duration"			"4.0"
 	    		"IsDebuff"			"1"
 	    		"Properties"

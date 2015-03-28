@@ -186,6 +186,7 @@ function FateGameMode:OnAllPlayersLoaded()
 		callback = function()
 
   	GameRules:SendCustomMessage("The game will start in 30 seconds. Anyone who haven't picked hero by then will be assigned a random hero.", 0, 0)
+    GameRules:SendCustomMessage("Forced random is disbled for the time being, but please decide on your pick as soon as possible before 60 seconds mark.", 0, 0)
     DisplayTip()
 	end
 	})
@@ -197,9 +198,10 @@ function FateGameMode:OnAllPlayersLoaded()
       local ply = PlayerResource:GetPlayer(i)
       if ply and ply:GetAssignedHero() == nil then
         --ply:MakeRandomHeroSelection()
-        AssignRandomHero(ply)
+        --AssignRandomHero(ply)
       end
     end
+    self.nCurrentRound = 1
     self:InitializeRound() -- Start the game after forcing a pick for every player
 	end
 	})
@@ -220,7 +222,13 @@ function FateGameMode:OnHeroInGame(hero)
     hero.CStock = 10
     hero.RespawnPos = hero:GetAbsOrigin() 
     --HideWearables(hero)
-  	giveUnitDataDrivenModifier(hero, hero, "round_pause", 75)
+    if self.nCurrentRound == 0 then
+      giveUnitDataDrivenModifier(hero, hero, "round_pause", 75)
+    elseif self.nCurrentRound >= 1 then 
+      hero:ModifyGold(3000, true, 0) 
+      giveUnitDataDrivenModifier(hero, hero, "round_pause", 10)
+    end
+
     local heroName = FindName(hero:GetName())
     hero.name = heroName
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
@@ -1029,7 +1037,7 @@ function FateGameMode:InitGameMode()
   self.nRadiantScore = 0
   self.nDireScore = 0
 
-  self.nCurrentRound = 1
+  self.nCurrentRound = 0
   self.nRadiantDead = 0
   self.nDireDead = 0
   self.nLastKilled = nil

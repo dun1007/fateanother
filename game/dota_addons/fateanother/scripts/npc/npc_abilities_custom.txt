@@ -14008,6 +14008,7 @@
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnPhalanxStart"
 			 	"Target"		"POINT"
+			 	"Damage"		"%damage"
 			}
 		}
 		
@@ -14773,7 +14774,30 @@
 		}
 	}
 
-
+	//================================================
+	// phalanx soldier passive
+	//================================================
+	"phalanx_soldier_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"phalanx_soldier_passive_effect"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}
 	//================================================
 	// master passive
 	//================================================
