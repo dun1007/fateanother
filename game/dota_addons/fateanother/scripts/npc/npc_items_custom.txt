@@ -1276,7 +1276,7 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-			"particle"			"particles/items_fx/courier_shield.vpcf"
+			"particle"			"particles/custom/generic/fate_green_shield.vpcf"
 	    }
 
 	    "OnSpellStart"
@@ -1313,18 +1313,9 @@
 	    {
 	    	"modifier_b_scroll"
 	    	{
+				"EffectName"	"particles/custom/generic/fate_green_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration" "20.0"
-	    		"OnCreated"
-	    		{
-	    			"AttachEffect"
-	    			{
-	    				"Target"		"CASTER"
-	    				"EffectName"	"particles/items_fx/courier_shield.vpcf"
-	    				"EffectAttachType"		"attach_hitloc"
-	    				"EffectRadius"		"300"
-	    			}
-
-	    		}
 	    	}
 	    }
 	}

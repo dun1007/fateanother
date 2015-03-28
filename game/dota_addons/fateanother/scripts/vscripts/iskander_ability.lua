@@ -1,3 +1,10 @@
+require("physics")
+require("util")
+
+aotkTargets = nil
+aotkCenter = Vector(500, -4800, 208)
+aotkCasterPos = nil
+
 function OnIskanderCharismaStart(keys)
 	local caster = keys.caster
 	StartCharismaTimer(keys)
@@ -52,7 +59,7 @@ function OnPhalanxStart(keys)
 	local caster = keys.caster
     local targetPoint = keys.target_points[1]
     local forwardVec = caster:GetForwardVector()
-
+    caster.PhalanxSoldiers = {}
 
 	local leftvec = Vector(-forwardVec.y, forwardVec.x, 0)
 	local rightvec = Vector(forwardVec.y, -forwardVec.x, 0)
@@ -61,14 +68,61 @@ function OnPhalanxStart(keys)
 	for i=0,3 do
 		local soldier = CreateUnitByName("iskander_phalanx_soldier", targetPoint + leftvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
 		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
+
+		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+		ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
 		soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
+		table.insert(caster.PhalanxSoldiers, soldier)
 	end
 
 	-- Spawn soldiers on right side
 	for i=1,4 do
 		local soldier = CreateUnitByName("iskander_phalanx_soldier", targetPoint + rightvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
 		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
+
+		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+		ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
 		soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
+		table.insert(caster.PhalanxSoldiers, soldier)
+	end
+	for i=1, #caster.PhalanxSoldiers do
+		local targets = FindUnitsInRadius(caster:GetTeam(), caster.PhalanxSoldiers[i]:GetAbsOrigin(), nil, 150
+	        , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		for k,v in pairs(targets) do
+			if v.PhalanxSoldiersHit ~= true then 
+				v.PhalanxSoldiersHit = true
+				Timers:CreateTimer(0.033, function()
+					v.PhalanxSoldiersHit = false
+				end)
+
+				local pullTarget = Physics:Unit(v)
+				local pullVector = (caster:GetAbsOrigin() - targetPoint):Normalized() * 500
+				v:PreventDI()
+				v:SetPhysicsFriction(0)
+				v:SetPhysicsVelocity(Vector(pullVector.x, pullVector.y, 500))
+				v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+				v:FollowNavMesh(false)
+
+				Timers:CreateTimer({
+					endTime = 0.25,
+					callback = function()
+					v:SetPhysicsVelocity(Vector(pullVector.x, pullVector.y, -500))
+				end
+				})
+
+			  	Timers:CreateTimer('phalanx_pull', {
+					endTime = 0.5,
+					callback = function()
+					v:PreventDI(false)
+					v:SetPhysicsVelocity(Vector(0,0,0))
+					v:OnPhysicsFrame(nil)
+				end
+				})
+
+			  	giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
+				DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			end
+	    end
 	end
 end
 
@@ -80,10 +134,46 @@ end
 function OnChariotChargeStart(keys)
 end
 
-function OnAOTKStart(keys)
+aotkQuest = nil
+function OnAOTKCastStart(keys)
 	local caster = keys.caster
 	EmitGlobalSound("Iskander.AOTK")
+	Timers:CreateTimer({
+		endTime = 2,
+		callback = function()
+		if keys.caster:IsAlive() then 
+			OnAOTKStart(keys)
+			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_army_of_the_king_death_checker",{})
+		end
+	end
+	})
 end
+
+function OnAOTKStart(keys)
+	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12)
+	local caster = keys.caster
+	aotkCasterLoc = caster:GetAbsOrigin()
+	caster.IsAOTKActive = true
+	caster:SetAbsOrigin(aotkCenter)
+
+
+	Timers:CreateTimer("aotk_timer", {
+	    endTime = 12,
+	    callback = function()
+		if caster:IsAlive() and caster.IsAOTKActive then 
+			EndAOTK(caster)
+		end
+	end
+	})
+end
+
+function OnAOTKDeath(keys)
+end
+
+function EndAOTK(caster)
+	caster:SetAbsOrigin(aotkCasterLoc)
+end
+
 
 function OnCavalrySummon(keys)
 end

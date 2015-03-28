@@ -599,8 +599,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"26.0"
-		"BountyGoldMax"				"38.0"
+		"BountyGoldMin"				"25.0"
+		"BountyGoldMax"				"25.0"
 		
 		// Bounds
 		//----------------------------------------------------------------
@@ -1067,6 +1067,7 @@
 	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
 	    	"particle"		"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
 	    	"particle"		"particles/generic_gameplay/generic_purge.vpcf"
+	    	"particle"		"particles/custom/generic/fate_green_shield.vpcf"
 
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"

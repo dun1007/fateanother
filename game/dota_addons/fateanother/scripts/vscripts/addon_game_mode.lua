@@ -408,7 +408,7 @@ function FateGameMode:OnGameRulesStateChange(keys)
       endTime = et,
       callback = function()
         if PlayerResource:HaveAllPlayersJoined() then
-          FateGameMode:PostLoadPrecache()
+          --FateGameMode:PostLoadPrecache()
           FateGameMode:OnAllPlayersLoaded()
           return 
         end

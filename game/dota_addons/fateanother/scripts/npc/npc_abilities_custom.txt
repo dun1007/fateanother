@@ -4554,7 +4554,9 @@
 			"modifier_ubw_freeze"
 			{
 				"Duration"		"2.0"
-				
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+				"Duration"				"2.0"
+								
 				"OnCreated"
 				{
 					"AttachEffect"
@@ -4565,7 +4567,6 @@
 						"EffectRadius"		"%radius"
 					}
 				}
-				
 				"States"
 				{
 					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
@@ -13187,6 +13188,8 @@
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"particle"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+			"particle"		"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
 		}
 
 		// Time		
@@ -13238,6 +13241,29 @@
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 				"EffectAttachType"	"follow_overhead"
 				"Duration"		"%duration"	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_weapon1"
+						}
+					}
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_weapon2"
+						}
+					}
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"		"%bat"
@@ -13959,6 +13985,7 @@
 		"AnimationPlaybackRate" 		"1.5"
 		"precache"
 		{
+			"particle"			"particles/items_fx/aegis_respawn.vpcf"
 		}
 		
 		// Casting
@@ -14209,19 +14236,72 @@
 			"RunScript"
 			{
 				"ScriptFile"		"iskander_ability"
-				"Function"			"OnAOTKStart"
+				"Function"			"OnAOTKCastStart"
 			}
-			"FireSound"
+			"ApplyModifier"
 			{
-				"EffectName"		"Hero_Invoker.Alacrity"
+				"ModifierName"		"modifier_army_of_the_king_freeze"
 				"Target"			"CASTER"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_army_of_the_king"
-			{		
+			"modifier_army_of_the_king_freeze"
+			{
+				"Duration"		"2.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+				"Duration"				"2.0"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		""
+						"EffectAttachType"	"start_at_origin"
+						"EffectRadius"		"%radius"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_army_of_the_king_death_checker"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		""
+						"EffectAttachType"	"start_at_origin"
+						"EffectRadius"		"%radius"
+					}
+				}
+			
+				"Duration"	"12.0"
+				
+				"OnDeath"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_army_of_the_king_death_checker"
+						"Target"			"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKDeath"
+					}
+				}
 			}
 		}
 	}
