@@ -14055,10 +14055,14 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
-		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"model"				"models/iskander/iskander_chariot.vmdl"
+			"particle"			"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+			"particle"			"particles/items_fx/aegis_respawn.vpcf"
+			"particle"			"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf"
+			"particle"			"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
 		}
 
 		// Time		
@@ -14085,7 +14089,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"300"
+				"radius"			"350"
 			}
 			"04"
 			{
@@ -14105,10 +14109,14 @@
 			{
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnChariotStart"
+				"Duration"			"%duration"
+				"MinDamage"			"%min_damage"
+				"MaxDamage"			"%max_damage"
+				"Radius"			"%radius"
 			}
-			"FireSound"
+			"ApplyModifier"
 			{
-				"EffectName"		"Hero_Invoker.Alacrity"
+				"ModifierName"		"modifier_gordius_wheel"
 				"Target"			"CASTER"
 			}
 		}
@@ -14117,6 +14125,53 @@
 		{
 			"modifier_gordius_wheel"
 			{		
+				"Duration"		"%duration+1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-300"
+				}
+				"OnCreated"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_gordius_wheel_freeze"
+						"Target"			"CASTER"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"iskander_ability"
+						"Function"			"OnChariotEnd"
+					}				
+				}
+			}
+			"modifier_gordius_wheel_freeze"
+			{
+				"Duration"		"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+				"Duration"				"2.0"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_gordius_wheel_speed_boost"
+			{
+				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_per_second"
+				}	
 			}
 		}
 	}

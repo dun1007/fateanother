@@ -128,7 +128,60 @@ end
 
 function OnChariotStart(keys)
 	local caster = keys.caster
-	EmitGlobalSound("Iskander.Charge")
+	local damageDiff = keys.MaxDamage - keys.MinDamage
+	print("chariot begin")
+
+	caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
+	caster:SetModel("models/iskander/iskander_chariot.vmdl")
+    caster:SetOriginalModel("models/iskander/iskander_chariot.vmdl")
+    caster:SetModelScale(1.0)
+    caster:EmitSound("Hero_Magnataur.Skewer.Cast")
+    caster:EmitSound("Hero_Zuus.GodsWrath")
+	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    ParticleManager:SetParticleControl(particle2, 1, caster:GetAbsOrigin())
+    local particle3 = ParticleManager:CreateParticle("particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    ParticleManager:SetParticleControl(particle3, 0, caster:GetAbsOrigin())
+    ParticleManager:SetParticleControl(particle3, 1, caster:GetAbsOrigin())
+    ParticleManager:SetParticleControl(particle3, 2, caster:GetAbsOrigin())
+
+   	Timers:CreateTimer(1.0, function() 
+   		if caster:HasModifier("modifier_gordius_wheel") then 
+			local currentStack = caster:GetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability)
+			if currentStack == 0 and caster:HasModifier("modifier_gordius_wheel_speed_boost") then currentStack = 1 end
+			caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost") 
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_speed_boost", {}) 
+			caster:SetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability, currentStack + 1)
+
+	        local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	        for k,v in pairs(targets) do
+				local distDiff = 250 -- max damage at 100, min damage at 350
+				local distance = (caster:GetAbsOrigin() - v:GetAbsOrigin()):Length2D() 
+				if distance <= 100 then 
+					damage = keys.MaxDamage
+				elseif distance > 100 then
+					damage = keys.MaxDamage - damageDiff * distance/keys.Radius
+				end
+	            DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	        end
+
+			local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			caster:EmitSound("Hero_Centaur.HoofStomp")
+			return 1.0
+		else
+			return
+		end
+	end)
+end
+
+function OnChariotEnd(keys)
+	local caster = keys.caster
+    caster:SetModel("models/iskander/iskander.vmdl")
+    caster:SetOriginalModel("models/iskander/iskander.vmdl")
+    caster:SetModelScale(1.0)
+
+    caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost")
 end
 
 function OnChariotChargeStart(keys)
@@ -156,18 +209,12 @@ function OnAOTKStart(keys)
 	caster.IsAOTKActive = true
 	caster:SetAbsOrigin(aotkCenter)
 	EmitGlobalSound("Iskander.AOTKAmbient")
+	Timers:CreateTimer(0.1, function() 
+		caster:AddNewModifier(caster, caster, "modifier_camera_follow", {duration = 1.0})
+	end)
+	--PlayerResource:SetCameraTarget(caster:GetPlayerID(), caster)
+	--PlayerResource:SetCameraTarget(caster:GetPlayerID(), nil)
 
-	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
-	for i=1, #ubwTargets do
-		if ubwTargets[i]:GetName() ~= "npc_dota_ward_base" then
-			ubwTargetPos = ubwTargets[i]:GetAbsOrigin()
-	        ubwTargetLoc[i] = ubwTargetPos
-	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
-	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
-			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
-		end
-    end
-    
 	Timers:CreateTimer("aotk_timer", {
 	    endTime = 12,
 	    callback = function()

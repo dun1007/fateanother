@@ -23,14 +23,8 @@ A) Right bottom side of the map.
 Q) How do I buy items with hotkey?
 A) You move through column with QWER and select a row with 1~9 button. This is quite terrible I know.
 
-Q) I get 'Cannot Take Items' error when trying to buy item! 
-A) Select your hero and try again. A unit cannot carry an item.
-
 Q) Can I change camera zoom?
 A) No, in Dota 2 all players' camera vision range is bound to one variable, meaning everyone will be forced to use your zoom. 
-
-Q) Why is C scroll stock running out so fast?
-A) In Dota 2 the stock in shop is team-bound, not personal and there's no way to do anything about it at the moment. It is very likely that someone else have hogged all scrolls before you get your hands on them.
 
 Q) Why does transfering a component from stash move other components altogether? I keep making EX by mistake =(
 A) This is because of how Dota 2 item combination works. I am currently trying to find a workaround for this. 

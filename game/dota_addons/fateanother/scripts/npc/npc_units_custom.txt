@@ -756,15 +756,14 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
-		"ModelScale"				"1.0"
-		"Level"						"1"
-		"HealthBarOffset"			"140"
+		"Model"						"models/heroes/chaos_knight/chaos_knight.vmdl"
+		"ModelScale"				"0.7"
+		"Level"						"4"
+		"HealthBarOffset"			"180"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"phalanx_soldier_passive"	 
-		"Ability2"					""	 
+		"Ability1"					""	 //Reference: Aihn
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -774,34 +773,42 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"12.0"
-		"AttackDamageMax"			"13.0"
-		"AttackRate"				"1.35"
-		"AttackAnimationPoint"		"0.5"
+		"AttackDamageMin"			"30.0"
+		"AttackDamageMax"			"38.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.4"
+		"AttackAnimationPoint"		"0.66"
 		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"90"
+		"AttackRange"				"100"
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"25.0"
-		"BountyGoldMax"				"25.0"
+		"BountyGoldMin"				"38.0"
+		"BountyGoldMax"				"54.0"
 		
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"200"
-		"CollisionSize"				"200"
+		"RingRadius"				"70"
+		"CollisionSize"				"32"
 		"FormationRank"				"0"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"245"
+		"LumberCost"				"60"
+		"FoodCost"					"4"
+		"BuildTime"					"40"
 		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"270"
-		"MovementTurnRate"			"0.6"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.5"
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"420"
+		"StatusHealth"				"835"
 		"StatusHealthRegen"			"0.25"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
@@ -823,23 +830,27 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
-			"AttachWearables"
-			{
-				"Wearable1"		{	"ItemDef"		"63"		}
-				"Wearable2"		{	"ItemDef"		"64"		}
-				"Wearable3" 	{	"ItemDef"		"65"		}
-				"Wearable4"		{	"ItemDef"		"66"		}
-				"Wearable5"		{	"ItemDef"		"67"		}
-				"Wearable6"		{	"ItemDef"		"68"		}
-			}
+			//"AttachWearables"
 			//{
-			//	"Wearable1"		{	"ItemDef"		"6789"		} //"Shield of Ascension"
-			//	"Wearable2"		{	"ItemDef"		"6791"		} //"Pauldrons of Ascension"
-			//	"Wearable3" 	{	"ItemDef"		"6790"		} //"Gauntlets of Ascension"
-			//	"Wearable4"		{	"ItemDef"		"6788"		} //"Drapes of Ascension"
-			//	"Wearable5"		{	"ItemDef"		"6787"		} //"Sword of Ascension"
-			//	"Wearable6"		{	"ItemDef"		"6792"		} //"Helm of Ascension"
+			//	"Wearable1"		{	"ItemDef"		"5810"		} //"Blades of Voth Domosh"
+			//	"Wearable2"		{	"ItemDef"		"5886"		} //"Stonehall Royal Guard Banners"
+			//	"Wearable3" 	{	"ItemDef"		"5887"		} //"Stonehall Royal Guard Helmet"
+			//	"Wearable4"		{	"ItemDef"		"5885"		} //"Stonehall Royal Guard Arms"
+			//	"Wearable5"		{	"ItemDef"		"6192"		} //"Pauldrons of the Equine Emissary"
 			//}
+			"AttachWearables"	
+			{
+				"Wearable1"		{	"ItemDef"	"5828"	} // "Atramentos the Apocalyptic"
+				"Wearable2"		{	"ItemDef"	"6266"	} // "Pauldrons of the Chaos Hound"
+				"Wearable3"		{	"ItemDef"	"5173"	} // "Entropic Helmet"
+				"Wearable4"		{	"ItemDef"	"5925"	} // "Shield of Screaming Souls"
+				"Wearable5"		{	"ItemDef"	"5233"	} // "Blade of Endless Havoc"
+			}
+		}
+	
+		"precache"
+		{
+			"particle_folder"	"particles/units/heroes/hero_chaos_knight"
 		}
 	}
 
@@ -848,55 +859,68 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
-		"ModelScale"				"1.0"
-		"Level"						"1"
+		"Model"						"models/heroes/silencer/silencer.vmdl"
+		"ModelScale"				"0.8"
+		"Level"						"3"
 		"HealthBarOffset"			"140"
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"phalanx_soldier_passive"	 
-		"Ability2"					""	 
+		"Ability1"					""	 //Reference: Asps
+		"Ability2"					""	 //Reference: Acmg
+		"Ability3"					""	 //Reference: Amim
+		"Ability4"					""	 //Reference: Afbk
+		"Ability5"					""	 //Reference: Aihn
 		
 		// Armor
 		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"
+		"ArmorPhysical"				"3"
 		"MagicalResistance"			"0"
 		
 		// Attack
 		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"12.0"
-		"AttackDamageMax"			"13.0"
-		"AttackRate"				"1.35"
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"13.0"
+		"AttackDamageMax"			"15.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.9"
 		"AttackAnimationPoint"		"0.5"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"90"
+		"AttackAcquisitionRange"	"700"
+		"AttackRange"				"250"
+		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+		"ProjectileSpeed"			"900"
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"25.0"
-		"BountyGoldMax"				"25.0"
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
 		
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"200"
-		"CollisionSize"				"200"
-		"FormationRank"				"0"
+		"RingRadius"				"70"
+		"CollisionSize"				"31"
+		"FormationRank"				"1"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"215"
+		"LumberCost"				"30"
+		"FoodCost"					"3"
+		"BuildTime"					"28"
 		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"270"
+		"MovementSpeed"				"300"
 		"MovementTurnRate"			"0.6"
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"420"
+		"StatusHealth"				"600"
 		"StatusHealthRegen"			"0.25"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
+		"StatusMana"				"250"
+		"StatusManaRegen"			"250"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -907,7 +931,7 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_NEUTRALS"
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 		
 		// Creature Data
@@ -916,22 +940,14 @@
 		{
 			"DisableClumpingBehavior"	"1"
 			"AttachWearables"
-			{
-				"Wearable1"		{	"ItemDef"		"63"		}
-				"Wearable2"		{	"ItemDef"		"64"		}
-				"Wearable3" 	{	"ItemDef"		"65"		}
-				"Wearable4"		{	"ItemDef"		"66"		}
-				"Wearable5"		{	"ItemDef"		"67"		}
-				"Wearable6"		{	"ItemDef"		"68"		}
+			{	//Tribunal Set
+				"Wearable1"	{ "ItemDef" "6387" }
+				"Wearable2"	{ "ItemDef"	"6389" }
+				"Wearable3" { "ItemDef"	"6390" }
+				"Wearable4" { "ItemDef"	"6391" }
+				"Wearable5" { "ItemDef"	"6393" }
+				"Wearable6" { "ItemDef"	"6394" }
 			}
-			//{
-			//	"Wearable1"		{	"ItemDef"		"6789"		} //"Shield of Ascension"
-			//	"Wearable2"		{	"ItemDef"		"6791"		} //"Pauldrons of Ascension"
-			//	"Wearable3" 	{	"ItemDef"		"6790"		} //"Gauntlets of Ascension"
-			//	"Wearable4"		{	"ItemDef"		"6788"		} //"Drapes of Ascension"
-			//	"Wearable5"		{	"ItemDef"		"6787"		} //"Sword of Ascension"
-			//	"Wearable6"		{	"ItemDef"		"6792"		} //"Helm of Ascension"
-			//}
 		}
 	}
 
@@ -1013,7 +1029,8 @@
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
 		"UnitLabel"					"healing_ward"
-		
+		"ConsideredHero"			"1"
+		"HasInventory"				"1"
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
@@ -1102,7 +1119,8 @@
 		"SoundSet"					"Creep_Good_Range"					// Name of sound set.
 		"Level"						"0"
 		"UnitLabel"					"healing_ward"
-		
+		"ConsideredHero"			"1"
+		"HasInventory"				"1"
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"6"

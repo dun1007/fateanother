@@ -324,6 +324,9 @@ function OnUBWStart(keys)
 	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
 	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
 			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
+			Timers:CreateTimer(0.1, function() 
+				ubwTargets[i]:AddNewModifier(ubwTargets[i], ubwTargets[i], "modifier_camera_follow", {duration = 1.0})
+			end)
 		end
     end
 
@@ -413,6 +416,9 @@ function EndUBW(caster)
 	    		if units[i] == ubwTargets[j] then
 	    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
 	    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
+	    			Timers:CreateTimer(0.1, function() 
+						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+					end)
 	    			IsUnitGeneratedInUBW = false
 	    			break 
 	    		end
@@ -422,6 +428,9 @@ function EndUBW(caster)
     		diff = ubwCenter - units[i]:GetAbsOrigin()
     		units[i]:SetAbsOrigin(ubwCasterPos - diff)
     		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
+			Timers:CreateTimer(0.1, function() 
+				units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+			end)
     	end 
     end
 
