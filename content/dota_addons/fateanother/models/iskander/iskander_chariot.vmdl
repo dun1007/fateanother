@@ -176,16 +176,6 @@ CVhitBoxSetList CVhitBoxSetList_0
 				},
 				CVhitBox
 				{
-					string m_name = "bone_new3"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "bone_new3"
-					float(3) m_vMinBounds = ( -34.136124, -96.332520, -39.555359 )
-					float(3) m_vMaxBounds = ( 30.613861, 97.667465, 53.944641 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
 					string m_name = "Bone_Arm2_R"
 					string m_sSurfaceProperty = ""
 					int m_nGroupId = 0
@@ -230,8 +220,8 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sSurfaceProperty = ""
 					int m_nGroupId = 0
 					string m_sBoneName = "Hero"
-					float(3) m_vMinBounds = ( -73.179832, -219.619705, 6.951500 )
-					float(3) m_vMaxBounds = ( 75.820122, 114.880234, 92.201500 )
+					float(3) m_vMinBounds = ( -80.000000, -80.000000, -80.000000 )
+					float(3) m_vMaxBounds = ( 80.000000, 80.000000, 80.000000 )
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -242,26 +232,6 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "bone_new2"
 					float(3) m_vMinBounds = ( -47.850723, -47.632103, -47.947277 )
 					float(3) m_vMaxBounds = ( 46.899261, 47.617882, 47.677731 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "bone_new0"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "bone_new0"
-					float(3) m_vMinBounds = ( -36.303646, -28.069641, -43.779411 )
-					float(3) m_vMaxBounds = ( 28.946339, 11.930359, 0.431534 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "bone_new1"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "bone_new1"
-					float(3) m_vMinBounds = ( -27.287180, -13.432159, -44.955692 )
-					float(3) m_vMaxBounds = ( 27.462805, 18.567841, 9.934940 )
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox

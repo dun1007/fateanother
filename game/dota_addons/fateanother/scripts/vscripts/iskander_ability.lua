@@ -155,8 +155,19 @@ function OnAOTKStart(keys)
 	aotkCasterLoc = caster:GetAbsOrigin()
 	caster.IsAOTKActive = true
 	caster:SetAbsOrigin(aotkCenter)
+	EmitGlobalSound("Iskander.AOTKAmbient")
 
-
+	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
+	for i=1, #ubwTargets do
+		if ubwTargets[i]:GetName() ~= "npc_dota_ward_base" then
+			ubwTargetPos = ubwTargets[i]:GetAbsOrigin()
+	        ubwTargetLoc[i] = ubwTargetPos
+	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
+	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
+			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
+		end
+    end
+    
 	Timers:CreateTimer("aotk_timer", {
 	    endTime = 12,
 	    callback = function()
@@ -168,6 +179,8 @@ function OnAOTKStart(keys)
 end
 
 function OnAOTKDeath(keys)
+	local caster = keys.caster
+	EndAOTK(caster)
 end
 
 function EndAOTK(caster)
