@@ -62,7 +62,9 @@ function OnPhalanxStart(keys)
 
 	-- Spawn soldiers from target point to left end
 	for i=0,3 do
-		local soldier = CreateUnitByName("iskander_phalanx_soldier", targetPoint + leftvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+		local soldier = CreateUnitByName("iskander_infantry", targetPoint + leftvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+	    soldier:AddAbility("phalanx_soldier_passive") 
+	    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
 		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
 
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
@@ -73,7 +75,9 @@ function OnPhalanxStart(keys)
 
 	-- Spawn soldiers on right side
 	for i=1,4 do
-		local soldier = CreateUnitByName("iskander_phalanx_soldier", targetPoint + rightvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+		local soldier = CreateUnitByName("iskander_infantry", targetPoint + rightvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+	    soldier:AddAbility("phalanx_soldier_passive") 
+	    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
 		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
 
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
@@ -214,6 +218,7 @@ function OnChariotEnd(keys)
     caster:SetModelScale(1.0)
 
     caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost")
+    caster:RemoveModifierByName("modifier_bloodseeker_thirst_speed")
 end
 
 function OnChariotChargeStart(keys)
@@ -340,6 +345,7 @@ end
 
 aotkTargets = nil
 aotkCenter = Vector(500, -4800, 208)
+ubwCenter = Vector(5600, -4398, 200)
 aotkCasterPos = nil
 function OnAOTKStart(keys)
 	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12)
@@ -347,11 +353,33 @@ function OnAOTKStart(keys)
 	local ability = keys.ability
 	aotkTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	caster.IsAOTKActive = true
+	caster.AOTKSoldiers = {}
+	Timers:CreateTimer(1.0, function()
+		if caster:IsAlive() then
+			LoopOverHeroes(function(hero)
+				EmitSoundOnClient("Iskander.AOTK_Ambient", hero:GetPlayerOwner())
+			end)
+		end
+	end)
+	-- Summon soldiers
+	for i=1,4 do
+		local soldier = CreateUnitByName("iskander_infantry", aotkCenter + Vector(500, 0, 0), true, nil, nil, caster:GetTeamNumber())
+		table.insert(caster.AOTKSoldiers, soldier)
+	end
+
+	-- If Archer's UBW is already active, do not teleport units
+	for i=1, #aotkTargets do
+		if aotkTargets[i]:GetName() == "npc_dota_hero_ember_spirit" and aotkTargets[i]:HasModifier("modifier_ubw_death_checker") then
+			return
+		end
+	end
 	aotkTargetLoc = {}
 	local diff = nil
 	local aotkTargetPos = nil
 	aotkCasterPos = caster:GetAbsOrigin()
-	caster.IsAOTKActive = true
+
+
 
 	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
 	for i=1, #aotkTargets do
@@ -361,8 +389,6 @@ function OnAOTKStart(keys)
 	        diff = (aotkCasterPos - aotkTargetPos)
 
 	        local forwardVec = aotkTargets[i]:GetForwardVector()
-	        local qangle = aotkTargets[i]:GetAngles()
-	        print(qangle)
 	        -- scale position difference to size of AOTK
 	        diff.y = diff.y * 0.7
 	        if aotkTargets[i]:GetTeam() ~= caster:GetTeam() then 
@@ -393,14 +419,6 @@ function OnAOTKStart(keys)
 		end
     end
 
-	Timers:CreateTimer("aotk_timer", {
-	    endTime = 12,
-	    callback = function()
-		if caster:IsAlive() and caster.IsAOTKActive then 
-			EndAOTK(caster)
-		end
-	end
-	})
 end
 
 function OnAOTKDeath(keys)
@@ -415,9 +433,25 @@ function EndAOTK(caster)
 	UTIL_RemoveImmediate(aotkQuest)
 	caster.IsAOTKActive = false
 
-    local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 2000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	-- Remove soldiers 
+	for i=1, #caster.AOTKSoldiers do
+		if IsValidEntity(caster.AOTKSoldiers[i]) then
+			if caster.AOTKSoldiers[i]:IsAlive() then
+				caster.AOTKSoldiers[i]:RemoveSelf()
+			end
+		end
+	end
+	LoopOverHeroes(function(hero)
+		hero:GetPlayerOwner():StopSound("Iskander.AOTK_Ambient")
+	end)
+    local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 3000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
     for i=1, #units do
+    	-- Disjoint all projectiles
     	ProjectileManager:ProjectileDodge(units[i])
+    	-- If unit is Archer and UBW is active, deactive it as well
+		if units[i]:GetName() == "npc_dota_hero_ember_spirit" and units[i]:HasModifier("modifier_ubw_death_checker") then
+			units[i]:RemoveModifierByName("modifier_ubw_death_checker")
+		end
     	local IsUnitGeneratedInAOTK = true
     	if aotkTargets ~= nil then
 	    	for j=1, #aotkTargets do
@@ -434,7 +468,7 @@ function EndAOTK(caster)
     	end
     	if IsUnitGeneratedInAOTK then
     		diff = aotkCenter - units[i]:GetAbsOrigin()
-    		units[i]:SetAbsOrigin(aotkCasterPos - diff)
+    		units[i]:SetAbsOrigin(aotkCasterPos - diff * 0.7)
     		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
 			Timers:CreateTimer(0.1, function() 
 				units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
