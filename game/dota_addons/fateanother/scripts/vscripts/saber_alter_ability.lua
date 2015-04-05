@@ -292,7 +292,6 @@ end]]
 
 function OnDexStart(keys)
 	local caster = keys.caster
-	local frontward = caster:GetForwardVector()
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.75)
 	EmitGlobalSound("Saber.Caliburn")
 	local dex = 
@@ -312,7 +311,7 @@ function OnDexStart(keys)
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
         fExpireTime = GameRules:GetGameTime() + 5.0,
 		bDeleteOnHit = false,
-		vVelocity = frontward * keys.Speed
+		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
 	Timers:CreateTimer(0.75, function() 
 		EmitGlobalSound("Saber_Alter.Excalibur")
@@ -321,14 +320,15 @@ function OnDexStart(keys)
 		if caster:IsAlive() then
 			EmitGlobalSound("Saber.Excalibur_Ready")
 			dex.vSpawnOrigin = caster:GetAbsOrigin() 
+			dex.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(dex)
 			
 			-- Create Particle for projectile
 			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 			Timers:CreateTimer( function()
-					if dummy ~= nil then
-						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
+					if IsValidEntity(dummy) then
+						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 						dummy:SetAbsOrigin( newLoc )
 						return 0.03
 					else

@@ -621,7 +621,8 @@
 			"saber_pause"
 			{
 				"Duration"		"%pause_duration"
-				
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"				
 				"OnCreated"
 				{
 					"ApplyModifier"
@@ -1297,7 +1298,8 @@
 			"saber_pause"
 			{
 				"Duration"		"5"
-				
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"						
 				"OnCreated"
 				{
 					"ApplyModifier"
@@ -1312,11 +1314,9 @@
 						"ModifierName"	"excalibur_vfx_phase_3"
 					}
 				}
-				
-				"States"
+				"Properties"
 				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.9"
 				}
 			}
 			
@@ -3106,9 +3106,6 @@
 		"AnimationPlaybackRate" 		"0.9"
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"
-			"particle_folder"		"particles/units/heroes/hero_invoker"
-			"particle_folder"		"particles/units/heroes/hero_lina"
 			"particle"				"particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death_ring_d_black.vpcf"
 			"particle"				"particles/units/heroes/hero_enigma/enigma_blackhole_n.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_cast.vpcf"
@@ -3201,7 +3198,8 @@
 			"dark_excalibur_VFX_controller"
 			{
 				"Duration"		"%pause_duration"
-				
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"				
 				"OnCreated"
 				{
 					"ApplyModifier"
@@ -13178,8 +13176,8 @@
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
-			//"particle"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-			//"particle"		"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
+			"particle"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+			"particle"		"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
 		}
 
 		// Time		
@@ -13231,29 +13229,30 @@
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 				"EffectAttachType"	"follow_overhead"
 				"Duration"		"%duration"	
-				//"OnCreated"
-				//{
-				//	"AttachEffect"
-				//	{
-				//		"Target"			"CASTER"
-				//		"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-				//		"EffectAttachType"	"follow_customorigin"
-				//		"ControlPointEntities"
-				//		{
-				//			"CASTER"		"attach_weapon1"
-				//		}
-				//	}
-				//	"AttachEffect"
-				//	{
-				//		"Target"			"CASTER"
-				//		"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-				//		"EffectAttachType"	"follow_customorigin"
-				//		"ControlPointEntities"
-				//		{
-				//			"CASTER"		"attach_weapon2"
-				//		}
-				//	}
-				//}
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_weapon1"
+						}
+					}
+
+					"AttachEffect"
+					{
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_weapon2"
+						}
+					}
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"		"%bat"
@@ -14290,7 +14289,10 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk_explosion.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk_ring_1.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk_ring_2.vpcf"
 		}
 
 		// Time		

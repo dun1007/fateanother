@@ -239,7 +239,7 @@ function OnExcaliburStart(keys)
 			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 			Timers:CreateTimer( function()
-					if dummy ~= nil then
+					if IsValidEntity(dummy) then
 						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 						dummy:SetAbsOrigin( newLoc )
 						return 0.03
@@ -285,6 +285,7 @@ function OnMaxStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
@@ -336,7 +337,7 @@ function OnMaxStart(keys)
 		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 		Timers:CreateTimer( function()
-				if dummy ~= nil then
+				if IsValidEntity(dummy) then
 					local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 					dummy:SetAbsOrigin( newLoc )
 					return 0.03

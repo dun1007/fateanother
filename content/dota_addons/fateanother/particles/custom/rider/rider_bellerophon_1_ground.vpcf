@@ -57,14 +57,6 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/units/heroes/hero_leshrac/leshrac_split_earth_b.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = false
-		},
-		ParticleChildrenInfo_t
-		{
 			string m_ChildRef = "particles/units/heroes/hero_leshrac/leshrac_splitearth_lights.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.000000
