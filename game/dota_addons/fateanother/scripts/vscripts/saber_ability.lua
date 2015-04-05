@@ -204,7 +204,6 @@ function OnExcaliburStart(keys)
 	print("Excalibur")
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
-	local frontward = caster:GetForwardVector()
 	
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.0)
 	local excal = 
@@ -224,7 +223,7 @@ function OnExcaliburStart(keys)
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
         fExpireTime = GameRules:GetGameTime() + 5.0,
 		bDeleteOnHit = false,
-		vVelocity = frontward * keys.Speed
+		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
 	Timers:CreateTimer(0.5, function() 
 		if caster:IsAlive() then
@@ -235,13 +234,13 @@ function OnExcaliburStart(keys)
 	Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
-			
+			excal.vVelocity = caster:GetForwardVector() * keys.Speed
 			-- Create Particle for projectile
 			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 			Timers:CreateTimer( function()
 					if dummy ~= nil then
-						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
+						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 						dummy:SetAbsOrigin( newLoc )
 						return 0.03
 					else
@@ -252,7 +251,7 @@ function OnExcaliburStart(keys)
 			
 			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
 			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.EndRadius, keys.EndRadius, keys.EndRadius ) )
-			ParticleManager:SetParticleControl( excalFxIndex, 2, frontward * keys.Speed )
+			ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
 			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
 			
 			Timers:CreateTimer( 2.5, function()
@@ -338,7 +337,7 @@ function OnMaxStart(keys)
 		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 		Timers:CreateTimer( function()
 				if dummy ~= nil then
-					local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
+					local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 					dummy:SetAbsOrigin( newLoc )
 					return 0.03
 				else

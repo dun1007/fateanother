@@ -1,7 +1,8 @@
-require( "timers")
-require( 'util' )
-require( 'archer_ability')
-require( 'master_ability')
+require("timers")
+require('util' )
+require('archer_ability')
+require('master_ability')
+require('xLib/xDialog')
 
 -- Load Stat collection (statcollection should be available from any script scope)
 require('lib.statcollection')

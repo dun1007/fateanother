@@ -770,6 +770,11 @@
 		"Ability5"				"fate_empty1"
 		"Ability6"				"iskander_army_of_the_king"
 		"Ability7"				"iskander_annihilate"
+		"Ability8"				"iskander_via_expugnatio"
+		"Ability9"				"fate_empty2"
+		"Ability10"				"fate_empty3"
+		"Ability11"				"presence_detection_passive"
+		"Ability12"				"attribute_bonus"
 		
 		"StatusHealth"					"1200"
 		"StatusHeathRegen"				"10"

@@ -12,4 +12,8 @@
     "stat_collection_send"
     {
     }
+    "xgui_show_rpg_dialog"
+    {
+        "playerID"     "short"
+    }
 }

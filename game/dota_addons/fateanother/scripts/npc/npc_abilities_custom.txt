@@ -8598,7 +8598,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"		"enuma_elish_pause"
+				"ModifierName"		"enuma_elish_anim"
 				"Target"			"CASTER"
 			}
 
@@ -8628,16 +8628,11 @@
 
 		"Modifiers"
 		{
-			"enuma_elish_pause"
+			"enuma_elish_anim"
 			{
-				"Duration"	"5.0"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"Duration"	"4.0"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
 			}
 		}
 	}
@@ -8715,7 +8710,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"		"enuma_elish_pause"
+				"ModifierName"		"max_enuma_elish_anim"
 				"Target"			"CASTER"
 			}
 
@@ -8745,16 +8740,11 @@
 
 		"Modifiers"
 		{
-			"enuma_elish_pause"
+			"max_enuma_elish_anim"
 			{
 				"Duration"	"6.0"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
 			}
 		}
 	}
@@ -11754,7 +11744,7 @@
 
 		"precache"
 		{
-			//"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 			"particle"		"particles/custom/avenger/avenger_dark_passage_start.vpcf"
 			"particle"		"particles/custom/avenger/avenger_dark_passage_end.vpcf"
 		}
@@ -13188,8 +13178,8 @@
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
-			"particle"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-			"particle"		"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
+			//"particle"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+			//"particle"		"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
 		}
 
 		// Time		
@@ -13241,29 +13231,29 @@
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 				"EffectAttachType"	"follow_overhead"
 				"Duration"		"%duration"	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-						"EffectAttachType"	"follow_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_weapon1"
-						}
-					}
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-						"EffectAttachType"	"follow_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_weapon2"
-						}
-					}
-				}
+				//"OnCreated"
+				//{
+				//	"AttachEffect"
+				//	{
+				//		"Target"			"CASTER"
+				//		"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+				//		"EffectAttachType"	"follow_customorigin"
+				//		"ControlPointEntities"
+				//		{
+				//			"CASTER"		"attach_weapon1"
+				//		}
+				//	}
+				//	"AttachEffect"
+				//	{
+				//		"Target"			"CASTER"
+				//		"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+				//		"EffectAttachType"	"follow_customorigin"
+				//		"ControlPointEntities"
+				//		{
+				//			"CASTER"		"attach_weapon2"
+				//		}
+				//	}
+				//}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"		"%bat"
@@ -14173,6 +14163,36 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_per_second"
 				}	
 			}
+			"modifier_gordius_wheel_mitigation_tier1"
+			{		
+				"Duration"		"2.5"
+				"IsHidden"		"1"
+				"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"20"
+	    		}
+			}
+			"modifier_gordius_wheel_mitigation_tier2"
+			{		
+				"Duration"		"3.0"
+				"IsHidden"		"1"
+				"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"25"
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"10"
+	    		}
+			}
+			"modifier_gordius_wheel_mitigation_tier3"
+			{		
+				"Duration"		"4.5"
+				"IsHidden"		"1"
+				"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"10"
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"5"
+	    		}
+			}
 		}
 	}
 
@@ -14193,17 +14213,17 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"iskander_via_expugnatio"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
-		"AnimationPlaybackRate" 		"1.5"
-		"AOERadius"						"%radius"
+		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"				"particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
+			"particle"				"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2000"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -14228,7 +14248,12 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"1200"
+				"range"				"1500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"trail_duration"	"3.0"
 			}
 		}
 
@@ -14239,6 +14264,10 @@
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnChariotChargeStart"
 			 	"Target"		"POINT"
+			 	"ChargeDamage"	"%charge_damage"
+			 	"TrailDamage"	"%trail_damage"
+			 	"Range"			"%range"
+			 	"Duration"		"%trail_duration"
 			}
 		}
 		
@@ -14292,6 +14321,7 @@
 			{
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnAOTKCastStart"
+				"Radius"			"%radius"
 			}
 			"ApplyModifier"
 			{

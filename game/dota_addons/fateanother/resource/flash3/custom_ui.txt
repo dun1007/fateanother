@@ -7,12 +7,17 @@
 	}
 	"2"
 	{
-	"File"		"PlayerSay"
-	"Depth"		"12"
+		"File"		"PlayerSay"
+		"Depth"		"12"
 	}
 	"3"
 	{
-	"File"		"CustomError"
-	"Depth"		"50"
+		"File"		"CustomError"
+		"Depth"		"50"
+	}
+	"4"
+	{
+		"File"		"RPGDialog"
+		"Depth"		"999"
 	}
 }
