@@ -317,6 +317,16 @@ function OnAOTKCastStart(keys)
 	local caster = keys.caster
 	EmitGlobalSound("Iskander.AOTK")
 	
+	local aotkParticle = ParticleManager:CreateParticle("particles/custom/iskandar/iskandar_aotk.vpcf", PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(aotkParticle, 0, caster:GetAbsOrigin())
+	
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle(aotkParticle, false)
+			ParticleManager:ReleaseParticleIndex(aotkParticle)
+			return nil
+		end
+	)
+	
 	Timers:CreateTimer({
 		endTime = 2,
 		callback = function()
