@@ -37,7 +37,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	float m_flMaxDrawDistance = 100000.000000
 	float m_flStartFadeDistance = 200000.000000
 	float m_flNoDrawTimeToGoToSleep = 8.000000
-	int m_nMaxParticles = 16
+	int m_nMaxParticles = 60
 	int m_nSkipRenderControlPoint = -1
 	int m_nAllowRenderControlPoint = -1
 	int m_nAggregationMinAvailableParticles = 0
@@ -383,8 +383,8 @@ C_OP_RenderSprites C_OP_RenderSprites_6
 
 C_INIT_RandomLifeTime C_INIT_RandomLifeTime_7
 {
-	float m_fLifetimeMin = 0.235000
-	float m_fLifetimeMax = 0.250000
+	float m_fLifetimeMin = 1.300000
+	float m_fLifetimeMax = 1.500000
 	float m_fLifetimeRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	float m_flOpStartFadeInTime = 0.000000
