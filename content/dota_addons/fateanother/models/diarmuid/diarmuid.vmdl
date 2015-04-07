@@ -365,7 +365,7 @@ CVattachmentList CVattachmentList_0
 			[
 				CVattachmentInfluence
 				{
-					string m_influenceName = "Bone_Hand R"
+					string m_influenceName = "Bone_Weapon R"
 					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
 					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
 					float m_flWeight = 1.000000
@@ -380,7 +380,7 @@ CVattachmentList CVattachmentList_0
 			[
 				CVattachmentInfluence
 				{
-					string m_influenceName = "Bone_Hand L"
+					string m_influenceName = "Bone_Weapon L"
 					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
 					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
 					float m_flWeight = 1.000000

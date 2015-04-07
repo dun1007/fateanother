@@ -290,8 +290,23 @@ function OnUBWStart(keys)
 	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
+	local ubwdummyLoc1 = ubwCenter + Vector(600,-600, 1000)
+	local ubwdummyLoc2 = ubwCenter + Vector(600,600, 1000)
+	local ubwdummyLoc3 = ubwCenter + Vector(-600,600, 1000)
+	local ubwdummyLoc4 = ubwCenter + Vector(-600,-600, 1000)
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	caster.IsUBWDominant = true
+	for i=1, #ubwTargets do
+		if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
+			ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
+			ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
+			ubwdummyLoc3 = aotkCenter + Vector(-600,600, 1000)
+			ubwdummyLoc4 = aotkCenter + Vector(-600,-600, 1000)
+			caster.IsUBWDominant = false
+			break
+		end
+	end
 	caster.IsUBWActive = true
 
 	local info = {
@@ -318,15 +333,15 @@ function OnUBWStart(keys)
 	end)
 
 	-- Add sword shooting dummies
-	local ubwdummy1 = CreateUnitByName("dummy_unit", ubwCenter + Vector(600,-600, 1000), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy2 = CreateUnitByName("dummy_unit", ubwCenter + Vector(600, 600, 1000), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy3 = CreateUnitByName("dummy_unit", ubwCenter + Vector(-600,-600, 1000), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy4 = CreateUnitByName("dummy_unit", ubwCenter + Vector(-600, 600, 1000), false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy1 = CreateUnitByName("dummy_unit", ubwdummyLoc1, false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy2 = CreateUnitByName("dummy_unit", ubwdummyLoc2, false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy3 = CreateUnitByName("dummy_unit", ubwdummyLoc3, false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy4 = CreateUnitByName("dummy_unit", ubwdummyLoc4, false, caster, caster, caster:GetTeamNumber())
 	Timers:CreateTimer(function()
-		ubwdummy1:SetAbsOrigin(ubwCenter + Vector(600,-600, 1000))
-		ubwdummy2:SetAbsOrigin(ubwCenter + Vector(600,600, 1000))
-		ubwdummy3:SetAbsOrigin(ubwCenter + Vector(-600,600, 1000))
-		ubwdummy4:SetAbsOrigin(ubwCenter + Vector(-600,-600, 1000))
+		ubwdummy1:SetAbsOrigin(ubwdummyLoc1)
+		ubwdummy2:SetAbsOrigin(ubwdummyLoc2)
+		ubwdummy3:SetAbsOrigin(ubwdummyLoc3)
+		ubwdummy4:SetAbsOrigin(ubwdummyLoc4)
 	end)
 	ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
 	for i=1, #ubwdummies do
@@ -353,19 +368,9 @@ function OnUBWStart(keys)
 		return 0.1
 	end)
 
-	-- If Archer's UBW is already active, do not teleport units
-	for i=1, #ubwTargets do
-		if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
-			print("found iskander!")
-			Timers:CreateTimer(0.033,function()
-				ubwdummy1:SetAbsOrigin(aotkCenter + Vector(600,-600, 1000))
-				ubwdummy2:SetAbsOrigin(aotkCenter + Vector(600,600, 1000))
-				ubwdummy3:SetAbsOrigin(aotkCenter + Vector(-600,600, 1000))
-				ubwdummy4:SetAbsOrigin(aotkCenter + Vector(-600,-600, 1000))
-			end)
-			return
-		end
-	end
+	if not caster.IsUBWDominant then return end -- If UBW is not dominant right now, do not teleport units 
+
+
 	ubwTargetLoc = {}
 	local diff = nil
 	local ubwTargetPos = nil
@@ -391,6 +396,7 @@ end
 
 function OnUBWDeath(keys)
 	local caster = keys.caster
+	print("ubw death checker removed")
 	EndUBW(caster)
 end
 

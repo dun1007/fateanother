@@ -705,10 +705,10 @@ function OnHGStart(keys)
 	Timers:CreateTimer(1.0, function()
 		if isFirstLoop == false then 
 			isFirstLoop = true
-			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(initTargets) do
 				print("inital ray")
-				DropRay(keys, Vector(0,0,0))
+				DropRay(keys, v:GetAbsOrigin())
 			end
 			maxBolt = maxBolt - #initTargets
 		else

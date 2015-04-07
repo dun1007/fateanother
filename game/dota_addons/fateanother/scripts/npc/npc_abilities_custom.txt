@@ -525,9 +525,6 @@
 		"AnimationPlaybackRate" 		"1.0"				// Adjust playback rate to reflect the ability was 0.9
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"		// I don't think it's neccessary to precache these
-			"particle_folder"		"particles/units/heroes/hero_invoker"					// three folders
-			"particle_folder"		"particles/units/heroes/hero_lina"						//
 			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
 			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
@@ -784,9 +781,6 @@
 			"particle"					"particles/custom/saber_avalon_floor.vpcf"
 			"particle"					"particles/custom/saber_avalon_impact.vpcf"
 			"particle"					"particles/custom/saber_avalon_explosion.vpcf"
-			"particle_folder"			"particles/units/heroes/hero_omniknight"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
 		}
 		
 		// Cast
@@ -1060,7 +1054,6 @@
 			"particle"				"particles/custom/saber_strike_air_blast.vpcf"
 			"particle"				"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
-			"particle_folder"		"particles/units/heroes/hero_invoker"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 		}
 
@@ -1831,7 +1824,7 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+			"particle"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
@@ -1872,7 +1865,19 @@
 		{
 			"modifier_aspd_increase"
 			{
-				"EffectName"	"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_weapon2"
+						}
+					}
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_modifier"
@@ -1964,6 +1969,24 @@
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold"
 			 }
+			 "ApplyModifier"
+			 {
+			 	"ModifierName"	"modifier_gae_bolg_pierce_anim"
+			 	"Target"		"CASTER"
+			 }
+		}
+		"Modifiers"
+		{
+			"modifier_gae_bolg_pierce_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
+				}
+			}	
 		}
 	}
 
@@ -1986,7 +2009,6 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 			"particle"		"particles/custom/screen_red_splash.vpcf"
@@ -2028,6 +2050,11 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"GBAttachEffect"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_wesen_gae_bolg_anim"
+				"Target"		"CASTER"
+			}
 
 		}
 		"OnSpellStart"
@@ -2039,6 +2066,25 @@
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold_percentage"
 			 }
+		}
+		"Modifiers"
+		{
+			"modifier_wesen_gae_bolg_anim"
+			{
+				"Duration"	"1.0"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+			}
+			"modifier_wesen_gae_bolg_pierce_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+			}
 		}
 	}
 	
@@ -2063,7 +2109,6 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
 			"particle"		"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf"
 			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf"
@@ -2123,6 +2168,11 @@
 			 	"Function"		"OnGBAOEStart"
 			 	"Target"		"POINT"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_gae_jump_throw_anim"
+				"Target"		"CASTER"
+			}
 		}
 
 		"OnProjectileHitUnit" 
@@ -2139,6 +2189,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_gae_jump_throw_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+			}	
 		}
 	}
 	
@@ -2468,7 +2524,7 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
+			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
 		}
 		
 		"AbilityCastPoint"				"1.3"
@@ -4810,7 +4866,6 @@
 		
 		"precache"
 		{
-			// "particle_folder"	"particles/units/heroes/hero_earthshaker" // should not be needed
 			"particle"			"particles/units/heroes/hero_centaur/centaur_warstomp_shockwave.vpcf"
 			"particle"			"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp.vpcf"
 			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_shockwave.vpcf"
@@ -5785,7 +5840,6 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_earthshaker"
 			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
@@ -6733,7 +6787,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		
 		"AbilityCastPoint"				"0.7"
@@ -6749,6 +6803,7 @@
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
 			"particle"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -6808,6 +6863,11 @@
 				"ModifierName"		"modifier_tg_overcharge_effect"
 				"Target"			"TARGET"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_tg_anim"
+				"Target"			"CASTER"
+			}
 		}
 
 		"Modifiers"
@@ -6830,6 +6890,29 @@
 							"TARGET"	"attach_hitloc"
 						}
 					}
+				}
+			}
+			"modifier_tg_anim"
+			{
+				"Duration"	"1.0"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+						}
+					}
+				}				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
 				}
 			}
 		}
@@ -10870,7 +10953,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gae_bolg_target"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
@@ -10967,7 +11050,6 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_earthshaker"
 			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
@@ -14315,6 +14397,11 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"12.0"
 			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"sustain_limit"		"5"
+			}
 		}
 		
 		"OnSpellStart"
@@ -14390,6 +14477,61 @@
 					}
 				}
 			}
+			"modifier_army_of_the_king_soldier_death_checker"
+			{
+				"Duration"		"12.0"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+		}
+	}
+
+	//================================================
+	// Iskander : Maharaja's Passive
+	//================================================
+	"iskander_maharaja_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "iskander_phalanx"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage"			"30"
+			}
+		}	
+		"Modifiers"
+		{
+			"modifier_maharaja_passive"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_maharaja_passive_buff"
+				"Aura_Radius"			"3000"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			
+			"modifier_maharaja_passive_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"
+				}
+			}
 		}
 	}
 
@@ -14404,19 +14546,19 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityTextureName"			"legion_commander_press_the_attack"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.5"
 
 		// Time		
@@ -14429,14 +14571,9 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_bonus"			"15 20 25 30 35"
+				"armor_reduction"			"-3 -6 -9 -12 -15"
 			}
 			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"armor_reduction"			"-2 -4 -6 -8 -10"
-			}
-			"03"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"duration"		"5"
@@ -14454,11 +14591,32 @@
 			{
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnBattleHornStart"
+			 	"Radius"		"%radius"
+			 	"Target"		"POINT"
 			}
 		}
 		
 		"Modifiers"
 		{
+			"modifier_battle_horn_armor_reduction"
+			{
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"%armor_reduction"
+				}
+			}
+			"modifier_battle_horn_movespeed_buff"
+			{	
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"Duration"				"1.0"
+				"EffectAttachType"		"follow_origin"			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"999"
+				}
+			}
 		}
 	}
 	//====================================
@@ -14479,7 +14637,6 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
 		}
 		
 		// Casting
@@ -14523,7 +14680,47 @@
 		{
 		}
 	}
+	//================================================
+	// Iskander : Hephaestion Passive
+	//================================================
+	"iskander_hephaestion_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "iskander_phalanx"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_mspd"			"15"
+			}
+		}	
+		"Modifiers"
+		{
+			"modifier_hephaestion_passive"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_hephaestion_passive_buff"
+				"Aura_Radius"			"3000"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			
+			"modifier_hephaestion_passive_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_aspd"
+				}
+			}
+		}
+	}
 
 	//====================================
 	// Iskander - Hammer and Anvil
@@ -14543,7 +14740,7 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"			"particles/econ/items/tinker/boots_of_travel/teleport_start_bots_dust.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.5"
@@ -14558,7 +14755,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"300"
+				"damage"			"250 325 400 475 550"
 			}
 		}
 
@@ -14568,6 +14765,7 @@
 			{
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnHammerStart"
+			 	"Damage"		"%damage"
 			}
 		}
 		
@@ -14593,7 +14791,6 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
 		}
 		
 		// Casting

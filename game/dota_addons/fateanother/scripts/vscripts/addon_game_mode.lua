@@ -482,8 +482,9 @@ function FateGameMode:OnHeroSpawned( keys )
 			local model_name = ""
 			
 			-- Check if npc is hero
-      if hero ~= nil then
+      if IsValidEntity(hero) then
 			 if not hero:IsHero() then return end
+      else return 
       end
 			
 			-- Getting model name
