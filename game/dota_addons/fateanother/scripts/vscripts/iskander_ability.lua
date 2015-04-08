@@ -353,11 +353,11 @@ aotkTargets = nil
 aotkCenter = Vector(500, -4800, 208)
 ubwCenter = Vector(5600, -4398, 200)
 aotkCasterPos = nil
-aotkSoldierDeath = nil	-- handle of AOTK ability
+aotkAbilityHandle = nil	-- handle of AOTK ability
 function OnAOTKStart(keys)
 	local caster = keys.caster
 	if caster.AOTKSoldierCount == nil then caster.AOTKSoldierCount = 0 end --initialize soldier count if its not made yet
-	aotkSoldierDeath = keys.ability -- Store handle in global variable for future use
+	aotkAbilityHandle = keys.ability -- Store handle in global variable for future use
 	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12)
 	local ability = keys.ability
 	aotkTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
@@ -392,7 +392,7 @@ function OnAOTKStart(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
 	end
 	-- Second row
 	for i=0,4 do
@@ -401,7 +401,7 @@ function OnAOTKStart(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
 	end
 	for i=0,4 do
 		local soldier = CreateUnitByName("iskander_archer", marbleCenter + Vector(800, -600 + i*100, 0), true, nil, nil, caster:GetTeamNumber())
@@ -409,14 +409,14 @@ function OnAOTKStart(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
 	end
 	local maharaja = CreateUnitByName("iskander_maharaja", maharajaPos, true, nil, nil, caster:GetTeamNumber())
 	maharaja:SetControllableByPlayer(caster:GetPlayerID(), true)
 	maharaja:SetOwner(caster)
 	table.insert(caster.AOTKSoldiers, maharaja)
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-	aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, maharaja, "modifier_army_of_the_king_soldier_death_checker",{})
+	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, maharaja, "modifier_army_of_the_king_soldier_death_checker",{})
 
 	if not caster.IsAOTKDominant then return end -- If Archer's UBW is already active, do not teleport units
 
@@ -551,12 +551,14 @@ function OnCavalrySummon(keys)
 	caster:EmitSound("Hero_Centaur.Stampede.Movement")
 	for i=0,5 do
 		local soldier = CreateUnitByName("iskander_cavalry", targetPoint + Vector(200, -200 + i*100), true, nil, nil, caster:GetTeamNumber())
+		--soldier:SetBaseMaxHealth(soldier:GetHealth() + ) 
+
 		soldier:AddNewModifier(caster, nil, "modifier_phased", {})
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		--table.insert(caster.AOTKCavalryTable, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
 	end
 	local hepha = CreateUnitByName("iskander_hephaestion", targetPoint, true, nil, nil, caster:GetTeamNumber())
 	hepha:SetControllableByPlayer(caster:GetPlayerID(), true)
@@ -564,7 +566,7 @@ function OnCavalrySummon(keys)
 	table.insert(caster.AOTKSoldiers, hepha)
 	--table.insert(caster.AOTKCavalryTable, hepha)
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-	aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, hepha, "modifier_army_of_the_king_soldier_death_checker",{})
+	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, hepha, "modifier_army_of_the_king_soldier_death_checker",{})
 end
 
 function OnMageSummon(keys)
@@ -578,14 +580,14 @@ function OnMageSummon(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
 	end
 	local waver = CreateUnitByName("iskander_waver", targetPoint, true, nil, nil, caster:GetTeamNumber())
 	waver:SetControllableByPlayer(caster:GetPlayerID(), true)
 	waver:SetOwner(caster)
 	table.insert(caster.AOTKSoldiers, waver)
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-	aotkSoldierDeath:ApplyDataDrivenModifier(keys.caster, waver, "modifier_army_of_the_king_soldier_death_checker",{})
+	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, waver, "modifier_army_of_the_king_soldier_death_checker",{})
 end
 
 function OnBattleHornStart(keys)
@@ -654,7 +656,7 @@ function OnHammerStart(keys)
 			endTime = 0.0,
 			callback = function()
 
-			local targets = FindUnitsInRadius(cavalryTable[i]:GetTeam(), cavalryTable[i]:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			local targets = FindUnitsInRadius(cavalryTable[i]:GetTeam(), cavalryTable[i]:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	        for k,v in pairs(targets) do
 				if v.HammerChargeHit ~= true then 
 					v.HammerChargeHit = true
@@ -690,34 +692,11 @@ function OnHammerStart(keys)
 				unit:PreventDI(false)
 				unit:SetPhysicsVelocity(Vector(0,0,0))
 				unit:OnPhysicsFrame(nil)
-				unit:RemoveModifierByName("hammer_charge" .. i)
-				Timers:RemoveTimer
+				unit:RemoveModifierByName("round_pause")
+				Timers:RemoveTimer("hammer_charge" .. i)
 			end
 		end)
 	end
-
-	--[[Timers:CreateTimer("chariot_dash_damage", {
-		endTime = 0.0,
-		callback = function()
-
-		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-        for k,v in pairs(targets) do
-			if v.ChariotChargeHit ~= true then 
-				v.ChariotChargeHit = true
-				Timers:CreateTimer(1.0, function()
-					v.ChariotChargeHit = false
-				end)
-
-           		DoDamage(caster, v, keys.ChargeDamage * currentMS / 100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-           		v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.25})
-
-           	end
-        end
-		return 0.1
-	end})]]
-
-
-
 end
 
 function OnBrillianceStart(keys)
