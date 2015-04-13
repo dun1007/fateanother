@@ -18,6 +18,7 @@ function OnIskanderCharismaRespawn(keys)
 	StartCharismaTimer(keys)
 end
 
+modName = "modifier_charisma_movespeed"
 function StartCharismaTimer(keys)
 	local caster = keys.caster
 	Timers:CreateTimer('charisma_passive_timer', {
@@ -27,7 +28,7 @@ function StartCharismaTimer(keys)
 		for k,v in pairs(targets) do
 			if v ~= caster then 
 				if IsFacingUnit(v, caster, 120) then
-					keys.ability:ApplyDataDrivenModifier(caster,v, "modifier_charisma_movespeed", {})
+					keys.ability:ApplyDataDrivenModifier(caster,v, modName, {})
 				end
 			end
 			
@@ -37,15 +38,20 @@ function StartCharismaTimer(keys)
 end
 function OnForwardStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner() 
 	
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_legion_commander/legion_commander_press_sphere.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
 
+	if ply.IsCharismaImproved then
+		keys.Radius = 20000
+	end
 	
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
         , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 
 	for k,v in pairs(targets) do
+		RemoveSlowEffect(v)
 		keys.ability:ApplyDataDrivenModifier(caster,v, "modifier_forward", {})
 		v:EmitSound("Hero_LegionCommander.Overwhelming.Location")
     end
@@ -69,7 +75,7 @@ function OnPhalanxStart(keys)
 	    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
 		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
 
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
 		ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
@@ -84,7 +90,7 @@ function OnPhalanxStart(keys)
 	    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
 		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
 
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
 		ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
@@ -116,14 +122,11 @@ function OnPhalanxStart(keys)
 				end
 				})
 
-			  	Timers:CreateTimer('phalanx_pull', {
-					endTime = 0.5,
-					callback = function()
+			  	Timers:CreateTimer(0.5, function()
 					v:PreventDI(false)
 					v:SetPhysicsVelocity(Vector(0,0,0))
 					v:OnPhysicsFrame(nil)
-				end
-				})
+				end)
 
 			  	giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
 				DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -161,20 +164,27 @@ end
 
 function OnChariotRide(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local damageDiff = keys.MaxDamage - keys.MinDamage
 
 	caster:SwapAbilities("iskander_gordius_wheel", "fate_empty2", true, true) 
-	caster:SwapAbilities("iskander_army_of_the_king", "iskander_via_expugnatio", true, true) 
+	if ply.IsVEAcquired then
+		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "iskander_via_expugnatio", true, true) 
+	else
+		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty3", true, true)
+	end
 
    	Timers:CreateTimer(function() 
    		if caster:HasModifier("modifier_gordius_wheel") then 
-			local currentStack = caster:GetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability)
-			if currentStack == 0 and caster:HasModifier("modifier_gordius_wheel_speed_boost") then currentStack = 1 end
-			caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost") 
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_speed_boost", {}) 
-			caster:SetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability, currentStack + 1)
+   			if not caster:HasModifier("modifier_army_of_the_king_death_checker") then
+				local currentStack = caster:GetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability)
+				if currentStack == 0 and caster:HasModifier("modifier_gordius_wheel_speed_boost") then currentStack = 1 end
+				caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost") 
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_speed_boost", {}) 
+				caster:SetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability, currentStack + 1)
+   			end
 
-			
+			-- do damage around rider
 	        local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	        for k,v in pairs(targets) do
 				local distDiff = 250 -- max damage at 100, min damage at 350
@@ -187,6 +197,25 @@ function OnChariotRide(keys)
 	            DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        end
 
+	        if ply.IsThundergodAcquired then
+		        local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		        for k,v in pairs(targets) do
+		            DoDamage(caster, v, 200, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+		        end	  
+		        local thunderTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		        local thunderTarget = thunderTargets[math.random(#thunderTargets)]
+		        if thunderTarget ~= nil then
+		        	print(thunderTarget:GetUnitName())
+		        	DoDamage(caster, thunderTarget, thunderTarget:GetHealth() * 12/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		        	thunderTarget:AddNewModifier(caster, thunderTarget, "modifier_stunned", {Duration = 0.1})
+		       		keys.ability:ApplyDataDrivenModifier(caster, thunderTarget, "modifier_gordius_wheel_thunder_slow", {}) 
+
+		       		thunderTarget:EmitSound("Hero_Zuus.LightningBolt")
+		        	local thunderFx = ParticleManager:CreateParticle("particles/units/heroes/hero_razor/razor_storm_lightning_strike.vpcf", PATTACH_CUSTOMORIGIN, thunderTarget)
+		        	ParticleManager:SetParticleControl(thunderFx, 0, thunderTarget:GetAbsOrigin())
+		        	ParticleManager:SetParticleControl(thunderFx, 1, caster:GetAbsOrigin()+Vector(0,0,800))
+		        end
+	        end
 			local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			caster:EmitSound("Hero_Centaur.HoofStomp")
 			return 1.0
@@ -195,29 +224,35 @@ function OnChariotRide(keys)
 		end
 	end)
 
-	-- Apply diminishing mitigation over time
-	Timers:CreateTimer(function()	
-		if caster:HasModifier("modifier_gordius_wheel") then 
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier1", {}) 
-		end
-	end)
-	Timers:CreateTimer(2.5, function()	
-		if caster:HasModifier("modifier_gordius_wheel") then 
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier2", {}) 
-		end
-	end)
-	Timers:CreateTimer(5.5, function()	
-		if caster:HasModifier("modifier_gordius_wheel") then 
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier3", {}) 
-		end
-	end)
+	if not caster:HasModifier("modifier_army_of_the_king_death_checker") then
+		-- Apply diminishing mitigation over time
+		Timers:CreateTimer(function()	
+			if caster:HasModifier("modifier_gordius_wheel") then 
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier1", {}) 
+			end
+		end)
+		Timers:CreateTimer(2.5, function()	
+			if caster:HasModifier("modifier_gordius_wheel") then 
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier2", {}) 
+			end
+		end)
+		Timers:CreateTimer(5.5, function()	
+			if caster:HasModifier("modifier_gordius_wheel") then 
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier3", {}) 
+			end
+		end)
+	end
 end
 
 function OnChariotEnd(keys)
 	local caster = keys.caster
 
 	caster:SwapAbilities("iskander_gordius_wheel", "fate_empty2", true, true) 
-	caster:SwapAbilities("iskander_army_of_the_king", "iskander_via_expugnatio", true, true) 
+	if caster:HasModifier("modifier_army_of_the_king_death_checker") then
+		caster:SwapAbilities("fate_empty3", caster:GetAbilityByIndex(5):GetName(), true, true) 
+	else
+		caster:SwapAbilities("iskander_army_of_the_king", caster:GetAbilityByIndex(5):GetName(), true, true) 
+	end
 
     caster:SetModel("models/iskander/iskander.vmdl")
     caster:SetOriginalModel("models/iskander/iskander.vmdl")
@@ -327,7 +362,7 @@ aotkQuest = nil
 function OnAOTKCastStart(keys)
 	local caster = keys.caster
 	EmitGlobalSound("Iskander.AOTK")
-	
+	IskanderCheckCombo(caster, keys.ability)
 	local aotkParticle = ParticleManager:CreateParticle("particles/custom/iskandar/iskandar_aotk.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(aotkParticle, 0, caster:GetAbsOrigin())
 	
@@ -354,10 +389,16 @@ aotkCenter = Vector(500, -4800, 208)
 ubwCenter = Vector(5600, -4398, 200)
 aotkCasterPos = nil
 aotkAbilityHandle = nil	-- handle of AOTK ability
+
+function OnAOTKLevelUp(keys)
+	aotkAbilityHandle = keys.ability -- Store handle in global variable for future use
+	print("lvlup")
+end
+
 function OnAOTKStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	if caster.AOTKSoldierCount == nil then caster.AOTKSoldierCount = 0 end --initialize soldier count if its not made yet
-	aotkAbilityHandle = keys.ability -- Store handle in global variable for future use
 	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12)
 	local ability = keys.ability
 	aotkTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
@@ -374,9 +415,13 @@ function OnAOTKStart(keys)
 	EmitGlobalSound("Iskander.AOTK_Ambient")
 
 	-- Swap abilities
-	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty2", true, true)
+	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)
 	caster:SwapAbilities("fate_empty1", "iskander_summon_hephaestion", true, true) 
-	caster:SwapAbilities("iskander_charisma", "iskander_summon_waver", true, true) 
+	if ply.IsBeyondTimeAcquired then
+		caster:SwapAbilities("iskander_charisma", "iskander_summon_waver", true, true) 
+	else 
+		caster:SwapAbilities("iskander_charisma", "fate_empty4", true, true) 
+	end
  
 
 	-- Summon soldiers
@@ -392,7 +437,7 @@ function OnAOTKStart(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
 	end
 	-- Second row
 	for i=0,4 do
@@ -401,7 +446,7 @@ function OnAOTKStart(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_archer_bonus_stat",{})
 	end
 	for i=0,4 do
 		local soldier = CreateUnitByName("iskander_archer", marbleCenter + Vector(800, -600 + i*100, 0), true, nil, nil, caster:GetTeamNumber())
@@ -409,14 +454,14 @@ function OnAOTKStart(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_archer_bonus_stat",{})
 	end
 	local maharaja = CreateUnitByName("iskander_maharaja", maharajaPos, true, nil, nil, caster:GetTeamNumber())
 	maharaja:SetControllableByPlayer(caster:GetPlayerID(), true)
 	maharaja:SetOwner(caster)
 	table.insert(caster.AOTKSoldiers, maharaja)
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, maharaja, "modifier_army_of_the_king_soldier_death_checker",{})
+	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, maharaja, "modifier_army_of_the_king_maharaja_bonus_stat",{})
 
 	if not caster.IsAOTKDominant then return end -- If Archer's UBW is already active, do not teleport units
 
@@ -488,9 +533,9 @@ function EndAOTK(caster)
 	caster.IsAOTKActive = false
 
 	-- Revert abilities
-	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty2", true, true)
+	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)
 	caster:SwapAbilities("fate_empty1", "iskander_summon_hephaestion", true, true) 
-	caster:SwapAbilities("iskander_charisma", "iskander_summon_waver", true, true) 
+	caster:SwapAbilities("iskander_charisma", caster:GetAbilityByIndex(3):GetName(), true, true) 
 
 	-- Remove soldiers 
 	for i=1, #caster.AOTKSoldiers do
@@ -547,8 +592,9 @@ function OnCavalrySummon(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local targetPoint = keys.target_points[1]
+	IskanderCheckCombo(caster, keys.ability)
 	--caster.AOTKCavalryTable = {}
-	caster:EmitSound("Hero_Centaur.Stampede.Movement")
+	caster:EmitSound("Hero_KeeperOfTheLight.SpiritForm")
 	for i=0,5 do
 		local soldier = CreateUnitByName("iskander_cavalry", targetPoint + Vector(200, -200 + i*100), true, nil, nil, caster:GetTeamNumber())
 		--soldier:SetBaseMaxHealth(soldier:GetHealth() + ) 
@@ -558,7 +604,7 @@ function OnCavalrySummon(keys)
 		table.insert(caster.AOTKSoldiers, soldier)
 		--table.insert(caster.AOTKCavalryTable, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_cavalry_bonus_stat",{})
 	end
 	local hepha = CreateUnitByName("iskander_hephaestion", targetPoint, true, nil, nil, caster:GetTeamNumber())
 	hepha:SetControllableByPlayer(caster:GetPlayerID(), true)
@@ -566,7 +612,7 @@ function OnCavalrySummon(keys)
 	table.insert(caster.AOTKSoldiers, hepha)
 	--table.insert(caster.AOTKCavalryTable, hepha)
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, hepha, "modifier_army_of_the_king_soldier_death_checker",{})
+	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, hepha, "modifier_army_of_the_king_hepha_bonus_stat",{})
 end
 
 function OnMageSummon(keys)
@@ -580,14 +626,30 @@ function OnMageSummon(keys)
 		soldier:SetOwner(caster)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_soldier_death_checker",{})
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_mage_bonus_stat",{})
 	end
 	local waver = CreateUnitByName("iskander_waver", targetPoint, true, nil, nil, caster:GetTeamNumber())
 	waver:SetControllableByPlayer(caster:GetPlayerID(), true)
 	waver:SetOwner(caster)
 	table.insert(caster.AOTKSoldiers, waver)
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, waver, "modifier_army_of_the_king_soldier_death_checker",{})
+	aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, waver, "modifier_army_of_the_king_waver_bonus_stat",{})
+end
+
+function ModifySoldierHealth(keys)
+	local unit = keys.target
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner() 
+	local newHP = unit:GetMaxHealth() + keys.HealthBonus
+	local newcurrentHP = unit:GetHealth() + keys.HealthBonus
+
+	if ply.IsBeyondTimeAcquired then 
+		newHP = newHP + caster:GetMaxHealth() * 30/100
+		newcurrentHP = newcurrentHP + caster:GetMaxHealth() * 30/100
+	end
+
+	unit:SetMaxHealth(newHP)
+	unit:SetHealth(newcurrentHP)
 end
 
 function OnBattleHornStart(keys)
@@ -621,6 +683,11 @@ function OnBattleHornStart(keys)
 	for k,v in pairs(targets) do
 		keys.ability:ApplyDataDrivenModifier(caster,v, "modifier_battle_horn_armor_reduction", {})
     end
+    if hero:HasModifier("modifier_annihilate_caster") then
+		for k,v in pairs(targets) do
+			keys.ability:ApplyDataDrivenModifier(caster,v, "modifier_battle_horn_movespeed_debuff", {})
+	    end
+    end
 end
 
 function OnHammerStart(keys)
@@ -629,6 +696,10 @@ function OnHammerStart(keys)
 	local cavalryTable = {}
 	table.insert(cavalryTable, caster)
 	caster:EmitSound("Hero_Centaur.Stampede.Cast")
+	if hero:HasModifier("modifier_annihilate_caster") then
+		keys.ability:EndCooldown()
+		keys.ability:StartCooldown(3.0)
+	end
 
 	if hero.IsAOTKDominant then
 		caster:SetAbsOrigin(aotkCenter + Vector(-1400, 0, 0)) 
@@ -684,7 +755,7 @@ function OnHammerStart(keys)
 		cavalryTable[i]:OnPhysicsFrame(function(unit)
 			local diff = hero:GetAbsOrigin() - cavalryTable[i]:GetAbsOrigin()
 			local dir = diff:Normalized()
-			local particle = ParticleManager:CreateParticle("particles/econ/items/tinker/boots_of_travel/teleport_start_bots_dust.vpcf", PATTACH_ABSORIGIN, cavalryTable[i])
+			local particle = ParticleManager:CreateParticle("particles/econ/items/tinker/boots_of_travel/teleport_end_bots_dust.vpcf", PATTACH_ABSORIGIN, cavalryTable[i])
 			ParticleManager:SetParticleControl(particle, 0, cavalryTable[i]:GetAbsOrigin())
 			unit:SetPhysicsVelocity(unit:GetPhysicsVelocity():Length() * dir)
 	   		unit:SetForwardVector(dir) 
@@ -700,19 +771,95 @@ function OnHammerStart(keys)
 end
 
 function OnBrillianceStart(keys)
+	local caster = keys.caster
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	if hero:HasModifier("modifier_annihilate_caster") then
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_waver_root_aura", {})
+	end
 end 
 
 function OnAnnihilateStart(keys)
+	local caster = keys.caster
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
+	EmitGlobalSound("Iskander.Annihilate")
+	-- Remove soldiers 
+	for i=1, #caster.AOTKSoldiers do
+		if IsValidEntity(caster.AOTKSoldiers[i]) then
+			if caster.AOTKSoldiers[i]:IsAlive() then
+				keys.ability:ApplyDataDrivenModifier(caster,caster.AOTKSoldiers[i], "modifier_annihilate", {})
+			end
+		end
+	end
+end
+
+function IskanderCheckCombo(caster, ability)
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("iskander_army_of_the_king") then
+			armyUsed = true
+			armyTime = GameRules:GetGameTime()
+			Timers:CreateTimer({
+				endTime = 5,
+				callback = function()
+				armyUsed = false
+			end
+			})
+		elseif ability == caster:FindAbilityByName("iskander_summon_hephaestion") and caster:FindAbilityByName("iskander_annihilate"):IsCooldownReady() and caster:FindAbilityByName("iskander_forward"):IsCooldownReady() then
+			if armyUsed == true then 
+				caster:SwapAbilities("iskander_forward", "iskander_annihilate", false, true)
+				local newTime =  GameRules:GetGameTime()
+				Timers:CreateTimer({
+					endTime = 5 - (newTime - armyTime),
+					callback = function()
+					caster:SwapAbilities("iskander_forward", "iskander_annihilate", true, false)
+					armyUsed = false
+				end
+				})
+			end
+		end
+	end
 end
 
 function OnIskanderCharismaImproved(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsCharismaImproved = true
+    modName = "modifier_charisma_improved"
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnThundergodAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsThundergodAcquired = true
+       -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnChariotChargeAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsVEAcquired = true
+       -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
 function OnBeyondTimeAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    ply.IsBeyondTimeAcquired = true
+       -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end

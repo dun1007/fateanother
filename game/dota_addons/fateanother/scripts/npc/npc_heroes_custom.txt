@@ -775,8 +775,9 @@
 		"Ability10"				"iskander_summon_waver"
 		"Ability11"				"fate_empty2"
 		"Ability12"				"fate_empty3"
-		"Ability13"				"presence_detection_passive"
-		"Ability14"				"attribute_bonus"
+		"Ability13"				"fate_empty4"
+		"Ability14"				"presence_detection_passive"
+		"Ability15"				"attribute_bonus"
 		
 		"StatusHealth"					"1200"
 		"StatusHeathRegen"				"10"

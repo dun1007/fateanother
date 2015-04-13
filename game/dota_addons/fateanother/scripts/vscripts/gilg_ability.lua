@@ -354,50 +354,56 @@ function OnEnumaStart(keys)
 		end
 		return
 	end)
+
 	Timers:CreateTimer(3.0, function() 
 		if caster:IsAlive() then
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			enuma.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
-
 			-- Destroy particle
 			ParticleManager:DestroyParticle( chargeFxIndex, false )
 			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
-			
-			-- Create particle
-			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
-			Timers:CreateTimer( function()
-					if dummy then
-						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
-						dummy:SetAbsOrigin( newLoc )
-						return 0.03
-					else
-						return nil
-					end
-				end
-			)
-			
-			local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 0, dummy:GetAbsOrigin() )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 1, caster:GetForwardVector() * keys.Speed )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
-			
-			Timers:CreateTimer( 6.0, function()
-					ParticleManager:DestroyParticle( tornadoFxIndex, false )
-					ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
-					Timers:CreateTimer( 0.5, function()
-							dummy:RemoveSelf()
+		end
+	end)
+
+	for i=0,1 do
+		Timers:CreateTimer(3.0, function() 
+			if caster:IsAlive() then
+				-- Create particle
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				Timers:CreateTimer( function()
+						if dummy then
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
+							dummy:SetAbsOrigin( newLoc )
+							return 0.03
+						else
 							return nil
 						end
-					)
-					return nil
-				end
-			)		
-		end
-		return
-	end)
+					end
+				)
+				
+				local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 0, dummy:GetAbsOrigin() )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 1, caster:GetForwardVector() * keys.Speed )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
+				
+				Timers:CreateTimer( 6.0, function()
+						ParticleManager:DestroyParticle( tornadoFxIndex, false )
+						ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
+						Timers:CreateTimer( 0.5, function()
+								dummy:RemoveSelf()
+								return nil
+							end
+						)
+						return nil
+					end
+				)		
+			end
+			return
+		end)
+	end
 end
 
 function OnEnumaHit(keys)
@@ -454,45 +460,49 @@ function OnMaxEnumaStart(keys)
 			enuma.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
-			
 			-- Destroy particle
 			ParticleManager:DestroyParticle( chargeFxIndex, false )
 			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
-			
-			-- Create particle
-			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
-			Timers:CreateTimer( function()
-					if dummy then
-						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
-						dummy:SetAbsOrigin( newLoc )
-						return 0.03
-					else
-						return nil
-					end
-				end
-			)
-			
-			local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 0, dummy:GetAbsOrigin() )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 1, caster:GetForwardVector() * keys.Speed )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
-			ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
-			
-			Timers:CreateTimer( 6.0, function()
-					ParticleManager:DestroyParticle( tornadoFxIndex, false )
-					ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
-					Timers:CreateTimer( 0.5, function()
-							dummy:RemoveSelf()
+		end
+	end)
+	for i=0,1 do
+		Timers:CreateTimer(3.75, function()
+			if caster:IsAlive() then
+				-- Create particle
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				Timers:CreateTimer( function()
+						if dummy then
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
+							dummy:SetAbsOrigin( newLoc )
+							return 0.03
+						else
 							return nil
 						end
-					)
-					return nil
-				end
-			)
-		end
-		return
-	end)
+					end
+				)
+				
+				local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 0, dummy:GetAbsOrigin() )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 1, caster:GetForwardVector() * keys.Speed )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
+				
+				Timers:CreateTimer( 6.0, function()
+						ParticleManager:DestroyParticle( tornadoFxIndex, false )
+						ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
+						Timers:CreateTimer( 0.5, function()
+								dummy:RemoveSelf()
+								return nil
+							end
+						)
+						return nil
+					end
+				)
+			end
+			return
+		end)
+	end
 end
 
 function OnMaxEnumaHit(keys)

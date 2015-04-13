@@ -5925,23 +5925,16 @@
 		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_dash_anim"
+				"Target"		"CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
 				"Function"			"OnNineStart"
 				"Target"			"POINT"
-			}
-			"DelayedAction"
-			{
-				"Delay"		"0.5"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_nine_lives_dash"
-						"Target"		"CASTER"
-					}
-				}
 			}
 			"FireSound"
 			{
@@ -5957,6 +5950,10 @@
 			{
 				"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
 			}
 
 			"modifier_nine_anim"
@@ -11149,6 +11146,11 @@
 		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_dash_anim"
+				"Target"			"CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
@@ -11159,18 +11161,6 @@
 			{
 				"ScriptFile"		"lancelot_ability"
 				"Function"			"OnKnightUsed"
-			}
-			"DelayedAction"
-			{
-				"Delay"		"0.5"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_nine_lives_dash"
-						"Target"		"CASTER"
-					}
-				}
 			}
 			"FireSound"
 			{
@@ -11185,7 +11175,11 @@
 			"modifier_dash_anim"
 			{
 				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+				"OverrideAnimation"     "ACT_DOTA_RUN"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
 			}
 
 			"modifier_nine_anim"
@@ -14002,6 +13996,16 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"20"
 				}
 			}
+			"modifier_charisma_improved"
+			{	
+				"Duration"				"0.25"		
+				"IsHidden"				"1"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"30"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"20"
+				}
+			}
 		}
 	}
 
@@ -14175,6 +14179,7 @@
 			"particle"			"particles/items_fx/aegis_respawn.vpcf"
 			"particle"			"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf"
 			"particle"			"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
+			"particle"			"particles/units/heroes/hero_razor/razor_storm_lightning_strike.vpcf"
 		}
 
 		// Time		
@@ -14315,6 +14320,15 @@
 	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"5"
 	    		}
 			}
+			"modifier_gordius_wheel_thunder_slow"
+			{
+				"Duration"		"1.5"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-20"
+				}
+			}
 		}
 	}
 
@@ -14443,6 +14457,76 @@
 				"var_type"			"FIELD_INTEGER"
 				"sustain_limit"		"5"
 			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"infantry_bonus_health"		"150 300 450 600 750"
+			}
+			"05"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"infantry_bonus_damage"		"8 16 24 34 40"
+			}
+			"06"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"maharaja_bonus_health"		"250 500 750 1000 1250"
+			}
+			"07"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"maharaja_bonus_damage"		"15 30 45 60 75"	
+			}
+			"08"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"archer_bonus_health"		"75 150 225 300 375"
+			}
+			"09"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"archer_bonus_damage"		"4 8 12 16 20"	
+			}
+			"10"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"cavalry_bonus_health"		"200 400 600 800 1000"
+			}
+			"11"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"cavalry_bonus_damage"		"5 10 15 20 25"	
+			}
+			"12"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"hepha_bonus_health"		"300 600 900 1200 1500"
+			}
+			"13"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"hepha_bonus_damage"		"20 40 60 80 100"	
+			}
+			"14"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"mage_bonus_health"		"100 200 300 400 500"
+			}
+			"15"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"mage_bonus_damage"		"4 8 12 16 20"	
+			}
+			"16"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"waver_bonus_health"		"150 300 450 600 750"
+			}
+			"17"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"waver_bonus_damage"		"15 30 45 60 75"	
+			}
 		}
 		
 		"OnSpellStart"
@@ -14457,6 +14541,14 @@
 			{
 				"ModifierName"		"modifier_army_of_the_king_freeze"
 				"Target"			"CASTER"
+			}
+		}
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"iskander_ability"
+				"Function"		"OnAOTKLevelUp"
 			}
 		}
 
@@ -14518,9 +14610,185 @@
 					}
 				}
 			}
-			"modifier_army_of_the_king_soldier_death_checker"
+			"modifier_army_of_the_king_infantry_bonus_stat"
 			{
-				"Duration"		"12.0"
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%infantry_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%infantry_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%infantry_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_maharaja_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%maharaja_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%maharaja_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%maharaja_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_archer_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%archer_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%archer_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%archer_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_cavalry_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%cavalry_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%cavalry_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%cavalry_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_hepha_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%hepha_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%hepha_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%hepha_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_mage_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%mage_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%mage_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%mage_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_waver_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%waver_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%waver_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%waver_bonus_health"
+					}					
+				}
 				"OnDestroy"
 				{
 					"RunScript"
@@ -14595,6 +14863,7 @@
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"particle"			"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
 		}
 		
 		// Casting
@@ -14656,6 +14925,16 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"999"
+				}
+			}
+			"modifier_battle_horn_movespeed_debuff"
+			{	
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"		"%duration"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
 				}
 			}
 		}
@@ -14738,7 +15017,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_mspd"			"15"
+				"bonus_mspd"			"20"
 			}
 		}	
 		"Modifiers"
@@ -14822,7 +15101,8 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle"			"particles/econ/items/tinker/boots_of_travel/teleport_start_bots_dust.vpcf"
+			"particle"		"particles/econ/items/tinker/boots_of_travel/teleport_end_bots_dust.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.5"
@@ -14840,7 +15120,14 @@
 				"damage"			"200 300 400 500 600"
 			}
 		}
-
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -14946,6 +15233,8 @@
 			"particle"	particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf
 			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
 			"particle"	"particles/generic_gameplay/generic_silenced.vpcf"
+			"particle"	"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -14959,6 +15248,11 @@
 
 		"OnSpellStart"
 		{
+			"RunScript"
+			{
+				"Function"	"OnBrillianceStart"
+				"ScriptFile"	"iskander_ability"
+			}
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_waver_big_bad_voodoo"
@@ -15002,6 +15296,11 @@
 				"ModifierName"	"modifier_waver_silence_aura"
 				"Target"		"CASTER"
 			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_waver_root_aura"
+				"Target"		"CASTER"
+			}
 		}
 
 		"Modifiers"
@@ -15018,8 +15317,7 @@
 
 			"modifier_waver_big_bad_voodoo"
 			{
-				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_wings.vpcf"
-				"EffectAttachType"	"follow_origin"
+				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
 		
 				"OnCreated"
 				{
@@ -15090,10 +15388,29 @@
 
 				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
 				"EffectAttachType"	"follow_overhead"
-		
+				"IsDebuff"			"1"
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+
+			"modifier_waver_root_aura"
+			{
+				"Aura"          	"modifier_waver_silence"
+				"Aura_Radius"   	"3000"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster" "0"				
+			}
+			"modifier_waver_root"
+			{			
+				"EffectName"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"IsDebuff"			"1"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}	
 			}
 		}
@@ -15105,30 +15422,24 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"iskander_army_of_the_king"
-		"MaxLevel"						"5"
-		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
+		"AbilityTextureName"			"iskander_annihilate"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"19"
+		"AbilityCooldown"				"140"
 		"AbilityCastPoint"				"0.3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"12.0"
-			}
 		}
 		
 		"OnSpellStart"
@@ -15138,17 +15449,27 @@
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnAnnihilateStart"
 			}
-			"FireSound"
+			"ApplyModifier"
 			{
-				"EffectName"		"Hero_Invoker.Alacrity"
+				"ModifierName"		"modifier_annihilate_caster"
 				"Target"			"CASTER"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_army_of_the_king"
+			"modifier_annihilate_caster"
+			{
+				"Duration"		"12.0"
+				"IsHidden"		"1"
+			}
+			"modifier_annihilate"
 			{		
+				"Duration" 	"12.0"
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -15200,7 +15521,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"17"
 
 		"precache"
 		{
@@ -15264,12 +15585,12 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"iskander_army_of_the_king"
+		"AbilityTextureName"			"iskander_bond_beyond_time"
 		
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"19"
 
 		"precache"
 		{

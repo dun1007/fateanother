@@ -319,7 +319,7 @@ function OnUBWStart(keys)
 	}
 
     -- swap Archer's skillset with UBW ones
-    caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 
+    caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
@@ -407,7 +407,7 @@ function EndUBW(caster)
 	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
 
-    caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 
+    caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
@@ -499,10 +499,11 @@ function OnRainStart(keys)
 		-- Create Arrow particles
 		-- Main variables
 		local speed = 3000				-- Movespeed of the arrow
-		
+
 		-- Side variables
+		local groundVector = caster:GetAbsOrigin() - Vector(0,0,1000)
 		local spawn_location = caster:GetAbsOrigin()
-		local target_location = ubwCenter + arrowVector
+		local target_location = groundVector + arrowVector
 		local forwardVec = ( target_location - caster:GetAbsOrigin() ):Normalized()
 		local delay = ( target_location - caster:GetAbsOrigin() ):Length2D() / speed
 		local distance = delay * speed
@@ -518,17 +519,17 @@ function OnRainStart(keys)
 				ParticleManager:ReleaseParticleIndex( arrowFxIndex )
 				
 				-- Delay damage
-				local targets = FindUnitsInRadius(caster:GetTeam(), ubwCenter + arrowVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+				local targets = FindUnitsInRadius(caster:GetTeam(), groundVector + arrowVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 				for k,v in pairs(targets) do
 					DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				end
 				
 				-- Particles on impact
 				local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
-				ParticleManager:SetParticleControl( explosionFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( explosionFxIndex, 0, groundVector + arrowVector + Vector( 0, 0, 150 ) )
 				
 				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
-				ParticleManager:SetParticleControl( impactFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( impactFxIndex, 0, groundVector + arrowVector + Vector( 0, 0, 150 ) )
 				ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(300, 300, 300))
 				
 				-- Destroy Particle
@@ -552,7 +553,7 @@ function OnRainStart(keys)
 	local bpCount = 0 
 	Timers:CreateTimer(2.8, function()
 		if bpCount == 5 then return end
-		local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		info.Target = units[math.random(#units)]
 		if info.Target ~= nil then 
 			ProjectileManager:CreateTrackingProjectile(info) 

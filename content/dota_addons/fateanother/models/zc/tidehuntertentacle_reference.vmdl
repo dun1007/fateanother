@@ -7,8 +7,8 @@ CVModel CVModel_0
 		[
 			CVmesh
 			{
-				string m_meshName = "zc"
-				string m_meshFile = "models/zc/zc.fbx"
+				string m_meshName = "tidehuntertentacle_reference"
+				string m_meshFile = "models/zc/tidehuntertentacle_reference.smd"
 				string m_materialSearchPath = ""
 				bool m_bSkinParentedObjects = true
 				bool m_bExpensiveTangents = false
@@ -16,6 +16,25 @@ CVModel CVModel_0
 				CVmorphInfo* m_pMorphInfo = NULL
 			}
 		]
+	}
+	CVClothProxyMeshList m_clothProxyMeshList = CVClothProxyMeshList
+	{
+		CVClothProxyMesh[] m_clothProxyMeshList = 
+		[
+			
+		]
+		float m_flClothEnableThreshold = 0.050000
+		bool m_bCreateStaticBone = false
+		int m_nMaxBonesPerVertex = 4
+		bool m_bRemoveUnusedBonesEnabled = false
+		bool m_bUseOnlyRealMeshBones = false
+		float m_flMatchProxiesToMeshes = 1.000000
+		float m_flReservedFloat = 0.000000
+		int m_nReservedInt = 0
+		bool m_bReservedBool1 = false
+		bool m_bReservedBool2 = false
+		bool m_bReservedBool3 = false
+		bool m_bReservedBool4 = false
 	}
 	CVphysicsMeshList m_physicsMeshList = CVphysicsMeshList
 	{
@@ -25,6 +44,11 @@ CVModel CVModel_0
 		]
 	}
 	CVmodelInfo* m_pModelInfo = NULL
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = NULL
+		string m_sFileName = ""
+	}
 	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
 	[
 		
@@ -76,8 +100,15 @@ CVModel CVModel_0
 	[
 		
 	]
-	CVMaterialRemapList* m_pMaterialRemapList = NULL
+	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
 	float m_flFbxScale = 1.000000
+	float m_flQCScale = 1.000000
+	CVPsf* m_pvPsf = NULL
+	string m_keyValueText = ""
+	bool m_bStaticProp = false
+	bool m_bEnableClothProcessing = true
+	float m_flClothEnableThreshold = 0.050000
+	int m_nMaxClothVertsPerMesh = 2048
 }
 
 CVanimGroup CVanimGroup_0
@@ -106,10 +137,10 @@ CVanimGroup CVanimGroup_0
 	[
 		CVanim
 		{
-			string m_Animationname = "zc_anim"
-			string m_Filepath = "models/zc/zc_anim.FBX"
-			int m_nStartframe = 50
-			int m_nEndframe = 25750
+			string m_Animationname = "BindPose"
+			string m_Filepath = "models/zc/tidehuntertentacle_anims/BindPose.smd"
+			int m_nStartframe = 0
+			int m_nEndframe = 0
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -157,10 +188,61 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "test"
-			string m_Filepath = "models/zc/test.FBX"
+			string m_Animationname = "spike_9frame"
+			string m_Filepath = "models/zc/tidehuntertentacle_anims/spike_9frame.smd"
 			int m_nStartframe = 0
-			int m_nEndframe = 25750
+			int m_nEndframe = 9
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "spike_15frame"
+			string m_Filepath = "models/zc/tidehuntertentacle_anims/spike_15frame.smd"
+			int m_nStartframe = 0
+			int m_nEndframe = 15
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -210,5 +292,17 @@ CVanimGroup CVanimGroup_0
 	string[] m_sScripts = 
 	[
 		
+	]
+}
+
+CVMaterialRemapList CVMaterialRemapList_0
+{
+	CVMaterialRemap[] m_vMaterialRemapList = 
+	[
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "materials/models/heroes/tidehunter/tentacle01_color.vmat"
+			string m_sReplaceMaterial = "materials/models/heroes/tidehunter/tentacle01.vmat"
+		}
 	]
 }

@@ -66,15 +66,28 @@ goesthruB = {"saber_avalon",
 cleansable = {
     "modifier_stunned",
     "modifier_rule_breaker",
+    "modifier_caliburn_slow",
     "modifier_purge",
     "modifier_breaker_gorgon",
     "rb_sealdisabled",
     "modifier_dagger_of_treachery",
+    "modifier_weakening_venom_debuff",
     "modifier_slow_tier1",
     "modifier_slow_tier2",
     "modifier_silence",
     "modifier_disarmed",
     "modifier_enkidu_hold" -- enkidu
+}
+
+slowmodifier = {
+    "modifier_slow_tier1",
+    "modifier_slow_tier2",
+    "modifier_caliburn_slow",
+    "modifier_breaker_gorgon",
+    "modifier_weakening_venom_debuff",
+    "modifier_double_edge_slow",
+    "modifier_tawrich_slow",
+    "modifier_battle_horn_movespeed_debuff"
 }
 
 donotlevel = {
@@ -384,6 +397,14 @@ function HardCleanse(target)
     for i=1, #cleansable do
         if target:HasModifier(cleansable[i]) then
             target:RemoveModifierByName(cleansable[i])
+        end
+    end
+end
+
+function RemoveSlowEffect(target)
+    for i=1, #slowmodifier do
+        if target:HasModifier(slowmodifier[i]) then
+            target:RemoveModifierByName(slowmodifier[i])
         end
     end
 end
