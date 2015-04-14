@@ -1188,7 +1188,7 @@ function FateGameMode:InitializeRound()
     end)
     -- if remaining players are equal
     if nRadiantAlive == nDireAlive then
-      print("Same number of players remaining on both teams.")
+      --[[print("Same number of players remaining on both teams.")
       -- if no one died this round, delcare winner based on current score standing
       if self.bIsCasualtyOccured == false  then
         print("No one died, the team losing right now wins.")
@@ -1203,6 +1203,13 @@ function FateGameMode:InitializeRound()
       elseif self.bIsCasualtyOccured then
         print("Someone died, so it's a draw")
     	  self:FinishRound(true, 2)
+      end]]
+      if self.nRadiantScore < self.nDireScore then
+        self:FinishRound(true,3)
+      elseif self.nRadiantScore > self.nDireScore then
+        self:FinishRound(true,4)
+      elseif self.nRadiantScore == self.nDireScore then
+        self:FinishRound(true, 2)
       end
     -- if remaining players are not equal
     elseif nRadiantAlive > nDireAlive then
@@ -1258,10 +1265,10 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 	elseif winner == 2 then
 		GameRules:SendCustomMessage("This round is a draw.", 0, 0)
   elseif winner == 3 then
-    GameRules:SendCustomMessage("Because no kills occured, the losing team(Radiant) has won.", 0, 0)
+    GameRules:SendCustomMessage("Because the same amount of Servants are alive on both teams, the losing team(Radiant) has won.", 0, 0)
     self.nRadiantScore = self.nRadiantScore + 1
   elseif winner == 4 then
-    GameRules:SendCustomMessage("Because no kills occured, the losing team(Dire) has won.", 0, 0)
+    GameRules:SendCustomMessage("Because the same amount of Servants are alive on both teams, the losing team(Dire) has won.", 0, 0)
     self.nDireScore = self.nDireScore + 1
 	end
   GameRules:SendCustomMessage("All players with less than 5,000 gold will receive starting gold in 5 seconds.", 0, 0)

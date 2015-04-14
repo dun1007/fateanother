@@ -50,6 +50,12 @@ function OnDerangeStart(keys)
 	DSCheckCombo(keys.caster, keys.ability)
 end
 
+function OnDerangeDeath(keys)
+	local caster = keys.caster
+	caster.ManaBlastCount = 0
+	caster:SetModifierStackCount( "modifier_derange_counter", caster, caster.ManaBlastCount )
+end
+
 function OnDarklightProc(keys)
 	DoDamage(keys.caster, keys.target, 400 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 end

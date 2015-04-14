@@ -139,36 +139,38 @@ function OnNineStart(keys)
 	local distance = (targetPoint - origin):Length2D()
 	local forward = (targetPoint - origin):Normalized() * distance
 
+
 	caster:SetPhysicsFriction(0)
-	caster:SetPhysicsVelocity(forward)
+	caster:SetPhysicsVelocity(caster:GetForwardVector()*distance)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
-	Timers:CreateTimer(1.00, function() 
-		if caster.NineLanded ~= true then
-			OnNineLanded(caster, keys.ability) 
-		end
-	return end)
 
-	caster:OnPhysicsFrame(function(unit)
-		local diff = unit:GetAbsOrigin() - origin
-		print(distance .. " and " .. diff:Length2D())
-		if diff:Length2D() > distance then
-			unit:PreventDI(false)
-			unit:OnPhysicsFrame(nil)
-			unit:OnPreBounce(nil)
-			unit:SetPhysicsVelocity(Vector(0,0,0))
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+	Timers:CreateTimer("chariot_dash", {
+		endTime = 1.0,
+		callback = function()
+		caster:OnPreBounce(nil)
+		caster:SetBounceMultiplier(0)
+		caster:PreventDI(false)
+		caster:SetPhysicsVelocity(Vector(0,0,0))
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		if caster:IsAlive() and not caster.NineLanded then
+			caster:RemoveModifierByName("modifier_dash_anim")
+			OnNineLanded(caster, keys.ability)
 		end
-	end)
+	return end
+	})
 
 	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
-		OnNineLanded(caster, keys.ability)
 		unit:OnPreBounce(nil)
 		unit:OnPhysicsFrame(nil)
 		unit:SetBounceMultiplier(0)
 		unit:PreventDI(false)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+		if caster:IsAlive() and not caster.NineLanded then
+			caster:RemoveModifierByName("modifier_dash_anim")
+			OnNineLanded(caster, keys.ability)
+		end
 	end)
 
 	
@@ -196,7 +198,13 @@ function OnNineLanded(caster, ability)
 	local casterInitOrigin = caster:GetAbsOrigin() 
 	caster.NineLanded = true
 
-	if caster:GetName() == "npc_dota_hero_doom_bringer" then ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) end
+	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
+		Timers:CreateTimer(0.033, function()
+			if caster:IsAlive() then
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
+			end
+		end)
+	end
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
 

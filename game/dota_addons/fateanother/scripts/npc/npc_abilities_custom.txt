@@ -2824,6 +2824,14 @@
 			{
 				"Passive"		"1"
 				"IsPurgable"	"0"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnDerangeDeath"
+					}
+				}
 			}
 			
 			"modifier_derange_mana_catalyst_VFX"
@@ -5950,6 +5958,7 @@
 			{
 				"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+				"Duration"				"0.9"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
@@ -11176,6 +11185,7 @@
 			{
 				"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_RUN"
+				"Duration"				"1.0"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
@@ -14231,11 +14241,6 @@
 				"MaxDamage"			"%max_damage"
 				"Radius"			"%radius"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_gordius_wheel"
-				"Target"			"CASTER"
-			}
 		}
 
 		"Modifiers"
@@ -14430,6 +14435,7 @@
 			"particle"			"particles/custom/iskandar/iskandar_aotk_explosion.vpcf"
 			"particle"			"particles/custom/iskandar/iskandar_aotk_ring_1.vpcf"
 			"particle"			"particles/custom/iskandar/iskandar_aotk_ring_2.vpcf"
+			"particle"			"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
 		}
 
 		// Time		
@@ -14587,10 +14593,13 @@
 				{
 					"AttachEffect"
 					{
-						"Target"			"TARGET"
-						"EffectName"		""
-						"EffectAttachType"	"start_at_origin"
-						"EffectRadius"		"%radius"
+						"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target"			"CASTER"
+						"ControlPoints"
+						{
+							"01"			"1500 1500 1500"
+						}
 					}
 				}
 			

@@ -139,7 +139,14 @@ end
 
 function OnChariotStart(keys)
 	local caster = keys.caster
+	if caster:HasModifier("modifier_gordius_wheel") then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast Now" } )
+		caster:GiveMana(400)
+		keys.ability:EndCooldown() 
+		return 
+	end
 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel", {}) 
 	caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
 	caster:SetModel("models/iskander/iskander_chariot.vmdl")
     caster:SetOriginalModel("models/iskander/iskander_chariot.vmdl")
@@ -167,7 +174,6 @@ function OnChariotRide(keys)
 	local ply = caster:GetPlayerOwner()
 	local damageDiff = keys.MaxDamage - keys.MinDamage
 
-	caster:SwapAbilities("iskander_gordius_wheel", "fate_empty2", true, true) 
 	if ply.IsVEAcquired then
 		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "iskander_via_expugnatio", true, true) 
 	else
@@ -247,7 +253,6 @@ end
 function OnChariotEnd(keys)
 	local caster = keys.caster
 
-	caster:SwapAbilities("iskander_gordius_wheel", "fate_empty2", true, true) 
 	if caster:HasModifier("modifier_army_of_the_king_death_checker") then
 		caster:SwapAbilities("fate_empty3", caster:GetAbilityByIndex(5):GetName(), true, true) 
 	else
@@ -265,7 +270,7 @@ end
 function OnChariotChargeStart(keys)
 	local caster = keys.caster
 	caster:EmitSound("Iskander.Charge")
-	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 2.0)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
 	local currentMS = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed())
 	print(currentMS)
 
@@ -412,7 +417,7 @@ function OnAOTKStart(keys)
 	end
 	caster.IsAOTKActive = true
 	caster.AOTKSoldiers = {}
-	EmitGlobalSound("Iskander.AOTK_Ambient")
+	caster:EmitSound("Ability.SandKing_SandStorm.loop")
 
 	-- Swap abilities
 	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)
@@ -423,6 +428,14 @@ function OnAOTKStart(keys)
 		caster:SwapAbilities("iskander_charisma", "fate_empty4", true, true) 
 	end
  
+ 	-- spawn sight dummy
+	local truesightdummy = CreateUnitByName("sight_dummy_unit", aotkCenter, false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	truesightdummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 3000}) 
+	truesightdummy:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
+	truesightdummy:SetDayTimeVisionRange(2500)
+	truesightdummy:SetNightTimeVisionRange(2500)
+	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
+	unseen:SetLevel(1)
 
 	-- Summon soldiers
 	local marbleCenter = 0
@@ -495,16 +508,19 @@ function OnAOTKStart(keys)
 	        aotkTargets[i]:SetAbsOrigin(aotkCenter - diff)
 			FindClearSpaceForUnit(aotkTargets[i], aotkTargets[i]:GetAbsOrigin(), true)
 			Timers:CreateTimer(0.1, function() 
-				aotkTargets[i]:AddNewModifier(aotkTargets[i], aotkTargets[i], "modifier_camera_follow", {duration = 1.0})
-				
+				if caster:IsAlive() then
+					aotkTargets[i]:AddNewModifier(aotkTargets[i], aotkTargets[i], "modifier_camera_follow", {duration = 1.0})
+				end
 			end)
 			Timers:CreateTimer(0.033, function()
-				ExecuteOrderFromTable({
-					UnitIndex = aotkTargets[i]:entindex(),
-					OrderType = DOTA_UNIT_ORDER_STOP,
-					Queue = false
-				})
-				aotkTargets[i]:SetForwardVector(forwardVec)
+				if caster:IsAlive() then
+					ExecuteOrderFromTable({
+						UnitIndex = aotkTargets[i]:entindex(),
+						OrderType = DOTA_UNIT_ORDER_STOP,
+						Queue = false
+					})
+					aotkTargets[i]:SetForwardVector(forwardVec)
+				end
 			end)
 		end
     end
@@ -531,6 +547,7 @@ function EndAOTK(caster)
 
 	UTIL_RemoveImmediate(aotkQuest)
 	caster.IsAOTKActive = false
+	StopSoundEvent("Ability.SandKing_SandStorm.loop", caster)
 
 	-- Revert abilities
 	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)

@@ -135,6 +135,9 @@ function OnSeal1Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+2) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -202,6 +205,9 @@ function OnSeal2Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+2) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -247,6 +253,9 @@ function OnSeal3Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+1) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -289,6 +298,9 @@ function OnSeal4Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+1) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 

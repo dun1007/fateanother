@@ -779,13 +779,13 @@
 		"Ability14"				"presence_detection_passive"
 		"Ability15"				"attribute_bonus"
 		
-		"StatusHealth"					"1200"
+		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"10"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"1"
 		
 		"ArmorPhysical"					"2"
-		"MagicalResistance"				"0"
+		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
