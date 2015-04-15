@@ -266,6 +266,7 @@ function OnBelleStart(keys)
 	Timers:CreateTimer(1.0, function() 
 		caster:SetAbsOrigin(targetPoint)
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		caster:EmitSound("Misc.Crash")
 	end)
 
 	-- this is when the damage actually applies(Put slam effect here)

@@ -803,6 +803,10 @@ function OnAnnihilateStart(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
 	EmitGlobalSound("Iskander.Annihilate")
+	Timers:CreateTimer(2.0, function()
+		EmitGlobalSound("Iskander.Aye")
+	end)
+	EmitGlobalSound("Hero_LegionCommander.PressTheAttack")
 	-- Remove soldiers 
 	for i=1, #caster.AOTKSoldiers do
 		if IsValidEntity(caster.AOTKSoldiers[i]) then

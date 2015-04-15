@@ -743,8 +743,10 @@ function DropRay(keys, boltvector)
 	if randy < 100 then randy = -100 - randy end
 	
 	local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
-	ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 1000 ) ) -- This is where the bolt will start
+	print(targetPoint)
+	print(boltvector)
+	ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector + Vector(0, 0, -750) ) -- This is where the bolt will land
+	ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 250 ) ) -- This is where the bolt will start
 	ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
 	
 	Timers:CreateTimer( 2.0, function()
@@ -754,6 +756,7 @@ function DropRay(keys, boltvector)
 		end
 	)
 
+		
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, keys.RadiusBolt, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	for k,v in pairs(targets) do
     	DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -835,6 +838,9 @@ function OnHGPStart(keys)
 		if randx < 100 then randx = -100 - randx end
 		local randy = RandomInt( 0, 200 )
 		if randy < 100 then randy = -100 - randy end
+
+		print(targetPoint)
+		print(boltvector)
 		
 		local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
 		ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land

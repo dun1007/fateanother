@@ -129,15 +129,87 @@ model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid.vmdl"
 model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
 
 function Precache( context )
-	print("Starting precache")
-	PrecacheUnitByNameSync("npc_precache_everything", context)
+    print("Starting precache")
+  	--PrecacheUnitByNameSync("npc_precache_everything", context)
 
-	--[[ Precache models
-	for k, v in pairs( model_lookup ) do
-		PrecacheResource( "model", v, context )
-	end]]
-	
-	print("precache complete")
+    -- Sound files
+    PrecacheResource("soundfile", "soundevents/bgm.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/misc_sound.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_archer.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_avenger.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_caster.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_berserker.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_fa.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_gilg.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_iskander.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_lancelot.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_lancer.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_rider.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_saber.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_saber_alter.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_ta.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_zc.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_zl.vsndevts", context)
+
+    -- Items
+    PrecacheItemByNameSync("item_apply_modifiers", context)
+    PrecacheItemByNameSync("item_mana_essence", context)
+    PrecacheItemByNameSync("item_condensed_mana_essence", context)
+    PrecacheItemByNameSync("item_teleport_scroll", context)
+    PrecacheItemByNameSync("item_gem_of_speed", context)
+    PrecacheItemByNameSync("item_scout_familiar", context)
+    PrecacheItemByNameSync("item_berserk_scroll", context)
+    PrecacheItemByNameSync("item_ward_familiar", context)
+    PrecacheItemByNameSync("item_mass_teleport_scroll", context)
+    PrecacheItemByNameSync("item_gem_of_resonance", context)
+    PrecacheItemByNameSync("item_blink_scroll", context)
+    PrecacheItemByNameSync("item_spirit_link" , context)
+    PrecacheItemByNameSync("item_c_scroll", context)
+    PrecacheItemByNameSync("item_b_scroll", context)
+    PrecacheItemByNameSync("item_a_scroll", context)
+    PrecacheItemByNameSync("item_a_plus_scroll", context)
+    PrecacheItemByNameSync("item_s_scroll", context)
+    PrecacheItemByNameSync("item_ex_scroll", context)
+    PrecacheItemByNameSync("item_summon_skeleton_warrior", context)
+    PrecacheItemByNameSync("item_summon_skeleton_archer", context)
+    PrecacheItemByNameSync("item_summon_ancient_dragon", context)
+    PrecacheItemByNameSync("item_all_seeing_orb", context)
+    PrecacheItemByNameSync("item_shard_of_anti_magic", context)
+    PrecacheItemByNameSync("item_shard_of_replenishment", context)
+
+    -- Master and Stash
+    PrecacheResource("model", "models/shirou/shirouanim.vmdl", context)
+    PrecacheResource("model", "models/items/courier/catakeet/catakeet_boxes.vmdl", context)
+    PrecacheResource("model", "models/tohsaka/tohsaka.vmdl", context)
+
+    -- Servants
+    PrecacheResource("model", "models/saber/saber.vmdl", context)
+    PrecacheResource("model", "models/lancer/lancer.vmdl", context)
+    PrecacheResource("model", "models/saber_alter/sbr_alter.vmdl", context)
+    PrecacheResource("model", "models/archer/archertest.vmdl", context)
+    PrecacheResource("model", "models/rider/rider.vmdl", context)
+    PrecacheResource("model", "models/berserker/berserker.vmdl", context)
+    PrecacheResource("model", "models/assassin/asn.vmdl", context)
+    PrecacheResource("model", "models/true_assassin/ta.vmdl", context)
+    PrecacheResource("model", "models/caster/caster.vmdl", context)
+    PrecacheResource("model", "models/gilgamesh/gilgamesh.vmdl", context)
+    PrecacheResource("model", "models/lancelot/lancelot.vmdl", context)
+    PrecacheResource("model", "models/avenger/avenger.vmdl", context)
+    PrecacheResource("model", "models/diarmuid/diarmuid.vmdl", context)
+    PrecacheResource("model", "models/iskander/iskander.vmdl", context)
+
+    -- AOTK Soldier assets
+    PrecacheResource("model_folder", "models/heroes/chen", context)
+    PrecacheResource("model_folder", "models/items/chen", context)
+    PrecacheResource("model_folder", "models/heroes/dragon_knight", context)
+    PrecacheResource("model_folder", "models/items/dragon_knight", context)
+    PrecacheResource("model_folder", "models/heroes/chaos_knight", context)
+ 	  PrecacheResource("model_folder", "models/items/chaos_knight", context)
+    PrecacheResource("model_folder", "models/heroes/silencer", context)
+    PrecacheResource("model_folder", "models/items/silencer", context)
+    PrecacheResource("model_folder", "models/heroes/windrunner", context)
+    PrecacheResource("model_folder", "models/items/windrunner", context)
+  	print("precache complete")
 end
 
 function FateGameMode:PostLoadPrecache()
@@ -237,6 +309,52 @@ function FateGameMode:OnHeroInGame(hero)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
     end)  ]]
+
+  -- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
+  Timers:CreateTimer( 3.0, function()
+      -- Setup variables\
+      local model_name = ""
+      
+      -- Check if npc is hero
+      if IsValidEntity(hero) then
+       if not hero:IsHero() then return end
+      else return 
+      end
+      
+      -- Getting model name
+      if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
+        model_name = model_lookup[ hero:GetName() ]
+        -- print( "Swapping in: " .. model_name )
+      else
+        return nil
+      end
+      
+      -- Check if it's correct format
+      if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
+      
+      -- Never got changed before
+      local toRemove = {}
+      local wearable = hero:FirstMoveChild()
+      while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+          -- print( "Removing wearable: " .. wearable:GetModelName() )
+          table.insert( toRemove, wearable )
+        end
+        wearable = wearable:NextMovePeer()
+      end
+      
+      -- Remove wearables
+      for k, v in pairs( toRemove ) do
+        v:SetModel( "models/development/invisiblebox.vmdl" )
+        v:RemoveSelf()
+      end
+      
+      -- Set model
+      hero:SetModel( model_name )
+      hero:SetOriginalModel( model_name )     -- This is needed because when state changes, model will revert back
+      hero:MoveToPosition( hero:GetAbsOrigin() )  -- This is needed because when model is spawned, it will be in T-pose
+    end
+  )
 end
 
 --[[
@@ -475,52 +593,7 @@ end
 
 -- This is for swapping hero models in
 function FateGameMode:OnHeroSpawned( keys )
-	-- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
-	Timers:CreateTimer( 0.05, function()
-			-- Setup variables
-			local hero = EntIndexToHScript( keys.entindex )
-			local model_name = ""
-			
-			-- Check if npc is hero
-      if IsValidEntity(hero) then
-			 if not hero:IsHero() then return end
-      else return 
-      end
-			
-			-- Getting model name
-			if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
-				model_name = model_lookup[ hero:GetName() ]
-				-- print( "Swapping in: " .. model_name )
-			else
-				return nil
-			end
-			
-			-- Check if it's correct format
-			if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
-			
-			-- Never got changed before
-			local toRemove = {}
-			local wearable = hero:FirstMoveChild()
-			while wearable ~= nil do
-				if wearable:GetClassname() == "dota_item_wearable" then
-					-- print( "Removing wearable: " .. wearable:GetModelName() )
-					table.insert( toRemove, wearable )
-				end
-				wearable = wearable:NextMovePeer()
-			end
-			
-			-- Remove wearables
-			for k, v in pairs( toRemove ) do
-				v:SetModel( "models/development/invisiblebox.vmdl" )
-				v:RemoveSelf()
-			end
-			
-			-- Set model
-			hero:SetModel( model_name )
-			hero:SetOriginalModel( model_name )			-- This is needed because when state changes, model will revert back
-			hero:MoveToPosition( hero:GetAbsOrigin() )	-- This is needed because when model is spawned, it will be in T-pose
-		end
-	)
+
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive

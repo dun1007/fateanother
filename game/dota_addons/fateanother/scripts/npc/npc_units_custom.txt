@@ -1580,7 +1580,7 @@
 			"particle"	"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
 			"particle"	"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
 			"particle" 	"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
-			"particle"	particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf
+			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
 			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
 			"particle"	"particles/generic_gameplay/generic_silenced.vpcf"
 
