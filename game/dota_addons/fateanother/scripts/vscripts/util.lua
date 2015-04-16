@@ -11,9 +11,9 @@ heroes = {
     "npc_dota_hero_skywrath_mage",
     "npc_dota_hero_sven", 
     "npc_dota_hero_vengefulspirit",
-    "npc_dota_hero_huskar"
-    --"npc_dota_hero_chen"
-    --"npc_dota_hero_shadow_shaman"
+    "npc_dota_hero_huskar",
+    "npc_dota_hero_chen",
+    "npc_dota_hero_shadow_shaman"
 }
 
 purgable = {
@@ -274,6 +274,8 @@ function FindName(name)
         heroName = "Lancer(4th)"
     elseif name == "npc_dota_hero_chen" then
         heroName = "Rider(4th)"
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        heroName = "Caster(4th)"
     end
     return heroName
 end
@@ -308,6 +310,8 @@ function FindAttribute(name)
         attributes = DiarmuidAttribute
     elseif name == "npc_dota_hero_chen" then
         attributes = IskanderAttribute
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        attributes = GillesAttribute
     end
     return attributes
 end 

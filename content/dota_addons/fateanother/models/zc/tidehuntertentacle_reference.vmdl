@@ -157,7 +157,11 @@ CVanimGroup CVanimGroup_0
 			bool m_bHidden = false
 			CActivity[] m_Activities = 
 			[
-				
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_IDLE"
+					int m_nWeight = 1
+				}
 			]
 			CAnimationEvent[] m_AnimationEvents = 
 			[
@@ -259,7 +263,11 @@ CVanimGroup CVanimGroup_0
 			bool m_bHidden = false
 			CActivity[] m_Activities = 
 			[
-				
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_ATTACK"
+					int m_nWeight = 1
+				}
 			]
 			CAnimationEvent[] m_AnimationEvents = 
 			[

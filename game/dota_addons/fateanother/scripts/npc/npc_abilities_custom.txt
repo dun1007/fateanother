@@ -15747,6 +15747,684 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Gilles de Rais : Prelati's Spellbook
+	//=================================================================================================================
+	"gille_spellbook_of_prelati"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"zc_prelati_spellbook"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"60"
+		"AbilityCastPoint"				"0.3"
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSelfishStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Throw Corpse
+	//===================================================
+	"gille_throw_corpse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"pugna_life_drain"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnThrowCorpseStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+
+	//===================================================
+	// Gilles De Rais : Summon Oceanic Demon
+	//===================================================
+	"gille_summon_demon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_oceanic_demon"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400 550 700 850 1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"12.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSummonDemonStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Torrent
+	//===================================================
+	"gille_torment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_torment"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnTormentStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Exquisite Cadaver
+	//===================================================
+	"gille_exquisite_cadaver"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"2"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_exquisite_cadavre"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnECStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Abyssal Contract
+	//===================================================
+	"gille_abyssal_contract"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"2"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"500 625 750 875 1000"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnContractStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//===================================================
+	// Gilles De Rais : Tentacle of Destruction
+	//===================================================
+	"gille_tentacle_of_destruction"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"zc_tentacle_of_destruction"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnECStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+	//=================================================================================================================
+	// Gilles De Rais : Tentacle Hook
+	//=================================================================================================================
+	"gille_tentacle_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"zc_tentacle_hook"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"10.0"
+
+	    "precache"
+	    {
+	    }		
+		"OnSpellStart"
+		{
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleHookStart"   
+			 	"Target"		"POINT"        	
+            }		
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleHookHit"           	
+            }
+		}
+	}
+
+
+	//=================================================================================================================
+	// Gilles De Rais : Tentacle Wrap
+	//=================================================================================================================
+	"gille_tentacle_wrap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"zc_tentacle_wrap"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"10.0"
+
+	    "precache"
+	    {
+	    }		
+		"OnSpellStart"
+		{
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleWrapStart"  
+            }		
+		}
+	}
+
+	//===================================================
+	// Gilles De Rais : Subterranean Skewer
+	//===================================================
+	"gille_subterranean_skewer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnTentacleSkewerStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//===================================================
+	// Gilles De Rais : L'Arret de Mort
+	//===================================================
+	"gille_larret_de_mort"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_combo"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Eye for Art
+	//=======================================
+	"gille_attribute_eye_for_art"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_eye_for_art"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"9"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnEyeForArtAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Improve Black Magic
+	//=======================================
+	"gille_attribute_improve_black_magic"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_torment"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"16"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnBlackMagicImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Mental Pollution
+	//=======================================
+	"gille_attribute_mental_pollution"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_mental_pollution"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnMentalPollutionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Abyssal Connection
+	//=======================================
+	"gille_attribute_abyssal_connection"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"17"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnAbyssConnectionAcquired"
+			}
+		}
+	}
 	//================================================
 	// simple dummy passive
 	//================================================

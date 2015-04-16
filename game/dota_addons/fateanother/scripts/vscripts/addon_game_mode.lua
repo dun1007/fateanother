@@ -127,6 +127,7 @@ model_lookup["npc_dota_hero_sven"] = "models/lancelot/lancelot.vmdl"
 model_lookup["npc_dota_hero_vengefulspirit"] = "models/avenger/avenger.vmdl"
 model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid.vmdl"
 model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
+model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 
 function Precache( context )
     print("Starting precache")
@@ -197,6 +198,8 @@ function Precache( context )
     PrecacheResource("model", "models/avenger/avenger.vmdl", context)
     PrecacheResource("model", "models/diarmuid/diarmuid.vmdl", context)
     PrecacheResource("model", "models/iskander/iskander.vmdl", context)
+    PrecacheResource("model", "models/zc/gille.vmdl", context)
+
 
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)

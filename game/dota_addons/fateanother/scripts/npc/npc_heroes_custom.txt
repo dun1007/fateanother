@@ -707,21 +707,25 @@
 	}
 
 	//=======================================
-	//	Caster(4th) - Gille De Rais
+	//	Caster(4th) - Gilles De Rais
 	//=======================================
-	"npc_dota_hero_zc"
+	"npc_dota_hero_gille"
 	{
 		"override_hero"			"npc_dota_hero_shadow_shaman"
 		"Model"					"models/development/invisiblebox.vmdl"
-		"ModelScale"			"1.00"
+		"ModelScale"			"1.40"
 
-		"Ability1"				"false_assassin_gate_keeper"
-		"Ability2"				"false_assassin_heart_of_harmony"
-		"Ability3"				"false_assassin_windblade"
-		"Ability4"				""
-		"Ability5"				""
-		"Ability6"				"false_assassin_tsubame_gaeshi"
-		
+		"AbilityLayout"			"6"
+		"Ability1"				"gille_summon_demon"
+		"Ability2"				"gille_torment"
+		"Ability3"				"gille_exquisite_cadaver"
+		"Ability4"				"gille_spellbook_of_prelati"
+		"Ability5"				"gille_throw_corpse"
+		"Ability6"				"gille_abyssal_contract"
+		"Ability7"				"gille_larret_de_mort"
+		"Ability8"				"presence_detection_passive"
+		"Ability9"				"attribute_bonus"
+
 		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"2"
 		"StatusMana"					"0"
@@ -732,8 +736,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"200"
-		"AttackDamageMin"				"27"
-		"AttackDamageMax"				"35"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
 		"AttackRate"					"0.95"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"

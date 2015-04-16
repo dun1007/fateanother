@@ -128,6 +128,15 @@ IskanderAttribute = {
 	attrCount = 4
 }
 
+GillesAttribute = {
+	"gille_attribute_eye_for_art",
+	"gille_attribute_improve_black_magic",
+	"gille_attribute_mental_pollution",
+	"gille_attribute_abyssal_connection",
+	"gille_larret_de_mort",
+	attrCount = 4
+}
+
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()

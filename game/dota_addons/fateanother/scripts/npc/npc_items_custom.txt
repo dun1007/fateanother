@@ -2066,3 +2066,85 @@
 	    }	
 	}
 }
+
+
+"item_gille_contaminate" 
+{
+    "ID"           "1131"
+    "BaseClass"    "item_datadriven"
+    "AbilityTextureName" "zc_contaminate"
+    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+    "ItemQuality"  "consumable"
+
+    "ItemCost"     "99999"
+    "ItemKillable" "0" 
+    "ItemSellable" "0"
+    "ItemPurchasable" "0"
+    "ItemDroppable" "0"
+    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+    "SideShop"     "1" 
+    "SecretShop"   "0"
+
+    "ItemStackable" "0"
+    "ItemPermanent" "1"
+    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+    "precache"
+    {
+    }
+
+
+    "OnSpellStart"
+    {
+    	"RunScript"
+		{
+			"ScriptFile"	"gille_ability"
+			"Function"		"OnContaminateStart"
+		}
+    }
+}
+
+
+"item_gille_integrate" 
+{
+    "ID"           "1132"
+    "BaseClass"    "item_datadriven"
+    "AbilityTextureName" "zc_integrate"
+    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+    "ItemQuality"  "consumable"
+
+    "ItemCost"     "99999"
+    "ItemKillable" "0" 
+    "ItemSellable" "0"
+    "ItemPurchasable" "0"
+    "ItemDroppable" "0"
+    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+    "SideShop"     "1" 
+    "SecretShop"   "0"
+
+    "ItemStackable" "0"
+    "ItemPermanent" "1"
+    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+    "precache"
+    {
+    }
+
+
+    "OnSpellStart"
+    {
+    	"RunScript"
+		{
+			"ScriptFile"	"gille_ability"
+			"Function"		"OnIntegrateStart"
+		}
+    }
+}
