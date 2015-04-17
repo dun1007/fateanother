@@ -545,11 +545,11 @@ CVanimGroup CVanimGroup_0
 	[
 		CVanim
 		{
-			string m_Animationname = "gille_anim_run"
+			string m_Animationname = "gille_walk"
 			string m_Filepath = "models/zc/gille_anim.FBX"
 			int m_nStartframe = 4
 			int m_nEndframe = 61
-			float m_flFps = 50.000000
+			float m_flFps = 60.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
 				bool m_bLoop = true
@@ -600,11 +600,11 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "gille_anim_death"
+			string m_Animationname = "gille_death"
 			string m_Filepath = "models/zc/gille_anim.FBX"
 			int m_nStartframe = 360
 			int m_nEndframe = 856
-			float m_flFps = 220.000000
+			float m_flFps = 250.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
 				bool m_bLoop = false
@@ -655,7 +655,7 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "gille_anim_cast1"
+			string m_Animationname = "gille_cast1"
 			string m_Filepath = "models/zc/gille_anim.FBX"
 			int m_nStartframe = 1565
 			int m_nEndframe = 1890
@@ -710,7 +710,7 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "gille_anim_cast2"
+			string m_Animationname = "gille_cast2"
 			string m_Filepath = "models/zc/gille_anim.FBX"
 			int m_nStartframe = 2260
 			int m_nEndframe = 2630
@@ -765,7 +765,7 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "gille_anim_cast3"
+			string m_Animationname = "gille_cast3"
 			string m_Filepath = "models/zc/gille_anim.FBX"
 			int m_nStartframe = 1923
 			int m_nEndframe = 2155
@@ -820,7 +820,7 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "gille_anim_idle"
+			string m_Animationname = "gille_idle"
 			string m_Filepath = "models/zc/gille_anim.FBX"
 			int m_nStartframe = 110
 			int m_nEndframe = 332
@@ -845,57 +845,6 @@ CVanimGroup CVanimGroup_0
 					string m_Name = "ACT_DOTA_IDLE"
 					int m_nWeight = 1
 				}
-			]
-			CAnimationEvent[] m_AnimationEvents = 
-			[
-				
-			]
-			CMotionFrame[] m_MotionFrames = 
-			[
-				
-			]
-			CIKrule*[] m_pIkRules = 
-			[
-				
-			]
-			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
-			{
-				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
-				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
-			}
-			string[] m_Keywords = 
-			[
-				
-			]
-			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
-			{
-				float m_flFadeInTime = 0.200000
-				float m_flFadeOutTime = 0.200000
-			}
-		},
-		CVanim
-		{
-			string m_Animationname = "gille_anim7"
-			string m_Filepath = "models/zc/gille_anim.FBX"
-			int m_nStartframe = 0
-			int m_nEndframe = 3280
-			float m_flFps = 30.000000
-			CAnimationLoop m_Loop = CAnimationLoop
-			{
-				bool m_bLoop = false
-				bool m_bSmoothLoop = false
-				int m_nSmoothLoopStart = 0
-				int m_nSmoothLoopEnd = 0
-				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
-				{
-					bool m_bEnabled = false
-					int m_nLoopRestart = 0
-				}
-			}
-			bool m_bHidden = false
-			CActivity[] m_Activities = 
-			[
-				
 			]
 			CAnimationEvent[] m_AnimationEvents = 
 			[

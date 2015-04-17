@@ -51,7 +51,11 @@ CVModel CVModel_0
 	}
 	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
 	[
-		
+		CVhitBoxSetListReference
+		{
+			CVhitBoxSetList* m_pObject = &CVhitBoxSetList_0
+			string m_sFileName = ""
+		}
 	]
 	CVattachmentListReference[] m_pAttachmentLists = 
 	[
@@ -109,6 +113,150 @@ CVModel CVModel_0
 	bool m_bEnableClothProcessing = true
 	float m_flClothEnableThreshold = 0.050000
 	int m_nMaxClothVertsPerMesh = 2048
+}
+
+CVhitBoxSetList CVhitBoxSetList_0
+{
+	CVhitBoxSet[] m_HitBoxSets = 
+	[
+		CVhitBoxSet
+		{
+			string m_name = "default"
+			CVhitBox[] m_HitBoxes = 
+			[
+				CVhitBox
+				{
+					string m_name = "root"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "root"
+					float(3) m_vMinBounds = ( -26.174635, -33.968689, 0.015907 )
+					float(3) m_vMaxBounds = ( 30.344351, 33.758331, 59.809692 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_0"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_0"
+					float(3) m_vMinBounds = ( -9.450705, -31.643936, -26.294687 )
+					float(3) m_vMaxBounds = ( 30.937311, 32.310741, 21.361883 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_1"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_1"
+					float(3) m_vMinBounds = ( -33.105495, -31.643936, -25.072296 )
+					float(3) m_vMaxBounds = ( 29.195721, 32.310745, 25.381165 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_2"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_2"
+					float(3) m_vMinBounds = ( -10.896191, -25.300722, -20.751171 )
+					float(3) m_vMaxBounds = ( 31.456333, 25.511057, 17.675198 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_3"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_3"
+					float(3) m_vMinBounds = ( -9.261711, -20.014729, -17.660368 )
+					float(3) m_vMaxBounds = ( 31.149948, 20.225063, 16.079458 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_4"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_4"
+					float(3) m_vMinBounds = ( -6.807793, -15.020719, -13.060905 )
+					float(3) m_vMaxBounds = ( 23.284515, 15.231042, 11.783424 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_5"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_5"
+					float(3) m_vMinBounds = ( 1.044662, -12.796583, -9.238937 )
+					float(3) m_vMaxBounds = ( 17.401604, 13.006895, 9.929665 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_6"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_6"
+					float(3) m_vMinBounds = ( -3.730217, -11.653126, -9.233261 )
+					float(3) m_vMaxBounds = ( 23.832405, 11.863428, 8.501091 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_7"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_7"
+					float(3) m_vMinBounds = ( -10.606400, -10.539574, -8.081360 )
+					float(3) m_vMaxBounds = ( 28.715172, 10.749866, 9.470825 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_8"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_8"
+					float(3) m_vMinBounds = ( -5.947235, -8.251535, -6.190887 )
+					float(3) m_vMaxBounds = ( 18.498611, 8.461813, 6.532098 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_9"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_9"
+					float(3) m_vMinBounds = ( -0.535400, -7.252850, -5.617683 )
+					float(3) m_vMaxBounds = ( 26.140869, 7.463115, 15.683060 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_10"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_10"
+					float(3) m_vMinBounds = ( -9.044411, -6.989676, -4.591278 )
+					float(3) m_vMaxBounds = ( 22.975277, 7.199934, 20.205246 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "tentacle0_11"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "tentacle0_11"
+					float(3) m_vMinBounds = ( -6.724564, -2.104920, -3.816208 )
+					float(3) m_vMaxBounds = ( 28.149086, 3.013284, 10.454895 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				}
+			]
+		}
+	]
 }
 
 CVanimGroup CVanimGroup_0
@@ -212,7 +360,11 @@ CVanimGroup CVanimGroup_0
 			bool m_bHidden = false
 			CActivity[] m_Activities = 
 			[
-				
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_DIE"
+					int m_nWeight = 1
+				}
 			]
 			CAnimationEvent[] m_AnimationEvents = 
 			[

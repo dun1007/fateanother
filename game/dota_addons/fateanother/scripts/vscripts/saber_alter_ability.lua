@@ -111,7 +111,6 @@ function OnMBStart(keys)
 			ProjectileManager:CreateTrackingProjectile(info) 
 			caster.ManaBlastCount = caster.ManaBlastCount - 1
 		end
-		
 		-- Update the charge
 		caster:SetModifierStackCount( "modifier_derange_counter", caster, caster.ManaBlastCount )
 	end
