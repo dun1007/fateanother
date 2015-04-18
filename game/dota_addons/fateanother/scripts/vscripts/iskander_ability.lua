@@ -70,33 +70,40 @@ function OnPhalanxStart(keys)
 
 	-- Spawn soldiers from target point to left end
 	for i=0,3 do
-		local soldier = CreateUnitByName("iskander_infantry", targetPoint + leftvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
-	    soldier:AddAbility("phalanx_soldier_passive") 
-	    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
-		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
-		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
+		Timers:CreateTimer(i*0.1, function()
+			local soldier = CreateUnitByName("iskander_infantry", targetPoint + leftvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+		    soldier:AddAbility("phalanx_soldier_passive") 
+		    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
+			soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
+			caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
+			aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
+			PhalanxPull(caster, soldier, targetPoint, keys.Damage, keys.ability) -- do pullback
 
-		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
-		ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
-		soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
-		table.insert(caster.PhalanxSoldiers, soldier)
+			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+			ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
+			soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
+			table.insert(caster.PhalanxSoldiers, soldier)
+		end)
 	end
 
 	-- Spawn soldiers on right side
 	for i=1,4 do
-		local soldier = CreateUnitByName("iskander_infantry", targetPoint + rightvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
-	    soldier:AddAbility("phalanx_soldier_passive") 
-	    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
-		soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
-		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
-		aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
+		Timers:CreateTimer(i*0.1, function()
+			local soldier = CreateUnitByName("iskander_infantry", targetPoint + rightvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+		    soldier:AddAbility("phalanx_soldier_passive") 
+		    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
+			soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = 3})
+			caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
+			aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
+			PhalanxPull(caster, soldier, targetPoint, keys.Damage, keys.ability) -- do pullback
 
-		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
-		ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
-		soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
-		table.insert(caster.PhalanxSoldiers, soldier)
+			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+			ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
+			soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
+			table.insert(caster.PhalanxSoldiers, soldier)
+		end)
 	end
+	--[[
 	for i=1, #caster.PhalanxSoldiers do
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster.PhalanxSoldiers[i]:GetAbsOrigin(), nil, 150
 	        , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
@@ -134,7 +141,46 @@ function OnPhalanxStart(keys)
 				v:SetForwardVector(Vector(forwardVec.x*-1, forwardVec.y, forwardVec.z))
 			end
 	    end
-	end
+	end]]
+end
+
+function PhalanxPull(caster, soldier, targetPoint, damage, ability)
+	local targets = FindUnitsInRadius(caster:GetTeam(), soldier:GetAbsOrigin(), nil, 150
+	        , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+		if v.PhalanxSoldiersHit ~= true then 
+			v.PhalanxSoldiersHit = true
+			Timers:CreateTimer(0.5, function()
+				v.PhalanxSoldiersHit = false
+			end)
+
+			local pullTarget = Physics:Unit(v)
+			local pullVector = (caster:GetAbsOrigin() - targetPoint):Normalized() * 500
+			v:PreventDI()
+			v:SetPhysicsFriction(0)
+			v:SetPhysicsVelocity(Vector(pullVector.x, pullVector.y, 500))
+			v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+			v:FollowNavMesh(false)
+
+			Timers:CreateTimer({
+				endTime = 0.25,
+				callback = function()
+				v:SetPhysicsVelocity(Vector(pullVector.x, pullVector.y, -500))
+			end
+			})
+
+		  	Timers:CreateTimer(0.5, function()
+				v:PreventDI(false)
+				v:SetPhysicsVelocity(Vector(0,0,0))
+				v:OnPhysicsFrame(nil)
+			end)
+
+		  	giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
+			DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			local forwardVec = v:GetForwardVector()
+			v:SetForwardVector(Vector(forwardVec.x*-1, forwardVec.y, forwardVec.z))
+		end
+    end
 end
 
 function OnChariotStart(keys)
@@ -365,11 +411,64 @@ end
 
 aotkQuest = nil
 function OnAOTKCastStart(keys)
+	-- initialize stuffs
 	local caster = keys.caster
+	caster.AOTKSoldiers = {}
+	if caster.AOTKSoldierCount == nil then caster.AOTKSoldierCount = 0 end --initialize soldier count if its not made yet
+
+	IskanderCheckCombo(caster, keys.ability) -- check combo
 	EmitGlobalSound("Iskander.AOTK")
-	IskanderCheckCombo(caster, keys.ability)
+
+	-- particle
 	local aotkParticle = ParticleManager:CreateParticle("particles/custom/iskandar/iskandar_aotk.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(aotkParticle, 0, caster:GetAbsOrigin())
+
+	local firstRowPos = aotkCenter + Vector(300, -500,0) 
+	local maharajaPos = aotkCenter + Vector(600, 0,0)
+
+	local infantrySpawnCounter = 0
+	Timers:CreateTimer(function()
+		if infantrySpawnCounter == 10 then return end
+		local soldier = CreateUnitByName("iskander_infantry", firstRowPos + Vector(0,infantrySpawnCounter*100,0), true, nil, nil, caster:GetTeamNumber())
+		soldier:AddNewModifier(caster, nil, "modifier_phased", {})
+		soldier:SetOwner(caster)
+		table.insert(caster.AOTKSoldiers, soldier)
+		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
+
+		infantrySpawnCounter = infantrySpawnCounter+1
+		return 0.1
+	end)
+
+	local archerSpawnCounter1 = 0
+	Timers:CreateTimer(0.99, function()
+		if archerSpawnCounter1 == 5 then return end
+		print("archer1")
+		local soldier = CreateUnitByName("iskander_archer", aotkCenter + Vector(800, 600 - archerSpawnCounter1*100, 0), true, nil, nil, caster:GetTeamNumber())
+		soldier:AddNewModifier(caster, nil, "modifier_phased", {})
+		soldier:SetOwner(caster)
+		table.insert(caster.AOTKSoldiers, soldier)
+		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_archer_bonus_stat",{})
+
+		archerSpawnCounter1 = archerSpawnCounter1+1
+		return 0.1
+	end)
+
+	local archerSpawnCounter2 = 0
+	Timers:CreateTimer(1.49, function()
+		if archerSpawnCounter2 == 5 then return end
+		print("archer2")
+		local soldier = CreateUnitByName("iskander_archer", aotkCenter + Vector(800, -600 + archerSpawnCounter2*100, 0), true, nil, nil, caster:GetTeamNumber())
+		soldier:AddNewModifier(caster, nil, "modifier_phased", {})
+		soldier:SetOwner(caster)
+		table.insert(caster.AOTKSoldiers, soldier)
+		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
+		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_archer_bonus_stat",{})
+
+		archerSpawnCounter2 = archerSpawnCounter2+1
+		return 0.1
+	end)
 	
 	Timers:CreateTimer( 2.0, function()
 			ParticleManager:DestroyParticle(aotkParticle, false)
@@ -378,6 +477,8 @@ function OnAOTKCastStart(keys)
 		end
 	)
 	
+
+
 	Timers:CreateTimer({
 		endTime = 2,
 		callback = function()
@@ -403,7 +504,6 @@ end
 function OnAOTKStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if caster.AOTKSoldierCount == nil then caster.AOTKSoldierCount = 0 end --initialize soldier count if its not made yet
 	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12)
 	local ability = keys.ability
 	aotkTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
@@ -416,7 +516,6 @@ function OnAOTKStart(keys)
 		end
 	end
 	caster.IsAOTKActive = true
-	caster.AOTKSoldiers = {}
 	caster:EmitSound("Ability.SandKing_SandStorm.loop")
 
 	-- Swap abilities
@@ -443,6 +542,13 @@ function OnAOTKStart(keys)
 	local firstRowPos = marbleCenter + Vector(300, -500,0) 
 	local maharajaPos = marbleCenter + Vector(600, 0,0)
 
+	for i=1, #caster.AOTKSoldiers do
+		local soldierHandle = caster.AOTKSoldiers[i]
+		local soldierPos = caster.AOTKSoldiers[i]:GetAbsOrigin()
+		local diffFromCenter = soldierPos - aotkCenter
+		soldierHandle:SetAbsOrigin(diffFromCenter + marbleCenter)
+	end
+	--[[
 	-- First row
 	for i=0,9 do
 		local soldier = CreateUnitByName("iskander_infantry", firstRowPos + Vector(0,i*100,0), true, nil, nil, caster:GetTeamNumber())
@@ -468,7 +574,7 @@ function OnAOTKStart(keys)
 		table.insert(caster.AOTKSoldiers, soldier)
 		caster.AOTKSoldierCount = caster.AOTKSoldierCount + 1
 		aotkAbilityHandle:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_archer_bonus_stat",{})
-	end
+	end]]
 	local maharaja = CreateUnitByName("iskander_maharaja", maharajaPos, true, nil, nil, caster:GetTeamNumber())
 	maharaja:SetControllableByPlayer(caster:GetPlayerID(), true)
 	maharaja:SetOwner(caster)
@@ -569,7 +675,7 @@ function EndAOTK(caster)
 		end
 	end]]
 	print("Process units")
-    local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 3000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+    local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 3000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
     for i=1, #units do
     	-- Disjoint all projectiles
     	ProjectileManager:ProjectileDodge(units[i])
