@@ -16753,7 +16753,7 @@
             }		
             "ApplyModifier"
             {
-            	"ModifierName"	"modifier_tentacle_hook"
+            	"ModifierName"	"modifier_tentacle_wrap"
             	"Target"		"TARGET"
             }
 			"FireSound"
@@ -16764,7 +16764,7 @@
 		}
 		"Modifiers"
 		{
-			"modifier_tentacle_hook"
+			"modifier_tentacle_wrap"
 			{
 				"IsDebuff"		"1"
 				"Duration"		"2.0"

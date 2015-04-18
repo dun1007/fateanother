@@ -76,7 +76,8 @@ cleansable = {
     "modifier_slow_tier2",
     "modifier_silence",
     "modifier_disarmed",
-    "modifier_enkidu_hold" -- enkidu
+    "modifier_enkidu_hold",
+    "modifier_tentacle_wrap"
 }
 
 slowmodifier = {
@@ -87,7 +88,8 @@ slowmodifier = {
     "modifier_weakening_venom_debuff",
     "modifier_double_edge_slow",
     "modifier_tawrich_slow",
-    "modifier_battle_horn_movespeed_debuff"
+    "modifier_battle_horn_movespeed_debuff",
+    "modifier_oceanic_demon_slow"
 }
 
 donotlevel = {

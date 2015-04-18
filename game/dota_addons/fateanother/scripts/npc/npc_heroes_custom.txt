@@ -740,7 +740,7 @@
 		"AttackDamageMax"				"0"
 		"AttackRate"					"9.99"
 		
-		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"
 		"AttributeBaseStrength"			"0"
 		"AttributeStrengthGain"			"0.75"
 		"AttributeBaseAgility"			"0"
