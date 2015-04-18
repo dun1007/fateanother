@@ -1199,23 +1199,24 @@
 		"ProjectileModel"			""				// Particle system model for projectile.
 		"ProjectileSpeed"			"9999"	
 
+
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"25.0"
-		"BountyGoldMax"				"25.0"
+		"BountyXP"					"300"			// Experience earn.
+		"BountyGoldMin"				"1000"			// Gold earned min.
+		"BountyGoldMax"				"1000"			// Gold earned max.
 		
 		// Bounds
 		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HUGE"
-		"RingRadius"				"300"
-		"CollisionSize"				"300"
-		"FormationRank"				"0"
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"500"
 		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"50"
-		"MovementTurnRate"			"0.5"
+		"MovementSpeed"				"100"
+		"MovementTurnRate"			"0.7"
 		
 		// Status
 		//----------------------------------------------------------------
@@ -1282,7 +1283,7 @@
 		"BaseClass"			"npc_dota_creature"
 		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
 
-		"Ability1"					""			// Ability 1
+		"Ability1"					"gille_oceanic_demon_passive"			// Ability 1
 		"Ability2"					""			// Ability 2
 		"Ability3"					""			// Ability 3
 		"Ability4"					""			// Ability 4
@@ -1305,6 +1306,12 @@
 		"StatusHealthRegen"			"0"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"5"			// Experience earn.
+		"BountyGoldMin"				"15"			// Gold earned min.
+		"BountyGoldMax"				"15"			// Gold earned max.
 
 		// Vision
 		//----------------------------------------------------------------
@@ -1343,6 +1350,12 @@
 		"StatusHealthRegen"			"0"		// Health regeneration rate.
 		"StatusMana"				"0"			// Base mana.
 		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"10"			// Experience earn.
+		"BountyGoldMin"				"30"			// Gold earned min.
+		"BountyGoldMax"				"30"			// Gold earned max.
 
 		// Vision
 		//----------------------------------------------------------------

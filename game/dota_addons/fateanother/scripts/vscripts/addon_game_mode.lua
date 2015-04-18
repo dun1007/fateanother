@@ -1,6 +1,7 @@
 require("timers")
 require('util' )
 require('archer_ability')
+require('gille_ability')
 require('master_ability')
 require('xLib/xDialog')
 
@@ -256,7 +257,14 @@ function FateGameMode:OnAllPlayersLoaded()
 	GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
   --GameStartTimerStart()
   StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
-
+  Timers:CreateTimer(5.0, function()
+     for i=0, 9 do
+        local player = PlayerResource:GetPlayer(i)
+        if player ~= nil then
+          PlayBGM(player)
+        end
+    end
+  end)
   	Timers:CreateTimer('30secondalert', {
 		endTime = 30,
 		callback = function()
@@ -369,12 +377,6 @@ function FateGameMode:OnGameInProgress()
 	print("[FATE] The game has officially begun")
   local lastChoice = 0
   local delayInBetween = 2.0
-  for i=0, 10 do
-      local player = PlayerResource:GetPlayer(i)
-      if player ~= nil then
-        PlayBGM(player)
-      end
-  end
 end
 
 choice = 0 --
@@ -923,6 +925,16 @@ function FateGameMode:OnEntityKilled( keys )
 	if keys.entindex_attacker ~= nil then
 	    killerEntity = EntIndexToHScript( keys.entindex_attacker )
 	end
+
+  -- Check if Caster(4th) is around and grant him 1 Madness
+  if killedUnit:GetUnitName() ~= "gille_corpse" then
+    local targets = FindUnitsInRadius(0, killedUnit:GetAbsOrigin(), nil, 800, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+    for i=1, #targets do
+      if targets[i]:GetName() == "npc_dota_hero_shadow_shaman" then
+        AdjustMadnessStack(targets[i], 1)
+      end
+    end
+  end
 
   if killedUnit:IsRealHero() then
     self.bIsCasuallyOccured = true

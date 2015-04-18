@@ -184,19 +184,23 @@ function ApplyAirborne(source, target, duration)
         descendCounter = descendCounter + 0.033
         return 0.033
     end)]]
+    local knockupSpeed = 1000
+    local knockupAcc = knockupSpeed/duration * 2
 
     Physics:Unit(target)
     target:PreventDI()
-    target:SetPhysicsVelocity(Vector(0,0,500))
-    target:SetPhysicsAcceleration(Vector(0,0,-200))
+    target:SetPhysicsVelocity(Vector(0,0,knockupSpeed))
+    target:SetPhysicsAcceleration(Vector(0,0,-knockupAcc))
     target:SetNavCollisionType(PHYSICS_NAV_NOTHING)
     target:FollowNavMesh(false)
+    target:Hibernate(false)
 
     Timers:CreateTimer(duration, function()
         target:PreventDI(false)
         target:SetPhysicsVelocity(Vector(0,0,0))
         target:SetPhysicsAcceleration(Vector(0,0,0))
         target:OnPhysicsFrame(nil)
+        target:Hibernate(true)
     end)
 
 

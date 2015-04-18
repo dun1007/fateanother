@@ -316,6 +316,15 @@
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+			"gille_attack_speed_boost"
+			{
+				"IsDebuff"		"0"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"50"
+				}
+			}
 	    }
 
 	}
@@ -2091,6 +2100,7 @@
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"30"
 	    "precache"
 	    {
 	    	"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
@@ -2117,6 +2127,11 @@
 				"ScriptFile"		"gille_ability"
 				"Function"			"OnContaminateStart"
 				"Radius"			"%radius"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Venomancer.PoisonNova"
+				"Target"			"CASTER"
 			}
 		}
 		
@@ -2175,10 +2190,24 @@
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"0"
 	    "precache"
 	    {
 	    }
 
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"200"
+			}	
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed"			"50"
+			}	
+		}
 
 	    "OnSpellStart"
 	    {
@@ -2193,6 +2222,13 @@
 	    {
 	    	"modifier_integrate"
 	    	{
+	    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+	    		"EffectAttachType"	"attach_hitloc"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%movespeed"
+	    			"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed"
+	    		}
 	    		"OnDeath"
 	    		{
 	    			"RunScript"
@@ -2255,5 +2291,52 @@
 				}	
 	    	}
 	    }
+	}
+
+
+	"item_gille_otherworldly_portal" 
+	{
+	    "ID"           "1133"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_integrate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCooldown"		"90"
+	    "precache"
+	    {
+	    }
+
+		"AbilitySpecial"
+		{
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnHorrorTeleport"
+				"Target"		"POINT"
+			}
+	    }
+
 	}
 }

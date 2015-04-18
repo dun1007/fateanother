@@ -133,8 +133,9 @@ GillesAttribute = {
 	"gille_attribute_improve_black_magic",
 	"gille_attribute_mental_pollution",
 	"gille_attribute_abyssal_connection",
+	"gille_attribute_abyssal_connection_2",
 	"gille_larret_de_mort",
-	attrCount = 4
+	attrCount = 5
 }
 
 function OnSeal1Start(keys)
@@ -789,7 +790,7 @@ function PresenceDetection(keys)
 					ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
 					--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
 					EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
-					-- Process Eye of Serenity attribute
+					-- Process Servant specific attributes
 					if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
 						print("Eye of Serenity activated")
 						enemy.IsSerenityOnCooldown = true
@@ -797,6 +798,8 @@ function PresenceDetection(keys)
 							enemy.IsSerenityOnCooldown = false
 						end)					
 						FAEyeAttribute(caster, enemy)
+					elseif caster:GetName() == "npc_dota_hero_shadow_shaman" and caster:GetPlayerOwner().IsEyeForArtAcquired == true then 
+						Say(caster:GetPlayerOwner(), "I sense the presence of " .. FindName(enemy:GetName()) .. "......", true)
 					end
 				end
 			end
