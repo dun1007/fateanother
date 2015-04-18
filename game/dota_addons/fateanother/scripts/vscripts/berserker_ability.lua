@@ -46,11 +46,6 @@ function OnRoarStart(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
-	-- Remove Berserk modifier and set health to max
-	if caster:HasModifier("modifier_berserk_self_buff") then
-		caster:RemoveModifierByName("modifier_berserk_self_buff")
-	end
-	caster:SetHealth(caster:GetMaxHealth())
 	local casterloc = caster:GetAbsOrigin()
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -144,7 +139,7 @@ function OnNineStart(keys)
 	local distance = (targetPoint - origin):Length2D()
 	local forward = (targetPoint - origin):Normalized() * distance
 
-	caster.NineLanded = false
+
 	caster:SetPhysicsFriction(0)
 	caster:SetPhysicsVelocity(caster:GetForwardVector()*distance)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
@@ -228,6 +223,7 @@ function OnNineLanded(caster, ability)
 					EmitGlobalSound("Lancelot.Roar1" )
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
 				end
+				caster.NineLanded = false
 				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				-- do damage to targets
@@ -325,12 +321,6 @@ function OnGodHandDeath(keys)
 	local caster = keys.caster
 	local newRespawnPos = caster:GetOrigin()
 	local ply = caster:GetPlayerOwner()
-
-	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
-	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
-	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=1.1})
-
 	print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
@@ -341,7 +331,7 @@ function OnGodHandDeath(keys)
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ply.GodHandStock = ply.GodHandStock - 1
 			GameRules:SendCustomMessage("<font color='#FF0000'>----------!!!!!</font> Remaining God Hand stock : " .. ply.GodHandStock , 0, 0)
-			caster:SetRespawnPosition(dummy:GetAbsOrigin())
+			caster:SetRespawnPosition(newRespawnPos)
 			caster:RespawnHero(false,false,false)
 			caster:RemoveModifierByName("modifier_god_hand_stock") 
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {}) 

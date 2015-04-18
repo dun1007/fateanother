@@ -419,7 +419,7 @@ function EndUBW(caster)
 
 
     local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300
-    , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+    , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
     for i=1, #units do
     	ProjectileManager:ProjectileDodge(units[i])
