@@ -3,6 +3,7 @@ require('util' )
 require('archer_ability')
 require('master_ability')
 require('xLib/xDialog')
+require('gille_ability')
 
 -- Load Stat collection (statcollection should be available from any script scope)
 require('lib.statcollection')
@@ -127,6 +128,7 @@ model_lookup["npc_dota_hero_sven"] = "models/lancelot/lancelot.vmdl"
 model_lookup["npc_dota_hero_vengefulspirit"] = "models/avenger/avenger.vmdl"
 model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid.vmdl"
 model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
+model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 
 function Precache( context )
     print("Starting precache")
@@ -197,6 +199,7 @@ function Precache( context )
     PrecacheResource("model", "models/avenger/avenger.vmdl", context)
     PrecacheResource("model", "models/diarmuid/diarmuid.vmdl", context)
     PrecacheResource("model", "models/iskander/iskander.vmdl", context)
+    PrecacheResource("model", "models/zc/gille.vmdl", context)
 
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)
@@ -378,7 +381,7 @@ choice = 0 --
 function PlayBGM(player)
   local delayInBetween = 2.0
 
-  Timers:CreateTimer('BGMTimer', {
+  Timers:CreateTimer("BGMTimer" .. player:GetPlayerID(), {
     endTime = 0,
     callback = function()
     choice = RandomInt(1,8)
@@ -470,7 +473,7 @@ function FateGameMode:PlayerSay(keys)
   -- Turns BGM on and off
   if text == "-bgmoff" then
     print("Turning BGM off")
-    Timers:RemoveTimer("BGMTimer")
+    Timers:RemoveTimer("BGMTimer" .. ply:GetPlayerID())
     ply:StopSound("BGM." .. choice)
   end
 
@@ -920,6 +923,15 @@ function FateGameMode:OnEntityKilled( keys )
 	if keys.entindex_attacker ~= nil then
 	    killerEntity = EntIndexToHScript( keys.entindex_attacker )
 	end
+  -- Check if Caster(4th) is around and grant him 1 Madness
+  if killedUnit:GetUnitName() ~= "gille_corpse" then
+    local targets = FindUnitsInRadius(0, killedUnit:GetAbsOrigin(), nil, 800, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+    for k,v in pairs(targets) do
+      if v:GetName() == "npc_dota_hero_shadow_shaman" then
+        AdjustMadnessStack(v, 1)
+      end
+    end
+  end
 
   if killedUnit:IsRealHero() then
     self.bIsCasuallyOccured = true

@@ -266,6 +266,7 @@
 		"precache"						
 		{
 			"particle"				"particles/econ/items/windrunner/windrunner_cape_sparrowhawk/windrunner_windrun_blur_sparrowhawk.vpcf"
+			"particle"				"particles/custom/saber/saber_invisible_air_trail.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
@@ -4927,6 +4928,7 @@
 			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
@@ -5911,6 +5913,7 @@
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
@@ -11162,6 +11165,7 @@
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
@@ -11682,6 +11686,7 @@
 
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_abaddon/abaddon_death_coil_explosion.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -15743,6 +15748,1329 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Gilles de Rais : Prelati's Spellbook
+	//=================================================================================================================
+	"gille_spellbook_of_prelati"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"zc_prelati_spellbook"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"60"
+		"AbilityCastPoint"				"0.3"
+		"precache"
+		{
+			"particle"			"particles/custom/avenger/avenger_verg_avesta_shield.vpcf"
+			"particle"			"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"			"particles/custom/generic/fate_red_shield.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}				
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSelfishStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_madness_passive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"ThinkInterval"	"20"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnMadnessStart"
+					}
+				}
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnMadnessThink"
+					}
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"CleanupGilleSummon"
+					}
+				}
+			}
+			"modifier_madness_stack"
+			{
+				"IsHidden"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+			}
+			"modifier_selfish_self_invul"
+			{
+				"IsHidden"		"1"
+				"EffectName"		"particles/custom/generic/fate_red_shield.vpcf"
+				"EffectAttachType"	"follow_origin"	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_selfish_debuff_aura"
+			{
+				"IsHidden"			"1"
+				"EffectName"		"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+				"EffectAttachType"	"follow_origin"	
+
+				"Aura"          	"modifier_selfish_debuff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster" "0"
+			}
+			"modifier_selfish_debuff"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/custom/avenger/avenger_verg_avesta_shield.vpcf"
+				"EffectAttachType"	"follow_origin"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
+				}
+
+			}
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Throw Corpse
+	//===================================================
+	"gille_throw_corpse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"pugna_life_drain"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"		
+		
+		"precache"
+		{
+			"model"		"models/props_structures/skeleton001.vmdl"
+			"particle"	"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnThrowCorpseStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+
+	//===================================================
+	// Gilles De Rais : Summon Oceanic Demon
+	//===================================================
+	"gille_summon_demon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_oceanic_demon"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"model"		"models/items/courier/echo_wisp/echo_wisp_flying.vmdl"
+			"particle"	"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400 550 700 850 1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 16.5 13 9.5 6"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"summon_number"			"3 4 5 6 7"
+			}						
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"190 230 270 310 350"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSummonDemonStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+				"Number"			"%summon_number"
+				"Health"			"%health"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Gilles de Rais : Oceanic Demon Passive
+	//=================================================================================================================
+	"gille_oceanic_demon_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"zc_oceanic_demon"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"60"
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"slow"			"-10"
+			}				
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnDemonSuicideStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_oceanic_demon"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Venomancer.Attack"
+						"Target"			"TARGET"
+					}
+					"RunScript"
+					{
+						"ScriptFile"		"gille_ability"
+						"Function"			"OnDemonPoisonApply"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_oceanic_demon_slow"
+						"Target"			"TARGET"
+					}
+				}
+			}
+			"modifier_oceanic_demon_slow"
+			{
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"		
+				"Duration"		"3.0"
+				"IsDebuff"		"1"
+				"IsHidden"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_VenomancerWard.ProjectileImpact"
+						"Target"		"TARGET"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+			}
+		}
+	}
+	//===================================================
+	// Gilles De Rais : Torment
+	//===================================================
+	"gille_torment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_torment"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"particle"		"particles/econ/items/warlock/warlock_staff_hellborn/warlock_upheaval_hellborn_debuff.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+			"particle"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.8"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"4"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"total_damage"		"400 500 600 700 800"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnTormentStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_DoomBringer.LvlDeath"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{	
+			"modifier_torment"
+			{
+				"EffectName"	"particles/econ/items/warlock/warlock_staff_hellborn/warlock_upheaval_hellborn_debuff.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"IsDebuff"		"1"
+				"Duration"		"%duration"
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnTormentThink"
+						"Damage"		"%total_damage"
+					}
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnTormentTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnTormentEnd"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_DoomBringer.LvlDeath"
+						"Target"		"TARGET"
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"	//CP3 has a child explosion origin
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Exquisite Cadaver
+	//===================================================
+	"gille_exquisite_cadaver"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_exquisite_cadavre"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+			"particle"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"		"particles/units/heroes/hero_shadow_demon/shadow_demon_soul_catcher.vpcf"
+			"particle"		"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+			"particle"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+			"particle"		"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn_shockwave.vpcf"
+			"particle"		"particles/custom/screen_scarlet_splash.vpcf"
+			"particle"		particles/units/heroes/hero_pugna/pugna_decrepify.vpcf
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_shadow_demon.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.45"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"400 450 500 550 600"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnECStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+				"Damage"			"%damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_exquisite_cadaver_demon"
+			{
+				"Duration"		"1.5"
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"		
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnECDemonExplode"
+						"Radius"		"%radius"
+						"Damage"		"%damage"
+					}
+				}
+			}
+			"modifier_exquisite_cadaver_dot"
+			{
+
+			}
+
+			"modifier_gille_combo"
+			{
+		        "EffectName"    "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+		        "EffectAttachType"  "follow_origin"
+				"Duration"		"20"
+				"IsDebuff"		"1"
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnGilleComboThink"
+					}
+				}
+			}
+			"modifier_gigantic_horror_freeze"
+			{
+				"EffectName"				"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"Duration"		"1.5"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Abyssal Contract
+	//===================================================
+	"gille_abyssal_contract"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"model"		"models/zc/tentacleking.vmdl"
+			"model"		"models/zc/tidehuntertentacle_reference.vmdl"
+			"particle"	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit_wrap.vpcf"
+			"particle"	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit.vpcf"
+			"particle"	"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf"
+			"particle"	"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
+			"particle"	"particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"75.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"500 625 750 875 1000"
+			}			
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"1500 1875 2250 2625 3000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_damage"		"100 150 200 250 300"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnContractStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+				"Damage"			"%damage"
+				"Health"			"%health"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//================================================
+	// Gilles De Rais : Gigantic Horror Passive
+	//================================================
+	"gille_gigantic_horror_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "undying_decay"
+		"MaxLevel"                      "8"
+		"precache"
+		{
+			
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_threshold"			"300 400 500 600 700 800 900 1000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health_regen"			"5 6 7 8 9 10 11 12 13"
+			}			
+		}
+
+		"Modifiers"
+		{
+			"modifier_gigantic_horror_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"	"%health_regen"
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnHorrorTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"Threshold"		"%damage_threshold"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnHorrorDeath"
+					}
+				}
+				"OnAttackStart"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Spectre.Attack"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Centaur.HoofStomp"
+						"Target"			"CASTER"
+					}
+				}
+		  	}
+		  	"modifier_gigantic_horror_penalty_timer"
+		  	{
+		  		"Duration"	"15"
+		  		"IsDebuff"	"1"
+		  	}
+		}
+	}
+
+	//===================================================
+	// Gilles De Rais : Tentacle of Destruction
+	//===================================================
+	"gille_tentacle_of_destruction"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"8"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"zc_tentacle_of_destruction"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"120 190 260 330 400 470 540 610"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"30 33 36 39 42 45 48 51"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_damage"		"0.9 1.2 1.5 1.8 2.1 2.4 2.7 3.0"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnTentacleSummon"
+				"Target"			"POINT"
+				"Health"			"%health"
+				"Damage"			"%damage"
+			}
+			"FireSound"
+			{
+				"EffectName"		"ZC.Tentacle2"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//================================================
+	// Gilles De Rais : Tentacle of Destruction Passive
+	//================================================
+	"gille_tentacle_of_destruction_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "undying_decay"
+		"MaxLevel"						"8"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"precache"
+		{
+			
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"120 190 260 330 400 470 540 610"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"14 18 22 26 30 34 38 42"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_damage"		"0.9 1.2 1.5 1.8 2.1 2.4 2.7 3.0"
+			}						
+		}
+
+		"Modifiers"
+		{
+			"modifier_tentacle_of_destruction_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnAttackStart"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Magnataur.PreAttack"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Treant.Attack"
+						"Target"			"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"		"gille_ability"
+						"Function"			"OnTentacleAttackLanded"	
+						"Damage"			"%bonus_damage"					
+					}
+				}
+		  	}
+		}
+	}
+
+	//=================================================================================================================
+	// Gilles De Rais : Tentacle Hook
+	//=================================================================================================================
+	"gille_tentacle_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"zc_tentacle_hook"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
+		"AnimationPlaybackRate" 		"2.0"
+		"AbilityCastRange"				"%range"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"10.0"
+
+	    "precache"
+	    {
+	    }		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"			"1000"
+			}			
+		}
+		"OnSpellStart"
+		{
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleHookStart"   
+			 	"Target"		"POINT"        	
+            }		
+			"LinearProjectile"
+			{
+				"Target"      	"POINT"
+			    "EffectName"  	""
+			    "MoveSpeed"   	"1500"
+			    "StartRadius"   "150"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "150"
+			    "FixedDistance" "%range"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"  "0"
+			    "ProvidesVision" "0"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleHookHit"           	
+            }
+		}
+	}
+
+
+	//=================================================================================================================
+	// Gilles De Rais : Tentacle Wrap
+	//=================================================================================================================
+	"gille_tentacle_wrap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"zc_tentacle_wrap"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"10.0"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
+		"AnimationPlaybackRate" 		"1.0"
+
+	    "precache"
+	    {
+	    }		
+		"OnSpellStart"
+		{
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleWrapStart"  
+            }		
+            "ApplyModifier"
+            {
+            	"ModifierName"	"modifier_tentacle_wrap"
+            	"Target"		"TARGET"
+            }
+			"FireSound"
+			{
+				"EffectName"		"ZC.Tentacle2"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_tentacle_wrap"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"2.0"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}				
+			}
+		}
+	}
+
+	//===================================================
+	// Gilles De Rais : Subterranean Skewer
+	//===================================================
+	"gille_subterranean_skewer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"8"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"25"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"			"1000"
+			}	
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"300 400 500 600 700 800 900 1000"
+			}				
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSubSkewerStart"
+				"Target"			"POINT"
+			}
+			"FireSound"
+			{
+				"EffectName"		"ZC.Tentacle1"
+				"Target"			"CASTER"
+			}
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnSubSkewerHit"    
+			 	"Damage"		"%damage"     
+			 	"StunDuration"	"%stun_duration"  	
+            }
+		}		
+		"Modifiers"
+		{
+		}
+	}
+
+
+
+	//===================================================
+	// Gilles De Rais : L'Arret de Mort
+	//===================================================
+	"gille_larret_de_mort"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_combo"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{	
+			"particle"		"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Eye for Art
+	//=======================================
+	"gille_attribute_eye_for_art"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_eye_for_art"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"9"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnEyeForArtAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Improve Black Magic
+	//=======================================
+	"gille_attribute_improve_black_magic"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_torment"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"16"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnBlackMagicImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Mental Pollution
+	//=======================================
+	"gille_attribute_mental_pollution"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_mental_pollution"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnMentalPollutionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Abyssal Connection
+	//=======================================
+	"gille_attribute_abyssal_connection"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnAbyssConnectionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Abyssal Connection - Tier 2
+	//=======================================
+	"gille_attribute_abyssal_connection_2"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnAbyssConnection2Acquired"
+			}
+		}
+	}
 	//================================================
 	// simple dummy passive
 	//================================================

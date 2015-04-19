@@ -128,6 +128,15 @@ IskanderAttribute = {
 	attrCount = 4
 }
 
+GillesAttribute = {
+	"gille_attribute_eye_for_art",
+	"gille_attribute_improve_black_magic",
+	"gille_attribute_mental_pollution",
+	"gille_attribute_abyssal_connection",
+	"gille_attribute_abyssal_connection_2",
+	"gille_larret_de_mort",
+	attrCount = 5
+}
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -384,6 +393,7 @@ function OnStatList1Open(keys)
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("master_damage")
 	caster:AddAbility("master_armor")
+	caster:AddAbility(caster.ComboName)
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -402,6 +412,7 @@ function OnStatList2Open(keys)
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("fate_empty1")
 	caster:AddAbility("fate_empty2")
+	caster:AddAbility(caster.ComboName)
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -418,6 +429,7 @@ function OnShardOpen(keys)
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("master_shard_of_prosperity")
 	caster:AddAbility("fate_empty2")
+	caster:AddAbility(caster.ComboName)
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -430,6 +442,7 @@ function OnStatListClose(keys)
 	for i=0,5 do
 		caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
 	end
+	caster:RemoveAbility(caster.ComboName)
 	for i=1, 20 do
 		if caster.SavedList[i] == nil then break
 		else

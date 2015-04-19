@@ -707,48 +707,52 @@
 	}
 
 	//=======================================
-	//	Caster(4th) - Gille De Rais
+	//	Caster(4th) - Gilles De Rais
 	//=======================================
-	"npc_dota_hero_zc"
+	"npc_dota_hero_gille"
 	{
 		"override_hero"			"npc_dota_hero_shadow_shaman"
 		"Model"					"models/development/invisiblebox.vmdl"
-		"ModelScale"			"1.00"
+		"ModelScale"			"1.40"
 
-		"Ability1"				"false_assassin_gate_keeper"
-		"Ability2"				"false_assassin_heart_of_harmony"
-		"Ability3"				"false_assassin_windblade"
-		"Ability4"				""
-		"Ability5"				""
-		"Ability6"				"false_assassin_tsubame_gaeshi"
-		
-		"StatusHealth"					"1100"
-		"StatusHeathRegen"				"2"
-		"StatusMana"					"0"
+		"AbilityLayout"			"6"
+		"Ability1"				"gille_summon_demon"
+		"Ability2"				"gille_torment"
+		"Ability3"				"gille_exquisite_cadaver"
+		"Ability4"				"gille_spellbook_of_prelati"
+		"Ability5"				"gille_throw_corpse"
+		"Ability6"				"gille_abyssal_contract"
+		"Ability7"				"gille_larret_de_mort"
+		"Ability8"				"presence_detection_passive"
+		"Ability9"				"attribute_bonus"
+
+		"StatusHealth"					"950"
+		"StatusHeathRegen"				"1"
+		"StatusMana"					"1000"
 		"StatusManaRegen"				"0"
 		
 		"ArmorPhysical"					"2"
-		"MagicalResistance"				"0"
+		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackRange"					"200"
-		"AttackDamageMin"				"27"
-		"AttackDamageMax"				"35"
-		"AttackRate"					"0.95"
+		"AttackRange"					"50"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
+		"AttackRate"					"9.99"
 		
-		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"0.7"
+		"AttributeStrengthGain"			"0.75"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.8"
+		"AttributeAgilityGain"			"0.75"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0"
+		"AttributeIntelligenceGain"		"1.3"
 		
-		"MovementSpeed"					"350"
+		"MovementSpeed"					"330"
 		"MovementTurnRate"				"0.3"
 
-		"VisionDaytimeRange"			"1000"
-		"VisionNighttimeRange"			"800"
+		"VisionDaytimeRange"			"700"
+		"VisionNighttimeRange"			"700"
 
 	}
 

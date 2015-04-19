@@ -205,7 +205,7 @@ function StartQuestTimer(questname, questtitle, questendtime)
 end
 
 function LevelAllAbility(hero)
-    for i=0, 30 do
+    for i=0, 14 do
         local ability = hero:GetAbilityByIndex(i)
         if ability == nil then return end
         local level0 = false
@@ -246,6 +246,7 @@ end
 
 function FindName(name)
     local heroName = nil
+    print("Finding name")
     if name == "npc_dota_hero_legion_commander" then
         heroName = "Saber"
     elseif name == "npc_dota_hero_phantom_lancer" then
@@ -274,6 +275,8 @@ function FindName(name)
         heroName = "Lancer(4th)"
     elseif name == "npc_dota_hero_chen" then
         heroName = "Rider(4th)"
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        heroName = "Caster(4th)"
     end
     return heroName
 end
@@ -308,6 +311,8 @@ function FindAttribute(name)
         attributes = DiarmuidAttribute
     elseif name == "npc_dota_hero_chen" then
         attributes = IskanderAttribute
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        attributes = GillesAttribute
     end
     return attributes
 end 

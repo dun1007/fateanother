@@ -1161,7 +1161,207 @@
 		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
 		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
 	}
+	"gille_gigantic_horror"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/zc/tentacleking.vmdl"
+		"ModelScale"				"1.6"
+		"Level"						"1"
+		"HealthBarOffset"			"500"
+		
+		"AbilityLayout"				"6"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"gille_tentacle_hook"	 
+		"Ability2"					"gille_tentacle_wrap"
+		"Ability3"					"gille_subterranean_skewer"
+		"Ability4"					"gille_tentacle_of_destruction"
+		"Ability5"					"gille_gigantic_horror_passive"
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"50"								// Damage range min.
+		"AttackDamageMax"			"50"								// Damage range max.
+		"AttackRate"				"2.0"								// Speed of attack.
+		"AttackAnimationPoint"		"0.5"								// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"1000"								// Range within a target can be acquired.
+		"AttackRange"				"700"								// Range within a target can be attacked.
+		"ProjectileModel"			""				// Particle system model for projectile.
+		"ProjectileSpeed"			"9999"	
 
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"300"			// Experience earn.
+		"BountyGoldMin"				"1000"			// Gold earned min.
+		"BountyGoldMax"				"1000"			// Gold earned max.
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"500"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"100"
+		"MovementTurnRate"			"0.7"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1500"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"1000"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		"ShouldDoFlyHeightVisual"	"0"
+	}
+
+
+	"gille_corpse"
+	{
+		"Model"				"models/props_structures/skeleton001.vmdl"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					""			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"0"		// Speed.
+		"MovementTurnRate"			"999"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
+		"AttackRate"					"999"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"250"		// Base health.
+		"StatusHealthRegen"			"1"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+	}
+
+	"gille_oceanic_demon"
+	{
+		"Model"				"models/items/courier/echo_wisp/echo_wisp_flying.vmdl"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					"gille_oceanic_demon_passive"			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"300"		// Speed.
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"15"
+		"AttackDamageMax"				"5"
+		"AttackRate"					"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"190"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"5"			// Experience earn.
+		"BountyGoldMin"				"15"			// Gold earned min.
+		"BountyGoldMax"				"15"			// Gold earned max.
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"300"		// Range of vision during day light.
+		"VisionNighttimeRange"		"300"		// Range of vision at night time.
+	}
+
+
+	"gille_tentacle_of_destruction"
+	{
+		"Model"				"models/zc/tidehuntertentacle_reference.vmdl"
+		"ModelScale"		"1.5"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					"gille_tentacle_of_destruction_passive"			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"300"		// Speed.
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"200"
+		"AttackDamageMin"				"20"
+		"AttackDamageMax"				"20"
+		"AttackRate"					"0.75"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"210"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"10"			// Experience earn.
+		"BountyGoldMin"				"30"			// Gold earned min.
+		"BountyGoldMax"				"30"			// Gold earned max.
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"500"		// Range of vision during day light.
+		"VisionNighttimeRange"		"500"		// Range of vision at night time.
+	}
+	
 	"lancer_trap"
 	{
 		// General
