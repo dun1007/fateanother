@@ -178,6 +178,9 @@ function Precache( context )
     PrecacheItemByNameSync("item_all_seeing_orb", context)
     PrecacheItemByNameSync("item_shard_of_anti_magic", context)
     PrecacheItemByNameSync("item_shard_of_replenishment", context)
+    PrecacheItemByNameSync("item_gille_contaminate", context)
+    PrecacheItemByNameSync("item_gille_integrate", context)
+    PrecacheItemByNameSync("item_gille_otherworldly_portal", context)
 
     -- Master and Stash
     PrecacheResource("model", "models/shirou/shirouanim.vmdl", context)
@@ -383,7 +386,7 @@ choice = 0 --
 function PlayBGM(player)
   local delayInBetween = 2.0
 
-  Timers:CreateTimer('BGMTimer', {
+  Timers:CreateTimer("BGMTimer" .. player:GetPlayerID(), {
     endTime = 0,
     callback = function()
     choice = RandomInt(1,8)
@@ -460,6 +463,21 @@ function FateGameMode:PlayerSay(keys)
     end
   end
 
+  if text == "-testsetupall" then
+    self:LoopOverPlayers(function(player, playerID)
+      local hero = player:GetAssignedHero()
+      hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
+      hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
+      if hero:GetName() == "npc_dota_hero_juggernaut" then
+        hero:SetBaseStrength(25)
+        hero:SetBaseAgility(25) 
+      else 
+        hero:SetBaseStrength(20) 
+        hero:SetBaseAgility(20) 
+        hero:SetBaseIntellect(20) 
+      end
+    end)
+  end
   if text == "-unpause" then
     --[[for _,plyr in pairs(self.vPlayerList) do
       local hr = plyr:GetAssignedHero()
@@ -475,7 +493,7 @@ function FateGameMode:PlayerSay(keys)
   -- Turns BGM on and off
   if text == "-bgmoff" then
     print("Turning BGM off")
-    Timers:RemoveTimer("BGMTimer")
+    Timers:RemoveTimer("BGMTimer" .. ply:GetPlayerID())
     ply:StopSound("BGM." .. choice)
   end
 

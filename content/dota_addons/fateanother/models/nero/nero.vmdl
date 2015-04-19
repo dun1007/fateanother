@@ -1,0 +1,286 @@
+<!-- schema text {7e125a45-3d83-4043-b292-9e24f8ef27b4} generic {198980d8-3a93-4919-b4c6-dd1fb07a3a4b} -->
+CVModel CVModel_0
+{
+	CVmeshList m_meshList = CVmeshList
+	{
+		CVmesh[] m_meshList = 
+		[
+			CVmesh
+			{
+				string m_meshName = "nero"
+				string m_meshFile = "models/nero/nero.fbx"
+				string m_materialSearchPath = ""
+				bool m_bSkinParentedObjects = true
+				bool m_bExpensiveTangents = false
+				bool m_bExpensiveVertices = false
+				CVmorphInfo* m_pMorphInfo = NULL
+			}
+		]
+	}
+	CVClothProxyMeshList m_clothProxyMeshList = CVClothProxyMeshList
+	{
+		CVClothProxyMesh[] m_clothProxyMeshList = 
+		[
+			
+		]
+		float m_flClothEnableThreshold = 0.050000
+		bool m_bCreateStaticBone = false
+		int m_nMaxBonesPerVertex = 4
+		bool m_bRemoveUnusedBonesEnabled = false
+		bool m_bUseOnlyRealMeshBones = false
+		float m_flMatchProxiesToMeshes = 1.000000
+		float m_flReservedFloat = 0.000000
+		int m_nReservedInt = 0
+		bool m_bReservedBool1 = false
+		bool m_bReservedBool2 = false
+		bool m_bReservedBool3 = false
+		bool m_bReservedBool4 = false
+	}
+	CVphysicsMeshList m_physicsMeshList = CVphysicsMeshList
+	{
+		CVphysicsMesh[] m_meshList = 
+		[
+			
+		]
+	}
+	CVmodelInfo* m_pModelInfo = NULL
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVhitBoxSetListReference[] m_pHitBoxSetLists = 
+	[
+		
+	]
+	CVattachmentListReference[] m_pAttachmentLists = 
+	[
+		
+	]
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		CVanimGroupReference
+		{
+			CVanimGroup* m_pObject = &CVanimGroup_0
+			string m_sFileName = ""
+		}
+	]
+	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
+	{
+		NodeMaterialGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVMeshGroupListReference m_pMeshGroupList = CVMeshGroupListReference
+	{
+		MeshGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVLODGroupListReference m_pLodGroupList = CVLODGroupListReference
+	{
+		LODGroupList_t* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropBreakableListReference m_pPropBreakableList = CVpropBreakableListReference
+	{
+		CVpropBreakableList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVpropDataListReference m_pPropDataList = CVpropDataListReference
+	{
+		CVpropDataList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVConstraintListReference[] m_pConstraintLists = 
+	[
+		
+	]
+	string m_collision = ""
+	string m_sMDLFilename = ""
+	string[] m_scriptFiles = 
+	[
+		
+	]
+	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
+	float m_flFbxScale = 1.000000
+	float m_flQCScale = 1.000000
+	CVPsf* m_pvPsf = NULL
+	string m_keyValueText = ""
+	bool m_bStaticProp = false
+	bool m_bEnableClothProcessing = true
+	float m_flClothEnableThreshold = 0.050000
+	int m_nMaxClothVertsPerMesh = 2048
+}
+
+CVanimGroup CVanimGroup_0
+{
+	string m_Name = ""
+	CVReferenceSkeletonReference m_pReferenceSkeleton = CVReferenceSkeletonReference
+	{
+		CVReferenceSkeleton* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVseqGroupReference m_pSeqGroup = CVseqGroupReference
+	{
+		CVseqGroup* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
+	CVanim[] m_Vanim = 
+	[
+		CVanim
+		{
+			string m_Animationname = "nero_anim"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 0
+			int m_nEndframe = 1249
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		}
+	]
+	string[] m_sScripts = 
+	[
+		
+	]
+}
+
+CVMaterialRemapList CVMaterialRemapList_0
+{
+	CVMaterialRemap[] m_vMaterialRemapList = 
+	[
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model1.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model2.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model3.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model4.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model5.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model6.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model7.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model8.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model9.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model10.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model11.vmat"
+			string m_sReplaceMaterial = "materials/nero/nero_body1.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model12.vmat"
+			string m_sReplaceMaterial = "materials/nero/nero_body2.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model13.vmat"
+			string m_sReplaceMaterial = "materials/models/development/invisibletexture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model14.vmat"
+			string m_sReplaceMaterial = "materials/nero/nero_eye.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model15.vmat"
+			string m_sReplaceMaterial = "materials/nero/nero_face.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model16.vmat"
+			string m_sReplaceMaterial = "materials/nero/nero_weap.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "model17.vmat"
+			string m_sReplaceMaterial = "materials/nero/nero_body2.vmat"
+		}
+	]
+}

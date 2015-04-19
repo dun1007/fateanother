@@ -142,7 +142,7 @@ femaleservant = {
 }
 
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
-    "<font color='#58ACFA'>Tip : </font>Work towards gathering 20 all stats in order to acquire <font color='#58ACFA'>Combo</font>, a defining move of hero that can turn the tides of battle. You can level  Stat Bonus of your hero or buy stats with Master's mana  to boost the timing of acquisition.",
+    "<font color='#58ACFA'>Tip : </font>Work towards gathering 20 all stats in order to acquire <font color='#58ACFA'>Combo</font>, a defining move of hero that can turn the tides of battle. You can level Stat Bonus of your hero or buy stats with Master's mana  to boost the timing of acquisition.",
     "<font color='#58ACFA'>Tip : </font>To increase your survivability, consider carrying <font color='#58ACFA'>A Scroll and B Scroll</font> that grant you significant damage mitigation for duration.",
     "<font color='#58ACFA'>Tip : </font>Using <font color='#58ACFA'>Scout Familiar and Ward Familiar</font> is an excellent way to develop a vision control, allowing your team to plan ahead for enemy moves.",
     "<font color='#58ACFA'>Tip : </font>You will get a warning ping when enemy Servant's presence is detected within 2500 range around your hero.",

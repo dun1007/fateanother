@@ -6689,6 +6689,7 @@
 		"precache"
 		{
 			"particle"					"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+			"model"						"models/assassin/asn.vmdl"
 		}
 
 		// Casting
@@ -6877,7 +6878,7 @@
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
 			"particle"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
-			"particle"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+			//"particle"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -6973,16 +6974,16 @@
 				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
 				"OnCreated"
 				{
-					"AttachEffect"
-					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
-						"EffectAttachType"	"follow_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"		"attach_sword"
-						}
-					}
+					//"AttachEffect"
+					//{
+					//	"Target"			"CASTER"
+					//	"EffectName"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+					//	"EffectAttachType"	"follow_customorigin"
+					//	"ControlPointEntities"
+					//	{
+					//		"CASTER"		"attach_sword"
+					//	}
+					//}
 				}				
 				"Properties"
 				{
@@ -16261,7 +16262,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"400 475 550 625 700"
+				"damage"			"400 450 500 550 600"
 			}
 		}
 		
