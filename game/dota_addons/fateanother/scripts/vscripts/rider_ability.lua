@@ -34,14 +34,11 @@ function NailPull(keys)
 		v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 		v:FollowNavMesh(false)
 
-	  	Timers:CreateTimer('nailpull', {
-			endTime = 0.5,
-			callback = function()
+		Timers:CreateTimer(0.5, function()
 			v:PreventDI(false)
 			v:SetPhysicsVelocity(Vector(0,0,0))
 			v:OnPhysicsFrame(nil)
-		end
-		})
+		end)
 
 		v:OnPhysicsFrame(function(unit)
 			local diff = caster:GetAbsOrigin() - unit:GetAbsOrigin()

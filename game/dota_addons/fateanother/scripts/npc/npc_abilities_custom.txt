@@ -6561,7 +6561,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25 23 21 19 17"
+		"AbilityCooldown"				"18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6571,30 +6571,44 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_chance"			"35"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"25 50 75 100 125"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.1"
+				"var_type"				"FIELD_INTEGER"
+				"armor_pen"			"25 35 45 55 65"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"150"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"200 225 250 275 300"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mr"				"20 25 30 35 40"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 175 250 325 400"
 			}
-
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"				"0.5 0.75 1.0 1.25 1.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"threshold"				"300 250 200 150 100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gcd"					"15"
+			}
 		}
 		
 		"OnSpellStart"
@@ -6603,19 +6617,51 @@
 			{
 				"ScriptFile"		"fa_ability"
 				"Function"			"OnHeartStart"
+				"GCD"				"%gcd"
 			}
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_heart_self_buff"
+				"ModifierName"	"modifier_heart_of_harmony"
+				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_TemplarAssassin.Refraction"
 				"Target"		"CASTER"
 			}
 		}
 		
-		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnHeartLevelUp"
+				"ArmorPen"			"%armor_pen"
+			}
+		}		
 		
 		"Modifiers"
 		{
-			"modifier_heart_self_buff"
+			"modifier_heart_of_harmony_passive"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnHeartAttackLanded"
+						"AttackDamage"		"%attack_damage"
+					}
+				}			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+				}	
+			}
+			"modifier_heart_of_harmony"
 			{
 				"Duration"		"%duration"
 				
@@ -6643,32 +6689,22 @@
 						}
 					}
 				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
-				}
-				"OnAttackLanded"
+
+				"OnTakeDamage"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"fa_ability"
-						"Function"			"OnHeartAttackLanded"
-						"Damage"			"%bonus_damage"
+						"Function"			"OnHeartDamageTaken"
+						"DamageTaken"		"%attack_damage"
+						"Threshold"			"%threshold"
+						"StunDuration"		"%stun_duration"
+						"Damage"			"%damage"
 					}
-					"Random"
-					{
-						"Chance"		"%proc_chance"
-						"OnSuccess"
-						{
-							"Stun"
-							{
-								"Target"	"TARGET"
-								"Duration"	"%stun_duration"
-							}
-						}
-					}
+				}				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
 				}
 
 			}
@@ -6782,6 +6818,151 @@
 		}
 	}
 
+
+	//========================================
+	// False Assassin : Tsubame Mai
+	//========================================
+	"false_assassin_tsubame_mai"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"false_assassin_tsubame_mai"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"MaxLevel"						"1"
+		"precache"
+		{
+			"particle"					"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+			"particle"					"particles/custom/archer/archer_overedge_slash.vpcf"
+			"particle"					"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
+			"particle"					"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+			"particle"					"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"threshold"				"350"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnTMStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_tsubame_mai"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_tsubame_mai"
+			{
+				"Duration"			"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+						"EffectAttachType"	"start_at_origin"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_origin"
+							"TARGET"		"attach_origin"
+						}
+					}
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnTMDamageTaken"
+						"DamageTaken"	"%attack_damage"
+						"Threshold"		"%threshold"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnTMLanded"
+					}
+				}
+			}
+			"modifier_tsubame_mai_anim"
+			{
+				"Duration"	"0.7"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_ATTACK_EVENT"				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
+			"modifier_tsubame_mai_tg_cast_anim"
+			{
+				"Duration"	"1.5"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
+				}
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+			}
+		}
+	}
 	//========================================
 	// False Assassin : Windblade
 	//========================================

@@ -345,7 +345,7 @@
 		"Ability4"				"false_assassin_minds_eye"
 		"Ability5"				"fate_empty2"
 		"Ability6"				"false_assassin_tsubame_gaeshi"
-		"Ability7"				"false_assassin_illusory_wanderer"
+		"Ability7"				"false_assassin_tsubame_mai"
 		"Ability8"				"false_assassin_quickdraw"
 		"Ability9"				"false_assassin_presence_concealment"
 		"Ability10"				"presence_detection_passive"

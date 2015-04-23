@@ -167,6 +167,43 @@ function giveUnitDataDrivenModifier(source, target, modifier,dur)
     item:RemoveSelf()
 end
 
+function ApplyAirborne(source, target, duration)
+    target:AddNewModifier(source, source, "modifier_stunned", {Duration = duration})
+    --[[local ascendCounter = 0
+    Timers:CreateTimer(function()
+        if ascendCounter > duration/2 then return end
+        target:SetAbsOrigin(target:GetAbsOrigin() + Vector(0,0,25))
+        ascendCounter = ascendCounter + 0.033
+        return 0.033
+    end)
+    local descendCounter = 0
+    Timers:CreateTimer(duration/2, function()
+        if descendCounter > duration/2 then return end
+        target:SetAbsOrigin(target:GetAbsOrigin() + Vector(0,0,-25))
+        descendCounter = descendCounter + 0.033
+        return 0.033
+    end)]]
+    local knockupSpeed = 1000
+    local knockupAcc = knockupSpeed/duration * 2
+
+    Physics:Unit(target)
+    target:PreventDI()
+    target:SetPhysicsVelocity(Vector(0,0,knockupSpeed))
+    target:SetPhysicsAcceleration(Vector(0,0,-knockupAcc))
+    target:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+    target:FollowNavMesh(false)
+    target:Hibernate(false)
+
+    Timers:CreateTimer(duration, function()
+        target:PreventDI(false)
+        target:SetPhysicsVelocity(Vector(0,0,0))
+        target:SetPhysicsAcceleration(Vector(0,0,0))
+        target:OnPhysicsFrame(nil)
+        target:Hibernate(true)
+    end)
+
+
+end
 
 function DummyEnd(dummy)
     dummy:RemoveSelf()
@@ -423,6 +460,12 @@ function GetPhysicalDamageReduction(armor)
     end
 end
 
+
+function ReduceCooldown(ability, reduction)
+    local remainingCD = ability:GetCooldownTimeRemaining() 
+    ability:EndCooldown()
+    ability:StartCooldown(remainingCD - reduction)
+end
 
 lastTipChoice = 0
 function DisplayTip()

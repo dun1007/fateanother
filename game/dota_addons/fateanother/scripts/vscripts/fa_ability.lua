@@ -50,17 +50,62 @@ function GKParticleDestroy( keys )
 end
 
 function OnHeartStart(keys)
-	
+	local caster = keys.caster
+	-- set global cooldown
+	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
+	caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
+	caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
 end
+
+function OnHeartLevelUp(keys)
+	local caster = keys.caster
+	caster.ArmorPen = keys.ArmorPen
+end
+
+function OnHeartAttackLanded(keys)
+	PrintTable(keys)
+	local caster = keys.caster
+	-- Process armor pen
+	local target = keys.target
+	local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
+	DoDamage(caster, target, caster:GetAttackDamage() * multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	print("dealt " .. caster:GetAttackDamage() * multiplier .. " bonus damage")
+
+end
+
+function OnHeartDamageTaken(keys)
+	-- process counter
+	local caster = keys.caster
+	local target = keys.attacker
+	local damageTaken = keys.DamageTaken
+	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 then
+
+		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
+		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
+		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
+		local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
+		local damage = caster:GetAttackDamage() * keys.Damage/100
+		DoDamage(caster, target, damage + damage*multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+
+
+		ReduceCooldown(caster:FindAbilityByName("false_assassin_gate_keeper"), 15)
+		ReduceCooldown(caster:FindAbilityByName("false_assassin_windblade"), 15)
+		ReduceCooldown(caster:FindAbilityByName("false_assassin_tsubame_gaeshi"), 15)
+
+		target:EmitSound("FA.Omigoto")
+		EmitGlobalSound("FA.Quickdraw")
+		CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
+		caster:RemoveModifierByName("modifier_heart_of_harmony")
+	end
+end
+
 
 function OnHeartAttackLanded(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local damage = keys.Damage
-	local targetSTR = 0
-	if target:IsRealHero() then targetSTR = target:GetStrength() end
-	damage = damage * (target:GetPhysicalArmorValue() + targetSTR) / 100
-	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	--damage = damage * (target:GetPhysicalArmorValue() + targetSTR) / 100
+	--DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 
 end
 
@@ -79,6 +124,107 @@ function PCStopOrder(keys)
 	ExecuteOrderFromTable(stopOrder) 
 end
 
+function OnTMLanded(keys)
+	local caster = keys.caster
+	local target = keys.target
+
+	local tgabil = caster:FindAbilityByName("false_assassin_tsubame_gaeshi")
+	keys.Damage = tgabil:GetLevelSpecialValueFor("damage", tgabil:GetLevel()-1)
+	keys.LastDamage = tgabil:GetLevelSpecialValueFor("lasthit_damage", tgabil:GetLevel()-1)
+	keys.StunDuration = tgabil:GetLevelSpecialValueFor("stun_duration", tgabil:GetLevel()-1)
+	keys.GCD = 0
+
+	local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
+	caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
+	ApplyAirborne(caster, target, 1.5)
+	print("Starting Tsubame Mai")
+	caster:RemoveModifierByName("modifier_tsubame_mai")
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.5)
+	--keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_anim", {})
+	EmitGlobalSound("FA.Kiero")
+	EmitGlobalSound("FA.Quickdraw")
+	CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
+
+	Timers:CreateTimer(0.7, function()
+		if caster:IsAlive() then
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_tg_cast_anim", {})
+			EmitGlobalSound("FA.TGReady")
+		end
+	end)
+	Timers:CreateTimer(1.5, function()
+		if caster:IsAlive() then
+			--keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_finish_anim", {})
+			OnTGStart(keys)
+		end
+	end)
+end
+
+function OnTMDamageTaken(keys)
+	local caster = keys.caster
+	local attacker = keys.attacker
+	local damageTaken = keys.DamageTaken
+
+	-- if caster is alive and damage is above threshold, do something
+	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 then
+		print("Starting Tsubame Mai")
+		local tgabil = caster:FindAbilityByName("false_assassin_tsubame_gaeshi")
+		keys.Damage = tgabil:GetLevelSpecialValueFor("damage", tgabil:GetLevel()-1)
+		keys.LastDamage = tgabil:GetLevelSpecialValueFor("lasthit_damage", tgabil:GetLevel()-1)
+		keys.StunDuration = tgabil:GetLevelSpecialValueFor("stun_duration", tgabil:GetLevel()-1)
+		keys.GCD = 0
+		keys.target = attacker
+		local target = attacker
+
+		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
+		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
+		ApplyAirborne(caster, target, 2.0)
+		giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 2.8)
+		caster:RemoveModifierByName("modifier_tsubame_mai")
+		EmitGlobalSound("FA.Owarida")
+		EmitGlobalSound("FA.Quickdraw")
+		CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
+
+		local slashCounter = 0
+		Timers:CreateTimer(0.6, function()
+			if slashCounter == 7 or not caster:IsAlive() then return end
+			local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
+			local damage = target:GetMaxHealth() * 5/100 + caster:GetAttackDamage()
+			DoDamage(caster, target, damage + damage*multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+			CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(400), target:GetAbsOrigin()+RandomVector(400))
+			caster:SetAbsOrigin(target:GetAbsOrigin()+RandomVector(400))
+			EmitGlobalSound("FA.Quickdraw") 
+
+			slashCounter = slashCounter + 1
+			return 0.2-slashCounter*0.02
+		end)
+
+		Timers:CreateTimer(2.0, function()
+			if caster:IsAlive() then
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_tg_cast_anim", {})
+				EmitGlobalSound("FA.TGReady")
+				ExecuteOrderFromTable({
+					UnitIndex = caster:entindex(),
+					OrderType = DOTA_UNIT_ORDER_STOP,
+					Queue = false
+				})
+				caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()) 
+			end
+		end)
+
+		Timers:CreateTimer(2.8, function()
+			if caster:IsAlive() then
+				OnTGStart(keys)
+			end
+		end)
+		
+	end
+end
+
+function CreateSlashFx(source, backpoint, frontpoint)
+	local slash1ParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_overedge_slash.vpcf", PATTACH_CUSTOMORIGIN, source )
+	ParticleManager:SetParticleControl( slash1ParticleIndex, 2, backpoint )
+	ParticleManager:SetParticleControl( slash1ParticleIndex, 3, frontpoint )
+end
 function OnFADeath(keys)
 	local caster = keys.caster
 	for i=1, #caster.IllusionTable do
@@ -292,6 +438,7 @@ function TGPlaySound(keys)
 	local caster = keys.caster
 	if caster:GetName() == "npc_dota_hero_juggernaut" then
 		EmitGlobalSound("FA.TGReady")
+
 	elseif caster:GetName() == "npc_dota_hero_sven" then
 		EmitGlobalSound("Lancelot.Growl" )
 	end
@@ -317,6 +464,7 @@ function OnTGStart(keys)
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
+
 
 	Timers:CreateTimer(0.5, function()  
 		if caster:IsAlive() then
@@ -373,12 +521,12 @@ end
 
 function FACheckCombo(caster, ability)
 	if caster:GetStrength() >= 25 and caster:GetAgility() >= 25 then
-		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") and caster:FindAbilityByName("false_assassin_heart_of_harmony"):IsCooldownReady() and caster:FindAbilityByName("false_assassin_illusory_wanderer"):IsCooldownReady() then
-			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") and caster:FindAbilityByName("false_assassin_heart_of_harmony"):IsCooldownReady() and caster:FindAbilityByName("false_assassin_tsubame_mai"):IsCooldownReady() then
+			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", true, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_illusory_wanderer", true, true) 
+				caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", true, true) 
 			end
 			})			
 		end

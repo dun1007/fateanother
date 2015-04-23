@@ -333,6 +333,7 @@ function OnNukeStart(keys)
     -- Create F16 nunit
     Timers:CreateTimer(1.97, function()
         EmitGlobalSound("Lancelot.Nuke_Beep")
+        EmitGlobalSound("Lancelot.Helicoptor")
         -- Set up unit
         LevelAllAbility(f16)
         FindClearSpaceForUnit(f16, f16:GetAbsOrigin(), true)

@@ -316,6 +316,15 @@
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+			"gille_attack_speed_boost"
+			{
+				"IsDebuff"		"0"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"50"
+				}
+			}
 	    }
 
 	}
@@ -2064,5 +2073,270 @@
 				"Function"		"FullHeal"
 			}
 	    }	
+	}
+
+	"item_gille_contaminate" 
+	{
+	    "ID"           "1131"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_contaminate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"30"
+	    "precache"
+	    {
+	    	"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+	    }
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}				
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"500 750 1000 1250 1500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnContaminateStart"
+				"Radius"			"%radius"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Venomancer.PoisonNova"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_contaminate"
+			{
+				"Duration"		"10.0"
+				"IsDebuff"		"1"
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnContaminateThink"
+						"Damage"		"%damage"
+					}
+				}
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"	"TARGET"
+					}
+				}
+			}
+		}
+	}
+
+
+	"item_gille_integrate" 
+	{
+	    "ID"           "1132"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_integrate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"0"
+	    "precache"
+	    {
+	    }
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"200"
+			}	
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed"			"50"
+			}	
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnIntegrateStart"
+			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_integrate"
+	    	{
+	    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+	    		"EffectAttachType"	"attach_hitloc"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%movespeed"
+	    			"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed"
+	    		}
+	    		"OnDeath"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"	"gille_ability"
+	    				"Function"		"OnIntegrateDeath"
+	    			}
+	    		}
+	    	}
+	    	"modifier_integrate_passive"
+	    	{
+	    		"IsHidden"		"1"
+	    		"Passive"		"1"
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnIntegrateCanceled"
+					}
+				}
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnIntegrateCanceled"
+					}
+				}
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnIntegrateCanceled"
+					}
+				}
+	    	}
+	    	"modifier_integrate_gille"
+	    	{
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"IntegrateFollow"
+					}				
+				}	
+	    	}
+	    }
+	}
+
+
+	"item_gille_otherworldly_portal" 
+	{
+	    "ID"           "1133"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_integrate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCooldown"		"90"
+	    "precache"
+	    {
+	    }
+
+		"AbilitySpecial"
+		{
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnHorrorTeleport"
+				"Target"		"POINT"
+			}
+	    }
+
 	}
 }

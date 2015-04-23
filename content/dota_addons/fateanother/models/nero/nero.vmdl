@@ -137,10 +137,175 @@ CVanimGroup CVanimGroup_0
 	[
 		CVanim
 		{
-			string m_Animationname = "nero_anim"
+			string m_Animationname = "nero_hack1"
 			string m_Filepath = "models/nero/nero_anim.FBX"
-			int m_nStartframe = 0
-			int m_nEndframe = 1249
+			int m_nStartframe = 187
+			int m_nEndframe = 225
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_ATTACK"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_attack_special"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 225
+			int m_nEndframe = 257
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_ATTACK_EVENT"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_run"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 280
+			int m_nEndframe = 305
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_RUN"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_dash"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 334
+			int m_nEndframe = 361
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -158,6 +323,391 @@ CVanimGroup CVanimGroup_0
 			CActivity[] m_Activities = 
 			[
 				
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_stab"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 481
+			int m_nEndframe = 507
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY1"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_stab2"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 750
+			int m_nEndframe = 785
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_ATTACK2"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_cast1"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 586
+			int m_nEndframe = 634
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_2"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_death"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 1000
+			int m_nEndframe = 1034
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_DIE"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_cast2"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 1156
+			int m_nEndframe = 1205
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_3"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_idle"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 182
+			int m_nEndframe = 184
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_IDLE"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "nero_hack2"
+			string m_Filepath = "models/nero/nero_anim.FBX"
+			int m_nStartframe = 437
+			int m_nEndframe = 475
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_4"
+					int m_nWeight = 1
+				}
 			]
 			CAnimationEvent[] m_AnimationEvents = 
 			[
