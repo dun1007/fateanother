@@ -7,8 +7,8 @@ CVModel CVModel_0
 		[
 			CVmesh
 			{
-				string m_meshName = "tamamo"
-				string m_meshFile = "models/tamamo/tamamo.fbx"
+				string m_meshName = "lee"
+				string m_meshFile = "models/lishuen/lee.fbx"
 				string m_materialSearchPath = ""
 				bool m_bSkinParentedObjects = true
 				bool m_bExpensiveTangents = false
@@ -100,7 +100,7 @@ CVModel CVModel_0
 	[
 		
 	]
-	CVMaterialRemapList* m_pMaterialRemapList = NULL
+	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
 	float m_flFbxScale = 1.000000
 	float m_flQCScale = 1.000000
 	CVPsf* m_pvPsf = NULL
@@ -137,10 +137,10 @@ CVanimGroup CVanimGroup_0
 	[
 		CVanim
 		{
-			string m_Animationname = "tamamo_anim"
-			string m_Filepath = "models/tamamo/tamamo_anim.FBX"
+			string m_Animationname = "lee_anim"
+			string m_Filepath = "models/lishuen/lee_anim.FBX"
 			int m_nStartframe = 0
-			int m_nEndframe = 967
+			int m_nEndframe = 3124
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -190,5 +190,67 @@ CVanimGroup CVanimGroup_0
 	string[] m_sScripts = 
 	[
 		
+	]
+}
+
+CVMaterialRemapList CVMaterialRemapList_0
+{
+	CVMaterialRemap[] m_vMaterialRemapList = 
+	[
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported1.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body2.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported2.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported3.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body2.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported4.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported5.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_face.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported6.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_eye.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported7.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_face.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported8.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_hair.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported9.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported10.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported11.vmat"
+			string m_sReplaceMaterial = "materials/lishuen/li_body.vmat"
+		}
 	]
 }
