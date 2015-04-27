@@ -266,6 +266,7 @@
 		"precache"						
 		{
 			"particle"				"particles/econ/items/windrunner/windrunner_cape_sparrowhawk/windrunner_windrun_blur_sparrowhawk.vpcf"
+			"particle"				"particles/custom/saber/saber_invisible_air_trail.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_trail.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_tornado_base.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
@@ -525,15 +526,13 @@
 		"AnimationPlaybackRate" 		"1.0"				// Adjust playback rate to reflect the ability was 0.9
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"		// I don't think it's neccessary to precache these
-			"particle_folder"		"particles/units/heroes/hero_invoker"					// three folders
-			"particle_folder"		"particles/units/heroes/hero_lina"						//
 			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
 			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
 			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
 			"particle"				"particles/custom/saber_excalibur.vpcf"
 			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
+			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -613,7 +612,13 @@
 			 	"ScriptFile"	"saber_ability"
 			 	"Function"		"OnExcaliburHit"
 			 	"Damage"		"%damage"
-			}			
+			}	
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}		
 		}
 		
 		"Modifiers"
@@ -621,7 +626,8 @@
 			"saber_pause"
 			{
 				"Duration"		"%pause_duration"
-				
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"				
 				"OnCreated"
 				{
 					"ApplyModifier"
@@ -783,9 +789,7 @@
 			"particle"					"particles/custom/saber_avalon_floor.vpcf"
 			"particle"					"particles/custom/saber_avalon_impact.vpcf"
 			"particle"					"particles/custom/saber_avalon_explosion.vpcf"
-			"particle_folder"			"particles/units/heroes/hero_omniknight"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 		}
 		
 		// Cast
@@ -1059,7 +1063,7 @@
 			"particle"				"particles/custom/saber_strike_air_blast.vpcf"
 			"particle"				"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
-			"particle_folder"		"particles/units/heroes/hero_invoker"
+			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 		}
 
@@ -1155,6 +1159,12 @@
 				"Target"		"TARGET"
 				"ModifierName"	"modifier_strike_air_target_VFX"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
 		}
 		
 		"Modifiers"
@@ -1218,6 +1228,7 @@
 			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
 			"particle"				"particles/custom/screen_yellow_splash.vpcf"
 			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
+			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 		}
 		
 		// Casting
@@ -1290,6 +1301,12 @@
 				"Function"		"OnMaxHit"
 				"Damage"		"%damage"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
 		}
 		
 		"Modifiers"
@@ -1297,7 +1314,8 @@
 			"saber_pause"
 			{
 				"Duration"		"5"
-				
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"						
 				"OnCreated"
 				{
 					"ApplyModifier"
@@ -1312,11 +1330,9 @@
 						"ModifierName"	"excalibur_vfx_phase_3"
 					}
 				}
-				
-				"States"
+				"Properties"
 				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.9"
 				}
 			}
 			
@@ -1556,6 +1572,7 @@
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
 		}
 		"AbilitySpecial"
 		{
@@ -1609,6 +1626,8 @@
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+
 		}
 		"AbilitySpecial"
 		{
@@ -1662,6 +1681,11 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
+			"model"					"models/props_gameplay/rune_haste01.vmdl"
+		}
 		"AbilitySpecial"
 		{
 			"01"
@@ -1831,7 +1855,7 @@
 		
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+			"particle"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
@@ -1872,7 +1896,19 @@
 		{
 			"modifier_aspd_increase"
 			{
-				"EffectName"	"particles/units/heroes/hero_lina/lina_fiery_soul.vpcf"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_weapon2"
+						}
+					}
+				}
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_modifier"
@@ -1908,6 +1944,7 @@
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
 			"particle"		"particles/items_fx/dagon.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}
 		
 		// Casting
@@ -1964,6 +2001,24 @@
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold"
 			 }
+			 "ApplyModifier"
+			 {
+			 	"ModifierName"	"modifier_gae_bolg_pierce_anim"
+			 	"Target"		"CASTER"
+			 }
+		}
+		"Modifiers"
+		{
+			"modifier_gae_bolg_pierce_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
+				}
+			}	
 		}
 	}
 
@@ -1986,11 +2041,11 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_centaur/centaur_double_edge.vpcf"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 			"particle"		"particles/custom/screen_red_splash.vpcf"
 			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}
 		
 		// Casting
@@ -2028,6 +2083,11 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"GBAttachEffect"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_wesen_gae_bolg_anim"
+				"Target"		"CASTER"
+			}
 
 		}
 		"OnSpellStart"
@@ -2039,6 +2099,25 @@
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold_percentage"
 			 }
+		}
+		"Modifiers"
+		{
+			"modifier_wesen_gae_bolg_anim"
+			{
+				"Duration"	"1.0"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+			}
+			"modifier_wesen_gae_bolg_pierce_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+			}
 		}
 	}
 	
@@ -2063,7 +2142,6 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_chaos_knight"
 			"particle"		"particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf"
 			"particle"		"particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf"
 			"particle"		"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf"
@@ -2123,6 +2201,11 @@
 			 	"Function"		"OnGBAOEStart"
 			 	"Target"		"POINT"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_gae_jump_throw_anim"
+				"Target"		"CASTER"
+			}
 		}
 
 		"OnProjectileHitUnit" 
@@ -2139,6 +2222,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_gae_jump_throw_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_5"
+			}	
 		}
 	}
 	
@@ -2468,7 +2557,8 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
+			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
 		}
 		
 		"AbilityCastPoint"				"1.3"
@@ -2656,7 +2746,6 @@
 
 		"precache"
 		{
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_slardar.vsndevts"
 			"particle"				"particles/units/heroes/hero_spectre/spectre_ambient.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_mana_catalyst.vpcf"
 		}
@@ -2748,6 +2837,14 @@
 			{
 				"Passive"		"1"
 				"IsPurgable"	"0"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnDerangeDeath"
+					}
+				}
 			}
 			
 			"modifier_derange_mana_catalyst_VFX"
@@ -3106,9 +3203,6 @@
 		"AnimationPlaybackRate" 		"0.9"
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_keeper_of_the_light"
-			"particle_folder"		"particles/units/heroes/hero_invoker"
-			"particle_folder"		"particles/units/heroes/hero_lina"
 			"particle"				"particles/econ/items/doom/doom_f2p_death_effect/doom_bringer_f2p_death_ring_d_black.vpcf"
 			"particle"				"particles/units/heroes/hero_enigma/enigma_blackhole_n.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_cast.vpcf"
@@ -3116,6 +3210,7 @@
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf"
+			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -3194,6 +3289,12 @@
 				"Function"		"OnDexHit"
 				"Damage"		"%damage"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}	
 		}				
 		
 		"Modifiers"
@@ -3201,7 +3302,8 @@
 			"dark_excalibur_VFX_controller"
 			{
 				"Duration"		"%pause_duration"
-				
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"				
 				"OnCreated"
 				{
 					"ApplyModifier"
@@ -4157,6 +4259,8 @@
 		{
 			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
 			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+
 		}
 		
 		// Casting
@@ -4300,7 +4404,7 @@
 		{
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"particle"				"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
-			"particle"	"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"particle"				"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -4410,6 +4514,7 @@
 		{
 			"particle"	"particles/custom/archer/archer_rhoaias_shield.vpcf"
 			"particle"	"particles/units/heroes/hero_templar_assassin/templar_assassin_refract_hit_sphere.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -4432,6 +4537,11 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_rho_aias_shield"
+				"Target"		"TARGET"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_EmberSpirit.FlameGuard.Cast"
 				"Target"		"TARGET"
 			}
 		}
@@ -4589,7 +4699,7 @@
 			
 				"Duration"	"12.0"
 				
-				"OnDeath"
+				"OnDestroy"
 				{
 					"RemoveModifier"
 					{
@@ -4812,12 +4922,13 @@
 		
 		"precache"
 		{
-			// "particle_folder"	"particles/units/heroes/hero_earthshaker" // should not be needed
 			"particle"			"particles/units/heroes/hero_centaur/centaur_warstomp_shockwave.vpcf"
 			"particle"			"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp.vpcf"
 			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_shockwave.vpcf"
 			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
@@ -4907,7 +5018,7 @@
 		{
 			"particle"			"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"particle"			"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-			
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_drowranger.vsndevts"
 			"particle"			"particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
 			"particle"			"particles/custom/archer/archer_arrow_rain_model.vpcf"
 			"particle"			"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
@@ -4976,6 +5087,8 @@
 		{
 			"particle"					"particles/custom/archer/archer_overedge_slash.vpcf"
 			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
 		}
 		
 		// Casting
@@ -5056,6 +5169,8 @@
 			"particle"					"particles/econ/events/ti4/teleport_end_ti4.vpcf"
 			"particle"					"particles/custom/archer/archer_hrunting_orb.vpcf"
 			"particle"					"particles/custom/archer/archer_hrunting_area.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
 		
 		"AbilityCastPoint"				"4.0"
@@ -5356,6 +5471,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
 		// Casting
@@ -5447,6 +5563,10 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"200"
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+		}
 		
 		"AbilitySpecial"
 		{
@@ -5787,12 +5907,13 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_earthshaker"
 			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
@@ -5846,23 +5967,16 @@
 		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_dash_anim"
+				"Target"		"CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
 				"Function"			"OnNineStart"
 				"Target"			"POINT"
-			}
-			"DelayedAction"
-			{
-				"Delay"		"0.5"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_nine_lives_dash"
-						"Target"		"CASTER"
-					}
-				}
 			}
 			"FireSound"
 			{
@@ -5878,6 +5992,11 @@
 			{
 				"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+				"Duration"				"0.9"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
 			}
 
 			"modifier_nine_anim"
@@ -6169,6 +6288,8 @@
 		"precache"
 		{
 			"particle"					"particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+
 		}
 		
 
@@ -6219,6 +6340,11 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_gate_keeper_self_buff"
+				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
 				"Target"		"CASTER"
 			}
 		}
@@ -6285,6 +6411,7 @@
 		"precache"
 		{
 			"particle"					"particles/custom/false_assassin/fa_quickdraw.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
 		}
 		
 		// Casting
@@ -6434,7 +6561,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"25 23 21 19 17"
+		"AbilityCooldown"				"18"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6444,30 +6571,44 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"proc_chance"			"35"
+				"var_type"				"FIELD_INTEGER"
+				"bonus_range"			"25 50 75 100 125"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"0.1"
+				"var_type"				"FIELD_INTEGER"
+				"armor_pen"			"25 35 45 55 65"
 			}
 			"03"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_range"			"150"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"200 225 250 275 300"
+				"var_type"				"FIELD_FLOAT"
+				"bonus_mr"				"20 25 30 35 40"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_FLOAT"
-				"duration"				"10.0"
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"100 175 250 325 400"
 			}
-
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stun_duration"				"0.5 0.75 1.0 1.25 1.5"
+			}
+			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"threshold"				"300 250 200 150 100"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"gcd"					"15"
+			}
 		}
 		
 		"OnSpellStart"
@@ -6476,19 +6617,51 @@
 			{
 				"ScriptFile"		"fa_ability"
 				"Function"			"OnHeartStart"
+				"GCD"				"%gcd"
 			}
 			"ApplyModifier"
 			{
-				"ModifierName"	"modifier_heart_self_buff"
+				"ModifierName"	"modifier_heart_of_harmony"
+				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_TemplarAssassin.Refraction"
 				"Target"		"CASTER"
 			}
 		}
 		
-		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnHeartLevelUp"
+				"ArmorPen"			"%armor_pen"
+			}
+		}		
 		
 		"Modifiers"
 		{
-			"modifier_heart_self_buff"
+			"modifier_heart_of_harmony_passive"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnHeartAttackLanded"
+						"AttackDamage"		"%attack_damage"
+					}
+				}			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
+				}	
+			}
+			"modifier_heart_of_harmony"
 			{
 				"Duration"		"%duration"
 				
@@ -6516,32 +6689,22 @@
 						}
 					}
 				}
-				
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
-				}
-				"OnAttackLanded"
+
+				"OnTakeDamage"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"fa_ability"
-						"Function"			"OnHeartAttackLanded"
-						"Damage"			"%bonus_damage"
+						"Function"			"OnHeartDamageTaken"
+						"DamageTaken"		"%attack_damage"
+						"Threshold"			"%threshold"
+						"StunDuration"		"%stun_duration"
+						"Damage"			"%damage"
 					}
-					"Random"
-					{
-						"Chance"		"%proc_chance"
-						"OnSuccess"
-						{
-							"Stun"
-							{
-								"Target"	"TARGET"
-								"Duration"	"%stun_duration"
-							}
-						}
-					}
+				}				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
 				}
 
 			}
@@ -6655,6 +6818,151 @@
 		}
 	}
 
+
+	//========================================
+	// False Assassin : Tsubame Mai
+	//========================================
+	"false_assassin_tsubame_mai"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"false_assassin_tsubame_mai"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"MaxLevel"						"1"
+		"precache"
+		{
+			"particle"					"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+			"particle"					"particles/custom/archer/archer_overedge_slash.vpcf"
+			"particle"					"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
+			"particle"					"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+			"particle"					"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"threshold"				"350"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"3.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"fa_ability"
+				"Function"			"OnTMStart"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_tsubame_mai"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_tsubame_mai"
+			{
+				"Duration"			"%duration"
+				
+				"EffectName"		"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+						"EffectAttachType"	"start_at_origin"
+					}
+				
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_origin"
+							"TARGET"		"attach_origin"
+						}
+					}
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnTMDamageTaken"
+						"DamageTaken"	"%attack_damage"
+						"Threshold"		"%threshold"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnTMLanded"
+					}
+				}
+			}
+			"modifier_tsubame_mai_anim"
+			{
+				"Duration"	"0.7"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_ATTACK_EVENT"				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
+			"modifier_tsubame_mai_tg_cast_anim"
+			{
+				"Duration"	"1.5"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
+				}
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+						}
+					}
+				}
+			}
+		}
+	}
 	//========================================
 	// False Assassin : Windblade
 	//========================================
@@ -6735,7 +7043,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		
 		"AbilityCastPoint"				"0.7"
@@ -6751,6 +7059,7 @@
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
 			"particle"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
+			"particle"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -6810,6 +7119,11 @@
 				"ModifierName"		"modifier_tg_overcharge_effect"
 				"Target"			"TARGET"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_tg_anim"
+				"Target"			"CASTER"
+			}
 		}
 
 		"Modifiers"
@@ -6832,6 +7146,29 @@
 							"TARGET"	"attach_hitloc"
 						}
 					}
+				}
+			}
+			"modifier_tg_anim"
+			{
+				"Duration"	"1.0"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+						"EffectAttachType"	"follow_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"		"attach_sword"
+						}
+					}
+				}				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
 				}
 			}
 		}
@@ -7073,6 +7410,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -7180,6 +7518,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -7306,6 +7645,7 @@
 			"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
 			"particle"		"particles/units/heroes/hero_bounty_hunter/bounty_hunter_windwalk.vpcf"
 			"soundfile"   "soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
 		}
 
 		"OnSpellStart"
@@ -7436,6 +7776,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 		
 
@@ -7496,6 +7837,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 		
 		"AbilityCastRange"				"800"
@@ -7566,6 +7908,7 @@
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_bane/bane_fiendsgrip_ground_rubble.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
 		}
 
 		// Time		
@@ -7703,6 +8046,7 @@
 		
 		"precache"
 		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -7800,6 +8144,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 		
 		"AbilityCastPoint"				"1.0"
@@ -8012,7 +8357,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"16"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -8353,6 +8698,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf"
 			"particle"		"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast_c.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skywrath_mage.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -8545,6 +8891,7 @@
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
 			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf"
+			"particle"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 		}
 		
 		// Casting
@@ -8598,7 +8945,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"		"enuma_elish_pause"
+				"ModifierName"		"enuma_elish_anim"
 				"Target"			"CASTER"
 			}
 
@@ -8624,20 +8971,21 @@
 			 	"Function"		"OnEnumaHit"
 			 	"Damage"		"%damage"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}	
 		}
 
 		"Modifiers"
 		{
-			"enuma_elish_pause"
+			"enuma_elish_anim"
 			{
-				"Duration"	"5.0"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"Duration"	"4.0"
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
 			}
 		}
 	}
@@ -8665,6 +9013,7 @@
 			"particle"		"particles/custom/screen_scarlet_splash.vpcf"
 			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_enuma_elish_charge.vpcf"
+			"particle"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 		}
 		
 		// Casting
@@ -8715,7 +9064,7 @@
 		{
 			"ApplyModifier"
 			{
-				"ModifierName"		"enuma_elish_pause"
+				"ModifierName"		"max_enuma_elish_anim"
 				"Target"			"CASTER"
 			}
 
@@ -8741,20 +9090,21 @@
 			 	"Function"		"OnMaxEnumaHit"
 			 	"Damage"		"%damage"
 			}
+			"FireEffect"
+			{
+				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectAttachType"  "follow_origin"
+				"Target"            "TARGET"
+			}
 		}
 
 		"Modifiers"
 		{
-			"enuma_elish_pause"
+			"max_enuma_elish_anim"
 			{
 				"Duration"	"6.0"
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"IsHidden"	"1"
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_6"
 			}
 		}
 	}
@@ -8945,6 +9295,7 @@
 		"precache"
 		{
 			"model"			"models/props_structures/tower_good.vmdl"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_rubick.vsndevts"
 		}
 		
 		// Casting
@@ -9106,6 +9457,7 @@
 
 		"precache"
 		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -9359,6 +9711,7 @@
 		{
 			"particle"	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
 			"particle"	"particles/custom/caster/caster_argos_durability.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_medusa.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -9485,6 +9838,7 @@
 		{
 			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_fire.vpcf"
 			"particle"	"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -9545,6 +9899,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_silencer/silencer_curse_aoe.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_death_prophet.vsndevts"
 		}
 		
 		// Casting
@@ -9615,6 +9970,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_luna/luna_lucent_beam.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_luna.vsndevts"
 		}
 		
 		// Casting
@@ -9950,6 +10306,7 @@
 			"particle"		"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"
 			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
 			"particle"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -10137,6 +10494,7 @@
 			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
 			"particle"			"particles/custom/screen_purple_splash.vpcf"
 			"particle"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 		}
 		
 		// Casting
@@ -10350,6 +10708,7 @@
 		{
 			"particle"		"particles/prototype_fx/item_linkens_buff.vpcf"
 			"particle"		"particles/custom/abaddon_death_coil_explosion.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -10578,6 +10937,7 @@
 		"precache"
 		{
 			"particle"			"particles/items2_fx/satanic_buff.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 		}
 
 		// Time		
@@ -10882,7 +11242,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gae_bolg_target"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
@@ -10892,6 +11252,7 @@
 			"particle"		"particles/units/heroes/hero_mirana/mirana_starfall_circle.vpcf"
 			"particle"		"particles/custom/lancer/lancer_heart_break.vpcf"
 			"particle"		"particles/items_fx/dagon.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}
 		
 		// Casting
@@ -10979,12 +11340,13 @@
 		
 		"precache"
 		{
-			"particle_folder"		"particles/units/heroes/hero_earthshaker"
 			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
 			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
@@ -11038,6 +11400,11 @@
 		
 		"OnSpellStart"
 		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_dash_anim"
+				"Target"			"CASTER"
+			}
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
@@ -11048,18 +11415,6 @@
 			{
 				"ScriptFile"		"lancelot_ability"
 				"Function"			"OnKnightUsed"
-			}
-			"DelayedAction"
-			{
-				"Delay"		"0.5"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"	"modifier_nine_lives_dash"
-						"Target"		"CASTER"
-					}
-				}
 			}
 			"FireSound"
 			{
@@ -11074,7 +11429,12 @@
 			"modifier_dash_anim"
 			{
 				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_5"
+				"OverrideAnimation"     "ACT_DOTA_RUN"
+				"Duration"				"1.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
 			}
 
 			"modifier_nine_anim"
@@ -11337,6 +11697,7 @@
 			"particle"		"particles/custom/lancelot/lancelot_arondite.vpcf"
 			"particle"		"particles/custom/lancelot/lancelot_arondite_ambient.vpcf"
 			"particle"		"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 		}
 
 		// Time		
@@ -11506,6 +11867,7 @@
 
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_abaddon/abaddon_death_coil_explosion.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -11651,6 +12013,7 @@
 			"particle"				"particles/econ/items/gyrocopter/hero_gyrocopter_gyrotechnics/gyro_calldown_first.vpcf"
 			"particle"				"particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf"
 			"particle"				"particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_gyrocopter.vsndevts"
 		}
 		
 		// Casting
@@ -11722,6 +12085,10 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "diarmuid_minds_eye"
 		"MaxLevel"                      "1"
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
+		}
 		
 		"Modifiers"
 		{
@@ -11754,9 +12121,10 @@
 
 		"precache"
 		{
-			//"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
+			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
 			"particle"		"particles/custom/avenger/avenger_dark_passage_start.vpcf"
 			"particle"		"particles/custom/avenger/avenger_dark_passage_end.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
 		// Casting
@@ -11770,7 +12138,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"75"
+		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
 		{
@@ -11838,6 +12206,7 @@
 			"particle"			"particles/units/heroes/hero_broodmother/broodmother_spiderlings_spawn.vpcf"
 			"particle"			"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff.vpcf"
 			"particle"			"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 
 		// Time		
@@ -12020,6 +12389,10 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"model"			"models/avenger/trueform/trueform.vmdl"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_broodmother.vsndevts"
 		}
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -12091,10 +12464,7 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "avenger_remains"
 		"MaxLevel"                      "5"
-		"precache"
-		{
-			"particle"			"particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-		}
+
 
 		"AbilitySpecial"
 		{
@@ -12178,6 +12548,7 @@
 		"precache"
 		{
 			"particle"			"particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bounty_hunter.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -12256,6 +12627,7 @@
 		"precache"
 		{
 			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -12347,6 +12719,8 @@
 		
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -12369,6 +12743,17 @@
 			{
 				"ScriptFile"		"avenger_ability"
 				"Function"			"OnBloodStart"
+			}
+			"FireEffect"
+			{
+				"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Target"			"TARGET"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_DoomBringer.Devour"
+				"Target"			"TARGET"
 			}
 		}
 	}
@@ -12397,6 +12782,7 @@
 			"model"		"models/avenger/trueform/trueform.vmdl"
 			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis.vpcf"
 			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -12490,6 +12876,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_huskar/huskar_inner_vitality.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -12569,6 +12956,7 @@
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
 			"particle"		"particles/custom/avenger/avenger_verg_avesta.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 		}
 
 		// Time		
@@ -12659,6 +13047,8 @@
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
 			"particle"		"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_life_stealer.vsndevts"
 		}
 
 		// Time		
@@ -13071,6 +13461,7 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
 		}
 
 		// Time		
@@ -13135,6 +13526,7 @@
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_huskar.vsndevts"
 		}
 		
 		// Casting
@@ -13190,6 +13582,7 @@
 			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 			"particle"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
 			"particle"		"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
 		}
 
 		// Time		
@@ -13245,22 +13638,23 @@
 				{
 					"AttachEffect"
 					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-						"EffectAttachType"	"follow_customorigin"
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
 						"ControlPointEntities"
 						{
-							"CASTER"		"attach_weapon1"
+							"CASTER"	"attach_weapon1"
 						}
 					}
+
 					"AttachEffect"
 					{
-						"Target"			"CASTER"
-						"EffectName"		"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-						"EffectAttachType"	"follow_customorigin"
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
 						"ControlPointEntities"
 						{
-							"CASTER"		"attach_weapon2"
+							"CASTER"	"attach_weapon2"
 						}
 					}
 				}
@@ -13287,6 +13681,7 @@
 			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
 			"particle"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
 			"particle"		"particles/items_fx/aegis_respawn.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 		}
 
 		// Time		
@@ -13400,6 +13795,7 @@
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 			"particle"		"particles/items_fx/dagon.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}
 		
 		// Casting
@@ -13535,6 +13931,7 @@
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 			"particle"		"particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf"
 			"particle"		"particles/items_fx/dagon.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}
 		
 		// Casting
@@ -13890,6 +14287,16 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"20"
 				}
 			}
+			"modifier_charisma_improved"
+			{	
+				"Duration"				"0.25"		
+				"IsHidden"				"1"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"30"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"20"
+				}
+			}
 		}
 	}
 
@@ -13909,6 +14316,7 @@
 		{
 			"particle"			"particles/units/heroes/hero_legion_commander/legion_commander_press_sphere.vpcf"
 			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 		}
 
 		// Time		
@@ -13986,6 +14394,7 @@
 		"precache"
 		{
 			"particle"			"particles/items_fx/aegis_respawn.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 		}
 		
 		// Casting
@@ -14063,6 +14472,10 @@
 			"particle"			"particles/items_fx/aegis_respawn.vpcf"
 			"particle"			"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start.vpcf"
 			"particle"			"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
+			"particle"			"particles/units/heroes/hero_razor/razor_storm_lightning_strike.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
 		}
 
 		// Time		
@@ -14113,11 +14526,6 @@
 				"MinDamage"			"%min_damage"
 				"MaxDamage"			"%max_damage"
 				"Radius"			"%radius"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_gordius_wheel"
-				"Target"			"CASTER"
 			}
 		}
 
@@ -14173,6 +14581,45 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_per_second"
 				}	
 			}
+			"modifier_gordius_wheel_mitigation_tier1"
+			{		
+				"Duration"		"2.5"
+				"IsHidden"		"1"
+				"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"20"
+	    		}
+			}
+			"modifier_gordius_wheel_mitigation_tier2"
+			{		
+				"Duration"		"3.0"
+				"IsHidden"		"1"
+				"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"25"
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"10"
+	    		}
+			}
+			"modifier_gordius_wheel_mitigation_tier3"
+			{		
+				"Duration"		"4.5"
+				"IsHidden"		"1"
+				"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"10"
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"5"
+	    		}
+			}
+			"modifier_gordius_wheel_thunder_slow"
+			{
+				"Duration"		"1.5"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-20"
+				}
+			}
 		}
 	}
 
@@ -14193,17 +14640,17 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"iskander_via_expugnatio"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
-		"AnimationPlaybackRate" 		"1.5"
-		"AOERadius"						"%radius"
+		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"				"particles/units/heroes/hero_zuus/zuus_static_field.vpcf"
+			"particle"				"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"2000"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"1200"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -14228,7 +14675,12 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"1200"
+				"range"				"1500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"trail_duration"	"3.0"
 			}
 		}
 
@@ -14239,6 +14691,10 @@
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnChariotChargeStart"
 			 	"Target"		"POINT"
+			 	"ChargeDamage"	"%charge_damage"
+			 	"TrailDamage"	"%trail_damage"
+			 	"Range"			"%range"
+			 	"Duration"		"%trail_duration"
 			}
 		}
 		
@@ -14261,7 +14717,31 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk_explosion.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk_ring_1.vpcf"
+			"particle"			"particles/custom/iskandar/iskandar_aotk_ring_2.vpcf"
+			"particle"			"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
+			"particle"			"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
+			"particle"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+			"particle"			"particles/econ/items/tinker/boots_of_travel/teleport_end_bots_dust.vpcf"
+			"particle"			"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"particle"		"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+			"particle"		"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+			"particle" 		"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
+			"particle"		"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+			"particle"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
+			"particle"		"particles/generic_gameplay/generic_silenced.vpcf"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"particle"			"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+			"model"				"models/iskander/waver.vmdl"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sandking.vsndevts"
 		}
 
 		// Time		
@@ -14284,6 +14764,81 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"12.0"
 			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"sustain_limit"		"5"
+			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"infantry_bonus_health"		"150 300 450 600 750"
+			}
+			"05"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"infantry_bonus_damage"		"8 16 24 34 40"
+			}
+			"06"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"maharaja_bonus_health"		"250 500 750 1000 1250"
+			}
+			"07"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"maharaja_bonus_damage"		"15 30 45 60 75"	
+			}
+			"08"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"archer_bonus_health"		"75 150 225 300 375"
+			}
+			"09"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"archer_bonus_damage"		"4 8 12 16 20"	
+			}
+			"10"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"cavalry_bonus_health"		"200 400 600 800 1000"
+			}
+			"11"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"cavalry_bonus_damage"		"5 10 15 20 25"	
+			}
+			"12"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"hepha_bonus_health"		"300 600 900 1200 1500"
+			}
+			"13"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"hepha_bonus_damage"		"20 40 60 80 100"	
+			}
+			"14"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"mage_bonus_health"		"100 200 300 400 500"
+			}
+			"15"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"mage_bonus_damage"		"4 8 12 16 20"	
+			}
+			"16"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"waver_bonus_health"		"150 300 450 600 750"
+			}
+			"17"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"waver_bonus_damage"		"15 30 45 60 75"	
+			}
 		}
 		
 		"OnSpellStart"
@@ -14292,11 +14847,20 @@
 			{
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnAOTKCastStart"
+				"Radius"			"%radius"
 			}
 			"ApplyModifier"
 			{
 				"ModifierName"		"modifier_army_of_the_king_freeze"
 				"Target"			"CASTER"
+			}
+		}
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"iskander_ability"
+				"Function"		"OnAOTKLevelUp"
 			}
 		}
 
@@ -14335,16 +14899,19 @@
 				{
 					"AttachEffect"
 					{
-						"Target"			"TARGET"
-						"EffectName"		""
-						"EffectAttachType"	"start_at_origin"
-						"EffectRadius"		"%radius"
+						"EffectName"		"particles/units/heroes/hero_sandking/sandking_sandstorm.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"Target"			"CASTER"
+						"ControlPoints"
+						{
+							"01"			"1500 1500 1500"
+						}
 					}
 				}
 			
 				"Duration"	"12.0"
 				
-				"OnDeath"
+				"OnDestroy"
 				{
 					"RemoveModifier"
 					{
@@ -14356,6 +14923,237 @@
 						"ScriptFile"	"iskander_ability"
 						"Function"		"OnAOTKDeath"
 					}
+				}
+			}
+			"modifier_army_of_the_king_infantry_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%infantry_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%infantry_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%infantry_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_maharaja_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%maharaja_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%maharaja_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%maharaja_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_archer_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%archer_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%archer_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%archer_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_cavalry_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%cavalry_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%cavalry_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%cavalry_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_hepha_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%hepha_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%hepha_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%hepha_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_mage_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%mage_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%mage_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%mage_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+			"modifier_army_of_the_king_waver_bonus_stat"
+			{
+				"Duration"			"12.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEATTACK_BONUSDAMAGE"	"%waver_bonus_damage"
+					//"MODIFIER_PROPERTY_HEALTH_BONUS"		"%waver_bonus_health"
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"ModifySoldierHealth"
+						"HealthBonus"	"%waver_bonus_health"
+					}					
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"iskander_ability"
+						"Function"		"OnAOTKSoldierDeath"
+						"SustainLimit"	"%sustain_limit"
+					}
+				}
+			}
+		}
+	}
+
+	//================================================
+	// Iskander : Maharaja's Passive
+	//================================================
+	"iskander_maharaja_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "iskander_phalanx"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage"			"30"
+			}
+		}	
+		"Modifiers"
+		{
+			"modifier_maharaja_passive"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_maharaja_passive_buff"
+				"Aura_Radius"			"3000"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			
+			"modifier_maharaja_passive_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage"
 				}
 			}
 		}
@@ -14372,19 +15170,20 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityTextureName"			"legion_commander_press_the_attack"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+			"particle"			"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"500"
+		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.5"
 
 		// Time		
@@ -14397,14 +15196,9 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_bonus"			"15 20 25 30 35"
+				"armor_reduction"			"-3 -6 -9 -12 -15"
 			}
 			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"armor_reduction"			"-2 -4 -6 -8 -10"
-			}
-			"03"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"duration"		"5"
@@ -14422,11 +15216,42 @@
 			{
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnBattleHornStart"
+			 	"Radius"		"%radius"
+			 	"Target"		"POINT"
 			}
 		}
 		
 		"Modifiers"
 		{
+			"modifier_battle_horn_armor_reduction"
+			{
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"%armor_reduction"
+				}
+			}
+			"modifier_battle_horn_movespeed_buff"
+			{	
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"Duration"				"1.0"
+				"EffectAttachType"		"follow_origin"			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"999"
+				}
+			}
+			"modifier_battle_horn_movespeed_debuff"
+			{	
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"		"%duration"	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
+				}
+			}
 		}
 	}
 	//====================================
@@ -14447,7 +15272,6 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
 		}
 		
 		// Casting
@@ -14491,8 +15315,89 @@
 		{
 		}
 	}
+	//================================================
+	// Iskander : Hephaestion Passive
+	//================================================
+	"iskander_hephaestion_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "iskander_phalanx"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_mspd"			"20"
+			}
+		}	
+		"Modifiers"
+		{
+			"modifier_hephaestion_passive"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_hephaestion_passive_buff"
+				"Aura_Radius"			"3000"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			
+			"modifier_hephaestion_passive_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_aspd"
+				}
+			}
+		}
+	}
 
+	//================================================
+	// Iskander : Waver Passive
+	//================================================
+	"iskander_waver_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "iskander_phalanx"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_mr"			"25"
+			}
+		}	
+		"Modifiers"
+		{
+			"modifier_waver_passive"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_waver_passive_buff"
+				"Aura_Radius"			"3000"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_BASIC"
+			}
+			
+			"modifier_waver_passive_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"25"
+				}
+			}
+		}
+	}
 	//====================================
 	// Iskander - Hammer and Anvil
 	//====================================
@@ -14511,7 +15416,8 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle"		"particles/econ/items/tinker/boots_of_travel/teleport_end_bots_dust.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.5"
@@ -14526,16 +15432,24 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"300"
+				"damage"			"200 300 400 500 600"
 			}
 		}
-
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"GBAttachEffect"
+			}
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 			 	"ScriptFile"	"iskander_ability"
 			 	"Function"		"OnHammerStart"
+			 	"Damage"		"%damage"
 			}
 		}
 		
@@ -14561,7 +15475,6 @@
 		"AOERadius"						"%radius"
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
 		}
 		
 		// Casting
@@ -14619,27 +15532,32 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"keeper_of_the_light_illuminate"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
-		"AnimationPlaybackRate" 		"1.5"
-		"AOERadius"						"%radius"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_BASIC"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"15"
+		"AbilityCastRange"				"3000"
+		"AbilityChannelTime"			"2.0"	
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"0.5"
+
+
 		"precache"
 		{
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			"particle" 	"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
+			"particle"	particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf
+			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"	"particles/generic_gameplay/generic_silenced.vpcf"
+			"particle"	"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
 		}
-		
-		"AbilityCastPoint"				"0.5"
-
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16"
-
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"0.5 1.0 1.5 2.0 2.5"
+				"var_type"		"FIELD_INTEGER"
+				"duration"		"2.0"
 			}
 		}
 
@@ -14647,13 +15565,169 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	"iskander_ability"
-			 	"Function"		"OnBrillianceStart"
+				"Function"	"OnBrillianceStart"
+				"ScriptFile"	"iskander_ability"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_waver_big_bad_voodoo"
+				"Target" 		"CASTER"
+				"Duration"		"%duration"
+			}
+
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_waver_big_bad_voodoo_channeling"
+				"Target" 		"CASTER"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_waver_silence_aura"
+				"Target"		"CASTER"
+			}
+
+			"FireSound"
+			{
+				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
+				"Target" 		"CASTER"
 			}
 		}
-		
+
+		"OnChannelFinish"
+		{
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_waver_big_bad_voodoo"
+				"Target" 		"CASTER"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_waver_big_bad_voodoo_channeling"
+				"Target" 		"CASTER"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_waver_silence_aura"
+				"Target"		"CASTER"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"	"modifier_waver_root_aura"
+				"Target"		"CASTER"
+			}
+		}
+
 		"Modifiers"
 		{
+			"modifier_waver_big_bad_voodoo_channeling"
+			{
+				"IsHidden"			"1"
+	            "ThinkInterval"		"1.0"
+	            "OnIntervalThink"
+	         	{
+				}
+			}
+
+
+			"modifier_waver_big_bad_voodoo"
+			{
+				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+		
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/witchdoctor_voodoo_restoration_aura.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+					}
+
+					"AttachEffect"
+					{
+						"EffectName"		"particles/custom/warlock_shadow_word_buff_copy.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"            "CASTER"
+					}
+
+					"AttachEffect"
+					{
+						"EffectName"        "particles/custom/witchdoctor_voodoo_restoration.vpcf"
+						"EffectAttachType"  "start_at_customorigin"
+						"Target"            "CASTER"
+						"ControlPoints"
+						{
+							"01"	"%radius 0 0"
+						}				
+					}
+				}
+
+				"OnDestroy"
+				{
+
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
+				}
+
+				"Aura"          	"modifier_waver_big_bad_voodoo_invulnerability"
+				"Aura_Radius"   	"3000"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster" "0"
+			}
+
+			"modifier_waver_big_bad_voodoo_invulnerability"
+			{
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
+				"EffectAttachType"	"follow_origin"
+		
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+
+			"modifier_waver_silence_aura"
+			{
+				"Aura"          	"modifier_waver_silence"
+				"Aura_Radius"   	"3000"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster" "0"				
+			}
+			"modifier_waver_silence"
+			{			
+
+				"EffectName"		"particles/generic_gameplay/generic_silenced.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"IsDebuff"			"1"
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
+
+			"modifier_waver_root_aura"
+			{
+				"Aura"          	"modifier_waver_silence"
+				"Aura_Radius"   	"3000"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster" "0"				
+			}
+			"modifier_waver_root"
+			{			
+				"EffectName"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"IsDebuff"			"1"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}	
+			}
 		}
 	}
 	//========================================
@@ -14663,30 +15737,26 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"iskander_army_of_the_king"
-		"MaxLevel"						"5"
-		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK_EVENT"
+		"AbilityTextureName"			"iskander_annihilate"
+		"MaxLevel"						"1"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
+			"particle"				"particles/units/heroes/hero_legion_commander/legion_commander_press.vpcf"
 		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"19"
+		"AbilityCooldown"				"140"
 		"AbilityCastPoint"				"0.3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"duration"			"12.0"
-			}
 		}
 		
 		"OnSpellStart"
@@ -14696,17 +15766,29 @@
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnAnnihilateStart"
 			}
-			"FireSound"
+			"ApplyModifier"
 			{
-				"EffectName"		"Hero_Invoker.Alacrity"
+				"ModifierName"		"modifier_annihilate_caster"
 				"Target"			"CASTER"
 			}
 		}
 
 		"Modifiers"
 		{
-			"modifier_army_of_the_king"
+			"modifier_annihilate_caster"
+			{
+				"Duration"		"12.0"
+				"IsHidden"		"1"
+			}
+			"modifier_annihilate"
 			{		
+                "EffectName" "particles/units/heroes/hero_legion_commander/legion_commander_press.vpcf"
+                "EffectAttachType" "follow_origin"
+				"Duration" 	"12.0"
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
 	}
@@ -14758,7 +15840,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"17"
 
 		"precache"
 		{
@@ -14822,12 +15904,12 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"iskander_army_of_the_king"
+		"AbilityTextureName"			"iskander_bond_beyond_time"
 		
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"19"
 
 		"precache"
 		{
@@ -14847,6 +15929,1329 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Gilles de Rais : Prelati's Spellbook
+	//=================================================================================================================
+	"gille_spellbook_of_prelati"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"zc_prelati_spellbook"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"60"
+		"AbilityCastPoint"				"0.3"
+		"precache"
+		{
+			"particle"			"particles/custom/avenger/avenger_verg_avesta_shield.vpcf"
+			"particle"			"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"			"particles/custom/generic/fate_red_shield.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"900"
+			}				
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSelfishStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_madness_passive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"ThinkInterval"	"20"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnMadnessStart"
+					}
+				}
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnMadnessThink"
+					}
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"CleanupGilleSummon"
+					}
+				}
+			}
+			"modifier_madness_stack"
+			{
+				"IsHidden"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+			}
+			"modifier_selfish_self_invul"
+			{
+				"IsHidden"		"1"
+				"EffectName"		"particles/custom/generic/fate_red_shield.vpcf"
+				"EffectAttachType"	"follow_origin"	
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_selfish_debuff_aura"
+			{
+				"IsHidden"			"1"
+				"EffectName"		"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+				"EffectAttachType"	"follow_origin"	
+
+				"Aura"          	"modifier_selfish_debuff"
+				"Aura_Radius"   	"%radius"
+				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_ApplyToCaster" "0"
+			}
+			"modifier_selfish_debuff"
+			{
+				"IsDebuff"			"1"
+				"EffectName"		"particles/custom/avenger/avenger_verg_avesta_shield.vpcf"
+				"EffectAttachType"	"follow_origin"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
+				}
+
+			}
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Throw Corpse
+	//===================================================
+	"gille_throw_corpse"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"pugna_life_drain"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"		
+		
+		"precache"
+		{
+			"model"		"models/props_structures/skeleton001.vmdl"
+			"particle"	"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnThrowCorpseStart"
+				"Target"			"POINT"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+
+
+	//===================================================
+	// Gilles De Rais : Summon Oceanic Demon
+	//===================================================
+	"gille_summon_demon"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_oceanic_demon"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"model"		"models/items/courier/echo_wisp/echo_wisp_flying.vmdl"
+			"particle"	"particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nevermore.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_venomancer.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"400 550 700 850 1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20 16.5 13 9.5 6"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"summon_number"			"3 4 5 6 7"
+			}						
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"190 230 270 310 350"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSummonDemonStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+				"Number"			"%summon_number"
+				"Health"			"%health"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Gilles de Rais : Oceanic Demon Passive
+	//=================================================================================================================
+	"gille_oceanic_demon_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"zc_oceanic_demon"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"60"
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"slow"			"-10"
+			}				
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnDemonSuicideStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_oceanic_demon"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Venomancer.Attack"
+						"Target"			"TARGET"
+					}
+					"RunScript"
+					{
+						"ScriptFile"		"gille_ability"
+						"Function"			"OnDemonPoisonApply"
+					}
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_oceanic_demon_slow"
+						"Target"			"TARGET"
+					}
+				}
+			}
+			"modifier_oceanic_demon_slow"
+			{
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"		
+				"Duration"		"3.0"
+				"IsDebuff"		"1"
+				"IsHidden"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_VenomancerWard.ProjectileImpact"
+						"Target"		"TARGET"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+			}
+		}
+	}
+	//===================================================
+	// Gilles De Rais : Torment
+	//===================================================
+	"gille_torment"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_torment"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"particle"		"particles/econ/items/warlock/warlock_staff_hellborn/warlock_upheaval_hellborn_debuff.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf"
+			"particle"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict.vpcf"
+			"particle"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.8"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"20.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"4"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"total_damage"		"400 500 600 700 800"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnTormentStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_DoomBringer.LvlDeath"
+				"Target"		"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{	
+			"modifier_torment"
+			{
+				"EffectName"	"particles/econ/items/warlock/warlock_staff_hellborn/warlock_upheaval_hellborn_debuff.vpcf"
+				"EffectAttachType"	"attach_origin"
+				"IsDebuff"		"1"
+				"Duration"		"%duration"
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnTormentThink"
+						"Damage"		"%total_damage"
+					}
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_dot.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnTormentTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnTormentEnd"
+					}
+					"FireSound"
+					{
+						"EffectName"	"Hero_DoomBringer.LvlDeath"
+						"Target"		"TARGET"
+					}
+					"FireEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"			"TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"	//CP3 has a child explosion origin
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Exquisite Cadaver
+	//===================================================
+	"gille_exquisite_cadaver"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_exquisite_cadavre"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.5"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+			"particle"		"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"		"particles/units/heroes/hero_shadow_demon/shadow_demon_soul_catcher.vpcf"
+			"particle"		"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+			"particle"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+			"particle"		"particles/units/heroes/hero_phoenix/phoenix_supernova_reborn_shockwave.vpcf"
+			"particle"		"particles/custom/screen_scarlet_splash.vpcf"
+			"particle"		particles/units/heroes/hero_pugna/pugna_decrepify.vpcf
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_shadow_demon.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.45"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"400 450 500 550 600"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnECStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+				"Damage"			"%damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_exquisite_cadaver_demon"
+			{
+				"Duration"		"1.5"
+				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"		
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnECDemonExplode"
+						"Radius"		"%radius"
+						"Damage"		"%damage"
+					}
+				}
+			}
+			"modifier_exquisite_cadaver_dot"
+			{
+
+			}
+
+			"modifier_gille_combo"
+			{
+		        "EffectName"    "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+		        "EffectAttachType"  "follow_origin"
+				"Duration"		"20"
+				"IsDebuff"		"1"
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnGilleComboThink"
+					}
+				}
+			}
+			"modifier_gigantic_horror_freeze"
+			{
+				"EffectName"				"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"Duration"		"1.5"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+		}
+	}
+
+
+	//===================================================
+	// Gilles De Rais : Abyssal Contract
+	//===================================================
+	"gille_abyssal_contract"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+			"model"		"models/zc/tentacleking.vmdl"
+			"model"		"models/zc/tidehuntertentacle_reference.vmdl"
+			"particle"	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit_wrap.vpcf"
+			"particle"	"particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit.vpcf"
+			"particle"	"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_rain_of_chaos_start.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf"
+			"particle"	"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
+			"particle"	"particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_treant.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.0"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"75.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"500 625 750 875 1000"
+			}			
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"1500 1875 2250 2625 3000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attack_damage"		"100 150 200 250 300"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnContractStart"
+				"Target"			"POINT"
+				"Radius"			"%radius"
+				"Damage"			"%damage"
+				"Health"			"%health"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//================================================
+	// Gilles De Rais : Gigantic Horror Passive
+	//================================================
+	"gille_gigantic_horror_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "undying_decay"
+		"MaxLevel"                      "8"
+		"precache"
+		{
+			
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_threshold"			"300 400 500 600 700 800 900 1000"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health_regen"			"5 6 7 8 9 10 11 12 13"
+			}			
+		}
+
+		"Modifiers"
+		{
+			"modifier_gigantic_horror_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"	"%health_regen"
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnHorrorTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"Threshold"		"%damage_threshold"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnHorrorDeath"
+					}
+				}
+				"OnAttackStart"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Spectre.Attack"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Centaur.HoofStomp"
+						"Target"			"CASTER"
+					}
+				}
+		  	}
+		  	"modifier_gigantic_horror_penalty_timer"
+		  	{
+		  		"Duration"	"15"
+		  		"IsDebuff"	"1"
+		  	}
+		}
+	}
+
+	//===================================================
+	// Gilles De Rais : Tentacle of Destruction
+	//===================================================
+	"gille_tentacle_of_destruction"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"8"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"zc_tentacle_of_destruction"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"10.0"
+
+		
+		"AbilitySpecial"
+		{		
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"120 190 260 330 400 470 540 610"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"30 33 36 39 42 45 48 51"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_damage"		"0.9 1.2 1.5 1.8 2.1 2.4 2.7 3.0"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnTentacleSummon"
+				"Target"			"POINT"
+				"Health"			"%health"
+				"Damage"			"%damage"
+			}
+			"FireSound"
+			{
+				"EffectName"		"ZC.Tentacle2"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//================================================
+	// Gilles De Rais : Tentacle of Destruction Passive
+	//================================================
+	"gille_tentacle_of_destruction_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "undying_decay"
+		"MaxLevel"						"8"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"precache"
+		{
+			
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"120 190 260 330 400 470 540 610"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"14 18 22 26 30 34 38 42"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_damage"		"0.9 1.2 1.5 1.8 2.1 2.4 2.7 3.0"
+			}						
+		}
+
+		"Modifiers"
+		{
+			"modifier_tentacle_of_destruction_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"OnAttackStart"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Magnataur.PreAttack"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Treant.Attack"
+						"Target"			"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"		"gille_ability"
+						"Function"			"OnTentacleAttackLanded"	
+						"Damage"			"%bonus_damage"					
+					}
+				}
+		  	}
+		}
+	}
+
+	//=================================================================================================================
+	// Gilles De Rais : Tentacle Hook
+	//=================================================================================================================
+	"gille_tentacle_hook"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"zc_tentacle_hook"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
+		"AnimationPlaybackRate" 		"2.0"
+		"AbilityCastRange"				"%range"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"10.0"
+
+	    "precache"
+	    {
+	    }		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"			"1000"
+			}			
+		}
+		"OnSpellStart"
+		{
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleHookStart"   
+			 	"Target"		"POINT"        	
+            }		
+			"LinearProjectile"
+			{
+				"Target"      	"POINT"
+			    "EffectName"  	""
+			    "MoveSpeed"   	"1500"
+			    "StartRadius"   "150"
+			    "StartPosition" "attach_origin"
+			    "EndRadius"     "150"
+			    "FixedDistance" "%range"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
+			    "HasFrontalCone"  "0"
+			    "ProvidesVision" "0"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"true"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleHookHit"           	
+            }
+		}
+	}
+
+
+	//=================================================================================================================
+	// Gilles De Rais : Tentacle Wrap
+	//=================================================================================================================
+	"gille_tentacle_wrap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"zc_tentacle_wrap"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.1"
+		"AbilityCooldown"				"10.0"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
+		"AnimationPlaybackRate" 		"1.0"
+
+	    "precache"
+	    {
+	    }		
+		"OnSpellStart"
+		{
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnTentacleWrapStart"  
+            }		
+            "ApplyModifier"
+            {
+            	"ModifierName"	"modifier_tentacle_wrap"
+            	"Target"		"TARGET"
+            }
+			"FireSound"
+			{
+				"EffectName"		"ZC.Tentacle2"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_tentacle_wrap"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"2.0"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}				
+			}
+		}
+	}
+
+	//===================================================
+	// Gilles De Rais : Subterranean Skewer
+	//===================================================
+	"gille_subterranean_skewer"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"8"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCooldown"				"25"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"29.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"			"1000"
+			}	
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"300 400 500 600 700 800 900 1000"
+			}				
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnSubSkewerStart"
+				"Target"			"POINT"
+			}
+			"FireSound"
+			{
+				"EffectName"		"ZC.Tentacle1"
+				"Target"			"CASTER"
+			}
+		}
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"0"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"gille_ability"
+			 	"Function"		"OnSubSkewerHit"    
+			 	"Damage"		"%damage"     
+			 	"StunDuration"	"%stun_duration"  	
+            }
+		}		
+		"Modifiers"
+		{
+		}
+	}
+
+
+
+	//===================================================
+	// Gilles De Rais : L'Arret de Mort
+	//===================================================
+	"gille_larret_de_mort"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"zc_combo"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{	
+			"particle"		"particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"150.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
+			}			
+		}
+		
+		"OnSpellStart"
+		{
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Eye for Art
+	//=======================================
+	"gille_attribute_eye_for_art"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_eye_for_art"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"9"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnEyeForArtAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Improve Black Magic
+	//=======================================
+	"gille_attribute_improve_black_magic"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_torment"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"16"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnBlackMagicImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Mental Pollution
+	//=======================================
+	"gille_attribute_mental_pollution"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_mental_pollution"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnMentalPollutionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Abyssal Connection
+	//=======================================
+	"gille_attribute_abyssal_connection"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnAbyssConnectionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Gilles De Rais Attribute : Abyssal Connection - Tier 2
+	//=======================================
+	"gille_attribute_abyssal_connection_2"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"zc_abyssal_contract"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnAbyssConnection2Acquired"
+			}
+		}
+	}
 	//================================================
 	// simple dummy passive
 	//================================================
@@ -15685,6 +18090,7 @@
 	    "precache"
 	    {
 	    	"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 	    }		
 		"OnSpellStart"
 		{

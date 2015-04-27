@@ -204,7 +204,6 @@ function OnExcaliburStart(keys)
 	print("Excalibur")
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
-	local frontward = caster:GetForwardVector()
 	
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.0)
 	local excal = 
@@ -224,7 +223,7 @@ function OnExcaliburStart(keys)
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
         fExpireTime = GameRules:GetGameTime() + 5.0,
 		bDeleteOnHit = false,
-		vVelocity = frontward * keys.Speed
+		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
 	Timers:CreateTimer(0.5, function() 
 		if caster:IsAlive() then
@@ -232,46 +231,52 @@ function OnExcaliburStart(keys)
 		end
 	end)
 
-	Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
+	-- Create linear projectile
+	Timers:CreateTimer(2.5, function()
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
-			
-			-- Create Particle for projectile
-			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
-			Timers:CreateTimer( function()
-					if dummy ~= nil then
-						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
-						dummy:SetAbsOrigin( newLoc )
-						return 0.03
-					else
-						return nil
-					end
-				end
-			)
-			
-			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
-			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.EndRadius, keys.EndRadius, keys.EndRadius ) )
-			ParticleManager:SetParticleControl( excalFxIndex, 2, frontward * keys.Speed )
-			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
-			
-			Timers:CreateTimer( 2.5, function()
-					ParticleManager:DestroyParticle( excalFxIndex, false )
-					ParticleManager:ReleaseParticleIndex( excalFxIndex )
-					Timers:CreateTimer( 0.5, function()
-							dummy:RemoveSelf()
-							return nil
-						end
-					)
-					return nil
-				end
-			)
-			
+			excal.vVelocity = caster:GetForwardVector() * keys.Speed
 			local projectile = ProjectileManager:CreateLinearProjectile(excal)
-			
-			return 
 		end
 	end)
+	-- Make 2 particles for both teams
+	for i=0,1 do
+		Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
+			if caster:IsAlive() then
+				-- Create Particle for projectile
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				Timers:CreateTimer( function()
+						if IsValidEntity(dummy) then
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
+							dummy:SetAbsOrigin( newLoc )
+							return 0.03
+						else
+							return nil
+						end
+					end
+				)
+				
+				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
+				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.EndRadius, keys.EndRadius, keys.EndRadius ) )
+				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
+				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+
+				Timers:CreateTimer( 2.5, function()
+						ParticleManager:DestroyParticle( excalFxIndex, false )
+						ParticleManager:ReleaseParticleIndex( excalFxIndex )
+						Timers:CreateTimer( 0.5, function()
+								dummy:RemoveSelf()
+								return nil
+							end
+						)
+						return nil
+					end
+				)
+				return 
+			end
+		end)
+	end
 end
 
 function OnExcaliburHit(keys)
@@ -286,6 +291,7 @@ function OnMaxStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
@@ -313,80 +319,82 @@ function OnMaxStart(keys)
 	
 	EmitGlobalSound("Saber.Excalibur_Ready")
 	Timers:CreateTimer({
-		endTime = 1.5, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
+		endTime = 1.5, 
 		callback = function()
 	    EmitGlobalSound("Saber.Excalibur")
 	end})
 	
-	Timers:CreateTimer({
-		endTime = 3, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
-		callback = function()
+	-- Create linear projectile
+	Timers:CreateTimer(3.0, function()
+		if caster:IsAlive() then
+			max_excal.vSpawnOrigin = caster:GetAbsOrigin() 
+			max_excal.vVelocity = caster:GetForwardVector() * keys.Speed
+			local projectile = ProjectileManager:CreateLinearProjectile(max_excal)
+			ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+		end
+	end)
 
-		--[[for i=0, 9 do
-			local player = PlayerResource:GetPlayer(i)
-			if player ~= nil then 
-				hero = PlayerResource:GetPlayer(i):GetAssignedHero()
-				ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, hero)
-			end
-		end]]
-		ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
-
-	    local projectile = ProjectileManager:CreateLinearProjectile( max_excal )
-		
-		-- Create Particle for projectile
-		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
-		Timers:CreateTimer( function()
-				if dummy ~= nil then
-					local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
-					dummy:SetAbsOrigin( newLoc )
-					return 0.03
-				else
-					return nil
-				end
-			end
-		)
-		
-		local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
-		ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
-		ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
-		ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
-			
-		Timers:CreateTimer( 2.5, function()
-				ParticleManager:DestroyParticle( excalFxIndex, false )
-				ParticleManager:ReleaseParticleIndex( excalFxIndex )
-				Timers:CreateTimer( 0.5, function()
-						dummy:RemoveSelf()
-						return nil
+	-- Create particle for both teams
+	for i=0,1 do
+		Timers:CreateTimer({
+			endTime = 3, 
+			callback = function()
+			if caster:IsAlive() then
+			-- Create Particle for projectile
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				Timers:CreateTimer( function()
+						if IsValidEntity(dummy) then
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
+							dummy:SetAbsOrigin( newLoc )
+							return 0.03
+						else
+							return nil
+						end
 					end
 				)
-				return nil
-			end
-		)
-		
-		-- Function to create rock follow the projectile
-		local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-		local burnFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_burn.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-		local currentLocation = caster:GetAbsOrigin()
-		local forwardVec = caster:GetForwardVector()
-		local distance_traverse = 0
-		Timers:CreateTimer( 0.2, function()
-				if distance_traverse < keys.Range then
-					currentLocation = currentLocation + forwardVec * keys.Speed * 0.03
-					ParticleManager:SetParticleControl( rockFxIndex, 0, currentLocation )
-					ParticleManager:SetParticleControl( burnFxIndex, 3, currentLocation )
-					distance_traverse = distance_traverse + keys.Speed / 10
-					return 0.03
-				else
-					ParticleManager:DestroyParticle( rockFxIndex, false )
-					ParticleManager:DestroyParticle( burnFxIndex, false )
-					ParticleManager:ReleaseParticleIndex( rockFxIndex )
-					ParticleManager:ReleaseParticleIndex( burnFxIndex )
+				
+				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
+				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
+				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
+				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+					
+				Timers:CreateTimer( 2.5, function()
+					ParticleManager:DestroyParticle( excalFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( excalFxIndex )
+					Timers:CreateTimer( 0.5, function()
+							dummy:RemoveSelf()
+							return nil
+						end
+					)
 					return nil
-				end
+				end)
+				--[[
+				-- Function to create rock follow the projectile
+				--local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+				local burnFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_burn.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+				local currentLocation = caster:GetAbsOrigin()
+				local forwardVec = caster:GetForwardVector()
+				local distance_traverse = 0
+				Timers:CreateTimer( 0.2, function()
+						if distance_traverse < keys.Range then
+							currentLocation = currentLocation + forwardVec * keys.Speed * 0.03
+							--ParticleManager:SetParticleControl( rockFxIndex, 0, currentLocation )
+							ParticleManager:SetParticleControl( burnFxIndex, 3, currentLocation )
+							distance_traverse = distance_traverse + keys.Speed / 10
+							return 0.03
+						else
+							--ParticleManager:DestroyParticle( rockFxIndex, false )
+							ParticleManager:DestroyParticle( burnFxIndex, false )
+							--ParticleManager:ReleaseParticleIndex( rockFxIndex )
+							ParticleManager:ReleaseParticleIndex( burnFxIndex )
+							return nil
+						end
+					end
+				)]]
 			end
-		)
-	end})
+		end})
+	end
 end
 
 function OnMaxHit(keys)
@@ -521,7 +529,9 @@ function OnStrikeAirStart(keys)
 		endTime = 1.75, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
 		callback = function()
 		if caster:IsAlive() then 
-			local projectile = ProjectileManager:CreateLinearProjectile(strikeair)
+			strikeair.vSpawnOrigin = caster:GetAbsOrigin() 
+			strikeair.vVelocity = caster:GetForwardVector() * 5000
+			projectile = ProjectileManager:CreateLinearProjectile(strikeair)
 		end
 	end})
 

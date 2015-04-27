@@ -59,7 +59,11 @@ CVModel CVModel_0
 	]
 	CVattachmentListReference[] m_pAttachmentLists = 
 	[
-		
+		CVattachmentListReference
+		{
+			CVattachmentList* m_pObject = &CVattachmentList_0
+			string m_sFileName = ""
+		}
 	]
 	CVanimGroupReference[] m_pAnimGroups = 
 	[
@@ -273,6 +277,29 @@ CVhitBoxSetList CVhitBoxSetList_0
 					float(3) m_vMinBounds = ( -7.604813, -11.139853, -23.980995 )
 					float(3) m_vMaxBounds = ( 6.895185, 22.547646, 20.519012 )
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				}
+			]
+		}
+	]
+}
+
+CVattachmentList CVattachmentList_0
+{
+	string m_name = ""
+	CVattachment[] m_attachments = 
+	[
+		CVattachment
+		{
+			string m_name = "attach_weapon2"
+			CVattachmentInfluence[] m_influences = 
+			[
+				CVattachmentInfluence
+				{
+					string m_influenceName = "Bone_Hand_R"
+					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float m_flWeight = 1.000000
+					bool m_bRoot = false
 				}
 			]
 		}
@@ -580,10 +607,10 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "lancer_anim_throw"
+			string m_Animationname = "lancer_anim_throw_ready"
 			string m_Filepath = "models/lancer/lancer_anim.FBX"
 			int m_nStartframe = 1790
-			int m_nEndframe = 1850
+			int m_nEndframe = 1822
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -658,6 +685,61 @@ CVanimGroup CVanimGroup_0
 				CActivity
 				{
 					string m_Name = "ACT_DOTA_CAST_ABILITY_1"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+		},
+		CVanim
+		{
+			string m_Animationname = "lancer_anim_throw"
+			string m_Filepath = "models/lancer/lancer_anim.FBX"
+			int m_nStartframe = 1822
+			int m_nEndframe = 1850
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_5"
 					int m_nWeight = 1
 				}
 			]

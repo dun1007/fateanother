@@ -61,7 +61,7 @@ FAAttribute = {
 	"false_assassin_attribute_eye_of_serenity",
 	"false_assassin_attribute_quickdraw",
 	"false_assassin_attribute_vitrification",
-	"false_assassin_illusory_wanderer",
+	"false_assassin_tsubame_mai",
 	attrCount = 4
 }
 
@@ -128,6 +128,15 @@ IskanderAttribute = {
 	attrCount = 4
 }
 
+GillesAttribute = {
+	"gille_attribute_eye_for_art",
+	"gille_attribute_improve_black_magic",
+	"gille_attribute_mental_pollution",
+	"gille_attribute_abyssal_connection",
+	"gille_attribute_abyssal_connection_2",
+	"gille_larret_de_mort",
+	attrCount = 5
+}
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -135,6 +144,9 @@ function OnSeal1Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+2) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -202,6 +214,9 @@ function OnSeal2Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+2) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -247,6 +262,9 @@ function OnSeal3Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+1) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -289,6 +307,9 @@ function OnSeal4Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
+		caster:SetMana(caster:GetMana()+1) 
+		caster:SetHealth(caster:GetHealth()+1) 
+		keys.ability:EndCooldown() 
 		return 
 	end
 
@@ -372,6 +393,7 @@ function OnStatList1Open(keys)
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("master_damage")
 	caster:AddAbility("master_armor")
+	caster:AddAbility(caster.ComboName)
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -390,6 +412,7 @@ function OnStatList2Open(keys)
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("fate_empty1")
 	caster:AddAbility("fate_empty2")
+	caster:AddAbility(caster.ComboName)
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -406,6 +429,7 @@ function OnShardOpen(keys)
 	caster:AddAbility("master_close_stat_list")
 	caster:AddAbility("master_shard_of_prosperity")
 	caster:AddAbility("fate_empty2")
+	caster:AddAbility(caster.ComboName)
 	caster:GetAbilityByIndex(0):SetLevel(1) 
 	caster:GetAbilityByIndex(1):SetLevel(1)
 	caster:GetAbilityByIndex(2):SetLevel(1)
@@ -418,6 +442,7 @@ function OnStatListClose(keys)
 	for i=0,5 do
 		caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
 	end
+	caster:RemoveAbility(caster.ComboName)
 	for i=1, 20 do
 		if caster.SavedList[i] == nil then break
 		else

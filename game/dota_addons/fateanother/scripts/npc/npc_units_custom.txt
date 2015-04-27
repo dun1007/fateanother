@@ -567,98 +567,6 @@
 		"VisionNighttimeRange"		"350"		// Range of vision at night time.
 	}
 
-	"iskander_phalanx_soldier"
-	{
-		// General
-		//----------------------------------------------------------------
-		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/heroes/dragon_knight/dragon_knight.vmdl"
-		"ModelScale"				"1.0"
-		"Level"						"1"
-		"HealthBarOffset"			"140"
-		
-		// Abilities
-		//----------------------------------------------------------------
-		"Ability1"					"phalanx_soldier_passive"	 
-		"Ability2"					""	 
-		
-		// Armor
-		//----------------------------------------------------------------
-		"ArmorPhysical"				"5"
-		"MagicalResistance"			"0"
-		
-		// Attack
-		//----------------------------------------------------------------
-		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"12.0"
-		"AttackDamageMax"			"13.0"
-		"AttackRate"				"1.35"
-		"AttackAnimationPoint"		"0.5"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"90"
-		
-		// Bounty
-		//----------------------------------------------------------------
-		"BountyGoldMin"				"25.0"
-		"BountyGoldMax"				"25.0"
-		
-		// Bounds
-		//----------------------------------------------------------------
-		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"200"
-		"CollisionSize"				"200"
-		"FormationRank"				"0"
-		
-		// Movement
-		//----------------------------------------------------------------
-		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"270"
-		"MovementTurnRate"			"0.6"
-		
-		// Status
-		//----------------------------------------------------------------
-		"StatusHealth"				"420"
-		"StatusHealthRegen"			"0.25"
-		"StatusMana"				"0"
-		"StatusManaRegen"			"0"
-		
-		// Vision
-		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"
-		"VisionNighttimeRange"		"800"
-		
-		// Team
-		//----------------------------------------------------------------
-		"TeamName"					"DOTA_TEAM_NEUTRALS"
-		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
-		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
-		
-		// Creature Data
-		//----------------------------------------------------------------
-		"Creature"
-		{
-			"DisableClumpingBehavior"	"1"
-			"AttachWearables"
-			{
-				"Wearable1"		{	"ItemDef"		"63"		}
-				"Wearable2"		{	"ItemDef"		"64"		}
-				"Wearable3" 	{	"ItemDef"		"65"		}
-				"Wearable4"		{	"ItemDef"		"66"		}
-				"Wearable5"		{	"ItemDef"		"67"		}
-				"Wearable6"		{	"ItemDef"		"68"		}
-			}
-			//{
-			//	"Wearable1"		{	"ItemDef"		"6789"		} //"Shield of Ascension"
-			//	"Wearable2"		{	"ItemDef"		"6791"		} //"Pauldrons of Ascension"
-			//	"Wearable3" 	{	"ItemDef"		"6790"		} //"Gauntlets of Ascension"
-			//	"Wearable4"		{	"ItemDef"		"6788"		} //"Drapes of Ascension"
-			//	"Wearable5"		{	"ItemDef"		"6787"		} //"Sword of Ascension"
-			//	"Wearable6"		{	"ItemDef"		"6792"		} //"Helm of Ascension"
-			//}
-		}
-	}
-
 	"iskander_infantry"
 	{
 		// General
@@ -671,7 +579,7 @@
 		
 		// Abilities
 		//----------------------------------------------------------------
-		"Ability1"					"phalanx_soldier_passive"	 
+		"Ability1"					""	 
 		"Ability2"					""	 
 		
 		// Armor
@@ -682,12 +590,12 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"12.0"
-		"AttackDamageMax"			"13.0"
+		"AttackDamageMin"			"20.0"
+		"AttackDamageMax"			"20.0"
 		"AttackRate"				"1.35"
 		"AttackAnimationPoint"		"0.5"
-		"AttackAcquisitionRange"	"500"
-		"AttackRange"				"90"
+		"AttackAcquisitionRange"	"2000"
+		"AttackRange"				"120"
 		
 		// Bounty
 		//----------------------------------------------------------------
@@ -697,26 +605,26 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
-		"RingRadius"				"200"
-		"CollisionSize"				"200"
+		"RingRadius"				"70"
+		"CollisionSize"				"32"
 		"FormationRank"				"0"
 		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"270"
-		"MovementTurnRate"			"0.6"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.5"
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"420"
-		"StatusHealthRegen"			"0.25"
+		"StatusHealth"				"800"
+		"StatusHealthRegen"			"0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1400"
+		"VisionDaytimeRange"		"800"
 		"VisionNighttimeRange"		"800"
 		
 		// Team
@@ -751,6 +659,178 @@
 		}
 	}
 
+	"iskander_archer"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/windrunner/windrunner.vmdl"
+		"ModelScale"				"1.0"
+		"Level"						"1"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 
+		"Ability2"					""	 
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"8.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.0"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"2000"
+		"AttackRange"				"900"
+		"ProjectileModel"			"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"25.0"
+		"BountyGoldMax"				"25.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"CollisionSize"				"32"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"450"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"21"		}
+				"Wearable2"		{	"ItemDef"		"22"		}
+				"Wearable3" 	{	"ItemDef"		"23"		}
+				"Wearable4"		{	"ItemDef"		"24"		}
+				"Wearable5"		{	"ItemDef"		"25"		}
+				"Wearable6"		{	"ItemDef"		"4603"		} // Sparrowhawk Hood
+			}
+		}
+	}
+	"iskander_maharaja"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/chen/chen.vmdl"
+		"ModelScale"				"1.0"
+		"Level"						"1"
+		"HealthBarOffset"			"300"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"iskander_maharaja_passive"	 
+		"Ability2"					"iskander_battle_horn"
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"50.0"
+		"AttackDamageMax"			"50.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.3"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"2000"
+		"AttackRange"				"800"
+		"ProjectileModel"			"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"25.0"
+		"BountyGoldMax"				"25.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"150"
+		"CollisionSize"				"150"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"360"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1250"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"800"
+		"VisionNighttimeRange"		"800"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
+		{
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"
+			{
+				"Wearable1"		{	"ItemDef"		"220"		}
+				"Wearable2"		{	"ItemDef"		"221"		}
+				"Wearable3" 	{	"ItemDef"		"222"		}
+				"Wearable4"		{	"ItemDef"		"223"		}
+				"Wearable5"		{	"ItemDef"		"224"		}
+				"Wearable6"		{	"ItemDef"		"225"		}
+			}
+		}
+	}
+
 	"iskander_cavalry"
 	{
 		// General
@@ -758,7 +838,7 @@
 		"BaseClass"					"npc_dota_creature"
 		"Model"						"models/heroes/chaos_knight/chaos_knight.vmdl"
 		"ModelScale"				"0.7"
-		"Level"						"4"
+		"Level"						"1"
 		"HealthBarOffset"			"180"
 		
 		// Abilities
@@ -773,8 +853,8 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackDamageMin"			"30.0"
-		"AttackDamageMax"			"38.0"
+		"AttackDamageMin"			"10.0"
+		"AttackDamageMax"			"10.0"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.4"
 		"AttackAnimationPoint"		"0.66"
@@ -783,8 +863,8 @@
 		
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"38.0"
-		"BountyGoldMax"				"54.0"
+		"BountyGoldMin"				"25.0"
+		"BountyGoldMax"				"25.0"
 		
 		// Bounds
 		//----------------------------------------------------------------
@@ -793,30 +873,23 @@
 		"CollisionSize"				"32"
 		"FormationRank"				"0"
 		
-		// Building Cost Stats
-		//----------------------------------------------------------------
-		"GoldCost"					"245"
-		"LumberCost"				"60"
-		"FoodCost"					"4"
-		"BuildTime"					"40"
-		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
-		"MovementSpeed"				"350"
+		"MovementSpeed"				"370"
 		"MovementTurnRate"			"0.5"
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"835"
-		"StatusHealthRegen"			"0.25"
+		"StatusHealth"				"1050"
+		"StatusHealthRegen"			"0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"
 		
 		// Vision
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"1400"
-		"VisionNighttimeRange"		"800"
+		"VisionNighttimeRange"		"1400"
 		
 		// Team
 		//----------------------------------------------------------------
@@ -830,27 +903,98 @@
 		"Creature"
 		{
 			"DisableClumpingBehavior"	"1"
-			//"AttachWearables"
-			//{
-			//	"Wearable1"		{	"ItemDef"		"5810"		} //"Blades of Voth Domosh"
-			//	"Wearable2"		{	"ItemDef"		"5886"		} //"Stonehall Royal Guard Banners"
-			//	"Wearable3" 	{	"ItemDef"		"5887"		} //"Stonehall Royal Guard Helmet"
-			//	"Wearable4"		{	"ItemDef"		"5885"		} //"Stonehall Royal Guard Arms"
-			//	"Wearable5"		{	"ItemDef"		"6192"		} //"Pauldrons of the Equine Emissary"
-			//}
 			"AttachWearables"	
 			{
-				"Wearable1"		{	"ItemDef"	"5828"	} // "Atramentos the Apocalyptic"
-				"Wearable2"		{	"ItemDef"	"6266"	} // "Pauldrons of the Chaos Hound"
-				"Wearable3"		{	"ItemDef"	"5173"	} // "Entropic Helmet"
-				"Wearable4"		{	"ItemDef"	"5925"	} // "Shield of Screaming Souls"
-				"Wearable5"		{	"ItemDef"	"5233"	} // "Blade of Endless Havoc"
+				"Wearable1"		{	"ItemDef"	"5924"	} // "Rapture"
+				"Wearable2"		{	"ItemDef"	"183"	} // "Default Shoulderpad"
+				"Wearable3"		{	"ItemDef"	"5233"	} // "Blade of Endless Havoc"
+				"Wearable4"		{	"ItemDef"	"5982"	} // "Chaos Legion helm"
 			}
 		}
-	
-		"precache"
+	}
+
+
+	"iskander_hephaestion"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/heroes/chaos_knight/chaos_knight.vmdl"
+		"ModelScale"				"1.0"
+		"Level"						"1"
+		"HealthBarOffset"			"300"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"iskander_hephaestion_passive"	 //Reference: Aihn
+		"Ability2"					"iskander_hammer_and_anvil"
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"			"50.0"
+		"AttackDamageMax"			"50.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.4"
+		"AttackAnimationPoint"		"0.66"
+		"AttackAcquisitionRange"	"2000"
+		"AttackRange"				"100"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"50.0"
+		"BountyGoldMax"				"50.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"200"
+		"CollisionSize"				"200"
+		"FormationRank"				"0"
+		
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"350"
+		"MovementTurnRate"			"0.5"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1500"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+		
+		// Creature Data
+		//----------------------------------------------------------------
+		"Creature"
 		{
-			"particle_folder"	"particles/units/heroes/hero_chaos_knight"
+			"DisableClumpingBehavior"	"1"
+			"AttachWearables"	
+			{
+				"Wearable1"		{	"ItemDef"	"5924"	} // "Rapture"
+				"Wearable2"		{	"ItemDef"	"183"	} // "Default Shoulderpad"
+				"Wearable3"		{	"ItemDef"	"5233"	} // "Blade of Endless Havoc"
+				"Wearable4"		{	"ItemDef"	"5982"	} // "Chaos Legion helm"
+			}
 		}
 	}
 
@@ -880,13 +1024,13 @@
 		// Attack
 		//----------------------------------------------------------------
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackDamageMin"			"13.0"
-		"AttackDamageMax"			"15.0"
+		"AttackDamageMin"			"12.0"
+		"AttackDamageMax"			"12.0"
 		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
 		"AttackRate"				"1.9"
 		"AttackAnimationPoint"		"0.5"
 		"AttackAcquisitionRange"	"700"
-		"AttackRange"				"250"
+		"AttackRange"				"400"
 		"ProjectileModel"			"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
 		"ProjectileSpeed"			"900"
 		
@@ -902,13 +1046,6 @@
 		"CollisionSize"				"31"
 		"FormationRank"				"1"
 		
-		// Building Cost Stats
-		//----------------------------------------------------------------
-		"GoldCost"					"215"
-		"LumberCost"				"30"
-		"FoodCost"					"3"
-		"BuildTime"					"28"
-		
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
@@ -917,10 +1054,10 @@
 		
 		// Status
 		//----------------------------------------------------------------
-		"StatusHealth"				"600"
+		"StatusHealth"				"800"
 		"StatusHealthRegen"			"0.25"
-		"StatusMana"				"250"
-		"StatusManaRegen"			"250"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
 		
 		// Vision
 		//----------------------------------------------------------------
@@ -951,7 +1088,280 @@
 		}
 	}
 
+	"iskander_waver"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/iskander/waver.vmdl"
+		"ModelScale"				"1.1"
+		"Level"						"1"
+		"HealthBarOffset"			"300"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"iskander_waver_passive"	 //Reference: Asps
+		"Ability2"					"iskander_brilliance_of_the_king"	 //Reference: Acmg
+		"Ability3"					""	 //Reference: Amim
+		"Ability4"					""	 //Reference: Afbk
+		"Ability5"					""	 //Reference: Aihn
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"3"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"8.0"
+		"AttackDamageMax"			"8.0"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackRate"				"1.9"
+		"AttackAnimationPoint"		"0.5"
+		"AttackAcquisitionRange"	"2000"
+		"AttackRange"				"500"
+		"ProjectileModel"			"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+		"ProjectileSpeed"			"900"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"26.0"
+		"BountyGoldMax"				"38.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"200"
+		"CollisionSize"				"200"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.6"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"850"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"250"
+		"StatusManaRegen"			"250"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1400"
+		"VisionNighttimeRange"		"1400"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_BASIC"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+	}
+	"gille_gigantic_horror"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/zc/tentacleking.vmdl"
+		"ModelScale"				"1.6"
+		"Level"						"1"
+		"HealthBarOffset"			"500"
+		
+		"AbilityLayout"				"6"
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"gille_tentacle_hook"	 
+		"Ability2"					"gille_tentacle_wrap"
+		"Ability3"					"gille_subterranean_skewer"
+		"Ability4"					"gille_tentacle_of_destruction"
+		"Ability5"					"gille_gigantic_horror_passive"
+		"Ability6"					""
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackDamageMin"			"50"								// Damage range min.
+		"AttackDamageMax"			"50"								// Damage range max.
+		"AttackRate"				"2.0"								// Speed of attack.
+		"AttackAnimationPoint"		"0.5"								// Normalized time in animation cycle to attack.
+		"AttackAcquisitionRange"	"1000"								// Range within a target can be acquired.
+		"AttackRange"				"700"								// Range within a target can be attacked.
+		"ProjectileModel"			""				// Particle system model for projectile.
+		"ProjectileSpeed"			"9999"	
 
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"300"			// Experience earn.
+		"BountyGoldMin"				"1000"			// Gold earned min.
+		"BountyGoldMax"				"1000"			// Gold earned max.
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
+		"CollisionSize"				"500"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
+		"MovementSpeed"				"100"
+		"MovementTurnRate"			"0.7"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1500"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"1000"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRONG"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_DEFAULT"
+
+		"ShouldDoFlyHeightVisual"	"0"
+	}
+
+
+	"gille_corpse"
+	{
+		"Model"				"models/props_structures/skeleton001.vmdl"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					""			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"0"		// Speed.
+		"MovementTurnRate"			"999"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
+		"AttackRate"					"999"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"250"		// Base health.
+		"StatusHealthRegen"			"1"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+	}
+
+	"gille_oceanic_demon"
+	{
+		"Model"				"models/items/courier/echo_wisp/echo_wisp_flying.vmdl"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					"gille_oceanic_demon_passive"			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"300"		// Speed.
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"15"
+		"AttackDamageMax"				"5"
+		"AttackRate"					"1.0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"190"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"5"			// Experience earn.
+		"BountyGoldMin"				"15"			// Gold earned min.
+		"BountyGoldMax"				"15"			// Gold earned max.
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"300"		// Range of vision during day light.
+		"VisionNighttimeRange"		"300"		// Range of vision at night time.
+	}
+
+
+	"gille_tentacle_of_destruction"
+	{
+		"Model"				"models/zc/tidehuntertentacle_reference.vmdl"
+		"ModelScale"		"1.5"
+		"BaseClass"			"npc_dota_creature"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					"gille_tentacle_of_destruction_passive"			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"300"		// Speed.
+		"MovementTurnRate"			"0.5"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"200"
+		"AttackDamageMin"				"20"
+		"AttackDamageMax"				"20"
+		"AttackRate"					"0.75"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"210"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyXP"					"10"			// Experience earn.
+		"BountyGoldMin"				"30"			// Gold earned min.
+		"BountyGoldMax"				"30"			// Gold earned max.
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"500"		// Range of vision during day light.
+		"VisionNighttimeRange"		"500"		// Range of vision at night time.
+	}
+	
 	"lancer_trap"
 	{
 		// General
@@ -1288,7 +1698,6 @@
 			"soundfile"			"soundevents/hero_archer.vsndevts"
 			"soundfile"			"soundevents/hero_avenger.vsndevts"
 			"soundfile"			"soundevents/hero_caster.vsndevts"
-
 			"soundfile"			"soundevents/hero_berserker.vsndevts"
 			"soundfile"			"soundevents/hero_fa.vsndevts"
 			"soundfile"			"soundevents/hero_gilg.vsndevts"
@@ -1302,6 +1711,7 @@
 			"soundfile"			"soundevents/hero_zc.vsndevts"
 			"soundfile"			"soundevents/hero_zl.vsndevts"
 
+			//Heroes
 			"model"					"models/saber/saber.vmdl"
 			"model"					"models/lancer/lancer.vmdl"
 			"model"					"models/saber_alter/sbr_alter.vmdl"
@@ -1319,11 +1729,7 @@
 			"model"					"models/iskander/iskander.vmdl"
 			"model"					"models/iskander/iskander_chariot.vmdl"
 
-			"model"					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
-			"model"					"models/development/invisiblebox.vmdl"
-			"model"					"models/shirou/shirouanim.vmdl"
-			"model"					"models/tohsaka/tohsaka.vmdl"
-			"model"					"models/lancelot/lancelot_f16.vmdl"
+			//AOTK Infantry
 			"model"					"models/heroes/dragon_knight/dragon_knight.vmdl"
 			"model"					"models/heroes/dragon_knight/helmet.vmdl"
 			"model"					"models/heroes/dragon_knight/shoulders.vmdl"
@@ -1332,14 +1738,64 @@
 			"model"					"models/heroes/dragon_knight/shield.vmdl"
 			"model"					"models/heroes/dragon_knight/skirt.vmdl"
 
-			//units
+			//Maharaja
+			"model"					"models/heroes/chen/chen.vmdl"
+			"model"					"models/heroes/chen/bracers.vmdl"
+			"model"					"models/heroes/chen/helmet.vmdl"
+			"model"					"models/heroes/chen/mount.vmdl"
+			"model"					"models/heroes/chen/mount_armor.vmdl"
+			"model"					"models/heroes/chen/shoulders.vmdl"
+			"model"					"models/heroes/chen/weapon.vmdl"
+			"particle"				"particles/units/heroes/hero_chen/chen_base_attack.vpcf"
+
+			//AOTK Archer
+			"model"					"models/heroes/windrunner/windrunner.vmdl"
+			"model"					"models/heroes/windrunner/windrunner_bow.vmdl"
+			"model"					"models/heroes/windrunner/windrunner_cape.vmdl"
+			"model"					"models/heroes/windrunner/windrunner_head.vmdl"
+			"model"					"models/heroes/windrunner/windrunner_quiver.vmdl"
+			"model"					"models/heroes/windrunner/windrunner_shoulderpads.vmdl"
+			"model"					"models/items/windrunner/sparrowhawk_hood2/sparrowhawk_hood2.vmdl"
+			"particle"				"particles/units/heroes/hero_windrunner/windrunner_base_attack.vpcf"
+
+			//AOTK Cavalry
+			"model"	"models/heroes/chaos_knight/chaos_knight.vmdl"
+			"model"	"models/heroes/chaos_knight/chaos_knight_helmet.vmdl"
+			"model"	"models/items/chaos_knight/chaos_legion_helm/chaos_legion_helm.vmdl"
+			"model"	"models/items/chaos_knight/blade_of_entropy/blade_of_entropy.vmdl"
+			"model"	"models/items/chaos_knight/rising_chaos_steed/rising_chaos_steed.vmdl"
+			"model"	"models/heroes/chaos_knight/chaos_knight_shoulderpads.vmdl"
+			"particle"		"particles/econ/items/tinker/boots_of_travel/teleport_end_bots_dust.vpcf"
+			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+
+			//AOTK Mage
+			"model"		"models/heroes/silencer/silencer.vmdl"
+			"model"		"models/items/silencer/whispertribunal__weapon/whispertribunal__weapon.vmdl"
+			"model"		"models/items/silencer/whispertribunal_arms/whispertribunal_arms.vmdl"
+			"model"		"models/items/silencer/whispertribunal_belt/whispertribunal_belt.vmdl"
+			"model"		"models/items/silencer/whispertribunal_head/whispertribunal_head.vmdl"
+			"model"		"models/items/silencer/whispertribunal_shield/whispertribunal_shield.vmdl"
+			"model"		"models/items/silencer/whispertribunal_shoulder/whispertribunal_shoulder.vmdl"
+			"model"		"models/iskander/waver.vmdl"
+			"particle"	"particles/units/heroes/hero_silencer/silencer_glaives_of_wisdom.vpcf"
+			"particle"	"particles/units/heroes/hero_invoker/invoker_base_attack.vpcf"
+			"particle" 	"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
+			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
+			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"	"particles/generic_gameplay/generic_silenced.vpcf"
+
+			//misc units
 			"model"					"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
 			"model"					"models/items/courier/catakeet/catakeet_boxes.vmdl"
 			"model"					"models/heroes/clinkz/clinkz.vmdl"
 			"model"					"models/items/courier/mighty_chicken/mighty_chicken.vmdl"
 			"model"					"models/props_gameplay/rune_haste01.vmdl"
 			"model"			"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
-
+			"model"					"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
+			"model"					"models/development/invisiblebox.vmdl"
+			"model"					"models/shirou/shirouanim.vmdl"
+			"model"					"models/tohsaka/tohsaka.vmdl"
+			"model"					"models/lancelot/lancelot_f16.vmdl"
 
 			//precache lines from npc_items_custom.txt
 			"particle"		"particles/items_fx/healing_flask.vpcf"

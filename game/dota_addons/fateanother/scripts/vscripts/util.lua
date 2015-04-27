@@ -66,15 +66,28 @@ goesthruB = {"saber_avalon",
 cleansable = {
     "modifier_stunned",
     "modifier_rule_breaker",
+    "modifier_caliburn_slow",
     "modifier_purge",
     "modifier_breaker_gorgon",
     "rb_sealdisabled",
     "modifier_dagger_of_treachery",
+    "modifier_weakening_venom_debuff",
     "modifier_slow_tier1",
     "modifier_slow_tier2",
     "modifier_silence",
     "modifier_disarmed",
     "modifier_enkidu_hold" -- enkidu
+}
+
+slowmodifier = {
+    "modifier_slow_tier1",
+    "modifier_slow_tier2",
+    "modifier_caliburn_slow",
+    "modifier_breaker_gorgon",
+    "modifier_weakening_venom_debuff",
+    "modifier_double_edge_slow",
+    "modifier_tawrich_slow",
+    "modifier_battle_horn_movespeed_debuff"
 }
 
 donotlevel = {
@@ -154,6 +167,43 @@ function giveUnitDataDrivenModifier(source, target, modifier,dur)
     item:RemoveSelf()
 end
 
+function ApplyAirborne(source, target, duration)
+    target:AddNewModifier(source, source, "modifier_stunned", {Duration = duration})
+    --[[local ascendCounter = 0
+    Timers:CreateTimer(function()
+        if ascendCounter > duration/2 then return end
+        target:SetAbsOrigin(target:GetAbsOrigin() + Vector(0,0,25))
+        ascendCounter = ascendCounter + 0.033
+        return 0.033
+    end)
+    local descendCounter = 0
+    Timers:CreateTimer(duration/2, function()
+        if descendCounter > duration/2 then return end
+        target:SetAbsOrigin(target:GetAbsOrigin() + Vector(0,0,-25))
+        descendCounter = descendCounter + 0.033
+        return 0.033
+    end)]]
+    local knockupSpeed = 1000
+    local knockupAcc = knockupSpeed/duration * 2
+
+    Physics:Unit(target)
+    target:PreventDI()
+    target:SetPhysicsVelocity(Vector(0,0,knockupSpeed))
+    target:SetPhysicsAcceleration(Vector(0,0,-knockupAcc))
+    target:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+    target:FollowNavMesh(false)
+    target:Hibernate(false)
+
+    Timers:CreateTimer(duration, function()
+        target:PreventDI(false)
+        target:SetPhysicsVelocity(Vector(0,0,0))
+        target:SetPhysicsAcceleration(Vector(0,0,0))
+        target:OnPhysicsFrame(nil)
+        target:Hibernate(true)
+    end)
+
+
+end
 
 function DummyEnd(dummy)
     dummy:RemoveSelf()
@@ -192,7 +242,7 @@ function StartQuestTimer(questname, questtitle, questendtime)
 end
 
 function LevelAllAbility(hero)
-    for i=0, 30 do
+    for i=0, 14 do
         local ability = hero:GetAbilityByIndex(i)
         if ability == nil then return end
         local level0 = false
@@ -233,6 +283,7 @@ end
 
 function FindName(name)
     local heroName = nil
+    print("Finding name")
     if name == "npc_dota_hero_legion_commander" then
         heroName = "Saber"
     elseif name == "npc_dota_hero_phantom_lancer" then
@@ -261,6 +312,8 @@ function FindName(name)
         heroName = "Lancer(4th)"
     elseif name == "npc_dota_hero_chen" then
         heroName = "Rider(4th)"
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        heroName = "Caster(4th)"
     end
     return heroName
 end
@@ -295,6 +348,8 @@ function FindAttribute(name)
         attributes = DiarmuidAttribute
     elseif name == "npc_dota_hero_chen" then
         attributes = IskanderAttribute
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        attributes = GillesAttribute
     end
     return attributes
 end 
@@ -388,6 +443,14 @@ function HardCleanse(target)
     end
 end
 
+function RemoveSlowEffect(target)
+    for i=1, #slowmodifier do
+        if target:HasModifier(slowmodifier[i]) then
+            target:RemoveModifierByName(slowmodifier[i])
+        end
+    end
+end
+
 function GetPhysicalDamageReduction(armor)
     local reduction = 0.06*armor / (1+0.06*armor)
     if armor >= 0 then 
@@ -397,6 +460,12 @@ function GetPhysicalDamageReduction(armor)
     end
 end
 
+
+function ReduceCooldown(ability, reduction)
+    local remainingCD = ability:GetCooldownTimeRemaining() 
+    ability:EndCooldown()
+    ability:StartCooldown(remainingCD - reduction)
+end
 
 lastTipChoice = 0
 function DisplayTip()

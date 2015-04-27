@@ -97,14 +97,6 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 		},
 		ParticleChildrenInfo_t
 		{
-			string m_ChildRef = "particles/custom/rider/rider_nail_swing_smoke.vpcf"
-			bool m_bPreventNameBasedLookup = false
-			float m_flDelay = 0.000000
-			bool m_bEndCap = false
-			bool m_bDisableChild = false
-		},
-		ParticleChildrenInfo_t
-		{
 			string m_ChildRef = "particles/units/heroes/hero_dark_seer/dark_seer_vacuum_shockwave.vpcf"
 			bool m_bPreventNameBasedLookup = false
 			float m_flDelay = 0.550000

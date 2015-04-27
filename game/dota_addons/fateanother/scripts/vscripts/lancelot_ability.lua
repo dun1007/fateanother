@@ -121,6 +121,7 @@ function OnKnightStart(keys)
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
         local ability = keys.ability
+        caster.IsKnightOpen = true
         if caster:HasModifier("modifier_arondite") then
                 FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
                 return 
@@ -195,6 +196,7 @@ end
 
 function OnKnightClosed(keys)
         local caster = keys.caster
+        caster.IsKnightOpen = false
         local a1 = caster:GetAbilityByIndex(0)
         local a2 = caster:GetAbilityByIndex(1)
         local a3 = caster:GetAbilityByIndex(2)
@@ -261,7 +263,6 @@ function KnightInitialize(keys)
 end
 
 function OnKnightUsed(keys)
-        print("dududu")
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
         local ability = keys.ability
@@ -272,6 +273,12 @@ function OnKnightUsed(keys)
 end
 
 function OnAronditeStart(keys)
+        if keys.caster.IsKnightOpen then 
+            keys.ability:EndCooldown() 
+            keys.caster:GiveMana(800)
+            FireGameEvent( 'custom_error_show', { player_ID = keys.caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
+            return 
+        end
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
         local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -326,6 +333,7 @@ function OnNukeStart(keys)
     -- Create F16 nunit
     Timers:CreateTimer(1.97, function()
         EmitGlobalSound("Lancelot.Nuke_Beep")
+        EmitGlobalSound("Lancelot.Helicoptor")
         -- Set up unit
         LevelAllAbility(f16)
         FindClearSpaceForUnit(f16, f16:GetAbsOrigin(), true)

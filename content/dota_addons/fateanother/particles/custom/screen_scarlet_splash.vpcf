@@ -16,7 +16,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	string m_hFallback = ""
 	int m_nFallbackMaxCount = -1
 	string m_hLowViolenceDef = ""
-	uint(4) m_ConstantColor = ( 255, 255, 127, 255 )
+	uint(4) m_ConstantColor = ( 255, 0, 0, 255 )
 	float(3) m_ConstantNormal = ( 0.000000, 0.000000, 1.000000 )
 	float m_flConstantRadius = 5.000000
 	float m_flConstantRotation = 0.000000

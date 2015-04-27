@@ -289,7 +289,7 @@ function OnGBComboHit(keys)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
 	EmitGlobalSound("Lancer.Heartbreak")
 	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
-  	Timers:CreateTimer(1.5, function() 
+  	Timers:CreateTimer(1.2, function() 
 	    local lancer = Physics:Unit(caster)
 	    caster:PreventDI()
 	    caster:SetPhysicsFriction(0)
@@ -297,7 +297,7 @@ function OnGBComboHit(keys)
 	    caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 	    caster:FollowNavMesh(false)	
 	    caster:SetAutoUnstuck(false)
-
+	    keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_pierce_anim", {})
 	    caster:OnPhysicsFrame(function(unit)
 			local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
 			local dir = diff:Normalized()
@@ -358,6 +358,7 @@ function OnGBAOEStart(keys)
 	
 	EmitGlobalSound("Lancer.GaeBolg")
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.6)
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_jump_throw_anim", {})
 
   	Timers:CreateTimer('gb_throw', {
 		endTime = 0.3,

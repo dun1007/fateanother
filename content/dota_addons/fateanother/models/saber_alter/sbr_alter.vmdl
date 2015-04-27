@@ -901,16 +901,6 @@ CVanimGroup CVanimGroup_0
 				{
 					string m_Name = "ACT_DOTA_CAST_ABILITY_1"
 					int m_nWeight = 1
-				},
-				CActivity
-				{
-					string m_Name = "ACT_DOTA_CAST_ABILITY_2"
-					int m_nWeight = 1
-				},
-				CActivity
-				{
-					string m_Name = "ACT_DOTA_CAST_ABILITY_5"
-					int m_nWeight = 1
 				}
 			]
 			CAnimationEvent[] m_AnimationEvents = 

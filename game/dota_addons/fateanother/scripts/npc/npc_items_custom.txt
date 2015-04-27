@@ -270,10 +270,7 @@
 				"IsDebuff"		"1"
 				"States"
 				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			
@@ -282,10 +279,7 @@
 				"IsDebuff"		"1"
 				"States"
 				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"pause_sealdisabled"
@@ -293,10 +287,7 @@
 				"IsDebuff"		"1"
 				"States"
 				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"rb_sealdisabled"
@@ -309,10 +300,8 @@
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"round_pause"
@@ -325,6 +314,15 @@
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"gille_attack_speed_boost"
+			{
+				"IsDebuff"		"0"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"50"
 				}
 			}
 	    }
@@ -604,6 +602,7 @@
 	    "precache"
 	    {
 	    	"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+	    	"soundfile"		"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
 	    }
 
 	    "SideShop"     "1" 
@@ -675,6 +674,10 @@
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"8"
+	    "precache"
+	    {
+	    	"particle"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+	    }
 
 	    "OnSpellStart"
 	    {
@@ -694,7 +697,9 @@
 	    {
 	    	"modifier_speed_gem"
 	    	{
-	    		"Duration"		"15.0"
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"		"follow_origin"	
+	    		"Duration"		"10.0"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"30"
@@ -733,6 +738,7 @@
 	    "precache"
 	    {
 	    	"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
+	    	"model"			"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
 	    }
 
 	    "OnSpellStart"
@@ -1001,6 +1007,7 @@
 	    "precache"
 	    {
 	    	"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+	    	"soundfile"		"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
 	    }
 	    "OnSpellStart"
 	    {
@@ -1114,10 +1121,19 @@
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"20"
+	    "precache"
+	    {
+	    	"particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf"
+	    }
 
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
+	    	"FireSound"
+	    	{
+	    		"EffectName"	"DOTA_Item.Mekansm.Activate"
+	    		"Target"		"CASTER"
+	    	}
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
@@ -1157,6 +1173,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
 
 	    "OnSpellStart"
@@ -1212,6 +1229,7 @@
 	    "precache"
 	    {
 	    	"particle"				"particles/units/heroes/hero_lina/lina_base_attack.vpcf"
+	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 	    }
 
 	    "AbilitySpecial"
@@ -1381,7 +1399,7 @@
 			}
 			"FireSound"
 			{
-				"EffectName"	"DOTA_Item.LinkensSphere.Target"
+				"EffectName"	"DOTA_Item.Pipe.Activate"
 				"Target"		"CASTER"
 			}
 	    }
@@ -1451,6 +1469,10 @@
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"30"
+	    "precache"
+	    {
+	    	"particle"			"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+	    }
 
 	    "OnSpellStart"
 	    {
@@ -1463,6 +1485,11 @@
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_a_plus_armor"
+				"Target"		"CASTER"
+			}
+			"FireSound"
+			{
+				"EffectName"	"DOTA_Item.Pipe.Activate"
 				"Target"		"CASTER"
 			}
 	    }
@@ -1538,6 +1565,8 @@
 		{
 			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
 			"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 
 	    "OnSpellStart"
@@ -1659,7 +1688,10 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 
 	    "OnSpellStart"
@@ -1806,6 +1838,7 @@
 	    "precache"
 	    {
 	    	"model"			"models/heroes/clinkz/clinkz.vmdl"
+			"particle"		"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	    }
 
 
@@ -1848,6 +1881,7 @@
 	    "precache"
 	    {
 	    	"model"			"models/creeps/neutral_creeps/n_creep_black_dragon/n_creep_black_dragon.vmdl"
+	    	"particle"		"particles/neutral_fx/black_dragon_attack.vpcf"	
 	    }
 
 
@@ -1899,6 +1933,7 @@
 		{
 			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
 			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -2038,5 +2073,270 @@
 				"Function"		"FullHeal"
 			}
 	    }	
+	}
+
+	"item_gille_contaminate" 
+	{
+	    "ID"           "1131"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_contaminate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"30"
+	    "precache"
+	    {
+	    	"particle"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+	    }
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"800"
+			}				
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"500 750 1000 1250 1500"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"gille_ability"
+				"Function"			"OnContaminateStart"
+				"Radius"			"%radius"
+			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_Venomancer.PoisonNova"
+				"Target"			"CASTER"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_contaminate"
+			{
+				"Duration"		"10.0"
+				"IsDebuff"		"1"
+				"ThinkInterval"	"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnContaminateThink"
+						"Damage"		"%damage"
+					}
+				}
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"	"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
+						"EffectAttachType"	"attach_hitloc"
+						"Target"	"TARGET"
+					}
+				}
+			}
+		}
+	}
+
+
+	"item_gille_integrate" 
+	{
+	    "ID"           "1132"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_integrate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCooldown"		"0"
+	    "precache"
+	    {
+	    }
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"200"
+			}	
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed"			"50"
+			}	
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnIntegrateStart"
+			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_integrate"
+	    	{
+	    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+	    		"EffectAttachType"	"attach_hitloc"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"	"%movespeed"
+	    			"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%attackspeed"
+	    		}
+	    		"OnDeath"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"	"gille_ability"
+	    				"Function"		"OnIntegrateDeath"
+	    			}
+	    		}
+	    	}
+	    	"modifier_integrate_passive"
+	    	{
+	    		"IsHidden"		"1"
+	    		"Passive"		"1"
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnIntegrateCanceled"
+					}
+				}
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnIntegrateCanceled"
+					}
+				}
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnIntegrateCanceled"
+					}
+				}
+	    	}
+	    	"modifier_integrate_gille"
+	    	{
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"IntegrateFollow"
+					}				
+				}	
+	    	}
+	    }
+	}
+
+
+	"item_gille_otherworldly_portal" 
+	{
+	    "ID"           "1133"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "zc_integrate"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCooldown"		"90"
+	    "precache"
+	    {
+	    }
+
+		"AbilitySpecial"
+		{
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnHorrorTeleport"
+				"Target"		"POINT"
+			}
+	    }
+
 	}
 }

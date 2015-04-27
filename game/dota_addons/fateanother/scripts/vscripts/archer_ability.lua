@@ -6,6 +6,7 @@ ubwTargets = nil
 ubwTargetLoc = nil
 ubwCasterPos = nil
 ubwCenter = Vector(5600, -4398, 200)
+aotkCenter = Vector(500, -4800, 208)
 
 function FarSightVision(keys)
 	local caster = keys.caster
@@ -289,24 +290,24 @@ function OnUBWStart(keys)
 	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
+	local ubwdummyLoc1 = ubwCenter + Vector(600,-600, 1000)
+	local ubwdummyLoc2 = ubwCenter + Vector(600,600, 1000)
+	local ubwdummyLoc3 = ubwCenter + Vector(-600,600, 1000)
+	local ubwdummyLoc4 = ubwCenter + Vector(-600,-600, 1000)
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	ubwTargetLoc = {}
-	local diff = nil
-	local ubwTargetPos = nil
-	ubwCasterPos = caster:GetAbsOrigin()
+	caster.IsUBWDominant = true
+	for i=1, #ubwTargets do
+		if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
+			ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
+			ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
+			ubwdummyLoc3 = aotkCenter + Vector(-600,600, 1000)
+			ubwdummyLoc4 = aotkCenter + Vector(-600,-600, 1000)
+			caster.IsUBWDominant = false
+			break
+		end
+	end
 	caster.IsUBWActive = true
-	
-	--[[local ubwTimerCounter = 0
-	Timers:CreateTimer(3.0, function() 
-		if ubwTimerCounter > 9 then return end
-		local ubwTimer = ParticleManager:CreateParticle("particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
-		ParticleManager:SetParticleControl( ubwTimer, 0, caster:GetAbsOrigin() )
-		ParticleManager:SetParticleControl( ubwTimer, 1, Vector( 0, 19 - ubwTimerCounter, 1) )
-		ParticleManager:SetParticleControl( ubwTimer, 2, Vector( 2, 0, 0) )
-		ubwTimerCounter = ubwTimerCounter + 1 
-		return 1.0 
-	end)]]
 
 	local info = {
 		Target = nil,
@@ -316,22 +317,9 @@ function OnUBWStart(keys)
 		vSpawnOrigin = ubwCenter + Vector(RandomFloat(-800,800),RandomFloat(-800,800), 500),
 		iMoveSpeed = 1000
 	}
-	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
-	for i=1, #ubwTargets do
-		if ubwTargets[i]:GetName() ~= "npc_dota_ward_base" then
-			ubwTargetPos = ubwTargets[i]:GetAbsOrigin()
-	        ubwTargetLoc[i] = ubwTargetPos
-	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
-	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
-			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
-			Timers:CreateTimer(0.1, function() 
-				ubwTargets[i]:AddNewModifier(ubwTargets[i], ubwTargets[i], "modifier_camera_follow", {duration = 1.0})
-			end)
-		end
-    end
 
     -- swap Archer's skillset with UBW ones
-    caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 
+    caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
@@ -345,10 +333,16 @@ function OnUBWStart(keys)
 	end)
 
 	-- Add sword shooting dummies
-	local ubwdummy1 = CreateUnitByName("dummy_unit", Vector(5000,-4000,500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy2 = CreateUnitByName("dummy_unit", Vector(5000,-5000, 500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy3 = CreateUnitByName("dummy_unit", Vector(6000,-4000, 500), false, caster, caster, caster:GetTeamNumber())
-	local ubwdummy4 = CreateUnitByName("dummy_unit", Vector(6000,-5000, 500), false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy1 = CreateUnitByName("dummy_unit", ubwdummyLoc1, false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy2 = CreateUnitByName("dummy_unit", ubwdummyLoc2, false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy3 = CreateUnitByName("dummy_unit", ubwdummyLoc3, false, caster, caster, caster:GetTeamNumber())
+	local ubwdummy4 = CreateUnitByName("dummy_unit", ubwdummyLoc4, false, caster, caster, caster:GetTeamNumber())
+	Timers:CreateTimer(function()
+		ubwdummy1:SetAbsOrigin(ubwdummyLoc1)
+		ubwdummy2:SetAbsOrigin(ubwdummyLoc2)
+		ubwdummy3:SetAbsOrigin(ubwdummyLoc3)
+		ubwdummy4:SetAbsOrigin(ubwdummyLoc4)
+	end)
 	ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
 	for i=1, #ubwdummies do
 		ubwdummies[i]:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
@@ -359,12 +353,13 @@ function OnUBWStart(keys)
 
 	Timers:CreateTimer(function() 
 		if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
-			local weaponTargets = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, keys.Radius
+			local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
             for i=1, #weaponTargets do
             	if weaponTargets[i]:GetTeam() ~= caster:GetTeam() then
             		info.Target = weaponTargets[i]
             		info.Source = ubwdummies[RandomInt(1,4)]
+            		info.vSpawnOrigin = ubwdummies[RandomInt(1,4)]:GetAbsOrigin()
             		break
             	end
             end
@@ -373,19 +368,37 @@ function OnUBWStart(keys)
 		return 0.1
 	end)
 
-	Timers:CreateTimer("ubw_timer", {
-	    endTime = 12,
-	    callback = function()
-		if caster:IsAlive() and caster.IsUBWActive then 
-			EndUBW(caster)
+	if not caster.IsUBWDominant then return end -- If UBW is not dominant right now, do not teleport units 
+
+
+	ubwTargetLoc = {}
+	local diff = nil
+	local ubwTargetPos = nil
+	ubwCasterPos = caster:GetAbsOrigin()
+	
+	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
+	for i=1, #ubwTargets do
+		if ubwTargets[i]:GetName() ~= "npc_dota_ward_base" then
+			ubwTargetPos = ubwTargets[i]:GetAbsOrigin()
+	        ubwTargetLoc[i] = ubwTargetPos
+	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
+	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
+			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
+			Timers:CreateTimer(0.1, function() 
+				if caster:IsAlive() then
+					ubwTargets[i]:AddNewModifier(ubwTargets[i], ubwTargets[i], "modifier_camera_follow", {duration = 1.0})
+				end
+			end)
 		end
-	end
-	})
+    end
+
+
 end
 
 
 function OnUBWDeath(keys)
 	local caster = keys.caster
+	print("ubw death checker removed")
 	EndUBW(caster)
 end
 
@@ -396,7 +409,7 @@ function EndUBW(caster)
 	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
 
-    caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true) 
+    caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
@@ -406,10 +419,13 @@ function EndUBW(caster)
 
 
     local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300
-    , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+    , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
     for i=1, #units do
     	ProjectileManager:ProjectileDodge(units[i])
+   		if units[i]:GetName() == "npc_dota_hero_chen" and units[i]:HasModifier("modifier_army_of_the_king_death_checker") then
+   			units[i]:RemoveModifierByName("modifier_army_of_the_king_death_checker")
+   		end
     	local IsUnitGeneratedInUBW = true
     	if ubwTargets ~= nil then
 	    	for j=1, #ubwTargets do
@@ -485,10 +501,11 @@ function OnRainStart(keys)
 		-- Create Arrow particles
 		-- Main variables
 		local speed = 3000				-- Movespeed of the arrow
-		
+
 		-- Side variables
+		local groundVector = caster:GetAbsOrigin() - Vector(0,0,1000)
 		local spawn_location = caster:GetAbsOrigin()
-		local target_location = ubwCenter + arrowVector
+		local target_location = groundVector + arrowVector
 		local forwardVec = ( target_location - caster:GetAbsOrigin() ):Normalized()
 		local delay = ( target_location - caster:GetAbsOrigin() ):Length2D() / speed
 		local distance = delay * speed
@@ -504,17 +521,17 @@ function OnRainStart(keys)
 				ParticleManager:ReleaseParticleIndex( arrowFxIndex )
 				
 				-- Delay damage
-				local targets = FindUnitsInRadius(caster:GetTeam(), ubwCenter + arrowVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+				local targets = FindUnitsInRadius(caster:GetTeam(), groundVector + arrowVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 				for k,v in pairs(targets) do
 					DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				end
 				
 				-- Particles on impact
 				local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
-				ParticleManager:SetParticleControl( explosionFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( explosionFxIndex, 0, groundVector + arrowVector + Vector( 0, 0, 150 ) )
 				
 				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
-				ParticleManager:SetParticleControl( impactFxIndex, 0, ubwCenter + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( impactFxIndex, 0, groundVector + arrowVector + Vector( 0, 0, 150 ) )
 				ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(300, 300, 300))
 				
 				-- Destroy Particle
@@ -538,7 +555,7 @@ function OnRainStart(keys)
 	local bpCount = 0 
 	Timers:CreateTimer(2.8, function()
 		if bpCount == 5 then return end
-		local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		info.Target = units[math.random(#units)]
 		if info.Target ~= nil then 
 			ProjectileManager:CreateTrackingProjectile(info) 

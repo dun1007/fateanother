@@ -34,14 +34,11 @@ function NailPull(keys)
 		v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 		v:FollowNavMesh(false)
 
-	  	Timers:CreateTimer('nailpull', {
-			endTime = 0.5,
-			callback = function()
+		Timers:CreateTimer(0.5, function()
 			v:PreventDI(false)
 			v:SetPhysicsVelocity(Vector(0,0,0))
 			v:OnPhysicsFrame(nil)
-		end
-		})
+		end)
 
 		v:OnPhysicsFrame(function(unit)
 			local diff = caster:GetAbsOrigin() - unit:GetAbsOrigin()
@@ -199,7 +196,7 @@ function OnBelle2Start(keys)
 	local belle2FxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_2_beam_charge.vpcf", PATTACH_ABSORIGIN, caster )
 	ParticleManager:SetParticleControl( belle2FxIndex, 0, caster:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( belle2FxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
-	ParticleManager:SetParticleControl( belle2FxIndex, 2, caster:GetForwardVector() * 3000 )
+	ParticleManager:SetParticleControl( belle2FxIndex, 2, caster:GetForwardVector() * 2000 )
 	ParticleManager:SetParticleControl( belle2FxIndex, 6, Vector( 2, 0, 0 ) )
 			
 	Timers:CreateTimer( 2, function()
@@ -266,6 +263,7 @@ function OnBelleStart(keys)
 	Timers:CreateTimer(1.0, function() 
 		caster:SetAbsOrigin(targetPoint)
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		caster:EmitSound("Misc.Crash")
 	end)
 
 	-- this is when the damage actually applies(Put slam effect here)

@@ -45,6 +45,12 @@ function OnRoarStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	
+	-- Remove Berserk modifier and set health to max
+	if caster:HasModifier("modifier_berserk_self_buff") then
+		caster:RemoveModifierByName("modifier_berserk_self_buff")
+	end
+	caster:SetHealth(caster:GetMaxHealth())
 
 	local casterloc = caster:GetAbsOrigin()
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
@@ -139,36 +145,38 @@ function OnNineStart(keys)
 	local distance = (targetPoint - origin):Length2D()
 	local forward = (targetPoint - origin):Normalized() * distance
 
+	caster.NineLanded = false
 	caster:SetPhysicsFriction(0)
-	caster:SetPhysicsVelocity(forward)
+	caster:SetPhysicsVelocity(caster:GetForwardVector()*distance)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
-	Timers:CreateTimer(1.00, function() 
-		if caster.NineLanded ~= true then
-			OnNineLanded(caster, keys.ability) 
-		end
-	return end)
 
-	caster:OnPhysicsFrame(function(unit)
-		local diff = unit:GetAbsOrigin() - origin
-		print(distance .. " and " .. diff:Length2D())
-		if diff:Length2D() > distance then
-			unit:PreventDI(false)
-			unit:OnPhysicsFrame(nil)
-			unit:OnPreBounce(nil)
-			unit:SetPhysicsVelocity(Vector(0,0,0))
-			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+	Timers:CreateTimer("chariot_dash", {
+		endTime = 1.0,
+		callback = function()
+		caster:OnPreBounce(nil)
+		caster:SetBounceMultiplier(0)
+		caster:PreventDI(false)
+		caster:SetPhysicsVelocity(Vector(0,0,0))
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		if caster:IsAlive() and not caster.NineLanded then
+			caster:RemoveModifierByName("modifier_dash_anim")
+			OnNineLanded(caster, keys.ability)
 		end
-	end)
+	return end
+	})
 
 	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
-		OnNineLanded(caster, keys.ability)
 		unit:OnPreBounce(nil)
 		unit:OnPhysicsFrame(nil)
 		unit:SetBounceMultiplier(0)
 		unit:PreventDI(false)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+		if caster:IsAlive() and not caster.NineLanded then
+			caster:RemoveModifierByName("modifier_dash_anim")
+			OnNineLanded(caster, keys.ability)
+		end
 	end)
 
 	
@@ -196,7 +204,13 @@ function OnNineLanded(caster, ability)
 	local casterInitOrigin = caster:GetAbsOrigin() 
 	caster.NineLanded = true
 
-	if caster:GetName() == "npc_dota_hero_doom_bringer" then ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) end
+	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
+		Timers:CreateTimer(0.033, function()
+			if caster:IsAlive() then
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
+			end
+		end)
+	end
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
 
@@ -215,7 +229,6 @@ function OnNineLanded(caster, ability)
 					EmitGlobalSound("Lancelot.Roar1" )
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
 				end
-				caster.NineLanded = false
 				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				-- do damage to targets
@@ -313,6 +326,12 @@ function OnGodHandDeath(keys)
 	local caster = keys.caster
 	local newRespawnPos = caster:GetOrigin()
 	local ply = caster:GetPlayerOwner()
+
+	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
+	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
+	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=1.1})
+
 	print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
@@ -323,7 +342,7 @@ function OnGodHandDeath(keys)
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ply.GodHandStock = ply.GodHandStock - 1
 			GameRules:SendCustomMessage("<font color='#FF0000'>----------!!!!!</font> Remaining God Hand stock : " .. ply.GodHandStock , 0, 0)
-			caster:SetRespawnPosition(newRespawnPos)
+			caster:SetRespawnPosition(dummy:GetAbsOrigin())
 			caster:RespawnHero(false,false,false)
 			caster:RemoveModifierByName("modifier_god_hand_stock") 
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {}) 

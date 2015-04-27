@@ -1,7 +1,9 @@
-require( "timers")
-require( 'util' )
-require( 'archer_ability')
-require( 'master_ability')
+require("timers")
+require('util' )
+require('archer_ability')
+require('master_ability')
+require('xLib/xDialog')
+require('gille_ability')
 
 -- Load Stat collection (statcollection should be available from any script scope)
 require('lib.statcollection')
@@ -126,17 +128,91 @@ model_lookup["npc_dota_hero_sven"] = "models/lancelot/lancelot.vmdl"
 model_lookup["npc_dota_hero_vengefulspirit"] = "models/avenger/avenger.vmdl"
 model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid.vmdl"
 model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
+model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 
 function Precache( context )
-	print("Starting precache")
-	PrecacheUnitByNameSync("npc_precache_everything", context)
+    print("Starting precache")
+  	--PrecacheUnitByNameSync("npc_precache_everything", context)
 
-	--[[ Precache models
-	for k, v in pairs( model_lookup ) do
-		PrecacheResource( "model", v, context )
-	end]]
-	
-	print("precache complete")
+    -- Sound files
+    PrecacheResource("soundfile", "soundevents/bgm.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/misc_sound.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_archer.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_avenger.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_caster.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_berserker.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_fa.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_gilg.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_iskander.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_lancelot.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_lancer.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_rider.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_saber.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_saber_alter.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_ta.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_zc.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_zl.vsndevts", context)
+
+    -- Items
+    PrecacheItemByNameSync("item_apply_modifiers", context)
+    PrecacheItemByNameSync("item_mana_essence", context)
+    PrecacheItemByNameSync("item_condensed_mana_essence", context)
+    PrecacheItemByNameSync("item_teleport_scroll", context)
+    PrecacheItemByNameSync("item_gem_of_speed", context)
+    PrecacheItemByNameSync("item_scout_familiar", context)
+    PrecacheItemByNameSync("item_berserk_scroll", context)
+    PrecacheItemByNameSync("item_ward_familiar", context)
+    PrecacheItemByNameSync("item_mass_teleport_scroll", context)
+    PrecacheItemByNameSync("item_gem_of_resonance", context)
+    PrecacheItemByNameSync("item_blink_scroll", context)
+    PrecacheItemByNameSync("item_spirit_link" , context)
+    PrecacheItemByNameSync("item_c_scroll", context)
+    PrecacheItemByNameSync("item_b_scroll", context)
+    PrecacheItemByNameSync("item_a_scroll", context)
+    PrecacheItemByNameSync("item_a_plus_scroll", context)
+    PrecacheItemByNameSync("item_s_scroll", context)
+    PrecacheItemByNameSync("item_ex_scroll", context)
+    PrecacheItemByNameSync("item_summon_skeleton_warrior", context)
+    PrecacheItemByNameSync("item_summon_skeleton_archer", context)
+    PrecacheItemByNameSync("item_summon_ancient_dragon", context)
+    PrecacheItemByNameSync("item_all_seeing_orb", context)
+    PrecacheItemByNameSync("item_shard_of_anti_magic", context)
+    PrecacheItemByNameSync("item_shard_of_replenishment", context)
+
+    -- Master and Stash
+    PrecacheResource("model", "models/shirou/shirouanim.vmdl", context)
+    PrecacheResource("model", "models/items/courier/catakeet/catakeet_boxes.vmdl", context)
+    PrecacheResource("model", "models/tohsaka/tohsaka.vmdl", context)
+
+    -- Servants
+    PrecacheResource("model", "models/saber/saber.vmdl", context)
+    PrecacheResource("model", "models/lancer/lancer.vmdl", context)
+    PrecacheResource("model", "models/saber_alter/sbr_alter.vmdl", context)
+    PrecacheResource("model", "models/archer/archertest.vmdl", context)
+    PrecacheResource("model", "models/rider/rider.vmdl", context)
+    PrecacheResource("model", "models/berserker/berserker.vmdl", context)
+    PrecacheResource("model", "models/assassin/asn.vmdl", context)
+    PrecacheResource("model", "models/true_assassin/ta.vmdl", context)
+    PrecacheResource("model", "models/caster/caster.vmdl", context)
+    PrecacheResource("model", "models/gilgamesh/gilgamesh.vmdl", context)
+    PrecacheResource("model", "models/lancelot/lancelot.vmdl", context)
+    PrecacheResource("model", "models/avenger/avenger.vmdl", context)
+    PrecacheResource("model", "models/diarmuid/diarmuid.vmdl", context)
+    PrecacheResource("model", "models/iskander/iskander.vmdl", context)
+    PrecacheResource("model", "models/zc/gille.vmdl", context)
+
+    -- AOTK Soldier assets
+    PrecacheResource("model_folder", "models/heroes/chen", context)
+    PrecacheResource("model_folder", "models/items/chen", context)
+    PrecacheResource("model_folder", "models/heroes/dragon_knight", context)
+    PrecacheResource("model_folder", "models/items/dragon_knight", context)
+    PrecacheResource("model_folder", "models/heroes/chaos_knight", context)
+ 	  PrecacheResource("model_folder", "models/items/chaos_knight", context)
+    PrecacheResource("model_folder", "models/heroes/silencer", context)
+    PrecacheResource("model_folder", "models/items/silencer", context)
+    PrecacheResource("model_folder", "models/heroes/windrunner", context)
+    PrecacheResource("model_folder", "models/items/windrunner", context)
+  	print("precache complete")
 end
 
 function FateGameMode:PostLoadPrecache()
@@ -236,6 +312,52 @@ function FateGameMode:OnHeroInGame(hero)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
     end)  ]]
+
+  -- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
+  Timers:CreateTimer( 3.0, function()
+      -- Setup variables\
+      local model_name = ""
+      
+      -- Check if npc is hero
+      if IsValidEntity(hero) then
+       if not hero:IsHero() then return end
+      else return 
+      end
+      
+      -- Getting model name
+      if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
+        model_name = model_lookup[ hero:GetName() ]
+        -- print( "Swapping in: " .. model_name )
+      else
+        return nil
+      end
+      
+      -- Check if it's correct format
+      if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
+      
+      -- Never got changed before
+      local toRemove = {}
+      local wearable = hero:FirstMoveChild()
+      while wearable ~= nil do
+        if wearable:GetClassname() == "dota_item_wearable" then
+          -- print( "Removing wearable: " .. wearable:GetModelName() )
+          table.insert( toRemove, wearable )
+        end
+        wearable = wearable:NextMovePeer()
+      end
+      
+      -- Remove wearables
+      for k, v in pairs( toRemove ) do
+        v:SetModel( "models/development/invisiblebox.vmdl" )
+        v:RemoveSelf()
+      end
+      
+      -- Set model
+      hero:SetModel( model_name )
+      hero:SetOriginalModel( model_name )     -- This is needed because when state changes, model will revert back
+      hero:MoveToPosition( hero:GetAbsOrigin() )  -- This is needed because when model is spawned, it will be in T-pose
+    end
+  )
 end
 
 --[[
@@ -259,7 +381,7 @@ choice = 0 --
 function PlayBGM(player)
   local delayInBetween = 2.0
 
-  Timers:CreateTimer('BGMTimer', {
+  Timers:CreateTimer("BGMTimer" .. player:GetPlayerID(), {
     endTime = 0,
     callback = function()
     choice = RandomInt(1,8)
@@ -351,7 +473,7 @@ function FateGameMode:PlayerSay(keys)
   -- Turns BGM on and off
   if text == "-bgmoff" then
     print("Turning BGM off")
-    Timers:RemoveTimer("BGMTimer")
+    Timers:RemoveTimer("BGMTimer" .. ply:GetPlayerID())
     ply:StopSound("BGM." .. choice)
   end
 
@@ -474,51 +596,7 @@ end
 
 -- This is for swapping hero models in
 function FateGameMode:OnHeroSpawned( keys )
-	-- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
-	Timers:CreateTimer( 0.05, function()
-			-- Setup variables
-			local hero = EntIndexToHScript( keys.entindex )
-			local model_name = ""
-			
-			-- Check if npc is hero
-      if hero ~= nil then
-			 if not hero:IsHero() then return end
-      end
-			
-			-- Getting model name
-			if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
-				model_name = model_lookup[ hero:GetName() ]
-				-- print( "Swapping in: " .. model_name )
-			else
-				return nil
-			end
-			
-			-- Check if it's correct format
-			if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
-			
-			-- Never got changed before
-			local toRemove = {}
-			local wearable = hero:FirstMoveChild()
-			while wearable ~= nil do
-				if wearable:GetClassname() == "dota_item_wearable" then
-					-- print( "Removing wearable: " .. wearable:GetModelName() )
-					table.insert( toRemove, wearable )
-				end
-				wearable = wearable:NextMovePeer()
-			end
-			
-			-- Remove wearables
-			for k, v in pairs( toRemove ) do
-				v:SetModel( "models/development/invisiblebox.vmdl" )
-				v:RemoveSelf()
-			end
-			
-			-- Set model
-			hero:SetModel( model_name )
-			hero:SetOriginalModel( model_name )			-- This is needed because when state changes, model will revert back
-			hero:MoveToPosition( hero:GetAbsOrigin() )	-- This is needed because when model is spawned, it will be in T-pose
-		end
-	)
+
 end
 
 -- An entity somewhere has been hurt.  This event fires very often with many units so don't do too many expensive
@@ -845,6 +923,15 @@ function FateGameMode:OnEntityKilled( keys )
 	if keys.entindex_attacker ~= nil then
 	    killerEntity = EntIndexToHScript( keys.entindex_attacker )
 	end
+  -- Check if Caster(4th) is around and grant him 1 Madness
+  if killedUnit:GetUnitName() ~= "gille_corpse" then
+    local targets = FindUnitsInRadius(0, killedUnit:GetAbsOrigin(), nil, 800, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+    for k,v in pairs(targets) do
+      if v:GetName() == "npc_dota_hero_shadow_shaman" then
+        AdjustMadnessStack(v, 1)
+      end
+    end
+  end
 
   if killedUnit:IsRealHero() then
     self.bIsCasuallyOccured = true
@@ -1186,7 +1273,7 @@ function FateGameMode:InitializeRound()
     end)
     -- if remaining players are equal
     if nRadiantAlive == nDireAlive then
-      print("Same number of players remaining on both teams.")
+      --[[print("Same number of players remaining on both teams.")
       -- if no one died this round, delcare winner based on current score standing
       if self.bIsCasualtyOccured == false  then
         print("No one died, the team losing right now wins.")
@@ -1201,6 +1288,13 @@ function FateGameMode:InitializeRound()
       elseif self.bIsCasualtyOccured then
         print("Someone died, so it's a draw")
     	  self:FinishRound(true, 2)
+      end]]
+      if self.nRadiantScore < self.nDireScore then
+        self:FinishRound(true,3)
+      elseif self.nRadiantScore > self.nDireScore then
+        self:FinishRound(true,4)
+      elseif self.nRadiantScore == self.nDireScore then
+        self:FinishRound(true, 2)
       end
     -- if remaining players are not equal
     elseif nRadiantAlive > nDireAlive then
@@ -1256,10 +1350,10 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 	elseif winner == 2 then
 		GameRules:SendCustomMessage("This round is a draw.", 0, 0)
   elseif winner == 3 then
-    GameRules:SendCustomMessage("Because no kills occured, the losing team(Radiant) has won.", 0, 0)
+    GameRules:SendCustomMessage("Because the same amount of Servants are alive on both teams, the losing team(Radiant) has won.", 0, 0)
     self.nRadiantScore = self.nRadiantScore + 1
   elseif winner == 4 then
-    GameRules:SendCustomMessage("Because no kills occured, the losing team(Dire) has won.", 0, 0)
+    GameRules:SendCustomMessage("Because the same amount of Servants are alive on both teams, the losing team(Dire) has won.", 0, 0)
     self.nDireScore = self.nDireScore + 1
 	end
   GameRules:SendCustomMessage("All players with less than 5,000 gold will receive starting gold in 5 seconds.", 0, 0)

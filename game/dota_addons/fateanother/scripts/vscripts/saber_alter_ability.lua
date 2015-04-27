@@ -50,6 +50,12 @@ function OnDerangeStart(keys)
 	DSCheckCombo(keys.caster, keys.ability)
 end
 
+function OnDerangeDeath(keys)
+	local caster = keys.caster
+	caster.ManaBlastCount = 0
+	caster:SetModifierStackCount( "modifier_derange_counter", caster, caster.ManaBlastCount )
+end
+
 function OnDarklightProc(keys)
 	DoDamage(keys.caster, keys.target, 400 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 end
@@ -292,7 +298,6 @@ end]]
 
 function OnDexStart(keys)
 	local caster = keys.caster
-	local frontward = caster:GetForwardVector()
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.75)
 	EmitGlobalSound("Saber.Caliburn")
 	local dex = 
@@ -312,51 +317,59 @@ function OnDexStart(keys)
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
         fExpireTime = GameRules:GetGameTime() + 5.0,
 		bDeleteOnHit = false,
-		vVelocity = frontward * keys.Speed
+		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
 	Timers:CreateTimer(0.75, function() 
 		EmitGlobalSound("Saber_Alter.Excalibur")
 	end)
-	Timers:CreateTimer(2.75, function() 
+
+	Timers:CreateTimer(2.75, function()
 		if caster:IsAlive() then
 			EmitGlobalSound("Saber.Excalibur_Ready")
 			dex.vSpawnOrigin = caster:GetAbsOrigin() 
+			dex.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(dex)
-			
-			-- Create Particle for projectile
-			local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-			dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
-			Timers:CreateTimer( function()
-					if dummy ~= nil then
-						local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward
-						dummy:SetAbsOrigin( newLoc )
-						return 0.03
-					else
-						return nil
-					end
-				end
-			)
-			
-			local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
-			ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
-			ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
-			ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
-				
-			Timers:CreateTimer( 2.5, function()
-					ParticleManager:DestroyParticle( excalFxIndex, false )
-					ParticleManager:ReleaseParticleIndex( excalFxIndex )
-					Timers:CreateTimer( 0.5, function()
-							dummy:RemoveSelf()
-							return nil
-						end
-					)
-					return nil
-				end
-			)
-			
-			return 
 		end
 	end)
+
+	for i=0,1 do
+		Timers:CreateTimer(2.75, function() 
+			if caster:IsAlive() then
+				-- Create Particle for projectile
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				Timers:CreateTimer( function()
+						if IsValidEntity(dummy) then
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
+							dummy:SetAbsOrigin( newLoc )
+							return 0.03
+						else
+							return nil
+						end
+					end
+				)
+				
+				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
+				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
+				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
+				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+					
+				Timers:CreateTimer( 2.5, function()
+						ParticleManager:DestroyParticle( excalFxIndex, false )
+						ParticleManager:ReleaseParticleIndex( excalFxIndex )
+						Timers:CreateTimer( 0.5, function()
+								dummy:RemoveSelf()
+								return nil
+							end
+						)
+						return nil
+					end
+				)
+				
+				return 
+			end
+		end)
+	end
 end
 
 function OnDexHit(keys)
