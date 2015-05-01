@@ -15918,7 +15918,6 @@
 		"AbilitySpecial"
 		{
 		}
-		
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -17249,6 +17248,626 @@
 			{
 				"ScriptFile"	"gille_ability"
 				"Function"		"OnAbyssConnection2Acquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Nero : Imperial Privilege
+	//=================================================================================================================
+	"nero_imperial_privilege"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"nero_imperial_privilege"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"9999"
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"nero_ability"
+				"Function"			"OnIPStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=====================================
+	// Nero : Gladiusanus Blauserum
+	//=====================================
+	"nero_gladiusanus_blauserum"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"nero_q"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+
+
+		"AbilityChannelTime"			"3.0"		
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"8"
+		"AbilityManaCost"				"100"
+		
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"12"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_damage"				"300 350 400 450 500"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"nero_ability"
+				"Function"			"OnGBStart"
+				"Duration"			"%duration"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_gladiusanus_blauserum_mitigation"
+				"Target"			"CASTER"
+			}
+		}
+
+		"OnChannelFinish"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"nero_ability"
+				"Function"			"OnGBEnd"
+			}
+			"RemoveModifier"
+			{
+				"ModifierName"		"modifier_gladiusanus_blauserum_mitigation"
+				"Target"			"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_gladiusanus_blauserum"
+			{
+				"Duration"		"%duration"
+				"IsDebuff"		"0"
+			}
+			"modifier_gladiusanus_blauserum_mitigation"
+			{
+				"IsDebuff"		"0"
+				"Properties"
+				{
+
+				}
+			}
+		}
+	}
+	//=================================================================================================================
+	// Nero : Tres Fontaine Ardent
+	//=================================================================================================================
+	"nero_tres_fontaine_ardent"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"AbilityTextureName"			"nero_w"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"21"
+		"AbilityManaCost"				"200"
+
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_agi"				"20 25 30 35 40"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"cleave_radius"				"200 250 300 350 400"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"nero_ability"
+				"Function"			"OnTFAStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Nero : Rosa Ichthys
+	//=================================================================================================================
+	"nero_rosa_ichthys"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"nero_e"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastRangeBuffer"		"0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"21"
+		"AbilityManaCost"				"400"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"380 460 540 620 700"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_range"				"2000"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"0.5 0.65 0.8 0.95 1.1"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"nero_ability"
+				"Function"				"OnRIStart"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			
+			"RunScript"
+			{
+				"ScriptFile"    "nero_ability"
+				"Function"      "OnRIHit"
+				"Damage"		"%damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//=================================================================================================================
+	// Nero : Aestus Domus Aurea
+	//=================================================================================================================
+	"nero_aestus_domus_aurea"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"nero_theatre"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"1.0"
+		
+		"precache"
+		{
+		}
+		
+		"AbilityCooldown"				"54"
+		"AbilityManaCost"				"800"
+		"AbilityCastRange"				"%radius"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"900"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"8.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"140 180 220 260 300"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow"					"80"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnTheatreStart"
+				"Radius"		"%radius"
+			}
+		}
+
+		"OnRespawn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnTheatreEnd"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_theatre_anim"
+			{
+				"Duration"		"2.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+				"Duration"				"2.0"
+						
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Nero : Fiery Finale
+	//=================================================================================================================
+	"nero_fiery_finale"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"nero_combo"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"180"
+		"AbilityManaCost"				"200"
+
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"nero_ability"
+				"Function"			"OnNeroComboStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=================================================================================================================
+	// Nero : Luas Saint Cladius
+	//=================================================================================================================
+	"nero_laus_saint_cladius"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"nero_e"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1200"
+		"AbilityCastRangeBuffer"		"0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"21"
+		"AbilityManaCost"				"400"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"380 460 540 620 700"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_range"				"2000"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"nero_ability"
+				"Function"				"OnLSCStart"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			
+			"RunScript"
+			{
+				"ScriptFile"    "nero_ability"
+				"Function"      "OnLSCHit"
+				"Damage"		"%damage"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//=======================================
+	// Nero Attribute : Pari Tenu Blauserum
+	//=======================================
+	"nero_attribute_pari_tenu_blauserum"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nero_q_attribute"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"11"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnPTBAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Nero Attribute : Improve Imperial Privilege
+	//=======================================
+	"nero_attribute_improve_imperial_privilege"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nero_imperial_privilege"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"17"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnPrivilegeImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Nero Attribute : Invictus Spiritus
+	//=======================================
+	"nero_attribute_invictus_spiritus"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"leoric_reincarnate"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnISAcquired"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Nero : Invictus Spiritus
+	//=================================================================================================================
+	"nero_invictus_spiritus"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"leoric_reincarnation"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastRangeBuffer"		"200"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"200"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"nero_ability"
+				"Function"				"OnISStart"
+			}
+		}
+		
+		"Modifiers"
+		{
+		}
+	}
+	//=======================================
+	// Nero Attribute : Soverign's Glory
+	//=======================================
+	"nero_attribute_soverigns_glory"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nero_theatre"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"17"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnGloryAcquired"
 			}
 		}
 	}

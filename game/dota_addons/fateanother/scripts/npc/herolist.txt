@@ -20,4 +20,6 @@
 	"npc_dota_hero_sven"				"1"		//berserker(4th)
 	"npc_dota_hero_shadow_shaman"		"1"		//caster(4th)
 	"npc_dota_hero_chen"				"1"		//rider(4th)
+	"npc_dota_hero_lina"				"1"		//Red Saber(Extra)
+	"npc_dota_hero_omniknight"			"1"		//White Saber(Extra)
 }

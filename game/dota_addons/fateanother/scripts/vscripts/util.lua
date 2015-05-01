@@ -314,6 +314,8 @@ function FindName(name)
         heroName = "Rider(4th)"
     elseif name == "npc_dota_hero_shadow_shaman" then
         heroName = "Caster(4th)"
+    elseif name == "npc_dota_hero_lina" then
+        heroName = "Red Saber(Extra)"
     end
     return heroName
 end
@@ -350,6 +352,8 @@ function FindAttribute(name)
         attributes = IskanderAttribute
     elseif name == "npc_dota_hero_shadow_shaman" then
         attributes = GillesAttribute
+    elseif name == "npc_dota_hero_lina" then
+        attributes = NeroAttribute
     end
     return attributes
 end 

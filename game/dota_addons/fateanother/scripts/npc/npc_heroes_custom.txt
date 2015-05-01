@@ -811,4 +811,105 @@
 		"VisionNighttimeRange"			"800"
 	}
 
+	//=======================================
+	//	Red Saber(Extra) - Nero
+	//=======================================
+	"npc_dota_hero_nero"
+	{
+		"override_hero"			"npc_dota_hero_lina"
+		"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.00"
+
+		"AbilityLayout"			"6"
+		"Ability1"				"nero_gladiusanus_blauserum"
+		"Ability2"				"nero_tres_fontaine_ardent"
+		"Ability3"				"nero_rosa_ichthys"
+		"Ability4"				"nero_imperial_privilege"
+		"Ability5"				"fate_empty1"
+		"Ability6"				"nero_aestus_domus_aurea"
+		"Ability7"				"nero_fiery_finale"
+		"Ability8"				"nero_laus_saint_cladius"
+		"Ability9"				"presence_detection_passive"
+		"Ability10"				"attribute_bonus"
+		
+		"StatusHealth"					"1150"
+		"StatusHeathRegen"				"9.0"
+		"StatusMana"					"1050"
+		"StatusManaRegen"				"1.2"
+		
+		"ArmorPhysical"					"3"
+		"MagicalResistance"				"0"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"150"
+		"AttackDamageMin"				"38"
+		"AttackDamageMax"				"66"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.9"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.4"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.7"
+		
+		"MovementSpeed"					"350"
+		"MovementTurnRate"				"0.3"
+
+		"VisionDaytimeRange"			"750"
+		"VisionNighttimeRange"			"750"
+	}
+
+	//=======================================
+	//	White Saber(Extra) - Gawain
+	//=======================================
+	"npc_dota_hero_gawain"
+	{
+		"override_hero"			"npc_dota_hero_omniknight"
+		"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.00"
+
+		"AbilityLayout"			"6"
+		"Ability1"				"diarmuid_warriors_charge"
+		"Ability2"				"diarmuid_double_spearsmanship"
+		"Ability3"				"diarmuid_gae_buidhe"
+		"Ability4"				"diarmuid_love_spot"
+		"Ability5"				"fate_empty1"
+		"Ability6"				"diarmuid_gae_dearg"
+		"Ability7"				"diarmuid_rampant_warrior"
+		"Ability8"				"diarmuid_double_spear_strike"
+		"Ability9"				"presence_detection_passive"
+		"Ability10"				"attribute_bonus"
+		"Ability11"			"diarmuid_autoattack"
+		
+		"StatusHealth"					"1150"
+		"StatusHeathRegen"				"9.0"
+		"StatusMana"					"1050"
+		"StatusManaRegen"				"1.2"
+		
+		"ArmorPhysical"					"3"
+		"MagicalResistance"				"20"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"100"
+		"AttackDamageMin"				"42"
+		"AttackDamageMax"				"42"
+		"AttackRate"					"1.2"
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.3"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.7"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"1.0"
+		
+		"MovementSpeed"					"350"
+		"MovementTurnRate"				"0.3"
+
+		"VisionDaytimeRange"			"825"
+		"VisionNighttimeRange"			"825"
+	}
+
 }

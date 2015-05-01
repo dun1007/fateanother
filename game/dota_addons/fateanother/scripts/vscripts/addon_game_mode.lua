@@ -129,6 +129,7 @@ model_lookup["npc_dota_hero_vengefulspirit"] = "models/avenger/avenger.vmdl"
 model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid.vmdl"
 model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
 model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
+model_lookup["npc_dota_hero_lina"] = "models/nero/nero.vmdl"
 
 function Precache( context )
     print("Starting precache")

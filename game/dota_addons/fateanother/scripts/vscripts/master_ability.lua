@@ -137,6 +137,15 @@ GillesAttribute = {
 	"gille_larret_de_mort",
 	attrCount = 5
 }
+
+NeroAttribute = {
+	"nero_attribute_pari_tenu_blauserum",
+	"nero_attribute_improve_imperial_privilege",
+	"nero_attribute_invictus_spiritus",
+	"nero_attribute_soverigns_glory",
+	"nero_fiery_finale",
+	attrCount = 4
+}
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()

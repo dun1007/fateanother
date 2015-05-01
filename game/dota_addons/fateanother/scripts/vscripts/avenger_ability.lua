@@ -408,6 +408,7 @@ end
 
 function OnOverdriveAttack(keys)
 	local caster = keys.caster
+	print("hey attack actually started")
 	if caster:HasModifier("modifier_overdrive_tier1") or caster:HasModifier("modifier_overdrive_tier2") or caster:HasModifier("modifier_overdrive_tier3") or caster:HasModifier("modifier_overdrive_tier4") or caster:HasModifier("modifier_overdrive_tier5") or caster:HasModifier("modifier_overdrive_tier6") then
 		print("overdrive already present")
 	else
