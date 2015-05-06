@@ -316,6 +316,8 @@ function FindName(name)
         heroName = "Caster(4th)"
     elseif name == "npc_dota_hero_lina" then
         heroName = "Red Saber(Extra)"
+    elseif name == "npc_dota_hero_omniknight" then
+        heroName = "White Saber(Extra)"
     end
     return heroName
 end
@@ -354,6 +356,8 @@ function FindAttribute(name)
         attributes = GillesAttribute
     elseif name == "npc_dota_hero_lina" then
         attributes = NeroAttribute
+    elseif name == "npc_dota_hero_omniknight" then
+        attributes = GawainAttribute
     end
     return attributes
 end 
@@ -374,6 +378,11 @@ function AddValueToTable(table, value)
     return table
 end
 
+function CreateSlashFx(source, backpoint, frontpoint)
+    local slash1ParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_overedge_slash.vpcf", PATTACH_CUSTOMORIGIN, source )
+    ParticleManager:SetParticleControl( slash1ParticleIndex, 2, backpoint )
+    ParticleManager:SetParticleControl( slash1ParticleIndex, 3, frontpoint )
+end
 
 function IsSpellBlocked(target)
     if target:HasModifier("modifier_instinct_active") then  --This abililty is blocked by the active/targeted Linken's effect.

@@ -146,6 +146,16 @@ NeroAttribute = {
 	"nero_fiery_finale",
 	attrCount = 4
 }
+
+GawainAttribute = {
+	"gawain_attribute_dawnbringer",
+	"gawain_attribute_blessing_of_fairy",
+	"gawain_attribute_divine_meltdown",
+	"gawain_attribute_sunlight",
+	"gawain_attribute_eclipse",
+	"gawain_supernova",
+	attrCount = 5
+}
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()

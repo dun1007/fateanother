@@ -220,11 +220,6 @@ function OnTMDamageTaken(keys)
 	end
 end
 
-function CreateSlashFx(source, backpoint, frontpoint)
-	local slash1ParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_overedge_slash.vpcf", PATTACH_CUSTOMORIGIN, source )
-	ParticleManager:SetParticleControl( slash1ParticleIndex, 2, backpoint )
-	ParticleManager:SetParticleControl( slash1ParticleIndex, 3, frontpoint )
-end
 function OnFADeath(keys)
 	local caster = keys.caster
 	for i=1, #caster.IllusionTable do

@@ -37,7 +37,6 @@
 		"AttackDamageMin"				"64"
 		"AttackDamageMax"				"72"
 		"AttackRate"					"1.35"
-		"AttackAnimationPoint"			"0.75"
 		"AttackAcquisitionRange"		"250"
 		"AttackRange"					"150"
 
@@ -416,7 +415,6 @@
 		"AttackDamageMin"				"46"
 		"AttackDamageMax"				"60"
 		"AttackRate"					"0.9"
-		"AttackAnimationPoint"			"0.3"
 		"AttackAcquisitionRange"		"800"
 		"ProjectileModel"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 		"ProjectileSpeed"				"1000"
@@ -829,8 +827,9 @@
 		"Ability6"				"nero_aestus_domus_aurea"
 		"Ability7"				"nero_fiery_finale"
 		"Ability8"				"nero_laus_saint_cladius"
-		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability9"				"nero_autoattack"
+		"Ability10"				"presence_detection_passive"
+		"Ability11"				"attribute_bonus"
 		
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"9.0"
@@ -845,6 +844,7 @@
 		"AttackDamageMin"				"38"
 		"AttackDamageMax"				"66"
 		"AttackRate"					"1.2"
+		"AttackAnimationPoint"			"0.3"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
@@ -871,19 +871,18 @@
 		"ModelScale"			"1.00"
 
 		"AbilityLayout"			"6"
-		"Ability1"				"diarmuid_warriors_charge"
-		"Ability2"				"diarmuid_double_spearsmanship"
-		"Ability3"				"diarmuid_gae_buidhe"
-		"Ability4"				"diarmuid_love_spot"
+		"Ability1"				"gawain_invigorating_ray"
+		"Ability2"				"gawain_blade_of_the_devoted"
+		"Ability3"				"gawain_excalibur_galatine"
+		"Ability4"				"gawain_solar_embodiment"
 		"Ability5"				"fate_empty1"
-		"Ability6"				"diarmuid_gae_dearg"
-		"Ability7"				"diarmuid_rampant_warrior"
-		"Ability8"				"diarmuid_double_spear_strike"
+		"Ability6"				"gawain_suns_embrace"
+		"Ability7"				"gawain_supernova"
+		"Ability8"				"gawain_divine_meltdown"
 		"Ability9"				"presence_detection_passive"
 		"Ability10"				"attribute_bonus"
-		"Ability11"			"diarmuid_autoattack"
 		
-		"StatusHealth"					"1150"
+		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1050"
 		"StatusManaRegen"				"1.2"
@@ -893,8 +892,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"42"
-		"AttackDamageMax"				"42"
+		"AttackDamageMin"				"52"
+		"AttackDamageMax"				"52"
 		"AttackRate"					"1.2"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
@@ -905,11 +904,11 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"1.0"
 		
-		"MovementSpeed"					"350"
+		"MovementSpeed"					"340"
 		"MovementTurnRate"				"0.3"
 
-		"VisionDaytimeRange"			"825"
-		"VisionNighttimeRange"			"825"
+		"VisionDaytimeRange"			"900"
+		"VisionNighttimeRange"			"900"
 	}
 
 }
