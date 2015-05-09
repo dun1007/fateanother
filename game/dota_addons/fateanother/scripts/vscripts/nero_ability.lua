@@ -9,6 +9,7 @@ function OnIPStart(keys)
 end
 
 function OnIPRespawn(keys)
+	print("respawned")
 	local caster = keys.caster
  	keys.ability:EndCooldown()
 end
@@ -253,6 +254,11 @@ end
 
 function OnTheatreCast(keys)
 	local caster = keys.caster
+	if caster:HasModifier("modifier_aestus_domus_aurea") then 
+		caster:SetMana(caster:GetMana()+800)
+		keys.ability:EndCooldown()
+		return 
+	end
 	EmitGlobalSound("Nero.Domus")
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.5)
 

@@ -17106,16 +17106,21 @@
 				"Function"			"OnIPStart"
 			}
 		}
-		"OnRespawn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"nero_ability"
-				"Function"			"OnIPRespawn"
-			}
-		}
 		"Modifiers"
 		{
+			"modifier_imperial_privilege"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"nero_ability"
+						"Function"			"OnIPRespawn"
+					}
+				}
+			}
 		}
 	}
 
@@ -17693,7 +17698,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"140 180 220 260 300"
+				"damage"				"100 120 140 180 200"
 			}
 			"04"
 			{

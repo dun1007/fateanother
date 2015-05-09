@@ -835,13 +835,13 @@
 		"Ability14"				"presence_detection_passive"
 		"Ability15"				"attribute_bonus"
 		
-		"StatusHealth"					"1150"
+		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1050"
 		"StatusManaRegen"				"1.2"
 		
 		"ArmorPhysical"					"3"
-		"MagicalResistance"				"0"
+		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"150"
@@ -852,11 +852,11 @@
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"0.9"
+		"AttributeStrengthGain"			"1.0"
 		"AttributeBaseAgility"			"0"
 		"AttributeAgilityGain"			"1.4"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0.7"
+		"AttributeIntelligenceGain"		"0.6"
 		
 		"MovementSpeed"					"350"
 		"MovementTurnRate"				"0.3"
