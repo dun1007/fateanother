@@ -370,10 +370,7 @@ function OnImproveDivinityAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsDivinityImproved = true
-	hero:SetBaseMagicalResistanceValue(25)
-	hero:SwapAbilities("berserker_5th_divinity","berserker_5th_divinity_improved", false, true)
-	hero:FindAbilityByName("berserker_5th_divinity_improved"):SetLevel(1)
-	print(hero:GetBaseMagicalResistanceValue())
+	hero:FindAbilityByName("berserker_5th_divinity"):SetLevel(2)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

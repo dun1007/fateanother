@@ -2242,30 +2242,6 @@
 	    	{
 	    		"IsHidden"		"1"
 	    		"Passive"		"1"
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"gille_ability"
-						"Function"		"OnIntegrateCanceled"
-					}
-				}
-				"OnAttackStart"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"gille_ability"
-						"Function"		"OnIntegrateCanceled"
-					}
-				}
-				"OnUnitMoved"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"gille_ability"
-						"Function"		"OnIntegrateCanceled"
-					}
-				}
 	    	}
 	    	"modifier_integrate_gille"
 	    	{

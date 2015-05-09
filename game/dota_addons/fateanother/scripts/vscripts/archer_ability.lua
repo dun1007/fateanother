@@ -14,11 +14,10 @@ function FarSightVision(keys)
 	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
 
 	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+	visiondummy:SetDayTimeVisionRange(radius)
+	visiondummy:SetNightTimeVisionRange(radius)
 	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
 	if ply.IsEagleEyeAcquired then 
-		visiondummy:SetDayTimeVisionRange(1400)
-		visiondummy:SetNightTimeVisionRange(1400)
-		radius = 1400
 		visiondummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1400}) 
 	end
 
@@ -233,7 +232,9 @@ end
 
 -- Starts casting UBW
 function OnUBWCastStart(keys)
+	local caster = keys.caster
 	EmitGlobalSound("Archer.UBW")
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
 	Timers:CreateTimer({
 		endTime = 2,
 		callback = function()
@@ -246,7 +247,6 @@ function OnUBWCastStart(keys)
 	ArcherCheckCombo(keys.caster, keys.ability)
 
 	-- Flame spread particle
-	local caster = keys.caster
 	local angle = 0
 	local increment_factor = 45
 	local origin = caster:GetAbsOrigin()
@@ -1015,6 +1015,7 @@ function OnEagleEyeAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(2)
 	hero:SetDayTimeVisionRange(hero:GetDayTimeVisionRange() + 200)
 	hero:SetNightTimeVisionRange(hero:GetNightTimeVisionRange() + 200) 
 	ply.IsEagleEyeAcquired = true

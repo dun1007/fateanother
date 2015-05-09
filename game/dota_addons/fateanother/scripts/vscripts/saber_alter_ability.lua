@@ -477,6 +477,7 @@ function OnImproveFerocityAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsFerocityImproved = true
+	hero:FindAbilityByName("saber_alter_unleashed_ferocity"):SetLevel(2)
 	hero:SwapAbilities("saber_alter_unleashed_ferocity","saber_alter_unleashed_ferocity_improved", false, true)
 
 	-- Set master 1's mana 

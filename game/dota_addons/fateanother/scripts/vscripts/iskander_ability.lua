@@ -416,6 +416,7 @@ function OnAOTKCastStart(keys)
 	caster.AOTKSoldiers = {}
 	if caster.AOTKSoldierCount == nil then caster.AOTKSoldierCount = 0 end --initialize soldier count if its not made yet
 
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
 	IskanderCheckCombo(caster, keys.ability) -- check combo
 	EmitGlobalSound("Iskander.AOTK")
 

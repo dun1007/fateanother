@@ -2428,7 +2428,9 @@
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
@@ -2446,7 +2448,7 @@
 		
 		"AbilityCastPoint"				"1.3"
 		"AbilityCooldown"				"30"
-		"AbilityManaCost"				"200"
+		"AbilityManaCost"				"200 300"
 		
 		"AbilitySpecial"
 		{
@@ -2458,7 +2460,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90"
+				"damage"				"90 150"
 			}
 		}
 		
@@ -2538,122 +2540,6 @@
 		}
 	}
 
-	//=================================================================================================================
-	// Saber Alter : Unleashed Ferocity Improved
-	//=================================================================================================================
-	"saber_alter_unleashed_ferocity_improved"
-	{
-		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"saber_alter_unleashed_ferocity"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
-		"AnimationPlaybackRate" 		"0.5"
-		"AOERadius"						"%radius"
-		
-		"precache"
-		{
-			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_crystalmaiden.vsndevts"
-			"particle"		"particles/econ/items/crystal_maiden/crystal_maiden_cowl_of_ice/maiden_crystal_nova_n_cowlofice.vpcf"
-		}
-		
-		"AbilityCastPoint"				"1.3"
-		"AbilityCooldown"				"30"
-		"AbilityManaCost"				"300"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"radius"				"450"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"150"
-			}
-		}
-		
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_unleashed_ferocity_caster_VFX_controller"
-			}
-			
-			"RunScript"
-			{
-				"ScriptFile"	"saber_alter_ability"
-				"Function"		"OnUFStart"
-				"Radius"		"%radius"
-				"Damage"		"%damage"
-			}
-		}
-		
-			
-		"Modifiers"
-		{
-			"modifier_unleashed_ferocity_caster_VFX_controller"
-			{
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				"Duration"						"2.0"	
-			
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
-					}
-				}
-				
-				"ThinkInterval"					"0.5"
-				"OnIntervalThink"
-				{
-					"RemoveModifier"
-					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
-					}
-				}
-			}
-			
-			"modifier_unleashed_ferocity_caster_VFX"
-			{
-				"IsHidden"						"1"
-				"IsPurgable"					"0"
-				"Duration"						"0.1"
-				
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"				"TARGET"
-						"EffectName"			"particles/custom/saber_alter/saber_alter_unleashed_ferocity.vpcf"
-						"EffectAttachType"		"follow_origin"
-						"EffectRadius"			"%radius"
-						"ControlPoints"
-						{
-							"01"				"%radius+150 3 0"
-						}
-					}
-				}
-			}
-		}
-	}
 
 	//=================================================================================================================
 	// Saber Alter : Darklight attribute passive
@@ -4249,7 +4135,9 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityTextureName"			"archer_clairvoyance"
 		"AOERadius"						"%radius"
@@ -4281,7 +4169,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"900"
+				"radius"			"900 1400"
 			}
 
 			"02"
@@ -4676,12 +4564,6 @@
 						"EffectAttachType"	"start_at_origin"
 						"EffectRadius"		"%radius"
 					}
-				}
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"modifier_ubw_death_checker"
@@ -5392,14 +5274,21 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"berserker_divinity"
-		"MaxLevel"						"1"
-		
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"			"12"
+				"damage_reduction"			"12 24"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mr"				"0 20"
 			}
 		}
 		
@@ -5412,39 +5301,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"%damage_reduction"
-				}
-			}
-		}
-	}
-
-	//=================================================================================================================
-	// Berserker : Divinity (Improved)
-	//=================================================================================================================
-	"berserker_5th_divinity_improved"
-	{
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"berserker_divinity"
-		"MaxLevel"						"1"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage_reduction"			"24"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_divinity_damage_block_improved"
-			{
-				"Passive"		"1"
-				"IsHidden"		"0"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"%damage_reduction"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
 				}
 			}
 		}
@@ -6052,40 +5909,6 @@
 	}
 
 	//=======================================
-	// Berserker Attribute : Improve Divinity
-	//=======================================
-	"berserker_5th_attribute_improve_divinity"
-	{
-		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"berserker_divinity"
-		
-		
-		"AbilityCastPoint"				"0.0"
-		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"16"
-
-		"precache"
-		{
-		}
-
-		"AbilitySpecial"
-		{
-		}
-		
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"berserker_ability"
-				"Function"		"OnImproveDivinityAcquired"
-			}
-		}
-	}
-
-	//=======================================
 	// Berserker Attribute : Berserk
 	//=======================================
 	"berserker_5th_attribute_berserk"
@@ -6194,7 +6017,9 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"false_assassin_minds_eye"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
@@ -6205,7 +6030,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"critical_rate"			"15"
+				"critical_rate"			"15 22"
+			}
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"critical_damage"			"250 300"
 			}
 		}
 		
@@ -6251,7 +6081,7 @@
 				"IsHidden"		"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "250"
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%critical_damage"
 				}
 				"OnAttackLanded"
 				{
@@ -8418,14 +8248,16 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"alchemist_goblins_greed"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"gold_gain"				"10"
+				"gold_gain"				"10 20"
 			}
 		}
 		
@@ -8434,12 +8266,14 @@
 			"modifier_golden_rule"
 			{
 				"Passive"		"1"
-				"OnCreated"
-				{
+	            "ThinkInterval"		"1.0"
+	            "OnIntervalThink"
+	         	{
 					"RunScript"
 					{
 						"ScriptFile"		"gilg_ability"
-						"Function"			"OnGoldenRuleStart"
+						"Function"			"OnGoldenRuleThink"
+						"GoldGain"			"%gold_gain"
 					}
 				}
 			}
@@ -14886,12 +14720,6 @@
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
 				}
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
-				}
 			}
 			"modifier_army_of_the_king_death_checker"
 			{
@@ -17251,37 +17079,7 @@
 			}
 		}
 	}
-	//================================================
-	// Nero Passive for autoattack
-	//================================================
-	"nero_autoattack"
-	{
-		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "diarmuid_minds_eye"
-		"MaxLevel"                      "1"
-		"precache"
-		{
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
-		}
-		
-		"Modifiers"
-		{
-			"nero_autoattack_passive"
-			{
-				"Passive"                        "1"
-				"IsHidden"                        "1"
-				"OnAttackLanded"
-				{
-					"FireSound"
-					{
-						"EffectName"		"Hero_LegionCommander.Attack"
-						"Target"			"CASTER"
-					}
-				}
-		  	}
-		}
-	}
+
 	//=================================================================================================================
 	// Nero : Imperial Privilege
 	//=================================================================================================================
@@ -17291,7 +17089,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"nero_imperial_privilege"
 		"MaxLevel"						"1"
-		"AbilityCooldown"				"9999"
+		"AbilityCooldown"				"0"
 		"precache"
 		{
 		}
@@ -17321,6 +17119,116 @@
 		}
 	}
 
+	"nero_acquire_divinity"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"berserker_divinity"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnDivinityAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Nero : Golden Rule
+	//=================================================================================================================
+	"nero_acquire_golden_rule"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"alchemist_goblins_greed"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnGoldenRuleAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Nero :  Mind's Eye
+	//=================================================================================================================
+	"nero_acquire_minds_eye"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"false_assassin_minds_eye"
+		
+		"AbilityCastPoint"				"0.0"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnMindEyeAcquired"
+			}
+		}
+	}
+	//=================================================================================================================
+	// Nero : Clairvoyance
+	//=================================================================================================================
+	"nero_acquire_clairvoyance"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_clairvoyance"
+		
+		"AbilityCastPoint"				"0.0"
+		"precache"
+		{
+			"particle"					"particles/custom/archer/archer_clairvoyance_dust.vpcf"
+			"particle"					"particles/custom/archer/archer_clairvoyance_circle.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnClairvoyanceAcquired"
+			}
+		}
+	}
+	
+	"nero_close_spellbook"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"silencer_last_word"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnIPClose"
+			}
+		}
+	}
 	//=====================================
 	// Nero : Gladiusanus Blauserum
 	//=====================================
@@ -17339,9 +17247,9 @@
 		"AnimationPlaybackRate" 		"1.0"
 
 
-		"AbilityChannelTime"			"3.0"		
+		"AbilityChannelTime"			"2.0"		
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"8"
+		"AbilityCooldown"				"15 13 11 9 7"
 		"AbilityManaCost"				"100"
 		
 		"precache"
@@ -17350,8 +17258,11 @@
 			"particle"			"particles/units/heroes/hero_doom_bringer/doom_scorched_earth.vpcf"
 			"particle"			"particles/custom/archer/archer_overedge_slash.vpcf"
 			"particle"			"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"			"particles/units/heroes/hero_treant/treant_livingarmor.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_clinkz.vsndevts"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_skeletonking.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -17359,17 +17270,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"12"
+				"duration"				"13"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_damage"				"300 350 400 450 500"
+				"max_damage"				"300"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_stack"		"50 58.33 66.66 75 83.33"
+				"damage_per_stack"		"75"
 			}
 		}
 
@@ -17379,6 +17290,12 @@
 			{
 				"ScriptFile"		"nero_ability"
 				"Function"			"OnGBStart"
+			}
+
+			"RemoveModifier"
+			{
+				"ModifierName"		"modifier_gladiusanus_blauserum"
+				"Target"			"CASTER"
 			}
 			"ApplyModifier"
 			{
@@ -17403,10 +17320,32 @@
 
 		"Modifiers"
 		{
+			"nero_autoattack_passive"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"
+				"OnAttackLanded"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_LegionCommander.Attack"
+						"Target"			"CASTER"
+					}
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nero_ability"
+						"Function"      "NeroTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}	
+		  	}
 			"modifier_gladiusanus_blauserum"
 			{
 				"Duration"		"%duration"
-				"IsHidden"		"1"
+				"IsHidden"		"0"
 				"IsDebuff"		"0"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
@@ -17447,6 +17386,14 @@
 						"Function"			"OnGBStrike"
 					}
 				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"nero_ability"
+						"Function"			"OnGBDestroy"
+					}
+				}
 			}
 			"modifier_gladiusanus_blauserum_mitigation"
 			{
@@ -17466,6 +17413,37 @@
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
 				}
+			}
+			"modifier_invictus_spiritus"
+			{
+				"Duration"			"3.0"
+				"IsHidden"			"1"
+				"OverrideAnimation"     "ACT_DOTA_DIE"	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_treant/treant_livingarmor.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "CASTER"
+
+						"ControlPointEntities"
+						{
+							"CASTER"	"follow_origin"
+							"CASTER"	"follow_origin"
+						}
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.7"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}		
 			}
 		}
 	}
@@ -17489,6 +17467,9 @@
 
 		"precache"
 		{
+			"particle"		"particles/items_fx/battlefury_cleave.vpcf"
+			"particle"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -17503,6 +17484,16 @@
 				"var_type"				"FIELD_INTEGER"
 				"cleave_radius"				"200 250 300 350 400"
 			}		
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cleave_damage"		"60"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"8"
+			}
 		}
 		
 		"OnSpellStart"
@@ -17517,23 +17508,31 @@
 				"ModifierName"		"modifier_tres_fontaine_ardent"
 				"Target"			"CASTER"
 			}
+			"FireSound"
+			{
+				"EffectName"		"Hero_EmberSpirit.SleightOfFist.Cast"
+				"Target"			"CASTER"
+			}
 		}
 		
 		"Modifiers"
 		{	
 			"modifier_tres_fontaine_ardent"
 			{
+				"EffectName"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"			"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%bonus_agi"
 				}
 				"OnAttackLanded"
 				{
-					"RunScript"
+					"CleaveAttack"
 					{
-						"ScriptFile"	"nero_ability"
-						"Function"		"OnTFACleave"
-						"Radius"		"%cleave_radius"
+						"CleavePercent"		"%cleave_damage"
+						"CleaveRadius"		"%cleave_radius"
+						"CleaveEffect"		"particles/items_fx/battlefury_cleave.vpcf"
 					}
 				}
 			}
@@ -17556,7 +17555,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"nero_e"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -17591,6 +17590,9 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"precache"						
 		{
+			"particle"			"particles/custom/archer/archer_overedge_slash.vpcf"
+			"particle"			"particles/units/heroes/hero_legion_commander/legion_duel_start_text_burst_flare.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
 		}
 		
 		"OnSpellStart"
@@ -17599,6 +17601,12 @@
 			{
 				"ScriptFile"			"nero_ability"
 				"Function"				"OnRIStart"
+				"MaxRange"				"%max_range"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_rosa_ichthys_anim"
+				"Target"			"CASTER"
 			}
 		}
 		
@@ -17611,11 +17619,32 @@
 				"ScriptFile"    "nero_ability"
 				"Function"      "OnRIHit"
 				"Damage"		"%damage"
+				"StunDuration"	"%stun_duration"
 			}
 		}
 		
 		"Modifiers"
 		{
+			"modifier_rosa_ichthys_anim"
+			{
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_1"	
+				"Duration"			"1.0"
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.7"
+				}
+			}
+			"modifier_laus_anim"
+			{
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_2"	
+				"Duration"			"1.0"
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
 		}
 	}
 	//=================================================================================================================
@@ -17637,11 +17666,17 @@
 		
 		"precache"
 		{
+			"particle"			"particles/custom/nero/nero_domus_ring_energy.vpcf"
+			"particle"			"particles/custom/nero/nero_domus_ray.vpcf"
+			"particle"			"models/particle/legion_duel_banner.vmdl"
+			"particle"			"particles/items2_fx/radiance_owner.vpcf"
+			"particle"			"particles/items2_fx/radiance.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 		}
 		
 		"AbilityCooldown"				"54"
 		"AbilityManaCost"				"800"
-		"AbilityCastRange"				"%radius"
+		"AbilityCastRange"				"900"
 		
 		"AbilitySpecial"
 		{
@@ -17663,7 +17698,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"slow"					"40 50 60 70 80"
+				"slow"					"-80"
 			}
 		}
 
@@ -17672,14 +17707,15 @@
 			"RunScript"
 			{
 				"ScriptFile"	"nero_ability"
-				"Function"		"OnTheatreStart"
+				"Function"		"OnTheatreCast"
 				"Radius"		"%radius"
+				"Damage"		"%damage/4"
 			}
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_theatre_anim"
 				"Target"		"CASTER"
-			}
+			}	
 		}
 
 		"OnRespawn"
@@ -17698,13 +17734,65 @@
 				"Duration"		"1.5"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 			}
+			"modifier_aestus_domus_aurea"
+			{
+				"Duration"		"%duration"
+				"IsHidden"		"1"
+				"EffectName"			"particles/items2_fx/radiance_owner.vpcf"
+				"EffectAttachType"		"follow_origin"
+				
+			}
+			"modifier_aestus_domus_aurea_lock"
+			{
+				"Duration"		"0.25"
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+			}
 			"modifier_aestus_domus_aurea_debuff"
 			{
-				"Duration"		"1.0"
+				"Duration"		"0.25"
+				"IsDebuff"		"1"
+				"EffectName"			"particles/items2_fx/radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"ThinkInterval" 		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"nero_ability"
+						"Function"				"OnTheatreApplyDamage"
+						"Damage"				"%damage/4"
+					}
+				}
+			}
+			"modifier_aestus_domus_aurea_debuff_slow"
+			{
+				"Duration"		"0.25"
+				"IsHidden"		"1"
 				"IsDebuff"		"1"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+			}
+			"modifier_aestus_domus_aurea_debuff_attribute"
+			{
+				"Duration"		"0.25"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"-0.5"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"-0.3"
+				}
+			}
+			"modifier_aestus_domus_aurea_ally_buff"
+			{
+				"Duration"		"0.25"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"25"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"15"
 				}
 			}
 		}
@@ -17728,10 +17816,28 @@
 
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_e.vpcf"
+			"particle"			"particles/custom/screen_lightred_splash.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_batrider.vsndevts"
 		}
 		
 		"AbilitySpecial"
-		{			
+		{	
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"flame_damage"				"250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"laus_slash_damage"		"20"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"laus_horizontal_slash_damage"		"1500"
+			}				
 		}
 		
 		"OnSpellStart"
@@ -17740,6 +17846,9 @@
 			{
 				"ScriptFile"		"nero_ability"
 				"Function"			"OnNeroComboStart"
+				"FlameDamage"		"%flame_damage"
+				"SlashDamage"		"%laus_slash_damage"
+				"FinalDamage"		"%laus_horizontal_slash_damage"
 			}
 		}
 		
@@ -17932,7 +18041,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"leoric_reincarnation"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
@@ -17968,6 +18077,7 @@
 		
 		"Modifiers"
 		{
+
 		}
 	}
 	//=======================================
@@ -18564,11 +18674,7 @@
 					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_MAX"	"900"
-					"MODIFIER_PROPERTY_MOVESPEED_BASE_OVERRIDE"		"900"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
 				}
 		  	}
 		}

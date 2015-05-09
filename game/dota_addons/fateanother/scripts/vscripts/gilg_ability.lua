@@ -67,18 +67,10 @@ function OnBarrageStart(keys)
     )
 end
 
-function OnGoldenRuleStart(keys)
+function OnGoldenRuleThink(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	local goldgain = 10
-	
-	Timers:CreateTimer("goldenrule_timer", {
-		endTime = 0, 	
-		callback = function()
-    	if ply.IsGoldenRuleImproved == true then goldgain = 20 end
-    	if caster:IsAlive() and GameRules:GetGameTime() > 75 then keys.caster:ModifyGold(goldgain, true, 0) end
-      	return 1.0		
-	end})
+    if caster:IsAlive() and GameRules:GetGameTime() > 75 then keys.caster:ModifyGold(keys.GoldGain, true, 0) end
 end
 
 
@@ -533,7 +525,7 @@ function OnImproveGoldenRuleAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsGoldenRuleImproved = true
-
+	hero:FindAbilityByName("gilgamesh_golden_rule"):SetLevel(2)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

@@ -188,7 +188,7 @@ function OnTMDamageTaken(keys)
 		Timers:CreateTimer(0.6, function()
 			if slashCounter == 7 or not caster:IsAlive() then return end
 			local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
-			local damage = target:GetMaxHealth() * 5/100 + caster:GetAttackDamage()
+			local damage = caster:GetAttackDamage() * 1.2
 			DoDamage(caster, target, damage + damage*multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 			CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(400), target:GetAbsOrigin()+RandomVector(400))
 			caster:SetAbsOrigin(target:GetAbsOrigin()+RandomVector(400))

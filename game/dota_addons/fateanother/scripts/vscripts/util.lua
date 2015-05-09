@@ -11,9 +11,11 @@ heroes = {
     "npc_dota_hero_skywrath_mage",
     "npc_dota_hero_sven", 
     "npc_dota_hero_vengefulspirit",
-    "npc_dota_hero_huskar"
-    --"npc_dota_hero_chen"
-    --"npc_dota_hero_shadow_shaman"
+    "npc_dota_hero_huskar",
+    "npc_dota_hero_chen",
+    "npc_dota_hero_shadow_shaman",
+    "npc_dota_hero_lina",
+    "npc_dota_hero_omniknight"
 }
 
 purgable = {
@@ -30,7 +32,9 @@ purgable = {
     "modifier_rule_breaker",
     "modifier_double_edge",
     "modifier_murderous_instinct",
-    "modifier_double_spearsmanship"
+    "modifier_double_spearsmanship",
+    "nero_gladiusanus_blauserum",
+    "nero_tres_fontaine_ardent"
 }
 
 strongdispelable = {
@@ -50,7 +54,9 @@ strongdispelable = {
     "modifier_argos_shield",
     "modifier_rho_aias_shield",
     "modifier_murderous_instinct",
-    "modifier_double_spearsmanship"
+    "modifier_double_spearsmanship",
+    "nero_gladiusanus_blauserum",
+    "nero_tres_fontaine_ardent"
 }
 
 goesthruB = {"saber_avalon",
@@ -76,7 +82,10 @@ cleansable = {
     "modifier_slow_tier2",
     "modifier_silence",
     "modifier_disarmed",
-    "modifier_enkidu_hold" -- enkidu
+    "modifier_enkidu_hold", -- enkidu
+    "modifier_tawrich_slow",
+    "modifier_battle_horn_movespeed_debuff",
+    "modifier_tentacle_wrap"
 }
 
 slowmodifier = {
@@ -87,7 +96,8 @@ slowmodifier = {
     "modifier_weakening_venom_debuff",
     "modifier_double_edge_slow",
     "modifier_tawrich_slow",
-    "modifier_battle_horn_movespeed_debuff"
+    "modifier_battle_horn_movespeed_debuff",
+    "modifier_aestus_domus_aurea_debuff_slow"
 }
 
 donotlevel = {
@@ -129,14 +139,20 @@ CannotReset = {
     "avenger_endless_loop",
     "avenger_dark_passage",
     "diarmuid_double_spear_strike",
-    "diarmuid_rampant_warrior"
+    "diarmuid_rampant_warrior",
+    "iskander_annihilate",
+    "gille_spellbook_of_prelati",
+    "gille_larret_de_mort",
+    "nero_fiery_finale",
+    "nero_imperial_privilege"
 }
 
 femaleservant = {
     "npc_dota_hero_legion_commander",
     "npc_dota_hero_spectre",
     "npc_dota_hero_templar_assassin",
-    "npc_dota_hero_crystal_maiden"
+    "npc_dota_hero_crystal_maiden",
+    "npc_dota_hero_lina"
 }
 
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",

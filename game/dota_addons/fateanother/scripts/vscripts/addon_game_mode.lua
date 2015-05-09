@@ -154,6 +154,8 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_ta.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_zc.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_zl.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_nero.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_gawain.vsndevts", context)
 
     -- Items
     PrecacheItemByNameSync("item_apply_modifiers", context)
@@ -392,7 +394,7 @@ function PlayBGM(player)
     if choice == lastChoice then return 0.1 end
     print("Playing BGM No. " .. choice)
     local songName = "BGM." .. choice
-
+    player.CurrentBGM = songName
     if choice == 1 then EmitSoundOnClient(songName, player) lastChoice = 1 return 186+delayInBetween
     elseif choice == 2 then EmitSoundOnClient(songName, player) lastChoice = 2 return 327+delayInBetween
     elseif choice == 3 then EmitSoundOnClient(songName, player)  lastChoice = 3 return 138+delayInBetween
@@ -478,7 +480,7 @@ function FateGameMode:PlayerSay(keys)
   if text == "-bgmoff" then
     print("Turning BGM off")
     Timers:RemoveTimer("BGMTimer" .. ply:GetPlayerID())
-    ply:StopSound("BGM." .. choice)
+    ply:StopSound(ply.CurrentBGM)
   end
 
   if text == "-bgmon" then
@@ -964,7 +966,7 @@ function FateGameMode:OnEntityKilled( keys )
 
     killerEntity:ModifyGold(bounty , true, 0) 
     -- if killer has Golden Rule attribute, grant 50% more gold
-    if killerEntity.IsGoldenRuleImproved then 
+    if killerEntity:FindAbilityByName("gilgamesh_golden_rule") and killerEntity:FindAbilityByName("gilgamesh_golden_rule"):GetLevel() == 2 then 
       killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
     end 
     print("Player collected bounty : " .. 1000 - killedUnit:GetGoldBounty())

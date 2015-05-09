@@ -583,11 +583,21 @@ end
 function OnIntegrateStart(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+
 	if caster.IsIntegrated then
 		hero:RemoveModifierByName("modifier_integrate_gille")
 		caster:RemoveModifierByName("modifier_integrate")
 		caster.IsIntegrated = false
 		caster.AttemptingIntegrate = false
+	elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
+		caster.IsIntegrated = true
+		keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
+		caster:EmitSound("ZC.Tentacle1")
+		caster:EmitSound("ZC.Laugh")
+		return 
+	end
+	--[[
 	else
 		caster.AttemptingIntegrate = true
 		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), 
@@ -617,7 +627,7 @@ function OnIntegrateStart(keys)
 			end
 			return 0.1
 		end})
-	end
+	end]]
 end
 
 function OnIntegrateDeath(keys)
@@ -638,7 +648,9 @@ end
 function IntegrateFollow(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:SetAbsOrigin(caster:GetAbsOrigin() + Vector(0,0,500))
+	if IsValidEntity(caster) then
+		hero:SetAbsOrigin(caster:GetAbsOrigin() + Vector(0,0,500))
+	end
 end
 
 function OnHorrorTeleport(keys)
