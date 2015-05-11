@@ -1849,7 +1849,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"lancer_relentless_spear"
 		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		
@@ -1867,7 +1867,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"aspd_modifier"			"30 60 90 120 150"
+				"aspd_modifier"			"50 100 150 200 250"
 			}
 			"02"
 			{
@@ -2460,7 +2460,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"90 150"
+				"damage"				"7 7"
 			}
 		}
 		
@@ -7223,7 +7223,9 @@
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
@@ -7233,13 +7235,14 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"AbilityUnitTargetFlag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"700 1100"
 		"AbilityCooldown"				"8"
 		"AbilityManaCost"				"100"
 		
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
 		}
 
@@ -7254,17 +7257,17 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"poison_dot"			"13"
+				"poison_dot"			"15 30"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"poison_slow"			"-18"
+				"poison_slow"			"-15 -30"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"5"
+				"duration"				"5 10"
 			}
 			"05"
 			{
@@ -7304,134 +7307,29 @@
 		{
 			"modifier_dirk_poison"
 			{
+				"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_poison_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"			
 				"IsDebuff"		"1"
 				"Duration"		"%duration"
 				"ThinkInterval"		"1.0"
-				"OnThinkInterval"
+				"OnIntervalThink"
 				{
-					"Damage"
+					"RunScript"
 					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%poison_dot"
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnDirkPoisonTick"
+						"Damage"			"%poison_dot"
 					}
-				}
+				}			
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%poison_slow"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"-5"
 				}
 			}
 		}
 	}
 
-	//=====================================
-	// True Assassin : Dirk (Improved)
-	//=====================================
-	"true_assassin_dirk_improved"
-	{
-		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"			"ta_dirk"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
-		"AnimationPlaybackRate" 		"1.0"
-		
-		"AbilityCastPoint"				"0.3"
-		"AbilityCastRange"				"1000"
-		"AbilityCooldown"				"8"
-		"AbilityManaCost"				"200"
-		
-		"precache"
-		{
-			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_assassin.vsndevts"
-		}
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"180"
-			}
-
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"poison_dot"			"13"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"poison_slow"			"-18"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"				"15"
-			}
-			"05"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"max_target"			"5"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"ta_ability"
-				"Function"			"OnDirkStart"
-				"Damage"			"%damage"
-				"MaxTarget"		"%max_target"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_PhantomAssassin.Dagger.Cast"
-				"Target"		"CASTER"
-			}
-		}
-
-		"OnProjectileHitUnit"
-		{
-			"DeleteOnHit"			"true"
-			"RunScript"
-			{
-				"ScriptFile"    "ta_ability"
-				"Function"      "OnDirkHit"
-				"Damage"		"%damage"
-			}
-		}
-
-		"Modifiers"
-		{
-			"modifier_dirk_poison"
-			{
-				"Duration"		"%duration"
-				"IsDebuff"		"1"
-				"ThinkInterval"		"1.0"
-				"OnThinkInterval"
-				{
-					"Damage"
-					{
-						"Target"	"TARGET"
-						"Type"		"DAMAGE_TYPE_MAGICAL"
-						"Damage"	"%poison_dot"
-					}
-				}
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%poison_slow"
-					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"-2"
-				}
-			}
-		}
-	}
 
 	"true_assassin_ambush"
 	{
@@ -7765,7 +7663,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_increase"			"0.5 1.0 1.5 2.0 2.5"
+				"agi_increase"			"0.75 1.5 2.25 3 3.75"
 			}
 			"04"
 			{
@@ -7876,6 +7774,7 @@
 		
 		"precache"
 		{
+			"particle"				"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 
@@ -7934,6 +7833,8 @@
 		{
 			"modifier_steal_str_reduction"
 			{
+				"EffectName"	"particles/units/heroes/hero_night_stalker/nightstalker_void.vpcf"
+				"EffectAttachType"	"follow_origin"
 				"IsDebuff"		"1"
 				"Duration"		"%duration"
 				"Properties"
@@ -7974,6 +7875,7 @@
 		{
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
+			"particle"		"particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 		
@@ -17280,12 +17182,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_damage"				"300"
+				"max_damage"				"320"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_stack"		"75"
+				"damage_per_stack"		"80"
 			}
 		}
 
@@ -17714,7 +17616,7 @@
 				"ScriptFile"	"nero_ability"
 				"Function"		"OnTheatreCast"
 				"Radius"		"%radius"
-				"Damage"		"%damage/4"
+				"Damage"		"%damage"
 			}
 			"ApplyModifier"
 			{
@@ -17782,13 +17684,13 @@
 			}
 			"modifier_aestus_domus_aurea_debuff_attribute"
 			{
-				"Duration"		"0.25"
+				"Duration"		"1.1"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"IsDebuff"		"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"-0.5"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"-0.3"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"-5"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"-3"
 				}
 			}
 			"modifier_aestus_domus_aurea_ally_buff"
@@ -17947,7 +17849,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"11"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -18015,7 +17917,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"13"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -18099,7 +18001,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -18677,6 +18579,35 @@
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}
+
+	//================================================
+	// Ping sign passive
+	//================================================
+	"ping_sign_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		
+		"Modifiers"
+		{
+			"dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"

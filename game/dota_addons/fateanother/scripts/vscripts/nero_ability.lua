@@ -153,7 +153,7 @@ function OnGBStrike(keys)
 	if ply.IsPTBAcquired then
 		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		for k,v in pairs(targets) do
-			DoDamage(caster, target, caster:GetAgility() * 8, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			DoDamage(caster, target, caster:GetAgility() * 5 + caster:GetStrength() * 5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			target:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.75})
 		end
 	end
@@ -284,6 +284,7 @@ function OnTheatreStart(keys)
 	local banners = CreateBannerInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
 	--local blockers = CreateBlockerInCircle(caster:GetAbsOrigin(), keys.Radius)
 
+	-- banner loop
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
 			for i=1, #banners do
@@ -307,6 +308,7 @@ function OnTheatreStart(keys)
 		end
 	end)
 
+	-- light particle loop
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
 			local lightFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ray.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
@@ -317,20 +319,16 @@ function OnTheatreStart(keys)
 		end
 	end)
 
-	Timers:CreateTimer(function()
-		if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
-			--apply debuff to faceaway enemies
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-			for k,v in pairs(targets) do
-				keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_lock",{})
-				--[[if ply.IsGloryAcquired then
-					DoDamage(caster, v, keys.Damage * 3/10 , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-				end]]
-				if not IsFacingUnit(v, caster, 180) then
-					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff",{})
-					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff_slow",{})
-					if ply.IsGloryAcquired then
-
+	-- attribute loop
+	if ply.IsGloryAcquired then
+		keys.Damage = keys.Damage * 0.35
+		Timers:CreateTimer(function()
+			if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
+				local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+				
+				for k,v in pairs(targets) do
+					DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+					if not IsFacingUnit(v, caster, 180) then
 						local currentStack = v:GetModifierStackCount("modifier_aestus_domus_aurea_debuff_attribute", keys.ability)
 						if currentStack == 0 and v:HasModifier("modifier_aestus_domus_aurea_debuff_attribute") then currentStack = 1 end
 						v:RemoveModifierByName("modifier_aestus_domus_aurea_debuff_attribute")
@@ -338,14 +336,33 @@ function OnTheatreStart(keys)
 						v:SetModifierStackCount("modifier_aestus_domus_aurea_debuff_attribute", keys.ability, currentStack + 1)
 					end
 				end
+				return 1.0
+			else 
+				return
+			end
+		end)
+	end
+
+	-- main loop
+	Timers:CreateTimer(function()
+		if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
+			--apply debuff to faceaway enemies
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			for k,v in pairs(targets) do
+				keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_lock",{})
+				if not IsFacingUnit(v, caster, 180) then
+					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff",{})
+					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff_slow",{})
+				end
 			end
 
-			if ply.IsGloryAcquired then
+			-- buff allies
+			--[[if ply.IsGloryAcquired then
 				local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 				for k,v in pairs(targets) do
 					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_ally_buff",{})
 				end
-			end
+			end]]
 
 			-- Attach theatre particle along
 			ParticleManager:SetParticleControl( theatreFx, 7, caster:GetAbsOrigin())

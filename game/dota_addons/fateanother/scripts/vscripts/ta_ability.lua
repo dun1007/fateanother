@@ -24,15 +24,23 @@ function OnDirkStart(keys)
 end
 
 function OnDirkHit(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	if not IsImmuneToSlow(keys.target) then 
 		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
 	end
-	if keys.ability:GetName() == "true_assassin_dirk" then
-		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	if ply.IsWeakeningVenomAcquired then
+		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility(), DAMAGE_TYPE_PURE, 0, keys.ability, false)
 	else
-		DoDamage(keys.caster, keys.target, keys.Damage + keys.caster:GetAgility() , DAMAGE_TYPE_PURE, 0, keys.ability, false)
+		DoDamage(keys.caster, keys.target, keys.Damage + keys.caster:GetAgility() , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	end
+end
+
+function OnDirkPoisonTick(keys)
+	local caster = keys.caster
+	local target = keys.target
+	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnVenomHit(keys)
@@ -166,6 +174,10 @@ function OnDIZabStart(keys)
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, target:GetAbsOrigin()) -- target effect location
 	ParticleManager:SetParticleControl(particle, 2, target:GetAbsOrigin()) -- circle effect location
+	local smokeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
+	local smokeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	ParticleManager:SetParticleControl(smokeFx, 0, target:GetAbsOrigin())
 	EmitGlobalSound("TA.Zabaniya") 
 	caster:EmitSound("Hero_Nightstalker.Darkness") 
 end
@@ -271,6 +283,7 @@ end
 
 function OnZabStart(keys)
 	local caster = keys.caster
+	local target = keys.target
 	local info = {
 		Target = keys.target,
 		Source = caster, 
@@ -286,6 +299,11 @@ function OnZabStart(keys)
 		endTime = 0.033,
 		callback = function()
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		local smokeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
+		local smokeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+		ParticleManager:SetParticleControl(smokeFx2, 0, target:GetAbsOrigin())
+
 		ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
 		ParticleManager:SetParticleControl(particle, 2, keys.target:GetAbsOrigin()) -- circle effect location
 		EmitGlobalSound("TA.Zabaniya") 
@@ -304,6 +322,9 @@ function OnZabHit(keys)
 	local blood = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill_b.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(blood, 4, target:GetAbsOrigin())
 	ParticleManager:SetParticleControlEnt(blood, 1, target , 0, "attach_hitloc", target:GetAbsOrigin(), false)
+
+	local shadowFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(shadowFx, 0, target:GetAbsOrigin())
 
 	if ply.IsShadowStrikeAcquired and caster.IsShadowStrikeActivated then 
 		keys.Damage = keys.Damage + 400 

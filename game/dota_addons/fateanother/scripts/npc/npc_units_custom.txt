@@ -97,7 +97,6 @@
 		"Model"				"models/true_assassin/ta.vmdl"
 		"BaseClass"			"npc_dota_creature"
 		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
-
 		"Ability1"					"true_assassin_combo_zab"			// Ability 1
 		"Ability2"					"dummy_unit_passive"			// Ability 2
 		"Ability3"					""			// Ability 3
@@ -311,9 +310,6 @@
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"6"
 		"ModelScale"				"1.0"
-		"IsSummoned"				"1"
-		"UnitLabel"					"hawk"
-
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"ward_conversion"			// Ability 1
@@ -1411,6 +1407,7 @@
 		"ModelScale"				"1.0"
 		"SelectionGroup"			"Techies_LandMines"
 		"BoundsHullName"			"DOTA_HULL_SIZE_SMALL"			// Hull type used for navigation/locomotion.
+
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"lancer_trap_passive"			// Ability 1
@@ -1479,6 +1476,8 @@
 		"UnitLabel"					"healing_ward"
 		"ConsideredHero"			"1"
 		"HasInventory"				"1"
+
+
 		// Abilities
 		//----------------------------------------------------------------
 		"AbilityLayout"				"4"
@@ -1552,8 +1551,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"900"		// Range of vision at night time.
+		"VisionDaytimeRange"		"200"		// Range of vision during day light.
+		"VisionNighttimeRange"		"200"		// Range of vision at night time.
 
 		//"HasInventory"				"1"
 	}
@@ -1632,8 +1631,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"900"		// Range of vision during day light.
-		"VisionNighttimeRange"		"900"		// Range of vision at night time.
+		"VisionDaytimeRange"		"200"		// Range of vision during day light.
+		"VisionNighttimeRange"		"200"		// Range of vision at night time.
 
 		// Bots
 		//----------------------------------------------------------------
@@ -1725,6 +1724,83 @@
 	}
 
 
+	//=================================================================================
+	// Ping Sign
+	//=================================================================================
+	"ping_sign"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_building"
+		"Model"						"models/development/invisiblebox.vmdl"
+		"ModelScale"				"1"
+		"Level"						"0"
+		"HealthBarOffset"			"140"
+		"MinimapIcon" 				"minimap_shop"
+		"MinimapIconSize" 			"500"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"AbilityLayout"				"4"
+		"Ability1"					"ping_sign_passive"	 //Reference: Agld
+		"Ability2"					""	 //Reference: Avul
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackDamageType"			"DAMAGE_TYPE_ArmorPhysical"
+		"AttackDamageMin"			"0"
+		"AttackDamageMax"			"0"
+		"AttackRate"				"0"
+		"AttackAcquisitionRange"	"500"
+		
+		// Bounty
+		//----------------------------------------------------------------
+		"BountyGoldMin"				"0.0"
+		"BountyGoldMax"				"0.0"
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_FILLER"
+		"RingRadius"				"70"
+		"CollisionSize"				"50"
+		
+		// Building Cost Stats
+		//----------------------------------------------------------------
+		"GoldCost"					"0"
+		"LumberCost"				"0"
+		"BuildTime"					"60"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_NONE"
+		"MovementSpeed"				"0"
+		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"150000"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"
+		"VisionNighttimeRange"		"0"
+		
+		// Team
+		//----------------------------------------------------------------
+		"TeamName"					"DOTA_TEAM_NEUTRALS"
+		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_BASIC"
+		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_STRUCTURE"
+		"UnitRelationShipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_BUILDING"
+		
+	}
 	"npc_precache_everything"
 	{
 		"BaseClass"					"npc_dota_creep"

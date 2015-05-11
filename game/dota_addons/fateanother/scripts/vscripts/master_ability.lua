@@ -169,7 +169,7 @@ function OnSeal1Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		caster:SetHealth(caster:GetHealth()+1) 
@@ -239,7 +239,7 @@ function OnSeal2Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		caster:SetHealth(caster:GetHealth()+1) 
@@ -287,7 +287,7 @@ function OnSeal3Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
@@ -332,7 +332,7 @@ function OnSeal4Start(keys)
 		return 
 	end
 
-	if hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
@@ -804,8 +804,11 @@ function PresenceDetection(keys)
 					--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
 					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
 					local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+
+
 					ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
 					ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
+					
 					--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
 					EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
 					-- Process Eye of Serenity attribute

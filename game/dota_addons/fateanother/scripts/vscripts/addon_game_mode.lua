@@ -313,7 +313,7 @@ function FateGameMode:OnHeroInGame(hero)
 
     local heroName = FindName(hero:GetName())
     hero.name = heroName
-    GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Please wait until the battle begins.", 0, 0)
+    GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
     --[[UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
@@ -596,6 +596,9 @@ function FateGameMode:OnNPCSpawned(keys)
       hero.MasterStash = masterStash
       LevelAllAbility(masterStash)
 
+      local pingsign = CreateUnitByName("ping_sign", Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
+      pingsign:FindAbilityByName("ping_sign_passive"):SetLevel(1)
+      pingsign:SetAbsOrigin(Vector(4500 + hero:GetPlayerID()*350,-6500,0))
 
 	end
 end

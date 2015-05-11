@@ -62,7 +62,13 @@ end
 
 function OnUFStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
 	local UFCount = 0
+	local bonusDamage = 0
+
+	if ply.IsFerocityImproved then
+		bonusDamage = caster:GetStrength() + caster:GetIntellect()
+	end
 	DSCheckCombo(caster, keys.ability)
 	Timers:CreateTimer(function()
 		if UFCount == 5 then return end
@@ -70,7 +76,8 @@ function OnUFStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
-	         DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	         DoDamage(caster, v, v:GetHealth() * keys.Damage / 100 , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	         v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 	    end
 		UFCount = UFCount + 1;
 		return 0.5
@@ -118,6 +125,7 @@ function OnMBStart(keys)
 
 	for k,v in pairs(targets) do
 	    DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	    v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 	end
 end
 
