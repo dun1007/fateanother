@@ -352,7 +352,9 @@ function OnTheatreStart(keys)
 				keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_lock",{})
 				if not IsFacingUnit(v, caster, 180) then
 					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff",{})
-					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff_slow",{})
+					if not IsImmuneToSlow(v) then
+						keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_debuff_slow",{})
+					end
 				end
 			end
 

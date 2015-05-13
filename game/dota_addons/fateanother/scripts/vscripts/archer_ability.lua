@@ -385,7 +385,7 @@ function OnUBWStart(keys)
 	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
 			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
 			Timers:CreateTimer(0.1, function() 
-				if caster:IsAlive() then
+				if caster:IsAlive() and IsValidEntity(ubwTargets[i]) then
 					ubwTargets[i]:AddNewModifier(ubwTargets[i], ubwTargets[i], "modifier_camera_follow", {duration = 1.0})
 				end
 			end)

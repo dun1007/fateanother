@@ -18030,7 +18030,9 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"gawain_solar_embodiment"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"precache"
 		{
 		}
@@ -18040,7 +18042,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"sun_radius"					"666"
+				"sun_radius"					"666 999"
 			}
 			"02"
 			{
@@ -18050,7 +18052,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"defensive_bonus"		"3"
+				"defensive_bonus"		"3 6"
 			}
 		}
 		
@@ -18060,17 +18062,21 @@
 			{
 				"Passive"				"1"
 				"IsHidden"				"1"
-				"Aura"					"modifier_charisma_aura_buff"
-				"Aura_Radius"			"1000"
+				"Aura"					"modifier_artificial_sun"
+				"Aura_Radius"			"%sun_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP "
 			}
 			
 			"modifier_artificial_sun"
 			{
-				"IsHidden"			"1"
+				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
 				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%defensive_bonus"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%defensive_bonus"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%defensive_bonus"
 				}
 			}
 		}
@@ -18092,6 +18098,11 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"gawain_invigorating_ray"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl4.vpcf"
+			"particle"			"particles/items2_fx/radiance.vpcf"
+		}
 		
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -18135,6 +18146,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_invigorating_ray_ally"
+			{
+			}
+			"modifier_invigorating_ray_enemy"
+			{
+			}
 		}
 	}
 
@@ -18155,6 +18172,8 @@
 		
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_phantom_lancer/phantom_lancer_deathflash.vpcf"
+			"particle"			"particles/units/heroes/hero_phantom_lancer/phantom_lancer_spawn.vpcf"
 		}
 		
 		"AbilityCooldown"				"15"
