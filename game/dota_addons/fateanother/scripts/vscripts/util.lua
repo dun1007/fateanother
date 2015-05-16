@@ -512,23 +512,35 @@ end
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 
     local IsAbsorbed = false
-    local damageTaken = dmg
     local IsBScrollIgnored = false
+    local MR = target:GetMagicalArmorValue() 
 
     if dmg_type == DAMAGE_TYPE_MAGICAL then
+        -- if target has Sun's Embrace modifier, reduce damage by MR before calculation
+        if target:HasModifier("modifier_suns_embrace_ally") then
+            dmg = dmg * (1-MR)
+        end
+
+        -- Process B scroll
         for k,v in pairs(goesthruB) do
             if abil:GetAbilityName() == v then IsBScrollIgnored = true break end
         end
         if IsBScrollIgnored == false and target:HasModifier("modifier_b_scroll") then 
-            MR = target:GetMagicalArmorValue() 
-            target.BShieldAmount = target.BShieldAmount - damageTaken * (1-MR)
+            target.BShieldAmount = target.BShieldAmount - dmg * (1-MR)
             if target.BShieldAmount <= 0 then
-                damageTaken = -target.BShieldAmount
+                dmg = -target.BShieldAmount
                 target:RemoveModifierByName("modifier_b_scroll")
             else 
-                damageTaken = 0
+                dmg = 0
                 IsAbsorbed = true
             end
+        end
+    end
+
+    -- check if target has Gawain's Sun's Embrace modifier
+    if dmg_type == DAMAGE_TYPE_PHYSICAL or dmg_type == DAMAGE_TYPE_MAGICAL then
+        if target:HasModifier("modifier_suns_embrace_enemy") then
+            dmg = dmg + dmg*MR
         end
     end
 
@@ -540,27 +552,26 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         elseif dmg_type == DAMAGE_TYPE_MAGICAL then
             reduction = target:GetMagicalArmorValue() 
         end 
-        target.rhoShieldAmount = target.rhoShieldAmount - damageTaken * (1-reduction)
+        target.rhoShieldAmount = target.rhoShieldAmount - dmg * (1-reduction)
 
         -- if damage is beyond the shield's block amount, update remaining damage
         if target.rhoShieldAmount <= 0 then
             --print("Rho Aias has been broken through by " .. -target.rhoShieldAmount)
-            damageTaken = -target.rhoShieldAmount
+            dmg = -target.rhoShieldAmount
             target:RemoveModifierByName("modifier_rho_aias_shield")
             target.argosShieldAmount = 0
         -- if shield has enough durability, set a flag that the damage is fully absorbed
         else 
             --print("Rho Aias absorbed full damage")
-            damageTaken = 0
+            dmg = 0
             IsAbsorbed = true
         end
     end
 
 
     if target:GetName() == "npc_dota_hero_legion_commander" and target:HasModifier("modifier_avalon") then
-        local incomingDmg = damageTaken
+        local incomingDmg = dmg
         if dmg_type == DAMAGE_TYPE_MAGICAL then
-            MR = target:GetMagicalArmorValue() 
             incomingDmg = incomingDmg * (1-MR)
         end 
         if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" then
@@ -571,7 +582,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             else 
                 target.IsAvalonProc = false
             end
-            damageTaken = 0
+            dmg = 0
             target.IsAvalonPenetrated = false
         end
     end 
@@ -583,15 +594,15 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         elseif dmg_type == DAMAGE_TYPE_MAGICAL then
             reduction = target:GetMagicalArmorValue() 
         end 
-        target.argosShieldAmount = target.argosShieldAmount - damageTaken * (1-reduction)
+        target.argosShieldAmount = target.argosShieldAmount - dmg * (1-reduction)
         if target.argosShieldAmount <= 0 then
             print("Argos has been broken through by " .. -target.argosShieldAmount)
-            damageTaken = -target.argosShieldAmount
+            dmg = -target.argosShieldAmount
             target:RemoveModifierByName("modifier_argos_shield") 
             target.argosShieldAmount = 0
         else
             print("Argos absorbed full damage")
-            damageTaken = 0
+            dmg = 0
             IsAbsorbed = true
         end
     end
@@ -601,7 +612,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         local dmgtable = {
             attacker = source,
             victim = target,
-            damage = damageTaken,
+            damage = dmg,
             damage_type = dmg_type,
             damage_flags = dmg_flag,
             ability = abil
@@ -617,7 +628,6 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
                 local AR = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
                 damageToAllies = dmgtable.damage * (1-AR)
             elseif dmg_type == DAMAGE_TYPE_MAGICAL then
-                local MR = target:GetMagicalArmorValue() 
                 damageToAllies = dmgtable.damage * (1-MR)
             end   
             damageToAllies = dmgtable.damage/#target.linkTable

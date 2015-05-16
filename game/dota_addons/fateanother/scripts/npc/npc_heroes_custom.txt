@@ -883,8 +883,9 @@
 		"Ability6"				"gawain_suns_embrace"
 		"Ability7"				"gawain_supernova"
 		"Ability8"				"gawain_divine_meltdown"
-		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability9"				"gawain_excalibur_galatine_detonate"
+		"Ability10"				"presence_detection_passive"
+		"Ability11"				"attribute_bonus"
 		
 		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"9.0"

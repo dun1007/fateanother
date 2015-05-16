@@ -17577,7 +17577,7 @@
 			"particle"			"particles/custom/nero/nero_domus_ray.vpcf"
 			"particle"			"models/particle/legion_duel_banner.vmdl"
 			"particle"			"particles/items2_fx/radiance_owner.vpcf"
-			"particle"			"particles/items2_fx/radiance.vpcf"
+			"particle"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 		}
 		
@@ -17659,7 +17659,7 @@
 			{
 				"Duration"		"0.25"
 				"IsDebuff"		"1"
-				"EffectName"			"particles/items2_fx/radiance.vpcf"
+				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
 				"EffectAttachType"		"follow_origin"
 				"ThinkInterval" 		"0.25"
 				"OnIntervalThink"
@@ -18035,6 +18035,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_phoenix/phoenix_sunray_tgt_sphere.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -18060,7 +18061,6 @@
 		{
 			"modifier_artificial_sun_aura"
 			{
-				"Passive"				"1"
 				"IsHidden"				"1"
 				"Aura"					"modifier_artificial_sun"
 				"Aura_Radius"			"%sun_radius"
@@ -18071,7 +18071,7 @@
 			"modifier_artificial_sun"
 			{
 				"IsHidden"		"1"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				//"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%defensive_bonus"
@@ -18081,6 +18081,7 @@
 			}
 		}
 	}
+
 
 	//=================================================================================================================
 	// Gawain : Invigorating Ray
@@ -18100,8 +18101,11 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_enchantress/enchantress_natures_attendants_lvl4.vpcf"
-			"particle"			"particles/items2_fx/radiance.vpcf"
+			"particle"		"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+			"particle"		"particles/items2_fx/radiance.vpcf"
+			"particle"		"particles/items2_fx/radiance_owner.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 		}
 		
 		// Ability stats
@@ -18148,9 +18152,36 @@
 		{
 			"modifier_invigorating_ray_ally"
 			{
+				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Duration"				"%duration"
+				"ThinkInterval" 		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnIRTickAlly"
+						"Damage"					"%heal_amount"
+					}
+				}
 			}
 			"modifier_invigorating_ray_enemy"
 			{
+				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"IsDebuff"				"1"
+				"Duration"				"%duration"
+				"ThinkInterval" 		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnIRTickEnemy"
+						"Damage"				"%heal_amount"
+					}
+				}
 			}
 		}
 	}
@@ -18167,13 +18198,16 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"gawain_blade_of_the_devoted"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_phantom_lancer/phantom_lancer_deathflash.vpcf"
-			"particle"			"particles/units/heroes/hero_phantom_lancer/phantom_lancer_spawn.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
+			"particle"			"particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_sun_strike_sparks.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_invoker.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 		
 		"AbilityCooldown"				"15"
@@ -18184,7 +18218,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"330 410 490 570 650"
+				"heal_amount"			"350 430 510 590 670"
 			}
 		}
 
@@ -18195,6 +18229,11 @@
 				"ScriptFile"	"gawain_ability"
 				"Function"		"OnDevoteStart"
 			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_blade_of_the_devoted"
+				"Target"			"CASTER"
+			}
 		}
 
 		"OnRespawn"
@@ -18203,6 +18242,52 @@
 
 		"Modifiers"
 		{
+			"modifier_blade_of_the_devoted"
+			{
+				"Duration"		"10.0"
+				"OnAttackStart"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_blade_of_the_devoted_anim"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_blade_of_the_devoted"
+						"Target"			"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"		"gawain_ability"
+						"Function"			"OnDevoteHit"
+						"Damage"			"%heal_amount"
+					}
+				}				
+			}
+
+			"modifier_blade_of_the_devoted_ally_deniable"
+			{
+				"Duration"		"1.0"
+				"IsHidden"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_SPECIALLY_DENIABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
+			"modifier_blade_of_the_devoted_anim"
+			{
+				"OverrideAnimation"     "ACT_DOTA_ATTACK_EVENT"	
+				"Duration"			"1.0"
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
 		}
 	}
 
@@ -18221,17 +18306,23 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gawain_excalibur_galatine"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"1.5"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"
 
 		
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_keeper_of_the_light/keeper_cast01.vpcf"
+			"particle"		"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+			"particle"		"particles/custom/gawain/gawain_excalibur_galatine_orb.vpcf"
+			"particle"		"particles/units/heroes/hero_ember_spirit/ember_spirit_hit.vpcf"
+			"particle"		"particles/custom/saber_excalibur_circle.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 		}
 		
 		"AbilityCastPoint"				"0.15"
-		"AbilityCooldown"				"30"
+		"AbilityCooldown"				"36"
 		"AbilityManaCost"				"400"
 		"AbilityCastRange"				"1500"
 		
@@ -18245,7 +18336,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"600"
+				"radius"				"500"
 			}
 		}
 		
@@ -18256,15 +18347,80 @@
 				"ScriptFile"    "gawain_ability"
 				"Function"      "OnGalatineStart"
 				"Target"		"POINT"
+				"Damage"		"%damage"
+				"Radius"		"%radius"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_excalibur_galatine_vfx"
+				"Target"		"CASTER"
 			}
 		}
 		
 		"Modifiers"
-		{
+		{		
+			"modifier_excalibur_galatine_vfx"
+			{
+				"Duration"		"1.75"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/custom/saber_excalibur_circle.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"EffectRadius"		"400"
+					}
+				}
+			}
+			"modifier_excalibur_galatine_anim"
+			{
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_2"	
+				"Duration"			"1.5"
+				"IsHidden"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.7"
+				}
+			}
 		}
 	}
 
 
+
+	//=======================================
+	// Gawain : Detonate Excalibur Galatine
+	//=======================================
+	"gawain_excalibur_galatine_detonate"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"gawain_excalibur_galatine"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"5"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gawain_ability"
+				"Function"		"OnGalatineDetonate"
+			}
+		}
+	}
 	//=================================================================================================================
 	// Gawain : Sun's Embrace
 	//=================================================================================================================
@@ -18286,7 +18442,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"900"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.6"
 		"AbilityCooldown"				"45"
 		"AbilityManaCost"				"800"
 		
@@ -18297,9 +18453,14 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"total_damage"			"500 625 750 875 1000"
+				"total_damage"			"550 700 850 1000 1150"
 			}
 			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"duration"				"8"
@@ -18308,6 +18469,7 @@
 		
 		"precache"						
 		{
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
 		}
 		
 		"OnSpellStart"
@@ -18317,11 +18479,73 @@
 				"ScriptFile"			"gawain_ability"
 				"Function"				"OnEmbraceStart"
 			}
+			"FireEffect"
+			{
+				"Target"			"TARGET"
+				"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"ControlPoints"
+				{
+					"00"	"0 0 0"
+					"01"	"%radius %radius %radius"
+				}
+			}
 		}
 	
 		
 		"Modifiers"
 		{
+			"modifier_suns_embrace_ally"
+			{
+				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Duration"				"%duration"
+				"ThinkInterval" 		"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnEmbraceTickAlly"
+						"Damage"				"%total_damage"
+						"Radius"				"%radius"
+					}
+				}
+			}
+			"modifier_suns_embrace_enemy"
+			{
+				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"IsDebuff"				"1"
+				"Duration"				"%duration"
+				"ThinkInterval" 		"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnEmbraceTickEnemy"
+						"Radius"				"%radius"
+					}
+				}
+			}
+			"modifier_suns_embrace_burn"
+			{
+				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Duration"		"0.5"
+				"IsDebuff"		"1"
+				"ThinkInterval" 		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnEmbraceDamageTick"
+						"Damage"				"%total_damage"
+					}
+				}
+			}		
 		}
 	}
 
