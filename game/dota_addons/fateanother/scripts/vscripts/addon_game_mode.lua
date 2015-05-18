@@ -218,6 +218,7 @@ function Precache( context )
     PrecacheResource("model_folder", "models/items/silencer", context)
     PrecacheResource("model_folder", "models/heroes/windrunner", context)
     PrecacheResource("model_folder", "models/items/windrunner", context)
+
   	print("precache complete")
 end
 

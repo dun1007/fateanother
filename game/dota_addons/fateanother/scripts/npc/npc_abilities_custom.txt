@@ -6117,8 +6117,10 @@
 
 		"precache"
 		{
-			"particle"					"particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"					"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
+			"particle"					"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
+			"particle"					"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_templar_assassin.vsndevts"
 
 		}
 		
@@ -6167,16 +6169,17 @@
 				"ScriptFile"		"fa_ability"
 				"Function"			"OnGKStart"
 			}
+			"FireSound"
+			{
+				"EffectName"	"Hero_TemplarAssassin.Refraction"
+				"Target"		"CASTER"
+			}
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_gate_keeper_self_buff"
 				"Target"		"CASTER"
 			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
-				"Target"		"CASTER"
-			}
+
 		}
 		
 		
@@ -6189,21 +6192,26 @@
 				
 				"OnCreated"
 				{
-					"RunScript"
+					"AttachEffect"
 					{
-						"ScriptFile"		"fa_ability"
-						"Function"			"GKParticleStart"
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+						"EffectAttachType"	"start_at_origin"
 					}
-				}
 				
-				"OnDestroy"
-				{
-					"RunScript"
+					"AttachEffect"
 					{
-						"ScriptFile"		"fa_ability"
-						"Function"			"GKParticleDestroy"
+						"Target"			"TARGET"
+						"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"		"attach_origin"
+							"TARGET"		"attach_origin"
+						}
 					}
 				}
+
 				
 				"Properties"
 				{
@@ -6380,9 +6388,9 @@
 
 		"precache"
 		{
-			"particle"					"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
-			"particle"					"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
-			"particle"					"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
+			"particle"					"particles/econ/items/abaddon/abaddon_alliance/abaddon_aphotic_shield_alliance.vpcf"
+			"particle"					"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 		}
 
 		// Casting
@@ -6456,7 +6464,7 @@
 			}
 			"FireSound"
 			{
-				"EffectName"	"Hero_TemplarAssassin.Refraction"
+				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
 				"Target"		"CASTER"
 			}
 		}
@@ -6473,53 +6481,29 @@
 		
 		"Modifiers"
 		{
-			"modifier_heart_of_harmony_passive"
-			{
-				"Passive"		"1"
-				"IsHidden"		"0"
-				"OnAttackLanded"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"fa_ability"
-						"Function"			"OnHeartAttackLanded"
-						"AttackDamage"		"%attack_damage"
-					}
-				}			
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACK_RANGE_BONUS"			"%bonus_range"
-				}	
-			}
 			"modifier_heart_of_harmony"
 			{
 				"Duration"		"%duration"
 				
 				"EffectName"		"particles/units/heroes/hero_razor/razor_ambient_g.vpcf"
 				"EffectAttachType"	"follow_origin"
-				
 				"OnCreated"
 				{
-					"AttachEffect"
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_zuus/zuus_thundergods_wrath_start_f.vpcf"
-						"EffectAttachType"	"start_at_origin"
-					}
-				
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_storm_image.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"TARGET"		"attach_origin"
-							"TARGET"		"attach_origin"
-						}
+						"ScriptFile"		"fa_ability"
+						"Function"			"GKParticleStart"
 					}
 				}
-
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"GKParticleDestroy"
+					}
+				}				
 				"OnTakeDamage"
 				{
 					"RunScript"
@@ -6537,6 +6521,18 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
 				}
 
+			}
+			"modifier_heart_of_harmony_invisible"
+			{
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"Duration"					"%duration"
+				"IsHidden"					"1"
+				"States"
+			    {
+				    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+				    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+			    }
 			}
 		}
 	}
@@ -18036,6 +18032,8 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_phoenix/phoenix_sunray_tgt_sphere.vpcf"
+			"particle"		"particles/custom/gawain/gawain_artificial_sun.vpcf"
+			"model"			"models/heroes/phoenix/phoenix_egg.vmdl"
 		}
 		
 		"AbilitySpecial"
@@ -18082,6 +18080,51 @@
 		}
 	}
 
+	
+	//=================================================================================================================
+	// Gawain : Blessing of Fairy
+	//=================================================================================================================
+	"gawain_blessing_of_fairy"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"gawain_blessing_of_fairy"
+		"AbilityCooldown"				"60"
+
+		"precache"
+		{
+			"particle"	"particles/items_fx/aegis_timer.vpcf"
+
+		}
+		
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"	"modifier_gawain_revive"
+				"Target"		"CASTER"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_gawain_revive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gawain_ability"
+						"Function"	"OnFairyDamageTaken"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+			}
+		}
+	}
 
 	//=================================================================================================================
 	// Gawain : Invigorating Ray
@@ -18183,6 +18226,16 @@
 					}
 				}
 			}
+			"modifier_invigorating_ray_armor_buff"
+			{
+				"Duration"	"%duration"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"20"
+				}
+			}
+			
 		}
 	}
 
@@ -18267,6 +18320,18 @@
 						"Damage"			"%heal_amount"
 					}
 				}				
+			}
+			"modifier_blade_of_the_devoted_eclispe"
+			{
+				"Duration"		"3.0"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"gawain_ability"
+						"Function"			"OnDevoteConsecutiveHit"
+					}
+				}	
 			}
 
 			"modifier_blade_of_the_devoted_ally_deniable"
@@ -18434,7 +18499,7 @@
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"gawain_suns_embrace"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		
@@ -18470,6 +18535,12 @@
 		"precache"						
 		{
 			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"  "particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+			"particle"	"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 		
 		"OnSpellStart"
@@ -18497,10 +18568,47 @@
 		{
 			"modifier_suns_embrace_ally"
 			{
-				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
-				"EffectAttachType"		"follow_origin"
+				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+				"StatusEffectPriority" "10"
 				"Duration"				"%duration"
 				"ThinkInterval" 		"0.5"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+					}
+
+				 	"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"EffectRadius"		"%radius"
+						"Target"			"TARGET"
+					}
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"gawain_ability"
+						"Function"			"OnEmbraceEnd"
+					}
+				}
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -18514,8 +18622,38 @@
 			}
 			"modifier_suns_embrace_enemy"
 			{
-				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
-				"EffectAttachType"		"follow_origin"
+				"StatusEffectName"     "particles/status_fx/status_effect_guardian_angel.vpcf"
+				"StatusEffectPriority" "10"
+
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_halo_buff.vpcf"
+						"EffectAttachType"	"follow_overhead"
+						"Target"			"TARGET"
+					}
+
+				 	"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_ally.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"EffectRadius"		"%radius"
+						"Target"			"TARGET"
+					}
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
+				}
+
 				"IsDebuff"				"1"
 				"Duration"				"%duration"
 				"ThinkInterval" 		"0.5"
@@ -18545,11 +18683,74 @@
 						"Damage"				"%total_damage"
 					}
 				}
+			}
+			"modifier_suns_embrace_sunlight_bonus"
+			{
+				"Duration"		"%duration"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"30"
+				}
 			}		
 		}
 	}
 
 
+
+	//=======================================
+	// Gawain : Divine Meltdown
+	//=======================================
+	"gawain_divine_meltdown"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"gawain_meltdown"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"90"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+			"particle"			"particles/custom/gawain/gawain_meltdown.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_doombringer.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"gawain_ability"
+				"Function"		"OnMeltdownStart"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_divine_meltdown"
+			{
+				"IsHidden"	"1"
+				"Duration"	"5.0"
+				"ThinkInterval"				"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gawain_ability"
+						"Function"		"OnMeltdownThink"
+					}
+				}
+			}
+		}
+	}
 	//=================================================================================================================
 	// Gawain : Supernova
 	//=================================================================================================================
@@ -18561,9 +18762,20 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"gawain_supernova"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+		"precache"
+		{
+			"particle"			"particles/items_fx/black_king_bar_avatar.vpcf"
+			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+			"particle"			"particles/custom/gawain/gawain_supernova_explosion.vpcf"
+			"particle"			"particles/custom/screen_yellow_splash_gawain.vpcf"
+			"particle" 	"particles/units/heroes/hero_enigma/enigma_blackhole.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		}
 		
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -18581,6 +18793,16 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"duration"				"8"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"				"1000"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"				"1000"
 			}
 		}
 		
@@ -18600,6 +18822,63 @@
 		
 		"Modifiers"
 		{
+	    	"modifier_supernova"
+	    	{
+	    		"Duration"		"8.0"
+				"ThinkInterval" 		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnSupernovaTick"
+					}
+				}
+	    		"OnCreated"
+	    		{
+					"AttachEffect"
+					{
+						"Target"			"TARGET"
+						"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/units/heroes/hero_ember_spirit/ember_spirit_flameguard.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
+					"AttachEffect"
+					{
+						"EffectName"        "particles/units/heroes/hero_enigma/enigma_blackhole_l.vpcf"
+						"EffectAttachType"  "follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+	    		}
+	    		"OnDestroy"
+	    		{
+					"RunScript"
+					{
+						"ScriptFile"			"gawain_ability"
+						"Function"				"OnSupernovaEnd"
+						"Damage"				"%damage"
+					}
+	    		}
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+	    	}
 		}
 	}
 
@@ -18830,6 +19109,104 @@
 		}
 	}
 
+	//================================================
+	// Artificial Sun Passive
+	//================================================
+	"gawain_artificial_sun_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+
+		
+		"Modifiers"
+		{
+			"artificial_sun_passive"
+			{
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"			"CASTER"
+						"EffectName"		"particles/custom/gawain/gawain_artificial_sun.vpcf"
+						"EffectAttachType"	"follow_origin"
+					}
+				}
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"ThinkInterval"				"0.033"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gawain_ability"
+						"Function"		"OnSunPassiveThink"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gawain_ability"
+						"Function"		"OnSunCleanup"
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}
+
+	//=================================================================================================================
+	// Gawain : Divine Meltdown
+	//=================================================================================================================
+	"gawain_artificial_sun_divine_meltdown"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"gawain_blessing_of_fairy"
+
+		"precache"
+		{
+
+		}
+		
+		"OnSpellStart"
+		{
+		}
+
+		"Modifiers"
+		{
+			"modifier_gawain_revive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_phoenix/phoenix_supernova_egg.vpcf"
+						"EffectAttachType"	"follow_origin"
+						"Target"            "TARGET"
+						"ControlPointEntities"
+						{
+							"TARGET"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}						
+				}
+			}
+		}
+	}
 	//================================================
 	// Ping sign passive
 	//================================================

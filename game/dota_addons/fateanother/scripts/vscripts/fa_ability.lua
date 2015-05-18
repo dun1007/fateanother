@@ -51,15 +51,21 @@ end
 
 function OnHeartStart(keys)
 	local caster = keys.caster
-	-- set global cooldown
-	caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
-	caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
-	caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
+	local ply = caster:GetPlayerOwner()
+
+	if ply.IsVitrificationAcquired then
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_heart_of_harmony_invisible", {})
+	else
+		-- set global cooldown
+		caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
+		caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
+		caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
+	end
 end
 
 function OnHeartLevelUp(keys)
 	local caster = keys.caster
-	caster.ArmorPen = keys.ArmorPen
+	--caster.ArmorPen = keys.ArmorPen
 end
 
 function OnHeartAttackLanded(keys)
@@ -83,9 +89,9 @@ function OnHeartDamageTaken(keys)
 		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
-		local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
+		--local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
 		local damage = caster:GetAttackDamage() * keys.Damage/100
-		DoDamage(caster, target, damage + damage*multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+		DoDamage(caster, target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 
 
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_gate_keeper"), 15)
@@ -96,6 +102,7 @@ function OnHeartDamageTaken(keys)
 		EmitGlobalSound("FA.Quickdraw")
 		CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
 		caster:RemoveModifierByName("modifier_heart_of_harmony")
+		caster:RemoveModifierByName("modifier_heart_of_harmony_invisible")
 	end
 end
 
@@ -112,7 +119,6 @@ end
 function OnPCDeactivate(keys)
 	local caster = keys.caster
 	caster:RemoveModifierByName("modifier_fa_invis")
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_quickdraw_damage_amplifier", {}) 
 end
 
 function PCStopOrder(keys)
@@ -187,9 +193,12 @@ function OnTMDamageTaken(keys)
 		local slashCounter = 0
 		Timers:CreateTimer(0.6, function()
 			if slashCounter == 7 or not caster:IsAlive() then return end
-			local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
+			--local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
 			local damage = caster:GetAttackDamage() * 1.2
-			DoDamage(caster, target, damage + damage*multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+			if math.random(100) < 15 then
+				damage = damage * 2.5
+			end
+			DoDamage(caster, target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 			CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(400), target:GetAbsOrigin()+RandomVector(400))
 			caster:SetAbsOrigin(target:GetAbsOrigin()+RandomVector(400))
 			EmitGlobalSound("FA.Quickdraw") 
@@ -375,7 +384,6 @@ end
 
 function OnQuickdrawHit(keys)
 	local damage = 700 + keys.caster:GetAgility() * 10
-	if keys.caster:HasModifier("modifier_quickdraw_damage_amplifier") then damage = damage + 300 end
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 

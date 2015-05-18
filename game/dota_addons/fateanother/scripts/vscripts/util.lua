@@ -34,7 +34,10 @@ purgable = {
     "modifier_murderous_instinct",
     "modifier_double_spearsmanship",
     "nero_gladiusanus_blauserum",
-    "nero_tres_fontaine_ardent"
+    "nero_tres_fontaine_ardent",
+    "modifier_invigorating_ray_ally",
+    "modifier_invigorating_ray_armor_buff",
+    "modifier_blade_of_the_devoted"
 }
 
 strongdispelable = {
@@ -144,7 +147,9 @@ CannotReset = {
     "gille_spellbook_of_prelati",
     "gille_larret_de_mort",
     "nero_fiery_finale",
-    "nero_imperial_privilege"
+    "nero_imperial_privilege",
+    "gawain_divine_meltdown",
+    "gawain_supernova"
 }
 
 femaleservant = {
@@ -538,7 +543,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     end
 
     -- check if target has Gawain's Sun's Embrace modifier
-    if dmg_type == DAMAGE_TYPE_PHYSICAL or dmg_type == DAMAGE_TYPE_MAGICAL then
+    if dmg_type == DAMAGE_TYPE_PHYSICAL or dmg_type == DAMAGE_TYPE_PURE then
         if target:HasModifier("modifier_suns_embrace_enemy") then
             dmg = dmg + dmg*MR
         end
