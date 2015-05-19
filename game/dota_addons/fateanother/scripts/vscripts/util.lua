@@ -100,7 +100,8 @@ slowmodifier = {
     "modifier_double_edge_slow",
     "modifier_tawrich_slow",
     "modifier_battle_horn_movespeed_debuff",
-    "modifier_aestus_domus_aurea_debuff_slow"
+    "modifier_aestus_domus_aurea_debuff_slow",
+    "modifier_warriors_charge_slow"
 }
 
 donotlevel = {
@@ -473,6 +474,12 @@ function HardCleanse(target)
     for i=1, #cleansable do
         if target:HasModifier(cleansable[i]) then
             target:RemoveModifierByName(cleansable[i])
+        end
+    end
+
+    for i=1, #slowmodifier do
+        if target:HasModifier(slowmodifier[i]) then
+            target:RemoveModifierByName(slowmodifier[i])
         end
     end
 end

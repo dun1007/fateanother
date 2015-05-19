@@ -115,7 +115,7 @@ end
 ]]
 model_lookup = {}
 model_lookup["npc_dota_hero_legion_commander"] = "models/saber/saber.vmdl"
-model_lookup["npc_dota_hero_phantom_lancer"] = "models/lancer/lancer.vmdl"
+model_lookup["npc_dota_hero_phantom_lancer"] = "models/lancer/lancer2.vmdl"
 model_lookup["npc_dota_hero_spectre"] = "models/saber_alter/sbr_alter.vmdl"
 model_lookup["npc_dota_hero_ember_spirit"] = "models/archer/archertest.vmdl"
 model_lookup["npc_dota_hero_templar_assassin"] = "models/rider/rider.vmdl"
@@ -126,7 +126,7 @@ model_lookup["npc_dota_hero_crystal_maiden"] = "models/caster/caster.vmdl"
 model_lookup["npc_dota_hero_skywrath_mage"] = "models/gilgamesh/gilgamesh.vmdl"
 model_lookup["npc_dota_hero_sven"] = "models/lancelot/lancelot.vmdl"
 model_lookup["npc_dota_hero_vengefulspirit"] = "models/avenger/avenger.vmdl"
-model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid.vmdl"
+model_lookup["npc_dota_hero_huskar"] = "models/diarmuid/diarmuid2.vmdl"
 model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
 model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 model_lookup["npc_dota_hero_lina"] = "models/nero/nero.vmdl"
@@ -190,7 +190,7 @@ function Precache( context )
 
     -- Servants
     PrecacheResource("model", "models/saber/saber.vmdl", context)
-    PrecacheResource("model", "models/lancer/lancer.vmdl", context)
+    PrecacheResource("model", "models/lancer/lancer2.vmdl", context)
     PrecacheResource("model", "models/saber_alter/sbr_alter.vmdl", context)
     PrecacheResource("model", "models/archer/archertest.vmdl", context)
     PrecacheResource("model", "models/rider/rider.vmdl", context)
@@ -202,6 +202,7 @@ function Precache( context )
     PrecacheResource("model", "models/lancelot/lancelot.vmdl", context)
     PrecacheResource("model", "models/avenger/avenger.vmdl", context)
     PrecacheResource("model", "models/diarmuid/diarmuid.vmdl", context)
+    PrecacheResource("model", "models/diarmuid/diarmuid2.vmdl", context)
     PrecacheResource("model", "models/iskander/iskander.vmdl", context)
     PrecacheResource("model", "models/zc/gille.vmdl", context)
     PrecacheResource("model", "models/nero/nero.vmdl", context)

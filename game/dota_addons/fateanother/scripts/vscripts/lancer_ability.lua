@@ -59,6 +59,11 @@ function RuneMagicUsed(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
+	a1:StartCooldown(20)
+	a2:StartCooldown(20)
+	a3:StartCooldown(20)
+	a4:StartCooldown(20)
+	a6:StartCooldown(20)
 	caster:SwapAbilities(a1:GetName(), "lancer_5th_rune_magic", true, true) 
 	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", true, true) 
 	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", true, true) 
@@ -351,8 +356,8 @@ function OnGBAOEStart(keys)
 		Target = bolgdummy,
 		Source = caster, 
 		Ability = keys.ability,
-		EffectName = "particles/units/heroes/hero_huskar/huskar_burning_spear.vpcf",
-		vSpawnOrigin = caster:GetAbsOrigin(),
+		EffectName = "particles/custom/lancer/lancer_gae_bolg_projectile.vpcf",
+		vSpawnOrigin = caster:GetAbsOrigin() + Vector(0,0,300),
 		iMoveSpeed = 2000
 	}
 	
@@ -397,6 +402,8 @@ function OnGBAOEHit(keys)
 
 	local crack = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
 	local fire = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
+	local explodeFx1 = ParticleManager:CreateParticle("particles/custom/lancer/lancer_gae_bolg_hit.vpcf", PATTACH_ABSORIGIN, bolgdummy )
+	ParticleManager:SetParticleControl( explodeFx1, 0, bolgdummy:GetAbsOrigin())	
 
 	caster:EmitSound("Misc.Crash")
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius

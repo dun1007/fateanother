@@ -65,7 +65,7 @@
 	{
 		"override_hero"			"npc_dota_hero_phantom_lancer"
 		"Model"					"models/development/invisiblebox.vmdl"
-		"ModelScale"			"1.15"
+		"ModelScale"			"0.92"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"lancer_5th_rune_magic"
@@ -623,7 +623,7 @@
 		"Ability14"				"avenger_overdrive"
 		"Ability15"				"avenger_autoattack"
 		
-		"StatusHealth"					"1150"
+		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"12"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"0"
@@ -633,15 +633,15 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"40"
-		"AttackDamageMax"				"58"
+		"AttackDamageMin"				"32"
+		"AttackDamageMax"				"50"
 		"AttackRate"					"1.10"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"0.75"
+		"AttributeStrengthGain"			"0.95"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.5"
+		"AttributeAgilityGain"			"1.3"
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"0.75"
 		
@@ -660,7 +660,7 @@
 	{
 		"override_hero"			"npc_dota_hero_huskar"
 		"Model"					"models/development/invisiblebox.vmdl"
-		"ModelScale"			"1.10"
+		"ModelScale"			"1.20"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"diarmuid_warriors_charge"
