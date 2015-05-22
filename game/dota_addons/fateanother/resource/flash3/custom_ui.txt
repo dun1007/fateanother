@@ -20,4 +20,15 @@
 		"File"		"RPGDialog"
 		"Depth"		"999"
 	}
+    "5"
+    {
+        "File"      "CustomUI_Timer"
+        "Depth"     "40"
+    }
+    //pip currently disabled
+   	//"6"
+	//{
+	//	"File"		"PipNumbers"
+	//	"Depth"		"18"
+	//}
 }

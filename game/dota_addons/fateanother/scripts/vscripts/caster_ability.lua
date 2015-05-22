@@ -329,6 +329,12 @@ end
 
 function OnArgosStart(keys)
 	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	if ply.IsArgosImproved then 
+		keys.MaxShield = keys.MaxShield + 200 
+		keys.ShieldAmount = keys.ShieldAmount + 100
+	end
+
 	if caster.argosShieldAmount == nil then 
 		caster.argosShieldAmount = keys.ShieldAmount
 	else

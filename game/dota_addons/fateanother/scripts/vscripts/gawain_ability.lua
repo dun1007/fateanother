@@ -503,7 +503,7 @@ function OnFairyAcquired(keys)
 
     hero:AddAbility("gawain_blessing_of_fairy")
     hero:FindAbilityByName("gawain_blessing_of_fairy"):SetLevel(1)
-    hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_blessing_of_fairy", true, true)
+    --hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_blessing_of_fairy", true, true)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

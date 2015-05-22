@@ -16,4 +16,20 @@
     {
         "playerID"     "short"
     }
+    "cgm_timer_display"
+    {
+        "timerMsg"      "string"
+        "timerSeconds"  "string"
+        "timerEnd"      "bool"
+        "timerPosition" "byte"
+    }
+    "cgm_timer_pause"
+    {
+        "timePaused"      "bool"
+    }
+    "send_hero_ent"
+    {
+        "player_ID"     "short"
+        "_ent"      "short"
+    }
 }

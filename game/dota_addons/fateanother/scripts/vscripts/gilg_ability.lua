@@ -181,7 +181,7 @@ function OnGramStart(keys)
 		Ability = keys.ability,
 		EffectName = "particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 700
+		iMoveSpeed = 1000
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 end

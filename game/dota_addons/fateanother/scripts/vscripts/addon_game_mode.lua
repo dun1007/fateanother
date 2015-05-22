@@ -263,7 +263,8 @@ function FateGameMode:OnAllPlayersLoaded()
 	--GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
 	GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
   --GameStartTimerStart()
-  StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
+  FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 60, timerEnd = true, timerPosition = 100})
+  --StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
 
   	Timers:CreateTimer('30secondalert', {
 		endTime = 30,
@@ -312,10 +313,11 @@ function FateGameMode:OnHeroInGame(hero)
       hero:ModifyGold(3000, true, 0) 
       giveUnitDataDrivenModifier(hero, hero, "round_pause", 10)
     end
-
+    print(hero:GetPlayerOwnerID())
     local heroName = FindName(hero:GetName())
     hero.name = heroName
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
+    
     --[[UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
@@ -1192,6 +1194,7 @@ function FateGameMode:InitializeRound()
   
   -- Flag game mode as pre round, and display tip
   IsPreRound = true  
+  FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 15, timerEnd = true, timerPosition = 0})
   DisplayTip()
 	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false) 
 
@@ -1241,7 +1244,8 @@ function FateGameMode:InitializeRound()
 		callback = function()
     print("[FateGameMode]Round started.")
     IsPreRound = false
-    roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
+    FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 150, timerEnd = true, timerPosition = 0})
+    --roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
 
     self:LoopOverPlayers(function(player, playerID)
       player:GetAssignedHero():RemoveModifierByName("round_pause")
@@ -1325,7 +1329,7 @@ end
 4 : Dire(by default)]]
 function FateGameMode:FinishRound(IsTimeOut, winner)
 	print("[FATE] Winner decided")
-  UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
+  --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
 
   self:LoopOverPlayers(function(ply, plyID)
     if ply:GetAssignedHero():IsAlive() then

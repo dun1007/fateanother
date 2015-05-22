@@ -239,6 +239,10 @@ function OnUBWCastStart(keys)
 		endTime = 2,
 		callback = function()
 		if keys.caster:IsAlive() then 
+		    caster.UBWLocator = CreateUnitByName("ping_sign2", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
+		    caster.UBWLocator:FindAbilityByName("ping_sign_passive"):SetLevel(1)
+		    caster.UBWLocator:AddNewModifier(caster, caster, "modifier_kill", {duration = 12.5})
+		    caster.UBWLocator:SetAbsOrigin(caster:GetAbsOrigin())
 			OnUBWStart(keys)
 			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_ubw_death_checker",{})
 		end
@@ -408,6 +412,9 @@ function EndUBW(caster)
 
 	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
+	if IsValidEntity(caster.UBWLocator) then
+		caster.UBWLocator:RemoveSelf()
+	end
 
     caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 

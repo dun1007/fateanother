@@ -484,6 +484,10 @@ function OnAOTKCastStart(keys)
 		endTime = 2,
 		callback = function()
 		if keys.caster:IsAlive() then 
+		    caster.AOTKLocator = CreateUnitByName("ping_sign2", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
+		    caster.AOTKLocator:FindAbilityByName("ping_sign_passive"):SetLevel(1)
+		    caster.AOTKLocator:AddNewModifier(caster, caster, "modifier_kill", {duration = 12.5})
+		    caster.AOTKLocator:SetAbsOrigin(caster:GetAbsOrigin())
 			OnAOTKStart(keys)
 			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_army_of_the_king_death_checker",{})
 		end
@@ -654,6 +658,10 @@ function EndAOTK(caster)
 
 	UTIL_RemoveImmediate(aotkQuest)
 	caster.IsAOTKActive = false
+	if IsValidEntity(caster.AOTKLocator) then
+		caster.AOTKLocator:RemoveSelf()
+	end
+
 	StopSoundEvent("Ability.SandKing_SandStorm.loop", caster)
 
 	-- Revert abilities

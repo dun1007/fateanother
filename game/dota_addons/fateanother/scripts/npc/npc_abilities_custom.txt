@@ -13157,6 +13157,10 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "diarmuid_minds_eye"
 		"MaxLevel"                      "1"
+		"precache"
+		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+		}
 		
 		"Modifiers"
 		{
@@ -14053,7 +14057,7 @@
 	"iskander_forward"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"iskander_forward"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
@@ -14081,7 +14085,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1 1.5 2.0 2.5 3.0"
+				"duration"			"1.6 2.2 2.8 3.4 4.0"
 			}
 			"02"
 			{
@@ -18088,7 +18092,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%defensive_bonus"
-					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%defensive_bonus"
 					"MODIFIER_PROPERTY_EVASION_CONSTANT"			"%defensive_bonus"
 				}
 			}
@@ -18286,7 +18289,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"350 430 510 590 670"
+				"heal_amount"			"370 425 480 535 590"
 			}
 		}
 
@@ -18962,6 +18965,11 @@
 				"ScriptFile"	"gawain_ability"
 				"Function"		"OnFairyAcquired"
 			}
+		}
+
+		"Modifiers"
+		{
+
 		}
 	}
 
