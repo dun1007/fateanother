@@ -915,5 +915,60 @@
 		"VisionDaytimeRange"			"900"
 		"VisionNighttimeRange"			"900"
 	}
+	//=======================================
+	//	Caster(Extra) - Tamamo 
+	//=======================================
+	"npc_dota_hero_tamamo"
+	{
+		"override_hero"			"npc_dota_hero_enchantress"
+		"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.00"
+
+		"AbilityLayout"			"6"
+		"Ability1"				"gawain_invigorating_ray"
+		"Ability2"				"gawain_blade_of_the_devoted"
+		"Ability3"				"gawain_excalibur_galatine"
+		"Ability4"				"gawain_solar_embodiment"
+		"Ability5"				"fate_empty1"
+		"Ability6"				"gawain_suns_embrace"
+		"Ability7"				"gawain_supernova"
+		"Ability8"				"gawain_divine_meltdown"
+		"Ability9"				"gawain_excalibur_galatine_detonate"
+		"Ability10"				"presence_detection_passive"
+		"Ability11"				"attribute_bonus"
+		
+		"StatusHealth"					"900"
+		"StatusHeathRegen"				"4.0"
+		"StatusMana"					"1300"
+		"StatusManaRegen"				"4.5"
+		
+		"ArmorPhysical"					"1"
+		"MagicalResistance"				"20"
+
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackRange"					"600"
+		"AttackDamageMin"				"38"
+		"AttackDamageMax"				"46"
+		"AttackRate"					"0.8"
+		"AttackAcquisitionRange"		"1000"
+		//"ProjectileModel"				"particles/base_attacks/generic_projectile.vpcf"
+		//"ProjectileSpeed"				"1000"
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.6"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.9"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"1.5"
+		
+		"MovementSpeed"					"320"
+		"MovementTurnRate"				"0.3"
+
+		"VisionDaytimeRange"			"1000"
+		"VisionNighttimeRange"			"1000"
+	}
 
 }

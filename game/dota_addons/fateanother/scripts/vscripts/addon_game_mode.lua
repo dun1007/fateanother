@@ -263,7 +263,7 @@ function FateGameMode:OnAllPlayersLoaded()
 	--GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
 	GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
   --GameStartTimerStart()
-  FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 60, timerEnd = true, timerPosition = 100})
+  FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
   --StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
 
   	Timers:CreateTimer('30secondalert', {
@@ -1194,7 +1194,7 @@ function FateGameMode:InitializeRound()
   
   -- Flag game mode as pre round, and display tip
   IsPreRound = true  
-  FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 15, timerEnd = true, timerPosition = 0})
+  FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 16, timerEnd = true, timerPosition = 0})
   DisplayTip()
 	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false) 
 
@@ -1244,7 +1244,7 @@ function FateGameMode:InitializeRound()
 		callback = function()
     print("[FateGameMode]Round started.")
     IsPreRound = false
-    FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 150, timerEnd = true, timerPosition = 0})
+    FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 151, timerEnd = true, timerPosition = 0})
     --roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
 
     self:LoopOverPlayers(function(player, playerID)

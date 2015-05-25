@@ -263,7 +263,7 @@ function PlayHeartBreakEffect(target)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(culling_kill_particle)
 
-	local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break.vpcf", PATTACH_CUSTOMORIGIN, target)
+	local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break_txt.vpcf", PATTACH_CUSTOMORIGIN, target)
 	ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
 end
 

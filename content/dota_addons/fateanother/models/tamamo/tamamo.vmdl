@@ -467,10 +467,10 @@ CVanimGroup CVanimGroup_0
 		},
 		CVanim
 		{
-			string m_Animationname = "tamamo_anim"
+			string m_Animationname = "tamamo_cast2"
 			string m_Filepath = "models/tamamo/tamamo_anim.FBX"
-			int m_nStartframe = 0
-			int m_nEndframe = 936
+			int m_nStartframe = 876
+			int m_nEndframe = 926
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -487,7 +487,11 @@ CVanimGroup CVanimGroup_0
 			bool m_bHidden = false
 			CActivity[] m_Activities = 
 			[
-				
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_2"
+					int m_nWeight = 1
+				}
 			]
 			CAnimationEvent[] m_AnimationEvents = 
 			[
