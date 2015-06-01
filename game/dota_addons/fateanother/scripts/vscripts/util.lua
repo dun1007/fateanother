@@ -340,6 +340,8 @@ function FindName(name)
         heroName = "Red Saber(Extra)"
     elseif name == "npc_dota_hero_omniknight" then
         heroName = "White Saber(Extra)"
+    elseif name == "npc_dota_hero_enchantress" then
+        heroName = "Caster(Extra)"
     end
     return heroName
 end
@@ -380,6 +382,8 @@ function FindAttribute(name)
         attributes = NeroAttribute
     elseif name == "npc_dota_hero_omniknight" then
         attributes = GawainAttribute
+    elseif name == "npc_dota_hero_enchantress" then
+        attributes = TamamoAttribute
     end
     return attributes
 end 

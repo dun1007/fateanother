@@ -19128,15 +19128,15 @@
 		{
 		}
 		
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"1"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"370 425 480 535 590"
+				"var_type"				"FIELD_FLOAT"
+				"damage"			"5"
 			}
 		}
 
@@ -19155,6 +19155,10 @@
 
 		"Modifiers"
 		{
+			"modifier_fiery_heaven"
+			{
+
+			}
 		}
 	}
 
@@ -19177,7 +19181,7 @@
 		{
 		}
 		
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"1"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
@@ -19226,7 +19230,7 @@
 		{
 		}
 		
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"1"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
@@ -19275,7 +19279,7 @@
 		{
 		}
 		
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"1"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
@@ -19302,6 +19306,27 @@
 
 		"Modifiers"
 		{
+		}
+	}
+	//=================================================================================================================
+	// Tamamo : Close Spellbook
+	//=================================================================================================================
+	"tamamo_close_spellbook"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"silencer_last_word"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"tamamo_ability"
+				"Function"		"OnCharmListClosed"
+			}
 		}
 	}
 
@@ -19569,6 +19594,44 @@
 	}
 
 
+	//=================================================================================================================
+	// Tamamo : Polygamist Castration Fist
+	//=================================================================================================================
+	"tamamo_polygamist_castration_fist"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"tamamo_kick"
+		"MaxLevel"						"1"
+
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastRangeBuffer"		"0"
+		"AbilityCooldown"				"150"
+		"AbilityManaCost"				"600"
+
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{			
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"tamamo_ability"
+				"Function"			"OnKickStart"
+			}
+		}
+		"Modifiers"
+		{
+		}
+	}
+
 	//=======================================
 	// Tamamo : Spirit Theft
 	//=======================================
@@ -19640,7 +19703,7 @@
 	//=======================================
 	// Tamamo : Polygamist Castration Fist
 	//=======================================
-	"tamamo_attribute_polygamist_castration_fist"
+	"tamamo_attribute_tamamo_escape"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
@@ -19974,12 +20037,21 @@
 			{
 				"Passive"		"1"
 				"IsHidden"		"1"
+				"ThinkInterval"				"0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"master_ability"
+					 	"Function"		"OnPresenceDetectionThink"
+					}
+				}
 				"OnCreated"
 				{
 					"RunScript"
 					{
 					 	"ScriptFile"	"master_ability"
-					 	"Function"		"PresenceDetection"
+					 	"Function"		"test"
 					}
 				}
 			}

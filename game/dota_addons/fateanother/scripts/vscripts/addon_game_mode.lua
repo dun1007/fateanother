@@ -1,5 +1,5 @@
 require("timers")
-require('util' )
+local util = require('util' )
 require('archer_ability')
 require('master_ability')
 require('xLib/xDialog')
@@ -60,8 +60,9 @@ BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
 mode = nil
 FATE_VERSION = "Beta Version"
-IsPickPhase = true
-IsPreRound = false
+_G.IsPickPhase = true
+_G.IsPreRound = true
+IsGameStarted = false
 
 XP_TABLE[0] = 0
 XP_TABLE[1] = 200
@@ -131,6 +132,7 @@ model_lookup["npc_dota_hero_chen"] = "models/iskander/iskander.vmdl"
 model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 model_lookup["npc_dota_hero_lina"] = "models/nero/nero.vmdl"
 model_lookup["npc_dota_hero_omniknight"] = "models/gawain/gawain.vmdl"
+model_lookup["npc_dota_hero_enchantress"] = "models/tamamo/tamamo.vmdl"
 
 function Precache( context )
     print("Starting precache")
@@ -207,6 +209,8 @@ function Precache( context )
     PrecacheResource("model", "models/zc/gille.vmdl", context)
     PrecacheResource("model", "models/nero/nero.vmdl", context)
     PrecacheResource("model", "models/gawain/gawain.vmdl", context)
+    PrecacheResource("model", "models/tamamo/tamamo.vmdl", context)
+    
 
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)
@@ -1004,6 +1008,7 @@ function FateGameMode:OnEntityKilled( keys )
   	 	Timers:RemoveTimer('alertmsg')
   		Timers:RemoveTimer('alertmsg2')
   		Timers:RemoveTimer('timeoutmsg')
+      Timers:RemoveTimer('presence_alert')
    		self:FinishRound(false, 1)
    	elseif nDireAlive == 0 then 
       print("All Dire heroes eliminated, removing existing timers and declaring winner...")
@@ -1011,6 +1016,7 @@ function FateGameMode:OnEntityKilled( keys )
   	 	Timers:RemoveTimer('alertmsg')
   		Timers:RemoveTimer('alertmsg2')
   		Timers:RemoveTimer('timeoutmsg')
+      Timers:RemoveTimer('presence_alert')
    		self:FinishRound(false, 0)
    	end
  end
@@ -1166,7 +1172,8 @@ function FateGameMode:InitGameMode()
 end
 
 
-IsGameStarted = false
+
+_G.RoundStartTime = 0
 roundQuest = nil 
 
 function FateGameMode:InitializeRound()
@@ -1193,7 +1200,7 @@ function FateGameMode:InitializeRound()
 	end
   
   -- Flag game mode as pre round, and display tip
-  IsPreRound = true  
+  _G.IsPreRound = true  
   FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 16, timerEnd = true, timerPosition = 0})
   DisplayTip()
 	Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false) 
@@ -1238,12 +1245,13 @@ function FateGameMode:InitializeRound()
     end
   end)
 
-
+  
   Timers:CreateTimer('beginround', {
 		endTime = 15,
 		callback = function()
     print("[FateGameMode]Round started.")
-    IsPreRound = false
+    _G.IsPreRound = false
+    _G.RoundStartTime = GameRules:GetGameTime()
     FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 151, timerEnd = true, timerPosition = 0})
     --roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
 
@@ -1254,6 +1262,13 @@ function FateGameMode:InitializeRound()
     FireGameEvent("show_center_message",msg)
 	end
 	})
+
+  Timers:CreateTimer('presence_alert', {
+    endTime = 75,
+    callback = function()
+      GameRules:SendCustomMessage("1 minute has passed. Servants can now detect the presence of another within 2500 radius.", 0, 0) 
+  end
+  })
 
   Timers:CreateTimer('round_30sec_alert', {
 		endTime = 135,
@@ -1394,7 +1409,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
   Timers:CreateTimer('roundend', {
 		endTime = 5,
 		callback = function()
-    IsPreRound = true
+    _G.IsPreRound = true
     self:LoopOverPlayers(function(ply, plyID)
       ply:GetAssignedHero():RespawnHero(false, false, false)
       ProjectileManager:ProjectileDodge(ply:GetAssignedHero())
@@ -1504,6 +1519,7 @@ function FateGameMode:OnConnectFull(keys)
     return
   end
 end
+
 
 --[[ This is an example console command
 function FateGameMode:ExampleConsoleCommand()
