@@ -1,64 +1,53 @@
---[[ Examples
-
--- Set bRecreateOnChange to false in order to prevent multiple spawns
--- Projectile:SetVelocity(newVel, newPos)
--- Set bGroundLock to true
--- UnitBehavior = PROJECTILE_DESTROY
--- nChangeMax
-
-local projectile = {
-        --EffectName = "particles/test_particle/ranged_tower_good.vpcf",
-        EffectName = WEAPON.effectName,
-        --vSpawnOrigin = hero:GetAbsOrigin(),
-        vSpawnOrigin = hero:GetAbsOrigin() + Vector(0,0,80),--{unit=hero, attach="attach_attack1", offset=Vector(0,0,0)},
-        fDistance = WEAPON.distance,
-        fStartRadius = WEAPON.radiusStart,
-        fEndRadius = WEAPON.radiusEnd,
-        Source = hero,
-        fExpireTime = 8.0,
-        vVelocity = hero.aim * WEAPON.speed, -- RandomVector(1000),
-        UnitBehavior = WEAPON.unitBehavior,
+  --[[local projectile = {
+        EffectName = "particles/units/heroes/hero_shadow_demon/shadow_demon_shadow_poison_projectile.vpcf",
+        vSpawnOrigin = caster:GetAbsOrigin() + Vector(0,0,80),
+        fDistance = 1000,
+        fStartRadius = 100,
+        fEndRadius = 100,
+        Source = caster,
+        fExpireTime = 5.0,
+        vVelocity = Vector(500, 0, 0),
+        UnitBehavior = PROJECTILES_DESTROY,
         bMultipleHits = false,
         bIgnoreSource = true,
-        TreeBehavior = WEAPON.treeBehavior,--PROJECTILES_NOTHING,
+        TreeBehavior = PROJECTILES_NOTHING,--PROJECTILES_NOTHING,
         bCutTrees = true,
-        WallBehavior = WEAPON.wallBehavior,--PROJECTILES_BOUNCE,
-        GroundBehavior = WEAPON.groundBehavior,--PROJECTILES_BOUNCE,
+        WallBehavior = PROJECTILES_NOTHING,--PROJECTILES_BOUNCE,
+        GroundBehavior = PROJECTILES_NOTHING,--PROJECTILES_BOUNCE,
         fGroundOffset = 50,
-        nChangeMax = 1,
+        nChangeMax = 100,
         bRecreateOnChange = true,
-        bZCheck = true,
-        --draw = true,             draw = {alpha=1, color=Vector(200,0,0)},
-        --iPositionCP = 0,
-        --iVelocityCP = 1,
-        --ControlPoints = {[5]=Vector(100,0,0), [10]=Vector(0,0,1)},
-        --fRehitDelay = .3,
-        --bGroundLock = false,
-        --fChangeDelay = 1,
-        --fRadiusStep = 10,
+        bZCheck = false,
+        bGroundLock = true,
 
-        UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and GameRules:IsEnemy(unit:GetTeamNumber(), hero:GetTeamNumber()) and unit.dodgeProjectiles ~= true; end,
+        draw = true,             draw = {alpha=1, color=Vector(200,0,0)},
+        iPositionCP = 0,
+        iVelocityCP = 1,
+        --ControlPoints = {[0]=Vector(500,0,0), [1]=Vector(0,0,1)},
+        fRehitDelay = .3,
+        fChangeDelay = 1,
+        fRadiusStep = 10,
+
+        UnitTest = function(self, unit) return unit:GetUnitName() ~= "npc_dummy_unit" and (unit:GetTeamNumber() ~= caster:GetTeamNumber()) and unit.dodgeProjectiles ~= true; end,
         OnUnitHit = function(self, unit) 
           local damageTable = {
-            victim = unit,
-            attacker = hero,
-            damage = RandomInt(WEAPON.damageMin, WEAPON.damageMax),
+              victim = unit,
+              attacker = caster,
+              damage = 100,
             damage_type = DAMAGE_TYPE_PURE,
           }
 
-          EmitSoundOnClient(hero.projectileHitSound, hero:GetPlayerOwner())
-          unit:EmitSound(WEAPON.shotHitSound)
+            ApplyDamage(damageTable)
+        end
+    }
+  
+  Projectiles:CreateProjectile(projectile)
 
-          ApplyDamage(damageTable)
-        end,
-        --OnTreeHit = function(self, tree) ... end,
-        --OnWallHit = function(self, gnvPos) ... end,
-        --OnGroundHit = function(self, groundPos) ... end,
-        --OnFinish = function(self, pos) ... end,
-      }
+  Timers:CreateTimer(0.5, function()
+    print("poof")
+    projectile.SetVelocity(caster:GetAbsOrigin(), Vector(1000,500,0))
+  end)]]
 
-      Projectiles:CreateProjectile(projectile)
---]]
 
 PROJECTILES_THINK = 0.01
 

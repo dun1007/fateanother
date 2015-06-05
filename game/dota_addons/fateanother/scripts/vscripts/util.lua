@@ -319,7 +319,7 @@ function FindName(name)
     elseif name == "npc_dota_hero_doom_bringer" then
         heroName = "Berserker(5th)"
     elseif name == "npc_dota_hero_juggernaut" then
-        heroName = "False Assassin(5th)"
+        heroName = "Assassin(5th)"
     elseif name == "npc_dota_hero_bounty_hunter" then
         heroName = "True Assassin(5th)"
     elseif name == "npc_dota_hero_crystal_maiden" then

@@ -13,6 +13,7 @@ function OnIRStart(keys)
 			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_invigorating_ray_armor_buff", {})
 		end
 	else
+		if IsSpellBlocked(keys.target) then return end
 		target:EmitSound("Hero_Omniknight.Purification")
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_invigorating_ray_enemy", {})
 	end
@@ -232,6 +233,7 @@ function OnEmbraceStart(keys)
 	else
 		-- process enemy effect
 		--DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+		if IsSpellBlocked(keys.target) then return end
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_enemy",{})
 		if ply.IsEclipseAcquired then
 			target:AddNewModifier(caster, caster, "modifier_stunned", {Duration = 1.5})

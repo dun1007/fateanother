@@ -193,6 +193,8 @@ end
 function OnRIStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
+	
 	if caster.IsFieryFinaleActivated then 
 		OnLSCStart(keys)
 		return

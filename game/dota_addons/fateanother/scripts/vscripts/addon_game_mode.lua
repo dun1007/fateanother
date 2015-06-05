@@ -1336,6 +1336,10 @@ function FateGameMode:InitializeRound()
 	})
 end
 
+
+DoNotKillAtTheEndOfRound = {
+  "tamamo_charm"
+}
 --[[ 
 0 : Radiant 
 1 : Dire 
@@ -1362,12 +1366,20 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
   local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
   for k,v in pairs(units) do
     if not v:IsRealHero() and IsValidEntity(v) then
-      v:ForceKill(true)
+      for i=1, #DoNotKillAtTheEndOfRound do
+        if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+          v:ForceKill(true)
+        end
+      end
     end
   end
   for k,v in pairs(units2) do
     if not v:IsRealHero() and IsValidEntity(v) then
-      v:ForceKill(true)
+      for i=1, #DoNotKillAtTheEndOfRound do
+        if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+          v:ForceKill(true)
+        end
+      end
     end
   end
   -- decide the winner

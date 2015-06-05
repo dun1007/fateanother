@@ -36,7 +36,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"64"
 		"AttackDamageMax"				"72"
-		"AttackRate"					"1.35"
+		"AttackRate"					"1.2"
 		"AttackAcquisitionRange"		"250"
 		"AttackRange"					"150"
 
@@ -574,7 +574,7 @@
 		"StatusManaRegen"				"1"
 		
 		"ArmorPhysical"					"5"
-		"MagicalResistance"				"0"
+		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"

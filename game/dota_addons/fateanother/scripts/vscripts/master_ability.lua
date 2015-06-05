@@ -782,7 +782,6 @@ end
 
 function OnPresenceDetectionThink(keys)
 	local caster = keys.caster
-	print(RoundStartTime)
 	if GameRules:GetGameTime() < RoundStartTime + 60 then 
 		return
 	end

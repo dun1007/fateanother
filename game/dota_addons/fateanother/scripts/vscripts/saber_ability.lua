@@ -97,46 +97,7 @@ function InvisibleAirPull(keys)
 	end)
 end
 
---[[
-	Author: kritth
-	Date: 10.01.2015.
-	Create magnataur shockwave in tracking manner upon start
-]]
-function CaliburnSlash( keys )
-	-- Variables
-	local caster = keys.caster
-	local target = keys.target
-	local ability = keys.ability
-	local movespeed = ability:GetLevelSpecialValueFor( "speed", ability:GetLevel() - 1 )
-	local particleName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-	
 
-	-- Create particle
-	local fxIndex = ParticleManager:CreateParticle( particleName, PATTACH_ABSORIGIN, caster )
-	
-	-- Global value
-	caster.caliburn_reach_target = false
-	caster.caliburn_pos = caster:GetAbsOrigin()
-	
-	-- Change forward vector over interval
-	Timers:CreateTimer( function() 
-			local targetPos = target:GetAbsOrigin()
-			local forwardVec = targetPos - caster.caliburn_pos
-			forwardVec = forwardVec:Normalized()
-			
-			caster.caliburn_pos = caster.caliburn_pos + forwardVec * ( movespeed / 10 )
-			
-			ParticleManager:SetParticleControl( fxIndex, 1, forwardVec * movespeed )
-			
-			if caster.caliburn_reach_target then
-				ParticleManager:DestroyParticle( fxIndex, false )
-				return nil
-			else
-				return 1.0 / movespeed
-			end
-		end
-	)
-end
 
 --[[
 	Author: kritth
@@ -144,11 +105,6 @@ end
 	Create yellowish explosion upon hitting unit
 ]]
 function CaliburnExplode( keys )
-	-- Turn the flag
-	keys.caster.caliburn_reach_target = true
-	
-	print("Exploding")
-
 	-- Variables
 	local caster = keys.caster
 	local target = keys.target
@@ -548,7 +504,7 @@ function StrikeAirPush(keys)
 	local target = keys.target
 	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
 
-	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_avalon"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_invisible_air"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	giveUnitDataDrivenModifier(keys.caster, keys.target, "pause_sealenabled", 0.5)
 
     local pushTarget = Physics:Unit(keys.target)

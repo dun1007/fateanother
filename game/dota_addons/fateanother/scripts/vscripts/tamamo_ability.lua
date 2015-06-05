@@ -1,3 +1,14 @@
+require("Physics")
+require("util")
+require("projectiles")
+
+CharmModifierList = {
+	"modifier_fiery_heaven_indicator",
+	"modifier_frigid_heaven_indicator",
+	"modifier_gust_heaven_indicator",
+	"modifier_void_cleft_indicator"
+}
+
 function OnArmedUpStart(keys)
 	local caster = keys.caster
 	local a1 = caster:GetAbilityByIndex(0) -- Soulstream
@@ -16,19 +27,47 @@ function OnArmedUpStart(keys)
 end
 
 function OnFireCharmLoaded(keys)
+	local caster = keys.caster
 	CloseCharmList(keys)
+	for i=1, #CharmModifierList do
+		if caster:HasModifier(CharmModifierList[i]) then
+			caster:RemoveModifierByName(CharmModifierList[i])
+		end
+	end
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_fiery_heaven_indicator", nil)
 end
 
 function OnFreezeCharmLoaded(keys)
+	local caster = keys.caster
 	CloseCharmList(keys)
+	for i=1, #CharmModifierList do
+		if caster:HasModifier(CharmModifierList[i]) then
+			caster:RemoveModifierByName(CharmModifierList[i])
+		end
+	end
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_frigid_heaven_indicator", nil)
 end
 
 function OnGustCharmLoaded(keys)
+	local caster = keys.caster
 	CloseCharmList(keys)
+	for i=1, #CharmModifierList do
+		if caster:HasModifier(CharmModifierList[i]) then
+			caster:RemoveModifierByName(CharmModifierList[i])
+		end
+	end
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gust_heaven_indicator", nil)
 end
 
 function OnVoidCharmLoaded(keys)
+	local caster = keys.caster
 	CloseCharmList(keys)
+	for i=1, #CharmModifierList do
+		if caster:HasModifier(CharmModifierList[i]) then
+			caster:RemoveModifierByName(CharmModifierList[i])
+		end
+	end
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_void_cleft_indicator", nil)
 end
 
 function OnCharmListClosed(keys)
@@ -57,7 +96,29 @@ function CloseCharmList(keys)
 
 end
 
+function OnSoulStreamInitialize(keys)
+	local caster = keys.caster
+	caster.CharmTable1 = {}
+	caster.CharmTable2 = {}
+	Timers:CreateTimer(2.0, function()
+		for i=1, 5 do
+			local soldier = CreateUnitByName("tamamo_charm", Vector(-10000,-10000,0), true, nil, nil, caster:GetTeamNumber())
+			soldier:SetAbsOrigin(Vector(-10000,-10000,0))
+			table.insert(caster.CharmTable1, soldier)
+			caster.Charms = soldier
+		end
+		for i=1, 5 do
+			local soldier = CreateUnitByName("tamamo_charm", Vector(-10000,-10000,0), true, nil, nil, caster:GetTeamNumber())
+			soldier:SetAbsOrigin(Vector(-10000,-10000,0))
+			table.insert(caster.CharmTable2, soldier)
+			caster.Charms = soldier
+		end
+	end)
+end
+
 function OnSoulstreamStart(keys)
+	local caster = keys.caster
+
 end
 
 function OnSGStart(keys)
