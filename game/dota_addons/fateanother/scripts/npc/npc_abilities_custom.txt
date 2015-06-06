@@ -4348,7 +4348,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stun_duration"			"2.0"
+				"stun_duration"			"1.0 1.3 1.6 1.9 2.2"
 			}
 			"05"
 			{
@@ -4442,7 +4442,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_absorb"				"700 900 1100 1300 1500"
+				"damage_absorb"				"600 750 900 1050 1200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_health"			"0 100 200 300 400"
 			}
 		}
 		
@@ -4489,6 +4494,14 @@
 				"States"
 				{
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_rho_aias_health_bonus"
+			{
+				"Passive"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
 				}
 			}
 		}
@@ -4558,7 +4571,15 @@
 				"Target"		"CASTER"
 			}
 		}
-
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnUBWLevelUp"
+			}
+		}		
+		
 		"OnRespawn"
 		{
 			"RunScript"
@@ -4639,7 +4660,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
@@ -4662,7 +4683,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.3"
-		"AbilityChannelTime"			"2.0"		
+		"AbilityChannelTime"			"5.0"		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"7.0"
@@ -4676,23 +4697,23 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200"
+				"damage"			"200 250 300 350 400"
 			}
 			
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1150"
+				"radius"			"900"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"tooltip_max_weapon"	"25"
+				"tooltip_weapon_drop_delay"	"0.06"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"tooltip_channeling"	"2.0"
+				"tooltip_channeling"	"5.0"
 			}
 		}
 		
@@ -4732,7 +4753,7 @@
 		{
 			"modifier_sword_barrage"
 			{
-				"Duration"		"2.0"
+				"Duration"		"5.0"
 			}
 		}
 	}
@@ -4744,7 +4765,7 @@
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -4822,7 +4843,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
@@ -4875,12 +4896,12 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"30"
+				"damage"			"30 40 50 60 70"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_lasthit"	"200"
+				"damage_lasthit"	"200 250 300 350 400"
 			}
 			"05"
 			{

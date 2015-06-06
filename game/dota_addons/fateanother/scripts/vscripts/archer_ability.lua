@@ -98,20 +98,26 @@ function KBStart(keys)
 	end	
 
 	if ply.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
-		keys.ability:EndCooldown()
-		keys.ability:StartCooldown(2.0)
+		local barrage = caster:FindAbilityByName("archer_5th_sword_barrage")
+		local barrageCD = barrage:GetCooldownTimeRemaining()
+		barrage:EndCooldown()
+		barrage:StartCooldown(barrageCD-1)
 	end
 end
 
 function KBHit(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ply = caster:GetPlayerOwner()
 	local ability = keys.ability
 	local KBCount = 0
+
+	if ply.IsProjectionImproved then keys.DamagePerTick = keys.DamagePerTick + caster:GetIntellect() end
 
 	Timers:CreateTimer(function() 
 		if KBCount == 4 then return end
 		DoDamage(keys.caster, keys.target, keys.DamagePerTick , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
 		caster:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
@@ -228,6 +234,13 @@ function OnRhoDamaged(keys)
 		print("rho not broken, remaining shield : " .. rhoTarget.rhoShieldAmount)
 		rhoTarget:SetHealth(currentHealth + keys.DamageTaken)
 	end
+end
+
+function OnUBWLevelUp(keys)
+	local caster = keys.caster
+	caster:FindAbilityByName("archer_5th_sword_barrage"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("archer_5th_rule_breaker"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("archer_5th_nine_lives"):SetLevel(keys.ability:GetLevel())
 end
 
 -- Starts casting UBW
@@ -369,7 +382,7 @@ function OnUBWStart(keys)
             end
             ProjectileManager:CreateTrackingProjectile(info) 
 		else return end 
-		return 0.1
+		return 0.2
 	end)
 
 	if not caster.IsUBWDominant then return end -- If UBW is not dominant right now, do not teleport units 
@@ -603,9 +616,6 @@ function OnArrowRainBPHit(keys)
 end
 
 function OnUBWWeaponHit(keys)
-	if keys.caster:GetPlayerOwner().IsProjectionImproved then 
-		keys.Damage = keys.Damage + 10
-	end	
 	if ubwdummies ~= nil then
 		DoDamage(ubwdummies[1], keys.target, keys.Damage , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	end
@@ -617,7 +627,7 @@ function OnUBWBarrageStart(keys)
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
 	if ply.IsProjectionImproved then 
-		keys.Damage = keys.Damage + 100
+		keys.Damage = keys.Damage + (caster:GetStrength() + caster:GetIntellect())*2
 	end	
 	caster:EmitSound("Archer.UBWAmbient")
 	local barrageCount = 0
@@ -626,7 +636,6 @@ function OnUBWBarrageStart(keys)
 	local forwardVec = ( targetPoint - caster:GetAbsOrigin() ):Normalized()
 	
 	Timers:CreateTimer( function()
-		if barrageCount == 25 then return end
 		if caster:HasModifier("modifier_sword_barrage") then			
 			local swordVector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
 			
@@ -684,6 +693,8 @@ function OnUBWBarrageStart(keys)
 			
 		    barrageCount = barrageCount + 1
 			return 0.08
+		else 
+			return
 		end
     end)
 end
@@ -759,10 +770,7 @@ function OnUBWNineLanded(caster, ability)
 	local nineCounter = 0
 
 	local ply = caster:GetPlayerOwner()
-	if ply.IsProjectionImproved then 
-		tickdmg = tickdmg + 15
-		lasthitdmg = lasthitdmg + 200
-	end
+
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {})
 	Timers:CreateTimer(function()
@@ -773,7 +781,11 @@ function OnUBWNineLanded(caster, ability)
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 				for k,v in pairs(lasthitTargets) do
-					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					if ply.IsProjectionImproved then 
+						DoDamage(caster, v, lasthitdmg+v:GetHealth()*0.05 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					else
+						DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					end
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 					-- push enemies back
 					local pushback = Physics:Unit(v)
@@ -811,7 +823,11 @@ function OnUBWNineLanded(caster, ability)
 			caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 			for k,v in pairs(targets) do
-				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				if ply.IsProjectionImproved then 
+					DoDamage(caster, v, tickdmg+v:GetHealth()*0.05 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				else
+					DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				end	
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 			end
 
