@@ -352,6 +352,7 @@ function OnEnumaStart(keys)
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			enuma.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
+			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 10000, 0, true)
 			-- Destroy particle
 			ParticleManager:DestroyParticle( chargeFxIndex, false )
 			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
@@ -451,6 +452,7 @@ function OnMaxEnumaStart(keys)
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			enuma.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
+			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 10000, 0, true)
 			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 			-- Destroy particle
 			ParticleManager:DestroyParticle( chargeFxIndex, false )

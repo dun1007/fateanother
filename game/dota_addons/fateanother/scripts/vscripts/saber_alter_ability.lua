@@ -149,6 +149,7 @@ function OnMMBStart(keys)
 	EmitGlobalSound("Saber_Alter.MMB" ) 
 	EmitGlobalSound("Saber_Alter.MMBAfter") 
 	ParticleManager:CreateParticle("particles/custom/screen_blue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+	ScreenShake(caster:GetOrigin(), 15, 2.0, 2, 10000, 0, true)
 
 	local dmg = caster:GetMaxMana()
 	if ply.IsManaShroudImproved == true then dmg = dmg + 200 end
@@ -337,6 +338,7 @@ function OnDexStart(keys)
 			dex.vSpawnOrigin = caster:GetAbsOrigin() 
 			dex.vVelocity = caster:GetForwardVector() * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(dex)
+			ScreenShake(caster:GetOrigin(), 7, 2.0, 2, 10000, 0, true)
 		end
 	end)
 

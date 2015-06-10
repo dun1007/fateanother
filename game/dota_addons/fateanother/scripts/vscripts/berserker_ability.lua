@@ -73,6 +73,7 @@ function OnRoarStart(keys)
 	    DoDamage(caster, v, finaldmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	end
 	ParticleManager:CreateParticle("particles/custom/screen_face_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+	ScreenShake(caster:GetOrigin(), 30, 2.0, 5.0, 10000, 0, true)
 
 end
 
@@ -222,7 +223,7 @@ function OnNineLanded(caster, ability)
 				end
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
-			if nineCounter == 8 then -- if nine is finished
+			if nineCounter == 8 then -- if it is last strike
 				if caster:GetName() == "npc_dota_hero_doom_bringer" then
 					EmitGlobalSound("Berserker.Roar")
 				elseif caster:GetName() == "npc_dota_hero_sven" then
@@ -231,6 +232,7 @@ function OnNineLanded(caster, ability)
 				end
 				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
+				ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 1500, 0, true)
 				-- do damage to targets
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 1, false)
 				for k,v in pairs(lasthitTargets) do

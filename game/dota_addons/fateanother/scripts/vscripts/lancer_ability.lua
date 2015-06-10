@@ -404,7 +404,7 @@ function OnGBAOEHit(keys)
 	local fire = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
 	local explodeFx1 = ParticleManager:CreateParticle("particles/custom/lancer/lancer_gae_bolg_hit.vpcf", PATTACH_ABSORIGIN, bolgdummy )
 	ParticleManager:SetParticleControl( explodeFx1, 0, bolgdummy:GetAbsOrigin())	
-
+	ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 2000, 0, true)
 	caster:EmitSound("Misc.Crash")
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)

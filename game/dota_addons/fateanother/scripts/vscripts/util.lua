@@ -516,12 +516,14 @@ lastTipChoice = 0
 function DisplayTip()
     print("Displaying tip!")
     local tipchoice = 0
+    local tipRef = ""
     while tipchoice == lastTipChoice do
         print("Rerolling tip choice")
-        tipchoice = RandomInt(1, #tipTable) 
+        tipchoice = RandomInt(1, 10) 
+        tipRef = ("#Fate_Tip" .. tipchoice)
     end
 
-    GameRules:SendCustomMessage(tipTable[tipchoice], 0, 0) 
+    GameRules:SendCustomMessage(tipRef, 0, 0) 
     lastTipChoice = tipchoice
 end
 

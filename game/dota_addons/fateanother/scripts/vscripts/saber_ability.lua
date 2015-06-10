@@ -193,6 +193,7 @@ function OnExcaliburStart(keys)
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			excal.vVelocity = caster:GetForwardVector() * keys.Speed
 			local projectile = ProjectileManager:CreateLinearProjectile(excal)
+			ScreenShake(caster:GetOrigin(), 5, 0.1, 2, 20000, 0, true)
 		end
 	end)
 	-- Make 2 particles for both teams
@@ -287,6 +288,7 @@ function OnMaxStart(keys)
 			max_excal.vVelocity = caster:GetForwardVector() * keys.Speed
 			local projectile = ProjectileManager:CreateLinearProjectile(max_excal)
 			ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+			ScreenShake(caster:GetOrigin(), 7, 2.0, 2, 10000, 0, true)
 		end
 	end)
 
