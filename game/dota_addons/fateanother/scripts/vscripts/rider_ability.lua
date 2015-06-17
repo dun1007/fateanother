@@ -323,8 +323,7 @@ function OnImproveMysticEyesAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	ply.IsMysticEyeImproved = true
-	hero:FindAbilityByName("rider_5th_mystic_eye_improved"):SetLevel(1)
-	hero:SwapAbilities("rider_5th_mystic_eye","rider_5th_mystic_eye_improved", false, true)
+	hero:FindAbilityByName("rider_5th_mystic_eye"):SetLevel(2)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

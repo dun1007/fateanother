@@ -28,7 +28,7 @@
     "6"
     {
     	"File"		"Fatepedia"
-    	"Depth"		"1001"
+    	"Depth"		"999"
     }
     //pip currently disabled
    	//"6"

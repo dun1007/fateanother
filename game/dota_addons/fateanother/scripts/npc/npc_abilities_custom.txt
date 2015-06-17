@@ -920,7 +920,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_excalibur"
+		"AbilityTextureName"			"saber_attribute_improve_excalibur"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -954,7 +954,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_instinct"
+		"AbilityTextureName"			"saber_attribute_improve_instinct"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -988,7 +988,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_chivalry"
+		"AbilityTextureName"			"saber_attribute_chivalry"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -1022,7 +1022,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_strike_air"
+		"AbilityTextureName"			"saber_attribute_strike_air"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -1459,7 +1459,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"lancer_battle_continuation"
+		"AbilityTextureName"			"lancer_5th_battle_continuation"
 		"AbilityCooldown"				"60"
 
 		"precache"
@@ -1504,7 +1504,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"lancer_battle_continuation"
+		"AbilityTextureName"			"lancer_5th_protection_from_arrows"
 
 		"OnSpellStart"
 		{
@@ -1535,7 +1535,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lancer_rune_magic"
+		"AbilityTextureName"			"lancer_5th_rune_magic"
 		"AbilityCooldown"				"20"
 		"AbilityCastPoint"				"0.0"
 
@@ -1854,7 +1854,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"lancer_relentless_spear"
+		"AbilityTextureName"			"lancer_5th_relentless_spear"
 		"AbilityCastAnimation"			"ACT_DOTA_DISABLED"
 		
 		"precache"
@@ -1937,7 +1937,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gae_bolg_target"
+		"AbilityTextureName"			"lancer_5th_gae_bolg"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -2044,7 +2044,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"lancer_wesen_gae_bolg"
+		"AbilityTextureName"			"lancer_5th_wesen_gae_bolg"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -2146,7 +2146,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gae_bolg_aoe"
+		"AbilityTextureName"			"lancer_5th_gae_bolg_jump"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"0.5"
 		"AOERadius"						"%radius"
@@ -2257,7 +2257,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lancer_battle_continuation"
+		"AbilityTextureName"			"lancer_attribute_improve_battle_continuation"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -2291,7 +2291,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gae_bolg_aoe"
+		"AbilityTextureName"			"lancer_attribute_improve_gae_bolg"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -2325,7 +2325,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"visage_gravekeepers_cloak"
+		"AbilityTextureName"			"lancer_attribute_protection_from_arrows"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -2359,7 +2359,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lancer_the_heartseeker"
+		"AbilityTextureName"			"lancer_attribute_the_heartseeker"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -2565,7 +2565,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"saber_alter_darklight"
+		"AbilityTextureName"			"saber_alter_darklight_passive"
 		"MaxLevel"						"1"
 		
 		"AbilitySpecial"
@@ -3350,7 +3350,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_alter_mana_shroud"
+		"AbilityTextureName"			"saber_alter_attribute_mana_shroud"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -3384,7 +3384,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_alter_mana_burst"
+		"AbilityTextureName"			"saber_alter_attribute_mana_blast"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -3418,7 +3418,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_alter_vortigern"
+		"AbilityTextureName"			"saber_alter_attribute_improve_ferocity"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -3452,7 +3452,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"saber_alter_darklight"
+		"AbilityTextureName"			"saber_alter_attribute_ultimate_darklight"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -3483,12 +3483,12 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"rider_mystic_eyes"
+		"AbilityTextureName"			"rider_5th_mystic_eye"
 		"precache"
 		{
 			"particle"					"particles/custom/rider/rider_mystic_eye_debuff.vpcf"
 		}
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
 		
 		"AbilitySpecial"
 		{
@@ -3500,7 +3500,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"speed_modifier"		"10"
+				"speed_modifier"		"10 20"
 			}
 		}
 		
@@ -3530,59 +3530,13 @@
 	}
 
 	//=================================================================================================================
-	// Rider : Mystic Eye (Improved)
-	//=================================================================================================================
-	"rider_5th_mystic_eye_improved"
-	{
-		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"rider_mystic_eyes"
-		"MaxLevel"						"1"
-		
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"Range"					"1000"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_modifier"		"20"
-			}
-		}
-		
-		"Modifiers"
-		{
-			"modifier_mystic_eye"
-			{
-				"Passive"	"1"
-				"IsHidden"	"0"
-				"Aura"		"rider_5th_mystic_eye_aura"
-				"Aura_Radius"	"1000"
-				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
-				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
-			}
-			"rider_5th_mystic_eye_aura"
-			{
-				"IsDebuff"		"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%speed_modifier"
-				}
-			}
-		}
-	}
-	//=================================================================================================================
 	// Rider : Monstrous Strength passive
 	//=================================================================================================================
 	"rider_5th_monstrous_strength_passive"
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"rider_monstrous_strength"
+		"AbilityTextureName"			"rider_5th_monstrous_strength_passive"
 		"MaxLevel"						"1"
 		
 		"AbilitySpecial"
@@ -3631,7 +3585,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"rider_nail_swing"
+		"AbilityTextureName"			"rider_5th_nail_swing"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"
@@ -3688,7 +3642,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"rider_breaker_gorgon"
+		"AbilityTextureName"			"rider_5th_breaker_gorgon"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"
@@ -3768,7 +3722,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"rider_bloodfort"
+		"AbilityTextureName"			"rider_5th_bloodfort_andromeda"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"0.4"
 		"AOERadius"						"%radius"
@@ -3866,7 +3820,7 @@
 		"AbilityU11tTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"rider_bellerophon_two"
+		"AbilityTextureName"			"rider_5th_bellerophon_2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"0.4"
 		"AOERadius"						"%radius"
@@ -3954,7 +3908,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"rider_bellerophon"
+		"AbilityTextureName"			"rider_5th_bellerophon"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"2.0"
 		"AOERadius"						"%radius"
@@ -4031,7 +3985,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"rider_mystic_eyes"
+		"AbilityTextureName"			"rider_5th_attribute_improve_mystic_eyes"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -4065,7 +4019,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"rider_riding"
+		"AbilityTextureName"			"rider_5th_attribute_riding"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -4099,7 +4053,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"rider_seal"
+		"AbilityTextureName"			"rider_5th_attribute_seal"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -4133,7 +4087,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"rider_monstrous_strength"
+		"AbilityTextureName"			"rider_5th_attribute_monstrous_strength"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -4171,7 +4125,7 @@
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"archer_clairvoyance"
+		"AbilityTextureName"			"archer_5th_clairvoyance"
 		"AOERadius"						"%radius"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
@@ -4242,7 +4196,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_kanshou_bakuya"
+		"AbilityTextureName"			"archer_5th_kanshou_bakuya"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -4309,7 +4263,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_broken_phantasm"
+		"AbilityTextureName"			"archer_5th_broken_phantasm"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"
@@ -4421,7 +4375,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_rho_aias"
+		"AbilityTextureName"			"archer_5th_rho_aias"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -4521,7 +4475,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_ubw"
+		"AbilityTextureName"			"archer_5th_ubw"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -4667,7 +4621,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_sword_rain"
+		"AbilityTextureName"			"archer_5th_sword_barrage"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -4771,7 +4725,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"caster_rule_breaker"
+		"AbilityTextureName"			"archer_5th_rule_breaker"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"2.0"
 		"AbilityCastPoint"				"0.3"
@@ -4850,7 +4804,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"berserker_nine"
+		"AbilityTextureName"			"archer_5th_nine_lives"
 		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
 		"AnimationPlaybackRate" 		"1.0"		
 		"AOERadius"						"%radius"
@@ -4947,7 +4901,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_arrow_rain"
+		"AbilityTextureName"			"archer_5th_arrow_rain"
 		
 		"precache"
 		{
@@ -5014,7 +4968,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_overedge"
+		"AbilityTextureName"			"archer_5th_overedge"
 		"AOERadius"						"%radius"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"3.0"	
@@ -5095,7 +5049,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"archer_hrunting"
+		"AbilityTextureName"			"archer_5th_hrunting"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -5160,7 +5114,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"archer_eagle_eye"
+		"AbilityTextureName"			"archer_5th_attribute_eagle_eye"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -5193,7 +5147,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"archer_hrunting"
+		"AbilityTextureName"			"archer_5th_attribute_hrunting"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -5227,7 +5181,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"archer_shroud_of_martin"
+		"AbilityTextureName"			"archer_5th_attribute_shroud_of_martin"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -5261,7 +5215,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"archer_projection"
+		"AbilityTextureName"			"archer_5th_attribute_improve_projection"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -5295,7 +5249,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"archer_overedge"
+		"AbilityTextureName"			"archer_5th_attribute_overedge"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -5326,7 +5280,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"berserker_divinity"
+		"AbilityTextureName"			"berserker_5th_divinity"
 		"MaxLevel"						"2"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -5373,7 +5327,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"berserker_fissure_strike"
+		"AbilityTextureName"			"berserker_5th_fissure_strike"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		"FightRecapLevel"				"1"
@@ -5456,7 +5410,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"berserker_courage"
+		"AbilityTextureName"			"berserker_5th_courage"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"2.0"
 		"MaxLevel"						"5"
@@ -5607,7 +5561,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"berserker_roar"
+		"AbilityTextureName"			"berserker_5th_madmans_roar"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"2.0"
 		"MaxLevel"						"1"
@@ -5692,7 +5646,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"berserker_berserk"
+		"AbilityTextureName"			"berserker_5th_berserk"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"2.0"
 		"MaxLevel"						"5"
@@ -5760,7 +5714,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"berserker_berserk"
+		"AbilityTextureName"			"berserker_5th_berserk_attribute_passive"
 		"MaxLevel"						"1"
 		"precache"
 		{
@@ -5810,7 +5764,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"berserker_nine"
+		"AbilityTextureName"			"berserker_5th_nine_lives"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_5"
 		"AnimationPlaybackRate" 		"0.5"		
 		"AOERadius"						"%radius"
@@ -5925,7 +5879,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"berserker_god_hand"
+		"AbilityTextureName"			"berserker_5th_god_hand"
 		"MaxLevel"						"1"
 		"precache"
 		{
@@ -5960,7 +5914,39 @@
 			}			
 		}
 	}
+	//=======================================
+	// Berserker Attribute : Improve Divinity
+	//=======================================
+	"berserker_5th_attribute_improve_divinity"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"berserker_5th_attribute_improve_divinity"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"16"
 
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnImproveDivinityAcquired"
+			}
+		}
+	}
 	//=======================================
 	// Berserker Attribute : Berserk
 	//=======================================
@@ -5970,7 +5956,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"berserker_berserk"
+		"AbilityTextureName"			"berserker_5th_attribute_berserk"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -6003,7 +5989,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"berserker_god_hand"
+		"AbilityTextureName"			"berserker_5th_attribute_god_hand"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -6037,7 +6023,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"berserker_reincarnation"
+		"AbilityTextureName"			"berserker_5th_attribute_reincarnation"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -7068,7 +7054,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"false_assassin_ganryu"
+		"AbilityTextureName"			"false_assassin_attribute_ganryu"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -7101,7 +7087,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"false_assassin_eye_of_serenity"
+		"AbilityTextureName"			"false_assassin_attribute_eye_of_serenity"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -7135,7 +7121,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"false_assassin_quickdraw"
+		"AbilityTextureName"			"false_assassin_attribute_quickdraw"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -7169,7 +7155,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"false_assassin_vitrification"
+		"AbilityTextureName"			"false_assassin_attribute_vitrification"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -7199,7 +7185,7 @@
 	"true_assassin_presence_concealment"
 	{
 		"BaseClass"          			    "ability_datadriven"
-		"AbilityTextureName"           		"ta_presence_concealment"
+		"AbilityTextureName"           		"true_assassin_presence_concealment"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"MaxLevel"			"1"
 		"precache"
@@ -7285,7 +7271,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"			"ta_dirk"
+		"AbilityTextureName"			"true_assassin_dirk"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
 		"AbilityUnitTargetFlag"			"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
@@ -7390,7 +7376,7 @@
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"BaseClass"			"ability_datadriven"
-		"AbilityTextureName"			"ta_ambush"
+		"AbilityTextureName"			"true_assassin_ambush"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
@@ -7551,7 +7537,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"ta_combo"
+		"AbilityTextureName"			"true_assassin_combo"
 		"MaxLevel"						"1"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"1.0"
@@ -7682,7 +7668,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"ta_self_modification"
+		"AbilityTextureName"			"true_assassin_self_modification"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
@@ -7817,7 +7803,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"ta_snatch_strike"
+		"AbilityTextureName"			"true_assassin_snatch_strike"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -7922,7 +7908,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"ta_zabaniya"
+		"AbilityTextureName"			"true_assassin_zabaniya"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -8076,7 +8062,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"ta_presence_concealment"
+		"AbilityTextureName"			"true_assassin_attribute_improve_presence_concealment"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -8110,7 +8096,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"ta_protection_from_wind"
+		"AbilityTextureName"			"true_assassin_attribute_protection_from_wind"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -8144,7 +8130,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"ta_weakening_venom"
+		"AbilityTextureName"			"true_assassin_attribute_weakening_venom"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -8178,7 +8164,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"ta_shadow_strike"
+		"AbilityTextureName"			"true_assassin_attribute_shadow_strike"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -8209,7 +8195,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"alchemist_goblins_greed"
+		"AbilityTextureName"			"gilgamesh_golden_rule"
 		"MaxLevel"						"2"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -8255,7 +8241,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gilga_sword_barrage"
+		"AbilityTextureName"			"gilgamesh_sword_barrage"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -8393,7 +8379,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"gilga_enkidu"
+		"AbilityTextureName"			"gilgamesh_enkidu"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -8478,7 +8464,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"gilga_gram"
+		"AbilityTextureName"			"gilgamesh_gram"
 		
 		"AbilityCastPoint"				"0.8"
 		"AbilityCastRange"				"800"
@@ -8552,7 +8538,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gilga_gob"
+		"AbilityTextureName"			"gilgamesh_gate_of_babylon"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"2.0"
 
@@ -8681,7 +8667,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"1.0"
 
-		"AbilityTextureName"			"gilga_enuma_elish"
+		"AbilityTextureName"			"gilgamesh_enuma_elish"
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
@@ -8807,7 +8793,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"1.0"
 
-		"AbilityTextureName"			"gilga_max_enuma_elish"
+		"AbilityTextureName"			"gilgamesh_max_enuma_elish"
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
@@ -8919,7 +8905,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"alchemist_goblins_greed"
+		"AbilityTextureName"			"gilgamesh_attribute_improve_golden_rule"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -8952,7 +8938,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gilga_power_of_sumer"
+		"AbilityTextureName"			"gilgamesh_attribute_power_of_sumer"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -8986,7 +8972,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gilga_sword_barrage"
+		"AbilityTextureName"			"gilgamesh_attribute_rain_of_swords"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -9020,7 +9006,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gilga_sword_of_creation"
+		"AbilityTextureName"			"gilgamesh_attribute_sword_of_creation"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -9054,7 +9040,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"caster_item_construction"
+		"AbilityTextureName"			"caster_5th_item_construction"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -9090,7 +9076,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityTextureName"			"caster_territory_creation"
+		"AbilityTextureName"			"caster_5th_territory_creation"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"2.0"
 		"precache"
@@ -9501,7 +9487,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"caster_argos"
+		"AbilityTextureName"			"caster_5th_argos"
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"10"
 		"AbilityManaCost"				"100"
@@ -9584,7 +9570,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_magic"
+		"AbilityTextureName"			"caster_5th_ancient_magic"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -10093,7 +10079,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"caster_rule_breaker"
+		"AbilityTextureName"			"caster_5th_rule_breaker"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.5"
 		"AbilityCastPoint"				"0.7"
@@ -10205,7 +10191,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"caster_hecatic_graea"
+		"AbilityTextureName"			"caster_5th_hecatic_graea"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"0.5"
 		"AOERadius"						"%radius"
@@ -10290,7 +10276,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"caster_hecatic_graea_2"
+		"AbilityTextureName"			"caster_5th_hecatic_graea_powered"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"0.5"
 		"AOERadius"						"%radius"
@@ -10372,7 +10358,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_territory_creation"
+		"AbilityTextureName"			"caster_5th_attribute_improve_territory_creation"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -10406,7 +10392,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"caster_argos"
+		"AbilityTextureName"			"caster_5th_attribute_improve_argos"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -10507,7 +10493,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
-		"AbilityTextureName"			"lancelot_eternal_arms_mastership"
+		"AbilityTextureName"			"lancelot_arms_mastership"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"45"
 		"precache"
@@ -10604,7 +10590,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityTextureName"			"lancelot_smg"
+		"AbilityTextureName"			"lancelot_smg_barrage"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
@@ -10923,7 +10909,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"saber_caliburn"
+		"AbilityTextureName"			"lancelot_caliburn"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK" // Change the animation from "ACT_DOTA_CAST_ABILITY_1" to match the timing of the ability
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"
@@ -11036,7 +11022,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gae_bolg_target"
+		"AbilityTextureName"			"lancelot_gae_bolg"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -11128,7 +11114,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"berserker_nine"
+		"AbilityTextureName"			"lancelot_nine_lives"
 		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
 		"AnimationPlaybackRate" 		"0.5"		
 		"AOERadius"						"%radius"
@@ -11278,7 +11264,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"caster_rule_breaker"
+		"AbilityTextureName"			"lancelot_rule_breaker"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 		"AbilityCastPoint"				"0.7"
@@ -11377,7 +11363,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
-		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
+		"AbilityTextureName"			"lancelot_tsubame_gaeshi"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
@@ -11653,7 +11639,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lancelot_eternal_arms_mastership"
+		"AbilityTextureName"			"lancelot_attribute_improve_eternal"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -11722,7 +11708,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lancelot_knight_of_honor_2"
+		"AbilityTextureName"			"lancelot_attribute_improve_knight_of_honor"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -11756,7 +11742,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lancelot_total_assault"
+		"AbilityTextureName"			"lancelot_attribute_total_assault"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -12175,7 +12161,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"avenger_remains"
+		"AbilityTextureName"			"avenger_unlimited_remains"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -12257,7 +12243,7 @@
 	{
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "avenger_remains"
+		"AbilityTextureName"            "avenger_unlimited_remains"
 		"MaxLevel"                      "5"
 
 
@@ -12332,7 +12318,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"avenger_tawrich"
+		"AbilityTextureName"			"avenger_tawrich_zarich"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		
 		"AbilityCastPoint"				"0.3"
@@ -12908,7 +12894,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"avenger_dark_passage"
+		"AbilityTextureName"			"avenger_attribute_improve_dark_passage"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		
 		"AbilityCastPoint"				"0.0"
@@ -12976,7 +12962,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"avenger_overdrive"
+		"AbilityTextureName"			"avenger_attribute_overdrive"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -13184,7 +13170,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"avenger_true_form"
+		"AbilityTextureName"			"avenger_attribute_demon_incarnate"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -13386,7 +13372,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"diarmuid_double_spearmanship"
+		"AbilityTextureName"			"diarmuid_double_spearsmanship"
 		"MaxLevel"						"5"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"precache"
@@ -13837,7 +13823,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"diarmuid_love_spot"
+		"AbilityTextureName"			"diarmuid_attribute_improve_love_spot"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -13871,7 +13857,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"diarmuid_minds_eye"
+		"AbilityTextureName"			"diarmuid_attribute_minds_eye"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -13904,7 +13890,7 @@
 	{
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
-		"AbilityTextureName"            "diarmuid_minds_eye"
+		"AbilityTextureName"            "diarmuid_attribute_minds_eye"
 		"MaxLevel"                      "1"
 		
 		"Modifiers"
@@ -13950,7 +13936,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"diarmuid_rosebloom"
+		"AbilityTextureName"			"diarmuid_attribute_rosebloom"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -13985,7 +13971,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"diarmuid_double_spear"
+		"AbilityTextureName"			"diarmuid_attribute_double_spear_strike"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -14017,7 +14003,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_TOGGLE"
-		"AbilityTextureName"			"diarmuid_double_spear"
+		"AbilityTextureName"			"diarmuid_attribute_double_spear_strike"
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -15617,7 +15603,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"iskander_charisma"
+		"AbilityTextureName"			"iskander_attribute_improve_charisma"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -15651,7 +15637,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"iskander_thundergods_wrath"
+		"AbilityTextureName"			"iskander_attribute_thundergods_wrath"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -15720,7 +15706,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"iskander_bond_beyond_time"
+		"AbilityTextureName"			"iskander_attribute_bond_beyond_time"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -15752,7 +15738,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"zc_prelati_spellbook"
+		"AbilityTextureName"			"gille_spellbook_of_prelati"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"60"
 		"AbilityCastPoint"				"0.3"
@@ -15869,7 +15855,7 @@
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"pugna_life_drain"
+		"AbilityTextureName"			"gille_throw_corpse"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"		
 		
@@ -15923,7 +15909,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"zc_oceanic_demon"
+		"AbilityTextureName"			"gille_summon_demon"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"		
@@ -15990,7 +15976,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityTextureName"			"zc_oceanic_demon"
+		"AbilityTextureName"			"gille_summon_demon"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"60"
 		"precache"
@@ -16075,7 +16061,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"zc_torment"
+		"AbilityTextureName"			"gille_torment"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"		
@@ -16211,7 +16197,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"zc_exquisite_cadavre"
+		"AbilityTextureName"			"gille_exquisite_cadaver"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"		
@@ -16341,7 +16327,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityTextureName"			"gille_abyssal_contract"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"		
@@ -16865,7 +16851,7 @@
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"zc_combo"
+		"AbilityTextureName"			"gille_larret_de_mort"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"		
@@ -16912,7 +16898,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"zc_eye_for_art"
+		"AbilityTextureName"			"gille_attribute_eye_for_art"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -16946,7 +16932,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"zc_torment"
+		"AbilityTextureName"			"gille_attribute_improve_black_magic"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -16980,7 +16966,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"zc_mental_pollution"
+		"AbilityTextureName"			"gille_attribute_mental_pollution"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -17014,7 +17000,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityTextureName"			"gille_attribute_abyssal_connection"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -17048,7 +17034,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityTextureName"			"gille_attribute_abyssal_connection_2"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -17122,7 +17108,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"berserker_divinity"
+		"AbilityTextureName"			"berserker_5th_divinity"
 		
 		"AbilityCastPoint"				"0.0"
 
@@ -17143,7 +17129,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"alchemist_goblins_greed"
+		"AbilityTextureName"			"gilgamesh_golden_rule"
 		
 		"AbilityCastPoint"				"0.0"
 
@@ -17189,7 +17175,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"archer_clairvoyance"
+		"AbilityTextureName"			"archer_5th_clairvoyance"
 		
 		"AbilityCastPoint"				"0.0"
 		"precache"
@@ -17240,7 +17226,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"nero_q"
+		"AbilityTextureName"			"nero_gladiusanus_blauserum"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -17455,7 +17441,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"nero_w"
+		"AbilityTextureName"			"nero_tres_fontaine_ardent"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -17552,7 +17538,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"nero_e"
+		"AbilityTextureName"			"nero_rosa_ichthys"
 		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		
 		// Ability stats
@@ -17658,7 +17644,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"nero_theatre"
+		"AbilityTextureName"			"nero_aestus_domus_aurea"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -17804,7 +17790,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"nero_combo"
+		"AbilityTextureName"			"nero_fiery_finale"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -17868,7 +17854,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"nero_e"
+		"AbilityTextureName"			"nero_rosa_ichthys"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		
 		// Ability stats
@@ -17935,7 +17921,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"nero_q_attribute"
+		"AbilityTextureName"			"nero_attribute_pari_tenu_blauserum"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -17969,7 +17955,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"nero_imperial_privilege"
+		"AbilityTextureName"			"nero_attribute_improve_imperial_privilege"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -18003,7 +17989,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"leoric_reincarnate"
+		"AbilityTextureName"			"nero_attribute_invictus_spiritus"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -18041,7 +18027,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"leoric_reincarnation"
+		"AbilityTextureName"			"nero_attribute_invictus_spiritus"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		
 		// Ability stats
@@ -18087,7 +18073,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"nero_theatre"
+		"AbilityTextureName"			"nero_attribute_soverigns_glory"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -18985,7 +18971,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gawain_dawnbringer"
+		"AbilityTextureName"			"gawain_attribute_dawnbringer"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -19019,7 +19005,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gawain_blessing_of_fairy"
+		"AbilityTextureName"			"gawain_attribute_blessing_of_fairy"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -19058,7 +19044,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gawain_meltdown"
+		"AbilityTextureName"			"gawain_attribute_divine_meltdown"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -19092,7 +19078,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gawain_sunlight"
+		"AbilityTextureName"			"gawain_attribute_sunlight"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -19126,7 +19112,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"gawain_eclipse"
+		"AbilityTextureName"			"gawain_attribute_eclipse"
 		
 		
 		"AbilityCastPoint"				"0.0"

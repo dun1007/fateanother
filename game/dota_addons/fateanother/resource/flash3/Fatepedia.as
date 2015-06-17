@@ -1,60 +1,94 @@
 ﻿package {
+	
 	import flash.events.MouseEvent;
 	import flash.display.MovieClip;
-
+	import flash.utils.getDefinitionByName;
+	import flash.utils.Dictionary;
+	import scaleform.clik.events.*;
+	import scaleform.clik.events.ButtonEvent;
+	import scaleform.clik.data.DataProvider;
+	
 	//import some stuff from the valve lib
 	import ValveLib.Globals;
 	import ValveLib.ResizeManager;
-	
+	import flashx.textLayout.formats.Float;
 	
 	public class Fatepedia extends MovieClip{
-		
 		//these three variables are required by the engine
 		public var gameAPI:Object;
 		public var globals:Object;
 		public var elementName:String;
 		
+		public var mainPanel:MovieClip;		
+		private var ButtonOriginalWidth:int;
+		private var ButtonOriginalHeight:int;
+		private var MainPanelOriginalWidth:int;
+		private var MainPanelOriginalHeight:int;
+		private var ScreenWidth:int;
+		private var ScreenHeight:int;
+		private var scaleRatioX:Number;
+		private var scaleRatioY:Number;
+		
         public function Fatepedia() {
-            //we add a listener to this.button1 (I called my button 'button1')
-            //this listener listens to the CLICK mouseEvent, and when it observes it, it cals onButtonClicked
-            this.OpenButton.addEventListener(MouseEvent.CLICK, onButtonClicked);
-        }
-        
-        /*this function is new, it is the handler for our listener
-         *handlers for mouseEvents always need the event:MouseEvent parameter.
-         *the ': void' at the end gives the type of this function, handlers are always voids. */
-        private function onButtonClicked(event:MouseEvent) : void {
-            trace("click!");
+			// Just for test purpose in flash
+			this.myOpenButton.addEventListener(MouseEvent.CLICK, onFatepediaClicked);
+			this.ButtonOriginalWidth = this.myOpenButton.width;
+			this.ButtonOriginalHeight = this.myOpenButton.height;
+			this.MainPanelOriginalWidth = 525;
+			this.MainPanelOriginalHeight = 652;
         }
 		
-		//this function is called when the UI is loaded
 		public function onLoaded() : void {			
-			//make this UI visible
 			visible = true;
-			
-			//let the client rescale the UI
+			this.myOpenButton.addEventListener(MouseEvent.CLICK, onFatepediaClicked);
 			Globals.instance.resizeManager.AddListener(this);
-			
-			//this is not needed, but it shows you your UI has loaded (needs 'scaleform_spew 1' in console)
-			trace("Fatepedia UI Loaded!");
+			trace("Fatepedia Loaded");
 		}
-		
-		//this handles the resizes - credits to Nullscope
-		public function onResize(re:ResizeManager) : * {
+
+		public function createMainPanel() {
+			this.mainPanel = new FatepediaMainPanel(this.globals);
+			addChild(mainPanel);
+			trace("Panel sizes", ScreenWidth, ScreenHeight, mainPanel.width, mainPanel.height);
+			mainPanel.width =  MainPanelOriginalWidth * scaleRatioX;
+			mainPanel.height =  MainPanelOriginalHeight * scaleRatioY;
+			mainPanel.x = ScreenWidth;
+			mainPanel.y = (ScreenHeight - mainPanel.height/2 * scaleRatioY);
+			trace("Current location...", mainPanel.x, mainPanel.y);
 			
-			var scaleRatioY:Number = re.ScreenHeight/900;
-					
-			if (re.ScreenHeight > 900){
-				scaleRatioY = 1;
+		}
+		public function onFatepediaClicked(event:MouseEvent)
+        {
+            trace("Fatepedia button clicked");
+			if (mainPanel == null) {
+				createMainPanel();
+				mainPanel.visible = true;
 			}
-                    
-            //You will probably want to scale your elements by here, they keep the same width and height by default.
-            //I recommend scaling both X and Y with scaleRatioY.
-            
-            //The engine keeps elements at the same X and Y coordinates even after resizing, you will probably want to adjust that here.
+			else
+			{
+				mainPanel.visible = false;
+				removeChild(this);
+				mainPanel = null;
+			}	
+			
+            return;
+        }// end function
+				
+		public function onResize(re:ResizeManager) : * {
+			// calculate by what ratio the stage is scaling
+			this.scaleRatioX = re.ScreenWidth/1920;
+			this.scaleRatioY = re.ScreenHeight/1080;
+			
+			this.myOpenButton.width = ButtonOriginalWidth * scaleRatioX;
+			this.myOpenButton.height = ButtonOriginalHeight * scaleRatioY;
+			this.myOpenButton.x = re.ScreenWidth;
+			this.myOpenButton.y = this.myOpenButton.height;			
+			trace("Current size :" + re.ScreenWidth + " " + re.ScreenHeight)
+			trace("##### RESIZE #########");
+					
+			ScreenWidth = re.ScreenWidth;
+			ScreenHeight = re.ScreenHeight;
+					
 		}
-
-
 
 	}
 }

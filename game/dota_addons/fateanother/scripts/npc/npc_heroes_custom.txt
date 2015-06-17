@@ -24,6 +24,12 @@
 		"Ability9"					"saber_strike_air"
 		"Ability10"					"presence_detection_passive"
 		"Ability11"					"attribute_bonus"
+		"Combo"						"saber_max_excalibur"
+		"AttributeNumber"			"4"
+		"Attribute1"				"saber_attribute_improve_excalibur"
+		"Attribute2"				"saber_attribute_improve_instinct"
+		"Attribute3"				"saber_attribute_chivalry"
+		"Attribute4"				"saber_attribute_strike_air"
 		
 		"StatusHealth"					"1300"
 		"StatusHeathRegen"				"8"
@@ -84,6 +90,13 @@
 		"Ability14"					"lancer_5th_protection_from_arrows"
 		"Ability15"					"presence_detection_passive"
 		"Ability16"					"attribute_bonus"
+
+		"Combo"						"lancer_5th_wesen_gae_bolg"
+		"AttributeNumber"			"4"
+		"Attribute1"				"lancer_attribute_improve_battle_continuation"
+		"Attribute2"				"lancer_attribute_improve_gae_bolg"
+		"Attribute3"				"lancer_attribute_protection_from_arrows"
+		"Attribute4"				"lancer_attribute_the_heartseeker"
 		
 		"StatusHealth"					"1200"
 		"StatusHeathRegen"				"6.5"
@@ -137,6 +150,13 @@
 		"Ability10"				"presence_detection_passive"
 		"Ability11"				"attribute_bonus"
 		
+		"Combo"						"saber_alter_max_mana_burst"
+		"AttributeNumber"			"4"
+		"Attribute1"				"saber_alter_attribute_mana_shroud"
+		"Attribute2"				"saber_alter_attribute_mana_blast"
+		"Attribute3"				"saber_alter_attribute_improve_ferocity"
+		"Attribute4"				"saber_alter_attribute_ultimate_darklight"
+
 		"StatusHealth"					"1500"
 		"StatusHeathRegen"				"20"
 		"StatusMana"					"1000"
@@ -193,6 +213,15 @@
 		"Ability13"				"presence_detection_passive"
 		"Ability14"				"attribute_bonus"
 
+		"Combo"						"archer_5th_arrow_rain"
+		"AttributeNumber"			"5"
+		"Attribute1"				"archer_5th_attribute_eagle_eye"
+		"Attribute2"				"archer_5th_attribute_hrunting"
+		"Attribute3"				"archer_5th_attribute_shroud_of_martin"
+		"Attribute4"				"archer_5th_attribute_improve_projection"
+		"Attribute5"				"archer_5th_attribute_overedge"
+
+
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"8"
 		"StatusMana"					"1000"
@@ -244,6 +273,14 @@
 		"Ability9"				"rider_5th_monstrous_strength_passive"
 		"Ability10"				"presence_detection_passive"
 		"Ability11"				"attribute_bonus"
+
+		"Combo"						"rider_5th_bellerophon_2"
+		"AttributeNumber"			"4"
+		"Attribute1"				"rider_5th_attribute_improve_mystic_eyes"
+		"Attribute2"				"rider_5th_attribute_riding"
+		"Attribute3"				"rider_5th_attribute_seal"
+		"Attribute4"				"rider_5th_attribute_monstrous_strength"
+
 		
 		"StatusHealth"					"1300"
 		"StatusHeathRegen"				"12"
@@ -296,7 +333,14 @@
 		"Ability10"				"berserker_5th_god_hand"
 		"Ability11"				"presence_detection_passive"
 		"Ability12"				"attribute_bonus"
-		
+
+		"Combo"						"berserker_5th_madmans_roar"
+		"AttributeNumber"			"4"
+		"Attribute1"				"berserker_5th_attribute_improve_divinity"
+		"Attribute2"				"berserker_5th_attribute_berserk"
+		"Attribute3"				"berserker_5th_attribute_god_hand"
+		"Attribute4"				"berserker_5th_attribute_reincarnation"
+
 		"StatusHealth"					"1600"
 		"StatusHeathRegen"				"25"
 		"StatusMana"					"1000"
@@ -350,6 +394,13 @@
 		"Ability10"				"presence_detection_passive"
 		"Ability11"				"attribute_bonus"
 
+		"Combo"						"false_assassin_tsubame_mai"
+		"AttributeNumber"			"4"
+		"Attribute1"				"false_assassin_attribute_ganryu"
+		"Attribute2"				"false_assassin_attribute_eye_of_serenity"
+		"Attribute3"				"false_assassin_attribute_quickdraw"
+		"Attribute4"				"false_assassin_attribute_vitrification"
+
 		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"10"
 		"StatusMana"					"0"
@@ -401,6 +452,13 @@
 		"Ability10"				"true_assassin_dirk_improved"
 		"Ability11"				"presence_detection_passive"
 		"Ability12"				"attribute_bonus"
+
+		"Combo"						"true_assassin_combo"
+		"AttributeNumber"			"4"
+		"Attribute1"				"true_assassin_attribute_improve_presence_concealment"
+		"Attribute2"				"true_assassin_attribute_protection_from_wind"
+		"Attribute3"				"true_assassin_attribute_weakening_venom"
+		"Attribute4"				"true_assassin_attribute_shadow_strike"
 
 		"StatusHealth"					"950"
 		"StatusHeathRegen"				"8"
@@ -459,6 +517,12 @@
 		"Ability14"				"presence_detection_passive"
 		"Ability15"				"attribute_bonus"
 
+		"Combo"						"caster_5th_hecatic_graea_powered"
+		"AttributeNumber"			"4"
+		"Attribute1"				"caster_5th_attribute_improve_territory_creation"
+		"Attribute2"				"caster_5th_attribute_improve_argos"
+		"Attribute3"				"caster_5th_attribute_improve_hecatic_graea"
+		"Attribute4"				"caster_5th_attribute_dagger_of_treachery"
 		
 		"StatusHealth"					"950"
 		"StatusHeathRegen"				"3"
@@ -510,7 +574,14 @@
 		"Ability8"				"gilgamesh_sword_barrage_improved"
 		"Ability9"				"presence_detection_passive"
 		"Ability10"				"attribute_bonus"
-		
+
+		"Combo"						"gilgamesh_max_enuma_elish"
+		"AttributeNumber"			"4"
+		"Attribute1"				"gilgamesh_attribute_improve_golden_rule"
+		"Attribute2"				"gilgamesh_attribute_power_of_sumer"
+		"Attribute3"				"gilgamesh_attribute_rain_of_swords"
+		"Attribute4"				"gilgamesh_attribute_sword_of_creation"
+
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"12"
 		"StatusMana"					"1000"
@@ -566,7 +637,14 @@
 		"Ability13"				"lancelot_nuke"
 		"Ability14"				"presence_detection_passive"
 		"Ability15"				"attribute_bonus"
-		
+
+		"Combo"						"lancelot_nuke"
+		"AttributeNumber"			"4"
+		"Attribute1"				"lancelot_attribute_improve_eternal"
+		"Attribute2"				"lancelot_attribute_blessing_of_fairy"
+		"Attribute3"				"lancelot_attribute_improve_knight_of_honor"
+		"Attribute4"				"lancelot_attribute_total_assault"
+
 		
 		"StatusHealth"					"1500"
 		"StatusHeathRegen"				"10"
@@ -622,7 +700,14 @@
 		"Ability13"				"attribute_bonus"
 		"Ability14"				"avenger_overdrive"
 		"Ability15"				"avenger_autoattack"
-		
+
+		"Combo"						"avenger_endless_loop"
+		"AttributeNumber"			"4"
+		"Attribute1"				"avenger_attribute_improve_dark_passage"
+		"Attribute2"				"avenger_attribute_blood_mark"
+		"Attribute3"				"avenger_attribute_overdrive"
+		"Attribute4"				"avenger_attribute_demon_incarnate"
+
 		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"12"
 		"StatusMana"					"1000"
@@ -674,7 +759,14 @@
 		"Ability9"				"presence_detection_passive"
 		"Ability10"				"attribute_bonus"
 		"Ability11"			"diarmuid_autoattack"
-		
+
+		"Combo"						"diarmuid_rampant_warrior"
+		"AttributeNumber"			"4"
+		"Attribute1"				"diarmuid_attribute_improve_love_spot"
+		"Attribute2"				"diarmuid_attribute_minds_eye"
+		"Attribute3"				"diarmuid_attribute_rosebloom"
+		"Attribute4"				"diarmuid_attribute_double_spear_strike"
+
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1050"
@@ -723,6 +815,14 @@
 		"Ability7"				"gille_larret_de_mort"
 		"Ability8"				"presence_detection_passive"
 		"Ability9"				"attribute_bonus"
+
+		"Combo"						"gille_larret_de_mort"
+		"AttributeNumber"			"5"
+		"Attribute1"				"gille_attribute_eye_for_art"
+		"Attribute2"				"gille_attribute_improve_black_magic"
+		"Attribute3"				"gille_attribute_mental_pollution"
+		"Attribute4"				"gille_attribute_abyssal_connection"
+		"Attribute5"				"gille_attribute_abyssal_connection_2"
 
 		"StatusHealth"					"950"
 		"StatusHeathRegen"				"1"
@@ -779,7 +879,14 @@
 		"Ability13"				"fate_empty4"
 		"Ability14"				"presence_detection_passive"
 		"Ability15"				"attribute_bonus"
-		
+
+		"Combo"						"iskander_annihilate"
+		"AttributeNumber"			"4"
+		"Attribute1"				"iskander_attribute_improve_charisma"
+		"Attribute2"				"iskander_attribute_thundergods_wrath"
+		"Attribute3"				"iskander_attribute_via_expugnatio"
+		"Attribute4"				"iskander_attribute_bond_beyond_time"
+
 		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"10"
 		"StatusMana"					"1000"
@@ -834,7 +941,14 @@
 		"Ability13"				"nero_close_spellbook"
 		"Ability14"				"presence_detection_passive"
 		"Ability15"				"attribute_bonus"
-		
+
+		"Combo"						"nero_fiery_finale"
+		"AttributeNumber"			"4"
+		"Attribute1"				"nero_attribute_pari_tenu_blauserum"
+		"Attribute2"				"nero_attribute_improve_imperial_privilege"
+		"Attribute3"				"nero_attribute_invictus_spiritus"
+		"Attribute4"				"nero_attribute_soverigns_glory"
+
 		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1050"
@@ -886,7 +1000,15 @@
 		"Ability9"				"gawain_excalibur_galatine_detonate"
 		"Ability10"				"presence_detection_passive"
 		"Ability11"				"attribute_bonus"
-		
+
+		"Combo"						"gawain_supernova"
+		"AttributeNumber"			"5"
+		"Attribute1"				"gawain_attribute_dawnbringer"
+		"Attribute2"				"gawain_attribute_blessing_of_fairy"
+		"Attribute3"				"gawain_attribute_divine_meltdown"
+		"Attribute4"				"gawain_attribute_sunlight"
+		"Attribute5"				"gawain_attribute_eclipse"
+
 		"StatusHealth"					"1250"
 		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1050"

@@ -32,4 +32,8 @@
         "player_ID"     "short"
         "_ent"      "short"
     }
+    "show_fatepedia_main_panel"
+    {
+        "player_ID"     "short"
+    }
 }
