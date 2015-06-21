@@ -335,8 +335,8 @@ function OnEnumaStart(keys)
 		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
 	if ply.IsEnumaImproved then 
-		enuma.fEndRadius = enuma.fEndRadius * 2
-		enuma.fDistance = enuma.fDistance + 300
+		enuma.fEndRadius = enuma.fEndRadius * 1.5
+		enuma.fDistance = enuma.fDistance + 150
 	end
 
 	Timers:CreateTimer(2.0, function() 

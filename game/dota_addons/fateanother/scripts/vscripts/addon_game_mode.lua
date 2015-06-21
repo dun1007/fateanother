@@ -54,6 +54,7 @@ USE_CUSTOM_HERO_LEVELS = true           -- Should we allow heroes to have custom
 MAX_LEVEL = 24                          -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = true             -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 
+
 XP_TABLE = {}
 XP_PER_LEVEL_TABLE = {}
 BOUNTY_PER_LEVEL_TABLE = {}
@@ -138,6 +139,14 @@ function Precache( context )
     print("Starting precache")
   	--PrecacheUnitByNameSync("npc_precache_everything", context)
 
+    PrecacheResource("soundfile", "soundevents/music/*.vsndevts", context)
+    --[[Kill the default sound files
+    PrecacheResource("soundfile", "soundevents/music/valve_dota_001/soundevents_stingers.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/music/valve_dota_001/soundevents_music.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/music/valve_dota_001/game_sounds_music.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/music/valve_dota_001/music/game_sounds_music.vsndevts", context)
+
+    PrecacheResource("soundfile", "soundevents/bgm.vsndevts", context)]]
     -- Sound files
     PrecacheResource("soundfile", "soundevents/bgm.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/misc_sound.vsndevts", context)
@@ -224,6 +233,7 @@ function Precache( context )
     PrecacheResource("model_folder", "models/heroes/windrunner", context)
     PrecacheResource("model_folder", "models/items/windrunner", context)
 
+    PrecacheResource("model", "models/heroes/legion_commander/legion_commander.vmdl", context)
   	print("precache complete")
 end
 
@@ -322,13 +332,18 @@ function FateGameMode:OnHeroInGame(hero)
     hero.name = heroName
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
     
+    hero:NotifyWearablesOfModelChange(false)
+    hero:ManageModelChanges()
+
     --[[UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
     Timers:CreateTimer(30.0, function() 
       UTIL_ResetMessageText(hero:GetPlayerID()+1)
     end)  ]]
 
-  -- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
-  Timers:CreateTimer( 3.0, function()
+  
+ --[[ -- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
+  Timers:CreateTimer( 0.5, function()
+      
       -- Setup variables\
       local model_name = ""
       
@@ -347,8 +362,9 @@ function FateGameMode:OnHeroInGame(hero)
       end
       
       -- Check if it's correct format
-      if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
-      
+      --if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
+
+
       -- Never got changed before
       local toRemove = {}
       local wearable = hero:FirstMoveChild()
@@ -362,16 +378,16 @@ function FateGameMode:OnHeroInGame(hero)
       
       -- Remove wearables
       for k, v in pairs( toRemove ) do
-        v:SetModel( "models/development/invisiblebox.vmdl" )
+        print("removing " .. v:GetName())
+        --v:SetModel( "models/development/invisiblebox.vmdl" )
         v:RemoveSelf()
       end
       
       -- Set model
       hero:SetModel( model_name )
       hero:SetOriginalModel( model_name )     -- This is needed because when state changes, model will revert back
-      hero:MoveToPosition( hero:GetAbsOrigin() )  -- This is needed because when model is spawned, it will be in T-pose
-    end
-  )
+      hero:RespawnUnit()   
+    end)]]
 end
 
 --[[
@@ -1039,6 +1055,8 @@ function FateGameMode:InitGameMode()
 	GameRules:SetUseCustomHeroXPValues(true)
 	GameRules:SetGoldPerTick(0)
   GameRules:SetUseBaseGoldBountyOnHeroes(false)
+  GameRules:SetCustomGameSetupTimeout(20)
+  GameRules:SetFirstBloodActive(false)
 
 	-- Random seed for RNG
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
@@ -1462,11 +1480,11 @@ function FateGameMode:CaptureGameMode()
 
     --mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
     mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
-
     mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
     mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
     mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
-    --GameRules:GetGameModeEntity():SetThink( "Think", self, "GlobalThink", 2 )
+    mode:SetStashPurchasingDisabled ( false )
+
     self:OnFirstPlayerLoaded()
 
   end 

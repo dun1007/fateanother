@@ -1652,7 +1652,7 @@
 		"StatusHealth"				"13"			// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"100"			// Base mana.
-		"StatusManaRegen"			"-0.04"			// Mana regeneration rate.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
 
 		// Team
 		//----------------------------------------------------------------
@@ -1732,7 +1732,7 @@
 		"StatusHealth"				"13"			// Base health.
 		"StatusHealthRegen"			"0"			// Health regeneration rate.
 		"StatusMana"				"100"			// Base mana.
-		"StatusManaRegen"			"-0.04"			// Mana regeneration rate.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.
 
 		// Team
 		//----------------------------------------------------------------

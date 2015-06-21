@@ -263,6 +263,7 @@ function OnUBWCastStart(keys)
 	})
 	ArcherCheckCombo(keys.caster, keys.ability)
 
+
 	-- Flame spread particle
 	local angle = 0
 	local increment_factor = 45
@@ -304,9 +305,11 @@ ubwQuest = nil
 ubwdummies = nil
 -- Begins UBW 
 function OnUBWStart(keys)
+	print("started UBW")
 	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
+
 	local ubwdummyLoc1 = ubwCenter + Vector(600,-600, 1000)
 	local ubwdummyLoc2 = ubwCenter + Vector(600,600, 1000)
 	local ubwdummyLoc3 = ubwCenter + Vector(-600,600, 1000)
@@ -314,6 +317,7 @@ function OnUBWStart(keys)
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	caster.IsUBWDominant = true
+
 	for i=1, #ubwTargets do
 		if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
 			ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
@@ -326,6 +330,7 @@ function OnUBWStart(keys)
 	end
 	caster.IsUBWActive = true
 
+	print("milestone")
 	local info = {
 		Target = nil,
 		Source = nil, 
@@ -348,19 +353,20 @@ function OnUBWStart(keys)
 		dunCounter = dunCounter + 1
 		return 3.0 
 	end)
-
+	print("creating and units")
 	-- Add sword shooting dummies
 	local ubwdummy1 = CreateUnitByName("dummy_unit", ubwdummyLoc1, false, caster, caster, caster:GetTeamNumber())
 	local ubwdummy2 = CreateUnitByName("dummy_unit", ubwdummyLoc2, false, caster, caster, caster:GetTeamNumber())
 	local ubwdummy3 = CreateUnitByName("dummy_unit", ubwdummyLoc3, false, caster, caster, caster:GetTeamNumber())
 	local ubwdummy4 = CreateUnitByName("dummy_unit", ubwdummyLoc4, false, caster, caster, caster:GetTeamNumber())
+	ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
 	Timers:CreateTimer(function()
 		ubwdummy1:SetAbsOrigin(ubwdummyLoc1)
 		ubwdummy2:SetAbsOrigin(ubwdummyLoc2)
 		ubwdummy3:SetAbsOrigin(ubwdummyLoc3)
 		ubwdummy4:SetAbsOrigin(ubwdummyLoc4)
 	end)
-	ubwdummies = {ubwdummy1, ubwdummy2, ubwdummy3, ubwdummy4}
+	
 	for i=1, #ubwdummies do
 		ubwdummies[i]:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 		ubwdummies[i]:SetDayTimeVisionRange(1000)
@@ -368,6 +374,7 @@ function OnUBWStart(keys)
 		ubwdummies[i]:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1000})
 	end
 
+	print("adding automated weapon shots")
 	Timers:CreateTimer(function() 
 		if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
 			local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
@@ -379,8 +386,10 @@ function OnUBWStart(keys)
             		info.vSpawnOrigin = ubwdummies[RandomInt(1,4)]:GetAbsOrigin()
             		break
             	end
+            	--ProjectileManager:CreateTrackingProjectile(info)  --ROOT OF EVIL
             end
-            ProjectileManager:CreateTrackingProjectile(info) 
+            
+            
 		else return end 
 		return 0.2
 	end)
@@ -393,6 +402,7 @@ function OnUBWStart(keys)
 	local ubwTargetPos = nil
 	ubwCasterPos = caster:GetAbsOrigin()
 	
+	--breakpoint
 	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
 	for i=1, #ubwTargets do
 		if ubwTargets[i]:GetName() ~= "npc_dota_ward_base" then
@@ -630,6 +640,12 @@ function OnUBWBarrageStart(keys)
 		keys.Damage = keys.Damage + (caster:GetStrength() + caster:GetIntellect())*2
 	end	
 	caster:EmitSound("Archer.UBWAmbient")
+
+	if math.random(1,2) == 1 then
+		caster:EmitSound("Archer.Bladeoff")
+	else
+		caster:EmitSound("Archer.Yuke")
+	end
 	local barrageCount = 0
 	
 	-- Vector
@@ -692,7 +708,7 @@ function OnUBWBarrageStart(keys)
 			)
 			
 		    barrageCount = barrageCount + 1
-			return 0.08
+			return 0.065
 		else 
 			return
 		end

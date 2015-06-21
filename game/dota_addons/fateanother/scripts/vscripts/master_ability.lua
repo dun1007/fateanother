@@ -274,6 +274,7 @@ function OnSeal2Start(keys)
 	-- Set cooldown
 	if ply.IsFirstSeal == true then
 		keys.ability:EndCooldown()
+		caster:SetMana(caster:GetMana()+1)  --refund 1 mana
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
@@ -782,8 +783,15 @@ end
 
 function OnPresenceDetectionThink(keys)
 	local caster = keys.caster
+	local hasSpecialPresenceDetection = false
 	if GameRules:GetGameTime() < RoundStartTime + 60 then 
-		return
+		if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired then 
+			hasSpecialPresenceDetection = true
+		elseif caster:GetName() == "npc_dota_hero_shadow_shaman" and caster:GetPlayerOwner().IsEyeForArtAcquired then
+			hasSpecialPresenceDetection = true
+		end
+
+		if hasSpecialPresenceDetection == false then return end
 	end
 
 	local oldEnemyTable = caster.PresenceTable
@@ -826,12 +834,22 @@ function OnPresenceDetectionThink(keys)
 			EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
 			-- Process Eye of Serenity attribute
 			if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
-				print("Eye of Serenity activated")
 				enemy.IsSerenityOnCooldown = true
 				Timers:CreateTimer(10.0, function() 
 					enemy.IsSerenityOnCooldown = false
 				end)					
 				FAEyeAttribute(caster, enemy)
+			end
+			-- Process Eye for Art attribute
+			if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster:GetPlayerOwner().IsEyeForArtAcquired == true then
+				local choice = math.random(1,3)
+				if choice == 1 then
+					Say(caster:GetPlayerOwner(), FindName(enemy:GetName()) .. ", dare to enter the demon's lair on your own?", true) 
+				elseif choice == 2 then
+					Say(caster:GetPlayerOwner(), "This presence...none other than " .. FindName(enemy:GetName()) .. "!", true) 
+				elseif choice == 3 then
+					Say(caster:GetPlayerOwner(), "Come forth, " .. FindName(enemy:GetName()) .. "...The fresh terror awaits you!", true) 
+				end
 			end
 		end
 	end

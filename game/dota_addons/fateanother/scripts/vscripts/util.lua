@@ -183,10 +183,15 @@ end
 
 -- Apply a modifier from item
 function giveUnitDataDrivenModifier(source, target, modifier,dur)
-    --source and target should be hscript-units. The same unit can be in both source and target)
-    local item = CreateItem( "item_apply_modifiers", nil, nil)
-    item:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
-    item:RemoveSelf()
+    --[[source and target should be hscript-units. The same unit can be in both source and target)
+    local dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), false, source, source, source:GetTeamNumber())
+    local dummyAbility = dummy:FindAbilityByName("dummy_unit_passive")
+    dummyAbility:SetLevel(1)
+
+    dummyAbility:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
+    dummy:RemoveSelf()]]
+    local dummyAbility = source:FindAbilityByName("presence_detection_passive")
+    dummyAbility:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
 end
 
 function ApplyAirborne(source, target, duration)
