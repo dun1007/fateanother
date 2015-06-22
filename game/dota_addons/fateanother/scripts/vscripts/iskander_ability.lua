@@ -683,34 +683,43 @@ function EndAOTK(caster)
 			player:StopSound("Iskander.AOTK_Ambient")
 		end
 	end]]
-	print("Process units")
     local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 3000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
     for i=1, #units do
-    	-- Disjoint all projectiles
-    	ProjectileManager:ProjectileDodge(units[i])
-    	-- If unit is Archer and UBW is active, deactive it as well
-		if units[i]:GetName() == "npc_dota_hero_ember_spirit" and units[i]:HasModifier("modifier_ubw_death_checker") then
-			units[i]:RemoveModifierByName("modifier_ubw_death_checker")
-		end
-    	local IsUnitGeneratedInAOTK = true
-    	if aotkTargets ~= nil then
-	    	for j=1, #aotkTargets do
-	    		if units[i] == aotkTargets[j] then
-	    			units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
-	    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
-	    			Timers:CreateTimer(0.1, function() 
-						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
-					end)
-	    			IsUnitGeneratedInAOTK = false
-	    			break 
+    	print("removing units in AOTK")
+    	if IsValidEntity(units[i]) then 
+	    	-- Disjoint all projectiles
+	    	ProjectileManager:ProjectileDodge(units[i])
+	    	-- If unit is Archer and UBW is active, deactive it as well
+			if units[i]:GetName() == "npc_dota_hero_ember_spirit" and units[i]:HasModifier("modifier_ubw_death_checker") then
+				units[i]:RemoveModifierByName("modifier_ubw_death_checker")
+			end
+	    	local IsUnitGeneratedInAOTK = true
+	    	if aotkTargets ~= nil then
+		    	for j=1, #aotkTargets do
+		    		if units[i] == aotkTargets[j] then
+		    			units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
+		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
+		    			Timers:CreateTimer(0.1, function() 
+							units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+						end)
+		    			IsUnitGeneratedInAOTK = false
+		    			break 
+		    		end
+		    	end 
+	    	end
+	    	if IsUnitGeneratedInAOTK then
+	    		diff = aotkCenter - units[i]:GetAbsOrigin()
+	    		if aotkCasterPos ~= nil then 
+	    			units[i]:SetAbsOrigin(aotkCasterPos - diff * 0.7)
 	    		end
-	    	end 
-    	end
-    	if IsUnitGeneratedInAOTK then
-    		diff = aotkCenter - units[i]:GetAbsOrigin()
-    		units[i]:SetAbsOrigin(aotkCasterPos - diff * 0.7)
-    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
-    	end
+	    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
+				Timers:CreateTimer(0.1, function() 
+					if not units[i]:IsNull() then
+						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+					end
+				end)
+	    	end
+	    end
     end
 
     aotkTargets = nil

@@ -4484,7 +4484,7 @@
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 			"particle"		"particles/custom/archer/archer_ubw_ring.vpcf"
 			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
-			"particle"		particles/units/heroes/hero_alchemist/alchemist_unstable_concoction_timer.vpcf
+			"model"			"models/items/skeleton_king/weapon_shattered/weapon_shattered.vmdl"
 		}
 		
 		"AbilityCastPoint"				"0.0"
@@ -4784,6 +4784,79 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
+				}
+			}
+		}
+	}
+
+	//=====================================
+	// Archer : Sword Barrage - Confine
+	//=====================================
+	"archer_5th_sword_barrage_confine"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"archer_5th_sword_barrage_confine"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"2.0"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"1500"
+		"AbilityCastRangeBuffer"		"0"
+		"AbilityCooldown"				"9.0"
+		"AbilityManaCost"				"200"
+		
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_dazzle/dazzle_weave_circle_trace.vpcf"
+			"particle"				"models/items/wraith_king/weapon_shattered/weapon_shattered.vmdl"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"				"200 300 400 500 600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"trap_duration"			"3.0"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_sword_barrage_confine"
+				"Target"			"TARGET"
+			}
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnUBWBarrageConfineStart"
+				"Damage"			"%damage"
+				"TrapDuration"		"%trap_duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_sword_barrage_confine"
+			{
+				"IsDebuff"					"true"
+				"Duration"					"%duration"
+				"EffectName"				"particles/units/heroes/hero_dazzle/dazzle_weave_circle_trace.vpcf"	
+				"EffectAttachType"			"follow_origin"
+				"Properties"
+				{
 				}
 			}
 		}
@@ -8407,6 +8480,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"2.0 2.5 3.0 3.5 4.0"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_tooltip"				"10"
+			}
 		}
 
 		"OnSpellStart"
@@ -8441,6 +8519,16 @@
 			"modifier_enkidu_hold"
 			{
 				"IsDebuff"		"1"
+	            "ThinkInterval"		"0.99"
+	            "OnIntervalThink"
+	         	{
+	         		"RunScript"
+	         		{
+	         			"ScriptFile"	"gilg_ability"
+	         			"Function"		"OnChainThink"
+	         			"Damage"		"%damage_tooltip"
+	         		}
+				}
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -10842,7 +10930,7 @@
 			}
 			"modifier_double_edge_slow"
 			{
-				"Duration"		"0.3"
+				"Duration"		"0.5"
 				"IsHidden"		"1"
 				"Properties"
 				{
@@ -11495,18 +11583,24 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"			"500 575 650 725 800"
+				"bonus_movespeed"		"0 5 10 15 20"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"50 60 70 80 90"
+				"damage"			"500 575 650 725 800"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"bonus_damage"			"50 60 70 80 90"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"duration"				"10"
 			}
+
 		}
 		
 		"OnSpellStart"
@@ -11532,6 +11626,15 @@
 
 		"Modifiers"
 		{
+			"modifier_arondite_passive"
+			{
+				"Passive"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
+				}				
+
+			}
 			"modifier_arondite"
 			{
 				"Duration"	"%duration"
@@ -17960,7 +18063,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -17994,7 +18097,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"10"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -18078,7 +18181,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -19049,7 +19152,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -20206,7 +20309,6 @@
 			"rb_sealdisabled"
 			{
 				"IsDebuff"		"1"
-				"IsHidden"		"1"
 			}
 			"jump_pause"
 			{
@@ -20415,6 +20517,7 @@
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"1"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		
 		
 		"OnSpellStart"

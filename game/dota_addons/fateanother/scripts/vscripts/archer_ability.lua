@@ -169,11 +169,33 @@ rhoTarget = nil
 
 function OnRhoStart(keys)
 	local target = keys.target
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	if ply.IsProjectionImproved then 
+		print("get knocked")
+		local knockBackUnits = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false )
+	 
+		local modifierKnockback =
+		{
+			center_x = target:GetAbsOrigin().x,
+			center_y = target:GetAbsOrigin().y,
+			center_z = target:GetAbsOrigin().z,
+			duration = 0.5,
+			knockback_duration = 0.5,
+			knockback_distance = 200,
+			knockback_height = 200,
+		}
+
+		for _,unit in pairs(knockBackUnits) do
+	--		print( "knock back unit: " .. unit:GetName() )
+			unit:AddNewModifier( unit, nil, "modifier_knockback", modifierKnockback );
+		end
+	end
 	rhoTarget = target 
 	target.rhoShieldAmount = keys.ShieldAmount
-	EmitGlobalSound("Archer.RhoAias" ) --[[Returns:void
-	Play named sound for all players
-	]]
+
+
+	EmitGlobalSound("Archer.RhoAias" ) 
 	
 	-- Attach particle for shield facing the forward vector
 	local rhoShieldParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_rhoaias_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
@@ -239,7 +261,7 @@ end
 function OnUBWLevelUp(keys)
 	local caster = keys.caster
 	caster:FindAbilityByName("archer_5th_sword_barrage"):SetLevel(keys.ability:GetLevel())
-	caster:FindAbilityByName("archer_5th_rule_breaker"):SetLevel(keys.ability:GetLevel())
+	caster:FindAbilityByName("archer_5th_sword_barrage_confine"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_nine_lives"):SetLevel(keys.ability:GetLevel())
 end
 
@@ -342,7 +364,7 @@ function OnUBWStart(keys)
 
     -- swap Archer's skillset with UBW ones
     caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
-    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
+    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
     -- DUN DUN DUN DUN
@@ -440,7 +462,7 @@ function EndUBW(caster)
 	end
 
     caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, true) 
-    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_rule_breaker", true, true) 
+    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
 	for i=1, #ubwdummies do
@@ -452,32 +474,39 @@ function EndUBW(caster)
     , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
     for i=1, #units do
-    	ProjectileManager:ProjectileDodge(units[i])
-   		if units[i]:GetName() == "npc_dota_hero_chen" and units[i]:HasModifier("modifier_army_of_the_king_death_checker") then
-   			units[i]:RemoveModifierByName("modifier_army_of_the_king_death_checker")
-   		end
-    	local IsUnitGeneratedInUBW = true
-    	if ubwTargets ~= nil then
-	    	for j=1, #ubwTargets do
-	    		if units[i] == ubwTargets[j] then
-	    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
-	    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
-	    			Timers:CreateTimer(0.1, function() 
-						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
-					end)
-	    			IsUnitGeneratedInUBW = false
-	    			break 
+    	print("removing units in UBW")
+    	if IsValidEntity(units[i]) then
+	    	ProjectileManager:ProjectileDodge(units[i])
+	   		if units[i]:GetName() == "npc_dota_hero_chen" and units[i]:HasModifier("modifier_army_of_the_king_death_checker") then
+	   			units[i]:RemoveModifierByName("modifier_army_of_the_king_death_checker")
+	   		end
+	    	local IsUnitGeneratedInUBW = true
+	    	if ubwTargets ~= nil then
+		    	for j=1, #ubwTargets do
+		    		if units[i] == ubwTargets[j] then
+		    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
+		    			Timers:CreateTimer(0.1, function() 
+							units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+						end)
+		    			IsUnitGeneratedInUBW = false
+		    			break 
+		    		end
+		    	end 
+	    	end
+	    	if IsUnitGeneratedInUBW then
+	    		diff = ubwCenter - units[i]:GetAbsOrigin()
+	    		if ubwCasterPos ~= nil then
+	    			units[i]:SetAbsOrigin(ubwCasterPos - diff)
 	    		end
+	    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
+				Timers:CreateTimer(0.1, function() 
+					if not units[i]:IsNull() then
+						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+					end
+				end)
 	    	end 
-    	end
-    	if IsUnitGeneratedInUBW then
-    		diff = ubwCenter - units[i]:GetAbsOrigin()
-    		units[i]:SetAbsOrigin(ubwCasterPos - diff)
-    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
-			Timers:CreateTimer(0.1, function() 
-				units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
-			end)
-    	end 
+	    end
     end
 
     ubwTargets = nil
@@ -717,6 +746,28 @@ end
 
 function OnBarrageCanceled(keys)
 	keys.caster:RemoveModifierByName("modifier_sword_barrage")
+end
+
+function OnUBWBarrageConfineStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	if ply.IsProjectionImproved then 
+		giveUnitDataDrivenModifier(caster, keys.target, "rb_sealdisabled", 2.0)
+	end
+	target:AddNewModifier(caster, target, "modifier_stunned", {duration = 0.1})
+	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	for i=1,8 do
+		local confineDummy = CreateUnitByName("ubw_sword_confine_dummy", Vector(target:GetAbsOrigin().x + math.cos(i*0.8) * 150, target:GetAbsOrigin().y + math.sin(i*0.8) * 150, -200)  , false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+		confineDummy:SetAbsOrigin(confineDummy:GetAbsOrigin() - Vector(0,0,-200)) 
+		confineDummy:SetForwardVector(Vector(0,0,-1))
+		Timers:CreateTimer(keys.TrapDuration, function()
+			if confineDummy:IsNull() == false then
+				confineDummy:RemoveSelf()
+			end
+		end)
+	end
+	target:EmitSound("FA.Quickdraw")
 end
 
 function OnUBWRBStart(keys)

@@ -275,6 +275,7 @@ function OnSeal2Start(keys)
 	if ply.IsFirstSeal == true then
 		keys.ability:EndCooldown()
 		caster:SetMana(caster:GetMana()+1)  --refund 1 mana
+		master2:SetMana(master2:GetMana() +1)
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
@@ -694,11 +695,11 @@ function OnAvariceAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return 
 	else 
-		ply.ShardAmount = ply.ShardAmount - 1
+		hero.ShardAmount = hero.ShardAmount - 1
 	end
 
 
@@ -730,11 +731,11 @@ function OnAMAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
-		ply.ShardAmount = ply.ShardAmount - 1
+		hero.ShardAmount = hero.ShardAmount - 1
 	end
 
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
@@ -745,11 +746,11 @@ function OnReplenishmentAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
-		ply.ShardAmount = ply.ShardAmount - 1
+		hero.ShardAmount = hero.ShardAmount - 1
 	end
 
 	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
@@ -760,11 +761,11 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	if ply.ShardAmount == 0 or ply.ShardAmount == nil then 
+	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
-		ply.ShardAmount = ply.ShardAmount - 1
+		hero.ShardAmount = hero.ShardAmount - 1
 	end
 
 

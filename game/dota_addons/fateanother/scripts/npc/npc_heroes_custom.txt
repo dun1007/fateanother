@@ -220,7 +220,7 @@
 		"Ability6"				"archer_5th_ubw"
 		"Ability7"				"archer_5th_arrow_rain"
 		"Ability8"				"archer_5th_sword_barrage"
-		"Ability9"				"archer_5th_rule_breaker"
+		"Ability9"				"archer_5th_sword_barrage_confine"
 		"Ability10"				"archer_5th_nine_lives"
 		"Ability11"				"archer_5th_hrunting"
 		"Ability12"				"archer_5th_overedge"

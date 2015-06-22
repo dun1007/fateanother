@@ -219,7 +219,7 @@ function Precache( context )
     PrecacheResource("model", "models/nero/nero.vmdl", context)
     PrecacheResource("model", "models/gawain/gawain.vmdl", context)
     PrecacheResource("model", "models/tamamo/tamamo.vmdl", context)
-    
+
 
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)
@@ -233,7 +233,6 @@ function Precache( context )
     PrecacheResource("model_folder", "models/heroes/windrunner", context)
     PrecacheResource("model_folder", "models/items/windrunner", context)
 
-    PrecacheResource("model", "models/heroes/legion_commander/legion_commander.vmdl", context)
   	print("precache complete")
 end
 
@@ -978,11 +977,12 @@ function FateGameMode:OnEntityKilled( keys )
 
     -- check if unit can receive a shard
     if killedUnit.DeathCount == 7 then
-      killedUnit.DeathCount = 0
       if killedUnit.ShardAmount == nil then 
         killedUnit.ShardAmount = 1
+        killedUnit.DeathCount = 0
       else
         killedUnit.ShardAmount = killedUnit.ShardAmount + 1
+        killedUnit.DeathCount = 0
       end
     end
     local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()

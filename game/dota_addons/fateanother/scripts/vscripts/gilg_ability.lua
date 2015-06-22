@@ -165,6 +165,12 @@ function OnChainStart(keys)
 	end
 end
 
+function OnChainThink(keys)
+	local caster = keys.caster
+	local target = keys.target
+	DoDamage(caster, target, target:GetHealth() * keys.Damage/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+end
+
 function OnChainBroken(keys)
 	local caster = keys.caster
 	if enkiduTarget ~= nil then enkiduTarget:RemoveModifierByName("modifier_enkidu_hold") end

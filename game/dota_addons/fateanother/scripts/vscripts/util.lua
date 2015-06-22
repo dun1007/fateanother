@@ -190,6 +190,9 @@ function giveUnitDataDrivenModifier(source, target, modifier,dur)
 
     dummyAbility:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
     dummy:RemoveSelf()]]
+    if not source:IsHero() then 
+        source = source:GetPlayerOwner():GetAssignedHero() 
+    end
     local dummyAbility = source:FindAbilityByName("presence_detection_passive")
     dummyAbility:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
 end

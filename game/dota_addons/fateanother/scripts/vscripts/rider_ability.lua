@@ -275,6 +275,7 @@ function OnBelleStart(keys)
 		
 		-- Crete particle
 		local belleImpactFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_1_impact.vpcf", PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( belleImpactFxIndex, 0, targetPoint)
 		ParticleManager:SetParticleControl( belleImpactFxIndex, 1, Vector( keys.Radius, keys.Radius, keys.Radius ) )
 		
 		Timers:CreateTimer( 1, function()
