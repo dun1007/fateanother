@@ -697,7 +697,9 @@ function EndAOTK(caster)
 	    	if aotkTargets ~= nil then
 		    	for j=1, #aotkTargets do
 		    		if units[i] == aotkTargets[j] then
-		    			units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
+		    			if ubwTargetLoc[j] ~= nil then
+		    				units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
+		    			end
 		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
 		    			Timers:CreateTimer(0.1, function() 
 							units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})

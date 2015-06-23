@@ -484,7 +484,9 @@ function EndUBW(caster)
 	    	if ubwTargets ~= nil then
 		    	for j=1, #ubwTargets do
 		    		if units[i] == ubwTargets[j] then
-		    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+		    			if ubwTargetLoc[j] ~= nil then
+			    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+			    		end
 		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
 		    			Timers:CreateTimer(0.1, function() 
 							units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})

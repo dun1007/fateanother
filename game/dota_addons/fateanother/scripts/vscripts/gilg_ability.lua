@@ -385,7 +385,7 @@ function OnEnumaStart(keys)
 				local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, dummy )
 				ParticleManager:SetParticleControl( tornadoFxIndex, 0, dummy:GetAbsOrigin() )
 				ParticleManager:SetParticleControl( tornadoFxIndex, 1, caster:GetForwardVector() * keys.Speed )
-				ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius, 0, 0 ) )
+				ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius+100, 0, 0 ) )
 				ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
 				
 				Timers:CreateTimer( 6.0, function()

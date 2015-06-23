@@ -360,7 +360,7 @@ function OnDexStart(keys)
 				)
 				
 				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
-				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
+				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width) )
 				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
 				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
 					
