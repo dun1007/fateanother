@@ -133,7 +133,7 @@ CannotReset = {
     "archer_5th_arrow_rain",
     "berserker_5th_madmans_roar",
     "false_assassin_quickdraw",
-    "false_assassin_illusory_wanderer",
+    "false_assassin_tsubame_mai",
     "true_assassin_combo",
     "gilgamesh_max_enuma_elish",
     "caster_5th_hecatic_graea_powered",

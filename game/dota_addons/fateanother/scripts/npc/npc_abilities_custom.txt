@@ -537,6 +537,7 @@
 			"particle"				"particles/custom/saber_excalibur.vpcf"
 			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
 			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			"particle"			"particles/units/heroes/hero_invoker/invoker_sun_strike_sparks.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -3150,7 +3151,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"length"					"2000"
+				"length"					"1800"
 			}
 			"04"
 			{
@@ -5060,7 +5061,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"0.0"
+		"AbilityCooldown"				"60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8766,7 +8767,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1700"
+		"AbilityCastRange"				"1600"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		

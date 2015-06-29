@@ -470,7 +470,7 @@ function OnTGStart(keys)
 
 
 	Timers:CreateTimer(0.5, function()  
-		if caster:IsAlive() then
+		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
@@ -486,7 +486,7 @@ function OnTGStart(keys)
 	return end)
 
 	Timers:CreateTimer(0.7, function()  
-		if caster:IsAlive() then
+		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
@@ -502,7 +502,7 @@ function OnTGStart(keys)
 	return end)
 
 	Timers:CreateTimer(0.9, function()  
-		if caster:IsAlive() then
+		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if IsSpellBlocked(keys.target) then return end -- Linken effect checker

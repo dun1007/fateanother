@@ -4,6 +4,7 @@ require('archer_ability')
 require('master_ability')
 require('xLib/xDialog')
 require('gille_ability')
+require('notifications')
 
 -- Load Stat collection (statcollection should be available from any script scope)
 require('lib.statcollection')
@@ -530,13 +531,13 @@ function FateGameMode:PlayerSay(keys)
       hero:ModifyGold(-tonumber(goldAmt), true , 0) 
       targetHero:ModifyGold(tonumber(goldAmt), true, 0)
 
-      GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , ply:GetTeam(), 0)
+      GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
     end
   end
 
   -- Asks team for gold
   if text == "-goldpls" then
-    GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , ply:GetTeam(), 0)
+    GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
   end
 end
 -- The overall game state has changed
@@ -590,7 +591,10 @@ function FateGameMode:OnNPCSpawned(keys)
         print((hero:GetPlayerID()+1) .." is a bot!") 
         self.vPlayerList[hero:GetPlayerID() + 1] = player
       end
-
+      
+      -- Set music off
+      player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
+      
       -- Create Command Seal master for hero
 	    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
 	    master:SetControllableByPlayer(hero:GetPlayerID(), true) 
@@ -603,6 +607,7 @@ function FateGameMode:OnNPCSpawned(keys)
       master:AddItem(CreateItem("item_master_transfer_items4", nil, nil))
       master:AddItem(CreateItem("item_master_transfer_items5", nil, nil))
       master:AddItem(CreateItem("item_master_transfer_items6", nil, nil))
+      MinimapEvent( hero:GetTeamNumber(), hero, master:GetAbsOrigin().x, master:GetAbsOrigin().y + 500, DOTA_MINIMAP_EVENT_HINT_LOCATION, 5 )
 
       -- Create attribute/stat master for hero
       master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*350,-7350,0), true, hero, hero, hero:GetTeamNumber())
@@ -611,6 +616,12 @@ function FateGameMode:OnNPCSpawned(keys)
       hero.MasterUnit2 = master2
       AddMasterAbility(master2, hero:GetName())
       LevelAllAbility(master2)
+      master2:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
+      master2:AddItem(CreateItem("item_master_transfer_items2", nil, nil))
+      master2:AddItem(CreateItem("item_master_transfer_items3", nil, nil))
+      master2:AddItem(CreateItem("item_master_transfer_items4", nil, nil))
+      master2:AddItem(CreateItem("item_master_transfer_items5", nil, nil))
+      master2:AddItem(CreateItem("item_master_transfer_items6", nil, nil))
 
       -- Create personal stash for hero
       masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
@@ -908,6 +919,9 @@ function FateGameMode:OnPlayerLevelUp(keys)
   hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
   hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 4)
   hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 4)
+  Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>4 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
+
+  MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
 end
 
 -- A player last hit a creep, a tower, or a hero
@@ -1211,8 +1225,10 @@ function FateGameMode:InitializeRound()
         hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+10) 
         hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
         hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+10)
+        MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
       end)
-      GameRules:SendCustomMessage("10 minutes passed. The Holy Grail's blessings restore all Master to full health and grant 10 Mana to them.", 0, 0)
+      Notifications:TopToAll("<font color='#58ACFA'>10 minutes passed.</font> The Holy Grail's blessing <font color='#58ACFA'>restore all Master to full health and grant 10 mana to them.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+      
       return 600
     end})
 	end

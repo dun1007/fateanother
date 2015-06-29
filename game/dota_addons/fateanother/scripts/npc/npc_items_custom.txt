@@ -558,7 +558,7 @@
 	    "ItemInitialCharges" "2"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
-	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
+	   	"ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"40"

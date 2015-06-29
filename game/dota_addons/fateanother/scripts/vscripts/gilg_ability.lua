@@ -320,14 +320,13 @@ function OnEnumaStart(keys)
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
 	-- Create casting particle
 	local chargeFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-
 	local enuma = 
 	{
 		Ability = keys.ability,
         EffectName = "",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = caster:GetAbsOrigin(),
-        fDistance = keys.Range,
+        fDistance = keys.Range - keys.EndRadius, -- We need this to take end radius of projectile into account
         fStartRadius = keys.StartRadius,
         fEndRadius = keys.EndRadius,
         Source = caster,
@@ -430,7 +429,7 @@ function OnMaxEnumaStart(keys)
         EffectName = "",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = nil,
-        fDistance = keys.Range,
+        fDistance = keys.Range - keys.EndRadius, -- We need this to take end radius of projectile into account
         fStartRadius = keys.StartRadius,
         fEndRadius = keys.EndRadius,
         Source = caster,

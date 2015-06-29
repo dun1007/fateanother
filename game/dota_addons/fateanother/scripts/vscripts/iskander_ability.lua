@@ -697,7 +697,7 @@ function EndAOTK(caster)
 	    	if aotkTargets ~= nil then
 		    	for j=1, #aotkTargets do
 		    		if units[i] == aotkTargets[j] then
-		    			if ubwTargetLoc[j] ~= nil then
+		    			if aotkTargets[j] ~= nil then
 		    				units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
 		    			end
 		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)

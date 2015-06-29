@@ -318,7 +318,7 @@ function OnNukeStart(keys)
     }
     FireGameEvent("show_center_message",nukemsg)
 
-    local f16 = CreateUnitByName("f16_dummy", Vector(20000, 20000, 0), true, nil, nil, caster:GetTeamNumber())
+    local f16 = CreateUnitByName("f16_dummy", Vector(0, 0, 0), true, nil, nil, caster:GetTeamNumber())
     local visiondummy = CreateUnitByName("sight_dummy_unit", targetPoint, false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
     visiondummy:SetDayTimeVisionRange(1500)
     visiondummy:SetNightTimeVisionRange(1500)

@@ -308,6 +308,8 @@ end]]
 function OnDexStart(keys)
 	local caster = keys.caster
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.75)
+	keys.Range = keys.Range - keys.Width -- We need this to take end radius of projectile into account
+	print(keys.Range)
 	EmitGlobalSound("Saber.Caliburn")
 	local dex = 
 	{

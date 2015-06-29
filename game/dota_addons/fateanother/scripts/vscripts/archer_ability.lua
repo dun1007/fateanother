@@ -739,7 +739,7 @@ function OnUBWBarrageStart(keys)
 			)
 			
 		    barrageCount = barrageCount + 1
-			return 0.065
+			return 0.055
 		else 
 			return
 		end

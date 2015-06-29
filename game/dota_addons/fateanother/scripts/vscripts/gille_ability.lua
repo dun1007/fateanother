@@ -189,7 +189,7 @@ function OnECStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 
-	local allytargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	local allytargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius + 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(allytargets) do
 		if v:GetUnitName() == "gille_gigantic_horror" and caster.IsComboReady then
 			OnGilleComboStart(keys)

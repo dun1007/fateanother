@@ -41,9 +41,9 @@ function TransferItem(keys)
 			end
 		end]]
 		local itemName = stash_item:GetName()
-		hero:RemoveItem(stash_item) 
+		stash_item:RemoveSelf()
 		--Timers:CreateTimer( 0.033, function()
-		   	hero:AddItem(CreateItem(itemName, hero, hero)) 
+		hero:AddItem(CreateItem(itemName, hero, hero)) 
 		   	--return 
 		--end)
 

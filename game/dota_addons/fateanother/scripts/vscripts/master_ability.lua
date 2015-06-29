@@ -487,7 +487,8 @@ function RemoveAllAbility(caster)
 	local abilityList = {}
 	for i=0,20 do
 		if caster:GetAbilityByIndex(i) ~= nil then 
-			abilityList[i+1] = caster:GetAbilityByIndex(i):GetName()
+			local abil = caster:GetAbilityByIndex(i):GetName()
+			abilityList[i+1] = abil
 			caster:RemoveAbility(caster:GetAbilityByIndex(i):GetName())
 		else 
 			break
@@ -824,6 +825,7 @@ function OnPresenceDetectionThink(keys)
 
 		if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
 			--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+			MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
 			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
 			local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
 
@@ -890,7 +892,8 @@ function PresenceDetection(keys)
 				end
 
 				if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
-					--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+					MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+					print("pinged")
 					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
 					local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
 

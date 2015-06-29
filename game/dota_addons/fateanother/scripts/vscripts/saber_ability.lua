@@ -160,6 +160,7 @@ function OnExcaliburStart(keys)
 	print("Excalibur")
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	keys.Range = keys.Range - keys.EndRadius -- We need this to take end radius of projectile into account
 	
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.0)
 	local excal = 
@@ -219,6 +220,7 @@ function OnExcaliburStart(keys)
 				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
 				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
 
+
 				Timers:CreateTimer( 2.5, function()
 						ParticleManager:DestroyParticle( excalFxIndex, false )
 						ParticleManager:ReleaseParticleIndex( excalFxIndex )
@@ -249,6 +251,7 @@ function OnMaxStart(keys)
 	local targetPoint = keys.target_points[1]
 	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
+	keys.Range = keys.Range - keys.Width -- We need this to take end radius of projectile into account
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
