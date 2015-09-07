@@ -392,8 +392,10 @@ end
 
 function OnDexHit(keys)
 	local caster = keys.caster
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if caster.IsDarklightAcquired then keys.Damage = keys.Damage + 300 end
+	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*1.3 end
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 

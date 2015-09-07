@@ -25,6 +25,6 @@
 	"misc"
 	{
 		"item"		"item_berserk_scroll"
-		"item"		"item_mass_teleport_scroll"
+		//"item"		"item_mass_teleport_scroll"
 	}
 }

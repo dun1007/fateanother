@@ -336,6 +336,7 @@ function OnSummonSkeleton(keys)
 
 	-- Set skeletal stat according to parameters
 	spooky:SetMaxHealth(keys.Health)
+	spooky:SetBaseMaxHealth(keys.Health)
 	spooky:SetHealth(keys.Health)
 	spooky:SetBaseDamageMax(keys.Damage)
 	spooky:SetBaseDamageMin(keys.Damage)
@@ -394,6 +395,7 @@ function OnSummonDragon(keys)
 	drag:AddNewModifier(caster, nil, "modifier_kill", {duration = 60})
 
 	drag:SetMaxHealth(keys.Health)
+	drag:SetBaseMaxHealth(keys.Health)
 	drag:SetHealth(keys.Health)
 	drag:SetBaseDamageMax(keys.Damage)
 	drag:SetBaseDamageMin(keys.Damage)

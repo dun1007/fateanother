@@ -98,9 +98,17 @@ end
 function Disengage(keys)
 	local caster = keys.caster
 	local backward = caster:GetForwardVector() * keys.Distance
+	local newLoc = caster:GetAbsOrigin() - backward
+	local diff = newLoc - caster:GetAbsOrigin()
+
 	HardCleanse(caster)
+	local i = 1
+	while GridNav:IsBlocked(newLoc) or not GridNav:IsTraversable(newLoc) or i == 100 do
+		i = i+1
+		newLoc = caster:GetAbsOrigin() + diff:Normalized() * (keys.Distance - i*10)
+	end
 	Timers:CreateTimer(0.033, function() 
-		caster:SetAbsOrigin(caster:GetAbsOrigin() - backward)
+		caster:SetAbsOrigin(newLoc)
 		ProjectileManager:ProjectileDodge(caster) 
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 	end)

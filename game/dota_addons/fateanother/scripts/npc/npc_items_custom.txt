@@ -752,12 +752,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"duration"				"105"
+				"duration"				"80"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"vision_range"			"1600"
+				"vision_range"			"1250"
 			}
 		}
 		"OnSpellStart"
@@ -768,6 +768,8 @@
 				"ScriptFile"	"items"
 				"Function"		"WardFam"
 				"Target"		"POINT"
+				"Duration"		"%duration"
+				"Radius"		"%vision_range"
 			}
 
 			"FireSound"
@@ -775,6 +777,21 @@
 				"EffectName"	"DOTA_Item.ObserverWard.Activate"
 				"Target"		"CASTER"
 			}	
+		}
+		"Modifiers"
+		{
+			"modifier_ward_death_checker"
+			{
+				"IsPassive"			"1"
+				"OnDeath"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"	"items"
+	    				"Function"		"OnWardDeath"
+	    			}
+	    		}
+			}
 		}
 	}
 
@@ -873,7 +890,7 @@
 	    "ItemCost"     "2000"
 	    "ItemKillable" "1" 
 	    "ItemSellable" "1"
-	    "ItemPurchasable" "1"
+	    "ItemPurchasable" "0"
 	    "ItemDroppable" "1"
 	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
 
@@ -1267,8 +1284,7 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-	    	//"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
-	    	//"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+	    	"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
 	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
 
@@ -1292,7 +1308,7 @@
 	    	"modifier_a_scroll"
 	    	{
 	    		"Duration"		"10.0"
-				//"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -1344,8 +1360,7 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-	    	//"particle"			"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
-	    	//"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+	    	"particle"			"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
 	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
 
@@ -1373,7 +1388,7 @@
 	    	"modifier_a_plus_mr"
 	    	{
 	    		"Duration"		"10.0"
-				//"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -1438,9 +1453,9 @@
 
 		"precache"
 		{
-			//"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
 			//"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
-			//"particle"	"particles/generic_gameplay/generic_purge.vpcf"
+			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 
@@ -1483,8 +1498,8 @@
 	    {
 	    	"modifier_purge"
 	    	{
-	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				//"EffectAttachType"	"follow_origin"
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"1.0"
 	    		"IsDebuff"			"1"
 	    		"States"
@@ -1494,8 +1509,8 @@
 	    	}
 	    	"modifier_slow_tier1"
 	    	{
-	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				//"EffectAttachType"	"follow_origin"
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"2.5"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1505,8 +1520,8 @@
 	    	}
 	    	"modifier_slow_tier2"
 	    	{
-	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				//"EffectAttachType"	"follow_origin"	
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"	
 	    		"Duration"			"4.0"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1564,9 +1579,9 @@
 		"AbilityCastRange"				"1000"
 		"precache"
 		{
-			//"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
 			//"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
-			//"particle"	"particles/generic_gameplay/generic_purge.vpcf"
+			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 
@@ -1609,8 +1624,8 @@
 	    {
 	    	"modifier_purge"
 	    	{
-	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				//"EffectAttachType"	"follow_origin"
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"1.0"
 	    		"IsDebuff"			"1"
 	    		"States"
@@ -1620,8 +1635,8 @@
 	    	}
 	    	"modifier_slow_tier1"
 	    	{
-	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				//"EffectAttachType"	"follow_origin"
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
 	    		"Duration"			"2.5"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1631,8 +1646,8 @@
 	    	}
 	    	"modifier_slow_tier2"
 	    	{
-	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				//"EffectAttachType"	"follow_origin"	
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"	
 	    		"Duration"			"4.0"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -2277,7 +2292,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movespeed"			"200"
+				"movespeed"			"150"
 			}	
 			"01"
 			{

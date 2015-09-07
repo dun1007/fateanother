@@ -279,8 +279,15 @@ end
 -- Starts casting UBW
 function OnUBWCastStart(keys)
 	local caster = keys.caster
+	if caster:GetAbsOrigin().y < -3500 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Already Within Reality Marble" } )
+		caster:SetMana(caster:GetMana() + 800)
+		keys.ability:EndCooldown()
+		return
+	end 
 	EmitGlobalSound("Archer.UBW")
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
+	keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_ubw_freeze",{})
 	Timers:CreateTimer({
 		endTime = 2,
 		callback = function()

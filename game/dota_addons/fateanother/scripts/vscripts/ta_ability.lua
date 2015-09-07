@@ -33,9 +33,9 @@ function OnDirkHit(keys)
 		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
 	end
 	if caster.IsWeakeningVenomAcquired then
-		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility(), DAMAGE_TYPE_PURE, 0, keys.ability, false)
+		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility()*2, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 	else
-		DoDamage(keys.caster, keys.target, keys.Damage + keys.caster:GetAgility() , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	end
 end
 
@@ -129,7 +129,7 @@ function OnDIStart(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	
 	Timers:CreateTimer(function()
-		if DICount > 8.0 then return end 
+		if DICount > 8.0 or not caster:IsAlive() then return end 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 650
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
@@ -226,6 +226,33 @@ end
 function OnAmbushStart(keys)
 	local caster = keys.caster
 	--caster:AddNewModifier(caster, caster, "modifier_invisible", {Duration = 12.0})
+	if caster.IsPCImproved then
+		local team = 0
+		if caster:GetTeam() == DOTA_TEAM_GOODGUYS then 
+			team = DOTA_TEAM_BADGUYS 
+		else 
+			team = DOTA_TEAM_GOODGUYS
+		end
+		--local units = FindUnitsInRadius(enemyTeamNumber, caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+		local units = FindUnitsInRadius(team, caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+		for i=1, #units do
+			print(units[i]:GetUnitName())
+			if units[i]:GetUnitName() == "ward_familiar" then
+				local visiondummy = CreateUnitByName("sight_dummy_unit", units[i]:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+				visiondummy:SetDayTimeVisionRange(100)
+				visiondummy:SetNightTimeVisionRange(100)
+				visiondummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 100}) 
+				local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+				unseen:SetLevel(1)
+				Timers:CreateTimer(5.0, function()
+					if IsValidEntity(visiondummy) and not visiondummy:IsNull() then
+						visiondummy:RemoveSelf()
+					end 
+				end)
+				return
+			end
+		end 
+	end
 	TACheckCombo(caster, keys.ability)
 end
 

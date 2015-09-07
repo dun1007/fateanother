@@ -148,9 +148,9 @@ function TPScroll(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
-	if caster:GetAbsOrigin().y < -3500 then 
+	if caster:GetAbsOrigin().y < -3500 or targetPoint.y < -3500 then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Location" } )
-		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))		
+		--caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))		
 		return
 	end
 
@@ -219,10 +219,15 @@ end
 function WardFam(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
-	local ward = CreateUnitByName("ward_familiar", targetPoint, true, caster, caster, caster:GetTeamNumber())
-	ward:AddNewModifier(caster, caster, "modifier_invisible", {}) 
-	ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105}) 
-    ward:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
+	caster.ward = CreateUnitByName("ward_familiar", targetPoint, true, caster, caster, caster:GetTeamNumber())
+	caster.ward:AddNewModifier(caster, caster, "modifier_invisible", {}) 
+	caster.ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = keys.Radius, duration = keys.Duration}) 
+    caster.ward:AddNewModifier(caster, caster, "modifier_kill", {duration = keys.Duration})
+end
+
+function OnWardDeath(keys)
+	local caster = keys.caster
+	--caster.ward:ForceKill(true)
 end
 
 function ScoutFam(keys)
@@ -335,7 +340,7 @@ function Blink(keys)
 	else  
 		newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * 1000
 		local i = 1
-		while GridNav:IsBlocked(newTargetPoint) or not GridNav:IsTraversable(newTargetPoint) do
+		while GridNav:IsBlocked(newTargetPoint) or not GridNav:IsTraversable(newTargetPoint) or i == 100 do
 			i = i+1
 			newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * (1000 - i*10)
 		end

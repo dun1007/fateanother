@@ -4863,11 +4863,6 @@
 				"Function"		"OnUBWCastStart"
 				"Radius"		"%radius"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_ubw_freeze"
-				"Target"		"CASTER"
-			}
 		}
 		"OnUpgrade"
 		{
@@ -4903,6 +4898,7 @@
 			"modifier_ubw_freeze"
 			{
 				"Duration"		"2.0"
+				"IsHidden"		"1"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 				"Duration"				"2.0"
 								
@@ -6552,7 +6548,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"critical_rate"			"15 22"
+				"critical_rate"			"15 17"
 			}
 			"01"
 			{
@@ -8582,8 +8578,8 @@
 		}
 		
 		"AbilityCastPoint"				"1.0"
-		"AbilityCastRange"				"500"
-		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastRange"				"600"
+		"AbilityCastRangeBuffer"		"250"
 		"AbilityCooldown"				"36"
 		"AbilityDamage"					"700 900 1100 1300 1500"
 		"AbilityManaCost"				"800"
@@ -8728,7 +8724,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"19"
+		"AbilityManaCost"				"17"
 
 		"precache"
 		{
@@ -8736,6 +8732,16 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"search_radius"			"2500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"reveal_duration"			"5.0"
+			}
 		}
 		
 		"OnSpellStart"
@@ -8770,6 +8776,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"chance"			"15"
+			}
 		}
 		
 		"OnSpellStart"
@@ -8804,6 +8815,26 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"agi_ratio"			"2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"str_reduction_dirk"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"baseattack_slow"			"5.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"baseattack_str_reduction"			"1"
+			}
 		}
 		
 		"OnSpellStart"
@@ -8838,6 +8869,21 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"zab_bonus_damage"			"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"snatch_bonus_damage"			"300"
+			}
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"combo_bonus_damage"			"100"
+			}
 		}
 		
 		"OnSpellStart"
@@ -9040,6 +9086,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gilgamesh_enkidu"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
@@ -9140,11 +9187,12 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gilgamesh_gram"
 		
 		"AbilityCastPoint"				"0.8"
 		"AbilityCastRange"				"800"
-		"AbilityCastRangeBuffer"		"200"
+		"AbilityCastRangeBuffer"		"600"
 		"AbilityCooldown"				"17"
 		"AbilityManaCost"				"200"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
@@ -9163,10 +9211,15 @@
 		{
 			"01"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"			"0.8"
+			}
+			"02"
+			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"400 480 560 640 720"
 			}
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"1.0"
@@ -9225,6 +9278,7 @@
 			"particle"		"particles/custom/gilgamesh/gilgamesh_gob_model.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_gob.vpcf"
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_juggernaut.vsndevts"
 		}
 		
 		// Casting
@@ -9498,25 +9552,30 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
+				"cast_delay"			"3.75"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
 				"damage"			"3500"
 			}
 			
-			"02"
+			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"start_radius"		"250"
 			}
-			"03"
+			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"end_radius"		"500"
 			}
-			"04"
+			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"1700"
 			}
-			"05"
+			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"speed"				"750"
@@ -9594,6 +9653,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bounty_bonus"				"50"
+			}
 		}
 		
 		"OnSpellStart"
@@ -9615,6 +9679,7 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityTextureName"			"gilgamesh_attribute_power_of_sumer"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -9627,6 +9692,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"arrow_damage"				"500"
+			}
 		}
 		
 		"OnSpellStart"
@@ -9661,6 +9731,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"barrage_radius"				"500"
+			}
 		}
 		
 		"OnSpellStart"
@@ -9695,6 +9770,26 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"enuma_range"				"150"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"enuma_radius"				"250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_enuma_damage"				"3500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_enuma_radius"			"500"
+			}
 		}
 		
 		"OnSpellStart"
@@ -9714,7 +9809,9 @@
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"3"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_5th_item_construction"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
@@ -9730,6 +9827,17 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"b_a_s_chance"			"45 30 25"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"b_a_s_chance_near_workshop"			"33 33 33"
+			}
+
 		}
 		
 		"OnSpellStart"
@@ -9785,6 +9893,11 @@
 		
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"workshop_health"			"1000"
+			}
 		}
 		
 		"OnSpellStart"
@@ -9908,6 +10021,11 @@
 			{
 				"var_type"					"FIELD_FLOAT"
 				"tick_interval"				"0.25"
+			}
+			"05"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"int_ratio"				"0.8"
 			}
 		}
 
@@ -15251,8 +15369,8 @@
 			}
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"health"			""
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"6.0"
 			}
 		}
 
@@ -15272,6 +15390,7 @@
 			 	"Function"		"OnPhalanxStart"
 			 	"Target"		"POINT"
 			 	"Damage"		"%damage"
+			 	"Duration"		"%duration"
 			}
 		}
 		
@@ -15440,11 +15559,11 @@
 			}
 			"modifier_gordius_wheel_thunder_slow"
 			{
-				"Duration"		"1.5"
+				"Duration"		"0.35"
 				"IsDebuff"		"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-20"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-99"
 				}
 			}
 		}
@@ -15675,11 +15794,6 @@
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnAOTKCastStart"
 				"Radius"			"%radius"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_army_of_the_king_freeze"
-				"Target"			"CASTER"
 			}
 		}
 		"OnUpgrade"
@@ -16106,7 +16220,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
+		"AbilityManaCost"				"150"
 		
 		"AbilitySpecial"
 		{
@@ -16309,7 +16423,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"200"
+		"AbilityManaCost"				"150"
 		
 		"AbilitySpecial"
 		{
@@ -16661,7 +16775,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"19"
 
 		"precache"
 		{
@@ -16730,7 +16844,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"19"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -17455,7 +17569,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_regen"			"5 6 7 8 9 10 11 12 13"
+				"health_regen"			"3 3 4 4 5 5 6 6"
 			}			
 		}
 
@@ -18480,7 +18594,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"20 30 40 50 60"
+				"bonus_agi"				"17 24 31 38 45"
 			}
 			"02"
 			{
@@ -18490,7 +18604,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"cleave_damage"		"60"
+				"cleave_damage"		"30"
 			}
 			"04"
 			{
@@ -21140,6 +21254,10 @@
 				"IsHidden"                        "1"    
 				"States"
 				{
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}

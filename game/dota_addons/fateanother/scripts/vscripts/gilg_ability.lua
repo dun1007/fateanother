@@ -40,7 +40,11 @@ function OnBarrageStart(keys)
 				-- Damage
 				local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 				for k,v in pairs(targets) do
-					DoDamage(caster, v, dot, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+					if v:GetUnitName() == "gille_gigantic_horror" then  
+						DoDamage(caster, v, dot*2.5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+					else 
+						DoDamage(caster, v, dot, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+					end
 				end
 				
 				-- Particles on impact
@@ -100,7 +104,11 @@ function OnChainStart(keys)
 	    	if rainCount == 15 then return end
 	       	local targets = FindUnitsInRadius(caster:GetTeam(), targetloc, nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	        for k,v in pairs(targets) do
-	        	DoDamage(caster, v, 25, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				if v:GetUnitName() == "gille_gigantic_horror" then  
+					DoDamage(caster, v, 25*2.5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				else 
+					DoDamage(caster, v, 25, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				end
 			end
 			-- Create sword particles
 			-- Main variables
@@ -283,6 +291,9 @@ end
 
 
 function OnGOBHit(keys)
+	local target = keys.target
+	local caster = keys.caster
+	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*2.5 end
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, keys.target)
 	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin())
@@ -376,7 +387,7 @@ function OnEnumaStart(keys)
 				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 				Timers:CreateTimer( function()
-						if dummy then
+						if IsValidEntity(dummy) and not dummy:IsNull() then
 							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 							dummy:SetAbsOrigin( newLoc )
 							return 0.03
@@ -410,6 +421,9 @@ function OnEnumaStart(keys)
 end
 
 function OnEnumaHit(keys)
+	local caster = keys.caster
+	local target = keys.target
+	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*1.3 end
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -476,7 +490,7 @@ function OnMaxEnumaStart(keys)
 				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 				Timers:CreateTimer( function()
-						if dummy then
+						if IsValidEntity(dummy) and not dummy:IsNull() then
 							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
 							dummy:SetAbsOrigin( newLoc )
 							return 0.03
