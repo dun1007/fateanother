@@ -9,7 +9,7 @@ function OnIRStart(keys)
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		target:EmitSound("Hero_Omniknight.Purification")
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_invigorating_ray_ally", {})
-		if ply.IsSunlightAcquired then
+		if caster.IsSunlightAcquired then
 			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_invigorating_ray_armor_buff", {})
 		end
 	else
@@ -19,6 +19,10 @@ function OnIRStart(keys)
 	end
 	local lightFx1 = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
 	ParticleManager:SetParticleControl( lightFx1, 0, target:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( lightFx1, false )
+		ParticleManager:ReleaseParticleIndex( lightFx1 )
+	end)
 end
 
 function OnIRTickAlly(keys)
@@ -26,7 +30,7 @@ function OnIRTickAlly(keys)
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 	target:SetHealth(target:GetHealth() + keys.Damage/5)
-	if ply.IsSunlightAcquired then
+	if caster.IsSunlightAcquired then
 		target:SetMana(target:GetMana() + keys.Damage/5)
 	end
 end
@@ -35,7 +39,7 @@ function OnIRTickEnemy(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
-	if ply.IsEclipseAcquired then 
+	if caster.IsEclipseAcquired then 
 		damage = keys.Damage/5
 	else
 		damage = keys.Damage/5 * 0.66
@@ -59,6 +63,10 @@ function OnDevoteStart(keys)
 	caster:EmitSound("Hero_EmberSpirit.FireRemnant.Cast")
 	local lightFx1 = ParticleManager:CreateParticle("particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	ParticleManager:SetParticleControl( lightFx1, 0, caster:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( lightFx1, false )
+		ParticleManager:ReleaseParticleIndex( lightFx1 )
+	end)
 end
 
 function OnDevoteHit(keys)
@@ -71,7 +79,7 @@ function OnDevoteHit(keys)
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		-- process team effect
 		target:SetHealth(target:GetHealth() + keys.Damage + caster:GetAttackDamage())
-		if ply.IsSunlightAcquired then
+		if caster.IsSunlightAcquired then
 			HardCleanse(target)
 			for i=0, 15 do 
 				local ability = target:GetAbilityByIndex(i)
@@ -90,7 +98,7 @@ function OnDevoteHit(keys)
 		target:AddNewModifier(caster, caster, "modifier_stunned", {Duration = 0.1})
 	end
 
-	if ply.IsEclipseAcquired then
+	if caster.IsEclipseAcquired then
 		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_blade_of_the_devoted_eclispe",{})
 		caster.CurrentDevoteDamage = keys.Damage/2
 	end
@@ -100,6 +108,12 @@ function OnDevoteHit(keys)
 	ParticleManager:SetParticleControl( lightFx1, 0, target:GetAbsOrigin())
 	local flameFx1 = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
 	ParticleManager:SetParticleControl( flameFx1, 0, target:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( lightFx1, false )
+		ParticleManager:ReleaseParticleIndex( lightFx1 )
+		ParticleManager:DestroyParticle( flameFx1, false )
+		ParticleManager:ReleaseParticleIndex( flameFx1 )
+	end)
 end
 
 function OnDevoteConsecutiveHit(keys)
@@ -115,6 +129,12 @@ function OnDevoteConsecutiveHit(keys)
 	ParticleManager:SetParticleControl( lightFx1, 0, target:GetAbsOrigin())
 	local flameFx1 = ParticleManager:CreateParticle("particles/units/heroes/hero_phoenix/phoenix_fire_spirit_ground.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
 	ParticleManager:SetParticleControl( flameFx1, 0, target:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( lightFx1, false )
+		ParticleManager:ReleaseParticleIndex( lightFx1 )
+		ParticleManager:DestroyParticle( flameFx1, false )
+		ParticleManager:ReleaseParticleIndex( flameFx1 )
+	end)
 end
 
 function OnGalatineStart(keys)
@@ -131,7 +151,7 @@ function OnGalatineStart(keys)
 
 	caster.IsGalatineActive = true
 
-	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 1.75)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.75)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_anim",{})
 	EmitGlobalSound("Gawain.Galatine")
 
@@ -168,7 +188,7 @@ function OnGalatineStart(keys)
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
 				v:SetHealth(v:GetHealth() + keys.Damage * 66/100)
-				if ply.IsSunlightAcquired then
+				if caster.IsSunlightAcquired then
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
 						if healTimer > 3 then return end
@@ -183,7 +203,7 @@ function OnGalatineStart(keys)
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-				if ply.IsEclipseAcquired then
+				if caster.IsEclipseAcquired then
 					local multiplier = (keys.Radius - (galatineDummy:GetAbsOrigin() - v:GetAbsOrigin()):Length2D())/keys.Radius
 					DoDamage(caster, v, keys.Damage/2 * multiplier , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				end
@@ -202,6 +222,13 @@ function OnGalatineStart(keys)
 			ParticleManager:ReleaseParticleIndex( flameFx1 )
 			ParticleManager:DestroyParticle( castFx1, false )
 			ParticleManager:ReleaseParticleIndex( castFx1 )
+
+			Timers:CreateTimer( 2.0, function()
+				ParticleManager:DestroyParticle( explodeFx1, false )
+				ParticleManager:ReleaseParticleIndex( explodeFx1 )
+				ParticleManager:DestroyParticle( explodeFx2, false )
+				ParticleManager:ReleaseParticleIndex( explodeFx2 )
+			end)
 			return
 		end
 	end)
@@ -227,7 +254,7 @@ function OnEmbraceStart(keys)
 		local currentHealth = target:GetMaxHealth() - target:GetHealth()
 		target:SetHealth(target:GetHealth() + currentHealth/2)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_ally",{})
-		if ply.IsSunlightAcquired then
+		if caster.IsSunlightAcquired then
 			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_sunlight_bonus",{})
 		end
 	else
@@ -235,7 +262,7 @@ function OnEmbraceStart(keys)
 		--DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 		if IsSpellBlocked(keys.target) then return end
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_enemy",{})
-		if ply.IsEclipseAcquired then
+		if caster.IsEclipseAcquired then
 			target:AddNewModifier(caster, caster, "modifier_stunned", {Duration = 1.5})
 		end
 	end
@@ -283,11 +310,20 @@ function OnSupernovaStart(keys)
 	caster.IsComboActive = true
 	caster.SunTable = {}
 
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
 	Timers:CreateTimer(4.0, function()
 		if target:IsAlive() then
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle, 1, Vector(400, 400, 400))
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 			EmitGlobalSound("Hero_Wisp.Relocate")
 		end
 	end)
@@ -296,6 +332,10 @@ function OnSupernovaStart(keys)
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle, 1, Vector(550, 550, 550))
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 		end
 	end)
 	Timers:CreateTimer(6.0, function()
@@ -303,6 +343,10 @@ function OnSupernovaStart(keys)
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle, 1, Vector(700, 700, 700))
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 		end
 	end)
 	Timers:CreateTimer(7.0, function()
@@ -310,6 +354,10 @@ function OnSupernovaStart(keys)
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle, 1, Vector(850, 850, 850))
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 		end
 	end) 
 	Timers:CreateTimer(8.0, function()
@@ -317,6 +365,10 @@ function OnSupernovaStart(keys)
 			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 			ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 			ParticleManager:SetParticleControl(particle, 1, Vector(1000, 1000, 1000))
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 		end
 	end) 
 	target:EmitSound("Hero_Enigma.Black_Hole")
@@ -362,7 +414,13 @@ function OnSupernovaEnd(keys)
 
 	local lightFx1 = ParticleManager:CreateParticle("particles/custom/gawain/gawain_supernova_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
 	ParticleManager:SetParticleControl( lightFx1, 0, target:GetAbsOrigin())
-	ParticleManager:CreateParticle("particles/custom/screen_yellow_splash_gawain.vpcf", PATTACH_EYES_FOLLOW, caster)
+	local splashFx = ParticleManager:CreateParticle("particles/custom/screen_yellow_splash_gawain.vpcf", PATTACH_EYES_FOLLOW, caster)
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( lightFx1, false )
+		ParticleManager:ReleaseParticleIndex( lightFx1 )
+		ParticleManager:DestroyParticle( splashFx, false )
+		ParticleManager:ReleaseParticleIndex( splashFx )
+	end)
 	EmitGlobalSound("Hero_Phoenix.SuperNova.Explode")
 	StopSoundEvent("Hero_Enigma.Black_Hole", target)
 end
@@ -373,17 +431,17 @@ function GenerateArtificialSun(caster, location)
 	local radius = 666
 	local artSun = CreateUnitByName("gawain_artificial_sun", location, true, nil, nil, caster:GetTeamNumber())
 	caster:FindAbilityByName("gawain_solar_embodiment"):ApplyDataDrivenModifier(caster, artSun, "modifier_artificial_sun_aura", {})
-	if ply.IsDawnAcquired then
+	if caster.IsDawnAcquired then
 		radius = 999
 		artSun:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 333}) 
 	end
 	artSun:SetDayTimeVisionRange(radius)
 	artSun:SetNightTimeVisionRange(radius)
-
+	artSun:AddNewModifier(caster, caster, "modifier_kill", {duration = 15})
 	artSun:SetAbsOrigin(artSun:GetAbsOrigin() + Vector(0,0, 500))
 
 
-	if ply.IsDawnAcquired then
+	if caster.IsDawnAcquired then
 		artSun.IsAttached = true
 
 		local targets = FindUnitsInRadius(caster:GetTeam(), location, nil, 666, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false) 
@@ -397,7 +455,7 @@ function GenerateArtificialSun(caster, location)
 	end
 
 	Timers:CreateTimer(9, function()
-		if IsValidEntity(artSun) and artSun:IsAlive() and caster.IsComboActive ~= true then
+		if IsValidEntity(artSun) and not artSun:IsNull() and artSun:IsAlive() and caster.IsComboActive ~= true then
 			artSun:ForceKill(true)
 		end
 	end)
@@ -419,6 +477,10 @@ function OnFairyDamageTaken(keys)
 		keys.ability:StartCooldown(60) 
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+		Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
 	end
 end
 
@@ -490,7 +552,7 @@ function OnDawnAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsDawnAcquired = true
+    hero.IsDawnAcquired = true
     hero:FindAbilityByName("gawain_solar_embodiment"):SetLevel(2)
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -501,7 +563,7 @@ function OnFairyAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsFairyAcquired = true
+    hero.IsFairyAcquired = true
 
     hero:AddAbility("gawain_blessing_of_fairy")
     hero:FindAbilityByName("gawain_blessing_of_fairy"):SetLevel(1)
@@ -515,7 +577,7 @@ function OnMeltdownAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsMeltdownAcquired = true
+    hero.IsMeltdownAcquired = true
     hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_divine_meltdown", true, true)
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -527,7 +589,7 @@ function OnSunlightAcquired(keys)
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
 
-    ply.IsSunlightAcquired = true
+    hero.IsSunlightAcquired = true
     caster:FindAbilityByName("gawain_attribute_eclipse"):StartCooldown(9999)
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -539,7 +601,7 @@ function OnEclipseAcquired(keys)
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
 
-    ply.IsEclipseAcquired = true
+    hero.IsEclipseAcquired = true
     caster:FindAbilityByName("gawain_attribute_sunlight"):StartCooldown(9999)
     -- Set master 1's mana 
     local master = hero.MasterUnit

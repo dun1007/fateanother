@@ -17,6 +17,7 @@ function NailPull(keys)
 	local pullFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_nail_swing.vpcf", PATTACH_CUSTOMORIGIN, caster )
 	ParticleManager:SetParticleControl( pullFxIndex, 0, caster:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( pullFxIndex, 1, Vector( radius, radius, radius ) )
+	-- Destroy particle
 	Timers:CreateTimer( 1.5, function()
 			ParticleManager:DestroyParticle( pullFxIndex, false )
 			ParticleManager:ReleaseParticleIndex( pullFxIndex )
@@ -65,7 +66,7 @@ function OnBGStart(keys)
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster, v, "modifier_breaker_gorgon", {Duration = keys.duration}) end
-		if ply.IsSealAcquired then  
+		if caster.IsSealAcquired then  
 			local rngesus = math.random(100)
 			if rngesus < 30 then
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 2.5})
@@ -97,7 +98,7 @@ function OnBloodfortStart(keys)
 	local radius = keys.Radius
 	local ability = keys.ability
 	local bloodfortCount = 0
-	caster:EmitSound("Rider.BloodFort"  ) 
+	caster:EmitSound("Rider.BloodFort") 
 
 	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, nil, nil, caster:GetTeamNumber())
 	local dummy_ability = dummy:FindAbilityByName("dummy_unit_passive")
@@ -118,7 +119,7 @@ function OnBloodfortStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), initCasterPoint, nil, radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
-			if ply.IsSealAcquired then  
+			if caster.IsSealAcquired then  
 				forcemove.UnitIndex = v:entindex()
 				ExecuteOrderFromTable(forcemove) 
 				giveUnitDataDrivenModifier(caster, v, "pause_sealenabled", 0.5)
@@ -205,14 +206,27 @@ function OnBelle2Start(keys)
 		end
 	)
 	
-	caster:SetAbsOrigin(caster:GetAbsOrigin() + caster:GetForwardVector() * keys.Range) 
+
+
+	locationDelta = caster:GetForwardVector() * keys.Range
+	newLocation = caster:GetAbsOrigin() + locationDelta
+	for i=1, 20 do
+		if GridNav:IsBlocked(newLocation) or not GridNav:IsTraversable(newLocation) then
+			locationDelta =  caster:GetForwardVector() * (keys.Range - 100)
+			newLocation = caster:GetAbsOrigin() + locationDelta
+		else
+			break
+		end
+	end 
+	caster:SetAbsOrigin(newLocation) 
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
 end
 
 function OnBelle2Hit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsRidingAcquired then keys.Damage = keys.Damage + 250 end 
+	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 250 end 
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -231,7 +245,7 @@ function OnBelleStart(keys)
 	ParticleManager:SetParticleControlEnt( belleFxIndex, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 	
-	if ply.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
+	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.0)
 	Timers:CreateTimer(0.5, function()
 		EmitGlobalSound("Rider.Bellerophon") 
@@ -250,6 +264,7 @@ function OnBelleStart(keys)
 
 
 	Timers:CreateTimer(0.7, function()
+		if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2000 then return end
 		if descendCount == 9 then return end
 
 		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x + descendVec.x * dist/6 ,
@@ -261,8 +276,10 @@ function OnBelleStart(keys)
 
 	-- this is when Rider makes a landing 
 	Timers:CreateTimer(1.0, function() 
-		caster:SetAbsOrigin(targetPoint)
-		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		if (caster:GetAbsOrigin() - targetPoint):Length2D() < 2000 then 
+			caster:SetAbsOrigin(targetPoint)
+			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+		end
 		caster:EmitSound("Misc.Crash")
 	end)
 
@@ -289,6 +306,8 @@ function OnBelleStart(keys)
 	        DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 2.0})
 	    end
+
+	    ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 2000, 0, true)
 	end)
 end
 
@@ -323,7 +342,7 @@ function OnImproveMysticEyesAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsMysticEyeImproved = true
+	hero.IsMysticEyeImproved = true
 	hero:FindAbilityByName("rider_5th_mystic_eye"):SetLevel(2)
 
 	-- Set master 1's mana 
@@ -336,7 +355,7 @@ function OnRidingAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed() + 50) 
-	ply.IsRidingAcquired = true
+	hero.IsRidingAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -347,7 +366,7 @@ function OnSealAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsSealAcquired = true
+	hero.IsSealAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -361,7 +380,7 @@ function OnMonstrousStrengthAcquired(keys)
 	hero:SetBaseMagicalResistanceValue(15)
 	hero:SetBaseStrength(hero:GetBaseStrength()+10) 
 	hero:FindAbilityByName("rider_5th_monstrous_strength_passive"):SetLevel(1)
-	ply.IsMonstrousStrengthAcquired = true
+	hero.IsMonstrousStrengthAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

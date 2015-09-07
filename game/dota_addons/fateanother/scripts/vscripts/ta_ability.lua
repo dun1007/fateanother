@@ -3,17 +3,19 @@ require("util")
 
 function OnDirkStart(keys)
 	local caster = keys.caster
+	local range = 750
+	if caster.IsWeakeningVenomAcquired then range = 1150 end
 	local info = {
 		Target = nil,
 		Source = caster, 
 		Ability = keys.ability,
 		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 700
+		iMoveSpeed = 1200
 	}
 
 	local targetCount = 0
-	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 700
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, range
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
 		targetCount = targetCount + 1
@@ -30,7 +32,7 @@ function OnDirkHit(keys)
 	if not IsImmuneToSlow(keys.target) then 
 		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
 	end
-	if ply.IsWeakeningVenomAcquired then
+	if caster.IsWeakeningVenomAcquired then
 		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility(), DAMAGE_TYPE_PURE, 0, keys.ability, false)
 	else
 		DoDamage(keys.caster, keys.target, keys.Damage + keys.caster:GetAgility() , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
@@ -70,7 +72,7 @@ function OnPCAbilityUsed(keys)
 	Timers:CreateTimer(1.5, function() 
 		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
-			if not ply.IsPCImproved then PCStopOrder(keys) return end
+			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end
 	end)
 end
@@ -84,7 +86,7 @@ function OnPCAttacked(keys)
 	Timers:CreateTimer(1.5, function() 
 		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
-			if not ply.IsPCImproved then PCStopOrder(keys) return end
+			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end
 	end)
 end
@@ -92,7 +94,7 @@ end
 function OnPCMoved(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsPCImproved then return end
+	if caster.IsPCImproved then return end
 	caster.LastActionTime = GameRules:GetGameTime() 
 
 
@@ -101,7 +103,7 @@ function OnPCMoved(keys)
 	Timers:CreateTimer(1.5, function() 
 		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
-			if not ply.IsPCImproved then PCStopOrder(keys) return end
+			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end
 	end)
 end
@@ -180,6 +182,17 @@ function OnDIZabStart(keys)
 	ParticleManager:SetParticleControl(smokeFx, 0, target:GetAbsOrigin())
 	EmitGlobalSound("TA.Zabaniya") 
 	caster:EmitSound("Hero_Nightstalker.Darkness") 
+
+	-- Destroy particle after delay
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+			ParticleManager:DestroyParticle( smokeFx, false )
+			ParticleManager:ReleaseParticleIndex( smokeFx )
+			ParticleManager:DestroyParticle( smokeFx2, false )
+			ParticleManager:ReleaseParticleIndex( smokeFx2 )
+			return nil
+	end)
 end
 
 function OnDIZabHit(keys)
@@ -187,8 +200,8 @@ function OnDIZabHit(keys)
 	local caster = keys.caster
 	local ply = keys.caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	local damage = hero:FindAbilityByName("true_assassin_ambush"):GetLevel() * 60 + 100
-	if ply.IsShadowStrikeAcquired then 
+	local damage = hero:FindAbilityByName("true_assassin_ambush"):GetLevel() * 80 + 120
+	if caster.IsShadowStrikeAcquired then 
 		damage = damage + 100
 	end
 	DoDamage(hero, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -245,6 +258,12 @@ function OnModStart(keys)
 	local caster = keys.caster
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_fiendsgrip_ground_rubble.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
+	-- Destroy particle after delay
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+			return nil
+	end)
 	TACheckCombo(caster, keys.ability) 
 	--increase stat
 end
@@ -273,7 +292,7 @@ function OnStealStart(keys)
 	local ply = caster:GetPlayerOwner() 
 	local target = keys.target
 
-	if caster:HasModifier("modifier_ambush") and ply.IsShadowStrikeAcquired then
+	if caster:HasModifier("modifier_ambush") and caster.IsShadowStrikeAcquired then
 		print("Shadow Strike activated")
 		keys.Damage = keys.Damage + 300
 	end
@@ -306,6 +325,18 @@ function OnZabStart(keys)
 
 		ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
 		ParticleManager:SetParticleControl(particle, 2, keys.target:GetAbsOrigin()) -- circle effect location
+
+		-- Destroy particle after delay
+		Timers:CreateTimer( 2.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+				ParticleManager:DestroyParticle( smokeFx, false )
+				ParticleManager:ReleaseParticleIndex( smokeFx )
+				ParticleManager:DestroyParticle( smokeFx2, false )
+				ParticleManager:ReleaseParticleIndex( smokeFx2 )
+				return nil
+		end)
+
 		EmitGlobalSound("TA.Zabaniya") 
 		caster:EmitSound("Hero_Nightstalker.Darkness") 
 	end
@@ -326,7 +357,15 @@ function OnZabHit(keys)
 	local shadowFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(shadowFx, 0, target:GetAbsOrigin())
 
-	if ply.IsShadowStrikeAcquired and caster.IsShadowStrikeActivated then 
+	-- Destroy particle after delay
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( blood, false )
+		ParticleManager:ReleaseParticleIndex( blood )
+		ParticleManager:DestroyParticle( shadowFx, false )
+		ParticleManager:ReleaseParticleIndex( shadowFx )
+		return nil
+	end)
+	if caster.IsShadowStrikeAcquired and caster.IsShadowStrikeActivated then 
 		keys.Damage = keys.Damage + 400 
 		caster.IsShadowStrikeActivated = false
 	end
@@ -365,7 +404,7 @@ function OnImprovePresenceConcealmentAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsPCImproved = true
+	hero.IsPCImproved = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -376,7 +415,7 @@ function OnProtectionFromWindAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsPFWAcquired = true
+	hero.IsPFWAcquired = true
 	hero:FindAbilityByName("true_assassin_protection_from_wind"):SetLevel(1) 
 
 	-- Set master 1's mana 
@@ -388,20 +427,21 @@ function OnWeakeningVenomAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsWeakeningVenomAcquired = true
+	hero.IsWeakeningVenomAcquired = true
 	hero:FindAbilityByName("true_assassin_weakening_venom_passive"):SetLevel(1)
-	hero:SwapAbilities("true_assassin_dirk_improved", "true_assassin_dirk", true, false) 
-
+	hero:FindAbilityByName("true_assassin_dirk"):SetLevel(2)
+	--hero:SwapAbilities("true_assassin_dirk", "true_assassin_dirk_attr_temp", true, true) 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+
 end
 
 function OnShadowStrikeAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsShadowStrikeAcquired = true
+	hero.IsShadowStrikeAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

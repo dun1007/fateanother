@@ -94,7 +94,7 @@ function OnChainStart(keys)
 	ParticleManager:SetParticleControlEnt( caster.enkiduBind, 0, target, PATTACH_POINT_FOLLOW, "attach_origin", targetloc, true )
 	ParticleManager:SetParticleControl( caster.enkiduBind, 1, targetloc )
 
-	if ply.IsRainAcquired then
+	if caster.IsRainAcquired then
 		local rainCount = 0
 	    Timers:CreateTimer(function()
 	    	if rainCount == 15 then return end
@@ -152,7 +152,7 @@ function OnChainStart(keys)
 	end
 
 	print(caster.IsGOBUp)
-	if caster.IsGOBUp and ply.IsSumerAcquired then 
+	if caster.IsGOBUp and caster.IsSumerAcquired then 
 		-- Casting by dummy doesn't work for some reason
 		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
@@ -286,6 +286,11 @@ function OnGOBHit(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, keys.target)
 	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin())
+	-- Destroy particle after delay
+	Timers:CreateTimer( 1.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 	keys.target:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
 end
 
@@ -339,7 +344,7 @@ function OnEnumaStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
-	if ply.IsEnumaImproved then 
+	if caster.IsEnumaImproved then 
 		enuma.fEndRadius = enuma.fEndRadius * 1.5
 		enuma.fDistance = enuma.fDistance + 150
 	end
@@ -442,7 +447,7 @@ function OnMaxEnumaStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
-	if ply.IsEnumaImproved then 
+	if caster.IsEnumaImproved then 
 		enuma.fEndRadius = enuma.fEndRadius * 1.5
 	end
 
@@ -507,7 +512,7 @@ end
 function OnMaxEnumaHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsEnumaImproved then
+	if caster.IsEnumaImproved then
 		keys.Damage = keys.Damage * 2
 	end
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -531,7 +536,7 @@ function OnImproveGoldenRuleAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsGoldenRuleImproved = true
+	hero.IsGoldenRuleImproved = true
 	hero:FindAbilityByName("gilgamesh_golden_rule"):SetLevel(2)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -542,7 +547,7 @@ function OnPowerOfSumerAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsSumerAcquired = true
+	hero.IsSumerAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -553,7 +558,7 @@ function OnRainOfSwordsAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsRainAcquired = true
+	hero.IsRainAcquired = true
 	hero:SwapAbilities("gilgamesh_sword_barrage","gilgamesh_sword_barrage_improved", true, true)
 
 	-- Set master 1's mana 
@@ -565,7 +570,7 @@ function OnSwordOfCreationAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsEnumaImproved = true
+	hero.IsEnumaImproved = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

@@ -8,7 +8,7 @@ function OnDerangeStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	
-	if ply.IsManaBlastAcquired then
+	if caster.IsManaBlastAcquired then
 		--[[
 			Fix a bug where user can have more than 7 charges and add VFX
 		]]
@@ -66,7 +66,7 @@ function OnUFStart(keys)
 	local UFCount = 0
 	local bonusDamage = 0
 
-	if ply.IsFerocityImproved then
+	if caster.IsFerocityImproved then
 		bonusDamage = caster:GetStrength() + caster:GetIntellect()
 	end
 	DSCheckCombo(caster, keys.ability)
@@ -76,7 +76,7 @@ function OnUFStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
-	         DoDamage(caster, v, v:GetHealth() * keys.Damage / 100 , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	         DoDamage(caster, v, v:GetHealth() * keys.Damage / 100 + bonusDamage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	         v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 	    end
 		UFCount = UFCount + 1;
@@ -90,9 +90,9 @@ function OnMBStart(keys)
 	local ply = caster:GetPlayerOwner()
 
 
-	if ply.IsManaShroudImproved == true then 
+	if caster.IsManaShroudImproved == true then 
 		keys.Radius = keys.Radius + 200 
-		keys.Damage = keys.Damage + 100
+		keys.Damage = keys.Damage + 3*caster:GetIntellect()
 	end
 	caster:EmitSound("Saber_Alter.ManaBurst") 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
@@ -104,16 +104,18 @@ function OnMBStart(keys)
 		Ability = keys.ability,
 		EffectName = "particles/items2_fx/skadi_projectile.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 400
+		iMoveSpeed = 500
 	}
 	
-	if ply.IsManaBlastAcquired then
+	if caster.IsManaBlastAcquired and #targets ~= 0 then
+		print("mana blast activated")
 		-- Force remove all particles
 		while caster:HasModifier( "modifier_derange_mana_catalyst_VFX" ) do
 			caster:RemoveModifierByName( "modifier_derange_mana_catalyst_VFX" )
 		end
 		
 		while caster.ManaBlastCount ~= 0 do
+			print("firing mana blast!")
 			info.Target = targets[math.random(#targets)]
 			ProjectileManager:CreateTrackingProjectile(info) 
 			caster.ManaBlastCount = caster.ManaBlastCount - 1
@@ -148,11 +150,15 @@ function OnMMBStart(keys)
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	EmitGlobalSound("Saber_Alter.MMB" ) 
 	EmitGlobalSound("Saber_Alter.MMBAfter") 
-	ParticleManager:CreateParticle("particles/custom/screen_blue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+	local BlueSplashFx = ParticleManager:CreateParticle("particles/custom/screen_blue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	ScreenShake(caster:GetOrigin(), 15, 2.0, 2, 10000, 0, true)
+	-- Destroy particle
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( BlueSplashFx, false )
+	end)
 
 	local dmg = caster:GetMaxMana()
-	if ply.IsManaShroudImproved == true then dmg = dmg + 200 end
+	if caster.IsManaShroudImproved == true then dmg = dmg + caster:GetIntellect()*5 end
 	
 	for k,v in pairs(targets) do
 	    DoDamage(caster, v, dmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability)
@@ -166,7 +172,7 @@ function OnVortigernStart(keys)
 	local damage = keys.Damage
 	local forward = ( keys.target_points[1] - caster:GetAbsOrigin() ):Normalized() -- caster:GetForwardVector() 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 0.4)
-	if ply.IsFerocityImproved then 
+	if caster.IsFerocityImproved then 
 		damage = damage + 100
 		keys.StunDuration = keys.StunDuration + 0.3
 	end
@@ -253,7 +259,7 @@ function OnVortigernHit(keys)
 	local damage = keys.Damage
 	print("Vortigern hit")
 	damage = damage * (85 + vortigernCount * 5)/100
-	if ply.IsFerocityImproved then 
+	if caster.IsFerocityImproved then 
 		damage = damage + 100
 		keys.StunDuration = keys.StunDuration + 0.3
 	end
@@ -273,7 +279,7 @@ end
 	local targetVec = Vector(0,0,0)
 	local damage = keys.Damage
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 0.4)
-	if ply.IsFerocityImproved then 
+	if caster.IsFerocityImproved then 
 		damage = damage + 100
 		keys.StunDuration = keys.StunDuration + 0.3
 	end
@@ -387,7 +393,7 @@ end
 function OnDexHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsDarklightAcquired then keys.Damage = keys.Damage + 300 end
+	if caster.IsDarklightAcquired then keys.Damage = keys.Damage + 300 end
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -429,13 +435,15 @@ end]]
 DUsed = false
 DTime = GameRules:GetGameTime()
 UFTime = 0
+	
 function DSCheckCombo(caster, ability)
+
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
 		if ability == caster:FindAbilityByName("saber_alter_derange") then
 			DUsed = true
 			DTime = GameRules:GetGameTime()
 			Timers:CreateTimer({
-				endTime = 4,
+				endTime = 5,
 				callback = function()
 				DUsed = false
 			end
@@ -445,7 +453,7 @@ function DSCheckCombo(caster, ability)
 				caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", false, true)
 				local newTime =  GameRules:GetGameTime()
 				Timers:CreateTimer({
-					endTime = 4 - (newTime - DTime),
+					endTime = 5 - (newTime - DTime),
 					callback = function()
 					caster:SwapAbilities("saber_alter_mana_burst", "saber_alter_max_mana_burst", true, false)
 					DUsed = false
@@ -464,7 +472,7 @@ function OnImproveManaShroundAcquired(keys)
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 20) 
 	hero:SetBaseMagicalResistanceValue(25)
 	hero:CalculateStatBonus()
-	ply.IsManaShroudImproved = true
+	hero.IsManaShroudImproved = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -476,7 +484,7 @@ function OnManaBlastAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsManaBlastAcquired = true
+	hero.IsManaBlastAcquired = true
 	hero.ManaBlastCount = 0
 
 	-- Set master 1's mana 
@@ -488,7 +496,7 @@ function OnImproveFerocityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsFerocityImproved = true
+	hero.IsFerocityImproved = true
 	hero:FindAbilityByName("saber_alter_unleashed_ferocity"):SetLevel(2)
 	hero:SwapAbilities("saber_alter_unleashed_ferocity","saber_alter_unleashed_ferocity_improved", false, true)
 
@@ -502,7 +510,7 @@ function OnDarklightAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("saber_alter_darklight_passive"):SetLevel(1)
-	ply.IsDarklightAcquired = true
+	hero.IsDarklightAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

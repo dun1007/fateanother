@@ -13,7 +13,7 @@
 		//"Model"						"models/development/invisiblebox.vmdl"
 		//"Model"						"models/heroes/legion_commander/legion_commander.vmdl"
 		"ModelScale"				"0.95"
-		"HeroID"					"121"
+		//"HeroID"					"121"
 		"Enabled"					"1"
 
 		"AbilityLayout"				"6"
@@ -77,7 +77,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"Model"					"models/lancer/lancer2.vmdl"
 		"ModelScale"			"0.92"
-		"HeroID"					"24"
+		//"HeroID"					"24"
 		"Enabled"					"1"
 
 		"AbilityLayout"				"6"
@@ -145,7 +145,7 @@
 		"Model"					"models/saber_alter/sbr_alter.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
-		"HeroID"					"113"
+		//"HeroID"					"113"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -208,7 +208,7 @@
 		"Model"					"models/archer/archertest.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
-		"HeroID"					"114"
+		//"HeroID"					"114"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -236,7 +236,7 @@
 		"Attribute5"				"archer_5th_attribute_overedge"
 
 
-		"StatusHealth"					"1150"
+		"StatusHealth"					"1100"
 		"StatusHeathRegen"				"8"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"3"
@@ -275,7 +275,7 @@
 		"Model"					"models/rider/rider.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
-		"HeroID"					"115"
+		//"HeroID"					"115"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -337,7 +337,7 @@
 		"override_hero"			"npc_dota_hero_doom_bringer"
 		"Model"					"models/berserker/berserker.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
-		"HeroID"					"116"
+		//"HeroID"					"116"
 		"Enabled"					"1"	
 
 		"AbilityLayout"			"6"
@@ -399,7 +399,7 @@
 		"Model"					"models/assassin/asn.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.0"
-		"HeroID"					"117"
+		//"HeroID"					"117"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -463,7 +463,7 @@
 		"Model"					"models/true_assassin/ta.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"AbilityLayout"			"6"
-		"HeroID"					"118"
+		//"HeroID"					"118"
 		"Enabled"					"1"	
 
 		"Ability1"				"true_assassin_ambush"
@@ -478,6 +478,7 @@
 		"Ability10"				"true_assassin_dirk_improved"
 		"Ability11"				"presence_detection_passive"
 		"Ability12"				"attribute_bonus"
+		"Ability13"				"true_assassin_dirk_attr_temp"
 
 		"Combo"						"true_assassin_combo"
 		"AttributeNumber"			"4"
@@ -499,6 +500,7 @@
 		"AttackDamageMin"				"46"
 		"AttackDamageMax"				"60"
 		"AttackRate"					"0.8"
+		"AttackAnimationPoint"			"0.3"
 		"AttackAcquisitionRange"		"800"
 		"ProjectileModel"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 		"ProjectileSpeed"				"1000"
@@ -527,7 +529,7 @@
 		"override_hero"			"npc_dota_hero_crystal_maiden"
 		"Model"					"models/caster/caster.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
-		"HeroID"					"119"
+		//"HeroID"					"119"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -554,7 +556,7 @@
 		"Attribute3"				"caster_5th_attribute_improve_hecatic_graea"
 		"Attribute4"				"caster_5th_attribute_dagger_of_treachery"
 		
-		"StatusHealth"					"950"
+		"StatusHealth"					"900"
 		"StatusHeathRegen"				"3"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"5"
@@ -570,17 +572,17 @@
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"1.1"
+		"AttributeStrengthGain"			"1.0"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"0.5"
+		"AttributeAgilityGain"			"0.6"
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"1.4"
 		
-		"MovementSpeed"					"320"
+		"MovementSpeed"					"315"
 		"MovementTurnRate"				"0.3"
 
-		"VisionDaytimeRange"			"900"
-		"VisionNighttimeRange"			"900"
+		"VisionDaytimeRange"			"800"
+		"VisionNighttimeRange"			"800"
 
 	}
 	
@@ -593,7 +595,7 @@
 		"Model"					"models/gilgamesh/gilgamesh.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
-		"HeroID"					"120"
+		//"HeroID"					"120"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -717,7 +719,7 @@
 		"Model"					"models/avenger/avenger.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"0.80"
-		"HeroID"					"122"
+		//"HeroID"					"122"
 		"Enabled"					"1"
 				
 		"AbilityLayout"			"6"
@@ -744,7 +746,7 @@
 		"Attribute3"				"avenger_attribute_overdrive"
 		"Attribute4"				"avenger_attribute_demon_incarnate"
 
-		"StatusHealth"					"1100"
+		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"12"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"0"
@@ -783,7 +785,7 @@
 		"Model"					"models/diarmuid/diarmuid2.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
-		"HeroID"					"123"
+		//"HeroID"					"123"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -812,7 +814,7 @@
 		"StatusManaRegen"				"1.2"
 		
 		"ArmorPhysical"					"3"
-		"MagicalResistance"				"0"
+		"MagicalResistance"				"15"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"250"
@@ -844,7 +846,7 @@
 		"Model"					"models/zc/gille.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.40"
-		"HeroID"					"124"
+		//"HeroID"					"124"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -905,7 +907,7 @@
 		"Model"					"models/iskander/iskander.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
-		"HeroID"					"125"
+		//"HeroID"					"125"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -970,7 +972,7 @@
 		"Model"					"models/nero/nero.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
-		"HeroID"					"126"
+		//"HeroID"					"126"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"
@@ -997,7 +999,7 @@
 		"Attribute3"				"nero_attribute_invictus_spiritus"
 		"Attribute4"				"nero_attribute_soverigns_glory"
 
-		"StatusHealth"					"1250"
+		"StatusHealth"					"1200"
 		"StatusHeathRegen"				"9.0"
 		"StatusMana"					"1050"
 		"StatusManaRegen"				"1.2"
@@ -1007,16 +1009,16 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"150"
-		"AttackDamageMin"				"38"
-		"AttackDamageMax"				"66"
-		"AttackRate"					"1.2"
+		"AttackDamageMin"				"46"
+		"AttackDamageMax"				"74"
+		"AttackRate"					"1.1"
 		"AttackAnimationPoint"			"0.3"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"1.0"
+		"AttributeStrengthGain"			"0.8"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.4"
+		"AttributeAgilityGain"			"1.6"
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"0.6"
 		
@@ -1036,7 +1038,7 @@
 		"Model"					"models/gawain/gawain.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
-		"HeroID"					"127"
+		//"HeroID"					"127"
 		"Enabled"					"1"
 
 		"AbilityLayout"			"6"

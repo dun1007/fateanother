@@ -62,7 +62,7 @@ function InvisibleAirPull(keys)
 	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
-	if ply.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
+	if caster.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
 	DoDamage(caster, target , keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 
     local pullTarget = Physics:Unit(keys.target)
@@ -134,13 +134,12 @@ function OnCaliburnHit(keys)
 
 
 
-	if ply.IsChivalryAcquired == true then 
+	if caster.IsChivalryAcquired == true then 
 		keys.Damage = keys.Damage + 200 
 		if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_caliburn_slow", {}) end
 	end
 	local aoedmg = keys.Damage * keys.AoEDamage
-
-	DoDamage(caster, target , keys.Damage - aoedmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(caster, target , keys.Damage - aoedmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), target:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -241,7 +240,7 @@ end
 function OnExcaliburHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsExcaliburAcquired == true then keys.Damage = keys.Damage + 300 end
+	if caster.IsExcaliburAcquired == true then keys.Damage = keys.Damage + 300 end
 
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) 
 end
@@ -290,8 +289,12 @@ function OnMaxStart(keys)
 			max_excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			max_excal.vVelocity = caster:GetForwardVector() * keys.Speed
 			local projectile = ProjectileManager:CreateLinearProjectile(max_excal)
-			ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+			local YellowScreenFx = ParticleManager:CreateParticle("particles/custom/screen_yellow_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 			ScreenShake(caster:GetOrigin(), 7, 2.0, 2, 10000, 0, true)
+			
+        	Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( YellowScreenFx, false )
+			end)
 		end
 	end)
 
@@ -330,29 +333,6 @@ function OnMaxStart(keys)
 					)
 					return nil
 				end)
-				--[[
-				-- Function to create rock follow the projectile
-				--local rockFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_rock_emitter.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-				local burnFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_excalibur_max_burn.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-				local currentLocation = caster:GetAbsOrigin()
-				local forwardVec = caster:GetForwardVector()
-				local distance_traverse = 0
-				Timers:CreateTimer( 0.2, function()
-						if distance_traverse < keys.Range then
-							currentLocation = currentLocation + forwardVec * keys.Speed * 0.03
-							--ParticleManager:SetParticleControl( rockFxIndex, 0, currentLocation )
-							ParticleManager:SetParticleControl( burnFxIndex, 3, currentLocation )
-							distance_traverse = distance_traverse + keys.Speed / 10
-							return 0.03
-						else
-							--ParticleManager:DestroyParticle( rockFxIndex, false )
-							ParticleManager:DestroyParticle( burnFxIndex, false )
-							--ParticleManager:ReleaseParticleIndex( rockFxIndex )
-							ParticleManager:ReleaseParticleIndex( burnFxIndex )
-							return nil
-						end
-					end
-				)]]
 			end
 		end})
 	end
@@ -361,7 +341,7 @@ end
 function OnMaxHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsExcaliburAcquired == true then keys.Damage = keys.Damage + 2000 end
+	if caster.IsExcaliburAcquired == true then keys.Damage = keys.Damage + 2000 end
 
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
@@ -384,7 +364,7 @@ function AvalonOnTakeDamage(keys)
 
 	if caster.IsAvalonPenetrated then return end
 
-	if caster.IsAvalonProc == true and caster.IsAvalonOnCooldown ~= true then 
+	if not caster:HasModifier("saber_pause") and not caster:HasModifier("modifier_max_excalibur") and caster.IsAvalonProc == true and caster.IsAvalonOnCooldown ~= true and (caster:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D() < 3000 then 
 		if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
 		AvalonDash(caster, attacker, keys.Damage, keys.ability)
 		caster.IsAvalonOnCooldown = true
@@ -436,19 +416,19 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 		callback = function()
 		
 		-- Particles
-		local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_impact.vpcf", PATTACH_ABSORIGIN, caster )
+		--local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_impact.vpcf", PATTACH_ABSORIGIN, caster )
 		local explosionFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_explosion.vpcf", PATTACH_ABSORIGIN, caster )
 		ParticleManager:SetParticleControl( explosionFxIndex, 3, caster:GetAbsOrigin() )
 		EmitSoundOn( "Hero_EarthShaker.Fissure", caster )
 		
 		Timers:CreateTimer( 3.0, function()
-				ParticleManager:DestroyParticle( impactFxIndex, false )
+				--ParticleManager:DestroyParticle( impactFxIndex, false )
 				ParticleManager:DestroyParticle( explosionFxIndex, false )
 			end
 		)
 		
 		-- Original function
-		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 300
+		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 300
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
 			DoDamage(caster, v, counterdamage , DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -507,7 +487,7 @@ end
 
 function StrikeAirPush(keys)
 	local target = keys.target
-	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
+	if target:GetName() == "npc_dota_hero_bounty_hunter" and target.IsPFWAcquired then return end
 
 	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_invisible_air"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	giveUnitDataDrivenModifier(keys.caster, keys.target, "pause_sealenabled", 0.5)
@@ -562,7 +542,7 @@ function OnImproveExcaliburAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsExcaliburAcquired = true
+	hero.IsExcaliburAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -573,7 +553,7 @@ function OnImproveInstinctAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsInstinctImproved = true
+	hero.IsInstinctImproved = true
 
 	hero:FindAbilityByName("saber_improved_instinct"):SetLevel(1)
 	hero:SwapAbilities("saber_instinct","saber_improved_instinct", false, true)
@@ -587,7 +567,7 @@ function OnChivalryAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsChivalryAcquired = true
+	hero.IsChivalryAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

@@ -7,7 +7,7 @@ function OnLoveSpotStart(keys)
 		OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION ,
 		Position = nil
 	}
-	if ply.IsLoveSpotImproved then keys.Duration = keys.Duration + 2 end
+	if caster.IsLoveSpotImproved then keys.Duration = keys.Duration + 2 end
 	DiarmuidCheckCombo(caster, keys.ability)
 
 	caster:EmitSound("Hero_Warlock.ShadowWord")
@@ -17,7 +17,6 @@ function OnLoveSpotStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
-			print(IsFemaleServant(v))
 			if IsFemaleServant(v) then
 				forcemove.UnitIndex = v:entindex()
 				forcemove.Position = caster:GetAbsOrigin() 
@@ -25,10 +24,18 @@ function OnLoveSpotStart(keys)
 				giveUnitDataDrivenModifier(caster, v, "pause_sealenabled", 0.5)
 			    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, v)
 			    ParticleManager:SetParticleControl(particle, 0, v:GetAbsOrigin())
+				Timers:CreateTimer( 2.0, function()
+					ParticleManager:DestroyParticle( particle, false )
+					ParticleManager:ReleaseParticleIndex( particle )
+				end)
 			end
 		end
 	    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	    ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
 		lovespotCount = lovespotCount + 1
 		return 1.0
 	end)
@@ -57,6 +64,10 @@ function OnChargeStart(keys)
     caster:EmitSound("Hero_Huskar.Life_Break")
     local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
     ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 end
 
 function OnDSStart(keys)
@@ -74,6 +85,10 @@ function OnRampantWarriorStart(keys)
 	caster:FindAbilityByName("diarmuid_double_spearsmanship"):ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 end
 
 function OnGaeCastStart(keys)
@@ -81,6 +96,11 @@ function OnGaeCastStart(keys)
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin()) -- target effect location
 	ParticleManager:SetParticleControl(particle, 2, caster:GetAbsOrigin()) -- circle effect location
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
+
 	if keys.ability == caster:FindAbilityByName("diarmuid_gae_buidhe") then
 		caster:EmitSound("ZL.Buidhe_Cast")
 	elseif keys.ability == caster:FindAbilityByName("diarmuid_gae_dearg") then 
@@ -94,7 +114,7 @@ function OnBuidheStart(keys)
 	local ply = caster:GetPlayerOwner()
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
-	if ply.IsRoseBloomAcquired then 
+	if caster.IsRoseBloomAcquired then 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_mark_of_mortality", {})
 	end
 
@@ -123,8 +143,12 @@ function OnBuidheStart(keys)
 	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
 	local particle_effect_intensity = 600
 	ParticleManager:SetParticleControl(dagon_particle, 2, Vector(particle_effect_intensity))
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( dagon_particle, false )
+		ParticleManager:ReleaseParticleIndex( dagon_particle )
+	end)
 
-	if ply.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_dearg"):IsCooldownReady() and caster:GetMana() >= 550 then
+	if caster.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_dearg"):IsCooldownReady() and caster:GetMana() >= 550 then
 		print("Double spear activated")
 		local dearg = caster:FindAbilityByName("diarmuid_gae_dearg")
 		local minDamage = dearg:GetLevelSpecialValueFor("min_damage", dearg:GetLevel()-1)
@@ -149,7 +173,6 @@ end
 
 function OnBuidheOwnerDeath(keys)
 	local caster = keys.caster
-	print("daed")
     LoopOverHeroes(function(hero)
     	hero:RemoveModifierByName("modifier_gae_buidhe")
     end)
@@ -166,7 +189,7 @@ function OnDeargStart(keys)
 	local damage = 0
 	local maxDamageDist = 100
 	local minDamageDist = 650
-	if ply.IsRoseBloomAcquired then 
+	if caster.IsRoseBloomAcquired then 
 		maxDamageDist = 300
 	end
 	local distDiff = minDamageDist - maxDamageDist
@@ -180,7 +203,7 @@ function OnDeargStart(keys)
 		damage = keys.MinDamage
 	end
 	DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-	print("Gae Dearg dealt " .. damage .. " damage to target")
+	--print("Gae Dearg dealt " .. damage .. " damage to target")
 	if target:HasModifier("modifier_mark_of_mortality") then
 		local detonateDamage = caster:GetMaxHealth() * 1/10
 		DoDamage(caster, target, detonateDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false) 
@@ -196,8 +219,12 @@ function OnDeargStart(keys)
 	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
 	local particle_effect_intensity = 600
 	ParticleManager:SetParticleControl(dagon_particle, 2, Vector(particle_effect_intensity))
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( dagon_particle, false )
+		ParticleManager:ReleaseParticleIndex( dagon_particle )
+	end)
 
-	if ply.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_buidhe"):IsCooldownReady() and caster:GetMana() >= 550 then
+	if caster.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_buidhe"):IsCooldownReady() and caster:GetMana() >= 550 then
 		print("Double spear activated")
 		local buidhe = caster:FindAbilityByName("diarmuid_gae_buidhe")
 		keys.Damage = buidhe:GetLevelSpecialValueFor("damage", buidhe:GetLevel()-1)
@@ -224,6 +251,10 @@ function PlayGaeEffect(target)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 4, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(culling_kill_particle)
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( culling_kill_particle, false )
+		ParticleManager:ReleaseParticleIndex( culling_kill_particle )
+	end)
 end 
 
 function OnMindEyeStart(keys)
@@ -266,7 +297,7 @@ function OnLoveSpotImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsLoveSpotImproved = true
+    hero.IsLoveSpotImproved = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -276,7 +307,7 @@ function OnMindEyeAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsMindEyeAcquired = true
+    hero.IsMindEyeAcquired = true
     hero:AddAbility("diarmuid_minds_eye") 
     hero:FindAbilityByName("diarmuid_minds_eye"):SetLevel(1)
     -- Set master 1's mana 
@@ -288,7 +319,7 @@ function OnRosebloomAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsRoseBloomAcquired = true
+    hero.IsRoseBloomAcquired = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -298,7 +329,7 @@ function OnDoubleSpearAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsDoubleSpearAcquired = true
+    hero.IsDoubleSpearAcquired = true
     hero.IsDoubleSpearReady = true
     hero:SwapAbilities("fate_empty1", "diarmuid_double_spear_strike", true, true) 
 	hero:FindAbilityByName("diarmuid_double_spear_strike"):ToggleAbility()

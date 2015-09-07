@@ -173,7 +173,6 @@ function OnSeal1Start(keys)
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+2) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return 
 	end
@@ -181,7 +180,6 @@ function OnSeal1Start(keys)
 	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return
 	end
@@ -200,13 +198,13 @@ function OnSeal1Start(keys)
 
 
 	keys.ability:ApplyDataDrivenModifier(keys.caster, hero, "modifier_command_seal_1",{})
-	ply.IsFirstSeal = true
+	caster.IsFirstSeal = true
 
 	caster:FindAbilityByName("cmd_seal_1"):StartCooldown(60)
 	Timers:CreateTimer({
 		endTime = 20.0,
 		callback = function()
-		ply.IsFirstSeal = false
+		caster.IsFirstSeal = false
 	end
 	})
 end
@@ -243,7 +241,6 @@ function OnSeal2Start(keys)
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+2) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return 
 	end
@@ -251,7 +248,6 @@ function OnSeal2Start(keys)
 	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return
 	end
@@ -272,7 +268,7 @@ function OnSeal2Start(keys)
 
 
 	-- Set cooldown
-	if ply.IsFirstSeal == true then
+	if caster.IsFirstSeal == true then
 		keys.ability:EndCooldown()
 		caster:SetMana(caster:GetMana()+1)  --refund 1 mana
 		master2:SetMana(master2:GetMana() +1)
@@ -293,7 +289,6 @@ function OnSeal3Start(keys)
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+1) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return 
 	end
@@ -302,7 +297,6 @@ function OnSeal3Start(keys)
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return
 	end
@@ -319,7 +313,7 @@ function OnSeal3Start(keys)
 	ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
 	hero:Heal(hero:GetMaxHealth(), hero)
 
-	if ply.IsFirstSeal == true then
+	if caster.IsFirstSeal == true then
 		keys.ability:EndCooldown()
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
@@ -338,7 +332,6 @@ function OnSeal4Start(keys)
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+1) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return 
 	end
@@ -347,7 +340,6 @@ function OnSeal4Start(keys)
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
-		caster:SetHealth(caster:GetHealth()+1) 
 		keys.ability:EndCooldown() 
 		return
 	end
@@ -367,7 +359,7 @@ function OnSeal4Start(keys)
 	hero:SetMana(hero:GetMaxMana()) 
 
 
-	if ply.IsFirstSeal == true then
+	if caster.IsFirstSeal == true then
 		keys.ability:EndCooldown()
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
@@ -515,6 +507,7 @@ function OnStrengthGain(keys)
 	end 
 
 	hero:SetBaseStrength(hero:GetBaseStrength()+1) 
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -538,6 +531,7 @@ function OnAgilityGain(keys)
 	end 
 
 	hero:SetBaseAgility(hero:GetBaseAgility()+1) 
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -547,7 +541,7 @@ function OnIntelligenceGain(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	hero:SetBaseIntellect(hero:GetBaseIntellect()+1) 
+
 
 	if hero.INTgained == nil then
 		hero.INTgained = 1
@@ -560,6 +554,9 @@ function OnIntelligenceGain(keys)
 			return
 		end
 	end 
+
+	hero:SetBaseIntellect(hero:GetBaseIntellect()+1) 
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -594,6 +591,8 @@ function OnDamageGain(keys)
 
 	hero:SetBaseDamageMax(hero:GetBaseDamageMax() - primaryStat + 3)
 	hero:SetBaseDamageMin(hero:GetBaseDamageMin() - primaryStat + 3)
+	hero:CalculateStatBonus()
+
 	print("Current base damage : " .. hero:GetBaseDamageMin()  .. " to " .. hero:GetBaseDamageMax())
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
@@ -618,6 +617,7 @@ function OnArmorGain(keys)
 	end 
 
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+2)
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -641,6 +641,7 @@ function OnHPRegenGain(keys)
 	end 
 
 	hero:SetBaseHealthRegen(hero:GetBaseHealthRegen()+2)
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -664,6 +665,7 @@ function OnManaRegenGain(keys)
 	end 
 
 	hero:SetBaseManaRegen(hero:GetManaRegen()+1)
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -687,6 +689,7 @@ function OnMovementSpeedGain(keys)
 	end 
 
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed()+5) 
+	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -704,10 +707,10 @@ function OnAvariceAcquired(keys)
 	end
 
 
-	if ply.AvariceCount == nil then 
-		ply.AvariceCount = 1
+	if caster.AvariceCount == nil then 
+		caster.AvariceCount = 1
 	else
-		ply.AvariceCount = ply.AvariceCount + 1
+		caster.AvariceCount = caster.AvariceCount + 1
 	end
 
 	local teamTable = {}
@@ -786,14 +789,14 @@ end
 function OnPresenceDetectionThink(keys)
 	local caster = keys.caster
 	local hasSpecialPresenceDetection = false
-	if GameRules:GetGameTime() < RoundStartTime + 60 then 
-		if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired then 
-			hasSpecialPresenceDetection = true
-		elseif caster:GetName() == "npc_dota_hero_shadow_shaman" and caster:GetPlayerOwner().IsEyeForArtAcquired then
-			hasSpecialPresenceDetection = true
-		end
+	if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired then 
+		hasSpecialPresenceDetection = true
+	elseif caster:GetName() == "npc_dota_hero_shadow_shaman" and caster.IsEyeForArtAcquired then
+		hasSpecialPresenceDetection = true
+	end
 
-		if hasSpecialPresenceDetection == false then return end
+	if GameRules:GetGameTime() < RoundStartTime + 60 then
+		if hasSpecialPresenceDetection == false then return end 
 	end
 
 	local oldEnemyTable = caster.PresenceTable
@@ -818,6 +821,7 @@ function OnPresenceDetectionThink(keys)
 	-- Do the ping for everyone with IsPresenceDetected marked as true
 	for i=1, #newEnemyTable do
 		local enemy = newEnemyTable[i]
+
 		-- Filter TA from ping if he has improved presence concealment attribute
 		if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy:GetPlayerOwner().IsPCImproved  then 
 			if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
@@ -836,7 +840,7 @@ function OnPresenceDetectionThink(keys)
 			--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
 			EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
 			-- Process Eye of Serenity attribute
-			if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
+			if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
 				enemy.IsSerenityOnCooldown = true
 				Timers:CreateTimer(10.0, function() 
 					enemy.IsSerenityOnCooldown = false
@@ -844,7 +848,7 @@ function OnPresenceDetectionThink(keys)
 				FAEyeAttribute(caster, enemy)
 			end
 			-- Process Eye for Art attribute
-			if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster:GetPlayerOwner().IsEyeForArtAcquired == true then
+			if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster.IsEyeForArtAcquired == true then
 				local choice = math.random(1,3)
 				if choice == 1 then
 					Say(caster:GetPlayerOwner(), FindName(enemy:GetName()) .. ", dare to enter the demon's lair on your own?", true) 
@@ -859,66 +863,6 @@ function OnPresenceDetectionThink(keys)
 	caster.PresenceTable = newEnemyTable
 end
 
-function PresenceDetection(keys)
-	local caster = keys.caster
-	caster.PresenceTable = {}
-	Timers:CreateTimer(function()  
-		if caster:IsAlive() then 
-			local oldEnemyTable = caster.PresenceTable
-			local newEnemyTable = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
-
-			-- Flag everyone in range as true before comparing two tables
-			for i=1, #newEnemyTable do
-				newEnemyTable[i].IsPresenceDetected = true
-			end
-
-			-- If enemy has not moved out of range since last presence detection, flag them as false
-			for i=1,#oldEnemyTable do
-				for j=1, #newEnemyTable do
-					if oldEnemyTable[i] == newEnemyTable[j] then 
-						--print(" " .. newEnemyTable[j]:GetName() .. " has not been out of range since last presence detection")
-						newEnemyTable[j].IsPresenceDetected = false
-						break
-					end
-				end
-			end
-
-			-- Do the ping for everyone with IsPresenceDetected marked as true
-			for i=1, #newEnemyTable do
-				local enemy = newEnemyTable[i]
-				-- Filter TA from ping if he has improved presence concealment attribute
-				if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy:GetPlayerOwner().IsPCImproved  then 
-					if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
-				end
-
-				if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
-					MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
-					print("pinged")
-					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
-					local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
-
-
-					ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
-					ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
-					
-					--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
-					EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
-					-- Process Eye of Serenity attribute
-					if caster:GetName() == "npc_dota_hero_juggernaut" and caster:GetPlayerOwner().IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
-						print("Eye of Serenity activated")
-						enemy.IsSerenityOnCooldown = true
-						Timers:CreateTimer(10.0, function() 
-							enemy.IsSerenityOnCooldown = false
-						end)					
-						FAEyeAttribute(caster, enemy)
-					end
-				end
-			end
-			caster.PresenceTable = newEnemyTable
-		end
-		return 0.3
-	end)
-end
 
 -- Scrapped it(can have only 1 instance of AddMinimapDebugPoint at time)
 function CustomPing(playerid, location)
@@ -934,6 +878,7 @@ function FAEyeAttribute(caster, enemy)
 	eyedummy:SetDayTimeVisionRange(500)
 	eyedummy:SetNightTimeVisionRange(500)
 	eyedummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 100}) 
+	
 
 	local eyedummypassive = eyedummy:FindAbilityByName("dummy_unit_passive")
 	eyedummypassive:SetLevel(1)

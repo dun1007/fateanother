@@ -12,7 +12,7 @@ function LancerOnTakeDamage(keys)
 	local highend = 1000
 	local cd = 60
 	local health = 1
-	if ply.IsBCImproved == true then
+	if caster.IsBCImproved == true then
 		lowend = 200
 		highend = 1200
 		cd = 30
@@ -21,8 +21,12 @@ function LancerOnTakeDamage(keys)
 	if currentHealth == 0 and keys.ability:IsCooldownReady() and keys.DamageTaken <= highend and keys.DamageTaken >= lowend  then
 		caster:SetHealth(health)
 		keys.ability:StartCooldown(cd) 
-		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-		ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+		local reviveFx = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		ParticleManager:SetParticleControl(reviveFx, 3, caster:GetAbsOrigin())
+
+		Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( reviveFx, false )
+		end)
 	end
 end
 
@@ -163,8 +167,13 @@ function Conversion(keys)
 	local currentHealth = caster:GetHealth()
 	local currentMana = caster:GetMana()
 	local healthLost = currentHealth * keys.Percentage / 100
+	local finalHealth = currentHealth - healthLost
 
-	caster:SetHealth(currentHealth - healthLost) 
+	if finalHealth > 1 then 
+		caster:SetHealth(currentHealth - healthLost) 
+	else
+		caster:SetHealth(1)
+	end
 	caster:SetMana(currentMana + healthLost)
 end
 
@@ -186,14 +195,19 @@ end
 
 function GBAttachEffect(keys)
 	local caster = keys.caster
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin()) -- target effect location
-	ParticleManager:SetParticleControl(particle, 2, caster:GetAbsOrigin()) -- circle effect location
+	local GBCastFx = ParticleManager:CreateParticle("particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(GBCastFx, 1, caster:GetAbsOrigin()) -- target effect location
+	ParticleManager:SetParticleControl(GBCastFx, 2, caster:GetAbsOrigin()) -- circle effect location
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( GBCastFx, false )
+	end)
+
 	if keys.ability == caster:FindAbilityByName("lancer_5th_gae_bolg") then
 		caster:EmitSound("Lancer.GaeBolg")
 	elseif keys.ability == caster:FindAbilityByName("lancelot_gae_bolg") then 
 		caster:EmitSound("Lancelot.Growl" )
 	end
+
 end
 
 
@@ -203,16 +217,11 @@ function OnGBTargetHit(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if ply.IsGaeBolgImproved == true then keys.HBThreshold = keys.HBThreshold + 150 end
+	if caster.IsGaeBolgImproved == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
 
-	-- Add dagon particle
-	local dagon_particle = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf",  PATTACH_ABSORIGIN_FOLLOW, keys.caster)
-	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
-	local particle_effect_intensity = 600
-	ParticleManager:SetParticleControl(dagon_particle, 2, Vector(particle_effect_intensity))
-	target:EmitSound("Hero_Lion.Impale")
 
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 	if target:GetHealth() < keys.HBThreshold then 
 		if target:GetHealth() ~= 0 then 
 			PlayHeartBreakEffect(target)
@@ -221,7 +230,7 @@ function OnGBTargetHit(keys)
 	end  -- check for HB
 
 	-- if Gae Bolg is improved, do 3 second dot over time
-	if ply.IsGaeBolgImproved == true then 
+	if caster.IsGaeBolgImproved == true then 
 		local dotCount = 0
 		Timers:CreateTimer(function() 
 			if dotCount == 3 then return end
@@ -231,8 +240,9 @@ function OnGBTargetHit(keys)
 		end)
 	end
 
+	--[[
 	-- if Heart Seeker attribute is acquired, check for HB condition every 0.3 seconds
-	if ply.IsHeartSeekerAcquired == true then
+	if caster.IsHeartSeekerAcquired == true then
 		local dotCount = 0
 		Timers:CreateTimer(function() 
 			if dotCount == 10 then return end
@@ -246,12 +256,23 @@ function OnGBTargetHit(keys)
 			dotCount = dotCount + 1
 			return 0.3
 		end)
-	end
-	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
+	end]]
+	
 
+	-- Add dagon particle
+	local dagon_particle = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf",  PATTACH_ABSORIGIN_FOLLOW, keys.caster)
+	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
+	local particle_effect_intensity = 600
+	ParticleManager:SetParticleControl(dagon_particle, 2, Vector(particle_effect_intensity))
+	target:EmitSound("Hero_Lion.Impale")
 	PlayNormalGBEffect(target)
+	-- Blood splat
 	local splat = ParticleManager:CreateParticle("particles/generic_gameplay/screen_blood_splatter.vpcf", PATTACH_EYES_FOLLOW, target)
 
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( dagon_particle, false )
+		ParticleManager:DestroyParticle( splat, false )
+	end)
 end
 
 function PlayHeartBreakEffect(target)
@@ -265,6 +286,11 @@ function PlayHeartBreakEffect(target)
 
 	local hb = ParticleManager:CreateParticle("particles/custom/lancer/lancer_heart_break_txt.vpcf", PATTACH_CUSTOMORIGIN, target)
 	ParticleManager:SetParticleControl( hb, 0, target:GetAbsOrigin())
+
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( culling_kill_particle, false )
+		ParticleManager:DestroyParticle( hb, false )
+	end)
 end
 
 function PlayNormalGBEffect(target)
@@ -275,6 +301,10 @@ function PlayNormalGBEffect(target)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 4, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 8, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:ReleaseParticleIndex(culling_kill_particle)
+	
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( culling_kill_particle, false )
+	end)
 end 
 
 function OnGBComboHit(keys)
@@ -289,52 +319,56 @@ function OnGBComboHit(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
-	if ply.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + 150 + target:GetStrength() end
+	if caster.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + caster:GetAttackDamage()*1.5 + target:GetStrength() end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
 	EmitGlobalSound("Lancer.Heartbreak")
 	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
-  	Timers:CreateTimer(1.2, function() 
-	    local lancer = Physics:Unit(caster)
-	    caster:PreventDI()
-	    caster:SetPhysicsFriction(0)
-	    caster:SetPhysicsVelocity((keys.target:GetAbsOrigin() - keys.caster:GetAbsOrigin()):Normalized() * 3000)
-	    caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
-	    caster:FollowNavMesh(false)	
-	    caster:SetAutoUnstuck(false)
-	    keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_pierce_anim", {})
-	    caster:OnPhysicsFrame(function(unit)
-			local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
-			local dir = diff:Normalized()
-			unit:SetPhysicsVelocity(dir * 3000)
-			if diff:Length() < 100 then
-			  	caster:RemoveModifierByName("pause_sealdisabled")
-				unit:PreventDI(false)
-				unit:SetPhysicsVelocity(Vector(0,0,0))
-				unit:OnPhysicsFrame(nil)
-				unit:SetAutoUnstuck(true)
-		        FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
+	if target:IsAlive() then
+	  	Timers:CreateTimer(1.8, function() 
+		    local lancer = Physics:Unit(caster)
+		    caster:PreventDI()
+		    caster:SetPhysicsFriction(0)
+		    caster:SetPhysicsVelocity((keys.target:GetAbsOrigin() - keys.caster:GetAbsOrigin()):Normalized() * 3000)
+		    caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+		    caster:FollowNavMesh(false)	
+		    caster:SetAutoUnstuck(false)
+		    keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_pierce_anim", {})
+		    caster:OnPhysicsFrame(function(unit)
+				local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
+				local dir = diff:Normalized()
+				unit:SetPhysicsVelocity(dir * 3000)
+				if diff:Length() < 100 then
+				  	caster:RemoveModifierByName("pause_sealdisabled")
+					unit:PreventDI(false)
+					unit:SetPhysicsVelocity(Vector(0,0,0))
+					unit:OnPhysicsFrame(nil)
+					unit:SetAutoUnstuck(true)
+			        FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 
-		        if caster:IsAlive() then 
-		        	ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
-		        	target:EmitSound("Hero_Lion.Impale")
-			    	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-					target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
-					print(target:GetHealth())
-					if target:GetHealth() < HBThreshold then 
-						if target:GetHealth() ~= 0 then 
-							PlayHeartBreakEffect(target)
-						end 
-						target:Kill(keys.ability, caster)
-					else
-						PlayNormalGBEffect(target)
+			        if caster:IsAlive() then 
+			        	local RedScreenFx = ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+			        	Timers:CreateTimer( 3.0, function()
+							ParticleManager:DestroyParticle( RedScreenFx, false )
+						end)
+			        	target:EmitSound("Hero_Lion.Impale")
+				    	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+						target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
+
+						if target:GetHealth() < HBThreshold then 
+							if target:GetHealth() ~= 0 then 
+								PlayHeartBreakEffect(target)
+							end 
+							target:Kill(keys.ability, caster)
+						else
+							PlayNormalGBEffect(target)
+						end
 					end
 				end
-			end
+			end)
+			return
 		end)
-		return
-	end)
-
+	end
 end
 
 function OnGBAOEStart(keys)
@@ -398,7 +432,14 @@ function OnGBAOEHit(keys)
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
-	if ply.IsGaeBolgImproved == true then keys.Damage = keys.Damage + 250 end
+	if caster.IsGaeBolgImproved == true then keys.Damage = keys.Damage + 250 end
+
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+        DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+    end
 
 	local crack = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
 	local fire = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
@@ -406,12 +447,12 @@ function OnGBAOEHit(keys)
 	ParticleManager:SetParticleControl( explodeFx1, 0, bolgdummy:GetAbsOrigin())	
 	ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 2000, 0, true)
 	caster:EmitSound("Misc.Crash")
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	for k,v in pairs(targets) do
-        DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
-    end
+
+    Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( crack, false )
+		ParticleManager:DestroyParticle( fire, false )
+		ParticleManager:DestroyParticle( explodeFx1, false )
+	end)
 end
 
 function GaeBolgDummyEnd(dummy)
@@ -422,11 +463,13 @@ end
 function LancerCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
 		if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") and caster:FindAbilityByName("lancer_5th_gae_bolg"):IsCooldownReady() and caster:FindAbilityByName("lancer_5th_wesen_gae_bolg"):IsCooldownReady()  then
-			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", false, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+				if caster:GetAbilityByIndex(2):GetName() == "lancer_5th_wesen_gae_bolg" then 
+					caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+				end
 			end
 			})
 		end
@@ -437,7 +480,7 @@ function OnImrpoveBCAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsBCImproved = true
+	hero.IsBCImproved = true
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -447,7 +490,7 @@ function OnImrpoveGaeBolgAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsGaeBolgImproved = true
+	hero.IsGaeBolgImproved = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -459,7 +502,7 @@ function OnPFAAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("lancer_5th_protection_from_arrows"):SetLevel(1) 
-	ply.IsPFAAcquired = true
+	hero.IsPFAAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -470,7 +513,7 @@ function OnHeartseekerAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsHeartSeekerAcquired = true
+	hero.IsHeartSeekerAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

@@ -17,14 +17,14 @@ function FarSightVision(keys)
 	visiondummy:SetDayTimeVisionRange(radius)
 	visiondummy:SetNightTimeVisionRange(radius)
 	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
-	if ply.IsEagleEyeAcquired then 
+	if caster.IsEagleEyeAcquired then 
 		visiondummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1400}) 
 	end
 
 	local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
 
-	if ply.IsHruntingAcquired then
+	if caster.IsHruntingAcquired then
 		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, true) 
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
@@ -79,7 +79,7 @@ function KBStart(keys)
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 	
-	if ply.IsOveredgeAcquired and caster.OveredgeCount < 3 then
+	if caster.IsOveredgeAcquired and caster.OveredgeCount < 3 then
 		caster.OveredgeCount = caster.OveredgeCount + 1
 		caster:RemoveModifierByName("modifier_overedge_stack") 
 		caster:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(caster, caster, "modifier_overedge_stack", {}) 
@@ -97,7 +97,7 @@ function KBStart(keys)
 		keys.ability:StartCooldown(3.0)
 	end	
 
-	if ply.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
+	if caster.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
 		local barrage = caster:FindAbilityByName("archer_5th_sword_barrage")
 		local barrageCD = barrage:GetCooldownTimeRemaining()
 		barrage:EndCooldown()
@@ -112,14 +112,20 @@ function KBHit(keys)
 	local ability = keys.ability
 	local KBCount = 0
 
-	if ply.IsProjectionImproved then keys.DamagePerTick = keys.DamagePerTick + caster:GetIntellect() end
+	if caster.IsProjectionImproved then keys.DamagePerTick = keys.DamagePerTick + caster:GetIntellect() end
 
 	Timers:CreateTimer(function() 
 		if KBCount == 4 then return end
 		DoDamage(keys.caster, keys.target, keys.DamagePerTick , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 
-		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster)
-		ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
+		local KBHitFx = ParticleManager:CreateParticle("particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(KBHitFx, 0, target:GetAbsOrigin()) 
+		-- Destroy particle after delay
+		Timers:CreateTimer( 2, function()
+			ParticleManager:DestroyParticle( KBHitFx, false )
+			ParticleManager:ReleaseParticleIndex( KBHitFx )
+		end)
+
 		caster:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
 		KBCount = KBCount + 1
 		return 0.25
@@ -157,9 +163,14 @@ function OnBPHit(keys)
     end
 
 
-    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-    ParticleManager:SetParticleControl(particle, 3, target:GetAbsOrigin())
+    local BpHitFx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+    ParticleManager:SetParticleControl(BpHitFx, 3, target:GetAbsOrigin())
 	--ParticleManager:SetParticleControl(particle, 3, target:GetAbsOrigin()) -- target location
+	Timers:CreateTimer( 2, function()
+		ParticleManager:DestroyParticle( BpHitFx, false )
+		ParticleManager:ReleaseParticleIndex( BpHitFx )
+	end)
+
 	if not target:IsMagicImmune() then
 		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
 	end
@@ -171,7 +182,7 @@ function OnRhoStart(keys)
 	local target = keys.target
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsProjectionImproved then 
+	if caster.IsProjectionImproved then 
 		print("get knocked")
 		local knockBackUnits = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false )
 	 
@@ -280,6 +291,9 @@ function OnUBWCastStart(keys)
 		    caster.UBWLocator:SetAbsOrigin(caster:GetAbsOrigin())
 			OnUBWStart(keys)
 			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_ubw_death_checker",{})
+			if caster.IsMartinAcquired then
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_shroud_of_martin_str_bonus", {})
+			end
 		end
 	end
 	})
@@ -331,28 +345,7 @@ function OnUBWStart(keys)
 	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
-
-	local ubwdummyLoc1 = ubwCenter + Vector(600,-600, 1000)
-	local ubwdummyLoc2 = ubwCenter + Vector(600,600, 1000)
-	local ubwdummyLoc3 = ubwCenter + Vector(-600,600, 1000)
-	local ubwdummyLoc4 = ubwCenter + Vector(-600,-600, 1000)
-	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
-            , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	caster.IsUBWDominant = true
-
-	for i=1, #ubwTargets do
-		if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
-			ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
-			ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
-			ubwdummyLoc3 = aotkCenter + Vector(-600,600, 1000)
-			ubwdummyLoc4 = aotkCenter + Vector(-600,-600, 1000)
-			caster.IsUBWDominant = false
-			break
-		end
-	end
-	caster.IsUBWActive = true
-
-	print("milestone")
+	--[[
 	local info = {
 		Target = nil,
 		Source = nil, 
@@ -360,12 +353,51 @@ function OnUBWStart(keys)
 		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		vSpawnOrigin = ubwCenter + Vector(RandomFloat(-800,800),RandomFloat(-800,800), 500),
 		iMoveSpeed = 1000
-	}
+	}]]
+
+	local ubwdummyLoc1 = ubwCenter + Vector(600,-600, 1000)
+	local ubwdummyLoc2 = ubwCenter + Vector(600,600, 1000)
+	local ubwdummyLoc3 = ubwCenter + Vector(-600,600, 1000)
+	local ubwdummyLoc4 = ubwCenter + Vector(-600,-600, 1000)
 
     -- swap Archer's skillset with UBW ones
     caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
+
+    -- Find eligible UBW targets
+	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
+            , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	caster.IsUBWDominant = true
+
+	-- Remove any dummy or hero in jump
+	for i=1, #ubwTargets do
+		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
+			print(ubwTargets[i]:GetUnitName())
+			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
+				print("dummy or a hero with jump state detected. Removing current index")
+				table.remove(ubwTargets, i)
+			end
+		end
+	end
+	
+
+
+	-- If Iskander's AOTK is active, place the dummy and center of UBW accordingly
+	for i=1, #ubwTargets do
+		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then 
+			if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
+				ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
+				ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
+				ubwdummyLoc3 = aotkCenter + Vector(-600,600, 1000)
+				ubwdummyLoc4 = aotkCenter + Vector(-600,-600, 1000)
+				caster.IsUBWDominant = false
+				break
+			end
+		end
+	end
+	caster.IsUBWActive = true
+
 
     -- DUN DUN DUN DUN
     local dunCounter = 0
@@ -396,7 +428,7 @@ function OnUBWStart(keys)
 		ubwdummies[i]:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1000})
 	end
 
-	print("adding automated weapon shots")
+	--[[print("adding automated weapon shots")
 	Timers:CreateTimer(function() 
 		if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
 			local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
@@ -414,8 +446,8 @@ function OnUBWStart(keys)
             
 		else return end 
 		return 0.2
-	end)
-
+	end)]]
+	
 	if not caster.IsUBWDominant then return end -- If UBW is not dominant right now, do not teleport units 
 
 
@@ -454,19 +486,21 @@ end
 function EndUBW(caster)
 	if caster.IsUBWActive == false then return end
 	print("UBW ended")
+    caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, false) 
+    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, false) 
+    caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, false) 
 
 	UTIL_RemoveImmediate(ubwQuest)
 	caster.IsUBWActive = false
-	if IsValidEntity(caster.UBWLocator) then
+	if not caster.UBWLocator:IsNull() and IsValidEntity(caster.UBWLocator) then
 		caster.UBWLocator:RemoveSelf()
 	end
 
-    caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, true) 
-    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
-    caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
 
 	for i=1, #ubwdummies do
-		ubwdummies[i]:ForceKill(true) 
+		if not ubwdummies[i]:IsNull() and IsValidEntity(ubwdummies[i]) then 
+			ubwdummies[i]:ForceKill(true) 
+		end
 	end
 
 
@@ -475,7 +509,7 @@ function EndUBW(caster)
 
     for i=1, #units do
     	print("removing units in UBW")
-    	if IsValidEntity(units[i]) then
+    	if not units[i]:IsNull() and IsValidEntity(units[i]) then
 	    	ProjectileManager:ProjectileDodge(units[i])
 	   		if units[i]:GetName() == "npc_dota_hero_chen" and units[i]:HasModifier("modifier_army_of_the_king_death_checker") then
 	   			units[i]:RemoveModifierByName("modifier_army_of_the_king_death_checker")
@@ -483,17 +517,19 @@ function EndUBW(caster)
 	    	local IsUnitGeneratedInUBW = true
 	    	if ubwTargets ~= nil then
 		    	for j=1, #ubwTargets do
-		    		if units[i] == ubwTargets[j] then
-		    			if ubwTargetLoc[j] ~= nil then
-			    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+		    		if not ubwTargets[j]:IsNull() and IsValidEntity(ubwTargets[j]) then 
+			    		if units[i] == ubwTargets[j] then
+			    			if ubwTargetLoc[j] ~= nil then
+				    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+				    		end
+			    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
+			    			Timers:CreateTimer(0.1, function() 
+								units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+							end)
+			    			IsUnitGeneratedInUBW = false
+			    			break 
 			    		end
-		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
-		    			Timers:CreateTimer(0.1, function() 
-							units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
-						end)
-		    			IsUnitGeneratedInUBW = false
-		    			break 
-		    		end
+			    	end
 		    	end 
 	    	end
 	    	if IsUnitGeneratedInUBW then
@@ -503,7 +539,7 @@ function EndUBW(caster)
 	    		end
 	    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
 				Timers:CreateTimer(0.1, function() 
-					if not units[i]:IsNull() then
+					if not units[i]:IsNull() and IsValidEntity(units[i]) then
 						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
 					end
 				end)
@@ -520,6 +556,7 @@ end
 -- combo
 function OnRainStart(keys)
 	local caster = keys.caster
+	if not caster.IsUBWActive then return end
 	caster:FindAbilityByName("archer_5th_rho_aias"):StartCooldown(27.0)
 	local ascendCount = 0
 	local descendCount = 0
@@ -540,7 +577,11 @@ function OnRainStart(keys)
 		iMoveSpeed = 3000
 	}
 
-	ParticleManager:CreateParticle("particles/custom/screen_brown_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+	local BrownSplashFx = ParticleManager:CreateParticle("particles/custom/screen_brown_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+	Timers:CreateTimer( 4.0, function()
+		ParticleManager:DestroyParticle( BrownSplashFx, false )
+		ParticleManager:ReleaseParticleIndex( BrownSplashFx )
+	end)
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.0)
 
 	Timers:CreateTimer('rain_ascend', {
@@ -651,8 +692,14 @@ function OnArrowRainBPHit(keys)
 	for k,v in pairs(targets) do
          DoDamage(caster, v, splashdmg, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
     end
-    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
-    ParticleManager:SetParticleControl(particle, 3, keys.target:GetAbsOrigin())
+    local ArrowExplosionFx = ParticleManager:CreateParticle("particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
+    ParticleManager:SetParticleControl(ArrowExplosionFx, 3, keys.target:GetAbsOrigin())
+	-- Destroy Particle
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( ArrowExplosionFx, false )
+		ParticleManager:ReleaseParticleIndex( ArrowExplosionFx )
+		return nil
+	end)
 	keys.target:AddNewModifier(caster, keys.target, "modifier_stunned", {Duration = stunDuration})
 end
 
@@ -667,7 +714,7 @@ function OnUBWBarrageStart(keys)
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
-	if ply.IsProjectionImproved then 
+	if caster.IsProjectionImproved then 
 		keys.Damage = keys.Damage + (caster:GetStrength() + caster:GetIntellect())*2
 	end	
 	caster:EmitSound("Archer.UBWAmbient")
@@ -754,13 +801,14 @@ function OnUBWBarrageConfineStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if ply.IsProjectionImproved then 
+	if caster.IsProjectionImproved then 
 		giveUnitDataDrivenModifier(caster, keys.target, "rb_sealdisabled", 2.0)
 	end
 	target:AddNewModifier(caster, target, "modifier_stunned", {duration = 0.1})
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	for i=1,8 do
 		local confineDummy = CreateUnitByName("ubw_sword_confine_dummy", Vector(target:GetAbsOrigin().x + math.cos(i*0.8) * 150, target:GetAbsOrigin().y + math.sin(i*0.8) * 150, -200)  , false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
+		confineDummy:FindAbilityByName("dummy_visible_unit_passive_no_fly"):SetLevel(1)
 		confineDummy:SetAbsOrigin(confineDummy:GetAbsOrigin() - Vector(0,0,-200)) 
 		confineDummy:SetForwardVector(Vector(0,0,-1))
 		Timers:CreateTimer(keys.TrapDuration, function()
@@ -775,7 +823,7 @@ end
 function OnUBWRBStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if ply.IsProjectionImproved then 
+	if caster.IsProjectionImproved then 
 		keys.StunDuration = keys.StunDuration + 0.2
 		giveUnitDataDrivenModifier(caster, keys.target, "rb_sealdisabled", 2.0)
 	end
@@ -850,7 +898,7 @@ function OnUBWNineLanded(caster, ability)
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 				for k,v in pairs(lasthitTargets) do
-					if ply.IsProjectionImproved then 
+					if caster.IsProjectionImproved then 
 						DoDamage(caster, v, lasthitdmg+v:GetHealth()*0.05 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					else
 						DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -892,7 +940,7 @@ function OnUBWNineLanded(caster, ability)
 			caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 			for k,v in pairs(targets) do
-				if ply.IsProjectionImproved then 
+				if caster.IsProjectionImproved then 
 					DoDamage(caster, v, tickdmg+v:GetHealth()*0.05 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 				else
 					DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -930,7 +978,7 @@ function OnHruntCast(keys)
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
-	caster:EmitSound("Hero_Invoker.EMP.Charge") 
+	 
 	-- Show hrunting cast
 	if caster.hrunting_particle ~= nil then
 		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
@@ -957,7 +1005,6 @@ function OnHruntStart(keys)
 	print(caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100 .. " " .. caster:GetMana())
 	caster:SetMana(0) 
 	
-	caster:EmitSound("Hero_Mirana.ArrowCast")
 	local info = {
 		Target = keys.target,
 		Source = keys.caster, 
@@ -1110,7 +1157,7 @@ function OnEagleEyeAcquired(keys)
 	hero:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(2)
 	hero:SetDayTimeVisionRange(hero:GetDayTimeVisionRange() + 200)
 	hero:SetNightTimeVisionRange(hero:GetNightTimeVisionRange() + 200) 
-	ply.IsEagleEyeAcquired = true
+	hero.IsEagleEyeAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -1121,7 +1168,7 @@ function OnHruntingAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsHruntingAcquired = true
+	hero.IsHruntingAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -1134,7 +1181,7 @@ function OnShroudOfMartinAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 10) 
 	hero:SetBaseMagicalResistanceValue(15)
-	ply.IsMartinAcquired = true
+	hero.IsMartinAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -1145,7 +1192,7 @@ function OnImproveProjectionAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsProjectionImproved = true
+	hero.IsProjectionImproved = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -1156,7 +1203,7 @@ function OnOveredgeAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsOveredgeAcquired = true
+	hero.IsOveredgeAcquired = true
 	hero.OveredgeCount = 0
 
 	-- Set master 1's mana 
@@ -1165,7 +1212,7 @@ function OnOveredgeAcquired(keys)
 
 	Timers:CreateTimer(function()  
 		print("Adding overedge stack")
-		if ply.IsOveredgeAcquired and hero.OveredgeCount < 3 then
+		if hero.IsOveredgeAcquired and hero.OveredgeCount < 3 then
 			hero.OveredgeCount = hero.OveredgeCount + 1
 			hero:RemoveModifierByName("modifier_overedge_stack") 
 			hero:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(hero, hero, "modifier_overedge_stack", {}) 

@@ -30,6 +30,8 @@ purgable = {
     "modifier_speed_gem",
     "modifier_share_damage",
     "modifier_rule_breaker",
+    "modifier_caster_rule_breaker",
+    "modifier_lancelot_rule_breaker",
     "modifier_double_edge",
     "modifier_murderous_instinct",
     "modifier_double_spearsmanship",
@@ -149,6 +151,7 @@ CannotReset = {
     "gille_larret_de_mort",
     "nero_fiery_finale",
     "nero_imperial_privilege",
+    "gawain_blessing_of_fairy",
     "gawain_divine_meltdown",
     "gawain_supernova"
 }
@@ -183,13 +186,6 @@ end
 
 -- Apply a modifier from item
 function giveUnitDataDrivenModifier(source, target, modifier,dur)
-    --[[source and target should be hscript-units. The same unit can be in both source and target)
-    local dummy = CreateUnitByName("dummy_unit", Vector(0,0,0), false, source, source, source:GetTeamNumber())
-    local dummyAbility = dummy:FindAbilityByName("dummy_unit_passive")
-    dummyAbility:SetLevel(1)
-
-    dummyAbility:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
-    dummy:RemoveSelf()]]
     if not source:IsHero() then 
         source = source:GetPlayerOwner():GetAssignedHero() 
     end
@@ -199,6 +195,8 @@ end
 
 function ApplyAirborne(source, target, duration)
     target:AddNewModifier(source, source, "modifier_stunned", {Duration = duration})
+
+    if target:GetName() == "npc_dota_hero_legion_commander" and target:HasModifier("modifier_avalon") then return end
     --[[local ascendCounter = 0
     Timers:CreateTimer(function()
         if ascendCounter > duration/2 then return end
@@ -257,6 +255,7 @@ function StartQuestTimer(questname, questtitle, questendtime)
   entKillCountSubquest:SetTextReplaceValue( SUBQUEST_TEXT_REPLACE_VALUE_TARGET_VALUE, questendtime ) --value on the bar
   
   Timers:CreateTimer(0.9, function()
+    if entQuest:IsNull() then return end
     if (questTimeEnd - GameRules:GetGameTime())<=0 then
       UTIL_RemoveImmediate( entQuest )
       entKillCountSubquest = nil
@@ -290,7 +289,7 @@ function LevelAllAbility(hero)
 end
 
 function EmitSoundOnAllClient(songname)
-    for i=0, 9 do
+    for i=0, 11 do
         local player = PlayerResource:GetPlayer(i)
         if player ~= nil then
             EmitSoundOnClient(songname, player)
@@ -467,7 +466,7 @@ end
 
 function AssignRandomHero(player)
     local heroesTable = heroes
-    for i=0,9 do
+    for i=0,11 do
         local ply = PlayerResource:GetPlayer(i)
         if ply and ply:GetAssignedHero() ~= nil then
             for i=1, #heroesTable do
@@ -600,7 +599,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         if dmg_type == DAMAGE_TYPE_MAGICAL then
             incomingDmg = incomingDmg * (1-MR)
         end 
-        if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" then
+        if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" or abil:GetAbilityName() == "false_assassin_tsubame_mai" or abil:GetAbilityName() == "lancelot_tsubame_gaeshi" then
             target.IsAvalonPenetrated = true
         else
             if incomingDmg > 300 then 
@@ -945,7 +944,7 @@ function LogDeepPrint(debugInstance, prefix)
 end
 
 function LoopOverHeroes(callback)
-  for i=0, 9 do
+  for i=0, 11 do
     local player = PlayerResource:GetPlayer(i)
     if player ~= nil and player:GetAssignedHero() ~= nil then 
       if callback(player:GetAssignedHero()) then
@@ -953,6 +952,17 @@ function LoopOverHeroes(callback)
       end 
     end
   end
+end
+
+function LoopOverPlayers(callback)
+    for i=0, 11 do
+        local player = PlayerResource:GetPlayer(i)
+        if player ~= nil and player:GetAssignedHero() ~= nil then 
+            if callback(player, player:GetPlayerID()) then
+                break
+            end 
+        end
+    end
 end
 
 function RemoveHeroFromLinkTables(targethero)

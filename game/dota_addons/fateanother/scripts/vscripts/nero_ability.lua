@@ -33,7 +33,7 @@ function OnDivinityAcquired(keys)
 		end
 	end
 	caster:AddAbility("berserker_5th_divinity")
-	if ply.IsPrivilegeImproved then
+	if caster.IsPrivilegeImproved then
 		caster:FindAbilityByName("berserker_5th_divinity"):SetLevel(2)
 	else
 		caster:FindAbilityByName("berserker_5th_divinity"):SetLevel(1)
@@ -58,7 +58,7 @@ function OnGoldenRuleAcquired(keys)
 		end
 	end
 	caster:AddAbility("gilgamesh_golden_rule")
-	if ply.IsPrivilegeImproved then
+	if caster.IsPrivilegeImproved then
 		caster:FindAbilityByName("gilgamesh_golden_rule"):SetLevel(2)
 	else
 		caster:FindAbilityByName("gilgamesh_golden_rule"):SetLevel(1)
@@ -82,7 +82,7 @@ function OnMindEyeAcquired(keys)
 		end
 	end
 	caster:AddAbility("false_assassin_minds_eye")
-	if ply.IsPrivilegeImproved then
+	if caster.IsPrivilegeImproved then
 		caster:FindAbilityByName("false_assassin_minds_eye"):SetLevel(2)
 	else
 		caster:FindAbilityByName("false_assassin_minds_eye"):SetLevel(1)
@@ -106,7 +106,7 @@ function OnClairvoyanceAcquired(keys)
 		end
 	end
 	caster:AddAbility("archer_5th_clairvoyance")
-	if ply.IsPrivilegeImproved then
+	if caster.IsPrivilegeImproved then
 		caster:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(2)
 	else
 		caster:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(1)
@@ -150,7 +150,7 @@ function OnGBStrike(keys)
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	caster:EmitSound("Hero_Clinkz.DeathPact")
-	if ply.IsPTBAcquired then
+	if caster.IsPTBAcquired then
 		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		for k,v in pairs(targets) do
 			DoDamage(caster, target, caster:GetAgility() * 5 + caster:GetStrength() * 5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -167,6 +167,13 @@ function OnGBStrike(keys)
 	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
 	ParticleManager:SetParticleControl(particle, 1, Vector(300, 300, 300)) 
 	ParticleManager:SetParticleControl(particle, 3, Vector(300, 300, 300)) 
+
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( flameFx, false )
+		ParticleManager:ReleaseParticleIndex( flameFx )
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 
 	-- add effect and handle attribute
 end
@@ -252,6 +259,11 @@ function OnRIHit(keys)
 	target:EmitSound("Hero_Lion.FingerOfDeath")
 	local slashFx = ParticleManager:CreateParticle("particles/units/heroes/hero_legion_commander/legion_duel_start_text_burst_flare.vpcf", PATTACH_ABSORIGIN, target )
 	ParticleManager:SetParticleControl( slashFx, 0, target:GetAbsOrigin() + Vector(0,0,300))
+
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( slashFx, false )
+		ParticleManager:ReleaseParticleIndex( slashFx )
+	end)
 end
 
 function OnTheatreCast(keys)
@@ -281,7 +293,10 @@ function OnTheatreStart(keys)
 	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
 
 	local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-	
+	Timers:CreateTimer( 12.0, function()
+		ParticleManager:DestroyParticle( theatreFx, false )
+		ParticleManager:ReleaseParticleIndex( theatreFx )
+	end)	
 
 	local banners = CreateBannerInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
 	--local blockers = CreateBlockerInCircle(caster:GetAbsOrigin(), keys.Radius)
@@ -322,7 +337,7 @@ function OnTheatreStart(keys)
 	end)
 
 	-- attribute loop
-	if ply.IsGloryAcquired then
+	if caster.IsGloryAcquired then
 		keys.Damage = keys.Damage * 0.35
 		Timers:CreateTimer(function()
 			if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
@@ -361,7 +376,7 @@ function OnTheatreStart(keys)
 			end
 
 			-- buff allies
-			--[[if ply.IsGloryAcquired then
+			--[[if caster.IsGloryAcquired then
 				local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 				for k,v in pairs(targets) do
 					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_ally_buff",{})
@@ -429,6 +444,7 @@ function OnNeroComboStart(keys)
 
 	print("combo activated")
 	caster.ScreenOverlay = ParticleManager:CreateParticle("particles/custom/screen_lightred_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_aestus_domus_aurea") then
 			local flameVector = Vector( RandomFloat(-900, 900), RandomFloat(-900, 900), 100 )
@@ -440,6 +456,10 @@ function OnNeroComboStart(keys)
 
 			local flameFx = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_e.vpcf", PATTACH_ABSORIGIN, caster )
 			ParticleManager:SetParticleControl( flameFx, 3, caster:GetAbsOrigin() + flameVector)
+			Timers:CreateTimer( 12.0, function()
+				ParticleManager:DestroyParticle( flameFx, false )
+				ParticleManager:ReleaseParticleIndex( flameFx )
+			end)
 			caster:EmitSound("Hero_Batrider.Firefly.Cast")
 			print("rawr")
 			return 0.1
@@ -541,7 +561,9 @@ function NeroTakeDamage(keys)
 	local healCounter = 0
 
 
-	if caster:GetHealth() == 0 and ply.IsISAcquired and caster.IsISOnCooldown == false then
+	if caster:GetHealth() == 0 and caster.IsISAcquired and caster.IsISOnCooldown == false and not caster:HasModifier("rb_sealdisabled") and not 
+		caster:HasModifier("modifier_command_seal_2") and not caster:HasModifier("modifier_command_seal_3") and not caster:HasModifier("modifier_command_seal_4") then
+		
 		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
 		caster:SetHealth(1)
 		caster.IsISOnCooldown = true
@@ -555,6 +577,7 @@ function NeroTakeDamage(keys)
 			return 1.0
 		end)
 		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
+		giveUnitDataDrivenModifier(keys.caster, keys.caster, "rb_sealdisabled", 6.0)
 	end
 end
 
@@ -580,7 +603,7 @@ function OnPTBAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsPTBAcquired = true
+    hero.IsPTBAcquired = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -590,7 +613,7 @@ function OnPrivilegeImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsPrivilegeImproved = true
+    hero.IsPrivilegeImproved = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -600,7 +623,7 @@ function OnISAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsISAcquired = true
+    hero.IsISAcquired = true
     hero.IsISOnCooldown = false
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -611,7 +634,7 @@ function OnGloryAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsGloryAcquired = true
+    hero.IsGloryAcquired = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

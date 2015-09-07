@@ -4,7 +4,7 @@ function OnGKStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	FACheckCombo(keys.caster, keys.ability)
-	if ply.IsQuickdrawAcquired then 
+	if caster.IsQuickdrawAcquired then 
 		caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true) 
 		Timers:CreateTimer(5, function() return caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true)   end)
 	end
@@ -53,7 +53,7 @@ function OnHeartStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 
-	if ply.IsVitrificationAcquired then
+	if caster.IsVitrificationAcquired then
 		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_heart_of_harmony_invisible", {})
 	else
 		-- set global cooldown
@@ -84,7 +84,7 @@ function OnHeartDamageTaken(keys)
 	local caster = keys.caster
 	local target = keys.attacker
 	local damageTaken = keys.DamageTaken
-	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 then
+	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-target:GetAbsOrigin()):Length2D() < 3000 then
 
 		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
@@ -130,6 +130,14 @@ function PCStopOrder(keys)
 	ExecuteOrderFromTable(stopOrder) 
 end
 
+function OnTMStart(keys)
+	local caster = keys.caster
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+end
+
 function OnTMLanded(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -171,7 +179,7 @@ function OnTMDamageTaken(keys)
 	local damageTaken = keys.DamageTaken
 
 	-- if caster is alive and damage is above threshold, do something
-	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 then
+	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-attacker:GetAbsOrigin()):Length2D() < 3000 then
 		print("Starting Tsubame Mai")
 		local tgabil = caster:FindAbilityByName("false_assassin_tsubame_gaeshi")
 		keys.Damage = tgabil:GetLevelSpecialValueFor("damage", tgabil:GetLevel()-1)
@@ -395,7 +403,7 @@ function OnWBStart(keys)
 	local radius = keys.Radius
 	local casterInitOrigin = caster:GetAbsOrigin() 
 
-	if not ply.IsGanryuAcquired then
+	if not caster.IsGanryuAcquired then
 		caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
 		caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(keys.GCD) 
 		caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
@@ -403,20 +411,23 @@ function OnWBStart(keys)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), casterInitOrigin, nil, radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
-	local risingwind = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
-	if ply.IsGanryuAcquired then
+	if caster.IsGanryuAcquired then
+		print("Ganryu!")
 		Timers:CreateTimer(0.3, function()
-			if targets[1] ~= nil then
-				caster:SetAbsOrigin(targets[1]:GetAbsOrigin())
-				FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+			for i=1, #targets do
+				if targets[i]:IsAlive() then
+					caster:SetAbsOrigin(targets[i]:GetAbsOrigin())
+					FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+					break
+				end
 			end
 		return end)
 	end
 
 	for k,v in pairs(targets) do
 		print(v:GetName())
-		if v:GetName() == "npc_dota_hero_bounty_hunter" and v:GetPlayerOwner().IsPFWAcquired then 
+		if v:GetName() == "npc_dota_hero_bounty_hunter" and v.IsPFWAcquired then 
 			-- do nothing
 		else
 			giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
@@ -435,6 +446,14 @@ function OnWBStart(keys)
 			return end)
 		end
 	end
+
+	local risingWindFx = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	-- Destroy particle after delay
+	Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( risingWindFx, false )
+			ParticleManager:ReleaseParticleIndex( risingWindFx )
+			return nil
+	end)
 end
 
 function TGPlaySound(keys)
@@ -450,7 +469,9 @@ end
 function OnTGStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	EmitGlobalSound("FA.Chop")
+
 	-- Check if caster is FA or Lancelot
 	if caster:GetName() == "npc_dota_hero_juggernaut" then
 		EmitGlobalSound("FA.TG")
@@ -473,7 +494,14 @@ function OnTGStart(keys)
 		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
-			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+			if caster.IsGanryuAcquired then 
+				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				for i=1, #targets do 
+					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				end
+			else
+				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+			end
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 			Timers:CreateTimer( 1.0, function()
@@ -489,7 +517,14 @@ function OnTGStart(keys)
 		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
-			DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+			if caster.IsGanryuAcquired then
+				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				for i=1, #targets do 
+					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				end
+			else
+				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+			end
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 			Timers:CreateTimer( 1.0, function()
@@ -505,9 +540,18 @@ function OnTGStart(keys)
 		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
-			if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-			DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
+			if IsSpellBlocked(keys.target) and target:GetName() == "npc_dota_hero_legion_commander" then return end -- if target has instinct up, block the last hit
+			if caster.IsGanryuAcquired then
+				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				for i=1, #targets do 
+					DoDamage(caster, targets[i], keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+					targets[i]:AddNewModifier(caster, targets[i], "modifier_stunned", {Duration = 1.5})
+				end
+			else
+				DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
+			end
+			
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 			Timers:CreateTimer( 1.0, function()
@@ -540,8 +584,8 @@ function OnGanryuAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsGanryuAcquired = true
-
+	hero.IsGanryuAcquired = true
+	print("Ganryu acquired")
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -551,7 +595,7 @@ function OnEyeOfSerenityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsEyeOfSerenityAcquired = true
+	hero.IsEyeOfSerenityAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -562,7 +606,7 @@ function OnQuickdrawAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsQuickdrawAcquired = true
+	hero.IsQuickdrawAcquired = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -573,7 +617,7 @@ function OnVitrificationAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsVitrificationAcquired = true
+	hero.IsVitrificationAcquired = true
 	hero:FindAbilityByName("false_assassin_presence_concealment"):SetLevel(1) 
 	hero:SwapAbilities("fate_empty2", "false_assassin_presence_concealment", true, true) 
 

@@ -1,0 +1,13 @@
+"AddonInfo"
+{
+	"maps"			"fate_raw"
+	"IsPlayable"	"1"
+	"fate_raw"
+	{
+		"MaxPlayers" "12"
+	}
+	"fate_test"
+	{
+		"MaxPlayers" "12"
+	}
+}

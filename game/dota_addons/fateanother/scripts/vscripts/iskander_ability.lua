@@ -42,8 +42,12 @@ function OnForwardStart(keys)
 	
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_legion_commander/legion_commander_press_sphere.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 
-	if ply.IsCharismaImproved then
+	if caster.IsCharismaImproved then
 		keys.Radius = 20000
 	end
 	
@@ -79,9 +83,17 @@ function OnPhalanxStart(keys)
 			aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
 			PhalanxPull(caster, soldier, targetPoint, keys.Damage, keys.ability) -- do pullback
 
-			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
-			ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
+			--local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+			--ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
 			soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
+			if i==0 then
+				local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+				ParticleManager:SetParticleControl(particle, 3, targetPoint)
+				Timers:CreateTimer( 2.0, function()
+					ParticleManager:DestroyParticle( particle, false )
+					ParticleManager:ReleaseParticleIndex( particle )
+				end)
+			end 
 			table.insert(caster.PhalanxSoldiers, soldier)
 		end)
 	end
@@ -97,8 +109,8 @@ function OnPhalanxStart(keys)
 			aotkAbility:ApplyDataDrivenModifier(keys.caster, soldier, "modifier_army_of_the_king_infantry_bonus_stat",{})
 			PhalanxPull(caster, soldier, targetPoint, keys.Damage, keys.ability) -- do pullback
 
-			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
-			ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
+			--local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, soldier)
+			--ParticleManager:SetParticleControl(particle, 3, soldier:GetAbsOrigin())
 			soldier:EmitSound("Hero_LegionCommander.Overwhelming.Location")
 			table.insert(caster.PhalanxSoldiers, soldier)
 		end)
@@ -207,6 +219,14 @@ function OnChariotStart(keys)
     ParticleManager:SetParticleControl(particle3, 0, caster:GetAbsOrigin())
     ParticleManager:SetParticleControl(particle3, 1, caster:GetAbsOrigin())
     ParticleManager:SetParticleControl(particle3, 2, caster:GetAbsOrigin())
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+		ParticleManager:DestroyParticle( particle2, false )
+		ParticleManager:ReleaseParticleIndex( particle2 )
+		ParticleManager:DestroyParticle( particle3, false )
+		ParticleManager:ReleaseParticleIndex( particle3 )
+	end)
 
     Timers:CreateTimer(1.0, function() 
     	if caster:IsAlive() then
@@ -220,7 +240,7 @@ function OnChariotRide(keys)
 	local ply = caster:GetPlayerOwner()
 	local damageDiff = keys.MaxDamage - keys.MinDamage
 
-	if ply.IsVEAcquired then
+	if caster.IsVEAcquired then
 		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "iskander_via_expugnatio", true, true) 
 	else
 		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty3", true, true)
@@ -249,10 +269,10 @@ function OnChariotRide(keys)
 	            DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        end
 
-	        if ply.IsThundergodAcquired then
+	        if caster.IsThundergodAcquired then
 		        local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 150, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		        for k,v in pairs(targets) do
-		            DoDamage(caster, v, 200, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+		            DoDamage(caster, v, 200, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 		        end	  
 		        local thunderTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		        local thunderTarget = thunderTargets[math.random(#thunderTargets)]
@@ -266,6 +286,10 @@ function OnChariotRide(keys)
 		        	local thunderFx = ParticleManager:CreateParticle("particles/units/heroes/hero_razor/razor_storm_lightning_strike.vpcf", PATTACH_CUSTOMORIGIN, thunderTarget)
 		        	ParticleManager:SetParticleControl(thunderFx, 0, thunderTarget:GetAbsOrigin())
 		        	ParticleManager:SetParticleControl(thunderFx, 1, caster:GetAbsOrigin()+Vector(0,0,800))
+					Timers:CreateTimer( 2.0, function()
+						ParticleManager:DestroyParticle( thunderFx, false )
+						ParticleManager:ReleaseParticleIndex( thunderFx )
+					end)
 		        end
 	        end
 			local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -381,7 +405,10 @@ function CreateLightningField(keys, vector)
  	local plusminus = 1
     local currentMS = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed())
     local particle3 = ParticleManager:CreateParticle("particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-
+	Timers:CreateTimer( 4.0, function()
+		ParticleManager:DestroyParticle( particle3, false )
+		ParticleManager:ReleaseParticleIndex( particle3 )
+	end)
     Timers:CreateTimer(function()	
     	if fieldCounter >= keys.Duration then return end
 
@@ -397,12 +424,21 @@ function CreateLightningField(keys, vector)
            	end
         end
         local randomVec = RandomInt(-400,400)
-    	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_CUSTOMORIGIN, caster)
-    	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_CUSTOMORIGIN, caster)
+        
+        local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field_c.vpcf", PATTACH_CUSTOMORIGIN, caster)
+        local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field_c.vpcf", PATTACH_CUSTOMORIGIN, caster)
+    	--local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_CUSTOMORIGIN, caster)
+    	--local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_static_field.vpcf", PATTACH_CUSTOMORIGIN, caster)
     	ParticleManager:SetParticleControl(particle3, 1, caster:GetAbsOrigin())
 		ParticleManager:SetParticleControl(particle3, 2, caster:GetAbsOrigin())
     	ParticleManager:SetParticleControl( particle, 0, vector + Vector(randomVec, 0, 250))
     	ParticleManager:SetParticleControl( particle2, 0, vector + Vector(randomVec, 0, 100))
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+			ParticleManager:DestroyParticle( particle2, false )
+			ParticleManager:ReleaseParticleIndex( particle2 )
+		end)
     	fieldCounter = fieldCounter + 0.5
     	return 0.5
     end)
@@ -509,29 +545,47 @@ end
 function OnAOTKStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12)
 	local ability = keys.ability
-	aotkTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
-            , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	caster.IsAOTKDominant = true
-	for i=1, #aotkTargets do
-		if aotkTargets[i]:GetName() == "npc_dota_hero_ember_spirit" and aotkTargets[i]:HasModifier("modifier_ubw_death_checker") then
-			caster.IsAOTKDominant = false
-			break
-		end
-	end
 	caster.IsAOTKActive = true
 	caster:EmitSound("Ability.SandKing_SandStorm.loop")
+	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12) -- Start timer
 
 	-- Swap abilities
 	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)
 	caster:SwapAbilities("fate_empty1", "iskander_summon_hephaestion", true, true) 
-	if ply.IsBeyondTimeAcquired then
+	if caster.IsBeyondTimeAcquired then
 		caster:SwapAbilities("iskander_charisma", "iskander_summon_waver", true, true) 
 	else 
 		caster:SwapAbilities("iskander_charisma", "fate_empty4", true, true) 
 	end
- 
+
+	-- Find eligible targets
+	aotkTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
+            , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+	caster.IsAOTKDominant = true
+
+	-- Remove any dummy or hero in jump from table 
+	for i=1, #aotkTargets do
+		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
+			print(aotkTargets[i]:GetUnitName())
+			if aotkTargets[i]:HasModifier("jump_pause") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
+				print("dummy or a hero with jump state detected. Removing current index")
+				table.remove(aotkTargets, i)
+			end
+		end
+	end
+
+	-- Check if Archer's UBW is already in place 
+	for i=1, #aotkTargets do
+		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
+			if aotkTargets[i]:GetName() == "npc_dota_hero_ember_spirit" and aotkTargets[i]:HasModifier("modifier_ubw_death_checker") then
+				caster.IsAOTKDominant = false
+				break
+			end
+		end
+	end
+
+
  	-- spawn sight dummy
 	local truesightdummy = CreateUnitByName("sight_dummy_unit", aotkCenter, false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 	truesightdummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 3000}) 
@@ -597,42 +651,44 @@ function OnAOTKStart(keys)
 
 	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
 	for i=1, #aotkTargets do
-		if aotkTargets[i]:GetName() ~= "npc_dota_ward_base" then
-			aotkTargetPos = aotkTargets[i]:GetAbsOrigin()
-	        aotkTargetLoc[i] = aotkTargetPos
-	        diff = (aotkCasterPos - aotkTargetPos)
+		if not aotkTargets[i]:IsNull() and IsValidEntity(aotkTargets[i]) then
+			if aotkTargets[i]:GetName() ~= "npc_dota_ward_base" then
+				aotkTargetPos = aotkTargets[i]:GetAbsOrigin()
+		        aotkTargetLoc[i] = aotkTargetPos
+		        diff = (aotkCasterPos - aotkTargetPos)
 
-	        local forwardVec = aotkTargets[i]:GetForwardVector()
-	        -- scale position difference to size of AOTK
-	        diff.y = diff.y * 0.7
-	        if aotkTargets[i]:GetTeam() ~= caster:GetTeam() then 
-	        	if diff.x <= 0 then 
-	        		diff.x = diff.x * -1 
-	        		forwardVec.x = forwardVec.x * -1
-	        	end
-	        elseif aotkTargets[i]:GetTeam() == caster:GetTeam() then
-	        	if diff.x >= 0 then 
-	        		diff.x = diff.x * -1
-	        		forwardVec.x = forwardVec.x * -1
-	        	end
-	        end
-	        aotkTargets[i]:SetAbsOrigin(aotkCenter - diff)
-			FindClearSpaceForUnit(aotkTargets[i], aotkTargets[i]:GetAbsOrigin(), true)
-			Timers:CreateTimer(0.1, function() 
-				if caster:IsAlive() then
-					aotkTargets[i]:AddNewModifier(aotkTargets[i], aotkTargets[i], "modifier_camera_follow", {duration = 1.0})
-				end
-			end)
-			Timers:CreateTimer(0.033, function()
-				if caster:IsAlive() then
-					ExecuteOrderFromTable({
-						UnitIndex = aotkTargets[i]:entindex(),
-						OrderType = DOTA_UNIT_ORDER_STOP,
-						Queue = false
-					})
-					aotkTargets[i]:SetForwardVector(forwardVec)
-				end
-			end)
+		        local forwardVec = aotkTargets[i]:GetForwardVector()
+		        -- scale position difference to size of AOTK
+		        diff.y = diff.y * 0.7
+		        if aotkTargets[i]:GetTeam() ~= caster:GetTeam() then 
+		        	if diff.x <= 0 then 
+		        		diff.x = diff.x * -1 
+		        		forwardVec.x = forwardVec.x * -1
+		        	end
+		        elseif aotkTargets[i]:GetTeam() == caster:GetTeam() then
+		        	if diff.x >= 0 then 
+		        		diff.x = diff.x * -1
+		        		forwardVec.x = forwardVec.x * -1
+		        	end
+		        end
+		        aotkTargets[i]:SetAbsOrigin(aotkCenter - diff)
+				FindClearSpaceForUnit(aotkTargets[i], aotkTargets[i]:GetAbsOrigin(), true)
+				Timers:CreateTimer(0.1, function() 
+					if caster:IsAlive() then
+						aotkTargets[i]:AddNewModifier(aotkTargets[i], aotkTargets[i], "modifier_camera_follow", {duration = 1.0})
+					end
+				end)
+				Timers:CreateTimer(0.033, function()
+					if caster:IsAlive() then
+						ExecuteOrderFromTable({
+							UnitIndex = aotkTargets[i]:entindex(),
+							OrderType = DOTA_UNIT_ORDER_STOP,
+							Queue = false
+						})
+						aotkTargets[i]:SetForwardVector(forwardVec)
+					end
+				end)
+			end
 		end
     end
 
@@ -655,23 +711,23 @@ end
 function EndAOTK(caster)
 	if caster.IsAOTKActive == false then return end
 	print("AOTK ended")
+	-- Revert abilities
+	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, false)
+	caster:SwapAbilities("fate_empty1", "iskander_summon_hephaestion", true, false) 
+	caster:SwapAbilities("iskander_charisma", caster:GetAbilityByIndex(3):GetName(), true, false) 
 
 	UTIL_RemoveImmediate(aotkQuest)
 	caster.IsAOTKActive = false
-	if IsValidEntity(caster.AOTKLocator) then
+	if not caster.AOTKLocator:IsNull() and IsValidEntity(caster.AOTKLocator) then
 		caster.AOTKLocator:RemoveSelf()
 	end
 
 	StopSoundEvent("Ability.SandKing_SandStorm.loop", caster)
 
-	-- Revert abilities
-	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)
-	caster:SwapAbilities("fate_empty1", "iskander_summon_hephaestion", true, true) 
-	caster:SwapAbilities("iskander_charisma", caster:GetAbilityByIndex(3):GetName(), true, true) 
 
 	-- Remove soldiers 
 	for i=1, #caster.AOTKSoldiers do
-		if IsValidEntity(caster.AOTKSoldiers[i]) then
+		if not caster.AOTKSoldiers[i]:IsNull() and IsValidEntity(caster.AOTKSoldiers[i]) then
 			if caster.AOTKSoldiers[i]:IsAlive() then
 				caster.AOTKSoldiers[i]:ForceKill(true)
 			end
@@ -686,7 +742,7 @@ function EndAOTK(caster)
     local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 3000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
     for i=1, #units do
     	print("removing units in AOTK")
-    	if IsValidEntity(units[i]) then 
+    	if not units[i]:IsNull() and IsValidEntity(units[i]) then 
 	    	-- Disjoint all projectiles
 	    	ProjectileManager:ProjectileDodge(units[i])
 	    	-- If unit is Archer and UBW is active, deactive it as well
@@ -696,17 +752,19 @@ function EndAOTK(caster)
 	    	local IsUnitGeneratedInAOTK = true
 	    	if aotkTargets ~= nil then
 		    	for j=1, #aotkTargets do
-		    		if units[i] == aotkTargets[j] then
-		    			if aotkTargets[j] ~= nil then
-		    				units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
-		    			end
-		    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
-		    			Timers:CreateTimer(0.1, function() 
-							units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
-						end)
-		    			IsUnitGeneratedInAOTK = false
-		    			break 
-		    		end
+		    		if not aotkTargets[j]:IsNull() and IsValidEntity(aotkTargets[j]) then
+			    		if units[i] == aotkTargets[j] then
+			    			if aotkTargets[j] ~= nil then
+			    				units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
+			    			end
+			    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
+			    			Timers:CreateTimer(0.1, function() 
+								units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+							end)
+			    			IsUnitGeneratedInAOTK = false
+			    			break 
+			    		end
+			    	end
 		    	end 
 	    	end
 	    	if IsUnitGeneratedInAOTK then
@@ -716,7 +774,7 @@ function EndAOTK(caster)
 	    		end
 	    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
 				Timers:CreateTimer(0.1, function() 
-					if not units[i]:IsNull() then
+					if IsValidEntity(units[i]) and not units[i]:IsNull() then
 						units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
 					end
 				end)
@@ -786,7 +844,7 @@ function ModifySoldierHealth(keys)
 	local newHP = unit:GetMaxHealth() + keys.HealthBonus
 	local newcurrentHP = unit:GetHealth() + keys.HealthBonus
 
-	if ply.IsBeyondTimeAcquired then 
+	if caster.IsBeyondTimeAcquired then 
 		newHP = newHP + caster:GetMaxHealth() * 30/100
 		newcurrentHP = newcurrentHP + caster:GetMaxHealth() * 30/100
 	end
@@ -900,6 +958,10 @@ function OnHammerStart(keys)
 			local dir = diff:Normalized()
 			local particle = ParticleManager:CreateParticle("particles/econ/items/tinker/boots_of_travel/teleport_end_bots_dust.vpcf", PATTACH_ABSORIGIN, cavalryTable[i])
 			ParticleManager:SetParticleControl(particle, 0, cavalryTable[i]:GetAbsOrigin())
+			Timers:CreateTimer( 2.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 			unit:SetPhysicsVelocity(unit:GetPhysicsVelocity():Length() * dir)
 	   		unit:SetForwardVector(dir) 
 			if diff:Length() < 50 then
@@ -974,7 +1036,7 @@ function OnIskanderCharismaImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsCharismaImproved = true
+    hero.IsCharismaImproved = true
     modName = "modifier_charisma_improved"
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -985,7 +1047,7 @@ function OnThundergodAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsThundergodAcquired = true
+    hero.IsThundergodAcquired = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -995,7 +1057,7 @@ function OnChariotChargeAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsVEAcquired = true
+    hero.IsVEAcquired = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -1005,7 +1067,7 @@ function OnBeyondTimeAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsBeyondTimeAcquired = true
+    hero.IsBeyondTimeAcquired = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

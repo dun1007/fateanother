@@ -1,7 +1,7 @@
 function OnEternalStart(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
-    if ply.IsEternalImproved ~= true then
+    if caster.IsEternalImproved ~= true then
         FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
         keys.ability:EndCooldown()
         return
@@ -11,7 +11,11 @@ function OnEternalStart(keys)
     HardCleanse(caster)
     local dispel = ParticleManager:CreateParticle( "particles/units/heroes/hero_abaddon/abaddon_death_coil_explosion.vpcf", PATTACH_ABSORIGIN, caster )
     ParticleManager:SetParticleControl( dispel, 1, caster:GetAbsOrigin())
-
+    -- Destroy particle after delay
+    Timers:CreateTimer( 2.0, function()
+        ParticleManager:DestroyParticle( dispel, false )
+        ParticleManager:ReleaseParticleIndex( dispel )
+    end)
 end
 
 function OnSMGStart(keys)
@@ -92,16 +96,16 @@ function OnSMGStart(keys)
 end
 
 function OnSMGHit(keys)
-        local caster = keys.caster
-        local target = keys.target
-        local ability = keys.ability
-        DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, ability, false)
-        local armorShred = math.floor(target:GetPhysicalArmorBaseValue() * keys.ArmorShred/100)
-        target:SetPhysicalArmorBaseValue(target:GetPhysicalArmorBaseValue() - armorShred)
-        Timers:CreateTimer( keys.Duration, function()
-                target:SetPhysicalArmorBaseValue(target:GetPhysicalArmorBaseValue() + armorShred) 
-                return
-        end)
+    local caster = keys.caster
+    local target = keys.target
+    local ability = keys.ability
+    DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, ability, false)
+    local armorShred = math.floor(target:GetPhysicalArmorBaseValue() * keys.ArmorShred/100)
+    target:SetPhysicalArmorBaseValue(target:GetPhysicalArmorBaseValue() - armorShred)
+    Timers:CreateTimer( keys.Duration, function()
+            target:SetPhysicalArmorBaseValue(target:GetPhysicalArmorBaseValue() + armorShred) 
+            return
+    end)
 end
 
 function OnDEStart(keys)
@@ -112,7 +116,7 @@ function OnDEAttack(keys)
     local caster = keys.caster
     local target = keys.target
     local ply = caster:GetPlayerOwner()
-    if ply.IsTAAcquired then
+    if caster.IsTAAcquired then
         keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_double_edge_slow", {}) 
     end
 end
@@ -136,7 +140,7 @@ function OnKnightStart(keys)
         local a6 = caster:GetAbilityByIndex(5)
 
         local NPLevel = 1
-        if ply.KnightLevel ~= nil then NPLevel = NPLevel + ply.KnightLevel end
+        if caster.KnightLevel ~= nil then NPLevel = NPLevel + caster.KnightLevel end
 
         
         caster:SwapAbilities("lancelot_close_spellbook", a5:GetName(), true,true) 
@@ -266,40 +270,47 @@ function OnKnightUsed(keys)
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
         local ability = keys.ability
-        if ply.KnightLevel == nil then
+        if caster.KnightLevel == nil then
                 OnKnightClosed(keys)
                 caster:FindAbilityByName("lancelot_knight_of_honor"):StartCooldown(ability:GetCooldown(ability:GetLevel())) 
         end
 end
 
 function OnAronditeStart(keys)
-        if keys.caster.IsKnightOpen then 
-            keys.ability:EndCooldown() 
-            keys.caster:GiveMana(800)
-            FireGameEvent( 'custom_error_show', { player_ID = keys.caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
-            return 
-        end
-        local caster = keys.caster
-        local ply = caster:GetPlayerOwner()
-        local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-        
-        local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-        for k,v in pairs(targets) do
-                DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
-        end
-        if ply.IsTAAcquired then
-            keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite_crit", {}) 
-        end
-        
+    if keys.caster.IsKnightOpen then 
+        keys.ability:EndCooldown() 
+        keys.caster:GiveMana(800)
+        FireGameEvent( 'custom_error_show', { player_ID = keys.caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
+        return 
+    end
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    -- Destroy particle after delay
+    Timers:CreateTimer( 2.0, function()
+        ParticleManager:DestroyParticle( groundcrack, false )
+        ParticleManager:ReleaseParticleIndex( groundcrack )
+    end)
+
+    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+    for k,v in pairs(targets) do
+            DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+    end
+    if caster.IsTAAcquired then
+        keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite_crit", {}) 
+    end
 end
 
 function OnFairyDmgTaken(keys)
-        local caster = keys.caster
-        if caster:GetHealth() < 500 and caster:IsAlive() and caster:FindAbilityByName("lancelot_blessing_of_fairy"):IsCooldownReady() then 
-                caster:EmitSound("DOTA_Item.BlackKingBar.Activate")
-                keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_fairy_magic_immunity", {}) 
-                keys.ability:StartCooldown(45)
-        end
+    local caster = keys.caster
+    if caster:GetHealth() < 500 and caster:IsAlive() and caster.IsFairyReady then 
+        caster:EmitSound("DOTA_Item.BlackKingBar.Activate")
+        keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_fairy_magic_immunity", {}) 
+        caster.IsFairyReady = false
+        Timers:CreateTimer(45, function()
+            caster.IsFairyReady = true
+        end)
+    end
 end
 
 function OnNukeStart(keys)
@@ -329,6 +340,11 @@ function OnNukeStart(keys)
     local nukeMarker = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf", PATTACH_CUSTOMORIGIN, caster )
     ParticleManager:SetParticleControl( nukeMarker, 0, targetPoint)
     ParticleManager:SetParticleControl( nukeMarker, 1, Vector(300, 300, 300))
+    -- Destroy particle after delay
+    Timers:CreateTimer( 3.0, function()
+        ParticleManager:DestroyParticle( nukeMarker, false )
+        ParticleManager:ReleaseParticleIndex( nukeMarker )
+    end)
 
     -- Create F16 nunit
     Timers:CreateTimer(1.97, function()
@@ -371,6 +387,14 @@ function OnNukeStart(keys)
         local barrageImpact2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_impact_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster )
         ParticleManager:SetParticleControl( barrageImpact2, 0, targetPoint+barrageVec1)
         visiondummy:EmitSound("Hero_Gyrocopter.Rocket_Barrage.Launch")
+        -- Destroy particle after delay
+        Timers:CreateTimer( 2.0, function()
+            ParticleManager:DestroyParticle( barrageImpact1, false )
+            ParticleManager:ReleaseParticleIndex( barrageImpact1 )
+            ParticleManager:DestroyParticle( barrageImpact2, false )
+            ParticleManager:ReleaseParticleIndex( barrageImpact2 )
+        end)
+    
         barrageCount = barrageCount + 1
         return 0.033
     end)
@@ -398,7 +422,13 @@ function OnNukeStart(keys)
         local mushroom = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
         ParticleManager:SetParticleControl( mushroom, 0, targetPoint)
 
-        
+        -- Destroy particle after delay
+        Timers:CreateTimer( 2.0, function()
+            ParticleManager:DestroyParticle( impactFxIndex, false )
+            ParticleManager:ReleaseParticleIndex( impactFxIndex )
+            ParticleManager:DestroyParticle( mushroom, false )
+            ParticleManager:ReleaseParticleIndex( mushroom )
+        end)
     end)
 end
 
@@ -418,7 +448,7 @@ function OnEternalImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsEternalImproved = true
+    hero.IsEternalImproved = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -432,6 +462,7 @@ function OnBlessingAcquired(keys)
     hero:FindAbilityByName("lancelot_blessing_of_fairy"):SetLevel(1) 
     hero:SwapAbilities("rubick_empty1", "lancelot_blessing_of_fairy", true, true) 
     hero:RemoveAbility("rubick_empty1") 
+    hero.IsFairyReady = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -441,11 +472,11 @@ function OnKnightImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    if ply.KnightLevel == nil then
-            ply.KnightLevel = 1
+    if hero.KnightLevel == nil then
+            hero.KnightLevel = 1
             keys.ability:EndCooldown()
     else
-            ply.KnightLevel = 2
+            hero.KnightLevel = 2
     end 
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -456,7 +487,7 @@ function OnTAAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsTAAcquired = true
+    hero.IsTAAcquired = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

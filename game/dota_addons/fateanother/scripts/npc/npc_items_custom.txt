@@ -329,121 +329,6 @@
 
 	}
 
-	"item_hregen_modifier"
-	{
-		"ID"							"2102"
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"BaseClass"						"item_datadriven"
- 
-		"Modifiers"
-		{
-			"modifier_hregen_mod_1"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.25"
-				}
-			}
-			"modifier_hregen_mod_2"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.5"
-				}
-			}
-			"modifier_hregen_mod_4"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"1.0"
-				}
-			}
-			"modifier_hregen_mod_8"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"2.0"
-				}
-			}
-			"modifier_hregen_mod_16"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"4.0"
-				}
-			}
-			"modifier_hregen_mod_32"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"8.0"
-				}
-			}
-			"modifier_hregen_mod_64"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"16.0"
-				}
-			}
-			"modifier_hregen_mod_128"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"32.0"
-				}
-			}
-			"modifier_hregen_mod_256"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"64.0"
-				}
-			}
-			"modifier_hregen_mod_512"
-			{
-				"Passive"           	"1"
-				"IsHidden"				"1"  
-				"Attributes"		"MODIFIER_ATTRIBUTE_MULTIPLE"  
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"128.0"
-				}
-			}
-		}
-	}
-
-
-
 	"item_mana_essence" 
 	{
 		//		GENERAL
@@ -509,7 +394,7 @@
 	            	"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"50"
 	            	"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"30"
 	            }
-	            "OnAttacked"
+	            "OnTakeDamage"
 	            {
 	            	"RemoveModifier"
 	            	{
@@ -1249,6 +1134,7 @@
 			}
 	    	"SpendCharge" {}
 	    }
+	    
 	}
 
 	"item_recipe_b_scroll"
@@ -1381,45 +1267,32 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-	    	"particle"		"particles/items2_fx/mjollnir_shield.vpcf"
+	    	//"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+	    	//"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
 
 	    "OnSpellStart"
 	    {
-	    	"SpendCharge" {}
 	    	"ApplyModifier"
 			{
-				"ModifierName"	"item_a_scroll"
+				"ModifierName"	"modifier_a_scroll"
 				"Target"		"CASTER"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"items"
-				"Function"		"AScroll"
 			}
 			"FireSound"
 			{
-				"EffectName"	"DOTA_Item.Pipe.Activate"
+				"EffectName"	"Hero_Oracle.FatesEdict.Cast"
 				"Target"		"CASTER"
 			}
+			"SpendCharge" {}
 	    }
 
 	    "Modifiers"
 	    {
-	    	"item_a_scroll"
+	    	"modifier_a_scroll"
 	    	{
 	    		"Duration"		"10.0"
-	    		"OnCreated"
-	    		{
-	    			"AttachEffect"
-	    			{
-	    				"Target"		"CASTER"
-	    				"EffectName"	"particles/items2_fx/mjollnir_shield.vpcf"
-	    				"EffectAttachType"		"follow_origin"
-	    				"EffectRadius"		"300"
-	    			}
-
-	    		}
+				//"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -1471,12 +1344,13 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-	    	"particle"			"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
+	    	//"particle"			"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+	    	//"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
 
 	    "OnSpellStart"
 	    {
-	    	"SpendCharge" {}
 	    	"ApplyModifier"
 			{
 				"ModifierName"	"modifier_a_plus_mr"
@@ -1489,17 +1363,17 @@
 			}
 			"FireSound"
 			{
-				"EffectName"	"DOTA_Item.Pipe.Activate"
+				"EffectName"	"Hero_Oracle.FatesEdict.Cast"
 				"Target"		"CASTER"
 			}
+			"SpendCharge" {}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_a_plus_mr"
 	    	{
 	    		"Duration"		"10.0"
-	    		"EffectName"	"particles/units/heroes/hero_sven/sven_warcry_buff.vpcf"
-	    		"EffectAttachType"	"follow_overhead"
+				//"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -1560,18 +1434,18 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastRange"				"1000"
 
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
-			"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
-			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
+			//"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			//"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+			//"particle"	"particles/generic_gameplay/generic_purge.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 
 	    "OnSpellStart"
 	    {
-	    	"SpendCharge" {}
 	    	"ApplyModifier"
 	    	{
 	    		"ModifierName"		"modifier_purge"
@@ -1603,13 +1477,14 @@
 				"EffectName"	"Hero_Zuus.GodsWrath.Target"
 				"Target"		"TARGET"
 			}
+			"SpendCharge" {}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_purge"
 	    	{
-	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType"	"follow_origin"
+	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				//"EffectAttachType"	"follow_origin"
 	    		"Duration"			"1.0"
 	    		"IsDebuff"			"1"
 	    		"States"
@@ -1619,8 +1494,8 @@
 	    	}
 	    	"modifier_slow_tier1"
 	    	{
-	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType"	"follow_origin"
+	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				//"EffectAttachType"	"follow_origin"
 	    		"Duration"			"2.5"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1630,8 +1505,8 @@
 	    	}
 	    	"modifier_slow_tier2"
 	    	{
-	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType"	"follow_origin"	
+	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				//"EffectAttachType"	"follow_origin"	
 	    		"Duration"			"4.0"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1686,17 +1561,17 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastRange"				"1000"
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
-			"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
-			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
+			//"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
+			//"particle"	"particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf"
+			//"particle"	"particles/generic_gameplay/generic_purge.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
 
 	    "OnSpellStart"
 	    {
-	    	"SpendCharge" {}
 	    	"ApplyModifier"
 	    	{
 	    		"ModifierName"		"modifier_purge"
@@ -1728,13 +1603,14 @@
 				"EffectName"	"Hero_Zuus.GodsWrath.Target"
 				"Target"		"TARGET"
 			}
+			"SpendCharge" {}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_purge"
 	    	{
-	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType"	"follow_origin"
+	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				//"EffectAttachType"	"follow_origin"
 	    		"Duration"			"1.0"
 	    		"IsDebuff"			"1"
 	    		"States"
@@ -1744,8 +1620,8 @@
 	    	}
 	    	"modifier_slow_tier1"
 	    	{
-	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType"	"follow_origin"
+	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				//"EffectAttachType"	"follow_origin"
 	    		"Duration"			"2.5"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1755,8 +1631,8 @@
 	    	}
 	    	"modifier_slow_tier2"
 	    	{
-	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
-				"EffectAttachType"	"follow_origin"	
+	    		//"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				//"EffectAttachType"	"follow_origin"	
 	    		"Duration"			"4.0"
 	    		"IsDebuff"			"1"
 	    		"Properties"
@@ -1798,6 +1674,34 @@
 	    	"model"			"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
 	    }
 
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"300 350 400 450 500 600 650 700"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"20 25 30 35 40 45 50 55"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_armor_multiplier"	"0.15"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_health_multiplier"	"5"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_ms_multiplier"		"1"
+			}
+		}
 
 	    "OnSpellStart"
 	    {
@@ -1805,6 +1709,11 @@
 			{
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnSummonSkeleton"
+				"Health"		"%health"
+				"Damage"		"%damage"
+				"ArmorRatio"	"%bonus_armor_multiplier"
+				"HealthRatio"	"%bonus_health_multiplier"
+				"MSRatio"		"%bonus_ms_multiplier"
 			}
 	    }
 	}
@@ -1841,6 +1750,34 @@
 			"particle"		"particles/units/heroes/hero_clinkz/clinkz_base_attack.vpcf"
 	    }
 
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"250 290 330 370 410 450 490 530"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"15 23 31 39 47 55 63 71"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_damage_multiplier"	"0.6"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_health_multiplier"	"4.0"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_ms_multiplier"		"0.8"
+			}
+		}
 
 	    "OnSpellStart"
 	    {
@@ -1848,6 +1785,11 @@
 			{
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnSummonSkeleton"
+				"Health"		"%health"
+				"Damage"		"%damage"
+				"DamageRatio"	"%bonus_damage_multiplier"
+				"HealthRatio"	"%bonus_health_multiplier"
+				"MSRatio"		"%bonus_ms_multiplier"
 			}
 	    }
 	}
@@ -1884,6 +1826,34 @@
 	    	"particle"		"particles/neutral_fx/black_dragon_attack.vpcf"	
 	    }
 
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"health"			"1000 1100 1200 1300 1400 1500 1600 1700"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"75 100 125 150 175 200 225 250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_health_multiplier"	"7.0"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_mana_multiplier"		"2.0"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_ms_multiplier"		"0.8"
+			}
+		}
 
 	    "OnSpellStart"
 	    {
@@ -1891,6 +1861,11 @@
 			{
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnSummonDragon"
+				"Health"		"%health"
+				"Damage"		"%damage"
+				"HealthRatio"	"%bonus_health_multiplier"
+				"ManaRatio"		"%bonus_mana_multiplier"
+				"MSRatio"		"%bonus_ms_multiplier"
 			}
 			"FireSound"
 			{
@@ -1924,7 +1899,7 @@
 	    "ItemPermanent" "1"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_AOE"
 	    "AbilityCastRange"				"99999"
 	    "AbilityManaCost"				"100"
 	    "AbilityCooldown"				"25"
@@ -1961,6 +1936,108 @@
 			}
 		}
 	}
+
+
+	"item_caster_5th_mount" 
+	{
+	    "ID"           "1099"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" "caster_5th_mount"
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+	    "AbilityCastPoint"				"0.0"
+	    "AbilityCooldown"		"5"
+	    "precache"
+	    {
+	    }
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"movespeed"			"200"
+			}	
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"attackspeed"			"50"
+			}	
+		}
+
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnMountStart"
+			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_mount"
+	    	{
+	    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_purifyingflames_heal.vpcf"
+	    		"EffectAttachType"	"attach_hitloc"
+	    		"OnDeath"
+	    		{
+	    			"RunScript"
+	    			{
+	    				"ScriptFile"	"caster_ability"
+	    				"Function"		"OnMountDeath"
+	    			}
+	    		}
+	    	}
+	    	"modifier_mount_passive"
+	    	{
+	    		"IsHidden"		"1"
+	    		"Passive"		"1"
+	    	}
+	    	"modifier_mount_caster"
+	    	{
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+				"ThinkInterval"  "0.03"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"caster_ability"
+						"Function"		"MountFollow"
+					}				
+				}	
+	    	}
+	    }
+	}
+
 
 	"item_shard_of_anti_magic" 
 	{
@@ -2190,7 +2267,7 @@
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-	    "AbilityCooldown"		"0"
+	    "AbilityCooldown"		"5"
 	    "precache"
 	    {
 	    }

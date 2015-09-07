@@ -4,7 +4,7 @@ function OnDPStart(keys)
 	local targetPoint = keys.target_points[1]
 	local currentHealthCost = 0
     local ply = caster:GetPlayerOwner()
-    if ply.IsDPImproved then
+    if caster.IsDPImproved then
     	keys.Range = 1000
     	keys.ability:EndCooldown() 
     	keys.ability:StartCooldown(1)
@@ -130,6 +130,10 @@ function OnRemainStart(keys)
 	caster:EmitSound("Hero_Nevermore.Shadowraze")
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin() + caster:GetForwardVector() * 200) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 
 	for i=1, keys.SpawnNumber do
 		local remain = CreateUnitByName("avenger_remain", caster:GetAbsOrigin() + caster:GetForwardVector() * 200, true, nil, nil, caster:GetTeamNumber()) 
@@ -222,6 +226,10 @@ function OnTZStart(keys)
 		caster:EmitSound("Hero_BountyHunter.Jinada")
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
 		DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 		TZCount = TZCount + 1
 		return 0.10
@@ -274,7 +282,7 @@ function OnTFStart(keys)
 	local ply = caster:GetPlayerOwner()
 	AvengerCheckCombo(keys.caster, keys.ability)
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
-    if ply.IsBloodMarkAcquired then 
+    if caster.IsBloodMarkAcquired then 
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
     else
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
@@ -289,20 +297,19 @@ function OnTFLevelUp(keys)
 	caster:FindAbilityByName("avenger_demon_core"):SetLevel(keys.ability:GetLevel())
 end
 
+
 function OnTFEnd(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
-    if ply.IsBloodMarkAcquired then 
+    if caster.IsBloodMarkAcquired then 
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
     else
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
    	end
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     local demoncore = caster:FindAbilityByName("avenger_demon_core")
-    if demoncore:GetToggleState() then
-    	demoncore:ToggleAbility()
-    end
+    TurnDCOff(keys)
     caster:SetModel("models/avenger/avenger.vmdl")
     caster:SetOriginalModel("models/avenger/avenger.vmdl")
 
@@ -321,7 +328,7 @@ function OnDCToggleOn(keys)
 			demoncore:ToggleAbility()  
 			return 
 		end
-		if ply.IsDIAcquired then 
+		if caster.IsDIAcquired then 
 			local trueform = caster:FindAbilityByName("avenger_true_form")
 			local trueformcd = trueform:GetCooldownTimeRemaining() 
 			trueform:EndCooldown()
@@ -336,8 +343,16 @@ end
 function OnDCToggleOff(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	caster:RemoveModifierByName("modifier_demon_core")
 end
 
+function TurnDCOff(keys)
+	local caster = keys.caster
+	local demoncore = caster:FindAbilityByName("avenger_demon_core")
+    if demoncore:GetToggleState() then
+    	demoncore:ToggleAbility()
+    end
+end
 function OnVergStart(keys)
 	local caster = keys.caster
 	EmitGlobalSound("Avenger.Berg")
@@ -348,7 +363,7 @@ function OnVergTakeDamage(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
-	if ply.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
+	if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
 	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
 	print(returnDamage)
 	if caster:GetHealth() ~= 0 then
@@ -356,6 +371,10 @@ function OnVergTakeDamage(keys)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
 	end
 end
 
@@ -378,6 +397,10 @@ function OnEndlessStart(keys)
 		ResetItems(caster)
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
 		caster:EmitSound("Hero_LifeStealer.Consume")
 		resetCounter = resetCounter + 1
 		return 3.0
@@ -390,7 +413,7 @@ function OnEndlessTakeDamage(keys)
 	local attacker = keys.attacker
 	local verg = caster:FindAbilityByName("avenger_verg_avesta")
 	local multiplier = verg:GetLevelSpecialValueFor("multiplier", verg:GetLevel()-1)
-	if ply.IsDIAcquired then multiplier = multiplier + 25 end
+	if caster.IsDIAcquired then multiplier = multiplier + 25 end
 	local returnDamage = keys.DamageTaken * multiplier / 100
 
 	-- Set master's combo cooldown
@@ -403,6 +426,10 @@ function OnEndlessTakeDamage(keys)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
 	end
 end
 
@@ -435,7 +462,7 @@ function OnDarkPassageImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsDPImproved = true
+    hero.IsDPImproved = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -445,7 +472,7 @@ function OnBloodMarkAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsBloodMarkAcquired = true
+    hero.IsBloodMarkAcquired = true
     -- swap vengeance mark with blood mark
     caster:SwapAbilities("avenger_vengeance_mark", "avenger_blood_mark", false, true) 
     -- Set master 1's mana 
@@ -468,7 +495,7 @@ function OnDIAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsDIAcquired = true
+    hero.IsDIAcquired = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

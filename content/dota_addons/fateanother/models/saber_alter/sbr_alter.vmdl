@@ -11,8 +11,11 @@ CVModel CVModel_0
 				string m_meshFile = "models/saber_alter/sbr_alter.fbx"
 				string m_materialSearchPath = ""
 				bool m_bSkinParentedObjects = true
+				bool m_bLegacySkinParentedTransforms = false
 				bool m_bExpensiveTangents = false
 				bool m_bExpensiveVertices = false
+				bool m_bIgnoreCloth = false
+				bool m_bGetSkinningFromLod0 = false
 				CVmorphInfo* m_pMorphInfo = NULL
 			}
 		]
@@ -27,7 +30,7 @@ CVModel CVModel_0
 		bool m_bCreateStaticBone = false
 		int m_nMaxBonesPerVertex = 4
 		bool m_bRemoveUnusedBonesEnabled = false
-		bool m_bUseOnlyRealMeshBones = false
+		bool m_bDriveMeshesWithBacksolvedJointsOnly = true
 		float m_flMatchProxiesToMeshes = 1.000000
 		float m_flReservedFloat = 0.000000
 		int m_nReservedInt = 0
@@ -103,7 +106,13 @@ CVModel CVModel_0
 		
 	]
 	string m_collision = ""
+	string m_softbody = ""
 	string m_sMDLFilename = ""
+	string[] m_sOffsetHitboxSets = 
+	[
+		
+	]
+	float(3) m_vHitboxSetOffset = ( 0.000000, 0.000000, 0.000000 )
 	string[] m_scriptFiles = 
 	[
 		
@@ -111,12 +120,18 @@ CVModel CVModel_0
 	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
 	float m_flFbxScale = 1.000000
 	float m_flQCScale = 1.000000
+	float(3) m_vOrigin = ( 0.000000, 0.000000, 0.000000 )
 	CVPsf* m_pvPsf = NULL
 	string m_keyValueText = ""
 	bool m_bStaticProp = false
 	bool m_bEnableClothProcessing = true
 	float m_flClothEnableThreshold = 0.050000
 	int m_nMaxClothVertsPerMesh = 2048
+	bool m_bBuildClothBoneHierarchy = false
+	symbol m_nNavType = AUTH_NAV_MESH
+	bool m_bMakeUniqueVMeshes = false
+	bool m_bMakeImplicitBindPoseSequence = false
+	bool m_bAdjustSkeletonFromBoneFlags = false
 }
 
 CVhitBoxSetList CVhitBoxSetList_0
@@ -517,6 +532,21 @@ CVattachmentList CVattachmentList_0
 					bool m_bRoot = false
 				}
 			]
+		},
+		CVattachment
+		{
+			string m_name = "attach_hitloc"
+			CVattachmentInfluence[] m_influences = 
+			[
+				CVattachmentInfluence
+				{
+					string m_influenceName = "Chest2"
+					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float m_flWeight = 1.000000
+					bool m_bRoot = false
+				}
+			]
 		}
 	]
 }
@@ -585,6 +615,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -640,6 +671,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -695,6 +727,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -750,6 +783,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -805,6 +839,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -860,6 +895,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -915,6 +951,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -970,6 +1007,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -1025,6 +1063,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -1080,6 +1119,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )

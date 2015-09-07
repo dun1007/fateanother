@@ -9,7 +9,7 @@ function OnMadnessThink(keys)
 	local ply = caster:GetPlayerOwner()
 
 	AdjustMadnessStack(caster, 1)
-	if ply.IsMentalPolluted then
+	if caster.IsMentalPolluted then
 		AdjustMadnessStack(caster, 1)
 	end
 end
@@ -17,7 +17,7 @@ end
 function AdjustMadnessStack(caster, adjustValue)
 	local ply = caster:GetPlayerOwner()
 	local maxMadness = 10
-	if ply.IsMentalPolluted then maxMadness = 15 end
+	if caster.IsMentalPolluted then maxMadness = 15 end
 	caster.MadnessStackCount = caster.MadnessStackCount + adjustValue
 
 
@@ -66,7 +66,7 @@ function OnThrowCorpseStart(keys)
 		return
 	end
 	
-	if ply.IsMentalPolluted then
+	if caster.IsMentalPolluted then
 		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(2)
 	end
@@ -76,6 +76,10 @@ function OnThrowCorpseStart(keys)
 	corpse:EmitSound("Hero_Nevermore.Shadowraze")
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, corpse)
 	ParticleManager:SetParticleControl(particle, 0, corpse:GetAbsOrigin()) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 	corpse:ForceKill(true)
 
 end
@@ -85,7 +89,7 @@ function OnSummonDemonStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", targetPoint, keys.Radius)
-	if ply.IsAbyssalConnection2Acquired then
+	if caster.IsAbyssalConnection2Acquired then
 		keys.Health = keys.Health * 1.3
 	end
 	if #targets == 0 then
@@ -112,15 +116,22 @@ function OnSummonDemonStart(keys)
 		unit:EmitSound("Hero_Nevermore.Shadowraze")
 		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, unit)
 		ParticleManager:SetParticleControl(particle, 0, unit:GetAbsOrigin()) 
+		Timers:CreateTimer( 2.0, function()
+			ParticleManager:DestroyParticle( particle, false )
+			ParticleManager:ReleaseParticleIndex( particle )
+		end)
+
 		for i=1,keys.Number do
 			local tentacle = CreateUnitByName("gille_oceanic_demon", unit:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber())
-			if ply.IsAbyssalConnection2Acquired then
+			if caster.IsAbyssalConnection2Acquired then
 				giveUnitDataDrivenModifier(caster, tentacle, "gille_attack_speed_boost", 999.0)
 			end
 			tentacle:SetControllableByPlayer(caster:GetPlayerID(), true)
 			tentacle:SetOwner(caster)
 			tentacle:SetMaxHealth(keys.Health)
+			tentacle:SetBaseMaxHealth(keys.Health)
 			tentacle:SetHealth(keys.Health)
+			tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 40.0})
 			--tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 30.0})
 			FindClearSpaceForUnit(tentacle, tentacle:GetAbsOrigin(), true)
 		end
@@ -151,6 +162,10 @@ function OnTormentStart(keys)
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_witchdoctor/witchdoctor_maledict_aoe.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0, targetPoint) 
 	ParticleManager:SetParticleControl(particle, 1, Vector(keys.Radius,0,0)) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 end
 
 function OnTormentThink(keys)
@@ -179,7 +194,7 @@ function OnTormentEnd(keys)
 	local ply = caster:GetPlayerOwner()
 	local victim = keys.target
 	local multiplier = 5
-	if ply.IsBlackMagicImproved then multiplier = 10 end
+	if caster.IsBlackMagicImproved then multiplier = 10 end
 	local damage = victim.AccumulatedDamage/100 * caster.TormentMadnessCost * multiplier
 
 	DoDamage(caster, victim, damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -206,14 +221,15 @@ function OnECStart(keys)
 	local corpseTargets = Entities:FindAllByNameWithin("npc_dota_creature", targetPoint, keys.Radius)
 	for k,v in pairs(corpseTargets) do
 		if v:GetUnitName() == "gille_corpse" then
-			ECExplode(keys, v:GetAbsOrigin())
 			v:RemoveSelf()
+			Timers:CreateTimer(0.5, function()
+				ECExplode(keys, v:GetAbsOrigin())
+			end)
 		end
 	end
 
 	for k,v in pairs(allytargets) do
 		if v:GetUnitName() == "gille_oceanic_demon" then
-			v:AddNewModifier(caster, nil, "modifier_kill", {duration = 1.5})
 			keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_exquisite_cadaver_demon", {}) 
 		end
 	end
@@ -226,7 +242,7 @@ function ECExplode(keys, origin)
     local targets = FindUnitsInRadius(caster:GetTeam(), origin, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		if ply.IsBlackMagicImproved then
+		if caster.IsBlackMagicImproved then
 			local damageCounter = 0
 			Timers:CreateTimer(function()
 				if not v:IsAlive() or damageCounter > 9 then return end
@@ -240,12 +256,20 @@ function ECExplode(keys, origin)
 	ParticleManager:SetParticleControl(particle, 0, origin) 
 	ParticleManager:SetParticleControl(particle, 1, Vector(keys.Radius,keys.Radius,keys.Radius)) 
 	ParticleManager:SetParticleControl(particle, 3, Vector(keys.Radius,keys.Radius,keys.Radius)) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 
 	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_shadow_demon/shadow_demon_soul_catcher.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle2, 1, origin) 
 	ParticleManager:SetParticleControl(particle2, 2, origin) 
 	ParticleManager:SetParticleControl(particle2, 3, origin) 
 	ParticleManager:SetParticleControl(particle2, 4, origin) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle2, false )
+		ParticleManager:ReleaseParticleIndex( particle2 )
+	end)
 
 	caster:EmitSound("Hero_ShadowDemon.Soul_Catcher.Cast")
 end
@@ -258,7 +282,7 @@ function OnECDemonExplode(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), demon:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		if ply.IsBlackMagicImproved then
+		if caster.IsBlackMagicImproved then
 			local damageCounter = 0
 			Timers:CreateTimer(function()
 				if not v:IsAlive() or damageCounter > 9 then return end
@@ -273,25 +297,34 @@ function OnECDemonExplode(keys)
 	ParticleManager:SetParticleControl(particle, 0, demon:GetAbsOrigin()) 
 	ParticleManager:SetParticleControl(particle, 1, Vector(keys.Radius,keys.Radius,keys.Radius)) 
 	ParticleManager:SetParticleControl(particle, 3, Vector(keys.Radius,keys.Radius,keys.Radius)) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle, false )
+		ParticleManager:ReleaseParticleIndex( particle )
+	end)
 
 	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_shadow_demon/shadow_demon_soul_catcher.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle2, 1, demon:GetAbsOrigin()) 
 	ParticleManager:SetParticleControl(particle2, 2, demon:GetAbsOrigin()) 
 	ParticleManager:SetParticleControl(particle2, 3, demon:GetAbsOrigin()) 
 	ParticleManager:SetParticleControl(particle2, 4, demon:GetAbsOrigin()) 
+	Timers:CreateTimer( 2.0, function()
+		ParticleManager:DestroyParticle( particle2, false )
+		ParticleManager:ReleaseParticleIndex( particle2 )
+	end)
 
 	demon:EmitSound("Hero_ShadowDemon.Soul_Catcher.Cast")
+	demon:ForceKill(true)
 end
 
 function OnContractStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
-	if ply.IsAbyssalConnection1Acquired then
+	if caster.IsAbyssalConnection1Acquired then
 		keys.Radius = keys.Radius + 200
 		keys.Damage = keys.Damage + 200
 	end
-	if ply.IsAbyssalConnection2Acquired then
+	if caster.IsAbyssalConnection2Acquired then
 		keys.Health = keys.Health * 1.3
 	end
 
@@ -319,9 +352,17 @@ function OnContractStart(keys)
 	local contractFx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_upheaval.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
 	ParticleManager:SetParticleControl(contractFx, 0, targetPoint)
 	ParticleManager:SetParticleControl(contractFx, 1, Vector(keys.Radius + 200,0,0))
+	Timers:CreateTimer( 5.0, function()
+		ParticleManager:DestroyParticle( contractFx, false )
+		ParticleManager:ReleaseParticleIndex( contractFx )
+	end)
 
 	local contractFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
 	ParticleManager:SetParticleControl(contractFx2, 0, targetPoint)
+	Timers:CreateTimer( 5.0, function()
+		ParticleManager:DestroyParticle( contractFx2, false )
+		ParticleManager:ReleaseParticleIndex( contractFx2 )
+	end)
 
 	contractFx4 = 0
 	Timers:CreateTimer(1.0, function()
@@ -338,16 +379,16 @@ function OnContractStart(keys)
 			else
 				-- Summon Gigantic Horror
 				local tentacle = CreateUnitByName("gille_gigantic_horror", targetPoint, true, nil, nil, caster:GetTeamNumber())
-				if ply.IsAbyssalConnection2Acquired then
+				if caster.IsAbyssalConnection2Acquired then
 					giveUnitDataDrivenModifier(caster, tentacle, "gille_attack_speed_boost", 999.0)
 				end
-				if ply.IsAbyssalConnection1Acquired then
+				if caster.IsAbyssalConnection1Acquired then
 					local cont = CreateItem("item_gille_contaminate" , nil, nil)
 					tentacle:AddItem(cont)
 					tentacle:AddItem(CreateItem("item_gille_integrate" , nil, nil))
 					cont:SetLevel(keys.ability:GetLevel())
 				end
-				if ply.IsAbyssalConnection2Acquired then
+				if caster.IsAbyssalConnection2Acquired then
 					tentacle:AddItem(CreateItem("item_gille_otherworldly_portal" , nil, nil))
 				end
 				tentacle:SetControllableByPlayer(caster:GetPlayerID(), true)
@@ -363,9 +404,11 @@ function OnContractStart(keys)
 				tentacle:FindAbilityByName("gille_gigantic_horror_passive"):SetLevel(skillLevel)  
 
 				tentacle:SetMaxHealth(keys.Health)
+				tentacle:SetBaseMaxHealth(keys.Health)
 				tentacle:SetHealth(keys.Health)
 				tentacle:SetBaseDamageMax(50 + keys.ability:GetLevel() * 50) 
 				tentacle:SetBaseDamageMin(50 + keys.ability:GetLevel() * 50) 
+				tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 90.0})
 			end
 			-- Damage enemies
 			local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -378,8 +421,13 @@ function OnContractStart(keys)
 			ParticleManager:SetParticleControl(contractFx3, 0, targetPoint)
 			ParticleManager:SetParticleControl(contractFx3, 1, Vector(keys.Radius + 500, 0, 0))
 			ParticleManager:SetParticleControl(contractFx3, 2, Vector(keys.Radius + 500, 0, 0))
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( contractFx3, false )
+				ParticleManager:ReleaseParticleIndex( contractFx3 )
+			end)
 			EmitGlobalSound("Hero_Warlock.RainOfChaos_buildup")
 			StopSoundEvent("Hero_Warlock.Upheaval", visiondummy)
+
 
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 300)
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 650)
@@ -407,11 +455,12 @@ end
 function OnHorrorTakeDamage(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner() 
+	local hero = ply:GetAssignedHero()
 	local damageTaken = keys.DamageTaken
 	local threshold = keys.Threshold
 	local multiplier = 0.3
-	if ply.IsAbyssalConnection1Acquired then
-		multiplier = 0.1
+	if hero.IsAbyssalConnection1Acquired then
+		multiplier = 0.2
 	end
 	if damageTaken > threshold then 
 		DoDamage(keys.attacker, caster, damageTaken * multiplier, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -422,6 +471,10 @@ function OnHorrorDeath(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_gigantic_horror_penalty_timer", {}) 
+	PrintTable(keys)
+	print(keys.target:GetName())
+	print(keys.caster:GetName())
+	Notifications:Top(player, "<font color='#58ACFA'>Gigantic Horror</font> has been eliminated! All opposing Servants have acquired 20%% XP.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
 end
 
 function OnTentacleSummon(keys)
@@ -429,22 +482,24 @@ function OnTentacleSummon(keys)
 	local ply = caster:GetPlayerOwner() 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local targetPoint = keys.target_points[1]
-	if ply.IsAbyssalConnection2Acquired then
+	if caster.IsAbyssalConnection2Acquired then
 		keys.Health = keys.Health * 1.3
 	end
 
 	for i=0,2 do
 		local tentacle = CreateUnitByName("gille_tentacle_of_destruction", targetPoint, true, nil, nil, caster:GetTeamNumber())
-		if ply.IsAbyssalConnection2Acquired then
+		if hero.IsAbyssalConnection2Acquired then
 			giveUnitDataDrivenModifier(caster, tentacle, "gille_attack_speed_boost", 999.0)
 		end
 		tentacle:SetControllableByPlayer(hero:GetPlayerID(), true)
 		tentacle:SetOwner(hero)
 		tentacle:SetMaxHealth(keys.Health) 
+		tentacle:SetBaseMaxHealth(keys.Health)
 		tentacle:SetHealth(keys.Health)
 		tentacle:SetBaseDamageMin(keys.Damage)
 		tentacle:SetBaseDamageMax(keys.Damage)
 		tentacle:FindAbilityByName("gille_tentacle_of_destruction_passive"):SetLevel(keys.ability:GetLevel())
+		tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 60.0})
 		FindClearSpaceForUnit(tentacle, tentacle:GetAbsOrigin(), true)
 	end
 end
@@ -503,6 +558,10 @@ function OnTentacleWrapStart(keys)
 		local tentacleFx = ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit_wrap.vpcf", PATTACH_CUSTOMORIGIN, target)
 		ParticleManager:SetParticleControl(tentacleFx, 0, target:GetAbsOrigin() + Vector(0,0,100))
 		ParticleManager:SetParticleControl(tentacleFx, 2, target:GetAbsOrigin() + Vector(0,0,100))
+		Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( tentacleFx, false )
+			ParticleManager:ReleaseParticleIndex( tentacleFx )
+		end)
 		fxCounter = fxCounter + 0.5
 		return 0.5
 	end)
@@ -546,6 +605,10 @@ function OnSubSkewerStart(keys)
 		print("tentacles")
 		local tentacleFx = ParticleManager:CreateParticle("particles/units/heroes/hero_tidehunter/tidehunter_spell_ravage_hit.vpcf", PATTACH_CUSTOMORIGIN, caster)
 		ParticleManager:SetParticleControl(tentacleFx, 0, casterLoc + diff * 110 * tentacleCounter1)
+		Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( tentacleFx, false )
+			ParticleManager:ReleaseParticleIndex( tentacleFx )
+		end)
 		tentacleCounter1 = tentacleCounter1 + 1
 		return 0.033
 	end)
@@ -570,6 +633,10 @@ function OnContaminateStart(keys)
 	local tentacleFx = ParticleManager:CreateParticle("particles/units/heroes/hero_pugna/pugna_netherblast.vpcf", PATTACH_CUSTOMORIGIN, caster)
 	ParticleManager:SetParticleControl(tentacleFx, 0, caster:GetAbsOrigin())
 	ParticleManager:SetParticleControl(tentacleFx, 1, Vector(keys.Radius+200,0,0))
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( tentacleFx, false )
+		ParticleManager:ReleaseParticleIndex( tentacleFx )
+	end)
 end
 
 function OnContaminateThink(keys)
@@ -584,50 +651,58 @@ function OnIntegrateStart(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 
-	if caster.IsIntegrated then
-		hero:RemoveModifierByName("modifier_integrate_gille")
-		caster:RemoveModifierByName("modifier_integrate")
-		caster.IsIntegrated = false
-		caster.AttemptingIntegrate = false
-	elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
-		caster.IsIntegrated = true
-		keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
-		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
-		caster:EmitSound("ZC.Tentacle1")
-		caster:EmitSound("ZC.Laugh")
-		return 
-	end
-	--[[
-	else
-		caster.AttemptingIntegrate = true
-		ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), 
-								OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
-								TargetIndex = hero:GetEntityIndex(), 
-								Position = hero:GetAbsOrigin(), 
-								Queue = false
-							}) 
-
-		ExecuteOrderFromTable({ UnitIndex = hero:GetEntityIndex(), 
-								OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
-								TargetIndex = caster:GetEntityIndex(), 
-								Position = caster:GetAbsOrigin(), 
-								Queue = false
-							}) 
-		Timers:CreateTimer("integrate_checker", {
-			endTime = 0.0,
-			callback = function()
-			if (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 300 and caster.AttemptingIntegrate then 
-				caster.IsIntegrated = true
+	Timers:CreateTimer(0.5, function()
+		if caster.IsIntegrated then
+			if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
+				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
+				keys.ability:EndCooldown()
+				return			
+			else
+				hero:RemoveModifierByName("modifier_integrate_gille")
+				caster:RemoveModifierByName("modifier_integrate")
+				caster.IsIntegrated = false
 				caster.AttemptingIntegrate = false
-				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
-				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
-				caster:EmitSound("ZC.Tentacle1")
-				caster:EmitSound("ZC.Laugh")
-				return 
 			end
-			return 0.1
-		end})
-	end]]
+		elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
+			caster.IsIntegrated = true
+			keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
+			caster:EmitSound("ZC.Tentacle1")
+			caster:EmitSound("ZC.Laugh")
+			return 
+		end
+		--[[
+		else
+			caster.AttemptingIntegrate = true
+			ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), 
+									OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
+									TargetIndex = hero:GetEntityIndex(), 
+									Position = hero:GetAbsOrigin(), 
+									Queue = false
+								}) 
+
+			ExecuteOrderFromTable({ UnitIndex = hero:GetEntityIndex(), 
+									OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
+									TargetIndex = caster:GetEntityIndex(), 
+									Position = caster:GetAbsOrigin(), 
+									Queue = false
+								}) 
+			Timers:CreateTimer("integrate_checker", {
+				endTime = 0.0,
+				callback = function()
+				if (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 300 and caster.AttemptingIntegrate then 
+					caster.IsIntegrated = true
+					caster.AttemptingIntegrate = false
+					keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
+					keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
+					caster:EmitSound("ZC.Tentacle1")
+					caster:EmitSound("ZC.Laugh")
+					return 
+				end
+				return 0.1
+			end})
+		end]]
+	end)
 end
 
 function OnIntegrateDeath(keys)
@@ -661,6 +736,10 @@ function OnHorrorTeleport(keys)
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Locate Within 500 Range from Caster" } )
 		keys.ability:EndCooldown()
 		return
+	elseif caster.IsIntegrated then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Use While Integrated" } )
+		keys.ability:EndCooldown()
+		return		
 	else
 		caster:SetAbsOrigin(targetPoint)
 	end
@@ -693,6 +772,10 @@ function OnGilleComboStart(keys)
 	local contractFx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_upheaval.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
 	ParticleManager:SetParticleControl(contractFx, 0, tentacle:GetAbsOrigin())
 	ParticleManager:SetParticleControl(contractFx, 1, Vector(radius + 200,0,0))
+	Timers:CreateTimer( 3.0, function()
+		ParticleManager:DestroyParticle( contractFx, false )
+		ParticleManager:ReleaseParticleIndex( contractFx )
+	end)
 
 	Timers:CreateTimer(1.5, function()
 		local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -706,10 +789,18 @@ function OnGilleComboStart(keys)
 			ParticleManager:SetParticleControl(particle, 1, Vector(radius+200,0,0))  
 			ParticleManager:DestroyParticle(contractFx, false)
 			ParticleManager:ReleaseParticleIndex(contractFx)
+			Timers:CreateTimer( 3.0, function()
+				ParticleManager:DestroyParticle( particle, false )
+				ParticleManager:ReleaseParticleIndex( particle )
+			end)
 		end)
 		
 		tentacle:EmitSound("Hero_ObsidianDestroyer.SanityEclipse.Cast")
-		ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, tentacle)
+		local splashFx = ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, tentacle)
+		Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( splashFx, false )
+			ParticleManager:ReleaseParticleIndex( splashFx )
+		end)
 		tentacle:EmitSound("Hero_ShadowDemon.DemonicPurge.Impact")
 		tentacle:ForceKill(true)
 	end)
@@ -736,7 +827,7 @@ function OnEyeForArtAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsEyeForArtAcquired = true
+    hero.IsEyeForArtAcquired = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -746,7 +837,7 @@ function OnBlackMagicImproved(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsBlackMagicImproved = true
+    hero.IsBlackMagicImproved = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -756,7 +847,7 @@ function OnMentalPollutionAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsMentalPolluted = true
+    hero.IsMentalPolluted = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -766,7 +857,7 @@ function OnAbyssConnectionAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsAbyssalConnection1Acquired = true
+    hero.IsAbyssalConnection1Acquired = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -776,7 +867,7 @@ function OnAbyssConnection2Acquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
-    ply.IsAbyssalConnection2Acquired = true
+    hero.IsAbyssalConnection2Acquired = true
        -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
