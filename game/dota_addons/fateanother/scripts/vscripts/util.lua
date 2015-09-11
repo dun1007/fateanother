@@ -593,7 +593,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         end
     end
 
-
+    -- Check if target has Avalon up
     if target:GetName() == "npc_dota_hero_legion_commander" and target:HasModifier("modifier_avalon") then
         local incomingDmg = dmg
         if dmg_type == DAMAGE_TYPE_MAGICAL then

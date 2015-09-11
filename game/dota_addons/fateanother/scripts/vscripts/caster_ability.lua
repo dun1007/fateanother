@@ -853,11 +853,21 @@ end
 
 function AncientLevelUp(keys)
 	local caster = keys.caster
-	caster:FindAbilityByName("caster_5th_wall_of_flame"):SetLevel(keys.ability:GetLevel())
-	caster:FindAbilityByName("caster_5th_silence"):SetLevel(keys.ability:GetLevel())
-	caster:FindAbilityByName("caster_5th_divine_words"):SetLevel(keys.ability:GetLevel())
-	caster:FindAbilityByName("caster_5th_mana_transfer"):SetLevel(keys.ability:GetLevel())
-	caster:FindAbilityByName("caster_5th_sacrifice"):SetLevel(keys.ability:GetLevel())
+	local a1 = caster:FindAbilityByName("caster_5th_wall_of_flame")
+	a1:SetLevel(keys.ability:GetLevel())
+	a1:EndCooldown()
+	local a2 = caster:FindAbilityByName("caster_5th_silence")
+	a2:SetLevel(keys.ability:GetLevel())
+	a2:EndCooldown()
+	local a3 = caster:FindAbilityByName("caster_5th_divine_words")
+	a3:SetLevel(keys.ability:GetLevel())
+	a3:EndCooldown()
+	local a4 = caster:FindAbilityByName("caster_5th_mana_transfer")
+	a4:SetLevel(keys.ability:GetLevel())
+	a4:EndCooldown()
+	local a5 = caster:FindAbilityByName("caster_5th_sacrifice")
+	a5:SetLevel(keys.ability:GetLevel())
+	a5:EndCooldown()
 end
 
 function OnFirewallStart(keys)
@@ -928,6 +938,7 @@ function OnSilenceStart(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
     for k,v in pairs(targets) do
 		v:AddNewModifier(caster, nil, "modifier_silence", {duration=keys.Duration})
+		v:AddNewModifier(caster, nil, "modifier_disarmed", {duration=keys.Duration})
 	end
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 0 , targetPoint)

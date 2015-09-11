@@ -1308,7 +1308,7 @@
 	    	"modifier_a_scroll"
 	    	{
 	    		"Duration"		"10.0"
-				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -2210,6 +2210,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"damage"			"500 750 1000 1250 1500"
 			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"10.0"
+			}
 		}
 		
 		"OnSpellStart"
@@ -2337,6 +2342,7 @@
 	    	}
 	    	"modifier_integrate_gille"
 	    	{
+	    		"Duration"			"90"
 				"States"
 				{
 					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"

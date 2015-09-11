@@ -437,16 +437,16 @@ function SScroll(keys)
 
 	DoDamage(caster, target, 400, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	ApplyPurge(target)
-	--local boltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
-	--ParticleManager:SetParticleControl(boltFx, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
+	local boltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
+	ParticleManager:SetParticleControl(boltFx, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 
-	--local lightningBoltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf", PATTACH_ABSORIGIN, target)
-	--ParticleManager:SetParticleControl(lightningBoltFx,0, caster:GetAbsOrigin())
-	--ParticleManager:SetParticleControl(lightningBoltFx,1, target:GetAbsOrigin())
+	local lightningBoltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf", PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(lightningBoltFx,0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl(lightningBoltFx,1, target:GetAbsOrigin())
 
 	Timers:CreateTimer(2.0, function()
-		--ParticleManager:DestroyParticle(boltFx, false)
-		--ParticleManager:DestroyParticle(lightningBoltFx, false)
+		ParticleManager:DestroyParticle(boltFx, false)
+		ParticleManager:DestroyParticle(lightningBoltFx, false)
 	end)
 end
 
@@ -464,9 +464,9 @@ function EXScroll(keys)
 	DoDamage(caster, target, 600, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	ApplyPurge(target)
 
-	--local boltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
+	local boltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
 	--local lightningBoltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf", PATTACH_ABSORIGIN, target)
-	--ParticleManager:SetParticleControl(boltFx, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
+	ParticleManager:SetParticleControl(boltFx, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 
 	local forkCount = 0
 	local dist = target:GetAbsOrigin() - caster:GetAbsOrigin()
@@ -476,10 +476,10 @@ function EXScroll(keys)
 		if forkCount == 4 then return end
 		if v ~= target then 
 	        DoDamage(caster, v, 600, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	        --local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
-	        --ParticleManager:SetParticleControl(bolt, 1, Vector(v:GetAbsOrigin().x,v:GetAbsOrigin().y,v:GetAbsOrigin().z+((v:GetBoundingMaxs().z - v:GetBoundingMins().z)/2)))
+	        local bolt = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster) 
+	        ParticleManager:SetParticleControl(bolt, 1, Vector(v:GetAbsOrigin().x,v:GetAbsOrigin().y,v:GetAbsOrigin().z+((v:GetBoundingMaxs().z - v:GetBoundingMins().z)/2)))
 	        Timers:CreateTimer(2.0, function()
-				--ParticleManager:DestroyParticle(bolt, false)
+				ParticleManager:DestroyParticle(bolt, false)
 			end) 
 			
 			--ParticleManager:SetParticleControl(lightningBoltFx,0, caster:GetAbsOrigin())
@@ -489,7 +489,7 @@ function EXScroll(keys)
     end
 
    	Timers:CreateTimer(2.0, function()
-		--ParticleManager:DestroyParticle(boltFx, false)
+		ParticleManager:DestroyParticle(boltFx, false)
 		--ParticleManager:DestroyParticle(lightningBoltFx, false)
 	end)
 end

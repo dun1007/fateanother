@@ -18,9 +18,11 @@ function OnDirkStart(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, range
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
-		targetCount = targetCount + 1
-        info.Target = v
-        ProjectileManager:CreateTrackingProjectile(info) 
+		if v:CanEntityBeSeenByMyTeam(caster) then
+			targetCount = targetCount + 1
+	        info.Target = v
+	        ProjectileManager:CreateTrackingProjectile(info) 
+	    end
         if targetCount == 7 then return end
     end
 end
@@ -33,7 +35,7 @@ function OnDirkHit(keys)
 		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
 	end
 	if caster.IsWeakeningVenomAcquired then
-		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility()*2, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility(), DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	else
 		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	end
