@@ -148,7 +148,6 @@ function OnGalatineStart(keys)
 	local timeElapsed = 0
 	local flyingDist = 0
 	local InFirstLoop = true
-
 	caster.IsGalatineActive = true
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.75)

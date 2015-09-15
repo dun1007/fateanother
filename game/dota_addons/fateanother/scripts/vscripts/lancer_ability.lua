@@ -185,16 +185,19 @@ function Conversion(keys)
 	caster:SetMana(currentMana + healthLost)
 end
 
-function IncinerateOnHit(keys)
+function OnIncinerateHit(keys)
 	local caster = keys.caster
 	local target = keys.target
 
-	if target:HasModifier("modifier_lancer_incinerate") then
-		local stacks = target:GetModifierStackCount("modifier_lancer_incinerate", nil)
-		target:SetModifierStackCount("modifier_lancer_incinerate", nil, stacks+1)
-	else
-		caster:FindAbilityByName("lancer_5th_rune_of_flame"):ApplyDataDrivenModifier(caster, target, "modifier_lancer_incinerate", {})
-	end
+
+	local currentStack = target:GetModifierStackCount("modifier_lancer_incinerate", keys.ability)
+
+	if currentStack == 0 and target:HasModifier("modifier_lancer_incinerate") then currentStack = 1 end
+	target:RemoveModifierByName("modifier_lancer_incinerate") 
+	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_lancer_incinerate", {}) 
+	target:SetModifierStackCount("modifier_lancer_incinerate", keys.ability, currentStack + 1)
+
+	DoDamage(caster, target, keys.ExtraDamage*currentStack, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 end
 
 function OnRAStart(keys)

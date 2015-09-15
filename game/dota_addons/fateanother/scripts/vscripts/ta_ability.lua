@@ -16,13 +16,13 @@ function OnDirkStart(keys)
 
 	local targetCount = 0
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, range
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
-		if v:CanEntityBeSeenByMyTeam(caster) then
+		--if v:CanEntityBeSeenByMyTeam(caster) then
 			targetCount = targetCount + 1
 	        info.Target = v
 	        ProjectileManager:CreateTrackingProjectile(info) 
-	    end
+	    --end
         if targetCount == 7 then return end
     end
 end

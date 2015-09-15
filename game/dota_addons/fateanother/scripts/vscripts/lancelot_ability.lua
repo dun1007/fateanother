@@ -277,12 +277,12 @@ function OnKnightUsed(keys)
 end
 
 function OnAronditeStart(keys)
-    if keys.caster.IsKnightOpen then 
+    --[[if keys.caster.IsKnightOpen then 
         keys.ability:EndCooldown() 
         keys.caster:GiveMana(800)
         FireGameEvent( 'custom_error_show', { player_ID = keys.caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
         return 
-    end
+    end]]
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()
     local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)

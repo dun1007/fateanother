@@ -1881,7 +1881,6 @@
 		}
 	}
 
-	//bugged
 	"lancer_5th_rune_of_flame"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -1902,18 +1901,24 @@
 
 		"Modifiers"
 		{
-			"modifier_lancer_incinerate"
+			"modifier_lancer_rune_of_flame"
 			{
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_PROCATTACK_BONUS_DAMAGE_MAGICAL"	"%extra_damage"
-				}
+				"Passive"			"1"
 				"OnAttackLanded"
 				{
-					"ScriptFile"	"lancer_ability"
-					"Function"		"IncinerateOnHit"
+					"RunScript"
+					{
+						"ScriptFile"	"lancer_ability"
+						"Function"		"OnIncinerateHit"
+						"ExtraDamage"	"%extra_damage"
+					}
 				}
+			}
+			"modifier_lancer_incinerate"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"5.0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 			}
 		}
 	}
@@ -3764,12 +3769,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"Range"					"1000"
+				"range"					"1000"
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"speed_modifier"		"10 20"
+				"var_type"				"FIELD_FLOAT"
+				"speed_modifier"		"-10 -20"
 			}
 		}
 		
@@ -3778,21 +3783,20 @@
 			"modifier_mystic_eye"
 			{
 				"Passive"		"1"
-				"IsHidden"		"1"
-				"IsDebuff"		"1"
+				"IsHidden"		"0"
 				"Aura"			"rider_5th_mystic_eye_aura"
-				"Aura_Radius"	"%Range"
+				"Aura_Radius"	"%range"
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_ALL"
 			}
 			"rider_5th_mystic_eye_aura"
 			{
 				"IsDebuff"			"1"
-			
+				"IsHidden"			"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%speed_modifier"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%speed_modifier"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%speed_modifier"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%speed_modifier"
 				}
 			}
 		}
@@ -4741,6 +4745,11 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"bonus_health"			"0 50 100 150 200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"			"7"
 			}
 		}
 		
@@ -6279,17 +6288,15 @@
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"350"
 			}
-
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius_lasthit"	"500"
+				"damage"			"60 70 80 90 100"
 			}
-
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"60 70 80 90 100"
+				"radius_lasthit"	"500"
 			}
 			"04"
 			{
@@ -8818,7 +8825,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"2.0"
+				"agi_ratio"			"1.0"
 			}
 			"02"
 			{
@@ -9025,7 +9032,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"gilga_sword_barrage"
+		"AbilityTextureName"			"gilgamesh_sword_barrage_improved"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 
@@ -11253,10 +11260,9 @@
 
 		"Modifiers"
 		{
-			"modifier_caster_rule_breaker"
+			"modifier_c_rule_breaker"
 			{
 				"IsDebuff"					"1"
-				"IsPurgable"				"1"
 				"Duration"					"%duration"
 				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
 				"EffectAttachType"			"follow_overhead"
@@ -12507,7 +12513,7 @@
 
 		"Modifiers"
 		{
-			"modifier_lancelot_rule_breaker"
+			"modifier_l_rule_breaker"
 			{
 				"IsDebuff"					"1"
 				"IsPurgable"				"1"
@@ -13547,6 +13553,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"avenger_tawrich_zarich"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
@@ -13631,6 +13638,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"avenger_vengence_mark"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		
@@ -13959,6 +13967,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"avenger_verg_avesta"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
@@ -14519,7 +14528,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"18"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.1"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -18130,7 +18139,7 @@
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-		"AbilityTextureName"			"zc_abyssal_contract"
+		"AbilityTextureName"			"tidehunter_ravage"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		
@@ -20375,6 +20384,11 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"radius"				"1000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stun_duration"				"2"
 			}
 		}
 		

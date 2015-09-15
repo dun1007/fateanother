@@ -31,6 +31,7 @@ purgable = {
     "modifier_share_damage",
     "modifier_rule_breaker",
     "modifier_caster_rule_breaker",
+    "modifier_heart_of_harmony",
     "modifier_lancelot_rule_breaker",
     "modifier_double_edge",
     "modifier_murderous_instinct",
@@ -43,6 +44,7 @@ purgable = {
 }
 
 strongdispelable = {
+    -- Purgable
     "modifier_aspd_increase",
     "modifier_derange",
     "modifier_courage_self_buff",
@@ -54,14 +56,22 @@ strongdispelable = {
     "modifier_speed_gem",
     "modifier_share_damage",
     "modifier_rule_breaker",
+    "modifier_caster_rule_breaker",
+    "modifier_heart_of_harmony",
+    "modifier_lancelot_rule_breaker",
     "modifier_double_edge",
-    "modifier_b_scroll",
-    "modifier_argos_shield",
-    "modifier_rho_aias_shield",
     "modifier_murderous_instinct",
     "modifier_double_spearsmanship",
     "nero_gladiusanus_blauserum",
-    "nero_tres_fontaine_ardent"
+    "nero_tres_fontaine_ardent",
+    "modifier_invigorating_ray_ally",
+    "modifier_invigorating_ray_armor_buff",
+    "modifier_blade_of_the_devoted",
+
+    -- Strong Dispelable
+    "modifier_b_scroll",
+    "modifier_argos_shield",
+    "modifier_rho_aias_shield",
 }
 
 goesthruB = {"saber_avalon",

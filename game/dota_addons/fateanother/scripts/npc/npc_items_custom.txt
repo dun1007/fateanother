@@ -367,6 +367,24 @@
 				"Function"		"OnManaEssenceAcquired"
 			}
 	    }
+	    "AbilitySpecial"
+	    {
+	   		"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_regen"				"50"
+			}
+	   		"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_regen"				"30"
+			}
+	   		"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"10"
+			}
+	    }
 
 	    "OnSpellStart"
 	    {
@@ -451,7 +469,19 @@
 	    {
 	    	"particle"		"particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf"
 	    }
-
+	    "AbilitySpecial"
+	    {
+	   		"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"health_heal"				"500"
+			}
+	   		"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_heal"				"300"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
@@ -501,7 +531,14 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityCooldown"				"90"
 	    "AbilityChannelTime"			"1.0"		
-
+	    "AbilitySpecial"
+	    {
+	   		"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"				"1.0"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"RunScript"
@@ -625,7 +662,14 @@
 	    	"particle"		"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
 	    	"model"			"models/items/courier/mighty_chicken/mighty_chicken_flying.vmdl"
 	    }
-
+	    "AbilitySpecial"
+	    {
+	   		"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"scout_duration"				"60"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
@@ -689,7 +733,19 @@
 	    {
 	    	"particle"		"particles/items2_fx/mask_of_madness.vpcf"
 	    }
-
+	    "AbilitySpecial"
+	    {
+	   		"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"aspd_bonus"				"100"
+			}
+	   		"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"ApplyModifier"
@@ -832,7 +888,14 @@
 	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
 	    	"particle"			"particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf"
 	    }
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_link_targets"				"5"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
@@ -1027,7 +1090,19 @@
 	    {
 	    	"particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf"
 	    }
-
+	    "AbilitySpecial"
+	    {
+	   		"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"heal_amount"				"500"
+			}
+	   		"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"radius"				"600"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
@@ -1077,7 +1152,14 @@
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_start.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 		}
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_distance"				"1000"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"RunScript"
@@ -1141,6 +1223,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"damage"					"100"
 			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stun_duration"					"1"
+			}
 		}
 	    "OnSpellStart"
 	    {
@@ -1199,7 +1286,19 @@
 	    {
 			"particle"			"particles/custom/generic/fate_green_shield.vpcf"
 	    }
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"barrier_block"					"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"					"20"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
@@ -1221,15 +1320,6 @@
 			}
 	    }
 
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"barrier_block"			"600"
-			}
-		}
-		
 	    "Modifiers"
 	    {
 	    	"modifier_b_scroll"
@@ -1287,7 +1377,19 @@
 	    	"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
 	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mr"					"50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"					"10"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"ApplyModifier"
@@ -1363,7 +1465,24 @@
 	    	"particle"			"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
 	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mr"					"50"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_armor"					"30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"					"10"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"ApplyModifier"
@@ -1388,7 +1507,7 @@
 	    	"modifier_a_plus_mr"
 	    	{
 	    		"Duration"		"10.0"
-				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -1458,7 +1577,29 @@
 			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"					"400"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_initial"					"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_duration"					"4"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lock_duration"					"1"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"ApplyModifier"
@@ -1584,7 +1725,34 @@
 			"particle"	"particles/generic_gameplay/generic_purge.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_zuus.vsndevts"
 		}
-
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage"					"600"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"max_targets"					"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_initial"					"100"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_duration"					"4"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"lock_duration"					"1"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"ApplyModifier"
@@ -2085,6 +2253,14 @@
 	    {
 	    	"particle"		"particles/items_fx/black_king_bar_avatar.vpcf"
 	    }
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"					"10"
+			}
+		}
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}

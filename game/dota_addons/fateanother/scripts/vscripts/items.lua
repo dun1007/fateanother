@@ -148,7 +148,7 @@ function TPScroll(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
-	if caster:GetAbsOrigin().y < -3500 or targetPoint.y < -3500 then 
+	if caster:GetAbsOrigin().y < -5000 or targetPoint.y < -5000 then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Location" } )
 		--caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))		
 		return
