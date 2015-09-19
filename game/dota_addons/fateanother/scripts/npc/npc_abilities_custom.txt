@@ -1895,7 +1895,7 @@
 			"01"
 			{
 				"var_type" 		"FIELD_INTEGER"
-				"extra_damage"		"1 2 3 4 5"
+				"extra_damage"		"3 4 5 6 7"
 			}
 		}
 
@@ -2751,7 +2751,7 @@
 
 					"Random"
 					{
-						"Chance"	"15"
+						"Chance"	"25"
 						"OnSuccess"
 						{
 							"ApplyModifier"
@@ -2768,7 +2768,7 @@
 				"IsHidden"		"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "400"
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "250"
 				}
 				"OnAttackLanded"
 				{
@@ -3724,12 +3724,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"crit_rate"		"15"
+				"crit_rate"		"25"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"crit_damage"		"400"
+				"crit_damage"		"250"
 			}
 			"04"
 			{
@@ -5855,7 +5855,17 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"500"
+				"range"				"750"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"slow_amount"				"-20 -25 -30 -35 -40"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"2.0"
 			}
 		}
 		
@@ -5866,7 +5876,8 @@
 				"ScriptFile"		"berserker_ability"
 				"Function"			"OnFissureStart"
 				"Target"			"POINT"
-				"Width"				"%width"
+				"Width"				"%radius"
+				"Range"				"%range"
 			}
 			"FireSound"
 			{
@@ -5888,6 +5899,15 @@
 		
 		"Modifiers"
 		{
+			"modifier_fissure_strike_slow"
+			{
+				"Duration"	"%duration"
+				"IsDebuff"	"1"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
+			    }
+			}
 		}
 	}
 
@@ -5910,7 +5930,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15 18 21 24 27"
+		"AbilityCooldown"				"16 14 12 10 8"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5930,57 +5950,56 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"15 25 35 45 55"
+				"damage_reduction"			"-20 -40 -60 -80 -100"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_proc"			"25 35 45 55 65"
+				"bonus_damage"			"15 25 35 45 55"
 			}
+
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"proc_chance"			"0.20 0.30 0.40 0.50 0.60"
+				"aspd_bonus"		"30 40 50 60 70"
 			}
 			"05"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"aspd_reduction"		"-20 -15 -10 -5 0"
+				"var_type"				"FIELD_FLOAT"
+				"ms_bonus"				"4 5 6 7 8"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"9.0 12.0 15.0 18.0 21.0"
+				"str_debuff"			"-10"
 			}
 			"07"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"proc_chance_percentage"	"20 30 40 50 60"
+				"var_type"				"FIELD_FLOAT"
+				"max_stack"			"5"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"12"
 			}
 		}
-		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnCourageLevelUp"
+			}
+		}
+
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
 				"Function"			"OnCourageStart"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_courage_armor_reduction"
-				"Target"
-				{
-					"Center"	"CASTER"
-					"Radius"	"400"
-					"Teams"		"DOTA_UNIT_TARGET_TEAM_ENEMY"
-					"Types"		"DOTA_UNIT_TARGET_ALL"
-				}
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_courage_self_buff"
-				"Target"		"CASTER"
+				"MaxStack"			"%max_stack"
 			}
 			"FireSound"
 			{
@@ -6008,34 +6027,53 @@
 			"modifier_courage_armor_reduction"
 			{
 				"Duration"		"%duration"
+				"IsDebuff"		"1"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_reduction"
 				}
 			}
-			"modifier_courage_self_buff"
+			"modifier_courage_attack_damage_debuff"
 			{
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_reduction"
+				}
+			}
+			"modifier_courage_attack_damage_buff"
+			{
+				"IsHidden"		"1"
 				"Duration"		"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_reduction"
 				}
 				"OnAttackLanded"
 				{
-					"Random"
+					"RunScript"
 					{
-						"Chance"		"%proc_chance"
-						"OnSuccess"
-						{
-							"Damage"
-							{
-								"Target"	"TARGET"
-								"Type"		"DAMAGE_TYPE_PHYSICAL"
-								"Damage"	"%damage_proc"
-							}
-						}
+						"ScriptFile"		"berserker_ability"
+						"Function"			"OnCourageAttackLanded"
 					}
+				}
+			}
+			"modifier_courage_damage_stack_indicator"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Duration"		"%duration"
+			}
+			"modifier_courage_stackable_buff"
+			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%ms_bonus"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%str_debuff"
 				}
 
 			}
@@ -6191,12 +6229,21 @@
 			"modifier_berserk_self_buff"
 			{
 				"Duration"		"%duration"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"berserker_ability"
+						"Function"			"OnBerserkDamageTaken"
+						"DamageTaken"		"%attack_damage"
+					}
+				}
 			}
 		}
 	}
 
 	//========================================
-	// Berserker : Berserk Passive
+	// Berserker : Eternal Rage Passive
 	//========================================
 	"berserker_5th_berserk_attribute_passive"
 	{
@@ -6206,6 +6253,7 @@
 		"MaxLevel"						"1"
 		"precache"
 		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
 		}
 
 		
@@ -6218,11 +6266,11 @@
 			"modifier_berserk_self_buff"
 			{
 				"Passive"				"1"
-				"OnAttackStart"
+				"OnAttackLanded"
 				{
 					"Random"
 					{
-						"Chance"		"30"
+						"Chance"		"35"
 						"OnSuccess"
 						{
 							"RunScript"
@@ -6398,6 +6446,67 @@
 				"IsHidden"		"0"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
 			}			
+			"modifier_god_hand_debuff"
+			{
+				"Duration"		"10"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-100"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
+					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"-500"
+					"MODIFIER_PROPERTY_BONUS_NIGHT_VISION"		"-500"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"-50"
+				}
+			}
+		}
+	}
+	//========================================
+	// Berserker : Reincarnation
+	//========================================
+	"berserker_5th_reincarnation"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"berserker_5th_attribute_reincarnation"
+		"MaxLevel"						"1"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+			"particle"			"particles/items_fx/aegis_respawn.vpcf"
+		}
+
+		
+		"OnSpellStart"
+		{
+		}
+
+		"Modifiers"
+		{
+			"modifier_reincarnation"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"berserker_ability"
+						"Function"			"OnReincarnationDamageTaken"
+						"DamageTaken"		"%attack_damage"
+					}
+				}
+			}
+			"modifier_reincarnation_stack"
+			{
+				"IsHidden"		"0"
+				"Duration"		"10"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"12"
+				}
+			}
 		}
 	}
 	//=======================================
@@ -6422,6 +6531,16 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_mr"				"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_block"				"24"
+			}
 		}
 		
 		"OnSpellStart"
@@ -6434,7 +6553,7 @@
 		}
 	}
 	//=======================================
-	// Berserker Attribute : Berserk
+	// Berserker Attribute : Eternal Rage
 	//=======================================
 	"berserker_5th_attribute_berserk"
 	{
@@ -6455,6 +6574,31 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bash_chance"				"35"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bash_duration"				"0.5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bash_damage"				"300"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"nine_cdr"				"5"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_convert_ratio"				"0.2"
+			}
 		}
 		
 		"OnSpellStart"
@@ -6488,6 +6632,26 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"aspd_penalty"				"100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"ms_penalty"				"30"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_penalty"				"500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"str_penalty"				"50"
+			}
 		}
 		
 		"OnSpellStart"
@@ -6522,6 +6686,26 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"threshold"				"100"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"health_regen"				"12"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_stack"				"5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_sustain"				"12000"
+			}
 		}
 		
 		"OnSpellStart"
@@ -12226,7 +12410,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"300"
 		"AbilityCastRangeBuffer"		"150"
-		"AbilityCastPoint"				"1.3"
+		"AbilityCastPoint"				"1.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -15612,34 +15796,39 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"10.0"
+				"cast_delay"			"1.0"
 			}
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_armor"			"15"
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"10.0"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_mr"			"40"
+				"bonus_armor"			"15"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movespeed_per_second"			"8"
+				"bonus_mr"			"40"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"350"
+				"movespeed_per_second"			"9"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"max_damage"			"400 450 500 550 600"
+				"radius"			"350"
 			}
 			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_damage"			"400 450 500 550 600"
+			}
+			"08"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"min_damage"			"100 150 200 250 300"
@@ -15886,85 +16075,90 @@
 		{
 			"01"
 			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"				"2"
+			}
+			"02"
+			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"1150"
 			}
-			"02"
+			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"12.0"
 			}
-			"03"
+			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"sustain_limit"		"5"
 			}
-			"04"
+			"05"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"infantry_bonus_health"		"150 300 450 600 750"
 			}
-			"05"
+			"06"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"infantry_bonus_damage"		"8 16 24 34 40"
 			}
-			"06"
+			"07"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"maharaja_bonus_health"		"250 500 750 1000 1250"
 			}
-			"07"
+			"08"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"maharaja_bonus_damage"		"15 30 45 60 75"	
 			}
-			"08"
+			"09"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"archer_bonus_health"		"75 150 225 300 375"
 			}
-			"09"
+			"10"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"archer_bonus_damage"		"4 8 12 16 20"	
 			}
-			"10"
+			"11"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"cavalry_bonus_health"		"200 400 600 800 1000"
 			}
-			"11"
+			"12"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"cavalry_bonus_damage"		"5 10 15 20 25"	
 			}
-			"12"
+			"13"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"hepha_bonus_health"		"300 600 900 1200 1500"
 			}
-			"13"
+			"14"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"hepha_bonus_damage"		"20 40 60 80 100"	
 			}
-			"14"
+			"15"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"mage_bonus_health"		"100 200 300 400 500"
 			}
-			"15"
+			"16"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"mage_bonus_damage"		"4 8 12 16 20"	
 			}
-			"16"
+			"17"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"waver_bonus_health"		"150 300 450 600 750"
 			}
-			"17"
+			"18"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"waver_bonus_damage"		"15 30 45 60 75"	
@@ -18635,6 +18829,30 @@
 			}
 		}
 	}
+	//=================================================================================================================
+	// Nero : Item Construction
+	//=================================================================================================================
+	"nero_acquire_item_construction"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"caster_5th_item_construction"
+		
+		"AbilityCastPoint"				"0.0"
+		"precache"
+		{
+
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnItemConstructionAcquired"
+			}
+		}
+	}
 	
 	"nero_close_spellbook"
 	{
@@ -18700,12 +18918,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_damage"				"340"
+				"max_damage"				"360"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_stack"		"85"
+				"damage_per_stack"		"90"
 			}
 		}
 
@@ -20098,15 +20316,20 @@
 		{
 			"01"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"total_damage"			"550 700 850 1000 1150"
+				"var_type"			"FIELD_FLOAT"
+				"cast_delay"			"0.6"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"500"
+				"total_damage"			"550 700 850 1000 1150"
 			}
 			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"500"
+			}
+			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"duration"				"8"

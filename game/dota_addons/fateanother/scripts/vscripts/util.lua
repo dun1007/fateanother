@@ -36,6 +36,7 @@ purgable = {
     "modifier_double_edge",
     "modifier_murderous_instinct",
     "modifier_double_spearsmanship",
+    "modifier_gordius_wheel_speed_boost",
     "nero_gladiusanus_blauserum",
     "nero_tres_fontaine_ardent",
     "modifier_invigorating_ray_ally",
@@ -62,6 +63,7 @@ strongdispelable = {
     "modifier_double_edge",
     "modifier_murderous_instinct",
     "modifier_double_spearsmanship",
+    "modifier_gordius_wheel_speed_boost",
     "nero_gladiusanus_blauserum",
     "nero_tres_fontaine_ardent",
     "modifier_invigorating_ray_ally",
@@ -72,6 +74,9 @@ strongdispelable = {
     "modifier_b_scroll",
     "modifier_argos_shield",
     "modifier_rho_aias_shield",
+    "modifier_gordius_wheel_mitigation_tier1",
+    "modifier_gordius_wheel_mitigation_tier2",
+    "modifier_gordius_wheel_mitigation_tier3"
 }
 
 goesthruB = {"saber_avalon",
@@ -85,21 +90,28 @@ goesthruB = {"saber_avalon",
 }
 
 cleansable = {
-    "modifier_stunned",
-    "modifier_rule_breaker",
-    "modifier_caliburn_slow",
-    "modifier_purge",
-    "modifier_breaker_gorgon",
-    "rb_sealdisabled",
-    "modifier_dagger_of_treachery",
-    "modifier_weakening_venom_debuff",
+    -- Slows
     "modifier_slow_tier1",
     "modifier_slow_tier2",
+    "modifier_caliburn_slow",
+    "modifier_breaker_gorgon",
+    "modifier_weakening_venom_debuff",
+    "modifier_double_edge_slow",
+    "modifier_tawrich_slow",
+    "modifier_battle_horn_movespeed_debuff",
+    "modifier_aestus_domus_aurea_debuff_slow",
+    "modifier_warriors_charge_slow",
+    "modifier_fissure_strike_slow",
+
+    -- Other CCs
+    "modifier_stunned",
+    "modifier_rule_breaker",
+    "modifier_purge",
+    "rb_sealdisabled",
+    "modifier_dagger_of_treachery",
     "modifier_silence",
     "modifier_disarmed",
     "modifier_enkidu_hold", -- enkidu
-    "modifier_tawrich_slow",
-    "modifier_battle_horn_movespeed_debuff",
     "modifier_tentacle_wrap"
 }
 
@@ -113,7 +125,8 @@ slowmodifier = {
     "modifier_tawrich_slow",
     "modifier_battle_horn_movespeed_debuff",
     "modifier_aestus_domus_aurea_debuff_slow",
-    "modifier_warriors_charge_slow"
+    "modifier_warriors_charge_slow",
+    "modifier_fissure_strike_slow"
 }
 
 donotlevel = {
@@ -129,7 +142,8 @@ donotlevel = {
     "false_assassin_presence_concealment",
     "true_assassin_weakening_venom_passive",
     "true_assassin_protection_from_wind",
-    "avenger_overdrive"
+    "avenger_overdrive",
+    "berserker_5th_reincarnation"
 }
 
 CannotReset = {

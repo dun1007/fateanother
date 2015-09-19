@@ -148,7 +148,7 @@ function TPScroll(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 	print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
-	if caster:GetAbsOrigin().y < -5000 or targetPoint.y < -5000 then 
+	if caster:GetAbsOrigin().y < -2000 or targetPoint.y < -2000 then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Location" } )
 		--caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))		
 		return
@@ -184,9 +184,12 @@ function TPScroll(keys)
 end
 
 function TPSuccess(keys)
-	print("TP successful")
 	local caster = keys.caster
-	if caster.TPLoc == nil then
+	print(caster:GetAbsOrigin().y)
+	if caster:GetAbsOrigin().y < -2000 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Location" } )
+		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
+	elseif caster.TPLoc == nil then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Have Ward Nearby Targeted Location" } )
 		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
 	else
@@ -223,6 +226,8 @@ function WardFam(keys)
 	caster.ward:AddNewModifier(caster, caster, "modifier_invisible", {}) 
 	caster.ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = keys.Radius, duration = keys.Duration}) 
     caster.ward:AddNewModifier(caster, caster, "modifier_kill", {duration = keys.Duration})
+
+    EmitSoundOnLocationForAllies(targetPoint,"DOTA_Item.ObserverWard.Activate",caster)
 end
 
 function OnWardDeath(keys)

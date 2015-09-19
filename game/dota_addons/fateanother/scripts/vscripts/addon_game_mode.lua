@@ -472,30 +472,16 @@ end
 -- The overall game state has changed
 function FateGameMode:OnGameRulesStateChange(keys)
     print("[BAREBONES] GameRules State Changed")
-    PrintTable(keys)
     
     local newState = GameRules:State_Get()
     if newState == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
         self.bSeenWaitForPlayers = true
     elseif newState == DOTA_GAMERULES_STATE_INIT then
-        Timers:RemoveTimer("alljointimer")
+        --Timers:RemoveTimer("alljointimer")
     elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-        local et = 6
-        if self.bSeenWaitForPlayers then
-            et = .01
-        end
-        Timers:CreateTimer("alljointimer", {
-            useGameTime = true,
-            endTime = et,
-            callback = function()
-                if PlayerResource:HaveAllPlayersJoined() then
-                    --FateGameMode:PostLoadPrecache()
-                    FateGameMode:OnAllPlayersLoaded()
-                    return 
-                end
-                return 1
-            end
-        })
+        Timers:CreateTimer(3.0, function()
+            FateGameMode:OnAllPlayersLoaded()
+        end)
     elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
         FateGameMode:OnGameInProgress()
     end

@@ -531,6 +531,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityCooldown"				"90"
 	    "AbilityChannelTime"			"1.0"		
+	    "AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 	    "AbilitySpecial"
 	    {
 	   		"01"
@@ -789,7 +790,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"1.0"
-
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -827,12 +828,6 @@
 				"Duration"		"%duration"
 				"Radius"		"%vision_range"
 			}
-
-			"FireSound"
-			{
-				"EffectName"	"DOTA_Item.ObserverWard.Activate"
-				"Target"		"CASTER"
-			}	
 		}
 		"Modifiers"
 		{
@@ -876,11 +871,12 @@
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 	    "AbilityCooldown"				"45.0"
 	    "AbilityCastRange"				"1000"
+	    "AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 
 	    "ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
 	    "precache"
@@ -969,6 +965,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityCooldown"				"90"
 	    "AbilityChannelTime"			"3.0"		
+	    "AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 	    "precache"
 	    {
 	    	"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
@@ -1146,6 +1143,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 	    "AbilityCooldown"				"30"
 	    "AbilityCastRange"				"1000"
+	    "AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
@@ -1202,10 +1200,11 @@
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 
 	    "AbilityCastRange"				"1000"
 	    "AbilityCooldown"				"10"
@@ -1563,12 +1562,13 @@
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
 
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityCooldown"				"30"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastRange"				"1000"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 
 		"precache"
 		{
@@ -1712,12 +1712,13 @@
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_ALWAYS"
 
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 	    "AbilityCooldown"				"35"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastRange"				"1000"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"

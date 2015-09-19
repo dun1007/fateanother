@@ -351,8 +351,9 @@
 		"Ability8"				"berserker_5th_divinity_improved"
 		"Ability9"				"berserker_5th_berserk_attribute_passive"
 		"Ability10"				"berserker_5th_god_hand"
-		"Ability11"				"presence_detection_passive"
-		"Ability12"				"attribute_bonus"
+		"Ability11"				"berserker_5th_reincarnation"
+		"Ability12"				"presence_detection_passive"
+		"Ability13"				"attribute_bonus"
 
 		"Combo"						"berserker_5th_madmans_roar"
 		"AttributeNumber"			"4"
@@ -810,7 +811,7 @@
 
 		"StatusHealth"					"1150"
 		"StatusHeathRegen"				"9.0"
-		"StatusMana"					"1050"
+		"StatusMana"					"1100"
 		"StatusManaRegen"				"1.2"
 		
 		"ArmorPhysical"					"3"
@@ -986,7 +987,7 @@
 		"Ability8"				"nero_invictus_spiritus"
 		"Ability9"				"nero_acquire_divinity"
 		"Ability10"				"nero_acquire_golden_rule"
-		"Ability11"				"nero_acquire_minds_eye"
+		"Ability11"				"nero_acquire_item_construction"
 		"Ability12"				"nero_acquire_clairvoyance"
 		"Ability13"				"nero_close_spellbook"
 		"Ability14"				"presence_detection_passive"

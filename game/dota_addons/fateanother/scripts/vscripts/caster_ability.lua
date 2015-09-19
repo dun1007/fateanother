@@ -245,8 +245,15 @@ function OnManaDrainStart(keys)
 	local hero = ply:GetAssignedHero()
 	local ability = keys.ability
 	local particleName = "particles/units/heroes/hero_lion/lion_spell_mana_drain.vpcf"
+
+
 	caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
 	caster.ManaDrainTarget = target
+	if target == caster then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Target Self" } )
+		keys.ability:EndCooldown()
+		return
+	end
 	keys.ManaPerSec = keys.ManaPerSec + hero:GetIntellect() * 0.8
 
 	caster.IsManaDrainChanneling = true
@@ -727,7 +734,7 @@ function OnItemStart(keys)
 	local randomitem = math.random(100)
 	local item = nil
 
-	if caster.IsTerritoryPresent and (caster.Territory:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() < 500 then 
+	if (caster.IsTerritoryPresent and (caster.Territory:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D() < 500) or caster.IsPrivilegeImproved then 
 		if randomitem <= 33 then 
 			item = CreateItem("item_s_scroll", nil, nil) 
 		elseif randomitem <= 66 then
@@ -1016,6 +1023,11 @@ function OnMTStart(keys)
 	local target = keys.target
 	local duration = keys.Duration
 	local durCount = 0
+	if target == caster then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Target Self" } )
+		keys.ability:EndCooldown()
+		return
+	end
 	caster.IsManaTransferActive = true
 	Timers:CreateTimer(function()
 		if durCount > duration then return end

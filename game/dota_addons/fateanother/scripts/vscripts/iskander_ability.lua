@@ -307,13 +307,13 @@ function OnChariotRide(keys)
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier1", {}) 
 			end
 		end)
-		Timers:CreateTimer(2.5, function()	
-			if caster:HasModifier("modifier_gordius_wheel") then 
+		Timers:CreateTimer(2.49, function()	
+			if caster:HasModifier("modifier_gordius_wheel") and caster:HasModifier("modifier_gordius_wheel_mitigation_tier1") then 
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier2", {}) 
 			end
 		end)
-		Timers:CreateTimer(5.5, function()	
-			if caster:HasModifier("modifier_gordius_wheel") then 
+		Timers:CreateTimer(5.49, function()	
+			if caster:HasModifier("modifier_gordius_wheel") and caster:HasModifier("modifier_gordius_wheel_mitigation_tier2") then 
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_mitigation_tier3", {}) 
 			end
 		end)

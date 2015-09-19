@@ -3,7 +3,7 @@ function OnIPStart(keys)
 
 	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "nero_acquire_divinity", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "nero_acquire_golden_rule", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_acquire_minds_eye", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_acquire_item_construction", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "nero_close_spellbook", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "nero_acquire_clairvoyance", true, true)
 end
@@ -107,11 +107,32 @@ function OnClairvoyanceAcquired(keys)
 	end
 	caster:AddAbility("archer_5th_clairvoyance")
 	if caster.IsPrivilegeImproved then
+		caster.IsEagleEyeAcquired = true
 		caster:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(2)
 	else
 		caster:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(1)
 	end
 	caster:SwapAbilities("archer_5th_clairvoyance", "fate_empty1", true, true)
+	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
+	OnIPClose(keys)
+end
+
+function OnItemConstructionAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local currentPassive = caster:GetAbilityByIndex(3):GetName()
+	if currentPassive ~= "fate_empty1" then
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:RemoveAbility(currentPassive)
+	end
+	for i=1, #PassiveModifiers do
+		if caster:HasModifier(PassiveModifiers[i]) then
+			caster:RemoveModifierByName(PassiveModifiers[i])
+		end
+	end
+	caster:AddAbility("caster_5th_item_construction")
+	caster:FindAbilityByName("caster_5th_item_construction"):SetLevel(1)
+	caster:SwapAbilities("caster_5th_item_construction", "fate_empty1", true, true)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end

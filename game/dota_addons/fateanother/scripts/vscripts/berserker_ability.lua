@@ -8,11 +8,11 @@ function OnFissureStart(keys)
 	{
 		Ability = keys.ability,
         EffectName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
-        iMoveSpeed = 500,
+        iMoveSpeed = keys.Range,
         vSpawnOrigin = nil,
-        fDistance = 500,
-        fStartRadius = 250,
-        fEndRadius = 250,
+        fDistance = keys.Range,
+        fStartRadius = keys.Width,
+        fEndRadius = keys.Width,
         Source = caster,
         bHasFrontalCone = true,
         bReplaceExisting = false,
@@ -21,7 +21,7 @@ function OnFissureStart(keys)
         iUnitTargetType = DOTA_UNIT_TARGET_ALL,
         fExpireTime = GameRules:GetGameTime() + 2.0,
 		bDeleteOnHit = false,
-		vVelocity = frontward * 500
+		vVelocity = frontward * keys.Range
 	}
 	fiss.vSpawnOrigin = caster:GetAbsOrigin() 
 	projectile = ProjectileManager:CreateLinearProjectile(fiss)
@@ -30,11 +30,78 @@ function OnFissureStart(keys)
 end
 
 function OnFissureHit(keys)
+	local caster = keys.caster
+	local target = keys.target 
+	if caster:HasModifier("modifier_courage_damage_stack_indicator") then
+		keys.Damage = keys.Damage + courageAbilityHandle:GetLevelSpecialValueFor("bonus_damage", courageAbilityHandle:GetLevel()-1)
+		DeduceCourageDamageStack(caster)
+	end 
+
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	if not IsImmuneToSlow(target) then keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_fissure_strike_slow", {}) end
+end
+
+courageAbilityHandle = nil
+function OnCourageLevelUp(keys)
+	courageAbilityHandle = keys.ability -- Store handle in global variable for future use
 end
 
 function OnCourageStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 400
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+		-- Apply armor reduction and damage reduction buff to nearby enemies
+		ability:ApplyDataDrivenModifier(caster, v, "modifier_courage_armor_reduction", {}) 
+		ability:ApplyDataDrivenModifier(caster, v, "modifier_courage_attack_damage_debuff", {}) 
+	end 
 
+	-- Apply stackable speed buff
+	local currentStack = caster:GetModifierStackCount("modifier_courage_stackable_buff", keys.ability)
+	if currentStack == 0 and caster:HasModifier("modifier_courage_stackable_buff") then 
+		currentStack = 1 
+	elseif currentStack == keys.MaxStack then 
+		currentStack = currentStack-1 
+	end
+
+	caster:RemoveModifierByName("modifier_courage_stackable_buff") 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_courage_stackable_buff", {}) 
+	caster:SetModifierStackCount("modifier_courage_stackable_buff", keys.ability, currentStack + 1)
+
+	-- Apply damage buff indicator
+	caster:RemoveModifierByName("modifier_courage_damage_stack_indicator")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_courage_damage_stack_indicator", {}) 
+	caster:SetModifierStackCount("modifier_courage_damage_stack_indicator", ability, 9)
+
+	-- Apply damage buff
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_courage_attack_damage_buff", {}) 
+
+	-- Reduce Nine Lives cooldown if applicable
+	if caster.IsEternalRageAcquired then
+		ReduceCooldown(caster:FindAbilityByName("berserker_5th_nine_lives"), 5)
+	end
+end
+
+function OnCourageAttackLanded(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	DeduceCourageDamageStack(caster)
+
+end
+
+function DeduceCourageDamageStack(caster)
+	-- Deduce a stack from damage buff
+	local currentStack = caster:GetModifierStackCount("modifier_courage_damage_stack_indicator", courageAbilityHandle)
+	caster:RemoveModifierByName("modifier_courage_damage_stack_indicator")
+	if currentStack == 1 then
+		caster:RemoveModifierByName("modifier_courage_attack_damage_buff")
+	else
+		courageAbilityHandle:ApplyDataDrivenModifier(caster, caster, "modifier_courage_damage_stack_indicator", {}) 
+		caster:SetModifierStackCount("modifier_courage_damage_stack_indicator", courageAbilityHandle, currentStack-1)
+	end
 end
 
 function OnRoarStart(keys)
@@ -81,12 +148,12 @@ function OnBerserkStart(keys)
 	local caster = keys.caster
 	local hplock = keys.Health
 	local duration = keys.Duration
+	local damageTaken = keys.DamageTaken
 	local ply = caster:GetPlayerOwner()
-	if ply.IsBerserkAcquired then duration = duration + 1 end
-
+	if caster.IsEternalRageAcquired then duration = duration + 1 end
 	local berserkCounter = 0
-	BerCheckCombo(caster, keys.ability)
-	EmitGlobalSound("Berserker.Roar") 
+	caster.BerserkDamageTaken = 0
+
 
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
@@ -100,7 +167,7 @@ function OnBerserkStart(keys)
 	)
 
 
-	if ply.IsBerserkAcquired then 
+	if caster.IsEternalRageAcquired then 
 		local explosionCounter = 0
 		local manaregenCounter = 0
 
@@ -109,8 +176,9 @@ function OnBerserkStart(keys)
 			if explosionCounter == duration then return end
 			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-		        DoDamage(caster, v, 150, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		        DoDamage(caster, v, caster.BerserkDamageTaken/5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			end
+			caster.BerserkDamageTaken = 0
 			local berserkExp = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControl(berserkExp, 1, caster:GetAbsOrigin())
 
@@ -118,22 +186,37 @@ function OnBerserkStart(keys)
 			return 1.0
 			end
 		)
+	end
 
-		Timers:CreateTimer(function()
-			if manaregenCounter > 2.0 then return end
-			caster:SetMana(caster:GetMana() + 30) 
+	BerCheckCombo(caster, keys.ability)
+	EmitGlobalSound("Berserker.Roar") 
+end
 
-			manaregenCounter = manaregenCounter + 0.2
-			return 0.2
-		end)
+function OnBerserkDamageTaken(keys)
+	local caster = keys.caster 
+	local damageTaken = keys.DamageTaken
+	if caster.IsEternalRageAcquired then
+		caster.BerserkDamageTaken = caster.BerserkDamageTaken + damageTaken
+		print(caster.BerserkDamageTaken)
+		caster:SetMana(caster:GetMana() + damageTaken/5)
 	end
 end
 
+-- Eternal Rage passive
 function OnBerserkProc(keys)
 	local caster = keys.caster
-	local targets = FindUnitsInRadius(caster:GetTeam(), keys.target, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-	for k,v in pairs(targets) do
-        DoDamage(caster, v, 200, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	local target = keys.target
+	target:EmitSound("Hero_Centaur.HoofStomp")
+	if not caster.IsRageBashOnCooldown then 
+		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		for k,v in pairs(targets) do
+	        DoDamage(caster, v, 300, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
+		end
+		caster.IsRageBashOnCooldown = true
+		Timers:CreateTimer(1.5, function()
+			caster.IsRageBashOnCooldown = false
+		end)
 	end
 end
 
@@ -234,6 +317,11 @@ function OnNineLanded(caster, ability)
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 1500, 0, true)
 				-- do damage to targets
+				local tempLasthitdmg = lasthitdmg -- store original tick damage 
+				if caster:HasModifier("modifier_courage_damage_stack_indicator") then
+					lasthitdmg = lasthitdmg + courageAbilityHandle:GetLevelSpecialValueFor("bonus_damage", courageAbilityHandle:GetLevel()-1)
+					DeduceCourageDamageStack(caster)
+				end 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 1, false)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -252,6 +340,7 @@ function OnNineLanded(caster, ability)
 						v:OnPhysicsFrame(nil)
 					return end)
 				end
+				lasthitdmg = tempLasthitdmg
 				-- add particles
 				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
@@ -261,19 +350,24 @@ function OnNineLanded(caster, ability)
 			end
 			
 			-- if its not last hit, do regular hit stuffs
+			local tempTickdamage = tickdmg -- store original tick damage 
+			if caster:HasModifier("modifier_courage_damage_stack_indicator") then
+				tickdmg = tickdmg + courageAbilityHandle:GetLevelSpecialValueFor("bonus_damage", courageAbilityHandle:GetLevel()-1)
+				DeduceCourageDamageStack(caster)
+			end 
 			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 				giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
 			end
+			tickdmg = tempTickdamage -- revert to original
 
 			local particle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControl(particle1, 1, caster:GetAbsOrigin())
 			local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControl(particle2, 1, caster:GetAbsOrigin())
 			nineCounter = nineCounter + 1
-			print(nineCounter)
 			return 0.3
 		end 
 	end)
@@ -339,25 +433,27 @@ function OnGodHandDeath(keys)
 		endTime = 1,
 		callback = function()
 
-		if IsTeamWiped(caster) == false and ply.GodHandStock > 0 then
+		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 then
 			EmitGlobalSound("Berserker.Roar") 
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ply.GodHandStock = ply.GodHandStock - 1
-			GameRules:SendCustomMessage("<font color='#FF0000'>----------!!!!!</font> Remaining God Hand stock : " .. ply.GodHandStock , 0, 0)
+			caster.GodHandStock = caster.GodHandStock - 1
+			GameRules:SendCustomMessage("<font color='#FF0000'>----------!!!!!</font> Remaining God Hand stock : " .. caster.GodHandStock , 0, 0)
 			caster:SetRespawnPosition(dummy:GetAbsOrigin())
 			caster:RespawnHero(false,false,false)
 			caster:RemoveModifierByName("modifier_god_hand_stock") 
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {}) 
-			caster:SetModifierStackCount("modifier_god_hand_stock", caster, ply.GodHandStock)
+			caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)
 
-			if ply.IsReincarnationAcquired then 
-				local resExp = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-				ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
-				local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-				for k,v in pairs(targets) do
-			        DoDamage(caster, v, caster:GetMaxHealth() * 3/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-				end	
-			end
+			-- Apply revive damage
+			local resExp = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			for k,v in pairs(targets) do
+		        DoDamage(caster, v, caster:GetMaxHealth() * 2.5/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			end	
+
+			-- Apply penalty
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_debuff", {}) 
 		else
 			caster:SetRespawnPosition(caster.RespawnPos)
 		end
@@ -367,11 +463,37 @@ function OnGodHandDeath(keys)
 
 end
 
+function OnReincarnationDamageTaken(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local damageTaken = keys.DamageTaken
+
+	if damageTaken > 100 then 
+		local currentStack = caster:GetModifierStackCount("modifier_reincarnation_stack", ability)
+		caster:RemoveModifierByName("modifier_reincarnation_stack")
+		if currentStack > 4 then currentStack = 4 end
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_reincarnation_stack", {}) 
+		caster:SetModifierStackCount("modifier_reincarnation_stack", ability, currentStack+1)
+	end
+
+	if caster:HasModifier("modifier_berserk_self_buff") then 
+		caster.ReincarnationDamageTaken = caster.ReincarnationDamageTaken+damageTaken*3
+	else
+		caster.ReincarnationDamageTaken = caster.ReincarnationDamageTaken+damageTaken
+	end
+
+	if caster.ReincarnationDamageTaken > 12000 and caster.IsGodHandAcquired then
+		caster.ReincarnationDamageTaken = 0
+		caster.GodHandStock = caster.GodHandStock + 1
+		caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)
+	end
+end
+
 function OnImproveDivinityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	ply.IsDivinityImproved = true
+	hero.IsDivinityImproved = true
 	hero:FindAbilityByName("berserker_5th_divinity"):SetLevel(2)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -383,8 +505,8 @@ function OnBerserkAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("berserker_5th_berserk_attribute_passive"):SetLevel(1)
-	ply.IsBerserkAcquired = true
-
+	hero.IsEternalRageAcquired = true
+	hero.IsRageBashOnCooldown = false
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -396,8 +518,8 @@ function OnGodHandAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local ability = hero:FindAbilityByName("berserker_5th_god_hand")
 	ability:SetLevel(1)
-	ply.IsGodHandAcquired = true
-	ply.GodHandStock = 11
+	hero.IsGodHandAcquired = true
+	hero.GodHandStock = 11
 	ability:ApplyDataDrivenModifier(hero, hero, "modifier_god_hand_stock", {}) 
 	hero:SetModifierStackCount("modifier_god_hand_stock", hero, 11)
 
@@ -411,8 +533,9 @@ function OnReincarnationAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:SetBaseHealthRegen(hero:GetMaxHealth()/100)
-	ply.IsReincarnationAcquired = true
+	hero.IsReincarnationAcquired = true
+	hero:FindAbilityByName("berserker_5th_reincarnation"):SetLevel(1)
+	hero.ReincarnationDamageTaken = 0
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
