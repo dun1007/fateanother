@@ -454,6 +454,9 @@ function OnGodHandDeath(keys)
 
 			-- Apply penalty
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_debuff", {}) 
+
+			-- Reset godhand stock
+			caster.ReincarnationDamageTaken = 0
 		else
 			caster:SetRespawnPosition(caster.RespawnPos)
 		end
@@ -482,7 +485,7 @@ function OnReincarnationDamageTaken(keys)
 		caster.ReincarnationDamageTaken = caster.ReincarnationDamageTaken+damageTaken
 	end
 
-	if caster.ReincarnationDamageTaken > 12000 and caster.IsGodHandAcquired then
+	if caster.ReincarnationDamageTaken > 20000 and caster.IsGodHandAcquired then
 		caster.ReincarnationDamageTaken = 0
 		caster.GodHandStock = caster.GodHandStock + 1
 		caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)

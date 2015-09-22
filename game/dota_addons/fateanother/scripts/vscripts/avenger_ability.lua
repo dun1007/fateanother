@@ -281,6 +281,8 @@ function OnTFStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	AvengerCheckCombo(keys.caster, keys.ability)
+	--local a1 = caster:GetAbilityByIndex(0)
+	--local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
     if caster.IsBloodMarkAcquired then 
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
@@ -302,11 +304,13 @@ function OnTFEnd(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
-    if caster.IsBloodMarkAcquired then 
+    local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
+    caster:SwapAbilities("avenger_tawrich_zarich", a2, true, true) 
+    --[[if caster.IsBloodMarkAcquired then 
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
     else
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
-   	end
+   	end]]
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     local demoncore = caster:FindAbilityByName("avenger_demon_core")
     TurnDCOff(keys)

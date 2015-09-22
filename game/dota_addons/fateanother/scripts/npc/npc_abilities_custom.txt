@@ -6635,23 +6635,34 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"aspd_penalty"				"100"
+				"health_percent"			"25"	
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"ms_penalty"				"30"
+				"duration"			"10"	
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"vision_penalty"				"500"
+				"aspd_penalty"				"100"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
+				"ms_penalty"				"30"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_penalty"				"500"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
 				"str_penalty"				"50"
 			}
+
 		}
 		
 		"OnSpellStart"
@@ -6678,7 +6689,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"10"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -6704,7 +6715,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage_sustain"				"12000"
+				"damage_sustain"				"20000"
 			}
 		}
 		
@@ -15095,17 +15106,17 @@
 			"01"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"delay"			"1.2"
+				"delay"			"1.1"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"400 500 600 700 800"
+				"damage"			"500 600 700 800 900"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_reduction"	"-400 -500 -600 -700 -800"
+				"health_reduction"	"-500 -600 -700 -800 -900"
 			}
 			"04"
 			{
@@ -15115,7 +15126,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"cast_time"			"1.2"
+				"cast_time"			"1.1"
 			}
 		}
 		
