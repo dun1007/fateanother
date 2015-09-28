@@ -313,47 +313,39 @@ function OnTFEnd(keys)
    	end]]
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     local demoncore = caster:FindAbilityByName("avenger_demon_core")
-    TurnDCOff(keys)
+    if demoncore:GetToggleState() then
+    	demoncore:ToggleAbility()
+    end
     caster:SetModel("models/avenger/avenger.vmdl")
     caster:SetOriginalModel("models/avenger/avenger.vmdl")
 
     caster:SetModelScale(0.8)
 end
 
-function OnDCToggleOn(keys)
+
+function OnDCTick(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local demoncore = caster:FindAbilityByName("avenger_demon_core")
-	local ply = caster:GetPlayerOwner()
-
-	Timers:CreateTimer(function() 
-		if not demoncore:GetToggleState() then return end
-		if caster:GetMana() < 25 then 
-			demoncore:ToggleAbility()  
-			return 
-		end
-		if caster.IsDIAcquired then 
-			local trueform = caster:FindAbilityByName("avenger_true_form")
-			local trueformcd = trueform:GetCooldownTimeRemaining() 
-			trueform:EndCooldown()
-			trueform:StartCooldown(trueformcd - 0.5)
-			print(trueform:GetCooldownTimeRemaining())
-		end
-		caster:SetMana(caster:GetMana() - 25) 
-		return 0.25
-	end)
-end
-
-function OnDCToggleOff(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	caster:RemoveModifierByName("modifier_demon_core")
+	-- If Demon Core is not toggled on or caster has less than 25 mana, remove buff 
+	if not ability:GetToggleState() or caster:GetMana() < 25 then 
+		caster:RemoveModifierByName("modifier_demon_core")
+		return
+	end
+	-- Reduce mana and process attribute stuffs
+	caster:SetMana(caster:GetMana() - 25) 
+	if caster.IsDIAcquired then 
+		local trueform = caster:FindAbilityByName("avenger_true_form")
+		local trueformcd = trueform:GetCooldownTimeRemaining() 
+		trueform:EndCooldown()
+		trueform:StartCooldown(trueformcd - 0.5)
+	end
 end
 
 function TurnDCOff(keys)
 	local caster = keys.caster
 	local demoncore = caster:FindAbilityByName("avenger_demon_core")
     if demoncore:GetToggleState() then
+    	print("asdqawe")
     	demoncore:ToggleAbility()
     end
 end

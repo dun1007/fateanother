@@ -16,46 +16,37 @@ statcollection.addStats({
 ENABLE_HERO_RESPAWN = false -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = true -- Should the main shop contain Secret Shop items as well as regular items
 ALLOW_SAME_HERO_SELECTION = false -- Should we let people select the same hero as each other
-
 HERO_SELECTION_TIME = 60.0 -- How long should we let people select their hero?
 PRE_GAME_TIME = 0 -- How long after people select their heroes should the horn blow and the game start?
 POST_GAME_TIME = 60.0 -- How long should we let people look at the scoreboard before closing the server automatically?
 TREE_REGROW_TIME = 60.0 -- How long should it take individual trees to respawn after being cut down/destroyed?
-
 GOLD_PER_TICK = 0 -- How much gold should players get per tick?
 GOLD_TICK_TIME = 0 -- How long should we wait in seconds between gold ticks?
-
 RECOMMENDED_BUILDS_DISABLED = false -- Should we disable the recommened builds for heroes (Note: this is not working currently I believe)
 CAMERA_DISTANCE_OVERRIDE = 1250.0 -- How far out should we allow the camera to go? 1134 is the default in Dota
-
 MINIMAP_ICON_SIZE = 1 -- What icon size should we use for our heroes?
 MINIMAP_CREEP_ICON_SIZE = 1 -- What icon size should we use for creeps?
 MINIMAP_RUNE_ICON_SIZE = 1 -- What icon size should we use for runes?
-
 RUNE_SPAWN_TIME = 120 -- How long in seconds should we wait between rune spawns?
 CUSTOM_BUYBACK_COST_ENABLED = true -- Should we use a custom buyback cost setting?
 CUSTOM_BUYBACK_COOLDOWN_ENABLED = true -- Should we use a custom buyback time?
 BUYBACK_ENABLED = false -- Should we allow people to buyback when they die?
-
 DISABLE_FOG_OF_WAR_ENTIRELY = false -- Should we disable fog of war entirely for both teams?
 --USE_STANDARD_DOTA_BOT_THINKING = false -- Should we have bots act like they would in Dota? (This requires 3 lanes, normal items, etc)
 USE_STANDARD_HERO_GOLD_BOUNTY = false -- Should we give gold for hero kills the same as in Dota, or allow those values to be changed?
-
 USE_CUSTOM_TOP_BAR_VALUES = true -- Should we do customized top bar values or use the default kill count per team?
 TOP_BAR_VISIBLE = true -- Should we display the top bar score/count at all?
 SHOW_KILLS_ON_TOPBAR = true -- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals) Requires USE_CUSTOM_TOP_BAR_VALUES
-
 ENABLE_TOWER_BACKDOOR_PROTECTION = false-- Should we enable backdoor protection for our towers?
 REMOVE_ILLUSIONS_ON_DEATH = true -- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false -- Should we disable the gold sound when players get gold?
-
 END_GAME_ON_KILLS = false -- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 9999 -- How many kills for a team should signify an end of game?
-
 USE_CUSTOM_HERO_LEVELS = true -- Should we allow heroes to have custom levels?
 MAX_LEVEL = 24 -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = true -- Should we use custom XP values to level up heroes, or the default Dota numbers?
-
+DISABLE_ANNOUNCER = false               -- Should we disable the announcer from working in the game?
+LOSE_GOLD_ON_DEATH = false               -- Should we have players lose the normal amount of dota gold on death?
 
 XP_TABLE = {}
 XP_PER_LEVEL_TABLE = {}
@@ -82,12 +73,12 @@ for i=2,MAX_LEVEL-1 do
 end
 
 for i=1, MAX_LEVEL do
-    BOUNTY_PER_LEVEL_TABLE[i] = 1000 + i * 100 -- Bounty gold formula : 1000 + Level * 100
+    BOUNTY_PER_LEVEL_TABLE[i] = 1300 + i * 75 -- Bounty gold formula : 1000 + Level * 100
 end
 
-XP_BOUNTY_PER_LEVEL_TABLE[1] = 124
+XP_BOUNTY_PER_LEVEL_TABLE[1] = 120
 for i=2, MAX_LEVEL do
-    XP_BOUNTY_PER_LEVEL_TABLE[i] = XP_BOUNTY_PER_LEVEL_TABLE[i-1]*1 + i*4 + 120 -- Bounty XP formula : Previous level XP + Current Level * 4 + 120(constant)
+    XP_BOUNTY_PER_LEVEL_TABLE[i] = XP_BOUNTY_PER_LEVEL_TABLE[i-1]*0.95 + i*4 + 100 -- Bounty XP formula : Previous level XP + Current Level * 4 + 120(constant)
 end
 
 DoNotKillAtTheEndOfRound = {
@@ -434,18 +425,6 @@ function FateGameMode:PlayerSay(keys)
         PlayBGM(ply)
     end
     
-    if text == "-xptable" then
-        PrintTable(XP_TABLE)
-    end
-    
-    if text == "-xplvltable" then
-        PrintTable(XP_PER_LEVEL_TABLE)
-    end
-    
-    if text == "-xpbountytable" then
-        PrintTable(XP_BOUNTY_PER_LEVEL_TABLE)
-    end
-    
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
@@ -513,7 +492,7 @@ function FateGameMode:OnHeroInGame(hero)
         self.vPlayerList[hero:GetPlayerID() + 1] = player
     end
     -- Initialize stuffs
-    hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
+    hero:SetCustomDeathXP(0)
     hero.bFirstSpawned = true
     hero.PresenceTable = {}
     hero:SetAbilityPoints(0)
@@ -522,6 +501,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
     hero.CStock = 10
     hero.RespawnPos = hero:GetAbsOrigin()     
+
 
     -- Set music off
     local player = PlayerResource:GetPlayer(hero:GetPlayerID())
@@ -918,8 +898,6 @@ function FateGameMode:OnPlayerLevelUp(keys)
     local player = EntIndexToHScript(keys.player)
     local hero = player:GetAssignedHero() 
     local level = keys.level
-    print("Set unit's EXP bounty to " .. XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
-    hero:SetCustomDeathXP(XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()])
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 4)
     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 4)
     Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>4 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
@@ -951,7 +929,7 @@ end
 function FateGameMode:OnTeamKillCredit(keys)
     print ('[BAREBONES] OnTeamKillCredit')
     PrintTable(keys)
-    
+    local p = keys.splitscreenplayer 
     local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
     local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
     local numKills = keys.herokills
@@ -981,17 +959,25 @@ function FateGameMode:OnEntityKilled( keys )
             end
         end
     end
-    
+    -- Change killer to be owning hero 
+    if not killerEntity:IsHero() then
+        print("Killed by neutral unit")
+        killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
+    end
     if killedUnit:IsRealHero() then
         self.bIsCasuallyOccured = true
+        -- Distribute XP to allies
+        local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
+        for i=1, #alliedHeroes do
+            alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)
+        end
+        --XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()]
         -- Add to death count
         if killedUnit.DeathCount == nil then
             killedUnit.DeathCount = 1
         else
             killedUnit.DeathCount = killedUnit.DeathCount + 1
         end
-        print("Current death count for " .. killedUnit.name .. " : " .. killedUnit.DeathCount)
-        
         -- check if unit can receive a shard
         if killedUnit.DeathCount == 7 then
             if killedUnit.ShardAmount == nil then 
@@ -1002,18 +988,23 @@ function FateGameMode:OnEntityKilled( keys )
                 killedUnit.DeathCount = 0
             end
         end
-        local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] - killedUnit:GetGoldBounty()
-        if not killerEntity:IsHero() then
-            print("Killed by neutral unit")
-            killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
-        end
-        
-        killerEntity:ModifyGold(bounty , true, 0) 
+        -- Give kill bounty 
+        local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]
+        killerEntity:ModifyGold(bounty , true, 0)
+        -- Create gold popup
+        local goldPopupFx = ParticleManager:CreateParticle("particles/msg_fx/msg_gold.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit)
+        ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
+        ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
+        ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(5,#tostring(bounty)+1, 0))
+        ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
+        -- Display gold message
+        GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold!", 0, 0)
+
         -- if killer has Golden Rule attribute, grant 50% more gold
         if killerEntity:FindAbilityByName("gilgamesh_golden_rule") and killerEntity:FindAbilityByName("gilgamesh_golden_rule"):GetLevel() == 2 then 
             killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
         end 
-        print("Player collected bounty : " .. 1000 - killedUnit:GetGoldBounty())
+        print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
         
         -- Need condition check for GH
         --if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
@@ -1208,6 +1199,15 @@ function FateGameMode:InitGameMode()
     self.bPlayersInit = false
 end
 
+function FateGameMode:ModifyGoldFilter(filterTable)
+    -- Disable gold gain from hero kills
+    if filterTable["reason_const"] == DOTA_ModifyGold_HeroKill then
+        filterTable["gold"] = 0
+        return true
+    end
+
+    return true
+end
 
 
 _G.RoundStartTime = 0
@@ -1262,6 +1262,7 @@ function FateGameMode:InitializeRound()
         duration = 4.0
     }
     
+    -- Set up heroes for new round
     self:LoopOverPlayers(function(ply, plyID)
         local hero = ply:GetAssignedHero()
         
@@ -1281,8 +1282,9 @@ function FateGameMode:InitializeRound()
         end
         
         if self.nCurrentRound ~= 1 then 
-            print("[FateGameMode]" .. hero:GetName() .. " of player " .. hero:GetPlayerID() .. " gained " .. XP_PER_LEVEL_TABLE[hero:GetLevel()] * 4/10 .. " experience at the start of round")
-            hero:AddExperience(XP_PER_LEVEL_TABLE[hero:GetLevel()] * 4/10 , false, false) 
+            local multiplier = (0.5+0.01*(hero:GetDeaths()-hero:GetKills()))
+            print("[FateGameMode]" .. hero:GetName() .. " of player " .. hero:GetPlayerID() .. " gained " .. (XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier) .. " experience at the start of round")
+            hero:AddExperience(XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier , false, false) 
         end
     end)
     
@@ -1526,7 +1528,10 @@ function FateGameMode:CaptureGameMode()
         mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
         mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
         mode:SetStashPurchasingDisabled ( false )
-        
+        mode:SetAnnouncerDisabled( DISABLE_ANNOUNCER )
+        mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
+        mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
+        SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()
         
     end 

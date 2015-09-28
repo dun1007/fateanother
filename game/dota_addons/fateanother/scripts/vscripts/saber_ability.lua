@@ -53,13 +53,12 @@ end
 
 function InvisibleAirPull(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	if keys.target:GetName() == "npc_dota_hero_bounty_hunter" and keys.target.IsPFWAcquired then return end -- Protection from Wind checker
 
 	keys.caster.invisible_air_reach_target = true					-- Addition
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-
-	if target:GetName() == "npc_dota_hero_bounty_hunter" and target:GetPlayerOwner().IsPFWAcquired then return end
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
 	if caster.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end

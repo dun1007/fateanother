@@ -119,13 +119,17 @@ function OnBloodfortStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), initCasterPoint, nil, radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
+	        DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	        if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster,v, "modifier_bloodfort_slow", {}) end
+	        caster:SetHealth(caster:GetHealth()+keys.AbsorbAmount)
 			if caster.IsSealAcquired then  
 				forcemove.UnitIndex = v:entindex()
 				ExecuteOrderFromTable(forcemove) 
-				giveUnitDataDrivenModifier(caster, v, "pause_sealenabled", 0.5)
+				Timers:CreateTimer(0.2, function()
+					v:Stop()
+				end)
+				ability:ApplyDataDrivenModifier(caster,v, "modifier_bloodfort_seal", {})
 			end
-	        DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	        if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster,v, "modifier_bloodfort_slow", {}) end
 	    end
 		bloodfortCount = bloodfortCount + 1
 		return 1.0

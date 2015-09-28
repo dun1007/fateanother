@@ -4061,6 +4061,7 @@
 				"Function"		"OnBloodfortStart"
 				"Damage"		"%damage"
 				"Duration"		"%duration"
+				"AbsorbAmount"	"%absorb"
 				"Radius"		"%radius"
 			}
 			
@@ -4076,6 +4077,17 @@
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}
+			}
+			"modifier_bloodfort_seal"
+			{
+				"Duration"		"0.5"
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -8209,7 +8221,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"24.0"
+		"AbilityCooldown"				"24 23 22 21 20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8670,7 +8682,7 @@
 		"AbilityCastRange"				"150"
 		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"400"
-		"AbilityDamage"					"400 450 500 550 600"
+		"AbilityDamage"					"400 475 550 625 700"
 		
 		"precache"
 		{
@@ -8683,7 +8695,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 450 500 550 600"
+				"damage"				"400 475 550 625 700"
 			}
 
 			"02"
@@ -12590,7 +12602,7 @@
 
 			"modifier_dash_anim"
 			{
-				"IsHidden"				"1"
+				//"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_RUN"
 				"Duration"				"1.0"
 				"Properties"
@@ -12601,7 +12613,7 @@
 
 			"modifier_nine_anim"
 			{
-				"IsHidden"			"1"
+				//"IsHidden"			"1"
 				"Duration"			"0.2"
 				"OverrideAnimation"		"ACT_DOTA_ATTACK"
 				"Properties"
@@ -12611,7 +12623,7 @@
 			}
 			"modifier_nine_anim2"
 			{
-				"IsHidden"			"1"
+				//"IsHidden"			"1"
 				"Duration"			"1.0"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
 				"Properties"
@@ -14062,14 +14074,6 @@
 					//"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
 					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
 				}
-				"OnRespawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"avenger_ability"
-						"Function"			"TurnDCOff"
-					}				
-				}
 				"OnDestroy"
 				{
 					"RunScript"
@@ -14115,11 +14119,6 @@
 		}
 		"OnToggleOn"
 		{
-			"RunScript"
-			{
-				"ScriptFile"		"avenger_ability"
-				"Function"			"OnDCToggleOn"
-			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_Huskar.Inner_Vitality"
@@ -14132,15 +14131,6 @@
 			}
 		}
 
-		"OnToggleOff"
-		{
-			"RunScript"
-			{
-				"ScriptFile"		"avenger_ability"
-				"Function"			"OnDCToggleOff"
-			}
-		}		
-
 		"Modifiers"
 		{
 			"modifier_demon_core"
@@ -14150,6 +14140,15 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"	"%health_regen_percentage"
+				}
+				"ThinkInterval"		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"avenger_ability"
+						"Function"		"OnDCTick"
+					}
 				}
 			}
 		}
@@ -20889,13 +20888,18 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"45 10"
 		"precache"
 		{
 		}
 		
 		"AbilitySpecial"
-		{			
+		{		
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge"				"12"
+			}	
 		}
 		
 		"OnSpellStart"
@@ -20938,7 +20942,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"			"5"
+				"radius"			"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"			"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_damage"			"20"
 			}
 		}
 
@@ -20993,8 +21007,13 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"370 425 480 535 590"
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"0.5"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_stun_duration"				"1.0"
 			}
 		}
 
@@ -21049,8 +21068,23 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"370 425 480 535 590"
+				"var_type"				"FIELD_FLOAT"
+				"mr_reduction"			"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_lock_duration"			"1.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_slow_duration"			"3.0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_initial_slow"			"100"
 			}
 		}
 
@@ -21181,7 +21215,7 @@
 		}
 		
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"1.0"
 		"AbilityManaCost"				"100"
 		"AbilityCastRange"				"1000"
 		
@@ -21190,12 +21224,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"600 800 1000 1200 1400"
+				"damage"				"70 85 100 115 130"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"500"
+				"radius"				"250"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_damage_bonus"				"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_ms"				"3 3.5 4 4.5 5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"stack_mana_cost"				"100"
 			}
 		}
 		
@@ -21264,7 +21313,7 @@
 		"AbilityCastRange"				"20000"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"18"
+		"AbilityCooldown"				"20 17 14 11 8"
 		"AbilityManaCost"				"200"
 		
 		// Ability special
@@ -21274,12 +21323,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"heal_amount"			"250 325 400 475 550"
+				"delay"			"1.0"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"duration"				"5"
+				"duration"			"1.5"
 			}
 		}
 		
@@ -21346,12 +21395,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"heal_amount"			"250 325 400 475 550"
+				"damage_modifier"			"200 225 250 275 300"
 			}
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"				"5"
+				"var_type"			"FIELD_FLOAT"
+				"orb_amount"				"3 4 5 6 7"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"7"
 			}
 		}
 		
@@ -21412,7 +21466,37 @@
 		}
 		
 		"AbilitySpecial"
-		{			
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"intelligence"			"0 8 16 24 32"
+			}	
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}	
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_regen"			"6"
+			}	
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"heal_amount"			"300"
+			}	
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mana_amount"			"200"
+			}	
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"6 7 8 9 10"
+			}		
 		}
 		
 		"OnSpellStart"
