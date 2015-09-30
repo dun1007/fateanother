@@ -11,7 +11,7 @@
 	//import some stuff from the valve lib
 	import ValveLib.Globals;
 	import ValveLib.ResizeManager;
-	import flashx.textLayout.formats.Float;
+	//import flashx.textLayout.formats.Float;
 	
 	public class Fatepedia extends MovieClip{
 		//these three variables are required by the engine

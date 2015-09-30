@@ -441,12 +441,6 @@ function FateGameMode:PlayerSay(keys)
     if text == "-goldpls" then
         GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
     end
-
-    if text == "-volvopls" then
-        print(hero:GetName())
-        hero:SetModel(model_lookup[hero:GetName()])
-        hero:SetOriginalModel(model_lookup[hero:GetName()])
-    end
 end
 -- The overall game state has changed
 function FateGameMode:OnGameRulesStateChange(keys)
