@@ -37,9 +37,9 @@
 			this.abilities = this.globals.GameInterface.LoadKVFile('scripts/npc/npc_abilities_custom.txt'); //Load ability KV
 			this.heroes = this.globals.GameInterface.LoadKVFile('scripts/npc/npc_heroes_custom.txt'); //Load hero KV
 			
-			var myFont:TextFormat = new TextFormat();
-			myFont.font = "MyFont";
-			myFont.size = 15;
+			//var myFont:TextFormat = new TextFormat();
+			//myFont.font = "MyFont";
+			//myFont.size = 15;
 			//Add portrait
 			var heroPortrait:MovieClip = new MovieClip;
 			this.globals.LoadImage("images/heroes/" + hName + ".png", heroPortrait, false);
@@ -51,8 +51,8 @@
 			
 			//Set texts
 			this.Title.text = realName;	//Hero Title
-			this.Innate.embedFonts = true
-			this.Innate.defaultTextFormat = myFont
+			//this.Innate.embedFonts = true
+			//this.Innate.defaultTextFormat = myFont
 			this.Innate.text = "#Fatepedia_Innate"
 			
 			this.Attr.text = "#Fatepedia_Attributes"

@@ -257,7 +257,7 @@ function FateGameMode:OnAllPlayersLoaded()
     print("[BAREBONES] All Players have loaded into the game")
     GameRules:SendCustomMessage("Fate/Another " .. FATE_VERSION .. " by Dun1007", 0, 0)
     --GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
-    GameRules:SendCustomMessage("Choose your heroic spirit. The game will start in 60 seconds.", 0, 0)
+    GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
     --GameStartTimerStart()
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     --StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
@@ -275,8 +275,8 @@ function FateGameMode:OnAllPlayersLoaded()
         endTime = 30,
         callback = function()
             
-            GameRules:SendCustomMessage("The game will start in 30 seconds. Anyone who haven't picked hero by then will be assigned a random hero.", 0, 0)
-            GameRules:SendCustomMessage("Forced random is disbled for the time being, but please decide on your pick as soon as possible before 60 seconds mark.", 0, 0)
+            GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_1", 0, 0)
+            GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_2", 0, 0)
             DisplayTip()
         end
     })
@@ -1212,12 +1212,12 @@ function FateGameMode:InitializeRound()
     if self.nCurrentRound == 1 then
         print("[FateGameMode]First round started, initiating 10 minute timer...")
         IsGameStarted = true
-        GameRules:SendCustomMessage("The game has begun!", 0, 0)
-        local blessingQuest = StartQuestTimer("roundTimerQuest", "Time Remaining until Next Holy Grail's Blessing", 599)
+        GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
+        local blessingQuest = StartQuestTimer("roundTimerQuest", "#Fate_Timer_10minute_quest", 599)
         Timers:CreateTimer('round_10min_bonus', {
             endTime = 600,
             callback = function()
-                blessingQuest = StartQuestTimer("roundTimerQuest", "Time Remaining until Next Holy Grail's Blessing", 599)
+                blessingQuest = StartQuestTimer("roundTimerQuest", "#Fate_Timer_10minute_quest", 599)
                 self:LoopOverPlayers(function(player, playerID)
                     local hero = player:GetAssignedHero()
                     hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
@@ -1226,7 +1226,7 @@ function FateGameMode:InitializeRound()
                     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+10)
                     MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
                 end)
-                Notifications:TopToAll("<font color='#58ACFA'>10 minutes passed.</font> The Holy Grail's blessing <font color='#58ACFA'>restore all Master to full health and grant 10 mana to them.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
                 
                 return 600
         end})
@@ -1244,15 +1244,15 @@ function FateGameMode:InitializeRound()
         duration = 4.0
     }
     local alertmsg = {
-        message = "30 seconds remaining!",
+        message = "#Fate_Timer_30_Alert",
         duration = 4.0
     }
     local alertmsg2 = {
-        message = "10 seconds remaining!",
+        message = "#Fate_Timer_10_Alert",
         duration = 4.0
     }
     local timeoutmsg = {
-        message = "Timeout!",
+        message = "#Fate_Timer_Timeout",
         duration = 4.0
     }
     
@@ -1277,7 +1277,7 @@ function FateGameMode:InitializeRound()
         
         if self.nCurrentRound ~= 1 then 
             local multiplier = (0.5+0.01*(hero:GetDeaths()-hero:GetKills()))
-            print("[FateGameMode]" .. hero:GetName() .. " of player " .. hero:GetPlayerID() .. " gained " .. (XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier) .. " experience at the start of round")
+            --print("[FateGameMode]" .. hero:GetName() .. " of player " .. hero:GetPlayerID() .. " gained " .. (XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier) .. " experience at the start of round")
             hero:AddExperience(XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier , false, false) 
         end
     end)
@@ -1303,7 +1303,7 @@ function FateGameMode:InitializeRound()
     Timers:CreateTimer('presence_alert', {
         endTime = 75,
         callback = function()
-            GameRules:SendCustomMessage("1 minute has passed. Servants can now detect the presence of another within 2500 radius.", 0, 0) 
+            GameRules:SendCustomMessage("#Fate_Presence_Alert", 0, 0) 
         end
     })
     
@@ -1419,21 +1419,21 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     end
     -- decide the winner
     if winner == 0 then 
-        GameRules:SendCustomMessage("The Radiant has won the round!", 0, 0)
+        GameRules:SendCustomMessage("#Fate_Round_Winner_1", 0, 0)
         self.nRadiantScore = self.nRadiantScore + 1
     elseif winner == 1 then
-        GameRules:SendCustomMessage("The Dire has won the round!", 0, 0)
+        GameRules:SendCustomMessage("#Fate_Round_Winner_2", 0, 0)
         self.nDireScore = self.nDireScore + 1
     elseif winner == 2 then
-        GameRules:SendCustomMessage("This round is a draw.", 0, 0)
+        GameRules:SendCustomMessage("#Fate_Round_Draw", 0, 0)
     elseif winner == 3 then
-        GameRules:SendCustomMessage("Because the same amount of Servants are alive on both teams, the losing team(Radiant) has won.", 0, 0)
+        GameRules:SendCustomMessage("#Fate_Round_Winner_1_By_Default", 0, 0)
         self.nRadiantScore = self.nRadiantScore + 1
     elseif winner == 4 then
-        GameRules:SendCustomMessage("Because the same amount of Servants are alive on both teams, the losing team(Dire) has won.", 0, 0)
+        GameRules:SendCustomMessage("#Fate_Round_Winner_2_By_Default", 0, 0)
         self.nDireScore = self.nDireScore + 1
     end
-    GameRules:SendCustomMessage("All players with less than 5,000 gold will receive starting gold in 5 seconds.", 0, 0)
+    GameRules:SendCustomMessage("#Fate_Round_Gold_Note", 0, 0)
     
     -- Set score 
     mode:SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireScore )
