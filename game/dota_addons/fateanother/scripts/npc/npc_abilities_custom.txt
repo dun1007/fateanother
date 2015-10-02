@@ -20973,10 +20973,13 @@
 		{
 			"modifier_fiery_heaven_indicator"
 			{
-				"OnCreated"
-				{
-					
-				}
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+			"modifier_fiery_heaven_indicator_enemy"
+			{
+				"Duration"		"10"
+				"IsDebuff"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 			}
 		}
 	}
@@ -21034,10 +21037,13 @@
 		{
 			"modifier_frigid_heaven_indicator"
 			{
-				"OnCreated"
-				{
-				
-				}
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+			"modifier_frigid_heaven_indicator_enemy"
+			{
+				"Duration"		"10"
+				"IsDebuff"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 			}
 		}
 	}
@@ -21069,7 +21075,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mr_reduction"			"3"
+				"mr_reduction"			"-3"
 			}
 			"02"
 			{
@@ -21105,11 +21111,51 @@
 		{
 			"modifier_gust_heaven_indicator"
 			{
-				"OnCreated"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+			}
+			"modifier_gust_heaven_indicator_enemy"
+			{
+				"Duration"		"10"
+				"IsDebuff"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
 				{
-				
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_reduction"
 				}
 			}
+	    	"modifier_gust_heaven_purge"
+	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
+	    		"Duration"			"%stack_lock_duration"
+	    		"IsDebuff"			"1"
+	    		"States"
+	    		{
+	    			"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+	    		}
+	    	}
+	    	"modifier_gust_heaven_purge_slow_tier1"
+	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"
+	    		"Duration"			"1.5"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-80"
+	    		}
+	    	}
+	    	"modifier_gust_heaven_purge_slow_tier2"
+	    	{
+	    		"EffectName"		"particles/generic_gameplay/generic_purge.vpcf"
+				"EffectAttachType"	"follow_origin"	
+	    		"Duration"			"%stack_slow_duration"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
+	    		}
+	    	}
 		}
 	}
 
@@ -21199,7 +21245,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
-		"LevelsBetweenUpgrades"			"2"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -21211,20 +21257,30 @@
 		
 		"precache"
 		{
-			"model"		"models/particle/arrow.vmdl"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+			"particle"					"particles/custom/tamamo/tamamo_soulstream_red_.vpcf"
+			"particle"					"particles/custom/tamamo/tamamo_soulstream_green_.vpcf"
+			"particle"					"particles/custom/tamamo/tamamo_soulstream_blue_.vpcf"
+			"particle"					"particles/custom/tamamo/tamamo_soulstream_explosion_green.vpcf"
+			"particle"					"particles/custom/tamamo/tamamo_soulstream_explosion_red.vpcf"
+			"particle"					"particles/custom/tamamo/tamamo_soulstream_explosion_blue.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"1.0"
+		"AbilityCooldown"				"3 2.5 2 1.5 1"
 		"AbilityManaCost"				"100"
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"900"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"70 85 100 115 130"
+				"damage"				"70 80 90 100 110"
 			}
 			"02"
 			{
@@ -21250,11 +21306,11 @@
 		
 		"OnUpgrade"
 		{
-			"RunScript"
-			{
-				"ScriptFile"    "tamamo_ability"
-				"Function"      "OnSoulStreamInitialize"
-			}			
+			//"RunScript"
+			//{
+			//	"ScriptFile"    "tamamo_ability"
+			//	"Function"      "OnSoulStreamInitialize"
+			//}			
 		}
 		"OnSpellStart"
 		{
@@ -21272,15 +21328,34 @@
 		{		
 			"modifier_soulstream_stack"
 			{
-				"Duration"		"10.0"
-				"OnCreated"
+				"Duration"		"7.0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
 				{
-					"AttachEffect"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%stack_ms"
+				}
+			}
+			"modifier_soulstream_projectile"
+			{
+				"IsHidden"			"1"
+				"Duration"			"2.0"
+				"ThinkInterval" 		"0.033"
+				"OnIntervalThink"
+				{
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/custom/saber_excalibur_circle.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"EffectRadius"		"400"
+						"ScriptFile"			"tamamo_ability"
+						"Function"				"OnSoulstreamProjectileTick"
+						"Damage"				"%damage"
+						"StackBonus"			"%stack_damage_bonus"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"tamamo_ability"
+						"Function"				"OnSoulstreamProjectileEnd"
 					}
 				}
 			}
@@ -21306,14 +21381,17 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
+			"particle"				"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_borealis.vpcf"
+			"particle"				"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_visage.vsndevts"
 		}
 		
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"20000"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"20 17 14 11 8"
+		"AbilityCastPoint"				"0.35"
+		"AbilityCooldown"				"30 24 18 12 6"
 		"AbilityManaCost"				"200"
 		
 		// Ability special
@@ -21326,6 +21404,11 @@
 				"delay"			"1.0"
 			}
 			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mr_reduction"			"-10 -12.5 -15 -17.5 -20"
+			}
+			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"duration"			"1.5"
@@ -21350,11 +21433,52 @@
 		
 		"Modifiers"
 		{
+			"modifier_subterranean_grasp_delay"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"Duration"		"%delay"
+				"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_borealis.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"OnDestroy"
+				{
+					"ApplyModifier"
+					{
+						"ModifierName"		"modifier_subterranean_grasp"
+						"Target"			"TARGET"
+					}
+				}
+			}
 			"modifier_subterranean_grasp"
 			{
-				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+				"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff.vpcf"
 				"EffectAttachType"		"follow_origin"
 				"Duration"				"%duration"
+				"IsDebuff"				"1"
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"	"Hero_Visage.GraveChill.Target"
+						"Target"		"TARGET"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"tamamo_ability"
+						"Function"			"OnSGDestroy"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_reduction"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 
 		}
@@ -21378,13 +21502,17 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lich.vsndevts"
+			"particle"				"particles/units/heroes/hero_templar_assassin/templar_assassin_refraction_break.vpcf"
+			"particle"				"particles/custom/tamamo/tamamo_mantra.vpcf"
+			"particle"				"particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf"
 		}
 		
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
-		"AbilityCastRangeBuffer"		"0"
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"700"
+		"AbilityCastRangeBuffer"		"300"
+		"AbilityCastPoint"				"0.6"
 		"AbilityCooldown"				"29"
 		"AbilityManaCost"				"400"
 		
@@ -21421,6 +21549,7 @@
 			{
 				"ScriptFile"			"tamamo_ability"
 				"Function"				"OnMantraStart"
+				"OrbAmount"				"%orb_amount"
 			}
 		}
 	
@@ -21429,15 +21558,57 @@
 		{
 			"modifier_mantra_ally"
 			{
-				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Duration"				"%duration"
+				"Duration"		"%duration"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "tamamo_ability"
+						"Function"      "OnMantraTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"Damage"		"%damage_modifier"
+					}
+				}
 			}
+
 			"modifier_mantra_enemy"
 			{
-				"EffectName"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
-				"EffectAttachType"		"follow_origin"
-				"Duration"				"%duration"
+				"IsDebuff"		"1"
+				"Duration"		"%duration"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "tamamo_ability"
+						"Function"      "OnMantraTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"Damage"		"%damage_modifier"
+					}
+				}
+			}
+
+			"modifier_mantra_vfx"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"				"TARGET"
+						"EffectName"			"particles/custom/tamamo/tamamo_mantra.vpcf"
+						"EffectAttachType"		"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+							"TARGET"			"attach_origin"
+						}
+					}
+				}				
 			}
 		}
 	}
@@ -21463,6 +21634,7 @@
 
 		"precache"
 		{
+			"particle"		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -21479,23 +21651,38 @@
 			}	
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"mana_regen"			"6"
-			}	
+			}
 			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"movespeed_modifier"			"14 18 22 26 30"
+			}		
+			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"heal_amount"			"300"
 			}	
-			"05"
+			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"mana_amount"			"200"
 			}	
-			"06"
+			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"duration"			"6 7 8 9 10"
+			}	
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_regen_enemy"			"-6"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"movespeed_modifier_enemy"			"-14 -18 -22 -26 -30"
 			}		
 		}
 		
@@ -21509,6 +21696,52 @@
 		}
 		"Modifiers"
 		{
+			"modifier_amaterasu_passive"
+			{
+				"Passive"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%intelligence"
+				}
+			}
+			"modifier_amaterasu_aura"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"ThinkInterval" 		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"tamamo_ability"
+						"Function"				"OnAmaterasuApplyAura"
+						"Radius"				"%radius"
+					}
+				}
+			}
+			"modifier_amaterasu_ally"
+			{
+				"Duration"			"0.25"
+				"EffectName"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%mana_regen"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_modifier"
+				}
+			}
+			"modifier_amaterasu_enemy"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"0.25"
+				"EffectName"			"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%mana_regen_enemy"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_modifier_enemy"
+				}
+			}
 		}
 	}
 
@@ -21535,7 +21768,27 @@
 		}
 		
 		"AbilitySpecial"
-		{			
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"search_radius"			"450"
+			}	
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"kick_damage"			"200"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"recoil_distance"			"700"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"explosion_damage"			"200"
+			}		
 		}
 		
 		"OnSpellStart"

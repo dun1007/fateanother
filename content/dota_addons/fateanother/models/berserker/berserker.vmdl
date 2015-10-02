@@ -121,7 +121,7 @@ CVModel CVModel_0
 	float m_flFbxScale = 1.000000
 	float m_flQCScale = 1.000000
 	float(3) m_vOrigin = ( 0.000000, 0.000000, 0.000000 )
-	CVPsf* m_pvPsf = NULL
+	CVPsfList* m_pPsfList = NULL
 	string m_keyValueText = ""
 	bool m_bStaticProp = false
 	bool m_bEnableClothProcessing = true
@@ -502,6 +502,21 @@ CVattachmentList CVattachmentList_0
 					bool m_bRoot = false
 				}
 			]
+		},
+		CVattachment
+		{
+			string m_name = "attach_origin"
+			CVattachmentInfluence[] m_influences = 
+			[
+				CVattachmentInfluence
+				{
+					string m_influenceName = "Chest"
+					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float m_flWeight = 1.000000
+					bool m_bRoot = false
+				}
+			]
 		}
 	]
 }
@@ -550,6 +565,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -606,6 +622,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -662,6 +679,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -718,6 +736,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -774,6 +793,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -830,6 +850,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -886,6 +907,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -942,6 +964,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity

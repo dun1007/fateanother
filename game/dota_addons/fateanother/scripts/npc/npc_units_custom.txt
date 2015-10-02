@@ -2007,7 +2007,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_building"
-		"Model"						"models/misc/charm.vmdl"
+		"Model"						"models/development/invisiblebox.vmdl"
 		"ModelScale"				"2"
 		"Level"						"0"
 		"HealthBarOffset"			"140"

@@ -62,7 +62,11 @@ CVModel CVModel_0
 	]
 	CVattachmentListReference[] m_pAttachmentLists = 
 	[
-		
+		CVattachmentListReference
+		{
+			CVattachmentList* m_pObject = &CVattachmentList_0
+			string m_sFileName = ""
+		}
 	]
 	CVanimGroupReference[] m_pAnimGroups = 
 	[
@@ -568,6 +572,39 @@ CVhitBoxSetList CVhitBoxSetList_0
 					float(3) m_vMinBounds = ( 3.002342, -1.493217, -6.466881 )
 					float(3) m_vMaxBounds = ( 5.576092, 4.565496, -0.526566 )
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				},
+				CVhitBox
+				{
+					string m_name = "Bone_Chest"
+					string m_sSurfaceProperty = ""
+					int m_nGroupId = 0
+					string m_sBoneName = "Bone_Chest"
+					float(3) m_vMinBounds = ( -12.392693, -7.053264, -1.840073 )
+					float(3) m_vMaxBounds = ( 12.354404, 9.594292, 11.826370 )
+					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+				}
+			]
+		}
+	]
+}
+
+CVattachmentList CVattachmentList_0
+{
+	string m_name = ""
+	CVattachment[] m_attachments = 
+	[
+		CVattachment
+		{
+			string m_name = "attach_origin"
+			CVattachmentInfluence[] m_influences = 
+			[
+				CVattachmentInfluence
+				{
+					string m_influenceName = "Bone_Chest"
+					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float m_flWeight = 1.000000
+					bool m_bRoot = false
 				}
 			]
 		}

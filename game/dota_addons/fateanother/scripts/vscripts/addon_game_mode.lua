@@ -148,6 +148,7 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_zl.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_nero.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_gawain.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_tamamo.vsndevts", context)
     
 
     
@@ -846,7 +847,8 @@ function FateGameMode:OnAbilityUsed(keys)
     
     local player = EntIndexToHScript(keys.PlayerID)
     local abilityname = keys.abilityname
-    --print("Is this ability resetable? : " .. player:GetAssignedHero():FindAbilityByName(abilityname).IsResetable)
+    
+    
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
