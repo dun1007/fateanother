@@ -39,9 +39,9 @@ function OnArmedUpStart(keys)
 	caster:SwapAbilities("tamamo_fiery_heaven", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_frigid_heaven", a2:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_gust_heaven", a3:GetName(), true, true) 
-	caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
+	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_close_spellbook", a5:GetName(), true,true) 
-	caster:SwapAbilities("fate_empty3", a6:GetName(), true, true) 
+	caster:SwapAbilities("fate_empty2", a6:GetName(), true, true) 
 end
 
 function OnFireCharmLoaded(keys)
@@ -49,7 +49,11 @@ function OnFireCharmLoaded(keys)
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_fiery_heaven_indicator"
 	CloseCharmList(keys)
-
+	if caster.IsWitchcraftAcquired then
+		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
+		armedUp:EndCooldown()
+		armedUp:StartCooldown(15)
+	end
 	-- Clear up other charm modifiers
 	for i=1, #CharmModifierList do
 		if caster:HasModifier(CharmModifierList[i]) then
@@ -127,8 +131,8 @@ function CloseCharmList(keys)
 	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_armed_up", a4:GetName(), true, true) 
-	caster:SwapAbilities("fate_empty1", a5:GetName(), true,true) 
+	caster:SwapAbilities("fate_empty1", a4:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
 	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, true) 
 
 end
@@ -239,7 +243,7 @@ function OnSoulstreamProjectileTick(keys)
 	local casterLoc = target:GetAbsOrigin()
 	local ability = keys.ability
 	local damage = keys.Damage
-
+	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.7 end
 	damage = damage + damage*caster.CurrentSoulstreamStack*keys.StackBonus/100
 
 	local radius, charmDamage, stackDamage, ccDuration, StackStunDuration, mrReduction = 0
@@ -294,6 +298,10 @@ function OnSoulstreamProjectileTick(keys)
 				end 
 			end	
 			DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			if caster.IsSpiritTheftAcquired then 
+				v:SetMana(v:GetMana()-25)
+				caster:SetMana(caster:GetMana()+25)
+			end
 		end
 
 
@@ -367,7 +375,7 @@ function OnSGStart(keys)
 	local target = keys.target
 	local ability = keys.ability
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-
+	TamamoCheckCombo(caster, keys.ability)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_subterranean_grasp_delay", {})
 	target:EmitSound("Hero_Visage.GraveChill.Cast")
 end
@@ -395,6 +403,12 @@ function OnMantraStart(keys)
 		modifierName = "modifier_mantra_enemy"
 	end
 
+	if caster.IsSeveredFateAcquired then
+		caster.TetheredTarget = target
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
+		caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,true) 
+	end
+
 	local castFx = ParticleManager:CreateParticle('particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf', PATTACH_CUSTOMORIGIN, target) 
     ParticleManager:SetParticleControl(castFx, 0, target:GetOrigin())
     target:EmitSound("Item.LotusOrb.Target")
@@ -403,6 +417,12 @@ function OnMantraStart(keys)
 	ability:ApplyDataDrivenModifier(caster, target, modifierName, {}) 
 	target:SetModifierStackCount(modifierName, ability, orbAmount)
 	for i=1, orbAmount do ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_vfx", {}) end
+end
+
+function OnMantraTetherEnd(keys)
+	local caster = keys.caster -- Caster
+	local target = keys.target -- Target of tether
+	caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,false) 
 end
 
 function OnMantraTakeDamage(keys)
@@ -418,10 +438,14 @@ function OnMantraTakeDamage(keys)
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		modifierName = "modifier_mantra_ally"
-		if currentHealth + (orbDamage - keys.DamageTaken) <= 0 then
+		if currentHealth == 0 then
 			print("lethal")
 		else
-			target:SetHealth(currentHealth + keys.DamageTaken)
+			if orbDamage < keys.DamageTaken then
+				target:SetHealth(currentHealth + orbDamage)
+			else
+				target:SetHealth(currentHealth + keys.DamageTaken)
+			end
 		end
 	else
 		if target.IsMantraProcOnCooldown then 
@@ -452,6 +476,38 @@ function OnMantraTakeDamage(keys)
 	end
 end
 
+function OnMantraTetherTick(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
+	if dist > 1250 then
+		target:RemoveModifierByName("modifier_mantra_tether")
+	end
+end
+
+function OnFatesCallStart(keys)
+	local caster = keys.caster
+	local targetPoint = keys.target_points[1]
+	local dist = (caster.TetheredTarget:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+	local delay = dist*0.002
+
+	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
+	ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
+	caster.TetheredTarget:EmitSound("Hero_Wisp.Relocate")
+
+	Timers:CreateTimer(delay, function()
+		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") then
+			caster.TetheredTarget:SetAbsOrigin(targetPoint)
+			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")
+			Timers:CreateTimer(0.033, function()
+				local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
+				ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
+				caster.TetheredTarget:EmitSound("Hero_Wisp.Return")
+			end)
+		end
+	end)
+end
+
 --[[
 Apply the aura modifier to caster
 ]]
@@ -459,10 +515,46 @@ function OnAmaterasuStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability 
 	caster.AmaterasuCastLoc = caster:GetAbsOrigin()
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_amaterasu_aura", {})
+	
+
+	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
+	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
+	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=keys.Duration+0.5})
+	ability:ApplyDataDrivenModifier(caster, dummy, "modifier_amaterasu_aura", {})
+	dummy.TempleDoors = CreateTempleDoorInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
+
+	if caster.IsWitchcraftAcquired then 
+		local targets = FindUnitsInRadius(caster:GetTeam(), caster.AmaterasuCastLoc, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		for k,v in pairs(targets) do
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_amaterasu_witchcraft_slow", {})
+		end
+	end
 
 	-- Particle
+	local circleFx = ParticleManager:CreateParticle('particles/units/heroes/hero_dazzle/dazzle_weave.vpcf', PATTACH_CUSTOMORIGIN, dummy) 
+    ParticleManager:SetParticleControl(circleFx, 0, caster:GetOrigin())
+    ParticleManager:SetParticleControl(circleFx, 1, Vector(keys.Radius,0,0))
+	local counter = 0
+    Timers:CreateTimer(function()
+    	if counter > keys.Duration then return end
+	   	local circleFx = ParticleManager:CreateParticle('particles/custom/tamamo/tamamo_amaterasu_continuous.vpcf', PATTACH_CUSTOMORIGIN, dummy) 
+	    ParticleManager:SetParticleControl(circleFx, 0, dummy:GetOrigin())
+	    ParticleManager:SetParticleControl(circleFx, 1, Vector(keys.Radius,0,0))
+	    counter = counter+1
+	    return 0.9
+    end)
+
 	EmitGlobalSound("Tamamo.Amaterasu")
+end
+
+function OnAmaterasuEnd(keys)
+	local target = keys.target
+	local caster = keys.caster
+	target:RemoveSelf()
+	for i=1, #target.TempleDoors do
+		target.TempleDoors[i]:RemoveSelf()
+	end
 end
 
 --[[
@@ -481,20 +573,137 @@ function OnAmaterasuApplyAura(keys)
 	for k,v in pairs(targets) do
 		-- Attribute Witchcraft logic
 		ability:ApplyDataDrivenModifier(caster, v, "modifier_amaterasu_enemy", {})
+		if caster.IsWitchcraftAcquired then 
+			if not v.IsWitchcraftStunOnCooldown then
+				if v:GetMana() < 5 then
+					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.5})
+					v:EmitSound("Hero_KeeperOfTheLight.ManaLeak.Stun")
+					v.IsWitchcraftStunOnCooldown = true
+					Timers:CreateTimer(6.0, function()
+						v.IsWitchcraftStunOnCooldown = false
+					end)
+				end
+			end
+		end
 	end
 end
 
+function CreateTempleDoorInCircle(handle, center, multiplier)
+	local bannerTable = {}
+	for i=1, 8 do
+		local x = math.cos(i*math.pi/4) * multiplier
+		local y = math.sin(i*math.pi/4) * multiplier
+		local banner = CreateUnitByName("tamamo_templedoor", Vector(center.x + x, center.y + y, 0), true, nil, nil, handle:GetTeamNumber())
+		banner:AddNewModifier(caster, nil, "modifier_kill", {duration=10.5})
+		local diff = (handle:GetAbsOrigin() - banner:GetAbsOrigin())
+    	banner:SetForwardVector(diff:Normalized()) 
+    	banner.Diff = diff
+		table.insert(bannerTable, banner)
+	end
+	return bannerTable
+end
+
 function OnKickStart(keys)
+	local caster = keys.caster
+	local lungeDelay = keys.LungeDelay
+	local damage = keys.Damage
+	local expDamageRatio = keys.ExplosionRatio
+	local ability = keys.ability
+	local nextTarget = caster
+	local count = 0
+	local targets = 0
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_polygamist", {}) 
+	EmitGlobalSound("Tamamo.Kick")
+	Timers:CreateTimer(function()
+		if count == 3 then 
+			-- Do knockback
+			nextTarget:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.7})
+			local forward = caster:GetForwardVector()
+			local backwards = forward * -1
+			local dur = 0
+			Timers:CreateTimer(function()
+				-- If knockback is finished, do damage 
+				if dur > 0.7 then 
+					FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+					FindClearSpaceForUnit(nextTarget, nextTarget:GetAbsOrigin(), true)
+					targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.SearchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+					for k,v in pairs(targets) do
+						DoDamage(caster, v, expDamageRatio*caster:GetIntellect() ,DAMAGE_TYPE_MAGICAL, 0, ability, false  )
+					end
+					local explodeFx1 = ParticleManager:CreateParticle("particles/units/heroes/hero_ember_spirit/ember_spirit_hit.vpcf", PATTACH_ABSORIGIN, nextTarget )
+					ParticleManager:SetParticleControl( explodeFx1, 0, nextTarget:GetAbsOrigin())
+					local explodeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, nextTarget )
+					ParticleManager:SetParticleControl( explodeFx2, 0, nextTarget:GetAbsOrigin())
+					nextTarget:EmitSound("Ability.LightStrikeArray")
+					return 
+				end 
+				caster:SetAbsOrigin(caster:GetAbsOrigin() + backwards*33)
+				nextTarget:SetAbsOrigin(nextTarget:GetAbsOrigin() + forward*33)
+				dur = dur + 0.033
+				return 0.033
+			end)
+			-- Do knockback 
+			return 
+		end
+		targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.SearchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		local trailFxIndex = ParticleManager:CreateParticle("particles/custom/tamamo/tamamo_kick_trail.vpcf", PATTACH_CUSTOMORIGIN, nextTarget )
+		ParticleManager:SetParticleControl( trailFxIndex, 1, nextTarget:GetAbsOrigin() )
+		if #targets ~= 0 then
+			nextTarget = targets[math.random(#targets)]
+			caster:SetAbsOrigin(nextTarget:GetAbsOrigin())
+			DoDamage(caster, nextTarget, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			nextTarget:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+
+
+			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 2000, 0, true)
+			nextTarget:EmitSound("Hero_Tusk.WalrusPunch.Target")
+		end
+		ParticleManager:SetParticleControl( trailFxIndex, 0, nextTarget:GetAbsOrigin() )
+		local splashFx = ParticleManager:CreateParticle("particles/custom/screen_violet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+		count = count+1
+		return lungeDelay 
+	end)
 end
 
 function OnSpiritTheftAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsSpiritTheftAcquired = true
 end
 
 function OnSeveredFateAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsSeveredFateAcquired = true
 end
 
 function OnPCFAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsEscapeAcquired = true
 end
 
 function OnWitchcraftAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsWitchcraftAcquired = true
+end
+
+function TamamoCheckCombo(caster, ability)
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if ability == caster:FindAbilityByName("tamamo_subterranean_grasp") and caster:FindAbilityByName("tamamo_polygamist_castration_fist"):IsCooldownReady()  then
+			caster:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist", false, true) 
+			Timers:CreateTimer({
+				endTime = 3,
+				callback = function()
+				caster:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist", true, false) 
+			end
+			})
+		end
+	end
 end

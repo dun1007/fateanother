@@ -21506,6 +21506,7 @@
 			"particle"				"particles/units/heroes/hero_templar_assassin/templar_assassin_refraction_break.vpcf"
 			"particle"				"particles/custom/tamamo/tamamo_mantra.vpcf"
 			"particle"				"particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf"
+			"particle"					"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
 		}
 		
 		// Ability stats
@@ -21610,6 +21611,116 @@
 					}
 				}				
 			}
+
+			"modifier_mantra_tether"
+			{
+				"Duration"			"7.0"
+				"ThinkInterval" 		"0.033"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"tamamo_ability"
+						"Function"				"OnMantraTetherTick"
+					}
+				}
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Wisp.Tether.Target"
+						"Target"			"TARGET"
+					}
+					
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "tamamo_ability"
+						"Function"      "OnMantraTetherEnd"
+					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tamamo : Fate's Call
+	//=================================================================================================================
+	"tamamo_fates_call"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"wisp_tether"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"850"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"45"
+		"AbilityManaCost"				"200"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"tamamo_ability"
+				"Function"				"OnFatesCallStart"
+				"OrbAmount"				"%orb_amount"
+				"Target"				"POINT"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_fates_call"
+			{
+				"Duration"		"%duration"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "tamamo_ability"
+						"Function"      "OnMantraTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"Damage"		"%damage_modifier"
+					}
+				}
+			}
 		}
 	}
 
@@ -21635,6 +21746,11 @@
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_keeper_of_the_light/keeper_mana_leak.vpcf"
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
+			"particle"		"particles/custom/tamamo/tamamo_amaterasu_continuous.vpcf"
+			"particle"		"particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
 		}
 		
 		"AbilitySpecial"
@@ -21652,7 +21768,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"mana_regen"			"6"
+				"mana_regen"			"7"
 			}
 			"04"
 			{
@@ -21677,7 +21793,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"mana_regen_enemy"			"-6"
+				"mana_regen_enemy"			"-7"
 			}
 			"09"
 			{
@@ -21692,6 +21808,8 @@
 			{
 				"ScriptFile"		"tamamo_ability"
 				"Function"			"OnAmaterasuStart"
+				"Radius"			"%radius"
+				"Duration"			"%duration"
 			}
 		}
 		"Modifiers"
@@ -21708,6 +21826,8 @@
 			{
 				"IsHidden"		"1"
 				"Duration"		"%duration"
+				"EffectName"			"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+				"EffectAttachType"		"follow_origin"
 				"ThinkInterval" 		"0.25"
 				"OnIntervalThink"
 				{
@@ -21716,6 +21836,14 @@
 						"ScriptFile"			"tamamo_ability"
 						"Function"				"OnAmaterasuApplyAura"
 						"Radius"				"%radius"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"tamamo_ability"
+						"Function"				"OnAmaterasuEnd"
 					}
 				}
 			}
@@ -21742,6 +21870,21 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_modifier_enemy"
 				}
 			}
+			"modifier_amaterasu_witchcraft_slow"
+			{
+				"Duration"		"1.5"
+				"IsDebuff"		"1"
+				"EffectName"			"particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-70"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
@@ -21760,11 +21903,17 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCooldown"				"150"
+		"AbilityCooldown"				"120"
 		"AbilityManaCost"				"600"
 
 		"precache"
 		{
+			"particle"			"particles/custom/tamamo/tamamo_kick_trail.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
+			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_hit.vpcf"
+			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"				"particles/custom/screen_violet_splash.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -21772,22 +21921,27 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"search_radius"			"450"
+				"search_radius"			"500"
 			}	
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"kick_damage"			"200"
+				"var_type"			"FIELD_FLOAT"
+				"lunge_delay"			"0.5"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"recoil_distance"			"700"
+				"kick_damage"			"500"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"explosion_damage"			"200"
+				"recoil_distance"			"700"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"explosion_int_ratio"			"10"
 			}		
 		}
 		
@@ -21797,10 +21951,48 @@
 			{
 				"ScriptFile"		"tamamo_ability"
 				"Function"			"OnKickStart"
+				"LungeDelay"		"%lunge_delay"
+				"SearchRadius"		"%search_radius"
+				"Damage"			"%kick_damage"
+				"RecoilDistance"	"%recoil_distance"
+				"ExplosionRatio"	"%explosion_int_ratio"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_polygamist"
+				"Target"			"CASTER"
 			}
 		}
 		"Modifiers"
 		{
+			"modifier_polygamist"
+			{
+				"Duration"		"2.2"
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_polygamist_shorter"
+			{
+				"Duration"		"1.45"
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"				"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
@@ -21826,6 +22018,16 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"int_ratio"			"0.7"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mana_drain"			"25"
+			}
 		}
 		
 		"OnSpellStart"
@@ -21860,6 +22062,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"fates_call_max_delay"			"2.5"
+			}
 		}
 		
 		"OnSpellStart"
@@ -21894,6 +22101,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"reduction"			"50"
+			}
 		}
 		
 		"OnSpellStart"
@@ -21928,6 +22140,21 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cc_duration"			"1.5"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_amount"			"70"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cooldown"			"15"
+			}
 		}
 		
 		"OnSpellStart"

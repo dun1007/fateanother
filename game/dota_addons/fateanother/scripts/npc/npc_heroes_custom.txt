@@ -507,7 +507,7 @@
 		"AttackAcquisitionRange"		"800"
 		"ProjectileModel"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 		"ProjectileSpeed"				"1000"
-		
+
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
 		"AttributeStrengthGain"			"0.5"
@@ -1107,8 +1107,8 @@
 		"Ability1"				"tamamo_soulstream"
 		"Ability2"				"tamamo_subterranean_grasp"
 		"Ability3"				"tamamo_mantra"
-		"Ability4"				"tamamo_armed_up"
-		"Ability5"				"fate_empty1"
+		"Ability4"				"fate_empty1"
+		"Ability5"				"tamamo_armed_up"
 		"Ability6"				"tamamo_amaterasu"
 		"Ability7"				"tamamo_polygamist_castration_fist"
 		"Ability8"				"tamamo_fiery_heaven"
@@ -1117,7 +1117,7 @@
 		"Ability11"				"tamamo_void_cleft"
 		"Ability12"				"tamamo_close_spellbook"
 		"Ability13"				"fate_empty2"
-		"Ability14"				"fate_empty3"
+		"Ability14"				"tamamo_fates_call"
 		"Ability15"				"presence_detection_passive"
 		"Ability16"				"attribute_bonus"
 		
@@ -1136,8 +1136,8 @@
 		"AttackDamageMax"				"46"
 		"AttackRate"					"0.8"
 		"AttackAcquisitionRange"		"1000"
-		//"ProjectileModel"				"particles/base_attacks/generic_projectile.vpcf"
-		//"ProjectileSpeed"				"1000"
+		"ProjectileModel"	"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack.vpcf"
+		"ProjectileSpeed"	"1000"
 		
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"

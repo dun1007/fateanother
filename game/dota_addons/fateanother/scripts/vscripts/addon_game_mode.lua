@@ -847,8 +847,15 @@ function FateGameMode:OnAbilityUsed(keys)
     
     local player = EntIndexToHScript(keys.PlayerID)
     local abilityname = keys.abilityname
-    
-    
+    local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
+    -- Check if hero is affected by Amaterasu
+    if hero:HasModifier("modifier_amaterasu_ally") then
+        hero:SetMana(hero:GetMana()+200)
+        hero:SetHealth(hero:GetHealth()+300)
+        hero:EmitSound("DOTA_Item.ArcaneBoots.Activate")
+        local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+        ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
+    end
 end
 
 -- A non-player entity (necro-book, chen creep, etc) used an ability
