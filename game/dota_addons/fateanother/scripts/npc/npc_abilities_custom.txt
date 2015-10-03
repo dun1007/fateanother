@@ -20888,7 +20888,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityCooldown"				"45 10"
+		"AbilityCooldown"				"45"
 		"precache"
 		{
 		}
@@ -20932,6 +20932,7 @@
 		
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
 		}
 		
 		"AbilityCooldown"				"1"
@@ -20952,7 +20953,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_damage"			"20"
+				"stack_damage"			"15"
 			}
 		}
 
@@ -20974,12 +20975,25 @@
 			"modifier_fiery_heaven_indicator"
 			{
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"tamamo_ability"
+						"Function"		"OnCharmAttacked"
+						"Radius"		"%radius"
+						"Damage"		"%damage"
+						"StackDamage"	"%stack_damage"
+					}					
+				}
 			}
 			"modifier_fiery_heaven_indicator_enemy"
 			{
 				"Duration"		"10"
 				"IsDebuff"		"1"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	    		"EffectName"		"particles/units/heroes/hero_huskar/huskar_burning_spear_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
@@ -21001,6 +21015,7 @@
 		
 		"precache"
 		{
+			"particle"				"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 		}
 		
 		"AbilityCooldown"				"1"
@@ -21038,12 +21053,33 @@
 			"modifier_frigid_heaven_indicator"
 			{
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"tamamo_ability"
+						"Function"		"OnCharmAttacked"
+						"Duration"		"%duration"
+						"StackStunDuration"		"%stack_stun_duration"
+					}					
+				}
 			}
 			"modifier_frigid_heaven_indicator_enemy"
 			{
 				"Duration"		"10"
 				"IsDebuff"		"1"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+	    		"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+			}
+			"modifier_frigid_heaven_stun_fx"
+			{
+				"IsHidden"		"1"
+				"IsDebuff"		"1"
+				"Duration"		"%stack_stun_duration"
+	    		"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
 			}
 		}
 	}
@@ -21064,7 +21100,8 @@
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
-		{
+		{	
+			"particle"			"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
 		}
 		
 		"AbilityCooldown"				"1"
@@ -21112,6 +21149,14 @@
 			"modifier_gust_heaven_indicator"
 			{
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"tamamo_ability"
+						"Function"		"OnCharmAttacked"
+					}					
+				}
 			}
 			"modifier_gust_heaven_indicator_enemy"
 			{
@@ -21122,6 +21167,8 @@
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_reduction"
 				}
+		    	"EffectName"		"particles/units/heroes/hero_windrunner/windrunner_windrun.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 	    	"modifier_gust_heaven_purge"
 	    	{
@@ -21258,10 +21305,11 @@
 		"precache"
 		{
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion.vpcf"
 			"particle"					"particles/units/heroes/hero_wisp/wisp_guardian_explosion_small.vpcf"
+			"particle"					"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
 			"particle"					"particles/custom/tamamo/tamamo_soulstream_red_.vpcf"
 			"particle"					"particles/custom/tamamo/tamamo_soulstream_green_.vpcf"
 			"particle"					"particles/custom/tamamo/tamamo_soulstream_blue_.vpcf"
@@ -21410,7 +21458,7 @@
 			}
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"duration"			"1.5"
 			}
 		}
@@ -21523,15 +21571,20 @@
 		{
 			"01"
 			{
+				"var_type"			"FIELD_FLOAT"
+				"cast_delay"		"0.6"
+			}
+			"02"
+			{
 				"var_type"			"FIELD_INTEGER"
 				"damage_modifier"			"200 225 250 275 300"
 			}
-			"02"
+			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"orb_amount"				"3 4 5 6 7"
 			}
-			"03"
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"				"7"
@@ -21653,6 +21706,10 @@
 						"Function"      "OnMantraTetherEnd"
 					}
 				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"15"
+				}
 			}
 		}
 	}
@@ -21665,7 +21722,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"5"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityTextureName"			"wisp_tether"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
@@ -21751,6 +21808,7 @@
 			"particle"		"particles/custom/tamamo/tamamo_amaterasu_continuous.vpcf"
 			"particle"		"particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"model"			"models/misc/templedoor.vmdl"
 		}
 		
 		"AbilitySpecial"
@@ -21874,15 +21932,11 @@
 			{
 				"Duration"		"1.5"
 				"IsDebuff"		"1"
-				"EffectName"			"particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf"
+				"EffectName"			"particles/items3_fx/silver_edge_slow.vpcf"
 				"EffectAttachType"		"follow_origin"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-70"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 		}
@@ -21921,7 +21975,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"search_radius"			"500"
+				"search_radius"			"700"
 			}	
 			"02"
 			{
@@ -21979,6 +22033,85 @@
 					"MODIFIER_STATE_STUNNED"				"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+		}
+	}
+
+	//=================================================================================================================
+	// Tamamo : Polygamist Castration Fist(with attribute)
+	//=================================================================================================================
+	"tamamo_polygamist_castration_fist_2"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityTextureName"			"tamamo_kick"
+		"MaxLevel"						"1"
+
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastRangeBuffer"		"0"
+		"AbilityCooldown"				"120"
+		"AbilityManaCost"				"600"
+
+		"precache"
+		{
+			"particle"			"particles/custom/tamamo/tamamo_kick_trail.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
+			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_hit.vpcf"
+			"particle"			"particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lina.vsndevts"
+			"particle"				"particles/custom/screen_violet_splash.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"search_radius"			"500"
+			}	
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"lunge_delay"			"0.5"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"kick_damage"			"500"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"recoil_distance"			"400"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"explosion_int_ratio"			"10"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"tamamo_ability"
+				"Function"			"OnKickStart"
+				"LungeDelay"		"%lunge_delay"
+				"SearchRadius"		"%search_radius"
+				"Damage"			"%kick_damage"
+				"RecoilDistance"	"%recoil_distance"
+				"ExplosionRatio"	"%explosion_int_ratio"
+			}
+			"ApplyModifier"
+			{
+				"ModifierName"		"modifier_polygamist"
+				"Target"			"CASTER"
+			}
+		}
+		"Modifiers"
+		{
 			"modifier_polygamist_shorter"
 			{
 				"Duration"		"1.45"
@@ -22065,6 +22198,16 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
+				"bonus_mr"			"15"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"distance"			"1250"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
 				"fates_call_max_delay"			"2.5"
 			}
 		}
@@ -22093,7 +22236,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{

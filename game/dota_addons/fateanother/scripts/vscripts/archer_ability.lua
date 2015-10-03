@@ -515,8 +515,16 @@ function EndUBW(caster)
     , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
     for i=1, #units do
+    	if IsValidEntity(units[i]) and not units[i]:IsNull() then
+			if string.match(units[i]:GetUnitName(),"dummy") then 
+				table.remove(units, i)
+			end
+		end
+	end
+
+    for i=1, #units do
     	print("removing units in UBW")
-    	if not units[i]:IsNull() and IsValidEntity(units[i]) then
+    	if IsValidEntity(units[i]) and not units[i]:IsNull() then
 	    	ProjectileManager:ProjectileDodge(units[i])
 	   		if units[i]:GetName() == "npc_dota_hero_chen" and units[i]:HasModifier("modifier_army_of_the_king_death_checker") then
 	   			units[i]:RemoveModifierByName("modifier_army_of_the_king_death_checker")

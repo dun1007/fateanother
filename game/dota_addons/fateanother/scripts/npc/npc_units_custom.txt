@@ -1516,7 +1516,7 @@
 		"VisionDaytimeRange"		"0"		// Range of vision during day light.
 		"VisionNighttimeRange"		"0"		// Range of vision at night time.
 	}
-	"tamamo_templedoor"
+	"tamamo_templedoor_dummy"
 	{
 		"Model"				"models/misc/templedoor.vmdl"
 		"BaseClass"			"npc_dota_creature"

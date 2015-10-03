@@ -66,11 +66,17 @@ function OnFireCharmLoaded(keys)
 	caster:SetModifierStackCount("modifier_fiery_heaven_indicator", keys.ability, chargeAmount)
 end
 
+
 function OnFreezeCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_frigid_heaven_indicator"
 	CloseCharmList(keys)
+	if caster.IsWitchcraftAcquired then
+		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
+		armedUp:EndCooldown()
+		armedUp:StartCooldown(15)
+	end
 
 	for i=1, #CharmModifierList do
 		if caster:HasModifier(CharmModifierList[i]) then
@@ -88,6 +94,11 @@ function OnGustCharmLoaded(keys)
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_gust_heaven_indicator"
 	CloseCharmList(keys)
+	if caster.IsWitchcraftAcquired then
+		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
+		armedUp:EndCooldown()
+		armedUp:StartCooldown(15)
+	end
 
 	for i=1, #CharmModifierList do
 		if caster:HasModifier(CharmModifierList[i]) then
@@ -131,31 +142,66 @@ function CloseCharmList(keys)
 	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
-	caster:SwapAbilities("fate_empty1", a4:GetName(), true, true) 
+	--caster:SwapAbilities("fate_empty1", a4:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
 	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, true) 
 
 end
 
---[[function OnSoulStreamInitialize(keys)
+function OnCharmAttacked(keys)
 	local caster = keys.caster
-	caster.CharmTable1 = {}
-	caster.CharmTable2 = {}
-	Timers:CreateTimer(2.0, function()
-		for i=1, 5 do
-			local soldier = CreateUnitByName("tamamo_charm", Vector(-10000,-10000,0), true, nil, nil, caster:GetTeamNumber())
-			soldier:SetAbsOrigin(Vector(-10000,-10000,0))
-			table.insert(caster.CharmTable1, soldier)
-			caster.Charms = soldier
+	local target = keys.target
+	local ability = keys.ability
+	local loadedCharmName = ability:GetAbilityName()
+	-- 6 stacks
+	if loadedCharmName == "tamamo_fiery_heaven" then
+		DeduceCharmStack(caster, "modifier_fiery_heaven_indicator")
+		if IncrementCharmStack(caster, target, ability, "modifier_fiery_heaven_indicator_enemy") == 6 then
+			target:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
+			DoDamage(caster, target, (target:GetMaxHealth()-target:GetHealth())*keys.StackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+
+			local explodeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
+			ParticleManager:SetParticleControl( explodeFx, 0, target:GetAbsOrigin())
+			target:EmitSound("Ability.LightStrikeArray")
+		else
+			DoDamage(caster, target, target:GetHealth()*keys.Damage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			local explosionFx = ParticleManager:CreateParticle("particles/custom/tamamo/tamamo_soulstream_explosion_red.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
 		end
-		for i=1, 5 do
-			local soldier = CreateUnitByName("tamamo_charm", Vector(-10000,-10000,0), true, nil, nil, caster:GetTeamNumber())
-			soldier:SetAbsOrigin(Vector(-10000,-10000,0))
-			table.insert(caster.CharmTable2, soldier)
-			caster.Charms = soldier
+	elseif loadedCharmName == "tamamo_frigid_heaven" then
+		local ccDuration = keys.Duration
+		local StackStunDuration = keys.StackStunDuration
+		DeduceCharmStack(caster, "modifier_frigid_heaven_indicator")
+		-- 6 stacks
+		if IncrementCharmStack(caster, target, ability, "modifier_frigid_heaven_indicator_enemy") == 6 then
+			target:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
+			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = StackStunDuration})
+
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_frigid_heaven_stun_fx", {})
+			target:EmitSound("Ability.FrostBlast")
+		else
+			target:AddNewModifier(caster, target, "modifier_disarmed", {Duration = ccDuration})
+			target:AddNewModifier(caster, target, "modifier_silence", {Duration = ccDuration})
+			local explosionFx = ParticleManager:CreateParticle("particles/custom/tamamo/tamamo_soulstream_explosion_blue.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
 		end
-	end)
-end]]
+	elseif loadedCharmName == "tamamo_gust_heaven" then
+		DeduceCharmStack(caster, "modifier_gust_heaven_indicator")
+		if IncrementCharmStack(caster, target, ability, "modifier_gust_heaven_indicator_enemy") == 6 then
+			target:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge", {}) 
+			if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge_slow_tier1", {}) end
+			if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge_slow_tier2", {}) end
+			target:EmitSound("DOTA_Item.DiffusalBlade.Activate")
+		else
+			local explosionFx = ParticleManager:CreateParticle("particles/custom/tamamo/tamamo_soulstream_explosion_green.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
+		end
+	end
+
+	target:EmitSound("Hero_Wisp.Spirits.Target")
+end
 
 function OnSoulstreamStart(keys)
 	local caster = keys.caster
@@ -271,6 +317,9 @@ function OnSoulstreamProjectileTick(keys)
 				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
 					v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
 					DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+					local explodeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, v )
+					ParticleManager:SetParticleControl( explodeFx, 0, v:GetAbsOrigin())
 					v:EmitSound("Ability.LightStrikeArray")
 				else
 					DoDamage(caster, v, v:GetHealth()*charmDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -280,6 +329,8 @@ function OnSoulstreamProjectileTick(keys)
 				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
 					v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
+
+					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_stun_fx", {})
 					v:EmitSound("Ability.FrostBlast")
 				else
 					v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
@@ -290,8 +341,8 @@ function OnSoulstreamProjectileTick(keys)
 				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
 					v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
 					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
-					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) 
-					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) 
+					if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
+					if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
 					v:EmitSound("DOTA_Item.DiffusalBlade.Activate")
 
 				else
@@ -393,6 +444,13 @@ function OnMantraStart(keys)
 	local ability = keys.ability
 	local orbAmount = keys.OrbAmount
 	local modifierName = 0
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	if target:HasModifier("modifier_mantra_ally") or target:HasModifier("modifier_mantra_enemy") then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Target Already Affected By Mantra" } )
+		keys.ability:EndCooldown()
+		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
+		return	
+	end
 	caster.MantraTarget = target
 	target.IsMantraProcOnCooldown = false 
 
@@ -413,7 +471,7 @@ function OnMantraStart(keys)
     ParticleManager:SetParticleControl(castFx, 0, target:GetOrigin())
     target:EmitSound("Item.LotusOrb.Target")
 
-	-- Set stack amount
+	-- Set stack amount1
 	ability:ApplyDataDrivenModifier(caster, target, modifierName, {}) 
 	target:SetModifierStackCount(modifierName, ability, orbAmount)
 	for i=1, orbAmount do ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_vfx", {}) end
@@ -466,6 +524,7 @@ function OnMantraTakeDamage(keys)
 
 	-- Set stack amount
 	currentStack = target:GetModifierStackCount(modifierName, ability)
+	print("current mantra stack :" .. currentStack)
 	target:RemoveModifierByName(modifierName)
 	target:RemoveModifierByName("modifier_mantra_vfx")
 
@@ -490,13 +549,26 @@ function OnFatesCallStart(keys)
 	local targetPoint = keys.target_points[1]
 	local dist = (caster.TetheredTarget:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
 	local delay = dist*0.002
+	caster.IsStunnedDuringFatesCall = false
 
 	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
 	ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
 	caster.TetheredTarget:EmitSound("Hero_Wisp.Relocate")
 
+	-- Check if Caster got stunned 
+	local count = 0
+	Timers:CreateTimer(function()
+		if count > delay then return end
+		if caster:HasModifier("modifier_stunned") then
+			caster.IsStunnedDuringFatesCall = true
+			return
+		end
+		count = count + 0.033
+		return 0.033
+	end)
+
 	Timers:CreateTimer(delay, function()
-		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") then
+		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") and not caster.IsStunnedDuringFatesCall then
 			caster.TetheredTarget:SetAbsOrigin(targetPoint)
 			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")
 			Timers:CreateTimer(0.033, function()
@@ -527,7 +599,8 @@ function OnAmaterasuStart(keys)
 	if caster.IsWitchcraftAcquired then 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster.AmaterasuCastLoc, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
-			ability:ApplyDataDrivenModifier(caster, v, "modifier_amaterasu_witchcraft_slow", {})
+			if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster, v, "modifier_amaterasu_witchcraft_slow", {}) end
+			v:AddNewModifier(caster, target, "modifier_silence", {Duration = 1.5})
 		end
 	end
 
@@ -593,7 +666,7 @@ function CreateTempleDoorInCircle(handle, center, multiplier)
 	for i=1, 8 do
 		local x = math.cos(i*math.pi/4) * multiplier
 		local y = math.sin(i*math.pi/4) * multiplier
-		local banner = CreateUnitByName("tamamo_templedoor", Vector(center.x + x, center.y + y, 0), true, nil, nil, handle:GetTeamNumber())
+		local banner = CreateUnitByName("tamamo_templedoor_dummy", Vector(center.x + x, center.y + y, 0), true, nil, nil, handle:GetTeamNumber())
 		banner:AddNewModifier(caster, nil, "modifier_kill", {duration=10.5})
 		local diff = (handle:GetAbsOrigin() - banner:GetAbsOrigin())
     	banner:SetForwardVector(diff:Normalized()) 
@@ -613,8 +686,23 @@ function OnKickStart(keys)
 	local count = 0
 	local targets = 0
 
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_polygamist", {}) 
-	EmitGlobalSound("Tamamo.Kick")
+	if caster.IsEscapeAcquired then
+		if caster:HasModifier("rb_sealdisabled") or caster:HasModifier("modifier_command_seal_2") or caster:HasModifier("modifier_command_seal_3") or caster:HasModifier("modifier_command_seal_4") then
+			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used(Revoked)" } )
+			keys.ability:EndCooldown()
+			caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
+			return			
+		end
+		lungeDelay = lungeDelay / 2
+		damage = damage / 2
+		expDamageRatio = expDamageRatio / 2
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_polygamist_shorter", {}) 
+	else 
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_polygamist", {}) 
+		EmitGlobalSound("Tamamo.Kick")
+			
+	end
+
 	Timers:CreateTimer(function()
 		if count == 3 then 
 			-- Do knockback
@@ -624,10 +712,10 @@ function OnKickStart(keys)
 			local dur = 0
 			Timers:CreateTimer(function()
 				-- If knockback is finished, do damage 
-				if dur > 0.7 then 
+				if dur > 0.4 then 
 					FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 					FindClearSpaceForUnit(nextTarget, nextTarget:GetAbsOrigin(), true)
-					targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.SearchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+					targets = FindUnitsInRadius(caster:GetTeam(), nextTarget:GetAbsOrigin(), nil, keys.SearchRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 					for k,v in pairs(targets) do
 						DoDamage(caster, v, expDamageRatio*caster:GetIntellect() ,DAMAGE_TYPE_MAGICAL, 0, ability, false  )
 					end
@@ -651,7 +739,7 @@ function OnKickStart(keys)
 		ParticleManager:SetParticleControl( trailFxIndex, 1, nextTarget:GetAbsOrigin() )
 		if #targets ~= 0 then
 			nextTarget = targets[math.random(#targets)]
-			caster:SetAbsOrigin(nextTarget:GetAbsOrigin())
+			caster:SetAbsOrigin(nextTarget:GetAbsOrigin() + RandomVector(100))
 			DoDamage(caster, nextTarget, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			nextTarget:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 
@@ -671,6 +759,9 @@ function OnSpiritTheftAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsSpiritTheftAcquired = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(caster:GetMana())
 end
 
 function OnSeveredFateAcquired(keys)
@@ -678,13 +769,33 @@ function OnSeveredFateAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsSeveredFateAcquired = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(caster:GetMana())
 end
 
 function OnPCFAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+
+	if hero:GetStrength() < 20 or hero:GetAgility() < 20 or hero:GetIntellect() < 20 then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Acquire 20 Stats" } )
+		keys.ability:EndCooldown()
+		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
+		return
+	end
 	hero.IsEscapeAcquired = true
+	hero:RemoveAbility("tamamo_polygamist_castration_fist")
+	hero:AddAbility("tamamo_polygamist_castration_fist_2")
+	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2"):SetLevel(1)
+	Timers:CreateTimer(0.033, function()
+		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true) 
+	end)
+
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(caster:GetMana())
 end
 
 function OnWitchcraftAcquired(keys)
@@ -692,10 +803,13 @@ function OnWitchcraftAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsWitchcraftAcquired = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(caster:GetMana())
 end
 
 function TamamoCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 and not caster.IsEscapeAcquired then
 		if ability == caster:FindAbilityByName("tamamo_subterranean_grasp") and caster:FindAbilityByName("tamamo_polygamist_castration_fist"):IsCooldownReady()  then
 			caster:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist", false, true) 
 			Timers:CreateTimer({

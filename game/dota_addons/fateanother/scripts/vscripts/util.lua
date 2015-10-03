@@ -76,7 +76,8 @@ strongdispelable = {
     "modifier_rho_aias_shield",
     "modifier_gordius_wheel_mitigation_tier1",
     "modifier_gordius_wheel_mitigation_tier2",
-    "modifier_gordius_wheel_mitigation_tier3"
+    "modifier_gordius_wheel_mitigation_tier3",
+    "tamamo_mantra"
 }
 
 goesthruB = {"saber_avalon",
@@ -102,6 +103,8 @@ cleansable = {
     "modifier_aestus_domus_aurea_debuff_slow",
     "modifier_warriors_charge_slow",
     "modifier_fissure_strike_slow",
+    "modifier_gust_heaven_purge_slow_tier1",
+    "modifier_gust_heaven_purge_slow_tier2",
 
     -- Other CCs
     "modifier_stunned",
@@ -112,7 +115,12 @@ cleansable = {
     "modifier_silence",
     "modifier_disarmed",
     "modifier_enkidu_hold", -- enkidu
-    "modifier_tentacle_wrap"
+    "modifier_tentacle_wrap",
+    "modifier_gust_heaven_purge",
+    "modifier_subterranean_grasp",
+
+    -- Debuffs
+    "modifier_gust_heaven_indicator_enemy"
 }
 
 slowmodifier = {
@@ -126,7 +134,10 @@ slowmodifier = {
     "modifier_battle_horn_movespeed_debuff",
     "modifier_aestus_domus_aurea_debuff_slow",
     "modifier_warriors_charge_slow",
-    "modifier_fissure_strike_slow"
+    "modifier_fissure_strike_slow",
+    "modifier_amaterasu_witchcraft_slow",
+    "modifier_gust_heaven_purge_slow_tier1",
+    "modifier_gust_heaven_purge_slow_tier2"
 }
 
 donotlevel = {
@@ -177,7 +188,11 @@ CannotReset = {
     "nero_imperial_privilege",
     "gawain_blessing_of_fairy",
     "gawain_divine_meltdown",
-    "gawain_supernova"
+    "gawain_supernova",
+    "tamamo_armed",
+    "tamamo_polygamist_castration_fist",
+    "tamamo_polygamist_castration_fist_2",
+    "tamamo_fates_call"
 }
 
 femaleservant = {
@@ -185,7 +200,8 @@ femaleservant = {
     "npc_dota_hero_spectre",
     "npc_dota_hero_templar_assassin",
     "npc_dota_hero_crystal_maiden",
-    "npc_dota_hero_lina"
+    "npc_dota_hero_lina",
+    "npc_dota_hero_enchantress"
 }
 
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",

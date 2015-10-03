@@ -1,0 +1,1 @@
+"D:\Scaleform VideoEncoder\medianoche.exe"    -gop_closed=on -gop_i=1 -gop_p=4 -gop_b=2 -video00="C:\Users\hermi_000\Documents\Adobe\Premiere Pro\9.0\tamamo_portrait_1.avi" -output="C:\Users\hermi_000\Documents\Adobe\Premiere Pro\9.0\tamamo_portrait_1.usm" -bitrate=16000000

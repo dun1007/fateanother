@@ -655,7 +655,7 @@ function OnAOTKStart(keys)
 
 	-- record location of units and move them into UBW(center location : 6000, -4000, 200)
 	for i=1, #aotkTargets do
-		if not aotkTargets[i]:IsNull() and IsValidEntity(aotkTargets[i]) then
+		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
 			if aotkTargets[i]:GetName() ~= "npc_dota_ward_base" then
 				aotkTargetPos = aotkTargets[i]:GetAbsOrigin()
 		        aotkTargetLoc[i] = aotkTargetPos
@@ -731,7 +731,7 @@ function EndAOTK(caster)
 
 	-- Remove soldiers 
 	for i=1, #caster.AOTKSoldiers do
-		if not caster.AOTKSoldiers[i]:IsNull() and IsValidEntity(caster.AOTKSoldiers[i]) then
+		if IsValidEntity(caster.AOTKSoldiers[i]) and not caster.AOTKSoldiers[i]:IsNull() then
 			if caster.AOTKSoldiers[i]:IsAlive() then
 				caster.AOTKSoldiers[i]:ForceKill(true)
 			end
@@ -744,9 +744,18 @@ function EndAOTK(caster)
 		end
 	end]]
     local units = FindUnitsInRadius(caster:GetTeam(), aotkCenter, nil, 3000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+ 
+    for i=1, #units do
+    	if IsValidEntity(units[i]) and not units[i]:IsNull() then
+			if string.match(units[i]:GetUnitName(),"dummy") then 
+				table.remove(units, i)
+			end
+		end
+	end
+
     for i=1, #units do
     	print("removing units in AOTK")
-    	if not units[i]:IsNull() and IsValidEntity(units[i]) then 
+    	if IsValidEntity(units[i]) and not units[i]:IsNull() then 
 	    	-- Disjoint all projectiles
 	    	ProjectileManager:ProjectileDodge(units[i])
 	    	-- If unit is Archer and UBW is active, deactive it as well
@@ -756,7 +765,7 @@ function EndAOTK(caster)
 	    	local IsUnitGeneratedInAOTK = true
 	    	if aotkTargets ~= nil then
 		    	for j=1, #aotkTargets do
-		    		if not aotkTargets[j]:IsNull() and IsValidEntity(aotkTargets[j]) then
+		    		if IsValidEntity(aotkTargets[j]) and not aotkTargets[j]:IsNull() then
 			    		if units[i] == aotkTargets[j] then
 			    			if aotkTargets[j] ~= nil then
 			    				units[i]:SetAbsOrigin(aotkTargetLoc[j]) 
