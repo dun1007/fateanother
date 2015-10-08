@@ -214,7 +214,7 @@ function OnBerserkProc(keys)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
 		end
 		caster.IsRageBashOnCooldown = true
-		Timers:CreateTimer(1.5, function()
+		Timers:CreateTimer(4.0, function()
 			caster.IsRageBashOnCooldown = false
 		end)
 	end

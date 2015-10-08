@@ -18,7 +18,7 @@ heroes = {
     "npc_dota_hero_omniknight"
 }
 
-purgable = {
+softdispellable = {
     "modifier_aspd_increase",
     "modifier_derange",
     "modifier_courage_self_buff",
@@ -44,8 +44,8 @@ purgable = {
     "modifier_blade_of_the_devoted"
 }
 
-strongdispelable = {
-    -- Purgable
+strongdispellable = {
+    -- softdispellable
     "modifier_aspd_increase",
     "modifier_derange",
     "modifier_courage_self_buff",
@@ -79,6 +79,15 @@ strongdispelable = {
     "modifier_gordius_wheel_mitigation_tier3",
     "tamamo_mantra"
 }
+
+revokes = {
+    "modifier_subterranean_grasp_revoke",
+    "modifier_enkidu_hold",
+    "jump_pause",
+    "pause_sealdisabled"
+}
+
+
 
 goesthruB = {"saber_avalon",
             "archer_5th_hrunting",
@@ -476,6 +485,13 @@ function IsSpellBlocked(target)
     end
 end 
 
+function IsRevoked(target)
+    for i=1, #revokes do
+        if target:HasModifier(revokes[i]) then return true end
+    end
+    return false
+end
+
 function IsFemaleServant(target)
     for i=1, #femaleservant do
         if target:GetName() == femaleservant[i] then
@@ -723,13 +739,13 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 end
 
 function ApplyPurge(target)
-    for k,v in pairs(purgable) do
+    for k,v in pairs(softdispellable) do
         target:RemoveModifierByName(v)
     end
 end
 
 function ApplyStrongDispel(target)
-    for k,v in pairs(strongdispelable) do
+    for k,v in pairs(strongdispellable) do
         target:RemoveModifierByName(v)
     end
 end

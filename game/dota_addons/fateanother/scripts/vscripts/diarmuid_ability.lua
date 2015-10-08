@@ -123,12 +123,14 @@ function OnBuidheStart(keys)
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local targetHealthPercentage = target:GetHealth() / target:GetMaxHealth()
 
-	local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
-	if currentStack == 0 and target:HasModifier("modifier_gae_buidhe") then currentStack = 1 end
-	target:RemoveModifierByName("modifier_gae_buidhe") 
-	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_gae_buidhe", {}) 
-	target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + 1)
-	if target:IsRealHero() then target:CalculateStatBonus() end
+	if target:GetHealth() ~= 0 then
+		local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
+		if currentStack == 0 and target:HasModifier("modifier_gae_buidhe") then currentStack = 1 end
+		target:RemoveModifierByName("modifier_gae_buidhe") 
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_gae_buidhe", {}) 
+		target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + 1)
+		if target:IsRealHero() then target:CalculateStatBonus() end
+	end
 
 	local targetNewHealth = target:GetHealth() + keys.Damage * (1-MR) * targetHealthPercentage 
     print(targetNewHealth)

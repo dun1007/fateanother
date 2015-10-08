@@ -21510,6 +21510,11 @@
 						"EffectName"	"Hero_Visage.GraveChill.Target"
 						"Target"		"TARGET"
 					}
+					"ApplyModifier"
+					{
+						"ModifierName"	"modifier_subterranean_grasp_revoke"
+						"Target"		"TARGET"
+					}
 				}
 				"OnDestroy"
 				{
@@ -21528,7 +21533,12 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-
+			"modifier_subterranean_grasp_revoke"
+			{
+				"IsHidden"				"1"
+				"Duration"				"%duration"
+				"IsDebuff"				"1"
+			}
 		}
 	}
 
@@ -21722,7 +21732,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"5"
+		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityTextureName"			"wisp_tether"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"

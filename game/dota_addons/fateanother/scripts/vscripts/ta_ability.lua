@@ -238,7 +238,6 @@ function OnAmbushStart(keys)
 		--local units = FindUnitsInRadius(enemyTeamNumber, caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		local units = FindUnitsInRadius(team, caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		for i=1, #units do
-			print(units[i]:GetUnitName())
 			if units[i]:GetUnitName() == "ward_familiar" then
 				local visiondummy = CreateUnitByName("sight_dummy_unit", units[i]:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 				visiondummy:SetDayTimeVisionRange(100)
@@ -251,7 +250,7 @@ function OnAmbushStart(keys)
 						visiondummy:RemoveSelf()
 					end 
 				end)
-				return
+				break
 			end
 		end 
 	end

@@ -177,7 +177,7 @@ function OnSeal1Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or IsRevoked(hero) then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		keys.ability:EndCooldown() 
@@ -245,7 +245,7 @@ function OnSeal2Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or IsRevoked(hero) then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		keys.ability:EndCooldown() 
@@ -293,7 +293,7 @@ function OnSeal3Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or IsRevoked(hero) then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
@@ -336,7 +336,7 @@ function OnSeal4Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or hero:HasModifier("pause_sealdisabled") or hero:HasModifier("rb_sealdisabled") or hero:HasModifier("modifier_enkidu_hold") or hero:HasModifier("jump_pause") then
+	if not hero:IsAlive() or IsRevoked(hero) then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
