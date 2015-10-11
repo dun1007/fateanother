@@ -296,7 +296,6 @@ function OnSoulstreamProjectileTick(keys)
 	-- Is Charm loaded for current projectile?
 	if target.IsCharmLoaded then
 		if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
-			radius = target.LoadedCharmHandle:GetLevelSpecialValueFor("radius", 0)
 			charmDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("damage", 0)
 			stackDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_damage", 0)
 		elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
@@ -307,7 +306,7 @@ function OnSoulstreamProjectileTick(keys)
 		end
 	end
 	-- If target is found, remove projectile and do damage
-	local targets = FindUnitsInRadius(caster:GetTeam(), casterLoc, nil, 75+radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	local targets = FindUnitsInRadius(caster:GetTeam(), casterLoc, nil, 75, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	if #targets ~= 0 then
 
 
@@ -796,8 +795,10 @@ function OnPCFAcquired(keys)
 	hero:RemoveAbility("tamamo_polygamist_castration_fist")
 	hero:AddAbility("tamamo_polygamist_castration_fist_2")
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2"):SetLevel(1)
+	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2").IsResetable = false
 	Timers:CreateTimer(0.033, function()
 		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true) 
+
 	end)
 
     -- Set master 1's mana 

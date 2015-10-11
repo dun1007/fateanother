@@ -337,7 +337,7 @@ function OnZabStart(keys)
 		Ability = keys.ability,
 		EffectName = "particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 700
+		iMoveSpeed = 950
 	}
 	if caster:HasModifier("modifier_ambush") then caster.IsShadowStrikeActivated = true print("Shadow Strike activated") end
 

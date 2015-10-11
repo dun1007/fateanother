@@ -570,7 +570,7 @@ function OnAOTKStart(keys)
 	-- Remove any dummy or hero in jump from table 
 	for i=1, #aotkTargets do
 		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
-			print(aotkTargets[i]:GetUnitName())
+			ProjectileManager:ProjectileDodge(aotkTargets[i]) -- Disjoint particles
 			if aotkTargets[i]:HasModifier("jump_pause") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
 				print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(aotkTargets, i)
@@ -578,7 +578,11 @@ function OnAOTKStart(keys)
 		end
 	end
 
-	-- Check if Archer's UBW is already in place 
+	if caster:GetAbsOrigin().x > 3000 and caster:GetAbsOrigin().y < -2000 then
+		caster.IsAOTKDominant = false
+	end
+
+	--[[-- Check if Archer's UBW is already in place 
 	for i=1, #aotkTargets do
 		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
 			if aotkTargets[i]:GetName() == "npc_dota_hero_ember_spirit" and aotkTargets[i]:HasModifier("modifier_ubw_death_checker") then
@@ -586,7 +590,7 @@ function OnAOTKStart(keys)
 				break
 			end
 		end
-	end
+	end]]
 
 
  	-- spawn sight dummy
@@ -709,7 +713,9 @@ end
 
 function OnAOTKDeath(keys)
 	local caster = keys.caster
-	EndAOTK(caster)
+	Timers:CreateTimer(0.066, function()
+		EndAOTK(caster)
+	end)
 end
 
 function EndAOTK(caster)
@@ -772,7 +778,9 @@ function EndAOTK(caster)
 			    			end
 			    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
 			    			Timers:CreateTimer(0.1, function() 
-								units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+			    				if IsValidEntity(units[i]) and not units[i]:IsNull() then 
+									units[i]:AddNewModifier(units[i], units[i], "modifier_camera_follow", {duration = 1.0})
+								end
 							end)
 			    			IsUnitGeneratedInAOTK = false
 			    			break 

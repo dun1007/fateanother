@@ -1401,6 +1401,9 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
             ply:GetAssignedHero():RemoveModifierByName("modifier_ubw_death_checker")
         end
+        if ply:GetAssignedHero():GetName() == "npc_dota_hero_chen" and ply:GetAssignedHero():HasModifier("modifier_army_of_the_king_death_checker") then
+            ply:GetAssignedHero():RemoveModifierByName("modifier_army_of_the_king_death_checker")
+        end
         if ply:GetAssignedHero():GetName() == "npc_dota_hero_doom_bringer" then
             ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
         end

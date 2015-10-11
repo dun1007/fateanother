@@ -4948,7 +4948,6 @@
 				}
 			
 				"Duration"	"12.0"
-				
 				"OnDestroy"
 				{
 					"RemoveModifier"
@@ -14787,7 +14786,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"650"
-		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastRangeBuffer"		"800"
 		"AbilityCastPoint"				"0.5"
 
 		// Time		
@@ -20943,17 +20942,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"radius"			"200"
+				"damage"			"3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"			"4"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_FLOAT"
-				"stack_damage"			"15"
+				"stack_damage"			"10"
 			}
 		}
 
@@ -21328,7 +21322,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"70 80 90 100 110"
+				"damage"				"80 90 100 110 120"
 			}
 			"02"
 			{

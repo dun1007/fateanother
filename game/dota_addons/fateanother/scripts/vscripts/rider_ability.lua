@@ -241,6 +241,11 @@ function OnBelleStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local ascendCount = 0
 	local descendCount = 0
+	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 then 
+		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
+		keys.ability:EndCooldown() 
+		return
+	end
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
 	local dmgdelay = dist * 0.000416
 	

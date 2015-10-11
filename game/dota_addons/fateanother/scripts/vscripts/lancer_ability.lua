@@ -324,7 +324,8 @@ function OnGBComboHit(keys)
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
-	
+
+
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
@@ -333,10 +334,16 @@ function OnGBComboHit(keys)
 	if caster.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + caster:GetAttackDamage()*1.5 + target:GetStrength() end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
-	EmitGlobalSound("Lancer.Heartbreak")
+	caster:EmitSound("Lancer.Heartbreak")
+	target:EmitSound("Lancer.Heartbreak")
 	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
 	if target:IsAlive() then
 	  	Timers:CreateTimer(1.8, function() 
+			if (caster:GetAbsOrigin().y < -2000 and target:GetAbsOrigin().y > -2000) or (caster:GetAbsOrigin().y > -2000 and target:GetAbsOrigin().y < -2000) then 
+				StopSoundEvent("Lancer.Heartbreak", caster)
+				StopSoundEvent("Lancer.Heartbreak", target)
+				return 
+			end
 		    local lancer = Physics:Unit(caster)
 		    caster:PreventDI()
 		    caster:SetPhysicsFriction(0)
@@ -389,7 +396,11 @@ function OnGBAOEStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local ascendCount = 0
 	local descendCount = 0
-	print(keys.ability.IsResetable)
+	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 then 
+		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
+		keys.ability:EndCooldown() 
+		return
+	end
 
 	bolgdummy = CreateUnitByName("dummy_unit", targetPoint, false, caster, caster, caster:GetTeamNumber())
 	local dummy_ability = bolgdummy:FindAbilityByName("dummy_unit_passive")

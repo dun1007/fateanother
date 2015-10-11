@@ -380,7 +380,7 @@ function OnUBWStart(keys)
 	-- Remove any dummy or hero in jump
 	for i=1, #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
-			print(ubwTargets[i]:GetUnitName())
+			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
 			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
 				print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(ubwTargets, i)
@@ -388,9 +388,15 @@ function OnUBWStart(keys)
 		end
 	end
 	
-
-
-	-- If Iskander's AOTK is active, place the dummy and center of UBW accordingly
+	if caster:GetAbsOrigin().x < 3000 and caster:GetAbsOrigin().y < -2000 then
+		ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
+		ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
+		ubwdummyLoc3 = aotkCenter + Vector(-600,600, 1000)
+		ubwdummyLoc4 = aotkCenter + Vector(-600,-600, 1000)
+		caster.IsUBWDominant = false
+	end
+	caster.IsUBWActive = true
+	--[[-- If Iskander's AOTK is active, place the dummy and center of UBW accordingly
 	for i=1, #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then 
 			if ubwTargets[i]:GetName() == "npc_dota_hero_chen" and ubwTargets[i]:HasModifier("modifier_army_of_the_king_death_checker") then
@@ -402,8 +408,8 @@ function OnUBWStart(keys)
 				break
 			end
 		end
-	end
-	caster.IsUBWActive = true
+	end]]
+	
 
 
     -- DUN DUN DUN DUN
@@ -487,7 +493,9 @@ end
 function OnUBWDeath(keys)
 	local caster = keys.caster
 	print("ubw death checker removed")
-	EndUBW(caster)
+	Timers:CreateTimer(0.033, function()
+		EndUBW(caster)
+	end)
 end
 
 function EndUBW(caster)
@@ -672,7 +680,7 @@ function OnRainStart(keys)
 	local bpCount = 0 
 	Timers:CreateTimer(2.8, function()
 		if bpCount == 5 then return end
-		local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+		local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		info.Target = units[math.random(#units)]
 		if info.Target ~= nil then 
 			ProjectileManager:CreateTrackingProjectile(info) 

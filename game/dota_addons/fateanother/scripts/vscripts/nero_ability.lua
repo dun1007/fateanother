@@ -251,6 +251,9 @@ function OnRIStart(keys)
 	}
 	
 	Timers:CreateTimer(1.25, function()
+		if (caster:GetAbsOrigin().y < -2000 and target:GetAbsOrigin().y > -2000) or (caster:GetAbsOrigin().y > -2000 and target:GetAbsOrigin().y < -2000) then 
+			return 
+		end
 		if caster:IsAlive() then
 			local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
 			local dist = 0
