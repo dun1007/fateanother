@@ -47,6 +47,7 @@ MAX_LEVEL = 24 -- What level should we let heroes get to?
 USE_CUSTOM_XP_VALUES = true -- Should we use custom XP values to level up heroes, or the default Dota numbers?
 DISABLE_ANNOUNCER = false               -- Should we disable the announcer from working in the game?
 LOSE_GOLD_ON_DEATH = false               -- Should we have players lose the normal amount of dota gold on death?
+VICTORY_CONDITION = 12 -- Round required for win
 
 XP_TABLE = {}
 XP_PER_LEVEL_TABLE = {}
@@ -81,10 +82,6 @@ for i=2, MAX_LEVEL do
     XP_BOUNTY_PER_LEVEL_TABLE[i] = XP_BOUNTY_PER_LEVEL_TABLE[i-1]*0.95 + i*4 + 100 -- Bounty XP formula : Previous level XP + Current Level * 4 + 120(constant)
 end
 
-DoNotKillAtTheEndOfRound = {
-    "tamamo_charm"
-}
-
 model_lookup = {}
 model_lookup["npc_dota_hero_legion_commander"] = "models/saber/saber.vmdl"
 model_lookup["npc_dota_hero_phantom_lancer"] = "models/lancer/lancer2.vmdl"
@@ -104,6 +101,18 @@ model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 model_lookup["npc_dota_hero_lina"] = "models/nero/nero.vmdl"
 model_lookup["npc_dota_hero_omniknight"] = "models/gawain/gawain.vmdl"
 model_lookup["npc_dota_hero_enchantress"] = "models/tamamo/tamamo.vmdl"
+
+DoNotKillAtTheEndOfRound = {
+    "tamamo_charm"
+}
+voteResultTable = {
+    voteFor12Rounds = 0,
+    voteFor10Rounds = 0, 
+    voteFor8Rounds = 0, 
+    voteFor6Rounds = 0, 
+    voteFor4Rounds = 0
+}
+
 
 
 if FateGameMode == nil then
@@ -261,7 +270,20 @@ function FateGameMode:OnAllPlayersLoaded()
     GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
     --GameStartTimerStart()
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
-    --StartQuestTimer("pickTimerQuest", "Hero Pick Time Remaining", 60)
+    
+    -- Reveal the vote winner
+    local maxval = voteResultTable.voteFor12Rounds
+    local maxkey = "voteFor12Rounds"
+    for k,v in pairs(voteResultTable) do
+        if v > maxval then
+            maxval = v
+            maxkey = k
+        end
+    end
+    --VICTORY_CONDITION = string.match(maxkey, "%d+")
+    VICTORY_CONDITION = 1
+    GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for <font color='#FF3399'>" .. VICTORY_CONDITION .. " rounds victory.</font>", 0, 0)
+
     local lastChoice = 0
     local delayInBetween = 2.0
     for i=0, 11 do
@@ -1049,13 +1071,30 @@ function FateGameMode:OnEntityKilled( keys )
     end
 end
 
+function OnVoteFinished(Index,keys)
+    print("[FateGameMode]vote finished by player with result :" .. keys.killsVoted)
+    local voteResult = keys.killsVoted
+    if voteResult == 1 then
+        
+        voteResultTable.voteFor12Rounds = voteResultTable.voteFor12Rounds+1
+        print(voteResultTable.voteFor12Rounds)
+    elseif voteResult == 2 then
+        voteResultTable.voteFor10Rounds = voteResultTable.voteFor10Rounds+1
+    elseif voteResult == 3 then
+        voteResultTable.voteFor8Rounds = voteResultTable.voteFor8Rounds+1
+    elseif voteResult == 4 then
+        voteResultTable.voteFor6Rounds = voteResultTable.voteFor6Rounds+1
+    elseif voteResult == 5 then
+        voteResultTable.voteFor4Rounds = voteResultTable.voteFor4Rounds+1
+    end
 
+end
 
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function FateGameMode:InitGameMode()
     FateGameMode = self
-    print('[BAREBONES] Starting to load Barebones FateGameMode...')
+    print('[FateGameMode] Starting to load Barebones FateGameMode...')
     -- Set game rules
     GameRules:SetHeroRespawnEnabled(false) 
     GameRules:SetUseUniversalShopMode(true) 
@@ -1111,6 +1150,8 @@ function FateGameMode:InitGameMode()
     
     -- For models swapping
     ListenToGameEvent( 'npc_spawned', Dynamic_Wrap( FateGameMode, 'OnHeroSpawned' ), self )
+    -- Listen to vote result
+    CustomGameEventManager:RegisterListener( "vote_finished", OnVoteFinished )
     
     -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
     Convars:RegisterCommand( "command_example", Dynamic_Wrap(FateGameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
@@ -1347,32 +1388,20 @@ function FateGameMode:InitializeRound()
                     end
                 end
             end)
+
             -- if remaining players are equal
             if nRadiantAlive == nDireAlive then
-                --[[print("Same number of players remaining on both teams.")
-                -- if no one died this round, delcare winner based on current score standing
-                if self.bIsCasualtyOccured == false then
-                    print("No one died, the team losing right now wins.")
-                    if self.nRadiantScore < self.nDireScore then
-                        self:FinishRound(true,3)
-                    elseif self.nRadiantScore > self.nDireScore then
-                        self:FinishRound(true,4)
-                    elseif self.nRadiantScore == self.nDireScore then
-                        print("However two teams are tied, so it's a draw")
-                        self:FinishRound(true,2)
-                    end
-                elseif self.bIsCasualtyOccured then
-                    print("Someone died, so it's a draw")
-                    self:FinishRound(true, 2)
-                end]]
-                if self.nRadiantScore < self.nDireScore then
+                -- Default Radiant Win
+                if self.nRadiantScore < self.nDireScore then 
                     self:FinishRound(true,3)
-                elseif self.nRadiantScore > self.nDireScore then
+                -- Default Dire Win
+                elseif self.nRadiantScore > self.nDireScore then 
                     self:FinishRound(true,4)
+                -- Draw
                 elseif self.nRadiantScore == self.nDireScore then
                     self:FinishRound(true, 2)
                 end
-                -- if remaining players are not equal
+            -- if remaining players are not equal
             elseif nRadiantAlive > nDireAlive then
                 self:FinishRound(true, 0)
             elseif nRadiantAlive < nDireAlive then
@@ -1383,7 +1412,11 @@ function FateGameMode:InitializeRound()
 end
 
 
-
+local winnerEventData = {
+    winnerTeam = 3, -- 0: Radiant, 1: Dire, 2: Draw
+    radiantScore = 0,
+    direScore = 0
+}
 --[[ 
 0 : Radiant 
 1 : Dire 
@@ -1432,19 +1465,27 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     -- decide the winner
     if winner == 0 then 
         GameRules:SendCustomMessage("#Fate_Round_Winner_1", 0, 0)
-        self.nRadiantScore = self.nRadiantScore + 1
+        self.nRadiantScore = self.nRadiantScore + 1 
+        winnerEventData.winnerTeam = 0
     elseif winner == 1 then
         GameRules:SendCustomMessage("#Fate_Round_Winner_2", 0, 0)
         self.nDireScore = self.nDireScore + 1
+        winnerEventData.winnerTeam = 1
     elseif winner == 2 then
         GameRules:SendCustomMessage("#Fate_Round_Draw", 0, 0)
+        winnerEventData.winnerTeam = 2
     elseif winner == 3 then
         GameRules:SendCustomMessage("#Fate_Round_Winner_1_By_Default", 0, 0)
         self.nRadiantScore = self.nRadiantScore + 1
+        winnerEventData.winnerTeam = 0
     elseif winner == 4 then
         GameRules:SendCustomMessage("#Fate_Round_Winner_2_By_Default", 0, 0)
         self.nDireScore = self.nDireScore + 1
+        winnerEventData.winnerTeam = 1
     end
+    winnerEventData.radiantScore = self.nRadiantScore
+    winnerEventData.direScore = self.nDireScore
+    CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
     GameRules:SendCustomMessage("#Fate_Round_Gold_Note", 0, 0)
     
     -- Set score 
@@ -1453,15 +1494,21 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     self.nCurrentRound = self.nCurrentRound + 1
     
     -- check for win condition
-    if self.nRadiantScore == 12 then
+    if self.nRadiantScore == VICTORY_CONDITION then
         Say(nil, "Radiant Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
+        Timers:CreateTimer(0.1, function()
+            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
+        end)
         return
-    elseif self.nDireScore == 12 then
+    elseif self.nDireScore == VICTORY_CONDITION then
         Say(nil, "Dire Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
+        Timers:CreateTimer(0.1, function()
+            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
+        end)
         return
     end
     
