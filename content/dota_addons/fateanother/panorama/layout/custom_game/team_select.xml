@@ -34,7 +34,6 @@
 					<Panel id="TeamListHeader">
 						<Label id="TeamListHeaderLabel" text="#custom_game_team_select" />
 						<Image id="TeamListLockedIcon" src="file://{images}/control_icons/lock_small.png" />
-						<Image id="TeamListLockedIcon" src="file://{images}/items/blink_scroll.png" />
 					</Panel>
 					<Panel id="TeamsListRoot" />
 					<Button id="ShuffleTeamAssignmentButton" onactivate="OnShufflePlayersPressed()">

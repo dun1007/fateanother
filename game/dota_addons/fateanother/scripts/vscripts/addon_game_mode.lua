@@ -58,7 +58,10 @@ FATE_VERSION = "Beta Version"
 _G.IsPickPhase = true
 _G.IsPreRound = true
 IsGameStarted = false
+nCountdown = 0
 
+
+-- XP and XP Bounty stuffs
 XP_TABLE[0] = 0
 XP_TABLE[1] = 200
 for i=2,MAX_LEVEL do
@@ -81,6 +84,17 @@ XP_BOUNTY_PER_LEVEL_TABLE[1] = 120
 for i=2, MAX_LEVEL do
     XP_BOUNTY_PER_LEVEL_TABLE[i] = XP_BOUNTY_PER_LEVEL_TABLE[i-1]*0.95 + i*4 + 100 -- Bounty XP formula : Previous level XP + Current Level * 4 + 120(constant)
 end
+
+-- Client to Server message data tables
+local winnerEventData = {
+    winnerTeam = 3, -- 0: Radiant, 1: Dire, 2: Draw
+    radiantScore = 0,
+    direScore = 0
+}
+local victoryConditionData = {
+    victoryCondition = 12
+}
+
 
 model_lookup = {}
 model_lookup["npc_dota_hero_legion_commander"] = "models/saber/saber.vmdl"
@@ -280,8 +294,9 @@ function FateGameMode:OnAllPlayersLoaded()
             maxkey = k
         end
     end
-    --VICTORY_CONDITION = string.match(maxkey, "%d+")
-    VICTORY_CONDITION = 1
+    VICTORY_CONDITION = string.match(maxkey, "%d+")
+    victoryConditionData.victoryCondition = VICTORY_CONDITION
+    --VICTORY_CONDITION = 1
     GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for <font color='#FF3399'>" .. VICTORY_CONDITION .. " rounds victory.</font>", 0, 0)
 
     local lastChoice = 0
@@ -314,6 +329,8 @@ function FateGameMode:OnAllPlayersLoaded()
                     --AssignRandomHero(ply)
                 end
             end
+            -- Set a think function for timer
+            GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
             self.nCurrentRound = 1
             self:InitializeRound() -- Start the game after forcing a pick for every player
         end
@@ -475,7 +492,7 @@ function FateGameMode:OnGameRulesStateChange(keys)
     elseif newState == DOTA_GAMERULES_STATE_INIT then
         --Timers:RemoveTimer("alljointimer")
     elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-        Timers:CreateTimer(3.0, function()
+        Timers:CreateTimer(2.0, function()
             FateGameMode:OnAllPlayersLoaded()
         end)
     elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
@@ -634,6 +651,11 @@ function FateGameMode:OnHeroInGame(hero)
         hero:SetOriginalModel( model_name ) -- This is needed because when state changes, model will revert back
         hero:RespawnUnit() 
     end)]]
+    -- Wait 1 second for loadup
+    Timers:CreateTimer(1.0, function()
+        print("victory condition set")
+        CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
+    end)
 end
 
 -- This is for swapping hero models in
@@ -1243,6 +1265,39 @@ function FateGameMode:InitGameMode()
     self.bPlayersInit = false
 end
 
+function CountdownTimer()
+    nCountdown = nCountdown + 1
+    local t = nCountdown
+    
+    local minutes = math.floor(t / 60)
+    local seconds = t - (minutes * 60)
+    local m10 = math.floor(minutes / 10)
+    local m01 = minutes - (m10 * 10)
+    local s10 = math.floor(seconds / 10)
+    local s01 = seconds - (s10 * 10)
+    local broadcast_gametimer = 
+        {
+            timer_minute_10 = m10,
+            timer_minute_01 = m01,
+            timer_second_10 = s10,
+            timer_second_01 = s01,
+        }
+    CustomGameEventManager:Send_ServerToAllClients( "timer_think", broadcast_gametimer )
+
+end
+
+---------------------------------------------------------------------------
+-- A timer that thinks every second
+---------------------------------------------------------------------------
+function FateGameMode:OnGameTimerThink()
+    -- Stop thinking if game is paused
+    if GameRules:IsGamePaused() == true then
+        return 1
+    end
+    CountdownTimer()
+    return 1
+end
+
 function FateGameMode:ModifyGoldFilter(filterTable)
     -- Disable gold gain from hero kills
     if filterTable["reason_const"] == DOTA_ModifyGold_HeroKill then
@@ -1411,12 +1466,6 @@ function FateGameMode:InitializeRound()
     })
 end
 
-
-local winnerEventData = {
-    winnerTeam = 3, -- 0: Radiant, 1: Dire, 2: Draw
-    radiantScore = 0,
-    direScore = 0
-}
 --[[ 
 0 : Radiant 
 1 : Dire 

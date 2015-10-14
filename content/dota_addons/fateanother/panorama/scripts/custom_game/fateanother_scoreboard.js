@@ -30,44 +30,22 @@ function UpdateTimer( data )
 	//$.Schedule( 0.1, UpdateTimer );
 }
 
-function ShowTimer( data )
+function UpdateWinCondition( data )
 {
-	$( "#Timer" ).AddClass( "timer_visible" );
-}
-
-function AlertTimer( data )
-{
-	$( "#Timer" ).AddClass( "timer_alert" );
-}
-
-function HideTimer( data )
-{
-	$( "#Timer" ).AddClass( "timer_hidden" );
-}
-
-function UpdateKillsToWin()
-{
-	$("#VictoryPoints").text = 12;
-	var victory_condition = CustomNetTables.GetTableValue( "game_state", "victory_condition" );
-	if ( victory_condition )
-	{
-		$("#VictoryPoints").text = victory_condition.kills_to_win;
-	}
-}
-
-function OnGameStateChanged( table, key, data )
-{
-	$.Msg( "Table '", table, "' changed: '", key, "' = ", data );
-	UpdateKillsToWin();
+	//var victory_condition = CustomNetTables.GetTableValue( "game_state", "victory_condition" );
+	//if ( victory_condition )
+	$.Msg("victory condition updated")
+	$("#VictoryPoints").text = data.victoryCondition;
+	
 }
 
 (function()
 {
 	// We use a nettable to communicate victory conditions to make sure we get the value regardless of timing.
-	UpdateKillsToWin();
-	CustomNetTables.SubscribeNetTableListener( "game_state", OnGameStateChanged );
-	
-    //GameEvents.Subscribe( "countdown", UpdateTimer );
+	//UpdateKillsToWin();
+	//CustomNetTables.SubscribeNetTableListener( "game_state", OnGameStateChanged );
+    GameEvents.Subscribe( "victory_condition_set", UpdateWinCondition );
+    GameEvents.Subscribe( "timer_think", UpdateTimer );
     //GameEvents.Subscribe( "show_timer", ShowTimer );
     //GameEvents.Subscribe( "timer_alert", AlertTimer );
     //GameEvents.Subscribe( "overtime_alert", HideTimer );
