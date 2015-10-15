@@ -48,7 +48,7 @@
 	{
 	    "ID"           "1997"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" "master_transfer_items"
+	    "AbilityTextureName" "master_transfer_items2"
 	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
@@ -89,7 +89,7 @@
 	{
 	    "ID"           "1996"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" "master_transfer_items"
+	    "AbilityTextureName" "master_transfer_items3"
 	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
@@ -130,7 +130,7 @@
 	{
 	    "ID"           "1995"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" "master_transfer_items"
+	    "AbilityTextureName" "master_transfer_items4"
 	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
@@ -171,7 +171,7 @@
 	{
 	    "ID"           "1994"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" "master_transfer_items"
+	    "AbilityTextureName" "master_transfer_items5"
 	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
@@ -212,7 +212,7 @@
 	{
 	    "ID"           "1993"
 	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" "master_transfer_items"
+	    "AbilityTextureName" "master_transfer_items6"
 	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
@@ -335,7 +335,7 @@
 		//-------------------------------------
 	    "ID"           			"1100"
 	    "BaseClass"    			"item_datadriven"
-	    "AbilityTextureName" 	"item_greater_salve"
+	    "AbilityTextureName" 	"mana_essence"
 	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"	
 	    
 	    "AbilityCooldown"		"10"

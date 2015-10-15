@@ -1,17 +1,20 @@
 require("timers")
-local util = require('util' )
+require('util' )
 require('archer_ability')
 require('master_ability')
 require('xLib/xDialog')
 require('gille_ability')
 require('notifications')
 require('items')
-
--- Load Stat collection (statcollection should be available from any script scope)
 require('lib.statcollection')
 statcollection.addStats({
     modID = '8b2dca1df6a65593f2eb2c5a1d8038f1' --GET THIS FROM http://getdotastats.com/#d2mods__my_mods
 })
+
+_G.IsPickPhase = true
+_G.IsPreRound = true
+_G.RoundStartTime = 0
+_G.nCountdown = 0
 
 ENABLE_HERO_RESPAWN = false -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = true -- Should the main shop contain Secret Shop items as well as regular items
@@ -55,11 +58,8 @@ BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
 mode = nil
 FATE_VERSION = "Beta Version"
-_G.IsPickPhase = true
-_G.IsPreRound = true
+roundQuest = nil 
 IsGameStarted = false
-nCountdown = 0
-
 
 -- XP and XP Bounty stuffs
 XP_TABLE[0] = 0
@@ -294,7 +294,7 @@ function FateGameMode:OnAllPlayersLoaded()
             maxkey = k
         end
     end
-    VICTORY_CONDITION = string.match(maxkey, "%d+")
+    VICTORY_CONDITION = tonumber(string.match(maxkey, "%d+"))
     victoryConditionData.victoryCondition = VICTORY_CONDITION
     --VICTORY_CONDITION = 1
     GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for <font color='#FF3399'>" .. VICTORY_CONDITION .. " rounds victory.</font>", 0, 0)
@@ -710,11 +710,13 @@ function FateGameMode:OnItemPurchased( keys )
     local itemCost = keys.itemcost
     
     local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
+    CheckItemCombinationInStash(hero)
     --[[ItemsKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
     for k,v in pairs(ItemsKV) do
         if string.find(v, "recipe") then
         end
     end]]
+    --[[
     local oldStash = GetStashItems(hero)
     
     
@@ -751,78 +753,7 @@ function FateGameMode:OnItemPurchased( keys )
                 end
             end
         end
-    end
-    
-    
-    --[[Timers:CreateTimer(0.033, function()
-    local purchasedItem = FindItemInStash(hero, itemName)
-    local IsComponent = false
-    local newStash = GetStashItems(hero)
-    local itemDifference = FindStashDifference(oldStash, newStash)
-    for i = 1, #newStash do
-        print("New Item in Stash : " .. newStash[i]:GetName())
-    end
-    for i = 1, #itemDifference do
-        print("Item Difference : " .. itemDifference[i]:GetName())
-    end
-    
-    -- If hero is out of base and does not have enough gold
-    if hero.IsInBase == false and hero:GetGold() + itemCost < itemCost * 1.5 then
-        print("Hero owning gold : " .. hero:GetGold())
-        print("Item cost outside of base : " .. itemCost*1.5)
-        FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
-        -- process component items
-        if itemName == "item_c_scroll" then
-            local BScroll = FindItemInStash(hero, "item_b_scroll") -- check if c scroll is already combined
-            if BScroll ~= nil then 
-                IsComponent = true
-                print("B Scroll found, removing it and creating C scroll")
-                hero:RemoveItem(BScroll)
-                CreateItemAtSlot(hero, "item_c_scroll", 6)
-            end
-        end
-        if itemName == "item_mana_essence" then
-            local pot = FindItemInStash(hero, "item_condensed_mana_essence")
-            if pot ~= nil then
-                IsComponent = true
-                print("Condesned Mana Essence found, removing it and creating regular pot")
-                hero:RemoveItem(pot)
-                CreateItemAtSlot(hero,"item_mana_essence", 6)
-            end
-        end
-        if itemName == "item_recipe_healing_scroll" then
-            print("reached")
-            local healScroll = FindItemInStash(hero, "item_healing_scroll")
-            if healScroll ~= nil then
-                IsComponent = true
-                print("Heal Scroll found, removing it and creating mana essence")
-                hero:RemoveItem(healScroll)
-                CreateItemAtSlot(hero,"item_mana_essence", 6)
-            end
-        end
-        if itemName == "item_recipe_a_plus_scroll" then
-            local APlusScroll = FindItemInStash(hero, "item_a_plus_scroll")
-            if APlusScroll ~= nil then
-                IsComponent = true
-                print("A Plus Scroll found, removing it and creating A scroll")
-                hero:RemoveItem(APlusScroll)
-                CreateItemAtSlot(hero,"item_a_scroll", 6)
-            end
-        end
-        if not IsComponent then
-            hero:RemoveItem(purchasedItem)
-        end
-        
-        hero:ModifyGold(itemCost, true, 0)
-        
-        -- if hero has enough gold, deduce the extra cost
-    else
-        hero:ModifyGold(-itemCost*0.5, true , 0) 
-    end
-    
-    return 
-end
-)]]
+    end]]
     
 end
 
@@ -849,22 +780,6 @@ function FindItemInStash(hero, itemname)
     return nil
 end 
 
-function CreateItemAtSlot(hero, itemname, slot)
-    local dummyitemtable = {}
-    for i = 0, slot-1 do
-        if hero:GetItemInSlot(i) == nil then
-            local dummyitem = CreateItem("item_blink_scroll", nil, nil)
-            table.insert(dummyitemtable, dummyitem)
-            hero:AddItem(dummyitem)
-        end
-    end
-    hero:AddItem(CreateItem(itemname, hero, hero))
-    
-    for i = 1, #dummyitemtable do
-        hero:RemoveItem(dummyitemtable[i]) 
-    end
-    
-end
 
 -- stash1 : old stash
 -- stash2 : new stash
@@ -1308,9 +1223,63 @@ function FateGameMode:ModifyGoldFilter(filterTable)
     return true
 end
 
+function FateGameMode:ExecuteOrderFilter(filterTable)
+    local ability = EntIndexToHScript(filterTable.entindex_ability) -- the handle of item
+    local target = EntIndexToHScript(filterTable.entindex_target) 
+    local units = filterTable.units
+    local targetIndex = filterTable.entindex_target-- the inventory target
+    local playerID = filterTable.issuer_player_id_const
+    local orderType = filterTable.order_type
+    local xPos = tonumber(filterTable.position_x)
+    local yPos = tonumber(filterTable.position_y)
+    local zPos = tonumber(filterTable.position_z)
 
-_G.RoundStartTime = 0
-roundQuest = nil 
+    local caster = nil
+    if units["0"] then
+        caster = EntIndexToHScript(units["0"])
+    end
+    -- Find items 
+    -- DOTA_UNIT_ORDER_PURASE_ITEM = 16
+    -- DOTA_UNIT_ORDER_SELL_ITEM = 17
+    -- DOTA_UNIT_ORDER_DISASSEMBLE_ITEM = 18
+    -- DOTA_UNIT_ORDER_MOVE_ITEM = 19(drag and drop)
+
+    -- What do we do when handling the move between inventory and stash?
+    if orderType == 19 then
+
+        local currentItemIndex, itemName, charges = nil
+        for i=0, 11 do 
+            if ability == caster:GetItemInSlot(i) then
+                currentItemIndex = i
+                itemName = ability:GetName()
+                charges = ability:GetCurrentCharges()
+                break
+            end
+        end
+        -- Item is currently placed in inventory, while target is in stash
+        if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 6 and targetIndex <= 11) then
+            ability:RemoveSelf()
+            CreateItemAtSlot(caster, itemName, targetIndex, charges)
+        elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 0 and targetIndex <=5) then
+            ability:RemoveSelf()
+            CreateItemAtSlot(caster, itemName, targetIndex, charges)
+        end
+    -- What do we do when item is bought?
+    elseif orderType == 16 then
+        print("purchase")
+        -- Check price
+        -- Check C scroll
+        -- Emit error sound and msg
+
+    -- What do we do when we sell items?
+    elseif orderType == 17 then
+
+        EmitSoundOnClient("General.Buy", caster:GetPlayerOwner())
+        print("sell")
+    end
+    -- Index ability
+    return true
+end
 
 function FateGameMode:InitializeRound()
     -- do first round stuff
@@ -1632,6 +1601,7 @@ function FateGameMode:CaptureGameMode()
         mode:SetStashPurchasingDisabled ( false )
         mode:SetAnnouncerDisabled( DISABLE_ANNOUNCER )
         mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
+        mode:SetExecuteOrderFilter( Dynamic_Wrap( FateGameMode, "ExecuteOrderFilter" ), FateGameMode )
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
         SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()

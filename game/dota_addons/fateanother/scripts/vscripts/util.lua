@@ -213,6 +213,16 @@ femaleservant = {
     "npc_dota_hero_enchantress"
 }
 
+itemComp = {
+    {"item_c_scroll","item_c_scroll", "item_b_scroll"},
+    {"item_b_scroll", "item_b_scroll", "item_a_scroll"},
+    {"item_a_scroll", "item_a_scroll", "item_s_scroll"},
+    {"item_s_scroll", "item_s_scroll", "item_ex_scroll"},
+    {"item_mana_essence", "item_mana_essence", "item_condensed_mana_essence"},
+    {"item_mana_essence", "item_recipe_healing_scroll", "item_healing_scroll"},
+    {"item_a_scroll", "item_recipe_a_plus_scroll", "item_a_plus_scroll"}
+}
+
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
     "<font color='#58ACFA'>Tip : </font>Work towards gathering 20 all stats in order to acquire <font color='#58ACFA'>Combo</font>, a defining move of hero that can turn the tides of battle. You can level  Stat Bonus of your hero or buy stats with Master's mana  to boost the timing of acquisition.",
     "<font color='#58ACFA'>Tip : </font>To increase your survivability, consider carrying <font color='#58ACFA'>A Scroll and B Scroll</font> that grant you significant damage mitigation for duration.",
@@ -278,9 +288,8 @@ function ApplyAirborne(source, target, duration)
         target:OnPhysicsFrame(nil)
         target:Hibernate(true)
     end)
-
-
 end
+
 
 function DummyEnd(dummy)
     dummy:RemoveSelf()
@@ -346,6 +355,121 @@ function EmitSoundOnAllClient(songname)
     end
 end
 
+function CheckItemCombination(hero)
+    --print("checking item combination of " .. hero:GetName())
+    -- loop through stash
+    for i=0,5 do 
+        local currentItem = hero:GetItemInSlot(i)
+        -- if item is there, check for combination
+        if currentItem ~= nil then
+            local currentItemName = currentItem:GetName()
+            -- Loop through composition list 
+            for i=1, #itemComp do 
+                -- component 1 is matching, check if item component 2 exists
+                if itemComp[i][1] == currentItemName then
+                    for j=0,5 do
+                        local currentItem2 = hero:GetItemInSlot(j)
+                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
+                            local currentItemName2 = currentItem2:GetName()
+                            if itemComp[i][2] == currentItemName2 then
+                                print("match found, fusing items")
+                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
+                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
+                                CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
+                            end
+                        end
+                    end
+                -- component 2 is matching, check if item component 1 exists
+                elseif itemComp[i][2] == currentItemName then
+                    for j=0,5 do
+                        local currentItem2 = hero:GetItemInSlot(j)
+                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
+                            local currentItemName2 = currentItem2:GetName()
+                            if itemComp[i][1] == currentItemName2 then
+                                print("match found, fusing items")
+                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
+                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
+                                CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
+                            end
+                        end
+                    end
+                end
+            end 
+        end
+    end
+end
+
+function CheckItemCombinationInStash(hero)
+    -- loop through stash
+    --print("checking item combination in stash of " .. hero:GetName())
+    for i=6,11 do 
+        local currentItem = hero:GetItemInSlot(i)
+        -- if item is there, check for combination
+        if currentItem ~= nil then
+            local currentItemName = currentItem:GetName()
+            -- Loop through composition list 
+            for i=1, #itemComp do 
+                -- component 1 is matching, check if item component 2 exists
+                if itemComp[i][1] == currentItemName then
+                    for j=6,11 do
+                        local currentItem2 = hero:GetItemInSlot(j)
+                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
+                            local currentItemName2 = currentItem2:GetName()
+                            if itemComp[i][2] == currentItemName2 then
+                                print("match found, fusing items")
+                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
+                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
+                                CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
+                                --hero:AddItem(CreateItem(itemComp[i][3], nil, nil)) 
+                            end
+                        end
+                    end
+                -- component 2 is matching, check if item component 1 exists
+                elseif itemComp[i][2] == currentItemName then
+                    for j=6,11 do
+                        local currentItem2 = hero:GetItemInSlot(j)
+                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
+                            local currentItemName2 = currentItem2:GetName()
+                            if itemComp[i][1] == currentItemName2 then
+                                print("match found, fusing items")
+                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
+                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
+                                CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
+                                --hero:AddItem(CreateItem(itemComp[i][3], nil, nil)) 
+                            end
+                        end
+                    end
+                end
+            end 
+        end
+    end
+end
+function CreateItemAtSlot(hero, itemname, slot, charges)
+    local dummyitemtable = {}
+    for i = 0, slot-1 do
+        if hero:GetItemInSlot(i) == nil then
+            local dummyitem = CreateItem("item_blink_scroll", nil, nil)
+            table.insert(dummyitemtable, dummyitem)
+            hero:AddItem(dummyitem)
+        end
+    end
+    local newItem = CreateItem(itemname, nil, nil)
+    if charges ~= -1 then
+        newItem:SetCurrentCharges(charges)
+    end
+    hero:AddItem(newItem)
+    --[[if slot >= 6 then
+        hero:AddItem(CreateItem(itemname, hero, hero))
+    else
+        hero:AddItem(CreateItem(itemname, nil, nil))
+    end]]
+
+    for i = 1, #dummyitemtable do
+        hero:RemoveItem(dummyitemtable[i]) 
+    end
+    CheckItemCombination(hero)
+    CheckItemCombinationInStash(hero)
+end
 
 function LoopThroughAttr(hero, attrTable)
     for i=1, #attrTable do

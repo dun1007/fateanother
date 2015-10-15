@@ -2,15 +2,7 @@ require("physics")
 require("util")
 cdummy = nil
 itemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt") 
-itemComp = {
-	{"item_c_scroll","item_c_scroll", "item_b_scroll"},
-	{"item_b_scroll", "item_b_scroll", "item_a_scroll"},
-	{"item_a_scroll", "item_a_scroll", "item_s_scroll"},
-	{"item_s_scroll", "item_s_scroll", "item_ex_scroll"},
-	{"item_mana_essence", "item_mana_essence", "item_condensed_mana_essence"},
-	{"item_mana_essence", "item_recipe_healing_scroll", "item_healing_scroll"},
-	{"item_a_scroll", "item_recipe_a_plus_scroll", "item_a_plus_scroll"}
-}
+
 
 function ParseCombinationKV()
 	for k,v in pairs(itemKV) do
@@ -54,51 +46,6 @@ function OnBaseLeft(trigger)
 	
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 	print("Base left")
-end
-
-function CheckItemCombination(hero)
-	-- loop through stash
-	for i=0,5 do 
-		local currentItem = hero:GetItemInSlot(i)
-		-- if item is there, check for combination
-		if currentItem ~= nil then
-			local currentItemName = currentItem:GetName()
-			-- Loop through composition list 
-			for i=1, #itemComp do 
-				-- component 1 is matching, check if item component 2 exists
-				if itemComp[i][1] == currentItemName then
-					for j=0,5 do
-						local currentItem2 = hero:GetItemInSlot(j)
-						if currentItem2 ~= nil and currentItem2 ~= currentItem then
-							local currentItemName2 = currentItem2:GetName()
-							if itemComp[i][2] == currentItemName2 then
-								print("match found, fusing items")
-								if not currentItem:IsNull() then currentItem:RemoveSelf() end
-								if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-								hero:AddItem(CreateItem(itemComp[i][3], nil, nil)) 
-								CheckItemCombination(hero)
-							end
-						end
-					end
-				-- component 2 is matching, check if item component 1 exists
-				elseif itemComp[i][2] == currentItemName then
-					for j=0,5 do
-						local currentItem2 = hero:GetItemInSlot(j)
-						if currentItem2 ~= nil and currentItem2 ~= currentItem then
-							local currentItemName2 = currentItem2:GetName()
-							if itemComp[i][1] == currentItemName2 then
-								print("match found, fusing items")
-								if not currentItem:IsNull() then currentItem:RemoveSelf() end
-								if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-								hero:AddItem(CreateItem(itemComp[i][3], nil, nil)) 
-								CheckItemCombination(hero)
-							end
-						end
-					end
-				end
-			end 
-		end
-	end
 end
 
 function TransferItem(keys)
