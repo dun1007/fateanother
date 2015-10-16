@@ -50,17 +50,31 @@ function CreateInventoryPanels()
 	}
 }
 
+function TransferShowTooltip() {
+	//var parent = $( "#direct_transfer" );
+	//$.CreatePanel("direct_transfer_tooltip", parent, "asd");
+
+	var checkBox = $("#toggle_transfer");
+	var sText    = "If unchecked, purchased items will be placed in stash first.";
+	$.DispatchEvent('DOTAShowTextTooltip', checkBox, "Purchased items will be placed in stash first if unchecked(Recommended for experienced players)");
+}
+
+function TransferHideTooltip() {
+    var checkBox = $('#toggle_transfer');
+    $.DispatchEvent( 'DOTAHideTextTooltip', checkBox );
+}
 
 (function()
 {
-	CreateInventoryPanels();
-	UpdateInventory();
+	$("#toggle_transfer").checked = true;
+	//CreateInventoryPanels();
+	//UpdateInventory();
 
-	GameEvents.Subscribe( "dota_inventory_changed", UpdateInventory );
-	GameEvents.Subscribe( "dota_inventory_item_changed", UpdateInventory );
-	GameEvents.Subscribe( "m_event_dota_inventory_changed_query_unit", UpdateInventory );
-	GameEvents.Subscribe( "m_event_keybind_changed", UpdateInventory );
-	GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateInventory );
-	GameEvents.Subscribe( "dota_player_update_query_unit", UpdateInventory );
+	//GameEvents.Subscribe( "dota_inventory_changed", UpdateInventory );
+	//GameEvents.Subscribe( "dota_inventory_item_changed", UpdateInventory );
+	//GameEvents.Subscribe( "m_event_dota_inventory_changed_query_unit", UpdateInventory );
+	//GameEvents.Subscribe( "m_event_keybind_changed", UpdateInventory );
+	//GameEvents.Subscribe( "dota_player_update_selected_unit", UpdateInventory );
+	//GameEvents.Subscribe( "dota_player_update_query_unit", UpdateInventory );
 })();
 

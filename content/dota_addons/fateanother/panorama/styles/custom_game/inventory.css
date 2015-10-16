@@ -2,9 +2,17 @@
 {
 	horizontal-align: right;
 	vertical-align: bottom;
-	margin-bottom: 50px;
+	margin-bottom: 180px;
 	margin-right: 0px;
 	flow-children: down;
+}
+
+#direct_transfer
+{
+	background-color: #222222;
+	height: 500px;
+	margin-bottom: 100px;
+	margin-left: 470px;
 }
 
 #inventory_items
