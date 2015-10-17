@@ -1260,9 +1260,11 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
         if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 6 and targetIndex <= 11) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges)
+            return false
         elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 0 and targetIndex <=5) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges)
+            return false
         end
     -- What do we do when item is bought?
     elseif orderType == 16 then
@@ -1270,14 +1272,33 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
         -- Check price
         -- Check C scroll
         -- Emit error sound and msg
-
+       if caster.IsInBase == false then
+            if PlayerResource:GetReliableGold(playerID) < itemCost * 1.5 then
+                -- This will take care of non-component items
+                FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
+                return false
+            else
+                print("Deducing extra cost" .. ability:GetCost()*0.5 .. "from player gold")
+                hero:ModifyGold(ability:GetCost() *0.5, true , 0) 
+            end
+        -- If hero is in base, check for C scroll stock
+        else
+            -- If hero is in base, check for C scroll stock
+            if ability:GetName() == "item_c_scroll" then
+                if caster.CStock > 0 then 
+                    caster.CStock = hero.CStock - 1
+                else 
+                    FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Out Of Stock" } )
+                    return false
+                end
+            end
+        end
     -- What do we do when we sell items?
     elseif orderType == 17 then
 
-        EmitSoundOnClient("General.Buy", caster:GetPlayerOwner())
-        print("sell")
+        --EmitSoundOnClient("General.Buy", caster:GetPlayerOwner())
+        --print("sell")
     end
-    -- Index ability
     return true
 end
 
