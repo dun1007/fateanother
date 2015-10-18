@@ -21025,6 +21025,11 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
+				"slow"				"-30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
 				"stack_stun_duration"				"1.0"
 			}
 		}
@@ -21066,6 +21071,15 @@
 	    		"EffectName"		"particles/units/heroes/hero_crystalmaiden/maiden_frostbite_buff.vpcf"
 				"EffectAttachType"	"follow_origin"
 			}
+	    	"modifier_frigid_heaven_slow"
+	    	{
+	    		"Duration"			"%duration"
+	    		"IsDebuff"			"1"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+	    		}
+	    	}
 			"modifier_frigid_heaven_stun_fx"
 			{
 				"IsHidden"		"1"
@@ -21111,14 +21125,19 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_lock_duration"			"1.0"
+				"duration"			"0.1"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_slow_duration"			"3.0"
+				"stack_lock_duration"			"1.0"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stack_slow_duration"			"3.0"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stack_initial_slow"			"100"
@@ -21332,12 +21351,12 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"stack_damage_bonus"				"20"
+				"stack_damage_bonus"				"15"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_ms"				"3 3.5 4 4.5 5"
+				"stack_ms"				"5 5.5 6 6.5 7"
 			}
 			"05"
 			{
@@ -21754,6 +21773,14 @@
 		{
 		}
 		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"tamamo_ability"
+				"Function"				"OnFatesCallCast"
+			}			
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -22158,7 +22185,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"int_ratio"			"0.7"
+				"int_ratio"			"0.5"
 			}
 			"02"
 			{

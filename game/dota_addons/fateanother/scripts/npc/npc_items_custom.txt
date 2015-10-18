@@ -531,7 +531,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityCooldown"				"90"
 	    "AbilityChannelTime"			"1.0"		
-	    "AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+	    //"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 	    "AbilitySpecial"
 	    {
 	   		"01"
@@ -1140,10 +1140,10 @@
 	    "ItemPermanent" "1"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 	    "AbilityCooldown"				"30"
-	    "AbilityCastRange"				"1000"
-	    "AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+	    "AbilityCastRange"				"20000"
+	    //"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"precache"
 		{
 			"particle"		"particles/units/heroes/hero_antimage/antimage_blink_end.vpcf"
@@ -1204,7 +1204,7 @@
 	    "AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		//"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 
 	    "AbilityCastRange"				"1000"
 	    "AbilityCooldown"				"10"
@@ -1568,7 +1568,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastRange"				"1000"
-		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		//"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 
 		"precache"
 		{
@@ -1718,7 +1718,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastRange"				"1000"
-		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		//"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"

@@ -67,9 +67,13 @@ function TransferItem(keys)
 			end
 		end]]
 		local itemName = stash_item:GetName()
+		local charges = stash_item:GetCurrentCharges()
+		local newItem = CreateItem(itemName, nil, nil)
+		newItem:SetCurrentCharges(charges)
 		stash_item:RemoveSelf()
 		--Timers:CreateTimer( 0.033, function()
-		hero:AddItem(CreateItem(itemName, nil, nil)) 
+
+		hero:AddItem(newItem) 
 		CheckItemCombination(hero)
 	else
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Items Found in Chosen Slot of Stash" } )

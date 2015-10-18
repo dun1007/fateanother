@@ -7,9 +7,7 @@
 		<include src="file://{resources}/scripts/custom_game/inventory.js" />
 	</scripts>
 	<Panel class="InventoryOverlayRoot" hittest="false">
-	<Panel id="direct_transfer"/>
-		<ToggleButton id="toggle_transfer" text="Enable Direct Transfer to Hero" 
-			onmouseover="TransferShowTooltip()" onmouseout="TransferHideTooltip()"/>
+
 	</Panel>
 		<!--<Panel id="stash_row" />
 		<Panel id="inventory_items">

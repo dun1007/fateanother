@@ -535,11 +535,11 @@ function FateGameMode:OnHeroInGame(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
     hero.CStock = 10
     hero.RespawnPos = hero:GetAbsOrigin()     
-
+    hero.bIsDirectTransferEnabled = true -- True by default
 
     -- Set music off
-    local player = PlayerResource:GetPlayer(hero:GetPlayerID())
-    player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
+    --local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+    --player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
     
     -- Create Command Seal master for hero
     master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
@@ -591,13 +591,13 @@ function FateGameMode:OnHeroInGame(hero)
     --hero:NotifyWearablesOfModelChange(false)
     --hero:ManageModelChanges()
 
-    local model = hero:FirstMoveChild()
+    --[[local model = hero:FirstMoveChild()
     while model ~= nil do
         if model:GetClassname() == "dota_item_wearable" then
             model:AddEffects(EF_NODRAW) -- Set model hidden
         end
         model = model:NextMovePeer()
-    end
+    end]]
     --[[UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
     Timers:CreateTimer(30.0, function() 
         UTIL_ResetMessageText(hero:GetPlayerID()+1)
@@ -711,12 +711,7 @@ function FateGameMode:OnItemPurchased( keys )
     
     local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
     CheckItemCombinationInStash(hero)
-    --[[ItemsKV = LoadKeyValues("scripts/npc/npc_items_custom.txt")
-    for k,v in pairs(ItemsKV) do
-        if string.find(v, "recipe") then
-        end
-    end]]
-    --[[
+
     local oldStash = GetStashItems(hero)
     
     
@@ -753,7 +748,7 @@ function FateGameMode:OnItemPurchased( keys )
                 end
             end
         end
-    end]]
+    end
     
 end
 
@@ -799,16 +794,31 @@ function FindStashDifference(stash1, stash2)
     return addedItems
 end
 
+local spellBooks = {
+    "lancer_5th_rune_magic",
+    "lancer_5th_close_spellbook",
+    "caster_5th_ancient_magic",
+    "caster_5th_close_spellbook",
+    "lancelot_knight_of_honor",
+    "lancelot_close_spellbook",
+    "diarmuid_double_spear_strike",
+    "nero_imperial_privilege",
+    "nero_close_spellbook",
+    "tamamo_armed_up",
+    "tamamo_close_spellbook"
+}
 -- An ability was used by a player
 function FateGameMode:OnAbilityUsed(keys)
     print('[BAREBONES] AbilityUsed')
-    PrintTable(keys)
     
     local player = EntIndexToHScript(keys.PlayerID)
     local abilityname = keys.abilityname
     local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
     -- Check if hero is affected by Amaterasu
     if hero:HasModifier("modifier_amaterasu_ally") then
+        for i=1, #spellBooks do
+            if abilityname == spellBooks[i] then return end
+        end
         hero:SetMana(hero:GetMana()+200)
         hero:SetHealth(hero:GetHealth()+300)
         hero:EmitSound("DOTA_Item.ArcaneBoots.Activate")
@@ -1024,7 +1034,14 @@ function OnVoteFinished(Index,keys)
     elseif voteResult == 5 then
         voteResultTable.voteFor4Rounds = voteResultTable.voteFor4Rounds+1
     end
+end
 
+function OnDirectTransferChanged(Index, keys)
+    local playerID = keys.player
+    local transferEnabled = keys.directTransfer
+
+    PlayerResource:GetPlayer(playerID):GetAssignedHero().bIsDirectTransferEnabled = transferEnabled
+    print("Direct tranfer set to " .. transferEnabled .. " for " .. PlayerResource:GetPlayer(playerID):GetAssignedHero():GetName())
 end
 
 -- This function initializes the game mode and is called before anyone loads into the game
@@ -1089,6 +1106,9 @@ function FateGameMode:InitGameMode()
     ListenToGameEvent( 'npc_spawned', Dynamic_Wrap( FateGameMode, 'OnHeroSpawned' ), self )
     -- Listen to vote result
     CustomGameEventManager:RegisterListener( "vote_finished", OnVoteFinished )
+    CustomGameEventManager:RegisterListener( "direct_transfer_changed", OnDirectTransferChanged )
+
+
     
     -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
     Convars:RegisterCommand( "command_example", Dynamic_Wrap(FateGameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
@@ -1246,8 +1266,8 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
 
     -- What do we do when handling the move between inventory and stash?
     if orderType == 19 then
-
-        local currentItemIndex, itemName, charges = nil
+        local currentItemIndex, itemName = nil
+        local charges = -1
         for i=0, 11 do 
             if ability == caster:GetItemInSlot(i) then
                 currentItemIndex = i
@@ -1265,10 +1285,14 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges)
             return false
+        elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 6 and targetIndex <=11) then
+            ability:RemoveSelf()
+            CreateItemAtSlot(caster, itemName, targetIndex, charges)
+            return false
         end
     -- What do we do when item is bought?
     elseif orderType == 16 then
-        print("purchase")
+        --[[
         -- Check price
         -- Check C scroll
         -- Emit error sound and msg
@@ -1293,11 +1317,19 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
                 end
             end
         end
+
+        -- If everything is fine, check whether player has direct transfer checked and place item in right inventory
+        if caster.bIsDirectTransferEnabled then
+            local itemName = ability:GetName()
+            CreateItemAtSlot(caster, itemName, 0, -1)
+        else
+        end]]
     -- What do we do when we sell items?
     elseif orderType == 17 then
-
-        --EmitSoundOnClient("General.Buy", caster:GetPlayerOwner())
-        --print("sell")
+        EmitSoundOnClient("General.Sell", caster:GetPlayerOwner())
+        caster:ModifyGold(GetItemCost(ability:GetName()) *0.5, true , 0) 
+        ability:RemoveSelf()
+        return false
     end
     return true
 end

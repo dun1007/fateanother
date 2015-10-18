@@ -62,7 +62,7 @@
 		
 		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"					"315"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 		
 		"VisionDaytimeRange"			"900"
 		"VisionNighttimeRange"			"900"
@@ -132,7 +132,7 @@
 		
 		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"					"370"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 		
 		"VisionDaytimeRange"			"1100"
 		"VisionNighttimeRange"			"1100"
@@ -194,7 +194,7 @@
 		
 		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
 		"MovementSpeed"					"300"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 		
 		"VisionDaytimeRange"			"700"
 		"VisionNighttimeRange"			"700"
@@ -261,7 +261,7 @@
 		"AttributeIntelligenceGain"		"0.8"
 		
 		"MovementSpeed"					"360"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 		
 		"VisionDaytimeRange"			"1400"
 		"VisionNighttimeRange"			"1400"
@@ -324,7 +324,7 @@
 		"AttributeIntelligenceGain"		"0.8"
 		
 		"MovementSpeed"					"340"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"1000"
 		"VisionNighttimeRange"			"1000"
@@ -387,7 +387,7 @@
 		"AttributeIntelligenceGain"		"0.3"
 		
 		"MovementSpeed"					"370"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"700"
 		"VisionNighttimeRange"			"700"
@@ -450,7 +450,7 @@
 		"AttributeIntelligenceGain"		"0"
 		
 		"MovementSpeed"					"350"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"1000"
 		"VisionNighttimeRange"			"1000"
@@ -517,7 +517,7 @@
 		"AttributeIntelligenceGain"		"0.7"
 		
 		"MovementSpeed"					"420"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"900"
 		"VisionNighttimeRange"			"900"
@@ -582,7 +582,7 @@
 		"AttributeIntelligenceGain"		"1.4"
 		
 		"MovementSpeed"					"315"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"800"
 		"VisionNighttimeRange"			"800"
@@ -643,7 +643,7 @@
 		"AttributeIntelligenceGain"		"1.0"
 		
 		"MovementSpeed"					"320"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"850"
 		"VisionNighttimeRange"			"850"
@@ -707,7 +707,7 @@
 		"AttributeIntelligenceGain"		"0.3"
 		
 		"MovementSpeed"					"335"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"850"
 		"VisionNighttimeRange"			"850"
@@ -772,7 +772,7 @@
 		"AttributeIntelligenceGain"		"0.75"
 		
 		"MovementSpeed"					"350"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"1000"
 		"VisionNighttimeRange"			"800"
@@ -834,7 +834,7 @@
 		"AttributeIntelligenceGain"		"0.6"
 		
 		"MovementSpeed"					"400"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"850"
 		"VisionNighttimeRange"			"850"
@@ -894,7 +894,7 @@
 		"AttributeIntelligenceGain"		"1.3"
 		
 		"MovementSpeed"					"330"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"700"
 		"VisionNighttimeRange"			"700"
@@ -960,7 +960,7 @@
 		"AttributeIntelligenceGain"		"0.4"
 		
 		"MovementSpeed"					"320"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"800"
 		"VisionNighttimeRange"			"800"
@@ -1026,7 +1026,7 @@
 		"AttributeIntelligenceGain"		"0.6"
 		
 		"MovementSpeed"					"350"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"750"
 		"VisionNighttimeRange"			"750"
@@ -1088,7 +1088,7 @@
 		"AttributeIntelligenceGain"		"1.0"
 		
 		"MovementSpeed"					"340"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"900"
 		"VisionNighttimeRange"			"900"
@@ -1149,7 +1149,7 @@
 		"AttributeIntelligenceGain"		"1.5"
 		
 		"MovementSpeed"					"320"
-		"MovementTurnRate"				"0.3"
+		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"1000"
 		"VisionNighttimeRange"			"1000"

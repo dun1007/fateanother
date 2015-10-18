@@ -235,9 +235,7 @@ function OnNineStart(keys)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
 
-	Timers:CreateTimer("chariot_dash", {
-		endTime = 1.0,
-		callback = function()
+	Timers:CreateTimer(1.0, function()
 		caster:OnPreBounce(nil)
 		caster:SetBounceMultiplier(0)
 		caster:PreventDI(false)
@@ -246,9 +244,10 @@ function OnNineStart(keys)
 		if caster:IsAlive() and not caster.NineLanded then
 			caster:RemoveModifierByName("modifier_dash_anim")
 			OnNineLanded(caster, keys.ability)
+			return 
 		end
-	return end
-	})
+		return
+	end)
 
 	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
 		unit:OnPreBounce(nil)

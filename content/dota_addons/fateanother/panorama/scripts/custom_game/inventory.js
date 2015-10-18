@@ -51,12 +51,9 @@ function CreateInventoryPanels()
 }
 
 function TransferShowTooltip() {
-	//var parent = $( "#direct_transfer" );
-	//$.CreatePanel("direct_transfer_tooltip", parent, "asd");
-
 	var checkBox = $("#toggle_transfer");
 	var sText    = "If unchecked, purchased items will be placed in stash first.";
-	$.DispatchEvent('DOTAShowTextTooltip', checkBox, "Purchased items will be placed in stash first if unchecked(Recommended for experienced players)");
+	$.DispatchEvent('DOTAShowTextTooltip', checkBox, "Purchased items will be placed in stash first if unchecked(Recommended to leave it checked for new players)");
 }
 
 function TransferHideTooltip() {
@@ -64,6 +61,10 @@ function TransferHideTooltip() {
     $.DispatchEvent( 'DOTAHideTextTooltip', checkBox );
 }
 
+function ChangeTransferMode() {
+	var checkBox = $('#toggle_transfer');
+	GameEvents.SendCustomGameEventToServer( "direct_transfer_changed", { "player" : Players.GetLocalPlayer(), "directTransfer" : checkBox.checked } );
+}
 (function()
 {
 	$("#toggle_transfer").checked = true;

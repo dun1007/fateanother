@@ -11,8 +11,11 @@ CVModel CVModel_0
 				string m_meshFile = "models/gilgamesh/gilgamesh.fbx"
 				string m_materialSearchPath = ""
 				bool m_bSkinParentedObjects = true
+				bool m_bLegacySkinParentedTransforms = false
 				bool m_bExpensiveTangents = false
 				bool m_bExpensiveVertices = false
+				bool m_bIgnoreCloth = false
+				bool m_bGetSkinningFromLod0 = false
 				CVmorphInfo* m_pMorphInfo = NULL
 			}
 		]
@@ -27,7 +30,7 @@ CVModel CVModel_0
 		bool m_bCreateStaticBone = false
 		int m_nMaxBonesPerVertex = 4
 		bool m_bRemoveUnusedBonesEnabled = false
-		bool m_bUseOnlyRealMeshBones = false
+		bool m_bDriveMeshesWithBacksolvedJointsOnly = true
 		float m_flMatchProxiesToMeshes = 1.000000
 		float m_flReservedFloat = 0.000000
 		int m_nReservedInt = 0
@@ -59,16 +62,17 @@ CVModel CVModel_0
 	]
 	CVattachmentListReference[] m_pAttachmentLists = 
 	[
-		
-	]
-	CVanimGroupReference[] m_pAnimGroups = 
-	[
-		CVanimGroupReference
+		CVattachmentListReference
 		{
-			CVanimGroup* m_pObject = &CVanimGroup_0
+			CVattachmentList* m_pObject = &CVattachmentList_0
 			string m_sFileName = ""
 		}
 	]
+	CVanimGroupReference m_pAnimGroup = CVanimGroupReference
+	{
+		CVanimGroup* m_pObject = &CVanimGroup_0
+		string m_sFileName = ""
+	}
 	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
 	{
 		NodeMaterialGroupList_t* m_pObject = NULL
@@ -99,7 +103,13 @@ CVModel CVModel_0
 		
 	]
 	string m_collision = ""
+	string m_softbody = ""
 	string m_sMDLFilename = ""
+	string[] m_sOffsetHitboxSets = 
+	[
+		
+	]
+	float(3) m_vHitboxSetOffset = ( 0.000000, 0.000000, 0.000000 )
 	string[] m_scriptFiles = 
 	[
 		
@@ -107,12 +117,22 @@ CVModel CVModel_0
 	CVMaterialRemapList* m_pMaterialRemapList = &CVMaterialRemapList_0
 	float m_flFbxScale = 1.000000
 	float m_flQCScale = 1.000000
-	CVPsf* m_pvPsf = NULL
+	float(3) m_vOrigin = ( 0.000000, 0.000000, 0.000000 )
+	CVPsfList* m_pPsfList = NULL
 	string m_keyValueText = ""
 	bool m_bStaticProp = false
 	bool m_bEnableClothProcessing = true
 	float m_flClothEnableThreshold = 0.050000
 	int m_nMaxClothVertsPerMesh = 2048
+	bool m_bBuildClothBoneHierarchy = false
+	symbol m_nNavType = AUTH_NAV_MESH
+	bool m_bMakeUniqueVMeshes = false
+	bool m_bMakeImplicitBindPoseSequence = false
+	bool m_bAdjustSkeletonFromBoneFlags = false
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
 }
 
 CVhitBoxSetList CVhitBoxSetList_0
@@ -126,333 +146,38 @@ CVhitBoxSetList CVhitBoxSetList_0
 			[
 				CVhitBox
 				{
-					string m_name = "Default"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "Default"
-					float(3) m_vMinBounds = ( -17.999996, -14.793725, -26.169487 )
-					float(3) m_vMaxBounds = ( 17.999992, 13.768767, 18.330521 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
 					string m_name = "Chest"
-					string m_sSurfaceProperty = ""
+					string m_sSurfaceProperty = "default"
 					int m_nGroupId = 0
 					string m_sBoneName = "Chest"
 					float(3) m_vMinBounds = ( -80.000000, -80.000000, -80.000000 )
 					float(3) m_vMaxBounds = ( 80.000000, 80.000000, 80.000000 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
+				}
+			]
+		}
+	]
+	string m_AutoCreateSetName = ""
+}
+
+CVattachmentList CVattachmentList_0
+{
+	string m_name = ""
+	CVattachment[] m_attachments = 
+	[
+		CVattachment
+		{
+			string m_name = "attach_origin"
+			CVattachmentInfluence[] m_influences = 
+			[
+				CVattachmentInfluence
 				{
-					string m_name = "Chest2"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "Chest2"
-					float(3) m_vMinBounds = ( -16.124994, -12.856182, -1.385117 )
-					float(3) m_vMaxBounds = ( 16.124994, 13.393814, 27.614883 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeB1"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeB1"
-					float(3) m_vMinBounds = ( -24.370543, -7.847999, -34.709389 )
-					float(3) m_vMaxBounds = ( 24.379446, 12.611959, -34.209389 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeF1"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeF1"
-					float(3) m_vMinBounds = ( -12.438690, -3.350817, -26.348885 )
-					float(3) m_vMaxBounds = ( 12.561304, -1.163315, -25.848885 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_arm"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_arm"
-					float(3) m_vMinBounds = ( -24.603245, -12.847200, -14.122391 )
-					float(3) m_vMaxBounds = ( 11.302999, 13.277796, 13.877625 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_leg"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_leg"
-					float(3) m_vMinBounds = ( -5.838883, -9.394552, -38.997234 )
-					float(3) m_vMaxBounds = ( 10.360330, 8.667944, -4.747231 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_leg"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_leg"
-					float(3) m_vMinBounds = ( -10.267275, -9.360432, -38.981518 )
-					float(3) m_vMaxBounds = ( 5.939751, 8.702065, -4.731514 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeB2"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeB2"
-					float(3) m_vMinBounds = ( -26.995541, -13.773054, -14.519577 )
-					float(3) m_vMaxBounds = ( 27.004444, 9.121477, -14.519569 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeF2"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeF2"
-					float(3) m_vMinBounds = ( -12.243069, -3.935612, -20.425896 )
-					float(3) m_vMaxBounds = ( 12.319426, -0.248111, -19.925896 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_arm"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_arm"
-					float(3) m_vMinBounds = ( -9.688057, -12.835825, -14.165939 )
-					float(3) m_vMaxBounds = ( 26.249432, 13.289171, 13.834076 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_elbow"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_elbow"
-					float(3) m_vMinBounds = ( -30.255768, -6.749133, -8.891632 )
-					float(3) m_vMaxBounds = ( 1.744221, 9.219615, 7.108368 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_knee"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_knee"
-					float(3) m_vMinBounds = ( -10.401960, -13.325802, -53.904060 )
-					float(3) m_vMaxBounds = ( 8.365610, 11.424198, 9.689690 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_knee"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_knee"
-					float(3) m_vMinBounds = ( -8.349545, -13.377207, -53.921494 )
-					float(3) m_vMaxBounds = ( 10.425842, 11.372789, 9.672256 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeB3"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeB3"
-					float(3) m_vMinBounds = ( -29.870539, -15.522675, -14.012272 )
-					float(3) m_vMaxBounds = ( 29.879446, 10.012482, -14.012268 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeF3"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeF3"
-					float(3) m_vMinBounds = ( -11.667572, -2.677589, -14.294552 )
-					float(3) m_vMaxBounds = ( 11.457422, 1.447409, -13.544552 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_elbow"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_elbow"
-					float(3) m_vMinBounds = ( -2.004288, -6.701605, -9.034180 )
-					float(3) m_vMaxBounds = ( 29.995701, 9.267142, 6.965820 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_hand"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_hand"
-					float(3) m_vMinBounds = ( -23.003670, -44.375435, -9.910675 )
-					float(3) m_vMaxBounds = ( -0.503670, 22.374550, 7.089325 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_foot"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_foot"
-					float(3) m_vMinBounds = ( -5.595978, -14.553394, -18.748301 )
-					float(3) m_vMaxBounds = ( 6.279018, 8.259102, 3.366266 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_foot"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_foot"
-					float(3) m_vMinBounds = ( -5.703623, -14.553394, -18.748301 )
-					float(3) m_vMaxBounds = ( 6.124499, 8.259102, 3.366266 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeB4"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeB4"
-					float(3) m_vMinBounds = ( -32.495537, -16.880064, -14.531010 )
-					float(3) m_vMaxBounds = ( 32.504440, 10.791809, -14.281006 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeF4"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeF4"
-					float(3) m_vMinBounds = ( -11.473285, -2.166074, -12.632252 )
-					float(3) m_vMaxBounds = ( 11.151710, 1.833923, -12.382252 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_hand"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_hand"
-					float(3) m_vMinBounds = ( 0.665100, -6.436943, -7.837830 )
-					float(3) m_vMaxBounds = ( 13.665100, 4.938055, 4.162170 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "Ea3"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "Ea3"
-					float(3) m_vMinBounds = ( -2.850098, -13.886681, -2.803864 )
-					float(3) m_vMaxBounds = ( 3.149902, 12.113327, 2.196167 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "Ea2"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "Ea2"
-					float(3) m_vMinBounds = ( -3.839722, -12.873318, -3.823425 )
-					float(3) m_vMaxBounds = ( 4.160278, 13.126678, 3.176575 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "Ea1"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "Ea1"
-					float(3) m_vMinBounds = ( -4.403732, -9.497658, -3.836914 )
-					float(3) m_vMaxBounds = ( 4.596268, 9.752335, 3.163086 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "Head"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "Head"
-					float(3) m_vMinBounds = ( -9.499996, -10.933680, -1.494659 )
-					float(3) m_vMaxBounds = ( 9.874998, 13.753815, 24.505341 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "R_toes"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "R_toes"
-					float(3) m_vMinBounds = ( -5.630433, -17.258015, -4.600138 )
-					float(3) m_vMaxBounds = ( 5.650814, -2.008019, 3.358176 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "L_toes"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "L_toes"
-					float(3) m_vMinBounds = ( -5.657544, -17.160183, -4.600138 )
-					float(3) m_vMaxBounds = ( 5.639328, -1.910185, 3.358176 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeB5"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeB5"
-					float(3) m_vMinBounds = ( -37.745533, -19.268976, -27.958862 )
-					float(3) m_vMaxBounds = ( 37.754444, 12.141178, -14.708862 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "PlateB"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "PlateB"
-					float(3) m_vMinBounds = ( -26.370546, -3.968661, -33.425064 )
-					float(3) m_vMaxBounds = ( 26.379442, 13.531337, -11.425056 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "RobeF5"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "RobeF5"
-					float(3) m_vMinBounds = ( -11.155483, -1.451413, -33.300297 )
-					float(3) m_vMaxBounds = ( 10.407011, 1.736087, -12.050297 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
-				},
-				CVhitBox
-				{
-					string m_name = "PlateF"
-					string m_sSurfaceProperty = ""
-					int m_nGroupId = 0
-					string m_sBoneName = "PlateF"
-					float(3) m_vMinBounds = ( -8.620549, -8.626743, -68.361526 )
-					float(3) m_vMaxBounds = ( 8.629445, -0.314252, -3.861519 )
-					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
+					string m_influenceName = "Chest"
+					float(3) m_vTranslationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float(3) m_vRotationOffset = ( 0.000000, 0.000000, 0.000000 )
+					float m_flWeight = 1.000000
+					bool m_bRoot = false
 				}
 			]
 		}
@@ -469,7 +194,7 @@ CVanimGroup CVanimGroup_0
 	}
 	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
 	{
-		CVBoneFlagList* m_pObject = &CVBoneFlagList_0
+		CVBoneFlagList* m_pObject = NULL
 		string m_sFileName = ""
 	}
 	CVseqGroupReference m_pSeqGroup = CVseqGroupReference
@@ -485,10 +210,68 @@ CVanimGroup CVanimGroup_0
 	[
 		CVanim
 		{
-			string m_Animationname = "gilgamesh_anim_idle"
+			string m_Animationname = "gilgamesh_anim"
 			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
 			int m_nStartframe = 30
 			int m_nEndframe = 100
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			bool m_bDisable = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = ""
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+			string m_folderName = ""
+		},
+		CVanim
+		{
+			string m_Animationname = "gilgamesh_idle"
+			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
+			int m_nStartframe = 375
+			int m_nEndframe = 405
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -503,6 +286,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -523,6 +307,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -537,123 +322,14 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
-			string m_Animationname = "gilgamesh_anim_move"
-			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
-			int m_nStartframe = 125
-			int m_nEndframe = 156
-			float m_flFps = 30.000000
-			CAnimationLoop m_Loop = CAnimationLoop
-			{
-				bool m_bLoop = true
-				bool m_bSmoothLoop = false
-				int m_nSmoothLoopStart = 0
-				int m_nSmoothLoopEnd = 0
-				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
-				{
-					bool m_bEnabled = false
-					int m_nLoopRestart = 0
-				}
-			}
-			bool m_bHidden = false
-			CActivity[] m_Activities = 
-			[
-				CActivity
-				{
-					string m_Name = "ACT_DOTA_RUN"
-					int m_nWeight = 1
-				}
-			]
-			CAnimationEvent[] m_AnimationEvents = 
-			[
-				
-			]
-			CMotionFrame[] m_MotionFrames = 
-			[
-				
-			]
-			CIKrule*[] m_pIkRules = 
-			[
-				
-			]
-			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
-			{
-				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
-				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
-			}
-			string[] m_Keywords = 
-			[
-				
-			]
-			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
-			{
-				float m_flFadeInTime = 0.200000
-				float m_flFadeOutTime = 0.200000
-			}
-		},
-		CVanim
-		{
-			string m_Animationname = "gilgamesh_anim_attack"
-			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
-			int m_nStartframe = 190
-			int m_nEndframe = 219
-			float m_flFps = 30.000000
-			CAnimationLoop m_Loop = CAnimationLoop
-			{
-				bool m_bLoop = false
-				bool m_bSmoothLoop = false
-				int m_nSmoothLoopStart = 0
-				int m_nSmoothLoopEnd = 0
-				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
-				{
-					bool m_bEnabled = false
-					int m_nLoopRestart = 0
-				}
-			}
-			bool m_bHidden = false
-			CActivity[] m_Activities = 
-			[
-				CActivity
-				{
-					string m_Name = "ACT_DOTA_ATTACK"
-					int m_nWeight = 1
-				}
-			]
-			CAnimationEvent[] m_AnimationEvents = 
-			[
-				
-			]
-			CMotionFrame[] m_MotionFrames = 
-			[
-				
-			]
-			CIKrule*[] m_pIkRules = 
-			[
-				
-			]
-			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
-			{
-				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
-				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
-			}
-			string[] m_Keywords = 
-			[
-				
-			]
-			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
-			{
-				float m_flFadeInTime = 0.200000
-				float m_flFadeOutTime = 0.200000
-			}
-		},
-		CVanim
-		{
-			string m_Animationname = "gilgamesh_anim_attack_two"
+			string m_Animationname = "gilgamesh_attack__2"
 			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
 			int m_nStartframe = 250
-			int m_nEndframe = 282
+			int m_nEndframe = 280
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -668,6 +344,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -688,6 +365,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -702,13 +380,14 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
-			string m_Animationname = "gilgamesh_anim_death"
+			string m_Animationname = "gilgamesh_attack__1"
 			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
-			int m_nStartframe = 560
-			int m_nEndframe = 584
+			int m_nStartframe = 185
+			int m_nEndframe = 219
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
 			{
@@ -723,11 +402,12 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
 				{
-					string m_Name = "ACT_DOTA_DIE"
+					string m_Name = "ACT_DOTA_ATTACK"
 					int m_nWeight = 1
 				}
 			]
@@ -743,6 +423,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -757,122 +438,13 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
-		},
-		CVanim
-		{
-			string m_Animationname = "gilgamesh_anim_chain"
-			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
-			int m_nStartframe = 310
-			int m_nEndframe = 345
-			float m_flFps = 30.000000
-			CAnimationLoop m_Loop = CAnimationLoop
-			{
-				bool m_bLoop = true
-				bool m_bSmoothLoop = false
-				int m_nSmoothLoopStart = 0
-				int m_nSmoothLoopEnd = 0
-				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
-				{
-					bool m_bEnabled = false
-					int m_nLoopRestart = 0
-				}
-			}
-			bool m_bHidden = false
-			CActivity[] m_Activities = 
-			[
-				CActivity
-				{
-					string m_Name = "ACT_DOTA_CAST_ABILITY_1"
-					int m_nWeight = 1
-				}
-			]
-			CAnimationEvent[] m_AnimationEvents = 
-			[
-				
-			]
-			CMotionFrame[] m_MotionFrames = 
-			[
-				
-			]
-			CIKrule*[] m_pIkRules = 
-			[
-				
-			]
-			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
-			{
-				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
-				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
-			}
-			string[] m_Keywords = 
-			[
-				
-			]
-			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
-			{
-				float m_flFadeInTime = 0.200000
-				float m_flFadeOutTime = 0.200000
-			}
-		},
-		CVanim
-		{
-			string m_Animationname = "gilgamesh_anim_raise"
-			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
-			int m_nStartframe = 410
-			int m_nEndframe = 500
-			float m_flFps = 30.000000
-			CAnimationLoop m_Loop = CAnimationLoop
-			{
-				bool m_bLoop = false
-				bool m_bSmoothLoop = false
-				int m_nSmoothLoopStart = 0
-				int m_nSmoothLoopEnd = 0
-				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
-				{
-					bool m_bEnabled = false
-					int m_nLoopRestart = 0
-				}
-			}
-			bool m_bHidden = false
-			CActivity[] m_Activities = 
-			[
-				CActivity
-				{
-					string m_Name = "ACT_DOTA_CAST_ABILITY_4"
-					int m_nWeight = 1
-				}
-			]
-			CAnimationEvent[] m_AnimationEvents = 
-			[
-				
-			]
-			CMotionFrame[] m_MotionFrames = 
-			[
-				
-			]
-			CIKrule*[] m_pIkRules = 
-			[
-				
-			]
-			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
-			{
-				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
-				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
-			}
-			string[] m_Keywords = 
-			[
-				
-			]
-			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
-			{
-				float m_flFadeInTime = 0.200000
-				float m_flFadeOutTime = 0.200000
-			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
 			string m_Animationname = "gilgamesh_enuma"
 			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
-			int m_nStartframe = 410
+			int m_nStartframe = 405
 			int m_nEndframe = 537
 			float m_flFps = 30.000000
 			CAnimationLoop m_Loop = CAnimationLoop
@@ -888,6 +460,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -908,6 +481,7 @@ CVanimGroup CVanimGroup_0
 			[
 				
 			]
+			CAlignAnimation* m_pAlignAnimation = NULL
 			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
 			{
 				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
@@ -922,605 +496,188 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
+		},
+		CVanim
+		{
+			string m_Animationname = "gilgamesh_cast1"
+			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
+			int m_nStartframe = 310
+			int m_nEndframe = 345
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			bool m_bDisable = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_1"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+			string m_folderName = ""
+		},
+		CVanim
+		{
+			string m_Animationname = "gilgamesh_run"
+			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
+			int m_nStartframe = 125
+			int m_nEndframe = 155
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			bool m_bDisable = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_RUN"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+			string m_folderName = ""
+		},
+		CVanim
+		{
+			string m_Animationname = "gilgamesh_cast2"
+			string m_Filepath = "models/gilgamesh/gilgamesh_anim.FBX"
+			int m_nStartframe = 405
+			int m_nEndframe = 435
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = false
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			bool m_bDisable = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAST_ABILITY_4"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+			string m_folderName = ""
 		}
 	]
 	string[] m_sScripts = 
 	[
 		
 	]
-}
-
-CVBoneFlagList CVBoneFlagList_0
-{
-	CVEncodingFlagBone[] m_boneFlag = 
-	[
-		CVEncodingFlagBone
-		{
-			string m_sParent = ""
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "m3bone_root"
-			bool m_bProcedural = false
-			bool m_bDeleted = true
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "m3bone_root"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Default"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Chest"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Chest"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Chest2"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Chest2"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_arm"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "L_arm"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_elbow"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "L_elbow"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_hand"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Chest2"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_arm"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_arm"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_elbow"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_elbow"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_hand"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_hand"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Ea3"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_hand"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Ea2"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_hand"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Ea1"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Chest2"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "Head"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_leg"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_leg"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_knee"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_knee"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_foot"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "R_foot"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "R_toes"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_leg"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "L_leg"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_knee"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "L_knee"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_foot"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "L_foot"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "L_toes"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeB1"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeB1"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeB2"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeB2"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeB3"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeB3"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeB4"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeB4"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeB5"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "PlateB"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeF1"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeF1"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeF2"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeF2"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeF3"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeF3"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeF4"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "RobeF4"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "RobeF5"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		},
-		CVEncodingFlagBone
-		{
-			string m_sParent = "Default"
-			bool m_bRigidLength = false
-			bool m_bPrealignedRotation = false
-			float(3) m_ReferenceAngle = ( 0.000000, 0.000000, 0.000000 )
-			string m_sName = "PlateF"
-			bool m_bProcedural = false
-			bool m_bDeleted = false
-			string m_sGroup = ""
-		}
-	]
-	CVEncodingFlagPose[] m_boneWorldspace = 
-	[
-		CVEncodingFlagPose
-		{
-			string m_name = "m3bone_root"
-			float(3) m_Translation = ( 0.000000, 0.000000, 0.000000 )
-			float(3) m_Rotation = ( 0.000000, -0.000000, 90.000000 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Default"
-			float(3) m_Translation = ( -0.293726, 0.000000, 113.669495 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Chest"
-			float(3) m_Translation = ( 0.681775, -0.000000, 123.539047 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Chest2"
-			float(3) m_Translation = ( -0.043678, 0.000000, 140.385132 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_arm"
-			float(3) m_Translation = ( -0.523317, 15.250553, 153.165939 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_elbow"
-			float(3) m_Translation = ( -0.795340, 41.504265, 152.034195 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_hand"
-			float(3) m_Translation = ( -0.624419, 71.334846, 151.837845 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_arm"
-			float(3) m_Translation = ( -0.534705, -16.896740, 153.122391 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_elbow"
-			float(3) m_Translation = ( -0.842892, -41.244194, 151.891647 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_hand"
-			float(3) m_Translation = ( -0.625464, -71.496277, 151.910690 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Ea3"
-			float(3) m_Translation = ( 83.613266, -81.649857, 150.803864 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Ea2"
-			float(3) m_Translation = ( 58.626637, -81.660225, 150.823441 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Ea1"
-			float(3) m_Translation = ( 35.752300, -81.596214, 150.836929 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "Head"
-			float(3) m_Translation = ( -0.996177, 0.000000, 163.494675 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_leg"
-			float(3) m_Translation = ( -0.519556, -11.036108, 99.247238 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_knee"
-			float(3) m_Translation = ( -0.325805, -8.848026, 61.810310 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_foot"
-			float(3) m_Translation = ( -1.803399, -8.904013, 18.758736 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "R_toes"
-			float(3) m_Translation = ( 12.866974, -8.557059, 4.610575 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_leg"
-			float(3) m_Translation = ( -0.485429, 10.935241, 99.231522 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_knee"
-			float(3) m_Translation = ( -0.377205, 8.824149, 61.827744 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_foot"
-			float(3) m_Translation = ( -1.803395, 8.312989, 18.758736 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "L_toes"
-			float(3) m_Translation = ( 12.964813, 8.548155, 4.610575 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeB1"
-			float(3) m_Translation = ( -7.638035, -0.004449, 119.209396 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeB2"
-			float(3) m_Translation = ( -14.003515, -0.004448, 85.019577 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeB3"
-			float(3) m_Translation = ( -15.862510, -0.004449, 69.512276 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeB4"
-			float(3) m_Translation = ( -17.708176, -0.004448, 55.031010 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeB5"
-			float(3) m_Translation = ( -20.108805, -0.004448, 40.208866 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "PlateB"
-			float(3) m_Translation = ( -8.343655, -0.004447, 117.925064 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeF1"
-			float(3) m_Translation = ( 9.086679, -0.061309, 115.848892 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeF2"
-			float(3) m_Translation = ( 11.501881, -0.069432, 89.925903 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeF3"
-			float(3) m_Translation = ( 13.822398, -0.082428, 70.294556 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeF4"
-			float(3) m_Translation = ( 14.833911, -0.089215, 56.632256 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "RobeF5"
-			float(3) m_Translation = ( 15.298571, -0.094518, 43.925297 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		},
-		CVEncodingFlagPose
-		{
-			string m_name = "PlateF"
-			float(3) m_Translation = ( 8.748245, -0.004450, 124.861526 )
-			float(3) m_Rotation = ( -0.000006, 0.000000, 89.999992 )
-		}
-	]
-	CVEncodingFlagMorph[] m_morphFlag = 
-	[
-		
-	]
-	CVEncodingFlagUser[] m_userFlag = 
+	string[] m_folderNames = 
 	[
 		
 	]
@@ -1538,6 +695,36 @@ CVMaterialRemapList CVMaterialRemapList_0
 		CVMaterialRemap
 		{
 			string m_sSearchMaterial = "milkshapeexported2.vmat"
+			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported3.vmat"
+			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported4.vmat"
+			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported5.vmat"
+			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported6.vmat"
+			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported7.vmat"
+			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
+		},
+		CVMaterialRemap
+		{
+			string m_sSearchMaterial = "milkshapeexported8.vmat"
 			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
 		},
 		CVMaterialRemap
@@ -1633,36 +820,6 @@ CVMaterialRemapList CVMaterialRemapList_0
 		CVMaterialRemap
 		{
 			string m_sSearchMaterial = "milkshapeexported27.vmat"
-			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
-		},
-		CVMaterialRemap
-		{
-			string m_sSearchMaterial = "milkshapeexported3.vmat"
-			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
-		},
-		CVMaterialRemap
-		{
-			string m_sSearchMaterial = "milkshapeexported4.vmat"
-			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
-		},
-		CVMaterialRemap
-		{
-			string m_sSearchMaterial = "milkshapeexported5.vmat"
-			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
-		},
-		CVMaterialRemap
-		{
-			string m_sSearchMaterial = "milkshapeexported6.vmat"
-			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
-		},
-		CVMaterialRemap
-		{
-			string m_sSearchMaterial = "milkshapeexported7.vmat"
-			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
-		},
-		CVMaterialRemap
-		{
-			string m_sSearchMaterial = "milkshapeexported8.vmat"
 			string m_sReplaceMaterial = "materials/gilga/gilga_texture.vmat"
 		}
 	]
