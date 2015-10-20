@@ -16,5 +16,26 @@
 	"DOTA_Custom7"    								"Olive Snake"
 	"DOTA_Custom8"    								"Purple Horse"
 	
-	"addonname"										"Barebones"
+	"addonname"										"Fate/Another"
+	"Fateanother_Kotomine_Speech"						"&quot;Rejoice boy, Your wish will finally come true.\""
+	"Fateanother_Gameplay"						"Gameplay"
+	"Fateanother_Gameplay1"							"The gameplay flows much like that of CS:GO; The game is won by winning set amount of rounds(the number is voted during loading screen). A round is won by eliminating enemy team. Coordinate with your team to fight through the bloodbath and stand victorious in your own Holy Grail War!"
+
+	"Fateanother_Servant"		"Servants"
+	"Fateanother_Servant_1"	"As of Beta v1.31, 18 Servants are available from various Fate series. All Servants possess deadly Noble Phantasms that are far more powerful than your regular Dota 2 abilities, meaning that getting out of position without countermeasure means certain death, just like CS:GO."
+	"Fateanother_Servant_2"	"Fortunately, you can avoid or withstand most sticky situations with fast reflexes. The items are extrmely versatile from defense to utility, but they are all comsumables. In other words, there is no item difference that broadens the gap between the 'feed' and 'fed'; the only thing matters is your skill."
+	"Fateanother_Servant_3"	"Servants can be customized by Master, enabling a variety of build options throughout the game."
+
+	"Fateanother_Master"		"MASTER"
+	"Fateanother_Master_Description"	"As a Master, you may provide support to your Servant from afar. There are 3 ways to aid your Servant:"
+	"Fateanother_Master_1"		"1. Strengthen Servant by granting Stats and Attributes.(Costs Master's Mana)"
+	"Fateanother_Master_2"		"2. Cast Command Seal, giving immediate advantage to Servant such as healing them to full health and resetting their cooldowns.(Costs Master's Mana AND Health)"
+	"Fateanother_Master_3"		"3. Purchase items and transfer them to Servant."
+	"Fateanother_Master_4"		"Master takes significant role at all stages of game. Bind them to group by Ctrl+[Num] for faster access."
+
+	"Fateanother_Tip_Header"					"REMINDER FOR BEGINNERS"
+	"Fateanother_Tip01"							"1. As mentioned above, everything in the game is way more deadly than your regular Dota 2 abilities. Fast reflexes and well-timed use of defensive items(namely Blink Scroll, A Scroll, and B Scroll) are vital to survival."
+	"Fateanother_Tip02"							"2. Fatepedia is a great resource for finding out what Servants do, from their abilities to strength/weaknesses."
+	"Fateanother_Tip03"							"3. To practice your mechanics in sandbox mode, you may create a solo lobby with cheat enabled. Most of Dota 2 cheats also work in this game. For instance, -createhero legion creates Saber under your command."
+	"Fateanother_Tip04"							""
 }

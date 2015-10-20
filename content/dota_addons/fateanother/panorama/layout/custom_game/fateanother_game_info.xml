@@ -1,0 +1,48 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/fateanother_game_info.css" />
+	</styles>
+	<Panel class="OverthrowGameInfo">
+		<Panel id="Title">
+			<Label id="TitleName" text="#addonname" />
+		</Panel>
+
+		<Panel id="KotomineRow" class="QuoteRow">
+			<Image id="KotomineImage" src="file://{images}/custom_game/game_info_kotomine.png" />
+			<Label id="KotomineQuote" html="true" text="#Fateanother_Kotomine_Speech" />
+		</Panel>
+
+		<Label id="GameplayHeader" class="Header" html="true" text="#Fateanother_Gameplay" />
+		<Panel id="GameplayRow" class="InfoRow">
+			<Label id="GameplayText1" class="TipText" text="#Fateanother_Gameplay1" />
+		</Panel>
+
+		<Image id="SaberImage" class="HeaderImage" src="file://{images}/custom_game/game_info_servant_saber.png" />
+		<Label id="ServantHeader" class="Header" html="true" text="#Fateanother_Servant" />
+		<Panel id="ServantsRow" class="InfoRow">
+			<Label id="ServantText01" class="TipText" html="true" text="#Fateanother_Servant_1" />
+			<Label id="ServantText02" class="TipText" html="true" text="#Fateanother_Servant_2" />
+			<Label id="ServantText03" class="TipText" html="true" text="#Fateanother_Servant_3" />
+		</Panel>
+
+		<Image id="ShirouImage" class="HeaderImage" src="file://{images}/custom_game/game_info_master_shirou.png" />
+		<Label id="MasterHeader" class="Header" html="true" text="#Fateanother_Master" />
+		<Label id="MasterTextDescription" html="true" text="#Fateanother_Master_Description" />
+		<Panel id="MasterRow" class="InfoRow">
+			<Label id="MasterText01" class="TipText" html="true" text="#Fateanother_Master_1" />
+			<Label id="MasterText02" class="TipText" html="true" text="#Fateanother_Master_2" />
+			<Label id="MasterText03" class="TipText" html="true" text="#Fateanother_Master_3" />
+		</Panel>
+		<Label id="MasterText04" html="true" text="#Fateanother_Master_4" />
+
+		<Image id="FujineeImage" class="HeaderImage" src="file://{images}/custom_game/game_info_tips_fujinee.png" />
+		<Label id="TipsHeader" class="Header" html="true" text="#Fateanother_Tip_Header" />
+		<Panel id="TipsRow" class="InfoRow">
+			<Label id="TipText01" class="TipText" html="true" text="#Fateanother_Tip01" />
+			<Label id="TipText02" class="TipText" html="true" text="#Fateanother_Tip02" />
+			<Label id="TipText03" class="TipText" html="true" text="#Fateanother_Tip03" />
+			<Label id="TipText04" class="TipText" html="true" text="#Fateanother_Tip04" />
+		</Panel>
+	</Panel>
+</root>

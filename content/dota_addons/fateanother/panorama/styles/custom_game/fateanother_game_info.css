@@ -1,0 +1,97 @@
+.OverthrowGameInfo
+{
+    width:100%;
+    flow-children: down;
+}
+ 
+Label
+{
+    font-size: 18px;
+    color: #999999;
+    vertical-align: top;
+}
+ 
+#Title
+{
+    flow-children: right;
+}
+
+#TitleIcon
+{
+    width: 64px;
+    height: 64px;
+    vertical-align: center;
+}
+
+#TitleName
+{
+    color: #cccccc;
+    font-size: 64px;
+    margin-left: 16px;
+    margin-top: 16px;
+    text-transform: uppercase;
+    vertical-align: center;
+}
+
+
+#ThroneText,
+#CoinsText,
+#ItemsText
+{
+    width: 50%;
+}
+
+.Header
+{
+	font-size: 24px;
+    font-weight: bold;
+	margin-top: 0px;
+	text-transform: uppercase;
+}
+
+.HeaderImage
+{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#KotomineQuote
+{
+    margin-left: 50px;
+}
+
+#KotomineRow
+{
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+#KotomineQuote
+{
+    margin-left: 50px;
+    margin-top: 40px;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-style: italic;
+    width: 350px;
+}
+
+
+.TipText
+{
+	margin-left: 16px;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+
+.InfoRow
+{
+    flow-children: down;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.QuoteRow
+{
+    flow-children: right;
+}
+

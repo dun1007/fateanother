@@ -17,7 +17,7 @@
 				<Label id="VoteListLabel" text="VOTE" />
 				<Panel id="VoteGroup" >
 					<Panel id="VoteGroupRound" >
-						<Label id="VoteGroupRoundTitle" text="HOW MANY ROUNDS NEEDED FOR VICTORY?" />
+						<Label id="VoteGroupRoundTitle" text="VOTE FOR ROUNDS NEEDED FOR VICTORY" />
 						<RadioButton group="GameKills" checked="checked" id="RoundButton1" text="12(Standard)" />
 						<RadioButton group="GameKills" id="RoundButton2" text="10"/>
 						<RadioButton group="GameKills" id="RoundButton3" text="8"/>
