@@ -1,0 +1,46 @@
+.TimerPanel
+{
+    width: 1500px;
+    height: 60px;
+    horizontal-align: middle;
+    margin-top: 50px;
+    margin-right: -750px;
+    z-index: -10;
+}
+
+#TimerBody
+{
+    flow-children: down;
+}
+
+#TimerMsg
+{
+    width: 230px;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 6px 8 #000000;
+    font-size: 20px;
+    font-weight: bold;
+    horizontal-align: left;
+}
+#TimerRemaining
+{
+    width: 230px;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 6px 8 #245191;
+    font-size: 30px;
+    font-weight: bold;
+    horizontal-align: left;
+    margin-left: 0px;
+    margin-top: 30px;
+}
+
+#RoundTimerPanel
+{
+    flow-children: right;
+    margin-top: 0px;
+    margin-left: 10px;
+}
+#MarbleTimerPanel
+{
+    margin-top: 40px;
+}

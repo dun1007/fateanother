@@ -118,23 +118,27 @@ function OnBuidheStart(keys)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_mark_of_mortality", {})
 	end
 
+	if target:GetHealth() < keys.Damage then
+		target:Kill(keys.ability, caster)
+	end
 	local MR = 0
 	if target:IsHero() then MR = target:GetMagicalArmorValue() end
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local targetHealthPercentage = target:GetHealth() / target:GetMaxHealth()
 
-	if target:GetHealth() ~= 0 then
+	if target:GetHealth() > 0 and target:IsAlive() then
 		local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
 		if currentStack == 0 and target:HasModifier("modifier_gae_buidhe") then currentStack = 1 end
 		target:RemoveModifierByName("modifier_gae_buidhe") 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_gae_buidhe", {}) 
 		target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + 1)
 		if target:IsRealHero() then target:CalculateStatBonus() end
+
+		local targetNewHealth = target:GetHealth() + keys.Damage * (1-MR) * targetHealthPercentage 
+	    target:SetHealth(targetNewHealth)
 	end
 
-	local targetNewHealth = target:GetHealth() + keys.Damage * (1-MR) * targetHealthPercentage 
-    print(targetNewHealth)
-    target:SetHealth(targetNewHealth)
+
 
 	EmitGlobalSound("ZL.Gae_Buidhe")
 	target:EmitSound("Hero_Lion.Impale")

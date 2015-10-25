@@ -22637,7 +22637,34 @@
 		  	}
 		}
 	}
-
+	//================================================
+	// master passive
+	//================================================
+	"master_2_passive"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "1"
+		"DisplayAdditionalHeroes"   "1"
+		
+		"Modifiers"
+		{
+			"dummy_unit"
+			{
+				"Passive"                        "1"
+				"IsHidden"                        "1"    
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					//"MODIFIER_STATE_FLYING" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+		  	}
+		}
+	}
 	//=================================================================================================================
 	// Passive Presence Detection
 	//=================================================================================================================
@@ -22853,7 +22880,7 @@
 		"AbilityTextureName"			"cmd_seal_2"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
-		"AbilityManaCost"				"2"
+		"AbilityManaCost"				"1"
 		
 		"precache"
 		{

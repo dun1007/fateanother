@@ -445,7 +445,7 @@ function CreateLightningField(keys, vector)
         
 end
 
-aotkQuest = nil
+--aotkQuest = nil
 function OnAOTKCastStart(keys)
 	-- initialize stuffs
 	local caster = keys.caster
@@ -551,7 +551,8 @@ function OnAOTKStart(keys)
 	local ability = keys.ability
 	caster.IsAOTKActive = true
 	caster:EmitSound("Ability.SandKing_SandStorm.loop")
-	aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12) -- Start timer
+	CreateUITimer("Army of the King", 12, "aotk_timer")
+	--aotkQuest = StartQuestTimer("aotkTimerQuest", "Army of the King", 12) -- Start timer
 
 	-- Swap abilities
 	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, true)
@@ -725,8 +726,8 @@ function EndAOTK(caster)
 	caster:SwapAbilities("iskander_army_of_the_king", "fate_empty3", true, false)
 	caster:SwapAbilities("fate_empty1", "iskander_summon_hephaestion", true, false) 
 	caster:SwapAbilities("iskander_charisma", caster:GetAbilityByIndex(3):GetName(), true, false) 
-
-	UTIL_RemoveImmediate(aotkQuest)
+	CreateUITimer("Army of the King", 0, "aotk_timer")
+	--UTIL_RemoveImmediate(aotkQuest)
 	caster.IsAOTKActive = false
 	if not caster.AOTKLocator:IsNull() and IsValidEntity(caster.AOTKLocator) then
 		caster.AOTKLocator:RemoveSelf()

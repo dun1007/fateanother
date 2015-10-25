@@ -356,6 +356,7 @@ function EmitSoundOnAllClient(songname)
 end
 
 function CheckItemCombination(hero)
+    local isMatchingFound = false
     --print("checking item combination of " .. hero:GetName())
     -- loop through stash
     for i=0,5 do 
@@ -367,7 +368,8 @@ function CheckItemCombination(hero)
             for i=1, #itemComp do 
                 -- component 1 is matching, check if item component 2 exists
                 if itemComp[i][1] == currentItemName then
-                    for j=0,5 do
+                    isMatchingFound = true
+                    for j=0,5 do 
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
                             local currentItemName2 = currentItem2:GetName()
@@ -376,11 +378,14 @@ function CheckItemCombination(hero)
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
                                 CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
+                                break
                             end
                         end
                     end
+                    if isMatchingFound then break end
                 -- component 2 is matching, check if item component 1 exists
                 elseif itemComp[i][2] == currentItemName then
+                    isMatchingFound = true
                     for j=0,5 do
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
@@ -390,16 +395,20 @@ function CheckItemCombination(hero)
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
                                 CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
+                                break
                             end
                         end
                     end
+                    if isMatchingFound then break end
                 end
             end 
         end
+        if isMatchingFound then break end
     end
 end
 
 function CheckItemCombinationInStash(hero)
+    local isMatchingFound = false
     -- loop through stash
     --print("checking item combination in stash of " .. hero:GetName())
     for i=6,11 do 
@@ -411,6 +420,7 @@ function CheckItemCombinationInStash(hero)
             for i=1, #itemComp do 
                 -- component 1 is matching, check if item component 2 exists
                 if itemComp[i][1] == currentItemName then
+                    isMatchingFound = true
                     for j=6,11 do
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
@@ -420,12 +430,14 @@ function CheckItemCombinationInStash(hero)
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
                                 CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
-                                --hero:AddItem(CreateItem(itemComp[i][3], nil, nil)) 
+                                break
                             end
                         end
                     end
+                    if isMatchingFound then break end
                 -- component 2 is matching, check if item component 1 exists
                 elseif itemComp[i][2] == currentItemName then
+                    isMatchingFound = true
                     for j=6,11 do
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
@@ -435,13 +447,15 @@ function CheckItemCombinationInStash(hero)
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
                                 CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
-                                --hero:AddItem(CreateItem(itemComp[i][3], nil, nil)) 
+                                break
                             end
                         end
                     end
+                    if isMatchingFound then break end
                 end
             end 
         end
+        if isMatchingFound then break end
     end
 end
 function CreateItemAtSlot(hero, itemname, slot, charges)
@@ -471,17 +485,7 @@ function CreateItemAtSlot(hero, itemname, slot, charges)
     CheckItemCombinationInStash(hero)
 end
 
-function LoopThroughAttr(hero, attrTable)
-    for i=1, #attrTable do
-        print("Added " .. attrTable[i])
-        hero:AddAbility(attrTable[i])
-    end
-    hero.ComboName = attrTable[#attrTable]
-    --print(attrTable[#attrTable])
-    hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(4):GetName(), true, true)
-    --hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
-    hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
-end
+
 
 function FindName(name)
     local heroName = nil
@@ -526,53 +530,6 @@ function FindName(name)
     return heroName
 end
 
-function FindAttribute(name)
-    local attributes = nil
-    if name == "npc_dota_hero_legion_commander" then
-        attributes = SaberAttribute
-    elseif name == "npc_dota_hero_phantom_lancer" then
-        attributes = LancerAttribute
-    elseif name == "npc_dota_hero_spectre" then
-        attributes = SaberAlterAttribute
-    elseif name == "npc_dota_hero_ember_spirit" then
-        attributes = ArcherAttribute
-    elseif name == "npc_dota_hero_templar_assassin" then
-        attributes = RiderAttribute
-    elseif name == "npc_dota_hero_doom_bringer" then
-        attributes = BerserkerAttribute
-    elseif name == "npc_dota_hero_juggernaut" then
-        attributes = FAAttribute
-    elseif name == "npc_dota_hero_bounty_hunter" then
-        attributes = TAAttribute
-    elseif name == "npc_dota_hero_crystal_maiden" then
-        attributes = CasterAttribute
-    elseif name == "npc_dota_hero_skywrath_mage" then
-        attributes = GilgaAttribute
-    elseif name == "npc_dota_hero_sven" then
-        attributes = LancelotAttribute
-    elseif name == "npc_dota_hero_vengefulspirit" then
-        attributes = AvengerAttribute
-    elseif name == "npc_dota_hero_huskar" then
-        attributes = DiarmuidAttribute
-    elseif name == "npc_dota_hero_chen" then
-        attributes = IskanderAttribute
-    elseif name == "npc_dota_hero_shadow_shaman" then
-        attributes = GillesAttribute
-    elseif name == "npc_dota_hero_lina" then
-        attributes = NeroAttribute
-    elseif name == "npc_dota_hero_omniknight" then
-        attributes = GawainAttribute
-    elseif name == "npc_dota_hero_enchantress" then
-        attributes = TamamoAttribute
-    end
-    return attributes
-end 
-
-function AddMasterAbility(master, name)
-    --local ply = master:GetPlayerOwner()
-    local attributeTable = FindAttribute(name)
-    LoopThroughAttr(master, attributeTable)
-end
 
 
 function AddValueToTable(table, value)
@@ -713,6 +670,21 @@ function DisplayTip()
     GameRules:SendCustomMessage(tipRef, 0, 0) 
     lastTipChoice = tipchoice
 end
+
+-- ten_min_timer
+-- round_timer
+-- pregame_timer
+-- ubw_timer
+-- aotk_timer
+function CreateUITimer(message, duration, description)
+    local timerData = {
+        timerMsg = message,
+        timerDuration = duration,
+        timerDescription = description
+    }
+    CustomGameEventManager:Send_ServerToAllClients( "display_timer", timerData ) 
+end
+
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 

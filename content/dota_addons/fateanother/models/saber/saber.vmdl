@@ -68,14 +68,11 @@ CVModel CVModel_0
 			string m_sFileName = ""
 		}
 	]
-	CVanimGroupReference[] m_pAnimGroups = 
-	[
-		CVanimGroupReference
-		{
-			CVanimGroup* m_pObject = &CVanimGroup_0
-			string m_sFileName = ""
-		}
-	]
+	CVanimGroupReference m_pAnimGroup = CVanimGroupReference
+	{
+		CVanimGroup* m_pObject = &CVanimGroup_0
+		string m_sFileName = ""
+	}
 	CVNodeMaterialGroupListReference m_pMaterialGroupList = CVNodeMaterialGroupListReference
 	{
 		NodeMaterialGroupList_t* m_pObject = NULL
@@ -121,7 +118,7 @@ CVModel CVModel_0
 	float m_flFbxScale = 1.000000
 	float m_flQCScale = 1.000000
 	float(3) m_vOrigin = ( 0.000000, 0.000000, 0.000000 )
-	CVPsf* m_pvPsf = NULL
+	CVPsfList* m_pPsfList = NULL
 	string m_keyValueText = ""
 	bool m_bStaticProp = false
 	bool m_bEnableClothProcessing = true
@@ -132,6 +129,10 @@ CVModel CVModel_0
 	bool m_bMakeUniqueVMeshes = false
 	bool m_bMakeImplicitBindPoseSequence = false
 	bool m_bAdjustSkeletonFromBoneFlags = false
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
+		
+	]
 }
 
 CVhitBoxSetList CVhitBoxSetList_0
@@ -151,6 +152,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "Default"
 					float(3) m_vMinBounds = ( -11.735537, -9.074335, -9.599365 )
 					float(3) m_vMaxBounds = ( 11.675072, 9.086206, 10.209694 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -161,6 +163,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "Chest"
 					float(3) m_vMinBounds = ( -80.000000, -80.000000, -80.000000 )
 					float(3) m_vMaxBounds = ( 80.000000, 80.000000, 80.000000 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -171,6 +174,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "Chest2"
 					float(3) m_vMinBounds = ( -9.979479, -8.845859, -0.620728 )
 					float(3) m_vMaxBounds = ( 9.979237, 9.366134, 19.522118 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -181,6 +185,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "R_arm"
 					float(3) m_vMinBounds = ( -27.736225, -6.635183, -5.668709 )
 					float(3) m_vMaxBounds = ( 0.400719, 7.154554, 8.836327 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -191,6 +196,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeF1"
 					float(3) m_vMinBounds = ( -8.172140, -4.658326, -14.480644 )
 					float(3) m_vMaxBounds = ( 8.172138, -1.827457, -8.990425 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -201,6 +207,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeR1"
 					float(3) m_vMinBounds = ( -8.329996, -13.447989, -12.086502 )
 					float(3) m_vMaxBounds = ( 3.417105, 8.883688, -11.543800 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -211,6 +218,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeL1"
 					float(3) m_vMinBounds = ( -1.627650, -13.458503, -12.115952 )
 					float(3) m_vMaxBounds = ( 10.119452, 8.873172, -11.573250 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -221,6 +229,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeB1"
 					float(3) m_vMinBounds = ( -5.976748, 4.287820, -11.974998 )
 					float(3) m_vMaxBounds = ( 5.976777, 7.283303, -11.801224 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -231,6 +240,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "L_arm"
 					float(3) m_vMinBounds = ( -0.521805, -6.647953, -5.684624 )
 					float(3) m_vMaxBounds = ( 27.615162, 7.141787, 8.820412 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -241,6 +251,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "R_elbow"
 					float(3) m_vMinBounds = ( -31.213615, -7.237160, -6.804337 )
 					float(3) m_vMaxBounds = ( -1.356686, 6.636020, 7.468163 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -251,6 +262,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "R_leg"
 					float(3) m_vMinBounds = ( -6.616587, -7.965838, -24.825642 )
 					float(3) m_vMaxBounds = ( 5.879673, 6.023094, -2.949463 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -261,6 +273,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "L_leg"
 					float(3) m_vMinBounds = ( -6.066736, -7.981585, -24.823917 )
 					float(3) m_vMaxBounds = ( 6.429533, 6.007348, -2.947739 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -271,6 +284,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeF2"
 					float(3) m_vMinBounds = ( -10.917794, -5.948565, -20.245712 )
 					float(3) m_vMaxBounds = ( 10.917792, -1.691923, -14.128342 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -281,6 +295,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeR2"
 					float(3) m_vMinBounds = ( -12.406340, -17.887444, -14.952087 )
 					float(3) m_vMaxBounds = ( 3.502936, 12.843952, -14.644928 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -291,6 +306,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeL2"
 					float(3) m_vMinBounds = ( -3.040372, -17.887447, -14.945518 )
 					float(3) m_vMaxBounds = ( 12.868885, 12.843948, -14.638458 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -301,6 +317,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeB2"
 					float(3) m_vMinBounds = ( -7.835207, 3.373779, -15.042953 )
 					float(3) m_vMaxBounds = ( 7.835212, 7.634069, -14.945129 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -311,6 +328,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "L_elbow"
 					float(3) m_vMinBounds = ( 0.694893, -6.592635, -4.824211 )
 					float(3) m_vMaxBounds = ( 31.119484, 6.759311, 6.994370 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -321,6 +339,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "R_hand"
 					float(3) m_vMinBounds = ( -11.228565, -4.620459, -5.368927 )
 					float(3) m_vMaxBounds = ( -1.736530, 3.988004, 2.524620 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -331,6 +350,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "R_knee"
 					float(3) m_vMinBounds = ( -6.422624, -8.256088, -39.384041 )
 					float(3) m_vMaxBounds = ( 6.412715, 8.151237, -0.665394 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -341,6 +361,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "L_knee"
 					float(3) m_vMinBounds = ( -6.375944, -8.267046, -39.336948 )
 					float(3) m_vMaxBounds = ( 6.459404, 8.140280, -0.618301 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -351,6 +372,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeF3"
 					float(3) m_vMinBounds = ( -13.976717, -6.014441, -22.240364 )
 					float(3) m_vMaxBounds = ( 13.976713, -1.251730, -17.055546 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -361,6 +383,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeR3"
 					float(3) m_vMinBounds = ( -14.155617, -22.689024, -16.803234 )
 					float(3) m_vMaxBounds = ( 5.125027, 15.652697, -16.241108 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -371,6 +394,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeL3"
 					float(3) m_vMinBounds = ( -5.219830, -22.730453, -16.787701 )
 					float(3) m_vMaxBounds = ( 14.060822, 15.611268, -16.225574 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -381,6 +405,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeB3"
 					float(3) m_vMinBounds = ( -10.125647, 2.249685, -16.372456 )
 					float(3) m_vMaxBounds = ( 10.125650, 6.684050, -9.390949 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -391,6 +416,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "Head"
 					float(3) m_vMinBounds = ( -8.318043, -11.302597, -4.885483 )
 					float(3) m_vMaxBounds = ( 8.033218, 9.951267, 24.053696 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -401,6 +427,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "L_hand"
 					float(3) m_vMinBounds = ( 1.785725, -4.701643, -5.104515 )
 					float(3) m_vMaxBounds = ( 11.277523, 4.285000, 2.501579 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -411,6 +438,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "Excalibur"
 					float(3) m_vMinBounds = ( -15.169456, -97.153343, -1.888275 )
 					float(3) m_vMaxBounds = ( 15.151165, 16.488762, 1.931091 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -421,6 +449,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "R_foot"
 					float(3) m_vMinBounds = ( -5.032884, -17.748957, -11.835375 )
 					float(3) m_vMaxBounds = ( 4.988532, 5.148296, 1.080958 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -431,6 +460,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "L_foot"
 					float(3) m_vMinBounds = ( -4.988538, -17.836229, -11.835389 )
 					float(3) m_vMaxBounds = ( 5.032893, 5.061028, 1.080943 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -441,6 +471,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "PlateL"
 					float(3) m_vMinBounds = ( -3.565929, -22.810064, -55.523659 )
 					float(3) m_vMaxBounds = ( 32.319794, 27.422163, 0.578171 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -451,6 +482,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "PlateR"
 					float(3) m_vMinBounds = ( -32.257294, -22.809645, -55.529442 )
 					float(3) m_vMaxBounds = ( 3.628399, 27.422583, 0.572388 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -461,6 +493,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeF4"
 					float(3) m_vMinBounds = ( -17.331774, -7.328436, -38.369118 )
 					float(3) m_vMaxBounds = ( 17.331766, -1.440905, -15.199524 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -471,6 +504,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeR4"
 					float(3) m_vMinBounds = ( -17.321861, -30.119644, -32.507782 )
 					float(3) m_vMaxBounds = ( 13.868404, 27.136864, -15.510601 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -481,6 +515,7 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeL4"
 					float(3) m_vMinBounds = ( -12.922203, -30.140583, -32.518753 )
 					float(3) m_vMaxBounds = ( 18.268089, 27.115925, -15.521576 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				},
 				CVhitBox
@@ -491,11 +526,13 @@ CVhitBoxSetList CVhitBoxSetList_0
 					string m_sBoneName = "RobeB4"
 					float(3) m_vMinBounds = ( -13.076200, 1.830654, -33.067551 )
 					float(3) m_vMaxBounds = ( 13.075925, 11.125750, -15.953739 )
+					bool m_bTranslationOnly = false
 					uint(4) m_cRenderColor = ( 0, 0, 0, 0 )
 				}
 			]
 		}
 	]
+	string m_AutoCreateSetName = ""
 }
 
 CVattachmentList CVattachmentList_0
@@ -571,6 +608,46 @@ CVanimGroup CVanimGroup_0
 	}
 	CVanimGroupReference[] m_pAnimGroups = 
 	[
+		CVanimGroupReference
+		{
+			CVanimGroup* m_pObject = &CVanimGroup_1
+			string m_sFileName = ""
+		}
+	]
+	CVanim[] m_Vanim = 
+	[
+		
+	]
+	string[] m_sScripts = 
+	[
+		
+	]
+	string[] m_folderNames = 
+	[
+		
+	]
+}
+
+CVanimGroup CVanimGroup_1
+{
+	string m_Name = ""
+	CVReferenceSkeletonReference m_pReferenceSkeleton = CVReferenceSkeletonReference
+	{
+		CVReferenceSkeleton* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVBoneFlagListReference m_pBoneFlagList = CVBoneFlagListReference
+	{
+		CVBoneFlagList* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVseqGroupReference m_pSeqGroup = CVseqGroupReference
+	{
+		CVseqGroup* m_pObject = NULL
+		string m_sFileName = ""
+	}
+	CVanimGroupReference[] m_pAnimGroups = 
+	[
 		
 	]
 	CVanim[] m_Vanim = 
@@ -595,6 +672,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -630,6 +708,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -651,6 +730,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				
@@ -682,6 +762,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -703,6 +784,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -738,6 +820,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -759,6 +842,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -794,6 +878,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -815,6 +900,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -850,6 +936,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -871,6 +958,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -906,6 +994,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -927,6 +1016,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				
@@ -958,6 +1048,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -979,6 +1070,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -1014,6 +1106,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -1035,6 +1128,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -1070,6 +1164,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -1091,6 +1186,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -1126,6 +1222,7 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
 		},
 		CVanim
 		{
@@ -1147,6 +1244,7 @@ CVanimGroup CVanimGroup_0
 				}
 			}
 			bool m_bHidden = false
+			bool m_bDisable = false
 			CActivity[] m_Activities = 
 			[
 				CActivity
@@ -1182,9 +1280,77 @@ CVanimGroup CVanimGroup_0
 				float m_flFadeInTime = 0.200000
 				float m_flFadeOutTime = 0.200000
 			}
+			string m_folderName = ""
+		},
+		CVanim
+		{
+			string m_Animationname = "saber_portrait"
+			string m_Filepath = "models/saber/saber_anim.FBX"
+			int m_nStartframe = 30
+			int m_nEndframe = 94
+			float m_flFps = 30.000000
+			CAnimationLoop m_Loop = CAnimationLoop
+			{
+				bool m_bLoop = true
+				bool m_bSmoothLoop = false
+				int m_nSmoothLoopStart = 0
+				int m_nSmoothLoopEnd = 0
+				CVAnimCmdStartLoop m_StartLoop = CVAnimCmdStartLoop
+				{
+					bool m_bEnabled = false
+					int m_nLoopRestart = 0
+				}
+			}
+			bool m_bHidden = false
+			bool m_bDisable = false
+			CActivity[] m_Activities = 
+			[
+				CActivity
+				{
+					string m_Name = "ACT_DOTA_CAPTURE"
+					int m_nWeight = 1
+				}
+			]
+			CAnimationEvent[] m_AnimationEvents = 
+			[
+				CAnimationEvent
+				{
+					string m_Event = ""
+					int m_nFrame = 0
+					string m_DataString = ""
+				}
+			]
+			CMotionFrame[] m_MotionFrames = 
+			[
+				
+			]
+			CIKrule*[] m_pIkRules = 
+			[
+				
+			]
+			CAlignAnimation* m_pAlignAnimation = NULL
+			CAdjustAnimation m_adjustAnimation = CAdjustAnimation
+			{
+				float(3) m_translation = ( 0.000000, 0.000000, 0.000000 )
+				float(3) m_rotation = ( 0.000000, 0.000000, 0.000000 )
+			}
+			string[] m_Keywords = 
+			[
+				
+			]
+			CVAnimResourceSequenceParams m_sequenceParams = CVAnimResourceSequenceParams
+			{
+				float m_flFadeInTime = 0.200000
+				float m_flFadeOutTime = 0.200000
+			}
+			string m_folderName = ""
 		}
 	]
 	string[] m_sScripts = 
+	[
+		
+	]
+	string[] m_folderNames = 
 	[
 		
 	]

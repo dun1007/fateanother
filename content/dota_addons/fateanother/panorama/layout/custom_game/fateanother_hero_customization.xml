@@ -1,0 +1,14 @@
+<root>
+    <styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/fateanother_hero_customization.css" />
+    </styles>
+
+    <scripts>
+    	$.Msg("hero customization loaded")
+    </scripts>
+
+  	<Panel hittest="true" class="CustomizationBoardRoot">
+  		<Image id="KotomineImage" src="file://{images}/custom_game/game_info_kotomine.png" />
+  	</Panel>
+</root>

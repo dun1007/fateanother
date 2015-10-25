@@ -38,4 +38,9 @@
 	"Fateanother_Tip02"							"2. Fatepedia is a great resource for finding out what Servants do, from their abilities to strength/weaknesses."
 	"Fateanother_Tip03"							"3. To practice your mechanics in sandbox mode, you may create a solo lobby with cheat enabled. Most of Dota 2 cheats also work in this game. For instance, -createhero legion creates Saber under your command."
 	"Fateanother_Tip04"							""
+
+	"Fateanother_Customize"						"CUSTOMIZE SERVANT"
+	"Fateanother_Customize_Attributes"			"Attributes"
+	"Fateanother_Customize_Stats"			"Stats        (MAX:50)"
+	"Fateanother_Customize_Special_Cooldowns"	"Combo"
 }

@@ -344,12 +344,13 @@ function OnUBWCastStart(keys)
 	
 end
 
-ubwQuest = nil
+--ubwQuest = nil
 ubwdummies = nil
 -- Begins UBW 
 function OnUBWStart(keys)
 	print("started UBW")
-	ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
+	CreateUITimer("Unlimited Blade Works", 12, "ubw_timer")
+	--ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
 	--[[
@@ -505,7 +506,7 @@ function EndUBW(caster)
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, false) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, false) 
 
-	UTIL_RemoveImmediate(ubwQuest)
+	CreateUITimer("Unlimited Blade Works", 0, "ubw_timer")
 	caster.IsUBWActive = false
 	if not caster.UBWLocator:IsNull() and IsValidEntity(caster.UBWLocator) then
 		caster.UBWLocator:RemoveSelf()

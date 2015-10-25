@@ -1,0 +1,16 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_timer.css" />
+    </styles>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/fateanother_timer_layout.js" /> 
+    </scripts>
+    <Panel class="TimerPanel" hittest="true">
+        <Panel id="RoundTimerPanel" hittest="false">
+        </Panel>
+        <Panel id="MarbleTimerPanel" hittest="false">
+        </Panel>
+
+    </Panel>
+</root>

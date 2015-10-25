@@ -3,7 +3,7 @@
 		<include src="file://{resources}/styles/dotastyles.css" />
 		<include src="file://{resources}/styles/custom_game/fateanother_game_info.css" />
 	</styles>
-	<Panel class="OverthrowGameInfo">
+	<Panel class="FateanotherGameInfo">
 		<Panel id="Title">
 			<Label id="TitleName" text="#addonname" />
 		</Panel>

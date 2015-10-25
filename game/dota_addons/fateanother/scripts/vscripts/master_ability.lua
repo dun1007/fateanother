@@ -252,9 +252,10 @@ function OnSeal2Start(keys)
 		return
 	end
 
+	caster:SetMana(caster:GetMana()-1)
 	-- Set master 2's mana 
 	local master2 = hero.MasterUnit2
-	master2:SetMana(master2:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+	master2:SetMana(caster:GetMana())
 	-- Set master's health
 	caster:SetHealth(caster:GetHealth()-1) 
 
@@ -370,6 +371,78 @@ function OnSeal4Start(keys)
 	end
 end
 
+function AddMasterAbility(master, name)
+    --local ply = master:GetPlayerOwner()
+    local attributeTable = FindAttribute(name)
+    LoopThroughAttr(master, attributeTable)
+	master:AddAbility("master_strength")
+	master:AddAbility("master_agility")
+	master:AddAbility("master_intelligence")
+	master:AddAbility("master_damage")
+	master:AddAbility("master_armor")
+	master:AddAbility("master_health_regen")
+	master:AddAbility("master_mana_regen")
+	master:AddAbility("master_movement_speed")
+	master:AddAbility("master_2_passive")
+end
+
+function LoopThroughAttr(hero, attrTable)
+    for i=1, #attrTable do
+        print("Added " .. attrTable[i])
+        hero:AddAbility(attrTable[i])
+    end
+    if #attrTable-1 == 4 then
+    	hero:AddAbility("fate_empty1")
+    	hero:SwapAbilities(attrTable[#attrTable], "fate_empty1", true, true)
+   	end
+    hero.ComboName = attrTable[#attrTable]
+    --print(attrTable[#attrTable])
+    --hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(4):GetName(), true, true)
+    --hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
+    hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
+end
+
+function FindAttribute(name)
+    local attributes = nil
+    if name == "npc_dota_hero_legion_commander" then
+        attributes = SaberAttribute
+    elseif name == "npc_dota_hero_phantom_lancer" then
+        attributes = LancerAttribute
+    elseif name == "npc_dota_hero_spectre" then
+        attributes = SaberAlterAttribute
+    elseif name == "npc_dota_hero_ember_spirit" then
+        attributes = ArcherAttribute
+    elseif name == "npc_dota_hero_templar_assassin" then
+        attributes = RiderAttribute
+    elseif name == "npc_dota_hero_doom_bringer" then
+        attributes = BerserkerAttribute
+    elseif name == "npc_dota_hero_juggernaut" then
+        attributes = FAAttribute
+    elseif name == "npc_dota_hero_bounty_hunter" then
+        attributes = TAAttribute
+    elseif name == "npc_dota_hero_crystal_maiden" then
+        attributes = CasterAttribute
+    elseif name == "npc_dota_hero_skywrath_mage" then
+        attributes = GilgaAttribute
+    elseif name == "npc_dota_hero_sven" then
+        attributes = LancelotAttribute
+    elseif name == "npc_dota_hero_vengefulspirit" then
+        attributes = AvengerAttribute
+    elseif name == "npc_dota_hero_huskar" then
+        attributes = DiarmuidAttribute
+    elseif name == "npc_dota_hero_chen" then
+        attributes = IskanderAttribute
+    elseif name == "npc_dota_hero_shadow_shaman" then
+        attributes = GillesAttribute
+    elseif name == "npc_dota_hero_lina" then
+        attributes = NeroAttribute
+    elseif name == "npc_dota_hero_omniknight" then
+        attributes = GawainAttribute
+    elseif name == "npc_dota_hero_enchantress" then
+        attributes = TamamoAttribute
+    end
+    return attributes
+end 
 
 function OnAttributeListOpen(keys)
 	local caster = keys.caster

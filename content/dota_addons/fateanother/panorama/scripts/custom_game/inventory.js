@@ -67,7 +67,7 @@ function ChangeTransferMode() {
 }
 (function()
 {
-	$("#toggle_transfer").checked = true;
+	//$("#toggle_transfer").checked = true;
 	//CreateInventoryPanels();
 	//UpdateInventory();
 

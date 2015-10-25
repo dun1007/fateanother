@@ -1,0 +1,44 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_customization.css" />
+    </styles>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/fateanother_customization.js" /> 
+    </scripts>
+    <Panel class="CustomizationBoardRoot" hittest="false">
+	    <Panel id="CustomizationBoard" hittest="false" >
+	        <Panel id="CustomizationAttributePanel" hittest="false">
+	            <Label class="CustomizationText" text="#Fateanother_Customize_Attributes" hittest="false" />
+	            <Panel id="CustomizationAttributeLayout" hittest="false">
+	            </Panel>
+	        </Panel>
+	        <Panel id="CustomizationStatPanel" hittest="false">
+	            <Label class="CustomizationText" text="#Fateanother_Customize_Stats" hittest="false"/>
+	            <Panel id="CustomizationStatLayout" hittest="false">
+	            </Panel>
+		        <Panel id="CustomizationStatAmountLayout" hittest="false">
+		        	<Label id="STRAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="AGIAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="INTAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="DMGAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="ARMORAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="HPREGAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="MPREGAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        	<Label id="MSAmount" class="StatDisplayText" text="0" hittest="false"/>
+		        </Panel>
+	        </Panel>
+
+	        <Panel id="CustomizationCooldownPanel" hittest="false">
+	            <Label class="CustomizationText" text="#Fateanother_Customize_Special_Cooldowns" hittest="false" />
+	            <Panel id="CustomizationCooldownLayout" hittest="false">
+	            </Panel>
+	        </Panel>
+	    </Panel>
+        <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" hittest="true">
+            <Image id="CustomizationOpenButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <Label id="CustomizationOpenButtonText" class="CustomizationText" text="#Fateanother_Customize" hittest="false"/>
+        </Button>
+    </Panel>
+
+</root>

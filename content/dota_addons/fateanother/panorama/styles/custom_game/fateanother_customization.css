@@ -1,0 +1,93 @@
+.CustomizationBoardRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 290px;
+    margin-left: -10px;
+    flow-children: down;
+}
+
+#CustomizationOpenButton
+{
+    width: 300px;
+    height: 50px;
+}
+
+#CustomizationBoard
+{
+    width: 750px;
+    height: 400px;
+    //background-image: url("file://{images}/custom_game/customization_background.png");
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
+    overflow: scroll;
+}
+
+.CustomizationText
+{
+    font-weight: bold;
+    color: white;
+    font-size: 26px;
+    text-shadow: 2px 2px 2px #000000;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
+}
+
+#CustomizationOpenButtonText
+{
+    horizontal-align: center;
+    vertical-align: middle;
+}
+
+
+#CustomizationAttributePanel
+{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#CustomizationAttributeLayout
+{
+	margin-top: 30px;
+	flow-children: right;
+}
+
+#CustomizationStatPanel
+{
+    margin-left: 20px;
+    margin-top: 140px;
+}
+
+#CustomizationStatLayout
+{
+	margin-top: 30px;
+	flow-children: right;
+}
+
+.StatDisplayText
+{
+	width: 30px;
+	margin-left: 54px;
+    font-weight: bold;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #45d28b ), color-stop( 0.3, #ddf53d ), to( #45d28b ) );
+    font-size: 26px;
+    horizontal-align: center;
+    vertical-align: middle;
+}
+
+#CustomizationStatAmountLayout
+{
+	margin-left: -26px;
+	margin-top: 100px;
+	flow-children: right;
+}
+
+#CustomizationCooldownPanel
+{
+    margin-top: 280px;
+    margin-left: 20px;
+}
+
+#CustomizationCooldownLayout
+{
+	margin-top: 30px;
+	flow-children: right;
+}

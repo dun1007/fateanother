@@ -1,0 +1,14 @@
+@define BACKGROUND_COLOR: #999999;
+
+.CustomizationBoardRoot
+{
+	horizontal-align: left;
+	vertical-align: top;
+	margin-top: 650px;
+    flow-children: down;
+    padding: 10px;
+    visibility: true;
+
+    width: 100%;
+    height: 100%;
+}

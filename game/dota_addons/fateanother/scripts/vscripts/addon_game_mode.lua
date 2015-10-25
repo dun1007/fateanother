@@ -117,7 +117,10 @@ model_lookup["npc_dota_hero_omniknight"] = "models/gawain/gawain.vmdl"
 model_lookup["npc_dota_hero_enchantress"] = "models/tamamo/tamamo.vmdl"
 
 DoNotKillAtTheEndOfRound = {
-    "tamamo_charm"
+    "tamamo_charm",
+    "master_1",
+    "master_2",
+    "master_3"
 }
 voteResultTable = {
     voteFor12Rounds = 0,
@@ -205,6 +208,7 @@ function Precache( context )
     PrecacheResource("model", "models/shirou/shirouanim.vmdl", context)
     PrecacheResource("model", "models/items/courier/catakeet/catakeet_boxes.vmdl", context)
     PrecacheResource("model", "models/tohsaka/tohsaka.vmdl", context)
+    PrecacheResource( "particle", "particles/units/heroes/hero_silencer/silencer_global_silence_sparks.vpcf", context)
     
     -- Servants
     PrecacheResource("model", "models/saber/saber.vmdl", context)
@@ -283,6 +287,7 @@ function FateGameMode:OnAllPlayersLoaded()
     --GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
     GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
     --GameStartTimerStart()
+    --CreateUITimer("Unlimited Blade Works", 12)
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     
     -- Reveal the vote winner
@@ -411,11 +416,7 @@ function FateGameMode:PlayerSay(keys)
     if matchA ~= nil and matchB ~= nil then
         -- Act on the match
     end
-    
-    if text == "-endgame" then 
-        GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-        GameRules:Defeated()
-    end 
+
     -- Below two commands are solely for test purpose, not to be used in normal games
     if text == "-testsetup" then
         if Convars:GetBool("developer") then 
@@ -466,7 +467,7 @@ function FateGameMode:PlayerSay(keys)
     end
     
     -- Sends a message to request gold
-    local pID, goldAmt = string.match(text, "^-(%d) (%d+)")
+    local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
         if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
             local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
@@ -562,7 +563,10 @@ function FateGameMode:OnHeroInGame(hero)
     hero.MasterUnit2 = master2
     AddMasterAbility(master2, hero:GetName())
     LevelAllAbility(master2)
-    
+    local playerData = {
+        masterUnit = master2:entindex()
+    }
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero", playerData )
     --[[-- Create personal stash for hero
     masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
     masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
@@ -728,7 +732,7 @@ function FateGameMode:OnItemPurchased( keys )
                 end
             end
         else
-            print("Deducing extra cost" .. itemCost*0.5 .. "from player gold")
+            --print("Deducing extra cost" .. itemCost*0.5 .. "from player gold")
             hero:ModifyGold(-itemCost*0.5, true , 0) 
         end
         -- If hero is in base, check for C scroll stock
@@ -941,7 +945,9 @@ function FateGameMode:OnEntityKilled( keys )
         -- Distribute XP to allies
         local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
         for i=1, #alliedHeroes do
-            alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)
+            if alliedHeroes[i]:IsHero() then
+                alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)
+            end
         end
         --XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()]
         -- Add to death count
@@ -1044,6 +1050,54 @@ function OnDirectTransferChanged(Index, keys)
     print("Direct tranfer set to " .. transferEnabled .. " for " .. PlayerResource:GetPlayer(playerID):GetAssignedHero():GetName())
 end
 
+local statTable = {
+    STR = 0,
+    AGI = 0,
+    INT = 0,
+    DMG = 0,
+    ARMOR = 0,
+    HPREG = 0,
+    MPREG = 0,
+    MS = 0
+}
+
+function OnServantCustomizeActivated(Index, keys)
+    local caster = EntIndexToHScript(keys.unitEntIndex)
+    local ability = EntIndexToHScript(keys.abilEntIndex)
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    if ability:GetBehavior() ~= 6293508 then 
+        return 
+    end
+    if ability:GetManaCost(1) > caster:GetMana() then
+        FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Master Mana" } )
+        return
+    end
+    if ability:IsCooldownReady() == false then
+        return
+    end
+    caster:CastAbilityImmediately(ability, caster:GetPlayerOwnerID()) 
+    -- Save updated stats 
+    statTable.STR = hero.STRgained 
+    statTable.AGI = hero.AGIgained
+    statTable.INT = hero.INTgained
+    statTable.DMG = hero.DMGgained
+    statTable.ARMOR = hero.ARMORgained
+    statTable.HPREG = hero.HPREGgained
+    statTable.MPREG = hero.MPREGgained
+    statTable.MS = hero.MSgained
+
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
+
+    hero:EmitSound("Item.DropGemWorld")
+    local tomeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_silencer/silencer_global_silence_sparks.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+    ParticleManager:SetParticleControl(tomeFx, 1, hero:GetAbsOrigin())
+    
+    --EmitSoundOnLocationForAllies(hero:GetAbsOrigin(), "Item.PickUpGemShop", hero)
+
+    --ability:StartCooldown(ability:GetCooldown(1))
+    --caster:SetMana(caster:GetMana() - ability:GetManaCost(1))
+end
+
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function FateGameMode:InitGameMode()
@@ -1107,6 +1161,7 @@ function FateGameMode:InitGameMode()
     -- Listen to vote result
     CustomGameEventManager:RegisterListener( "vote_finished", OnVoteFinished )
     CustomGameEventManager:RegisterListener( "direct_transfer_changed", OnDirectTransferChanged )
+    CustomGameEventManager:RegisterListener( "servant_customize", OnServantCustomizeActivated )
 
 
     
@@ -1218,7 +1273,6 @@ function CountdownTimer()
             timer_second_01 = s01,
         }
     CustomGameEventManager:Send_ServerToAllClients( "timer_think", broadcast_gametimer )
-
 end
 
 ---------------------------------------------------------------------------
@@ -1265,6 +1319,9 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
     -- DOTA_UNIT_ORDER_MOVE_ITEM = 19(drag and drop)
 
     -- What do we do when handling the move between inventory and stash?
+    if orderType == 11 then
+        PrintTable(filterTable)
+    end
     if orderType == 19 then
         local currentItemIndex, itemName = nil
         local charges = -1
@@ -1340,11 +1397,11 @@ function FateGameMode:InitializeRound()
         print("[FateGameMode]First round started, initiating 10 minute timer...")
         IsGameStarted = true
         GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
-        local blessingQuest = StartQuestTimer("roundTimerQuest", "#Fate_Timer_10minute_quest", 599)
+        CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
         Timers:CreateTimer('round_10min_bonus', {
             endTime = 600,
             callback = function()
-                blessingQuest = StartQuestTimer("roundTimerQuest", "#Fate_Timer_10minute_quest", 599)
+                CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
                 self:LoopOverPlayers(function(player, playerID)
                     local hero = player:GetAssignedHero()
                     hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
@@ -1361,7 +1418,8 @@ function FateGameMode:InitializeRound()
     
     -- Flag game mode as pre round, and display tip
     _G.IsPreRound = true 
-    FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 16, timerEnd = true, timerPosition = 0})
+    CreateUITimer("Pre-Round", 15, "pregame_timer")
+    --FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 16, timerEnd = true, timerPosition = 0})
     DisplayTip()
     Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false) 
     
@@ -1416,7 +1474,8 @@ function FateGameMode:InitializeRound()
             print("[FateGameMode]Round started.")
             _G.IsPreRound = false
             _G.RoundStartTime = GameRules:GetGameTime()
-            FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 151, timerEnd = true, timerPosition = 0})
+            CreateUITimer(("Round " .. self.nCurrentRound), 150, "round_timer" .. self.nCurrentRound)
+            --FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 151, timerEnd = true, timerPosition = 0})
             --roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
             
             self:LoopOverPlayers(function(player, playerID)
@@ -1497,7 +1556,8 @@ end
 function FateGameMode:FinishRound(IsTimeOut, winner)
     print("[FATE] Winner decided")
     --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
-    
+    CreateUITimer(("Round " .. self.nCurrentRound), 0, "round_timer" .. self.nCurrentRound)
+    CreateUITimer("Pre-Round", 0, "pregame_timer")
     self:LoopOverPlayers(function(ply, plyID)
         if ply:GetAssignedHero():IsAlive() then
             giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
@@ -1592,6 +1652,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             for k,v in pairs(units) do
                 if not v:IsRealHero() and IsValidEntity(v) then
                     for i=1, #DoNotKillAtTheEndOfRound do
+                        print(v:GetUnitName())
                         if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
                             v:ForceKill(true)
                         end
@@ -1601,6 +1662,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             for k,v in pairs(units2) do
                 if not v:IsRealHero() and IsValidEntity(v) then
                     for i=1, #DoNotKillAtTheEndOfRound do
+                        print(v:GetUnitName())
                         if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
                             v:ForceKill(true)
                         end
