@@ -84,10 +84,22 @@
 {
     margin-top: 280px;
     margin-left: 20px;
+    flow-children: right;
 }
 
 #CustomizationCooldownLayout
 {
 	margin-top: 30px;
 	flow-children: right;
+}
+
+#CustomizationShardPanel
+{
+    margin-left: 70px;
+}
+
+#CustomizationShardLayout
+{
+    margin-top: 30px;
+    flow-children: right;
 }

@@ -9,13 +9,17 @@ function OnCustomizeButtonPressed()
 
 function UpdateAttributeList(data)
 {
+	$.Msg("updating attribute list")
 	var attributePanel = $("#CustomizationAttributeLayout");
 	var statPanel = $("#CustomizationStatLayout");
 	var cooldownPanel = $("#CustomizationCooldownLayout");
-	if (!attributePanel || !statPanel)
+	var shardPanel = $("#CustomizationShardLayout");
+	if (!attributePanel || !statPanel || !shardPanel)
 		return;
 
+	$.Msg("panels present. linking abilities...")
 	var queryUnit = data.masterUnit; //Players.GetLocalPlayerPortraitUnit();
+	var queryUnit2 = data.shardUnit;
 	for(i=0; i<5; i++) {
 		CreateAbilityPanel(attributePanel, queryUnit, i);
 	}
@@ -23,6 +27,12 @@ function UpdateAttributeList(data)
 	for(i=6; i<14; i++) {
 		CreateAbilityPanel(statPanel, queryUnit, i);
 	}
+
+	for(i=8; i<12; i++) {
+		CreateAbilityPanel(shardPanel, queryUnit2, i);
+	}
+
+	$.Msg("done!")
 }
 
 function CreateAbilityPanel(panel, unit, abilityIndex)
@@ -44,6 +54,54 @@ function UpdateStatPanel(data)
 	$("#MPREGAmount").text = data.MPREG;
 	$("#MSAmount").text = data.MS;
 }
+
+function AttributeShowTooltip()
+{
+	var attrText = $("#CustomizationAttributeText");
+	$.DispatchEvent('DOTAShowTextTooltip', attrText, "#Fateanother_Customize_Attributes_Tooltip");
+}
+
+function AttributeHideTooltip()
+{
+	var attrText = $("#CustomizationAttributeText"); 
+	$.DispatchEvent( 'DOTAHideTextTooltip', attrText );
+}
+
+function StatShowTooltip()
+{
+	var statText = $("#CustomizationStatText"); 
+	$.DispatchEvent( 'DOTAShowTextTooltip', statText, "#Fateanother_Customize_Stats_Tooltip");
+}
+
+function StatHideTooltip()
+{
+	var statText = $("#CustomizationStatText"); 
+	$.DispatchEvent( 'DOTAHideTextTooltip', statText );
+}
+
+function ComboShowTooltip()
+{
+	var comboText = $("#CustomizationComboText"); 
+	$.DispatchEvent( 'DOTAShowTextTooltip', comboText, "#Fateanother_Customize_Special_Cooldowns_Tooltip");
+}
+
+function ComboHideTooltip()
+{
+	var comboText = $("#CustomizationComboText"); 
+	$.DispatchEvent( 'DOTAHideTextTooltip', comboText );
+}
+
+function ShardShowTooltip()
+{
+	var shardText = $("#CustomizationShardText"); 
+	$.DispatchEvent( 'DOTAShowTextTooltip', shardText, "#Fateanother_Customize_Special_Shards_Tooltip");
+}
+function ShardHideTooltip()
+{
+	var shardText = $("#CustomizationShardText"); 
+	$.DispatchEvent( 'DOTAHideTextTooltip', shardText );
+}
+
 
 (function()
 {

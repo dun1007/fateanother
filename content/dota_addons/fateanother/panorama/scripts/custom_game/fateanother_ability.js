@@ -76,7 +76,6 @@ function UpdateAbility()
 
 function AbilityShowTooltip()
 {
-	$.Msg("show tooltip");
 	var abilityButton = $( "#AbilityButton" );
 	var abilityName = Abilities.GetAbilityName( m_Ability );
 	// If you don't have an entity, you can still show a tooltip that doesn't account for the entity

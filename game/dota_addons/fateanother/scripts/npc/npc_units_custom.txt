@@ -1737,6 +1737,10 @@
 		"Ability6"					"fate_empty2"
 		"Ability7"					"fate_empty3"
 		"Ability8"					"fate_empty4"
+		"Ability9"					"master_shard_of_avarice"
+		"Ability10"					"master_shard_of_anti_magic"
+		"Ability11"					"master_shard_of_replenishment"
+		"Ability12"					"master_shard_of_prosperity"
 
 		// Armor
 		//----------------------------------------------------------------

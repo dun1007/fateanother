@@ -84,7 +84,8 @@ revokes = {
     "modifier_subterranean_grasp_revoke",
     "modifier_enkidu_hold",
     "jump_pause",
-    "pause_sealdisabled"
+    "pause_sealdisabled",
+    "rb_sealdisabled"
 }
 
 

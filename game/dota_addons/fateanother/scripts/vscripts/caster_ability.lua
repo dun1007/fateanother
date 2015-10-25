@@ -2,7 +2,7 @@ require("Physics")
 require("util")
 
 territoryAbilHandle = nil -- Ability handle for Create Workshop
-ATTRIBUTE_HG_INT_MULTIPLIER = 1
+ATTRIBUTE_HG_INT_MULTIPLIER = 0
 
 --[[
 	Author: Dun1007

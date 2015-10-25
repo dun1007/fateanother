@@ -240,18 +240,19 @@ function OnSeal2Start(keys)
 
 	if caster:GetHealth() == 1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
-		caster:SetMana(caster:GetMana()+2) 
+		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
 		return 
 	end
 
 	if not hero:IsAlive() or IsRevoked(hero) then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
-		caster:SetMana(caster:GetMana()+2) 
+		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
 		return
 	end
 
+	print(caster:GetMana()-1)
 	caster:SetMana(caster:GetMana()-1)
 	-- Set master 2's mana 
 	local master2 = hero.MasterUnit2
@@ -847,12 +848,13 @@ function OnProsperityAcquired(keys)
 
 
 	local master = hero.MasterUnit 
-	caster:SetMana(caster:GetMana()+20)
-	caster:SetMaxHealth(caster:GetMaxHealth()+1) 
-	caster:SetHealth(caster:GetHealth()+1)
+	local master2 = hero.MasterUnit2
 	master:SetMana(master:GetMana()+20)
 	master:SetMaxHealth(master:GetMaxHealth()+1) 
 	master:SetHealth(master:GetHealth()+1)
+	master2:SetMana(master:GetMana())
+	master2:SetMaxHealth(master:GetMaxHealth()) 
+	master2:SetHealth(master:GetHealth())
 end
 
 function test(keys)

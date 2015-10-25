@@ -41,6 +41,11 @@
 
 	"Fateanother_Customize"						"CUSTOMIZE SERVANT"
 	"Fateanother_Customize_Attributes"			"Attributes"
-	"Fateanother_Customize_Stats"			"Stats        (MAX:50)"
+	"Fateanother_Customize_Attributes_Tooltip"	"A unique set of properties that empowers your Servant in variety of ways."
+	"Fateanother_Customize_Stats"			"Stats"
+	"Fateanother_Customize_Stats_Tooltip"	"Each stat can be obtained only up to 50 times."
 	"Fateanother_Customize_Special_Cooldowns"	"Combo"
+	"Fateanother_Customize_Special_Cooldowns_Tooltip"	"A defining special move. Your Servant must fulfill Stat requirement, and cast abilities in certain order to activate the Combo."
+	"Fateanother_Customize_Special_Shards"	"Shards of Holy Grail"
+	"Fateanother_Customize_Special_Shards_Tooltip"		"The legendary artifact. Your Servant must face a death, not caused by friendly-fire or suicide, 7 times in order to activate the shard."
 }

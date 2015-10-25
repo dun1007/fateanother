@@ -551,7 +551,6 @@ function OnFatesCallCast(keys)
 	if caster:GetAbsOrigin().y <  -2000 then
 		caster.IsInMarbleAtStart = true
 	end
-	print(caster.IsInMarbleAtStart)
 end
 
 function OnFatesCallStart(keys)
@@ -573,6 +572,7 @@ function OnFatesCallStart(keys)
 		if count > delay then return end
 		if caster:HasModifier("modifier_stunned") then
 			caster.IsStunnedDuringFatesCall = true
+			print("caster stunned during fate's call, canceling it...")
 			return
 		end
 		count = count + 0.033
@@ -584,7 +584,7 @@ function OnFatesCallStart(keys)
 			caster.IsInMarbleAtEnd = true
 		end
 		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") and not caster.IsStunnedDuringFatesCall and 
-			(caster.IsInMarbleAtStart ~= caster.IsInMarbleAtEnd) then
+			(caster.IsInMarbleAtStart == caster.IsInMarbleAtEnd) then
 
 			caster.TetheredTarget:SetAbsOrigin(targetPoint)
 			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")

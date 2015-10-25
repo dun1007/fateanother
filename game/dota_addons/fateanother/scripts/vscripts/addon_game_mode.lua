@@ -564,7 +564,8 @@ function FateGameMode:OnHeroInGame(hero)
     AddMasterAbility(master2, hero:GetName())
     LevelAllAbility(master2)
     local playerData = {
-        masterUnit = master2:entindex()
+        masterUnit = master2:entindex(),
+        shardUnit = master:entindex()
     }
     CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero", playerData )
     --[[-- Create personal stash for hero
@@ -695,7 +696,20 @@ end
 function FateGameMode:OnPlayerReconnect(keys)
     print ( '[BAREBONES] OnPlayerReconnect' )
     PrintTable(keys) 
-    local userid = keys.PlayerID
+    Timers:CreateTimer(3.0, function()
+        print("reinitiating the UI")
+        local userid = keys.PlayerID
+        local ply = PlayerResource:GetPlayer(keys.PlayerID)
+        local hero = ply:GetAssignedHero()
+
+        local playerData = {
+            masterUnit = hero.MasterUnit2:entindex(),
+            shardUnit = hero.MasterUnit:entindex()
+        }
+        CustomGameEventManager:Send_ServerToPlayer( ply, "player_selected_hero", playerData )
+        --CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
+        return
+    end)
 end
 
 -- An item was purchased by a player

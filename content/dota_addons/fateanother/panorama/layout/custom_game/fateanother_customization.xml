@@ -9,12 +9,12 @@
     <Panel class="CustomizationBoardRoot" hittest="false">
 	    <Panel id="CustomizationBoard" hittest="false" >
 	        <Panel id="CustomizationAttributePanel" hittest="false">
-	            <Label class="CustomizationText" text="#Fateanother_Customize_Attributes" hittest="false" />
+	            <Label id="CustomizationAttributeText" class="CustomizationText" text="#Fateanother_Customize_Attributes" onmouseover="AttributeShowTooltip()" onmouseout="AttributeHideTooltip()" hittest="true" />
 	            <Panel id="CustomizationAttributeLayout" hittest="false">
 	            </Panel>
 	        </Panel>
 	        <Panel id="CustomizationStatPanel" hittest="false">
-	            <Label class="CustomizationText" text="#Fateanother_Customize_Stats" hittest="false"/>
+	            <Label id="CustomizationStatText" class="CustomizationText" text="#Fateanother_Customize_Stats" onmouseover="StatShowTooltip()" onmouseout="StatHideTooltip()" hittest="true"/>
 	            <Panel id="CustomizationStatLayout" hittest="false">
 	            </Panel>
 		        <Panel id="CustomizationStatAmountLayout" hittest="false">
@@ -30,9 +30,17 @@
 	        </Panel>
 
 	        <Panel id="CustomizationCooldownPanel" hittest="false">
-	            <Label class="CustomizationText" text="#Fateanother_Customize_Special_Cooldowns" hittest="false" />
-	            <Panel id="CustomizationCooldownLayout" hittest="false">
+	        	<Panel id="CustomizationComboPanel" hittest="false">
+		            <Label id="CustomizationComboText" class="CustomizationText" text="#Fateanother_Customize_Special_Cooldowns" onmouseover="ComboShowTooltip()" onmouseout="ComboHideTooltip()" hittest="true" />
+		            <Panel id="CustomizationCooldownLayout" hittest="false">
+		            </Panel>
 	            </Panel>
+	            <Panel id="CustomizationShardPanel" hittest="false">
+	            	<Label id="CustomizationShardText" class="CustomizationText" text="#Fateanother_Customize_Special_Shards" onmouseover="ShardShowTooltip()" onmouseout="ShardHideTooltip()" hittest="true" />
+	            	<Panel id="CustomizationShardLayout" hittest="false">
+		            </Panel>
+	            </Panel>
+
 	        </Panel>
 	    </Panel>
         <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" hittest="true">
