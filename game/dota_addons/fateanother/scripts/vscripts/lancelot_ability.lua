@@ -330,6 +330,7 @@ function OnNukeStart(keys)
     FireGameEvent("show_center_message",nukemsg)
 
     local f16 = CreateUnitByName("f16_dummy", Vector(0, 0, 0), true, nil, nil, caster:GetTeamNumber())
+    f16:SetOwner(caster)
     local visiondummy = CreateUnitByName("sight_dummy_unit", targetPoint, false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
     visiondummy:SetDayTimeVisionRange(1500)
     visiondummy:SetNightTimeVisionRange(1500)
@@ -378,7 +379,7 @@ function OnNukeStart(keys)
         local targets1 = FindUnitsInRadius(caster:GetTeam(), targetPoint + barrageVec1, nil, 200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
         for k,v in pairs(targets1) do
             DoDamage(caster, v, 300, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-            if not v:IsMagicImmune() then v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.50}) end
+            if not v:IsMagicImmune() then v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.75}) end
         end
         -- particle
         local barrageImpact1 = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )

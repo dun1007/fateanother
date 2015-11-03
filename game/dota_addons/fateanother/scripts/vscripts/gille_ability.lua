@@ -652,56 +652,58 @@ function OnIntegrateStart(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 
 	Timers:CreateTimer(0.5, function()
-		if caster.IsIntegrated then
-			if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
-				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
-				keys.ability:EndCooldown()
-				return			
-			else
-				hero:RemoveModifierByName("modifier_integrate_gille")
-				caster:RemoveModifierByName("modifier_integrate")
-				caster.IsIntegrated = false
-				caster.AttemptingIntegrate = false
-			end
-		elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
-			caster.IsIntegrated = true
-			keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
-			caster:EmitSound("ZC.Tentacle1")
-			caster:EmitSound("ZC.Laugh")
-			return 
-		end
-		--[[
-		else
-			caster.AttemptingIntegrate = true
-			ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), 
-									OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
-									TargetIndex = hero:GetEntityIndex(), 
-									Position = hero:GetAbsOrigin(), 
-									Queue = false
-								}) 
-
-			ExecuteOrderFromTable({ UnitIndex = hero:GetEntityIndex(), 
-									OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
-									TargetIndex = caster:GetEntityIndex(), 
-									Position = caster:GetAbsOrigin(), 
-									Queue = false
-								}) 
-			Timers:CreateTimer("integrate_checker", {
-				endTime = 0.0,
-				callback = function()
-				if (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 300 and caster.AttemptingIntegrate then 
-					caster.IsIntegrated = true
+		if caster:IsAlive() then
+			if caster.IsIntegrated then
+				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
+					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
+					keys.ability:EndCooldown()
+					return			
+				else
+					hero:RemoveModifierByName("modifier_integrate_gille")
+					caster:RemoveModifierByName("modifier_integrate")
+					caster.IsIntegrated = false
 					caster.AttemptingIntegrate = false
-					keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
-					keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
-					caster:EmitSound("ZC.Tentacle1")
-					caster:EmitSound("ZC.Laugh")
-					return 
 				end
-				return 0.1
-			end})
-		end]]
+			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
+				caster.IsIntegrated = true
+				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
+				caster:EmitSound("ZC.Tentacle1")
+				caster:EmitSound("ZC.Laugh")
+				return 
+			end
+			--[[
+			else
+				caster.AttemptingIntegrate = true
+				ExecuteOrderFromTable({ UnitIndex = caster:GetEntityIndex(), 
+										OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
+										TargetIndex = hero:GetEntityIndex(), 
+										Position = hero:GetAbsOrigin(), 
+										Queue = false
+									}) 
+
+				ExecuteOrderFromTable({ UnitIndex = hero:GetEntityIndex(), 
+										OrderType = DOTA_UNIT_ORDER_MOVE_TO_TARGET, 
+										TargetIndex = caster:GetEntityIndex(), 
+										Position = caster:GetAbsOrigin(), 
+										Queue = false
+									}) 
+				Timers:CreateTimer("integrate_checker", {
+					endTime = 0.0,
+					callback = function()
+					if (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 300 and caster.AttemptingIntegrate then 
+						caster.IsIntegrated = true
+						caster.AttemptingIntegrate = false
+						keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
+						keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
+						caster:EmitSound("ZC.Tentacle1")
+						caster:EmitSound("ZC.Laugh")
+						return 
+					end
+					return 0.1
+				end})
+			end]]
+		end
 	end)
 end
 

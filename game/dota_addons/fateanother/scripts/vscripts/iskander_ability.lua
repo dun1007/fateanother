@@ -76,6 +76,7 @@ function OnPhalanxStart(keys)
 	for i=0,3 do
 		Timers:CreateTimer(i*0.1, function()
 			local soldier = CreateUnitByName("iskander_infantry", targetPoint + leftvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+			soldier:SetOwner(caster)
 		    soldier:AddAbility("phalanx_soldier_passive") 
 		    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
 			soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = keys.Duration})
@@ -102,6 +103,7 @@ function OnPhalanxStart(keys)
 	for i=1,4 do
 		Timers:CreateTimer(i*0.1, function()
 			local soldier = CreateUnitByName("iskander_infantry", targetPoint + rightvec * 75 * i, true, nil, nil, caster:GetTeamNumber())
+			soldier:SetOwner(caster)
 		    soldier:AddAbility("phalanx_soldier_passive") 
 		    soldier:FindAbilityByName("phalanx_soldier_passive"):SetLevel(1)
 			soldier:AddNewModifier(caster, nil, "modifier_kill", {duration = keys.Duration})
@@ -205,7 +207,8 @@ function OnChariotStart(keys)
 	end
 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel", {}) 
-	caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
+	caster:AddNewModifier(caster, nil, "modifier_movespeed_cap", {duration = keys.Duration+1})
+	--caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
 	caster:SetModel("models/iskander/iskander_chariot.vmdl")
     caster:SetOriginalModel("models/iskander/iskander_chariot.vmdl")
     caster:SetModelScale(1.0)
@@ -248,6 +251,7 @@ function OnChariotRide(keys)
 
    	Timers:CreateTimer(function() 
    		if caster:HasModifier("modifier_gordius_wheel") then 
+   			print(caster:GetBaseMoveSpeed())
    			if not caster:HasModifier("modifier_army_of_the_king_death_checker") then
 				local currentStack = caster:GetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability)
 				if currentStack == 0 and caster:HasModifier("modifier_gordius_wheel_speed_boost") then currentStack = 1 end
@@ -334,7 +338,7 @@ function OnChariotEnd(keys)
     caster:SetModelScale(1.0)
 
     caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost")
-    caster:RemoveModifierByName("modifier_bloodseeker_thirst_speed")
+    caster:RemoveModifierByName("modifier_movespeed_cap")
 end
 
 function OnChariotChargeStart(keys)
@@ -602,6 +606,15 @@ function OnAOTKStart(keys)
 	truesightdummy:SetNightTimeVisionRange(2500)
 	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
+	-- spawn sight dummy for enemies
+	local enemyTeamNumber = 0
+	if caster:GetTeamNumber() == 0 then enemyTeamNumber = 1 end
+	local truesightdummy2 = CreateUnitByName("sight_dummy_unit", aotkCenter, false, keys.caster, keys.caster, enemyTeamNumber)
+	truesightdummy2:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
+	truesightdummy2:SetDayTimeVisionRange(2500)
+	truesightdummy2:SetNightTimeVisionRange(2500)
+	local unseen2 = truesightdummy2:FindAbilityByName("dummy_unit_passive")
+	unseen2:SetLevel(1)
 
 	-- Summon soldiers
 	local marbleCenter = 0

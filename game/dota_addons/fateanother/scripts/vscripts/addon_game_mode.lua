@@ -2,7 +2,6 @@ require("timers")
 require('util' )
 require('archer_ability')
 require('master_ability')
-require('xLib/xDialog')
 require('gille_ability')
 require('notifications')
 require('items')
@@ -952,51 +951,56 @@ function FateGameMode:OnEntityKilled( keys )
     -- Change killer to be owning hero 
     if not killerEntity:IsHero() then
         print("Killed by neutral unit")
-        killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
+        if IsValidEntity(killerEntity:GetPlayerOwner()) then 
+            killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
+        end
     end
     if killedUnit:IsRealHero() then
         self.bIsCasuallyOccured = true
-        -- Distribute XP to allies
-        local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
-        for i=1, #alliedHeroes do
-            if alliedHeroes[i]:IsHero() then
-                alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)
-            end
-        end
-        --XP_BOUNTY_PER_LEVEL_TABLE[hero:GetLevel()]
-        -- Add to death count
-        if killedUnit.DeathCount == nil then
-            killedUnit.DeathCount = 1
-        else
-            killedUnit.DeathCount = killedUnit.DeathCount + 1
-        end
-        -- check if unit can receive a shard
-        if killedUnit.DeathCount == 7 then
-            if killedUnit.ShardAmount == nil then 
-                killedUnit.ShardAmount = 1
-                killedUnit.DeathCount = 0
-            else
-                killedUnit.ShardAmount = killedUnit.ShardAmount + 1
-                killedUnit.DeathCount = 0
-            end
-        end
-        -- Give kill bounty 
-        local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]
-        killerEntity:ModifyGold(bounty , true, 0)
-        -- Create gold popup
-        local goldPopupFx = ParticleManager:CreateParticle("particles/msg_fx/msg_gold.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit)
-        ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
-        ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
-        ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(5,#tostring(bounty)+1, 0))
-        ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
-        -- Display gold message
-        GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold!", 0, 0)
 
-        -- if killer has Golden Rule attribute, grant 50% more gold
-        if killerEntity:FindAbilityByName("gilgamesh_golden_rule") and killerEntity:FindAbilityByName("gilgamesh_golden_rule"):GetLevel() == 2 then 
-            killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
-        end 
-        print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
+        if killerEntity:GetTeam() == killedUnit:GetTeam() then
+            GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain friendly Servant <font color='#FF5050'>" .. killedUnit.name .. "</font>!", 0, 0)
+        else
+            -- Add to death count
+            if killedUnit.DeathCount == nil then
+                killedUnit.DeathCount = 1
+            else
+                killedUnit.DeathCount = killedUnit.DeathCount + 1
+            end
+            -- check if unit can receive a shard
+            if killedUnit.DeathCount == 7 then
+                if killedUnit.ShardAmount == nil then 
+                    killedUnit.ShardAmount = 1
+                    killedUnit.DeathCount = 0
+                else
+                    killedUnit.ShardAmount = killedUnit.ShardAmount + 1
+                    killedUnit.DeathCount = 0
+                end
+            end
+            -- Distribute XP to allies
+            local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
+            for i=1, #alliedHeroes do
+                if alliedHeroes[i]:IsHero() then
+                    alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)
+                end
+            end
+            -- Give kill bounty 
+            local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]
+            killerEntity:ModifyGold(bounty , true, 0)
+            -- if killer has Golden Rule attribute, grant 50% more gold
+            if killerEntity:FindAbilityByName("gilgamesh_golden_rule") and killerEntity:FindAbilityByName("gilgamesh_golden_rule"):GetLevel() == 2 then 
+                killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
+            end 
+            print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
+            -- Create gold popup
+            local goldPopupFx = ParticleManager:CreateParticle("particles/msg_fx/msg_gold.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit)
+            ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
+            ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
+            ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(5,#tostring(bounty)+1, 0))
+            ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
+            -- Display gold message
+            GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold!", 0, 0)
+        end
         
         -- Need condition check for GH
         --if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
@@ -1176,7 +1180,8 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "vote_finished", OnVoteFinished )
     CustomGameEventManager:RegisterListener( "direct_transfer_changed", OnDirectTransferChanged )
     CustomGameEventManager:RegisterListener( "servant_customize", OnServantCustomizeActivated )
-
+    -- LUA modifiers
+    LinkLuaModifier("modifier_movespeed_cap", "modifiers/modifier_movespeed_cap", LUA_MODIFIER_MOTION_NONE)
 
     
     -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
@@ -1197,45 +1202,6 @@ function FateGameMode:InitGameMode()
     end, "Player said something", 0)
     
     
-    -- Fill server with fake clients
-    -- Fake clients don't use the default bot AI for buying items or moving down lanes and are sometimes necessary for debugging
-    Convars:RegisterCommand('fake', function()
-        -- Check if the server ran it
-        if not Convars:GetCommandClient() then
-            -- Create fake Players
-            SendToServerConsole('dota_create_fake_clients')
-            
-            Timers:CreateTimer('assign_fakes', {
-                useGameTime = false,
-                endTime = Time(),
-                callback = function(barebones, args)
-                    local userID = 20
-                    for i=0, 11 do
-                        userID = userID + 1
-                        -- Check if this player is a fake one
-                        if PlayerResource:IsFakeClient(i) then
-                            -- Grab player instance
-                            local ply = PlayerResource:GetPlayer(i)
-                            -- Make sure we actually found a player instance
-                            if ply then
-                                CreateHeroForPlayer('npc_dota_hero_axe', ply)
-                                self:OnConnectFull({
-                                    userid = userID,
-                                    index = ply:entindex()-1
-                                })
-                                
-                                ply:GetAssignedHero():SetControllableByPlayer(0, true)
-                            end
-                        end
-                    end
-            end})
-        end
-    end, 'Connects and assigns fake Players.', 0)
-    
-    --[[This block is only used for testing events handling in the event that Valve adds more in the future
-    Convars:RegisterCommand('events_test', function()
-        FateGameMode:StartEventTest()
-    end, "events test", 0)]]
     
     -- Initialized tables for tracking state
     self.nRadiantScore = 0

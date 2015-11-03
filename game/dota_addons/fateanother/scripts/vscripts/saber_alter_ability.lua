@@ -67,7 +67,7 @@ function OnUFStart(keys)
 	local bonusDamage = 0
 
 	if caster.IsFerocityImproved then
-		bonusDamage = caster:GetStrength() + caster:GetIntellect()
+		bonusDamage = caster:GetStrength()*1.5 + caster:GetIntellect()*1.5
 	end
 	DSCheckCombo(caster, keys.ability)
 	Timers:CreateTimer(function()
