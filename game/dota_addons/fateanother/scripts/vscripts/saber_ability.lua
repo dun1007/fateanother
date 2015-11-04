@@ -107,17 +107,16 @@ function CaliburnExplode( keys )
 	-- Variables
 	local caster = keys.caster
 	local target = keys.target
-	local lightParticleName = "particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
-	local explodeParticleName = "particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
+	local slashParticleName = "particles/custom/saber/caliburn/slash.vpcf"
+	local explodeParticleName = "particles/custom/saber/caliburn/explosion.vpcf"
 
 
 	-- Create particle
-	local lightFxIndex = ParticleManager:CreateParticle( lightParticleName, PATTACH_ABSORIGIN, target )
+	local slashFxIndex = ParticleManager:CreateParticle( slashParticleName, PATTACH_ABSORIGIN, target )
 	local explodeFxIndex = ParticleManager:CreateParticle( explodeParticleName, PATTACH_ABSORIGIN, target )
-	ParticleManager:SetParticleControl( explodeFxIndex, 3, target:GetAbsOrigin() )
 	
 	Timers:CreateTimer( 3.0, function()
-			ParticleManager:DestroyParticle( lightFxIndex, false )
+			ParticleManager:DestroyParticle( slashFxIndex, false )
 			ParticleManager:DestroyParticle( explodeFxIndex, false )
 			return nil
 		end
@@ -195,17 +194,20 @@ function OnExcaliburStart(keys)
 			ScreenShake(caster:GetOrigin(), 5, 0.1, 2, 20000, 0, true)
 		end
 	end)
-	-- Make 2 particles for both teams
-	for i=0,1 do
+	
+	local casterFacing = caster:GetForwardVector()
+	-- for i=0,1 do
 		Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
 			if caster:IsAlive() then
 				-- Create Particle for projectile
-				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				dummy:SetForwardVector(casterFacing)
 				Timers:CreateTimer( function()
 						if IsValidEntity(dummy) then
-							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
-							dummy:SetAbsOrigin( newLoc )
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * casterFacing
+							dummy:SetAbsOrigin(GetGroundPosition(newLoc,dummy))
+							-- DebugDrawCircle(newLoc, Vector(255,0,0), 0.5, keys.StartRadius, true, 0.15)
 							return 0.03
 						else
 							return nil
@@ -213,11 +215,8 @@ function OnExcaliburStart(keys)
 					end
 				)
 				
-				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
-				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.EndRadius, keys.EndRadius, keys.EndRadius ) )
-				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
-				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
-
+				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/saber/excalibur/shockwave.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, dummy )
+				ParticleManager:SetParticleControl(excalFxIndex, 4, Vector(keys.StartRadius,0,0))
 
 				Timers:CreateTimer( 2.5, function()
 						ParticleManager:DestroyParticle( excalFxIndex, false )
@@ -233,7 +232,7 @@ function OnExcaliburStart(keys)
 				return 
 			end
 		end)
-	end
+	-- end
 end
 
 function OnExcaliburHit(keys)
@@ -243,7 +242,7 @@ function OnExcaliburHit(keys)
 	if caster.IsExcaliburAcquired == true then keys.Damage = keys.Damage + 300 end
 	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*1.3 end
 	
-	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) 
+	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnMaxStart(keys)
