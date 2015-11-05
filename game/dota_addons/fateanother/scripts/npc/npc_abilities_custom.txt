@@ -1897,6 +1897,11 @@
 				"var_type" 		"FIELD_INTEGER"
 				"extra_damage"		"3 4 5 6 7"
 			}
+			"02"
+			{
+				"var_type"		"FIELD_FLOAT"
+				"ability_bonus_damage"	"0 2.5 5.0 7.5 10.0"
+			}
 		}
 
 		"Modifiers"
@@ -3675,12 +3680,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"uf_int_ratio"		"1"
+				"uf_int_ratio"		"1.5"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"uf_str_ratio"		"1"
+				"uf_str_ratio"		"1.5"
 			}
 		}
 		
@@ -3826,7 +3831,7 @@
 				{
 					//"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"50"
 				}
-				"OnAttackStart"
+				"OnAttackLanded"
 				{
 					"Random"
 					{
@@ -4206,7 +4211,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1100"
+		"AbilityCastRange"				"1150"
 		"AbilityCastPoint"				"0.8"
 
 		// Time		
@@ -4239,7 +4244,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"1100"
+				"range"				"1150"
 			}
 			"05"
 			{
@@ -5727,6 +5732,21 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"sword_interval"			"0.2"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"sword_base_damage"			"50"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"sword_int_ratio"			"0.5"
+			}
 		}
 		
 		"OnSpellStart"
@@ -5735,6 +5755,55 @@
 			{
 				"ScriptFile"	"archer_ability"
 				"Function"		"OnImproveProjectionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Archer Attribute : Improve Projection
+	//=======================================
+	"archer_5th_attribute_improve_projection_level2"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"archer_5th_attribute_improve_projection"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"sword_interval"			"20"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"sword_base_damage"			"30"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"sword_int_ratio"			"30"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnImproveProjection2Acquired"
 			}
 		}
 	}
@@ -6994,6 +7063,16 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_damage"		"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"agi_ratio"			"16"
+			}
 		}
 		
 		"OnSpellStart"
@@ -7007,6 +7086,7 @@
 
 		"OnProjectileHitUnit"
 		{
+			"DeleteOnHit"		"false"
 			"RunScript"
 			{
 			 	"ScriptFile"	"fa_ability"
@@ -7848,6 +7928,16 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"base_damage"		"500"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"agi_ratio"			"16"
+			}
 		}
 		
 		"OnSpellStart"
@@ -7962,6 +8052,14 @@
 					{
 						"ScriptFile"	"ta_ability"
 						"Function"		"OnPCMoved"
+					}
+				}
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"ta_ability"
+						"Function"		"OnPCRespawn"
 					}
 				}
 			}
@@ -10903,7 +11001,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_TOGGLE"
 		"AbilityTextureName"			"caster_5th_ancient_magic"
 		
 		
@@ -10919,6 +11017,14 @@
 		{
 		}
 		
+		"OnToggleOn"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnAncientStart"
+			}		
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -12892,7 +12998,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"			"500 575 650 725 800"
+				"damage"			"400 525 650 775 900"
 			}
 			"03"
 			{
@@ -13446,7 +13552,7 @@
 			"01"
 			{
 				"var_type"		"FIELD_INTEGER"
-				"crit_multiplier"	"200"
+				"crit_multiplier"	"225"
 			}
 			"02"
 			{
@@ -13865,12 +13971,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 440 480 520 560"
+				"damage"				"400 460 520 580 640"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"delay"				"5.0 4.25 3.5 2.75 2.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"return_percentage"		"20 25 30 35 40"
 			}
 		}
 
@@ -13909,7 +14020,8 @@
 					{
 						"ScriptFile"		"avenger_ability"
 						"Function"			"OnVengeanceEnd"
-						"Damage"			"%damage"				
+						"Damage"			"%damage"	
+						"ReturnAmount"		"%return_percentage"			
 					}
 					"FireEffect"
 					{
@@ -14188,7 +14300,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"multiplier"		"120 130 140 150 160"
+				"multiplier"		"145 155 165 175 185"
 			}
 			"02"
 			{
@@ -14886,7 +14998,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"bat"				"0.66 0.62 0.58 0.54 0.50"
+				"bat"				"0.65 0.60 0.55 0.50 0.45"
 			}
 		}
 		
@@ -14985,7 +15097,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"crit_damage"			"200.0"
+				"crit_damage"			"225.0"
 			}
 		}
 		
@@ -15038,7 +15150,7 @@
 				"IsHidden"		"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "200"
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
 				}
 				"OnAttackLanded"
 				{
@@ -15443,6 +15555,16 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"max_damage_dist"			"300"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mortality_damage"			"15"
+			}
 		}
 		
 		"OnSpellStart"
@@ -15646,12 +15768,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"1.6 2.2 2.8 3.4 4.0"
+				"duration"			"3.0 3.5 4.0 4.5 5.0"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"movespeed"			"30"
+				"movespeed"			"25 30 35 40 45"
 			}
 			"03"
 			{
@@ -15865,6 +15987,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-350"
+					"MODIFIER_PROPERTY_MOVESPEED_MAX"				"5000"
 				}
 				"OnCreated"
 				{
@@ -15978,7 +16101,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1200"
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.15"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -20203,8 +20326,8 @@
 			}
 			"02"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"damage"				"600 800 1000 1200 1400"
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"700 900 1100 1300 1500"
 			}
 			"03"
 			{
@@ -20331,7 +20454,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"total_damage"			"550 700 850 1000 1150"
+				"total_damage"			"650 800 950 1100 1250"
 			}
 			"03"
 			{

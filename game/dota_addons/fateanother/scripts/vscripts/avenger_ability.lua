@@ -168,6 +168,11 @@ end
 
 function OnRemainExplode(keys)
 	local caster = keys.caster
+	local target = keys.target
+	if (target:GetName() == "npc_dota_ward_base") or caster.IsDamageDone then
+		return
+	end
+	caster.IsDamageDone = true
 	caster:EmitSound("Hero_Broodmother.SpawnSpiderlingsImpact")
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, 250
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -255,7 +260,7 @@ end
 function OnVengeanceEnd(keys)
 	local caster = keys.caster
 	local target = keys.target
-	DoDamage(target, caster, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(target, caster, keys.Damage * keys.ReturnAmount/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnBloodStart(keys)

@@ -562,7 +562,7 @@
 		"StatusHealth"					"900"
 		"StatusHealthRegen"				"3"
 		"StatusMana"					"1000"
-		"StatusManaRegen"				"7"
+		"StatusManaRegen"				"9"
 		
 		"ArmorPhysical"					"1"
 		"MagicalResistance"				"20"
@@ -750,17 +750,17 @@
 		"Attribute4"				"avenger_attribute_demon_incarnate"
 
 		"StatusHealth"					"1150"
-		"StatusHealthRegen"				"12"
+		"StatusHealthRegen"				"0"
 		"StatusMana"					"1000"
-		"StatusManaRegen"				"4"
+		"StatusManaRegen"				"7"
 		
 		"ArmorPhysical"					"2"
 		"MagicalResistance"				"0"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"100"
-		"AttackDamageMin"				"32"
-		"AttackDamageMax"				"50"
+		"AttackDamageMin"				"48"
+		"AttackDamageMax"				"58"
 		"AttackRate"					"1.10"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"

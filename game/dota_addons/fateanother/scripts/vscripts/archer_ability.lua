@@ -100,8 +100,12 @@ function KBStart(keys)
 	if caster.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
 		local barrage = caster:FindAbilityByName("archer_5th_sword_barrage")
 		local barrageCD = barrage:GetCooldownTimeRemaining()
-		barrage:EndCooldown()
-		barrage:StartCooldown(barrageCD-1)
+		if barrageCD > 1 then
+			barrage:EndCooldown()
+			barrage:StartCooldown(barrageCD-1)
+		else
+			barrage:EndCooldown()
+		end
 	end
 end
 
@@ -353,7 +357,6 @@ function OnUBWStart(keys)
 	--ubwQuest = StartQuestTimer("ubwTimerQuest", "Unlimited Blade Works", 12)
 	local caster = keys.caster
 	local ability = keys.ability
-	--[[
 	local info = {
 		Target = nil,
 		Source = nil, 
@@ -361,7 +364,7 @@ function OnUBWStart(keys)
 		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		vSpawnOrigin = ubwCenter + Vector(RandomFloat(-800,800),RandomFloat(-800,800), 500),
 		iMoveSpeed = 1000
-	}]]
+	}
 
 	local ubwdummyLoc1 = ubwCenter + Vector(600,-600, 1000)
 	local ubwdummyLoc2 = ubwCenter + Vector(600,600, 1000)
@@ -441,27 +444,50 @@ function OnUBWStart(keys)
 		ubwdummies[i]:SetNightTimeVisionRange(1000)
 		ubwdummies[i]:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1000})
 	end
+	-- spawn sight dummy for enemies
+	local enemyTeamNumber = 0
+	if caster:GetTeamNumber() == 0 then enemyTeamNumber = 1 end
+	local truesightdummy2 = CreateUnitByName("sight_dummy_unit", ubwdummyLoc1, false, keys.caster, keys.caster, enemyTeamNumber)
+	truesightdummy2:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
+	truesightdummy2:SetDayTimeVisionRange(2500)
+	truesightdummy2:SetNightTimeVisionRange(2500)
+	local unseen2 = truesightdummy2:FindAbilityByName("dummy_unit_passive")
+	unseen2:SetLevel(1)
 
-	--[[print("adding automated weapon shots")
-	Timers:CreateTimer(function() 
-		if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
-			local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
-            , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-            for i=1, #weaponTargets do
-            	if weaponTargets[i]:GetTeam() ~= caster:GetTeam() then
-            		info.Target = weaponTargets[i]
-            		info.Source = ubwdummies[RandomInt(1,4)]
-            		info.vSpawnOrigin = ubwdummies[RandomInt(1,4)]:GetAbsOrigin()
-            		break
-            	end
-            	--ProjectileManager:CreateTrackingProjectile(info)  --ROOT OF EVIL
-            end
-            
-            
-		else return end 
-		return 0.2
-	end)]]
-	
+	-- Automated weapon shots
+	if caster.IsProjection2Improved then
+		Timers:CreateTimer(function() 
+			if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
+				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
+	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				local targetIndex = RandomInt(1, #weaponTargets)
+				local swordTarget = weaponTargets[targetIndex]
+				local swordOrigin = caster:GetAbsOrigin() + Vector(0,0,500) + RandomVector(1000)
+				local swordVector = (weaponTargets[targetIndex]:GetAbsOrigin() - swordOrigin):Normalized()
+
+				local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
+				ParticleManager:SetParticleControl( swordFxIndex, 0, swordOrigin )
+				ParticleManager:SetParticleControl( swordFxIndex, 1, swordVector * 5000 )
+				Timers:CreateTimer(0.1, function()
+					if swordTarget:IsAlive() then
+						DoDamage(caster, swordTarget, 50+caster:GetIntellect()*0.5 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+					end
+					ParticleManager:DestroyParticle( swordFxIndex, false )
+					ParticleManager:ReleaseParticleIndex( swordFxIndex )
+				end)
+				--[[local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
+	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	            local targetIndex = RandomInt(1, #weaponTargets)
+	            local dummyIndex = RandomInt(1,4)
+	            info.Target = weaponTargets[targetIndex]
+	            info.Source = ubwdummies[dummyIndex]
+	            info.vSpawnOrigin = ubwdummies[dummyIndex]:GetAbsOrigin()
+	            ProjectileManager:CreateTrackingProjectile(info) ]]
+			else return end 
+			return 0.2
+		end)
+	end
+
 	if not caster.IsUBWDominant then return end -- If UBW is not dominant right now, do not teleport units 
 
 
@@ -486,8 +512,14 @@ function OnUBWStart(keys)
 			end)
 		end
     end
+end
 
-
+function OnUBWWeaponHit(keys)
+	local caster = keys.caster
+	local target = keys.target 
+	if ubwdummies ~= nil then
+		DoDamage(caster, keys.target, 50+caster:GetIntellect()*0.5 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	end
 end
 
 
@@ -727,11 +759,7 @@ function OnArrowRainBPHit(keys)
 	keys.target:AddNewModifier(caster, keys.target, "modifier_stunned", {Duration = stunDuration})
 end
 
-function OnUBWWeaponHit(keys)
-	if ubwdummies ~= nil then
-		DoDamage(ubwdummies[1], keys.target, keys.Damage , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
-	end
-end
+
 
 function OnUBWBarrageStart(keys)
 	local caster = keys.caster
@@ -1216,7 +1244,32 @@ function OnImproveProjectionAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero.IsProjectionImproved = true
+	local ability = keys.ability
+	
+	if hero.IsProjectionImproved then
+		hero.IsProjection2Improved = true
+		ability:StartCooldown(9999)
+	else
+		hero.IsProjectionImproved = true
+		ability:EndCooldown()
+	end
+	
+
+	--caster:AddAbility("archer_5th_attribute_improve_projection_level2")
+	--caster:FindAbilityByName("archer_5th_attribute_improve_projection_level2"):SetLevel(1)
+	--caster:SwapAbilities(keys.ability:GetAbilityName(), "archer_5th_attribute_improve_projection_level2", true, true)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnImproveProjection2Acquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsProjection2Improved = true
+
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

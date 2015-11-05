@@ -690,7 +690,7 @@ function OnArmorGain(keys)
 		end
 	end 
 
-	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+2)
+	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue()+1.5)
 	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
@@ -898,7 +898,7 @@ function OnPresenceDetectionThink(keys)
 		local enemy = newEnemyTable[i]
 
 		-- Filter TA from ping if he has improved presence concealment attribute
-		if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy:GetPlayerOwner().IsPCImproved  then 
+		if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy.IsPCImproved  then 
 			if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
 		end
 

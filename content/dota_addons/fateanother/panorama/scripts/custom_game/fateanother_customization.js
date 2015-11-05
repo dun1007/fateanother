@@ -7,6 +7,14 @@ function OnCustomizeButtonPressed()
     customizePanel.visible = !customizePanel.visible;
 }
 
+function RemoveChilds(panel)
+{
+	for (i=0;i<panel.GetChildCount(); i++)
+	{
+		panel.GetChild(i).RemoveAndDeleteChildren();
+	}
+}
+
 function UpdateAttributeList(data)
 {
 	$.Msg("updating attribute list")
@@ -17,9 +25,10 @@ function UpdateAttributeList(data)
 	if (!attributePanel || !statPanel || !shardPanel)
 		return;
 
-	$.Msg("panels present. linking abilities...")
+	//$.Msg("panels present. linking abilities...")
 	var queryUnit = data.masterUnit; //Players.GetLocalPlayerPortraitUnit();
 	var queryUnit2 = data.shardUnit;
+
 	for(i=0; i<5; i++) {
 		CreateAbilityPanel(attributePanel, queryUnit, i);
 	}

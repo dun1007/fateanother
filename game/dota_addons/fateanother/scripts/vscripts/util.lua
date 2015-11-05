@@ -369,12 +369,12 @@ function CheckItemCombination(hero)
             for i=1, #itemComp do 
                 -- component 1 is matching, check if item component 2 exists
                 if itemComp[i][1] == currentItemName then
-                    isMatchingFound = true
                     for j=0,5 do 
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
                             local currentItemName2 = currentItem2:GetName()
                             if itemComp[i][2] == currentItemName2 then
+                                isMatchingFound = true
                                 print("match found, fusing items")
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
@@ -386,12 +386,12 @@ function CheckItemCombination(hero)
                     if isMatchingFound then break end
                 -- component 2 is matching, check if item component 1 exists
                 elseif itemComp[i][2] == currentItemName then
-                    isMatchingFound = true
                     for j=0,5 do
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
                             local currentItemName2 = currentItem2:GetName()
                             if itemComp[i][1] == currentItemName2 then
+                                isMatchingFound = true
                                 print("match found, fusing items")
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
@@ -421,12 +421,12 @@ function CheckItemCombinationInStash(hero)
             for i=1, #itemComp do 
                 -- component 1 is matching, check if item component 2 exists
                 if itemComp[i][1] == currentItemName then
-                    isMatchingFound = true
                     for j=6,11 do
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
                             local currentItemName2 = currentItem2:GetName()
                             if itemComp[i][2] == currentItemName2 then
+                                isMatchingFound = true
                                 print("match found, fusing items")
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
@@ -438,12 +438,12 @@ function CheckItemCombinationInStash(hero)
                     if isMatchingFound then break end
                 -- component 2 is matching, check if item component 1 exists
                 elseif itemComp[i][2] == currentItemName then
-                    isMatchingFound = true
                     for j=6,11 do
                         local currentItem2 = hero:GetItemInSlot(j)
                         if currentItem2 ~= nil and currentItem2 ~= currentItem then
                             local currentItemName2 = currentItem2:GetName()
                             if itemComp[i][1] == currentItemName2 then
+                                isMatchingFound = true
                                 print("match found, fusing items")
                                 if not currentItem:IsNull() then currentItem:RemoveSelf() end
                                 if not currentItem2:IsNull() then currentItem2:RemoveSelf() end

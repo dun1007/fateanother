@@ -681,25 +681,27 @@ function OnMountStart(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	Timers:CreateTimer(0.5, function()
-		if caster.IsMounted then
-			-- If Caster is attempting to unmount on not traversable terrain
-			if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
-				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
-				keys.ability:EndCooldown()
-				return			
-			else
+		if caster:IsAlive() then
+			if caster.IsMounted then
+				-- If Caster is attempting to unmount on not traversable terrain
+				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
+					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
+					keys.ability:EndCooldown()
+					return			
+				else
+					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+					hero:RemoveModifierByName("modifier_mount_caster")
+					caster:RemoveModifierByName("modifier_mount")
+					caster.IsMounted = false
+				end
+			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
+				caster.IsMounted = true
 				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
-				hero:RemoveModifierByName("modifier_mount_caster")
-				caster:RemoveModifierByName("modifier_mount")
-				caster.IsMounted = false
-			end
-		elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
-			caster.IsMounted = true
-			caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
-			keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
-			return
-		end 
+				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
+				return
+			end 
+		end
 	end)
 end
 
@@ -947,8 +949,10 @@ function OnSilenceStart(keys)
 		v:AddNewModifier(caster, nil, "modifier_silence", {duration=keys.Duration})
 		v:AddNewModifier(caster, nil, "modifier_disarmed", {duration=keys.Duration})
 	end
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_death_prophet/death_prophet_silence.vpcf", PATTACH_WORLDORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0 , targetPoint)
+	ParticleManager:SetParticleControl(particle, 1 , Vector(300,0,0))
+	ParticleManager:SetParticleControl(particle, 3 , Vector(300,0,0))
 
 	Timers:CreateTimer(2.0, function()
 		ParticleManager:DestroyParticle(particle, false)
@@ -1065,6 +1069,10 @@ function OnAncientClosed(keys)
 	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
 	caster:SwapAbilities(a6:GetName(), "caster_5th_hecatic_graea", true, true )
+	local spellbook = caster:FindAbilityByName("caster_5th_ancient_magic")
+	if spellbook:GetToggleState() then
+		spellbook:ToggleAbility()
+	end
 end
 
 function OnRBStart(keys)

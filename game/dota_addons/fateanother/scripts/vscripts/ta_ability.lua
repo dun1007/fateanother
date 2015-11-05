@@ -99,8 +99,19 @@ function OnPCMoved(keys)
 	if caster.IsPCImproved then return end
 	caster.LastActionTime = GameRules:GetGameTime() 
 
+	caster:RemoveModifierByName("modifier_ta_invis")
+	Timers:CreateTimer(1.5, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
+			if not caster.IsPCImproved then PCStopOrder(keys) return end
+		end
+	end)
+end
 
-
+function OnPCRespawn(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	caster.LastActionTime = GameRules:GetGameTime() 
 	caster:RemoveModifierByName("modifier_ta_invis")
 	Timers:CreateTimer(1.5, function() 
 		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then

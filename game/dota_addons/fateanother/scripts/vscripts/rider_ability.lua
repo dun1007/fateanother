@@ -255,8 +255,8 @@ function OnBelleStart(keys)
 	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 	
 	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
-	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.0)
-	Timers:CreateTimer(0.5, function()
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.3)
+	Timers:CreateTimer(0.7, function()
 		EmitGlobalSound("Rider.Bellerophon") 
 	end)
 
@@ -272,7 +272,7 @@ function OnBelleStart(keys)
 	end)
 
 
-	Timers:CreateTimer(0.7, function()
+	Timers:CreateTimer(1.0, function()
 		if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2000 then return end
 		if descendCount == 9 then return end
 
@@ -284,7 +284,7 @@ function OnBelleStart(keys)
 	end)
 
 	-- this is when Rider makes a landing 
-	Timers:CreateTimer(1.0, function() 
+	Timers:CreateTimer(1.3, function() 
 		if (caster:GetAbsOrigin() - targetPoint):Length2D() < 2000 then 
 			caster:SetAbsOrigin(targetPoint)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
@@ -293,7 +293,7 @@ function OnBelleStart(keys)
 	end)
 
 	-- this is when the damage actually applies(Put slam effect here)
-	Timers:CreateTimer(1.0+dmgdelay, function()
+	Timers:CreateTimer(1.3+dmgdelay, function()
 
 		-- Destroy particles
 		ParticleManager:DestroyParticle( belleFxIndex, false )

@@ -338,7 +338,7 @@ end
 
 function OnQuickdrawStart(keys)
 	local caster = keys.caster
-	local quickdraw = 
+	local qdProjectile = 
 	{
 		Ability = keys.ability,
         EffectName = "particles/custom/false_assassin/fa_quickdraw.vpcf",
@@ -349,7 +349,7 @@ function OnQuickdrawStart(keys)
         fEndRadius = 150,
         Source = caster,
         bHasFrontalCone = true,
-        bReplaceExisting = false,
+        bReplaceExisting = true,
         iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
         iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
@@ -357,7 +357,7 @@ function OnQuickdrawStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * 1500
 	}
-	local projectile = ProjectileManager:CreateLinearProjectile(quickdraw)
+	local projectile = ProjectileManager:CreateLinearProjectile(qdProjectile)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.4)
 	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
 	local sin = Physics:Unit(caster)
@@ -368,7 +368,6 @@ function OnQuickdrawStart(keys)
 	Timers:CreateTimer("quickdraw_dash", {
 		endTime = 0.5,
 		callback = function()
-		print("dash timer")
 		caster:OnPreBounce(nil)
 		caster:SetBounceMultiplier(0)
 		caster:PreventDI(false)
@@ -413,10 +412,9 @@ function OnWBStart(keys)
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
 	if caster.IsGanryuAcquired then
-		print("Ganryu!")
 		Timers:CreateTimer(0.3, function()
 			for i=1, #targets do
-				if targets[i]:IsAlive() then
+				if targets[i]:IsAlive() and targets[i]:GetName() ~= "npc_dota_ward_base" then
 					caster:SetAbsOrigin(targets[i]:GetAbsOrigin())
 					FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 					break
@@ -426,8 +424,7 @@ function OnWBStart(keys)
 	end
 
 	for k,v in pairs(targets) do
-		print(v:GetName())
-		if v:GetName() == "npc_dota_hero_bounty_hunter" and v.IsPFWAcquired then 
+		if (v:GetName() == "npc_dota_hero_bounty_hunter" and v.IsPFWAcquired) or v:GetUnitName() == "ward_familiar" then 
 			-- do nothing
 		else
 			giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
@@ -439,7 +436,6 @@ function OnWBStart(keys)
 			v:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 			v:FollowNavMesh(false)
 			Timers:CreateTimer(0.5, function()  
-				print("kill it")
 				v:PreventDI(false)
 				v:SetPhysicsVelocity(Vector(0,0,0))
 				v:OnPhysicsFrame(nil)

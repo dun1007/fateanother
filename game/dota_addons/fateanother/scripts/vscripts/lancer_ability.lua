@@ -230,6 +230,13 @@ function OnGBTargetHit(keys)
 	local ply = caster:GetPlayerOwner()
 	if caster.IsGaeBolgImproved == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
 
+	-- Check if caster is lancer(not lancelot)
+	if caster:GetName() == "npc_dota_hero_phantom_lancer" then
+		local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
+		local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
+		keys.Damage = keys.Damage + target:GetHealth()*healthDamagePct/100
+	end
+
 
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
@@ -370,7 +377,10 @@ function OnGBComboHit(keys)
 							ParticleManager:DestroyParticle( RedScreenFx, false )
 						end)
 			        	target:EmitSound("Hero_Lion.Impale")
-				    	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+
+						local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
+						local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
+				    	DoDamage(caster, target, keys.Damage + target:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 						target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 
 						if target:GetHealth() < HBThreshold then 
@@ -422,7 +432,7 @@ function OnGBAOEStart(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_jump_throw_anim", {})
 
   	Timers:CreateTimer('gb_throw', {
-		endTime = 0.3,
+		endTime = 0.45,
 		callback = function()
 	   	ProjectileManager:CreateTrackingProjectile(info) 
 	end
@@ -431,7 +441,7 @@ function OnGBAOEStart(keys)
 	Timers:CreateTimer('gb_ascend', {
 		endTime = 0,
 		callback = function()
-	   	if ascendCount == 10 then return end
+	   	if ascendCount == 15 then return end
 		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+50))
 		ascendCount = ascendCount + 1;
 		return 0.033
@@ -441,7 +451,7 @@ function OnGBAOEStart(keys)
 	Timers:CreateTimer("gb_descend", {
 	    endTime = 0.3,
 	    callback = function()
-	    	if descendCount == 10 then return end
+	    	if descendCount == 15 then return end
 			caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z-50))
 			descendCount = descendCount + 1;
 	      	return 0.033
@@ -455,26 +465,29 @@ function OnGBAOEHit(keys)
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
 	if caster.IsGaeBolgImproved == true then keys.Damage = keys.Damage + 250 end
-
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	for k,v in pairs(targets) do
-        DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
-    end
-
-	local crack = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
+	local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
+	local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
 	local fire = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
-	local explodeFx1 = ParticleManager:CreateParticle("particles/custom/lancer/lancer_gae_bolg_hit.vpcf", PATTACH_ABSORIGIN, bolgdummy )
-	ParticleManager:SetParticleControl( explodeFx1, 0, bolgdummy:GetAbsOrigin())	
-	ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 2000, 0, true)
-	caster:EmitSound("Misc.Crash")
+	Timers:CreateTimer(0.15, function()
+		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
+	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+		for k,v in pairs(targets) do
+	        DoDamage(caster, v, keys.Damage + v:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
+	    end
 
-    Timers:CreateTimer( 3.0, function()
-		ParticleManager:DestroyParticle( crack, false )
-		ParticleManager:DestroyParticle( fire, false )
-		ParticleManager:DestroyParticle( explodeFx1, false )
+		local crack = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
+		local explodeFx1 = ParticleManager:CreateParticle("particles/custom/lancer/lancer_gae_bolg_hit.vpcf", PATTACH_ABSORIGIN, bolgdummy )
+		ParticleManager:SetParticleControl( explodeFx1, 0, bolgdummy:GetAbsOrigin())	
+		ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 2000, 0, true)
+		caster:EmitSound("Misc.Crash")
+	    Timers:CreateTimer( 3.0, function()
+			ParticleManager:DestroyParticle( crack, false )
+			ParticleManager:DestroyParticle( fire, false )
+			ParticleManager:DestroyParticle( explodeFx1, false )
+		end)
 	end)
+
 end
 
 function GaeBolgDummyEnd(dummy)
