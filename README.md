@@ -1,5 +1,7 @@
 # [Fate/Another](https://steamcommunity.com/sharedfiles/filedetails/?id=366886594)
 
+[![Trailer Video](http://img.youtube.com/vi/DWNJVBVwank/sddefault.jpg)](https://www.youtube.com/watch?v=DWNJVBVwank)
+
 [We are recruiting!](http://dota2fa.blogspot.ca/2015/10/fateanother-recruitment-post.html)
 
 Fate/Another is a hero deathmatch unfolding in city of Fuyuki. For in-depth game rundown, please visit our Steam page by clicking on header above. 
