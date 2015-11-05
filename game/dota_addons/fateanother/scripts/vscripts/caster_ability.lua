@@ -1122,42 +1122,46 @@ function OnHGStart(keys)
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
-	local diff = targetPoint - caster:GetAbsOrigin()
 	local maxBolt = 13
+	local travelTime = 0.7
+	local ascendTime = travelTime+2.0
+	local descendTime = ascendTime+1.0
+	local diff = (targetPoint - caster:GetAbsOrigin()) * 1/travelTime
 	if caster.IsHGImproved then
 		maxBolt = 16
 	end 
+	if caster.IsHGImproved then keys.Damage = keys.Damage + caster:GetIntellect()*ATTRIBUTE_HG_INT_MULTIPLIER end
 
 	local initTargets = 0
-
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(800) 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
 		return 
 	end 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
 	--EmitGlobalSound("Caster.Hecatic") 
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.0)
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
-	caster:SetPhysicsVelocity(Vector(diff:Normalized().x * diff:Length2D(), diff:Normalized().y * diff:Length2D(), 750))
+	caster:SetPhysicsVelocity(Vector(diff:Normalized().x * diff:Length2D(), diff:Normalized().y * diff:Length2D(), 1000))
 	--allows caster to jump over walls
 	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 	caster:FollowNavMesh(false)
 	caster:SetAutoUnstuck(false)
 
-	Timers:CreateTimer(1.0, function()  
+	Timers:CreateTimer(travelTime, function()  
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		caster:SetAutoUnstuck(true)
 	return end) 
-	Timers:CreateTimer(3.0, function()  
+	Timers:CreateTimer(ascendTime, function()  
 		local dummy = CreateUnitByName( "sight_dummy_unit", caster:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber() );
 		caster:SetPhysicsVelocity( Vector( 0, 0, dummy:GetAbsOrigin().z - caster:GetAbsOrigin().z ) )
 		dummy:RemoveSelf()
 	return end) 
-	Timers:CreateTimer(4.0, function()
+	Timers:CreateTimer(descendTime, function()
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
@@ -1174,7 +1178,7 @@ function OnHGStart(keys)
 	}
 
 	local isFirstLoop = false
-	Timers:CreateTimer(1.0, function()
+	Timers:CreateTimer(0.7, function()
 		if isFirstLoop == false then 
 			isFirstLoop = true
 			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
@@ -1207,7 +1211,9 @@ end
 function DropRay(keys, boltvector)
 	local caster = keys.caster
 	local targetPoint = caster:GetAbsOrigin() 
-	if caster.IsHGImproved then keys.Damage = keys.Damage + caster:GetIntellect()*ATTRIBUTE_HG_INT_MULTIPLIER end
+	local rayDamage = 0
+	
+	print(keys.Damage)
 	-- Particle
 	-- These two values for making the bolt starts randomly from sky
 	local randx = RandomInt( 0, 200 )
@@ -1216,8 +1222,8 @@ function DropRay(keys, boltvector)
 	if randy < 100 then randy = -100 - randy end
 	
 	local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	print(targetPoint)
-	print(boltvector)
+	--print(targetPoint)
+	--print(boltvector)
 	ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector + Vector(0, 0, -750) ) -- This is where the bolt will land
 	ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 250 ) ) -- This is where the bolt will start
 	ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
@@ -1248,6 +1254,9 @@ function OnHGPStart(keys)
 	local boltCount  = 0
 	local maxBolt = 13
 	local barrageRadius = keys.Radius
+	local travelTime = 0.7
+	local ascendTime = travelTime+4.0
+	local descendTime = ascendTime+5.0
 	if caster.IsHGImproved then keys.Damage = keys.Damage + caster:GetIntellect()*ATTRIBUTE_HG_INT_MULTIPLIER end
 
 	-- Set master's combo cooldown
@@ -1266,27 +1275,27 @@ function OnHGPStart(keys)
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
 		return 
 	end 
-
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 6.0)
-	local diff = targetPoint - caster:GetAbsOrigin()
+	local diff = (targetPoint - caster:GetAbsOrigin()) * 1/travelTime
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
-	caster:SetPhysicsVelocity(Vector(diff:Normalized().x * diff:Length2D(), diff:Normalized().y * diff:Length2D(), 750))
+	caster:SetPhysicsVelocity(Vector(diff:Normalized().x * diff:Length2D(), diff:Normalized().y * diff:Length2D(), 1000))
 	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 	caster:FollowNavMesh(false)
 	caster:SetAutoUnstuck(false)
-	Timers:CreateTimer(1.0, function()  
+	Timers:CreateTimer(travelTime, function()  
 		ParticleManager:CreateParticle("particles/custom/screen_purple_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		caster:SetAutoUnstuck(true)
 	return end) 
-	Timers:CreateTimer(5.0, function()  
+	Timers:CreateTimer(ascendTime, function()  
 		local dummy = CreateUnitByName( "sight_dummy_unit", caster:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber() );
 		caster:SetPhysicsVelocity( Vector( 0, 0, dummy:GetAbsOrigin().z - caster:GetAbsOrigin().z ) )
 		dummy:RemoveSelf()
 	return end) 
-	Timers:CreateTimer(6.0, function()  
+	Timers:CreateTimer(descendTime, function()  
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
@@ -1302,7 +1311,7 @@ function OnHGPStart(keys)
 		ability = ability
 	}
 
-	Timers:CreateTimer(1.0, function()
+	Timers:CreateTimer(travelTime, function()
 		if boltCount == maxBolt then return end
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
   	  	
@@ -1312,9 +1321,6 @@ function OnHGPStart(keys)
 		if randx < 100 then randx = -100 - randx end
 		local randy = RandomInt( 0, 200 )
 		if randy < 100 then randy = -100 - randy end
-
-		print(targetPoint)
-		print(boltvector)
 		
 		local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
 		ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector ) -- This is where the bolt will land
@@ -1338,7 +1344,8 @@ function OnHGPStart(keys)
     end
     )
 
-	Timers:CreateTimer(3.5, function()
+	
+	Timers:CreateTimer(travelTime+2.5, function()
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, barrageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
         	DoDamage(caster, v, 1500, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -1347,6 +1354,7 @@ function OnHGPStart(keys)
   	  	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf", PATTACH_CUSTOMORIGIN, caster)
   	  	ParticleManager:SetParticleControl(particle, 0, targetPoint) 
 	    ParticleManager:SetParticleControl(particle, 1, Vector(barrageRadius, 0, 0)) 
+	    caster:EmitSound("Hero_ObsidianDestroyer.SanityEclipse.Cast")
 		return
     end
     )
