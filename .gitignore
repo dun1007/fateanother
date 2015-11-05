@@ -228,6 +228,9 @@ pip-log.txt
 *.vmdl_c
 *.vanim_c
 *.vagrp_c
+*.vxml_c
+*.vjs_c
+*.vcss_c
 *.bin
 content/dota_addons/fateanother/particles/*
 !content/dota_addons/fateanother/particles/custom/
