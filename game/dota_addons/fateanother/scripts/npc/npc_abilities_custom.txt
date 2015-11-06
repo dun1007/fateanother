@@ -405,9 +405,9 @@
 		{
 			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_impact.vpcf"
 			"particle"				"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_primal_split_explosion_swirl_b.vpcf"
-			"particle"				"particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_i.vpcf"
 			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_arcane_bolt_birds.vpcf"
+			"particle"				"particles/custom/saber/caliburn/explosion.vpcf"
+			"particle"				"particles/custom/saber/caliburn/slash.vpcf"
 		}
 		
 		
@@ -544,10 +544,11 @@
 			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
 			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
-			"particle"				"particles/custom/saber_excalibur.vpcf"
+			"particle"				"particles/custom/saber/excalibur/hit.vpcf"
+			"particle"				"particles/custom/saber/excalibur/shockwave.vpcf"
 			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
 			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
-			"particle"			"particles/units/heroes/hero_invoker/invoker_sun_strike_sparks.vpcf"
+			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_sparks.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -639,7 +640,7 @@
 			}	
 			"FireEffect"
 			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectName"        "particles/custom/saber/excalibur/hit.vpcf"
 				"EffectAttachType"  "follow_origin"
 				"Target"            "TARGET"
 			}		
