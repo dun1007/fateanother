@@ -206,6 +206,7 @@ function OnChariotStart(keys)
 		return 
 	end
 
+
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel", {}) 
 	caster:AddNewModifier(caster, nil, "modifier_movespeed_cap", {duration = keys.Duration+1})
 	--caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
@@ -242,6 +243,7 @@ function OnChariotRide(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local damageDiff = keys.MaxDamage - keys.MinDamage
+	local duration = keys.Duration
 
 	if caster.IsVEAcquired then
 		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "iskander_via_expugnatio", true, true) 
@@ -249,9 +251,9 @@ function OnChariotRide(keys)
 		caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "fate_empty3", true, true)
 	end
 
+	local counter = 0
    	Timers:CreateTimer(function() 
-   		if caster:HasModifier("modifier_gordius_wheel") then 
-   			print(caster:GetBaseMoveSpeed())
+   		if caster:HasModifier("modifier_gordius_wheel") and counter < 10 then 
    			if not caster:HasModifier("modifier_army_of_the_king_death_checker") then
 				local currentStack = caster:GetModifierStackCount("modifier_gordius_wheel_speed_boost", keys.ability)
 				if currentStack == 0 and caster:HasModifier("modifier_gordius_wheel_speed_boost") then currentStack = 1 end
@@ -298,6 +300,7 @@ function OnChariotRide(keys)
 	        end
 			local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			caster:EmitSound("Hero_Centaur.HoofStomp")
+			counter = counter+1
 			return 1.0
 		else
 			return

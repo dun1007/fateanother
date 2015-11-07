@@ -453,7 +453,8 @@ function OnGodHandDeath(keys)
 
 			-- Apply penalty
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_debuff", {}) 
-
+			-- Remove Gae Buidhe modifier
+			caster:RemoveModifierByName("modifier_gae_buidhe")
 			-- Reset godhand stock
 			caster.ReincarnationDamageTaken = 0
 		else

@@ -11627,7 +11627,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"caster_5th_hecatic_graea"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
-		"AnimationPlaybackRate" 		"0.5"
+		"AnimationPlaybackRate" 		"0.4"
 		"AOERadius"						"%radius"
 		"precache"
 		{
@@ -11693,6 +11693,18 @@
 
 		"Modifiers"
 		{
+
+			"modifier_hecatic_graea_anim"
+			{
+				//"IsHidden"			"1"
+				"IsHidden"			"1"
+				"Duration"			"4.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
 		}
 	}
 
@@ -11781,6 +11793,17 @@
 
 		"Modifiers"
 		{
+			"modifier_hecatic_graea_powered_anim"
+			{
+				//"IsHidden"			"1"
+				"IsHidden"			"1"
+				"Duration"			"4.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
 		}
 	}
 
@@ -15268,6 +15291,14 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%health_reduction"
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"diarmuid_ability"
+					 	"Function"		"OnBuidheBearerDeath"
+					}
 				}
 			}
 			"modifier_gae_buidhe_passive"

@@ -178,9 +178,11 @@ end
 
 function OnBuidheOwnerDeath(keys)
 	local caster = keys.caster
-    LoopOverHeroes(function(hero)
-    	hero:RemoveModifierByName("modifier_gae_buidhe")
-    end)
+end
+
+function OnBuidheBearerDeath(keys)
+	local caster = keys.caster
+	print(caster:GetName())
 end
 
 function OnDeargStart(keys)

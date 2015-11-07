@@ -228,7 +228,7 @@ function OnGBTargetHit(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if caster.IsGaeBolgImproved == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
+	if caster.IsHeartSeekerAcquired == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
 
 	-- Check if caster is lancer(not lancelot)
 	if caster:GetName() == "npc_dota_hero_phantom_lancer" then
