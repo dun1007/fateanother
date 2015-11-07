@@ -282,6 +282,9 @@ function OnMaxStart(keys)
 		callback = function()
 	    EmitGlobalSound("Saber.Excalibur")
 	end})
+
+	-- Charge particles
+	ParticleManager:CreateParticle("particles/custom/saber/max_excalibur/charge.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	
 	-- Create linear projectile
 	Timers:CreateTimer(3.0, function()
@@ -298,19 +301,21 @@ function OnMaxStart(keys)
 		end
 	end)
 
-	-- Create particle for both teams
-	for i=0,1 do
+	local casterFacing = caster:GetForwardVector()
+	-- for i=0,1 do
 		Timers:CreateTimer({
 			endTime = 3, 
 			callback = function()
 			if caster:IsAlive() then
 			-- Create Particle for projectile
-				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				dummy:SetForwardVector(casterFacing)
 				Timers:CreateTimer( function()
 						if IsValidEntity(dummy) then
-							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
-							dummy:SetAbsOrigin( newLoc )
+							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * casterFacing
+							dummy:SetAbsOrigin(GetGroundPosition(newLoc,dummy))
+							-- DebugDrawCircle(newLoc, Vector(255,0,0), 0.5, keys.Width, true, 0.15)
 							return 0.03
 						else
 							return nil
@@ -318,10 +323,7 @@ function OnMaxStart(keys)
 					end
 				)
 				
-				local excalFxIndex = ParticleManager:CreateParticle( "particles/custom/generic/fate_generic_beam_charge.vpcf", PATTACH_ABSORIGIN, dummy )
-				ParticleManager:SetParticleControl( excalFxIndex, 1, Vector( keys.Width, keys.Width, keys.Width ) )
-				ParticleManager:SetParticleControl( excalFxIndex, 2, caster:GetForwardVector() * keys.Speed )
-				ParticleManager:SetParticleControl( excalFxIndex, 6, Vector( 2.5, 0, 0 ) )
+				local excalFxIndex = ParticleManager:CreateParticle("particles/custom/saber/max_excalibur/shockwave.vpcf", PATTACH_ABSORIGIN_FOLLOW, dummy)
 					
 				Timers:CreateTimer( 2.5, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
@@ -335,7 +337,7 @@ function OnMaxStart(keys)
 				end)
 			end
 		end})
-	end
+	-- end
 end
 
 function OnMaxHit(keys)

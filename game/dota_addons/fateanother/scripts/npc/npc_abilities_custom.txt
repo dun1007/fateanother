@@ -544,10 +544,9 @@
 			"particle"				"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_beam.vpcf"
 			"particle"				"particles/custom/saber_excalibur_charge.vpcf"
+			"particle"				"particles/custom/saber_excalibur.vpcf"
 			"particle"				"particles/custom/saber/excalibur/hit.vpcf"
 			"particle"				"particles/custom/saber/excalibur/shockwave.vpcf"
-			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
-			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
 			"particle"				"particles/units/heroes/hero_invoker/invoker_sun_strike_sparks.vpcf"
 		}
 		// Casting
@@ -1289,8 +1288,9 @@
 			"parictle"				"particles/custom/saber_excalibur_max_rock_emitter.vpcf"
 			"particle"				"particles/custom/saber_excalibur_max_burn.vpcf"
 			"particle"				"particles/custom/screen_yellow_splash.vpcf"
-			"particle"				"particles/custom/generic/fate_generic_beam_charge.vpcf"
-			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			"particle"				"particles/custom/saber/max_excalibur/charge.vpcf"
+			"particle"				"particles/custom/saber/max_excalibur/shockwave.vpcf"
+			"particle"				"particles/custom/saber/excalibur/hit.vpcf"
 		}
 		
 		// Casting
@@ -1375,7 +1375,7 @@
 			}
 			"FireEffect"
 			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectName"        "particles/custom/saber/excalibur/hit.vpcf"
 				"EffectAttachType"  "follow_origin"
 				"Target"            "TARGET"
 			}
