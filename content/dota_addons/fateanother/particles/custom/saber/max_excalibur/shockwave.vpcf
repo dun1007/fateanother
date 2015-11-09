@@ -88,6 +88,7 @@
 				0.000000,
 			]
 			m_nCP1 = 0
+			m_bSetOnce = true
 		},
 		{
 			_class = "C_OP_PositionLock"
@@ -171,6 +172,12 @@
 		},
 		{
 			m_ChildRef = resource:"particles/custom/saber/max_excalibur/shockwave_trail.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/saber/max_excalibur/shockwave_pulses.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/saber/max_excalibur/shockwave_pulses_staggered.vpcf"
 		},
 	]
 }

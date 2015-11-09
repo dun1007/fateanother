@@ -1,0 +1,128 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_BoundingBoxMin =
+	[
+		-50.000000,
+		-50.000000,
+		-10.000000,
+	]
+	m_BoundingBoxMax =
+	[
+		50.000000,
+		50.000000,
+		200.000000,
+	]
+	m_ConstantColor =
+	[
+		142,
+		54,
+		186,
+		255,
+	]
+	m_flConstantRadius = 125.000000
+	m_flConstantLifespan = 0.500000
+	m_nMaxParticles = 20
+	m_Operators =
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeInSimple"
+			m_flFadeInTime = 0.100000
+		},
+		{
+			_class = "C_OP_FadeOutSimple"
+			m_flFadeOutTime = 0.300000
+		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 1
+		},
+		{
+			_class = "C_OP_SetSingleControlPointPosition"
+			m_vecCP1Pos =
+			[
+				0.000000,
+				0.000000,
+				300.000000,
+			]
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 0.400000
+			m_flEndScale = 0.750000
+		},
+		{
+			_class = "C_OP_BasicMovement"
+		},
+	]
+	m_Renderers =
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nOrientationType = 2
+			m_nSequenceCombineMode = "2"
+			m_bAdditive = true
+			m_nRefractBlurType = "2"
+			m_hTexture = resource:"materials/particle/particle_glow_04.vtex"
+		},
+	]
+	m_Initializers =
+	[
+		{
+			_class = "C_INIT_CreateSequentialPath"
+			m_flNumToAssign = 20.000000
+			m_PathParams =
+			{
+				m_nEndControlPointNumber = 1
+			}
+		},
+		{
+			_class = "C_INIT_RemapParticleCountToScalar"
+			m_nFieldOutput = 7
+			m_nInputMax = 19
+			m_flOutputMin = 0.500000
+			m_flOutputMax = 0.250000
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+			m_OffsetMin =
+			[
+				0.000000,
+				0.000000,
+				10.000000,
+			]
+			m_OffsetMax =
+			[
+				0.000000,
+				0.000000,
+				10.000000,
+			]
+		},
+	]
+	m_Emitters =
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 20
+		},
+	]
+	m_ForceGenerators =
+	[
+		{
+			_class = "C_OP_ForceBasedOnDistanceToPlane"
+			m_flMaxDist = 200.000000
+			m_vecForceAtMaxDist =
+			[
+				0.000000,
+				0.000000,
+				320.000000,
+			]
+			m_bDisableOperator = true
+		},
+	]
+	m_bShouldSort = false
+}

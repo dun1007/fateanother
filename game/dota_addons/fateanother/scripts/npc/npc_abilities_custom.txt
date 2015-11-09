@@ -3298,7 +3298,8 @@
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur.vpcf"
 			"particle"				"particles/custom/saber_alter/saber_alter_excalibur_beam_charge.vpcf"
-			"particle"				"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			"particle"				"particles/custom/saber_alter/excalibur/shockwave.vpcf"
+			"particle"				"particles/custom/saber_alter/excalibur/hit.vpcf"
 		}
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -3382,7 +3383,7 @@
 			}
 			"FireEffect"
 			{
-				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+				"EffectName"        "particles/custom/saber_alter/excalibur/hit.vpcf"
 				"EffectAttachType"  "follow_origin"
 				"Target"            "TARGET"
 			}	
