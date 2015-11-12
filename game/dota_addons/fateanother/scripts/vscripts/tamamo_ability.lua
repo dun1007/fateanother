@@ -29,12 +29,17 @@ end
 
 function OnArmedUpStart(keys)
 	local caster = keys.caster
-	local a1 = caster:GetAbilityByIndex(0) -- Soulstream
-	local a2 = caster:GetAbilityByIndex(1) -- Subterranean Grasp
-	local a3 = caster:GetAbilityByIndex(2) -- Mantra
-	local a4 = caster:GetAbilityByIndex(3) -- Armed Up
-	local a5 = caster:GetAbilityByIndex(4) -- fate_empty1
-	local a6 = caster:GetAbilityByIndex(5) -- Amaterasu
+	local a1 = caster:FindAbilityByName("tamamo_soulstream") -- Soulstream 
+	local a2 = caster:FindAbilityByName("tamamo_subterranean_grasp") -- Subterranean Grasp
+	local a3 = nil
+	if caster:GetAbilityByIndex(2):GetAbilityName() == "tamamo_mantra" then
+		a3 = caster:FindAbilityByName("tamamo_mantra") -- Mantra
+	else
+		a3 = caster:FindAbilityByName("tamamo_fates_call")
+	end
+	local a4 = caster:FindAbilityByName("fate_empty1") -- Armed Up
+	local a5 = caster:FindAbilityByName("tamamo_armed_up") -- fate_empty1
+	local a6 = caster:FindAbilityByName("tamamo_amaterasu") -- Amaterasu
 
 	caster:SwapAbilities("tamamo_fiery_heaven", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_frigid_heaven", a2:GetName(), true, true) 
@@ -132,20 +137,25 @@ end
 
 function CloseCharmList(keys)
 	local caster = keys.caster
-	local a1 = caster:GetAbilityByIndex(0) -- Fiery Heaven
-	local a2 = caster:GetAbilityByIndex(1) -- Frigid Heaven
-	local a3 = caster:GetAbilityByIndex(2) -- Gust Heaven
-	local a4 = caster:GetAbilityByIndex(3) -- fate_empty2
-	local a5 = caster:GetAbilityByIndex(4) -- close spellbook
-	local a6 = caster:GetAbilityByIndex(5) -- fate_empty3/Void Cleft
+
+	local a1 = caster:FindAbilityByName("tamamo_fiery_heaven") -- Soulstream 
+	local a2 = caster:FindAbilityByName("tamamo_frigid_heaven") -- Subterranean Grasp
+	local a3 = caster:FindAbilityByName("tamamo_gust_heaven") -- Mantra
+	local a4 = caster:FindAbilityByName("fate_empty1") -- Armed Up
+	local a5 = caster:FindAbilityByName("tamamo_close_spellbook") -- fate_empty1
+	local a6 = caster:FindAbilityByName("fate_empty2") -- Amaterasu
+
 
 	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
-	--caster:SwapAbilities("fate_empty1", a4:GetName(), true, true) 
+	if not caster.IsSeveredFateActive then
+		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
+	else
+		caster:SwapAbilities("tamamo_fates_call", a3:GetName(), true, true) 
+	end
+	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
 	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, true) 
-
 end
 
 function OnCharmAttacked(keys)
@@ -463,6 +473,7 @@ function OnMantraStart(keys)
 	end
 
 	if caster.IsSeveredFateAcquired then
+		caster.IsSeveredFateActive = true
 		caster.TetheredTarget = target
 		ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
 		caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,true) 
@@ -482,6 +493,7 @@ function OnMantraTetherEnd(keys)
 	local caster = keys.caster -- Caster
 	local target = keys.target -- Target of tether
 	caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,false) 
+	caster.IsSeveredFateActive = false
 end
 
 function OnMantraTakeDamage(keys)
@@ -510,8 +522,9 @@ function OnMantraTakeDamage(keys)
 		if target.IsMantraProcOnCooldown then 
 			return
 		else
+			print(attacker:GetName() .. " attacked " .. target:GetName())
 			target.IsMantraProcOnCooldown = true
-			DoDamage(attacker, target, orbDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			DoDamage(caster, target, orbDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			Timers:CreateTimer(0.299, function()
 				target.IsMantraProcOnCooldown = false
 			end)
@@ -525,7 +538,7 @@ function OnMantraTakeDamage(keys)
 
 	-- Set stack amount
 	currentStack = target:GetModifierStackCount(modifierName, ability)
-	print("current mantra stack :" .. currentStack)
+	--print("current mantra stack :" .. currentStack)
 	target:RemoveModifierByName(modifierName)
 	target:RemoveModifierByName("modifier_mantra_vfx")
 

@@ -48,4 +48,11 @@
 	"Fateanother_Customize_Special_Cooldowns_Tooltip"	"A defining special move. Your Servant must fulfill Stat requirement, and cast abilities in certain order to activate the Combo."
 	"Fateanother_Customize_Special_Shards"	"Shards of Holy Grail"
 	"Fateanother_Customize_Special_Shards_Tooltip"		"The legendary artifact. Your Servant must face a death, not caused by friendly-fire or suicide, 7 times in order to activate the shard."
+
+	"Fateanother_Portrait_Tooltip"					"Click to select your Servant."
+	"Fateanother_Master_Tooltip"					"Click to select Master, who can aid your Servant with powerful Command Seals."
+	"Fateanother_Master_Health"						"Master Health "
+	"Fateanother_Master_Mana"						"Master Mana "
+	"Fateanother_Master_Health_Tooltip"				"Master's current health, the limit on how many times you can use Command Seal. Casting Command Seal costs 1 health, and may be negated if it would reduce the health to zero.\nHealth is replenished to full every 10 minutes."
+	"Fateanother_Master_Mana_Tooltip"				"Master's current mana, the resource used for customizing Servant or casting Command Seal.\nMana is replenished by 4 on Servant level up, and 10 every 10 minutes."
 }

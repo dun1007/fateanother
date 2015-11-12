@@ -119,6 +119,8 @@ cleansable = {
     -- Other CCs
     "modifier_stunned",
     "modifier_rule_breaker",
+    "modifier_c_rule_breaker",
+    "modifier_l_rule_breaker",
     "modifier_purge",
     "rb_sealdisabled",
     "modifier_dagger_of_treachery",
@@ -243,6 +245,21 @@ function CalculateAngle(u, v)
     local cosangle = dotproduct/(u:Length2D()*v:Length2D()) 
     return math.acos(cosangle)
 end
+
+function SpawnVisionDummy(owner, location, radius, duration, bTrueSight)
+    local visiondummy = CreateUnitByName("sight_dummy_unit", location, false, owner, owner, owner:GetTeamNumber())
+    visiondummy:SetDayTimeVisionRange(radius)
+    visiondummy:SetNightTimeVisionRange(radius)
+    local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+    unseen:SetLevel(1)
+
+    if bTrueSight then
+        visiondummy:AddNewModifier(owner, owner, "modifier_item_ward_true_sight", {true_sight_range = radius}) 
+    end
+    Timers:CreateTimer(duration, function() visiondummy:RemoveSelf() return end)
+    return visiondummy
+end
+
 
 -- Apply a modifier from item
 function giveUnitDataDrivenModifier(source, target, modifier,dur)

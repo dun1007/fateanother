@@ -204,7 +204,7 @@ function OnECStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 
-	local allytargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius + 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	local allytargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(allytargets) do
 		if v:GetUnitName() == "gille_gigantic_horror" and caster.IsComboReady then
 			OnGilleComboStart(keys)
@@ -216,15 +216,13 @@ function OnECStart(keys)
 	if madnessCost ~= 0 then AdjustMadnessStack(caster, -madnessCost) end
 	caster.ECMadnessCost = madnessCost
 
-	ECExplode(keys, targetPoint)
+	ECExplode(keys, targetPoint, false)
 
 	local corpseTargets = Entities:FindAllByNameWithin("npc_dota_creature", targetPoint, keys.Radius)
 	for k,v in pairs(corpseTargets) do
 		if v:GetUnitName() == "gille_corpse" then
+			ECExplode(keys, v:GetAbsOrigin(), true)
 			v:RemoveSelf()
-			Timers:CreateTimer(0.5, function()
-				ECExplode(keys, v:GetAbsOrigin())
-			end)
 		end
 	end
 
@@ -235,13 +233,15 @@ function OnECStart(keys)
 	end
 end
 
-function ECExplode(keys, origin)
+function ECExplode(keys, origin, bIsCorpse)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local damage = keys.Damage
+	if bIsCorpse then damage = damage/2 end
 
     local targets = FindUnitsInRadius(caster:GetTeam(), origin, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
-		DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 		if caster.IsBlackMagicImproved then
 			local damageCounter = 0
 			Timers:CreateTimer(function()

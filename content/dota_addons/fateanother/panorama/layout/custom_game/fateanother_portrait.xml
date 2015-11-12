@@ -1,0 +1,38 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_portrait.css" />
+    </styles>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/fateanother_portrait.js" /> 
+    </scripts>
+    <Panel class="PortraitDisplayRoot" hittest="true">
+        <Panel id="HeroPortraitPanel" hittest="false">
+            <Image id="ServantPortraitImage" class="Portrait" src="file://{images}/heroes/npc_dota_hero_legion_commander.png" hittest="true"                          
+                            onmouseover="PortraitShowTooltip()"
+                            onmouseout="PortraitHideTooltip()"
+                            onactivate="PortraitClick()"/>
+        </Panel>
+        <Panel id="MasterPortraitPanel" hittest="false">
+            <Image id="MasterPortraitImage" class="Portrait" src="file://{images}/heroes/npc_dota_hero_master.png" hittest="true"
+                onmouseover="MasterShowTooltip()"
+                onmouseout="MasterHideTooltip()"
+                onactivate="MasterPortraitClick()"/>
+        </Panel>
+        <Panel id="MasterStatusPanel"   hittest="false">
+            <Panel id="MasterHealthPanel"   hittest="false">
+                <Label id="MasterHealthText" class="MasterHealth" text="#Fateanother_Master_Health" hittest="true" 
+                    onmouseover="MasterHealthShowTooltip()"
+                    onmouseout="MasterHealthHideTooltip()"/>
+                <Label id="MasterHealthNumber" class="MasterHealth" text="#Fateanother_Master_Health" hittest="true"/>
+            </Panel>
+            <Panel id="MasterManaPanel"     hittest="false">
+                <Label id="MasterManaText" class="MasterMana" text="#Fateanother_Master_Mana" hittest="true"
+                    onmouseover="MasterManaShowTooltip()"
+                    onmouseout="MasterManaHideTooltip()"/>
+                <Label id="MasterManaNumber" class="MasterMana" text="#Fateanother_Master_Mana" hittest="true"/>
+            </Panel>
+        </Panel>
+
+    </Panel>
+</root>

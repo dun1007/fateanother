@@ -12,28 +12,22 @@ function FarSightVision(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local radius = keys.ability:GetLevelSpecialValueFor( "radius", keys.ability:GetLevel() - 1 )
+	local targetLoc = keys.target_points[1]
 
-	local visiondummy = CreateUnitByName("sight_dummy_unit", keys.target_points[1], false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
-	visiondummy:SetDayTimeVisionRange(radius)
-	visiondummy:SetNightTimeVisionRange(radius)
-	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
+	local visiondummy = SpawnVisionDummy(caster, targetLoc, radius, keys.Duration, false)
+	
 	if caster.IsEagleEyeAcquired then 
-		visiondummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1400}) 
+		SpawnVisionDummy(caster, targetLoc, radius, keys.Duration, true)
 	end
-
-	local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
-	unseen:SetLevel(1)
 
 	if caster.IsHruntingAcquired then
 		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, true) 
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 	
-	Timers:CreateTimer(8, function() FarSightEnd(visiondummy) return end)
-	
 	-- Particles
-	
-	
+	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
+		
 	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
@@ -48,7 +42,7 @@ function FarSightVision(keys)
 	ParticleManager:SetParticleControl( dustFxIndex, 1, Vector( radius, radius, radius ) )
 			
 	-- Destroy particle after delay
-	Timers:CreateTimer( 8, function()
+	Timers:CreateTimer( keys.Duration, function()
 			ParticleManager:DestroyParticle( circleFxIndex, false )
 			ParticleManager:DestroyParticle( dustFxIndex, false )
 			ParticleManager:ReleaseParticleIndex( circleFxIndex )
@@ -146,9 +140,14 @@ end
 
 function OnBPStart(keys)
 	local caster = keys.caster
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Broken Phantasm fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
+	-- give vision for enemy
+	if IsValidEntity(target) then
+		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
 	end
 end
 

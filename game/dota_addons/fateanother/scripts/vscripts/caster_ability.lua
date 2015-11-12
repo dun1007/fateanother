@@ -1092,6 +1092,7 @@ function OnRBStart(keys)
 
 	ApplyStrongDispel(target)
 	if caster.IsRBImproved then
+		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(25)
 		giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", 3.0)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dagger_of_treachery", {}) 
@@ -1142,7 +1143,7 @@ function OnHGStart(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
 	--EmitGlobalSound("Caster.Hecatic") 
 
-	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.0)
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause", descendTime)
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
@@ -1276,7 +1277,7 @@ function OnHGPStart(keys)
 		return 
 	end 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
-	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 6.0)
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause", descendTime)
 	local diff = (targetPoint - caster:GetAbsOrigin()) * 1/travelTime
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()

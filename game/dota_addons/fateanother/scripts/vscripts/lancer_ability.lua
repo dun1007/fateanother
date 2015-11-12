@@ -467,7 +467,7 @@ function OnGBAOEHit(keys)
 	if caster.IsGaeBolgImproved == true then keys.Damage = keys.Damage + 250 end
 	local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
 	local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
-	local fire = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
+	
 	Timers:CreateTimer(0.15, function()
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -475,7 +475,7 @@ function OnGBAOEHit(keys)
 	        DoDamage(caster, v, keys.Damage + v:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 	    end
-
+	    local fire = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_rainofchaos_start_breakout_fallback_mid.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
 		local crack = ParticleManager:CreateParticle("particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp_cracks.vpcf", PATTACH_ABSORIGIN_FOLLOW, bolgdummy)
 		local explodeFx1 = ParticleManager:CreateParticle("particles/custom/lancer/lancer_gae_bolg_hit.vpcf", PATTACH_ABSORIGIN, bolgdummy )
 		ParticleManager:SetParticleControl( explodeFx1, 0, bolgdummy:GetAbsOrigin())	

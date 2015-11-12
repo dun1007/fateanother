@@ -69,17 +69,3 @@
 }
 
 
-
-.PortraitDisplayRoot
-{
-    horizontal-align: left;
-    vertical-align: top;
-    margin-top: 70px;
-    margin-left: 50px;
-    flow-children: down;
-}
-
-.Portrait
-{
-    margin-bottom: 20px;
-}

@@ -371,7 +371,7 @@ function OnDexStart(keys)
 			
 			local excalFxIndex = ParticleManager:CreateParticle("particles/custom/saber_alter/excalibur/shockwave.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, dummy )
 
-			Timers:CreateTimer( 2.5, function()
+			Timers:CreateTimer( 1.60, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( excalFxIndex )
 					Timers:CreateTimer( 0.5, function()

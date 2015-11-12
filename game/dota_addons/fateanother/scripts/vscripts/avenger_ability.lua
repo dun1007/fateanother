@@ -350,7 +350,6 @@ function TurnDCOff(keys)
 	local caster = keys.caster
 	local demoncore = caster:FindAbilityByName("avenger_demon_core")
     if demoncore:GetToggleState() then
-    	print("asdqawe")
     	demoncore:ToggleAbility()
     end
 end
@@ -366,7 +365,6 @@ function OnVergTakeDamage(keys)
 	local attacker = keys.attacker
 	if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
 	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
-	print(returnDamage)
 	if caster:GetHealth() ~= 0 then
 		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, keys.ability, false)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
