@@ -1193,7 +1193,7 @@ function OnHGStart(keys)
 		end
 
 		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-		while GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) do
+		while GridNav:IsBlocked(targetPoint + boltvector) or not GridNav:IsTraversable(targetPoint + boltvector) do
 			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
 		end
 		DropRay(keys, boltvector)
