@@ -1211,31 +1211,30 @@ end
 
 function DropRay(keys, boltvector)
 	local caster = keys.caster
-	local targetPoint = caster:GetAbsOrigin() 
-	local rayDamage = 0
+	local casterLocation = caster:GetAbsOrigin()
+	local targetPoint = GetGroundPosition(casterLocation + boltvector, caster)
 	
 	print(keys.Damage)
 	-- Particle
-	-- These two values for making the bolt starts randomly from sky
-	local randx = RandomInt( 0, 200 )
-	if randx < 100 then randx = -100 - randx end
-	local randy = RandomInt( 0, 200 )
-	if randy < 100 then randy = -100 - randy end
-	
-	local fxIndex = ParticleManager:CreateParticle( "particles/custom/caster/caster_hecatic_graea.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	--print(targetPoint)
-	--print(boltvector)
-	ParticleManager:SetParticleControl( fxIndex, 0, targetPoint + boltvector + Vector(0, 0, -750) ) -- This is where the bolt will land
-	ParticleManager:SetParticleControl( fxIndex, 1, targetPoint + boltvector + Vector( randx, randy, 250 ) ) -- This is where the bolt will start
-	ParticleManager:SetParticleControl( fxIndex, 2, Vector( keys.RadiusBolt, 0, 0 ) )
-	
-	Timers:CreateTimer( 2.0, function()
-			ParticleManager:DestroyParticle( fxIndex, false )
-			ParticleManager:ReleaseParticleIndex( fxIndex )
-			return nil
-		end
-	)
+	local dummy = CreateUnitByName("dummy_unit", targetPoint, false, caster, caster, caster:GetTeamNumber())
+	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 
+	local fxIndex = ParticleManager:CreateParticle("particles/custom/caster/hecatic_graea/ray.vpcf", PATTACH_POINT, dummy)
+	ParticleManager:SetParticleControlEnt(fxIndex, 0, dummy, PATTACH_POINT, "attach_hitloc", dummy:GetAbsOrigin(), true)
+	local portalLocation = casterLocation + (targetPoint - casterLocation):Normalized() * 300
+	portalLocation.z = casterLocation.z
+	ParticleManager:SetParticleControl(fxIndex, 4, portalLocation)
+
+	local casterDirection = (portalLocation - targetPoint):Normalized()
+	casterDirection.x = casterDirection.x * -1
+	casterDirection.y = casterDirection.y * -1
+	dummy:SetForwardVector(casterDirection)
+
+	-- DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, keys.RadiusBolt, true, 0.5)
+
+	Timers:CreateTimer(2, function()
+		dummy:RemoveSelf()
+	end)
 		
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, keys.RadiusBolt, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	for k,v in pairs(targets) do
