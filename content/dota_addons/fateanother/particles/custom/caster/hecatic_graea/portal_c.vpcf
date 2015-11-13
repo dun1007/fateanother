@@ -22,7 +22,7 @@
 		{
 			_class = "C_OP_RenderSprites"
 			m_nOrientationType = 2
-			m_hTexture = resource:"materials/particle/lanaya/lanaya_psionic_trap.vtex"
+			m_hTexture = resource:"materials/particle/oracle/oracle_fortune.vtex"
 		},
 	]
 	m_Initializers =
