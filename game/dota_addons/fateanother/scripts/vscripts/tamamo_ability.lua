@@ -243,7 +243,7 @@ function OnSoulstreamStart(keys)
 	local count = 0
 	Timers:CreateTimer(function()
 		if count == 5 then return end
-		local projectile = CreateUnitByName("tamamo_charm", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
+		local projectile = CreateUnitByName("tamamo_charm_dummy", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeam())
 
 		local particleName, particleExpName = 0
 		-- Deduce Charm stack if caster has it

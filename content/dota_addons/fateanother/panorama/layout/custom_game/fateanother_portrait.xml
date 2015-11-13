@@ -24,13 +24,13 @@
                 <Label id="MasterHealthText" class="MasterHealth" text="#Fateanother_Master_Health" hittest="true" 
                     onmouseover="MasterHealthShowTooltip()"
                     onmouseout="MasterHealthHideTooltip()"/>
-                <Label id="MasterHealthNumber" class="MasterHealth" text="#Fateanother_Master_Health" hittest="true"/>
+                <Label id="MasterHealthNumber" class="MasterHealth" text="#Fateanother_Master_Health" hittest="false"/>
             </Panel>
             <Panel id="MasterManaPanel"     hittest="false">
                 <Label id="MasterManaText" class="MasterMana" text="#Fateanother_Master_Mana" hittest="true"
                     onmouseover="MasterManaShowTooltip()"
                     onmouseout="MasterManaHideTooltip()"/>
-                <Label id="MasterManaNumber" class="MasterMana" text="#Fateanother_Master_Mana" hittest="true"/>
+                <Label id="MasterManaNumber" class="MasterMana" text="#Fateanother_Master_Mana" hittest="false"/>
             </Panel>
         </Panel>
 

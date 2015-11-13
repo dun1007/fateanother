@@ -29,6 +29,11 @@
 	flow-children: right;
 }
 
+#MasterStatusPanel
+{
+	margin-left: 120px;
+	margin-top: -61px;
+}
 .MasterHealth
 {
 	width: 150px;

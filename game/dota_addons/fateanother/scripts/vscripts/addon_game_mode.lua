@@ -940,7 +940,7 @@ function FateGameMode:OnEntityKilled( keys )
         killerEntity = EntIndexToHScript( keys.entindex_attacker )
     end
     -- Check if Caster(4th) is around and grant him 1 Madness
-    if killedUnit:GetUnitName() ~= "gille_corpse" then
+    if not string.match(killedUnit:GetUnitName() ,"dummy") then
         local targets = FindUnitsInRadius(0, killedUnit:GetAbsOrigin(), nil, 800, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
         for k,v in pairs(targets) do
             if v:GetName() == "npc_dota_hero_shadow_shaman" then

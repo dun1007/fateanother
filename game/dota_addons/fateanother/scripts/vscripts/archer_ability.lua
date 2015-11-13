@@ -853,7 +853,8 @@ function OnUBWBarrageConfineStart(keys)
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if caster.IsProjectionImproved then 
-		giveUnitDataDrivenModifier(caster, keys.target, "rb_sealdisabled", 2.0)
+		giveUnitDataDrivenModifier(caster, keys.target, "rb_sealdisabled", 3.0)
+		giveUnitDataDrivenModifier(caster, target, "locked",3.0)
 	end
 	target:AddNewModifier(caster, target, "modifier_stunned", {duration = 0.1})
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

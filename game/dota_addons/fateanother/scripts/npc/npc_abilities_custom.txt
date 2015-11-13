@@ -17666,6 +17666,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"health"			"190 230 270 310 350"
 			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cast_range"		"400 550 700 850 1000"
+			}
 		}
 		
 		"OnSpellStart"
@@ -17819,6 +17824,11 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"total_damage"		"400 500 600 700 800"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"0.3"
 			}
 		}
 		
@@ -18699,17 +18709,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"curse_damage"			"300"
+				"curse_damage"			"400"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"curse_duration"			"2.0"
+				"curse_duration"			"4.0"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"torment_multiplier"			"10.0"
+				"torment_multiplier"			"15.0"
 			}
 		}
 		
@@ -22901,6 +22911,10 @@
 			{
 				"IsDebuff"		"1"
 			}
+			"locked"
+			{
+				"IsDebuff"		"1"
+			}
 			"jump_pause"
 			{
 				"States"
@@ -22931,6 +22945,7 @@
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"50"
 				}
 			}
+
 		}
 	}
 

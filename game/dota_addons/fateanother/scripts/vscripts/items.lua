@@ -267,7 +267,7 @@ function Blink(keys)
 	local targetPoint = keys.target_points[1]
 	local newTargetPoint = nil
 
-	if caster:HasModifier("modifier_purge") or caster:HasModifier("modifier_aestus_domus_aurea_lock") then 
+	if caster:HasModifier("modifier_purge") or caster:HasModifier("modifier_aestus_domus_aurea_lock") or caster:HasModifier("locked") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 		keys.ability:EndCooldown()
 		return
