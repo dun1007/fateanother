@@ -963,21 +963,22 @@ end
 function OnDWStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	local rainCount = 0
 	if caster.IsHGImproved then keys.Damage = keys.Damage + caster:GetIntellect()*ATTRIBUTE_HG_INT_MULTIPLIER*3 end
 
     Timers:CreateTimer(0.5, function()
     	if rainCount == 3 then return end
     	caster:EmitSound("Hero_Luna.LucentBeam.Target")
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+		local dummy = CreateUnitByName("dummy_unit", targetPoint, false, caster, caster, caster:GetTeamNumber())
+		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+		dummy:SetAbsOrigin(targetPoint)
+		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_luna/luna_lucent_beam.vpcf", PATTACH_ABSORIGIN, dummy)
 		ParticleManager:SetParticleControl(particle, 0, targetPoint)
 		ParticleManager:SetParticleControl(particle, 1, targetPoint)
 		ParticleManager:SetParticleControl(particle, 5, targetPoint)
 		ParticleManager:SetParticleControl(particle, 6, targetPoint)
 		Timers:CreateTimer(2.0, function()
-			ParticleManager:DestroyParticle(particle, false)
-			return nil
+			dummy:RemoveSelf()
 		end)
 
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
