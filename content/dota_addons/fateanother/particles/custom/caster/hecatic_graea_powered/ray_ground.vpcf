@@ -1,0 +1,80 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_Children =
+	[
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ring_b_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ring_c_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ring_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_glow_b_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_glow_c_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_glow_d_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_glow_e_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_orange_smoke_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ashes_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ashes_b_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_flame_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ground_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_sparks_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_sparks_ambient_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_light_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_smoke_ambient_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_blast_streaks_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea_powered/ray_warp_blast.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_sphere_model_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_left_over_immortal1.vpcf"
+			m_bDisableChild = true
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_dark_arts_immortal1.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea/ray_ground_flash.vpcf"
+		},
+		{
+			m_ChildRef = resource:"particles/custom/caster/hecatic_graea_powered/ray_ground_spikes.vpcf"
+		},
+	]
+}
