@@ -1314,12 +1314,12 @@ function OnHGPStart(keys)
 	    ParticleManager:SetParticleControl(particle, 1, Vector(barrageRadius * 2.5, 1, 1))
 	    ParticleManager:SetParticleControl(particle, 2, Vector(barrageRadius * 75, 1, 1))
 	    caster:EmitSound("Hero_ObsidianDestroyer.SanityEclipse.Cast")
-		DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, barrageRadius, true, 1)
+		-- DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, barrageRadius, true, 1)
 		return
     end
     )
 
-	DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, radius, true, 1)
+	-- DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, radius, true, 1)
 
 	Timers:CreateTimer(1.0, function() 
 		EmitGlobalSound("Caster.Hecatic_Spread") 
