@@ -10154,7 +10154,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"b_a_s_chance_near_workshop"			"33 33 33"
+				"b_a_s_chance_near_workshop"			"33 33 34"
 			}
 
 		}
@@ -11733,7 +11733,7 @@
 			"particle"			"particles/units/heroes/hero_zuus/zuus_lightning_bolt.vpcf"
 			"particle"			"particles/units/heroes/hero_templar_assassin/templar_assassin_trap_start_ring.vpcf"
 			"particle"			"particles/custom/screen_purple_splash.vpcf"
-			"particle"			"particles/units/heroes/hero_obsidian_destroyer/obsidian_destroyer_sanity_eclipse_area.vpcf"
+			"particle"			"particles/custom/caster/hecatic_graea_powered/area.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_obsidian_destroyer.vsndevts"
 		}
 		
