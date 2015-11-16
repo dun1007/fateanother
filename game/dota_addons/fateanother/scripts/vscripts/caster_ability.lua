@@ -1171,12 +1171,12 @@ function OnHGStart(keys)
 
 	local isFirstLoop = false
 	Timers:CreateTimer(0.7, function()
+		-- For the first round of shots, find all servants within AoE and guarantee one ray hit
 		if isFirstLoop == false then 
 			isFirstLoop = true
 			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(initTargets) do
-				print("initial ray")
-				DropRay(keys, v:GetAbsOrigin())
+				DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, v:GetAbsOrigin(), "particles/custom/caster/hecatic_graea/ray.vpcf")
 			end
 			maxBolt = maxBolt - #initTargets
 		else
@@ -1187,7 +1187,7 @@ function OnHGStart(keys)
 		while GridNav:IsBlocked(targetPoint + boltvector) or not GridNav:IsTraversable(targetPoint + boltvector) do
 			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
 		end
-		DropRay(caster, keys.Damage, keys.RadiusBolt, ability, boltvector, "particles/custom/caster/hecatic_graea/ray.vpcf")
+		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, boltvector, "particles/custom/caster/hecatic_graea/ray.vpcf")
 
 	    boltCount = boltCount + 1
 		return 0.1
@@ -1216,15 +1216,15 @@ function DropRay(caster, damage, radius, ability, boltvector, particle)
 	casterDirection.y = casterDirection.y * -1
 	dummy:SetForwardVector(casterDirection)
 
-	-- DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, radius, true, 0.5)
+	DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, radius, true, 0.5)
 
 	Timers:CreateTimer(2, function()
 		dummy:RemoveSelf()
 	end)
 		
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint + boltvector, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	for k,v in pairs(targets) do
-    	DoDamage(caster, v, Damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+    	DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
     	v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 	end
 end
