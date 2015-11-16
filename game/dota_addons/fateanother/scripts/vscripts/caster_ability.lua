@@ -1187,7 +1187,8 @@ function OnHGStart(keys)
 		while GridNav:IsBlocked(targetPoint + boltvector) or not GridNav:IsTraversable(targetPoint + boltvector) do
 			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
 		end
-		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, boltvector, "particles/custom/caster/hecatic_graea/ray.vpcf")
+		local rayTarget = GetGroundPosition(boltvector + caster:GetAbsOrigin(), caster)
+		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea/ray.vpcf")
 
 	    boltCount = boltCount + 1
 		return 0.1
@@ -1196,9 +1197,8 @@ function OnHGStart(keys)
 	Timers:CreateTimer(1.0, function() EmitGlobalSound("Caster.Hecatic") EmitGlobalSound("Caster.Hecatic_Spread") caster:EmitSound("Misc.Crash") return end)
 end
 
-function DropRay(caster, damage, radius, ability, boltvector, particle)
+function DropRay(caster, damage, radius, ability, targetPoint, particle)
 	local casterLocation = caster:GetAbsOrigin()
-	local targetPoint = GetGroundPosition(casterLocation + boltvector, caster)
 	
 	-- print(damage)
 	-- Particle
@@ -1294,7 +1294,8 @@ function OnHGPStart(keys)
 		while GridNav:IsBlocked(targetPoint + boltvector) or not GridNav:IsTraversable(targetPoint + boltvector) do
 			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
 		end
-		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, boltvector, "particles/custom/caster/hecatic_graea_powered/ray.vpcf")
+		local rayTarget = GetGroundPosition(boltvector + caster:GetAbsOrigin(), caster)
+		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea_powered/ray.vpcf")
 
 	    boltCount = boltCount + 1
 		return 0.1
