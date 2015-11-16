@@ -1116,6 +1116,28 @@ function OnServantCustomizeActivated(Index, keys)
     --caster:SetMana(caster:GetMana() - ability:GetManaCost(1))
 end
 
+
+function OnHeroClicked(Index, keys)
+    local playerID = EntIndexToHScript(keys.player)
+    local hero = PlayerResource:GetPlayer(keys.player):GetAssignedHero()
+
+
+    if hero.IsIntegrated or hero.IsMounted then
+        -- Find the transport
+        local units = FindUnitsInRadius(hero:GetTeam(), hero:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+        for k,v in pairs(units) do
+            local unitname = v:GetUnitName()
+            if unitname == "caster_5th_ancient_dragon" or unitname == "gille_gigantic_horror" then
+                local playerData = {
+                    transport = v:entindex()
+                }
+                CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero_in_transport", playerData )
+                return
+            end
+        end
+    end
+end
+
 -- This function initializes the game mode and is called before anyone loads into the game
 -- It can be used to pre-initialize any values/tables that will be needed later
 function FateGameMode:InitGameMode()
@@ -1180,6 +1202,7 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "vote_finished", OnVoteFinished )
     CustomGameEventManager:RegisterListener( "direct_transfer_changed", OnDirectTransferChanged )
     CustomGameEventManager:RegisterListener( "servant_customize", OnServantCustomizeActivated )
+    CustomGameEventManager:RegisterListener( "check_hero_in_transport", OnHeroClicked )
     -- LUA modifiers
     LinkLuaModifier("modifier_movespeed_cap", "modifiers/modifier_movespeed_cap", LUA_MODIFIER_MOTION_NONE)
 

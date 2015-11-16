@@ -680,9 +680,9 @@ end
 function OnMountStart(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	Timers:CreateTimer(0.5, function()
+	Timers:CreateTimer(0.2, function()
 		if caster:IsAlive() then
-			if caster.IsMounted then
+			if hero.IsMounted then
 				-- If Caster is attempting to unmount on not traversable terrain
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
 					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
@@ -692,10 +692,10 @@ function OnMountStart(keys)
 					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 					hero:RemoveModifierByName("modifier_mount_caster")
 					caster:RemoveModifierByName("modifier_mount")
-					caster.IsMounted = false
+					hero.IsMounted = false
 				end
 			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
-				caster.IsMounted = true
+				hero.IsMounted = true
 				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
@@ -1216,7 +1216,7 @@ function DropRay(caster, damage, radius, ability, boltvector, particle)
 	casterDirection.y = casterDirection.y * -1
 	dummy:SetForwardVector(casterDirection)
 
-	DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, radius, true, 0.5)
+	--DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, radius, true, 0.5)
 
 	Timers:CreateTimer(2, function()
 		dummy:RemoveSelf()

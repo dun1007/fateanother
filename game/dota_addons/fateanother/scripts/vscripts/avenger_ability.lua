@@ -285,6 +285,7 @@ end
 function OnTFStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_true_form", {}) 
 	AvengerCheckCombo(keys.caster, keys.ability)
 	--local a1 = caster:GetAbilityByIndex(0)
 	--local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
@@ -295,8 +296,11 @@ function OnTFStart(keys)
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
    	end
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
+    caster:SetModel("models/avenger/trueform/trueform.vmdl")
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
     caster:SetModelScale(1.1)
+
+    caster:EmitSound("Hero_Terrorblade.Metamorphosis")
 end
 
 function OnTFLevelUp(keys)

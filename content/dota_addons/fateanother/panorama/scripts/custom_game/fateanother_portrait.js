@@ -92,8 +92,27 @@ function SetupPortrait(data)
 	UpdateHealthAndMana();
 }
 
+function CheckTransportSelection(data)
+{
+	var playerID = Players.GetLocalPlayer();
+	var mainSelected = Players.GetLocalPlayerPortraitUnit();
+	var hero = Players.GetPlayerHeroEntityIndex( playerID )
 
+	if (mainSelected == hero)
+	{
+		// check if transport is currently carrying Caster inside
+		GameEvents.SendCustomGameEventToServer("check_hero_in_transport", {player: Players.GetLocalPlayer()})
+	}
+
+}
+
+function SelectTransport(data)
+{
+	GameUI.SelectUnit(data.transport, false);
+}
 (function()
 {
 	GameEvents.Subscribe( "player_selected_hero", SetupPortrait);
+	GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
+	GameEvents.Subscribe( "player_selected_hero_in_transport", SelectTransport);
 })();

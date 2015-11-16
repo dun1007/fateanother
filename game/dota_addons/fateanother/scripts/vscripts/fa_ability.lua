@@ -390,7 +390,7 @@ function OnQuickdrawStart(keys)
 end
 
 function OnQuickdrawHit(keys)
-	local damage = 700 + keys.caster:GetAgility() * 10
+	local damage = 500 + keys.caster:GetAgility() * 16
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -412,10 +412,11 @@ function OnWBStart(keys)
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 
 	if caster.IsGanryuAcquired then
-		Timers:CreateTimer(0.3, function()
+		Timers:CreateTimer(0.1, function()
 			for i=1, #targets do
 				if targets[i]:IsAlive() and targets[i]:GetName() ~= "npc_dota_ward_base" then
-					caster:SetAbsOrigin(targets[i]:GetAbsOrigin())
+					--local diff = (caster:GetAbsOrigin() - targets[i]:GetAbsOrigin()):Normalized()
+					caster:SetAbsOrigin(targets[i]:GetAbsOrigin() - targets[i]:GetForwardVector():Normalized()*100)
 					FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 					break
 				end

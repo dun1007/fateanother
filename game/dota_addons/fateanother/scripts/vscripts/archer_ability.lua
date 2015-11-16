@@ -1049,6 +1049,7 @@ end
 
 function OnHruntStart(keys)
 	local caster = keys.caster
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
@@ -1069,6 +1070,10 @@ function OnHruntStart(keys)
 	}
 
 	ProjectileManager:CreateTrackingProjectile(info) 
+	-- give vision for enemy
+	if IsValidEntity(target) then
+		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
+	end
 end
 
 function OnHruntHit(keys)

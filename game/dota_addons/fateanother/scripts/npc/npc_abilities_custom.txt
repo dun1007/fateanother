@@ -7177,6 +7177,7 @@
 						"Function"		"OnPCDeactivate"
 					}
 				}
+
 			}
 
 			"modifier_quickdraw_damage_amplifier"
@@ -7487,7 +7488,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"150"
+		"AbilityCooldown"				"120"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -8005,7 +8006,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cast_delay"		"1.5"
+				"cast_delay"		"2.0"
 			}
 		}
 
@@ -8031,6 +8032,7 @@
 					{
 						"ScriptFile"		"ta_ability"
 						"Function"			"OnPCStart"
+						"CastDelay"			"%cast_delay"
 					}
 				}
 				"OnAbilityExecuted"
@@ -8039,6 +8041,7 @@
 					{
 						"ScriptFile"	"ta_ability"
 						"Function"		"OnPCAbilityUsed"
+						"CastDelay"			"%cast_delay"
 					}
 				}
 				"OnAttackStart"
@@ -8047,6 +8050,7 @@
 					{
 						"ScriptFile"	"ta_ability"
 						"Function"		"OnPCAttacked"
+						"CastDelay"			"%cast_delay"
 					}
 				}
 				"OnUnitMoved"
@@ -8055,6 +8059,7 @@
 					{
 						"ScriptFile"	"ta_ability"
 						"Function"		"OnPCMoved"
+						"CastDelay"			"%cast_delay"
 					}
 				}
 				"OnRespawn"
@@ -8063,8 +8068,20 @@
 					{
 						"ScriptFile"	"ta_ability"
 						"Function"		"OnPCRespawn"
+						"CastDelay"			"%cast_delay"
 					}
 				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnPCDamageTaken"
+						"CastDelay"			"%cast_delay"
+					}
+				}
+
+
 			}
 			"modifier_ta_invis"
 			{
@@ -14174,20 +14191,10 @@
 				"ScriptFile"		"avenger_ability"
 				"Function"			"OnTFStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_true_form"
-				"Target"			"CASTER"
-			}
 			"FireEffect"
 			{
 				"EffectName"		"particles/units/heroes/hero_terrorblade/terrorblade_metamorphosis_transform.vpcf"
 				"EffectAttachType"	"follow_origin"
-				"Target"			"CASTER"
-			}
-			"FireSound"
-			{
-				"EffectName"		"Hero_Terrorblade.Metamorphosis"
 				"Target"			"CASTER"
 			}
 		}
@@ -17473,7 +17480,12 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"madness_kill_range"			"900"
-			}		
+			}	
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"1000"
+			}	
 		}
 		
 		"OnSpellStart"
@@ -20762,7 +20774,7 @@
 		"AbilityCastRange"				"900"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCastPoint"				"0.5"
-		"AbilityCooldown"				"130"
+		"AbilityCooldown"				"170"
 		"AbilityManaCost"				"800"
 		
 		// Ability special

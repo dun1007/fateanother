@@ -781,10 +781,10 @@ function OnAvariceAcquired(keys)
 	end
 
 
-	if caster.AvariceCount == nil then 
-		caster.AvariceCount = 1
+	if hero.AvariceCount == nil then 
+		hero.AvariceCount = 1
 	else
-		caster.AvariceCount = caster.AvariceCount + 1
+		hero.AvariceCount = hero.AvariceCount + 1
 	end
 
 	local teamTable = {}

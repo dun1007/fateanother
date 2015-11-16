@@ -71,8 +71,8 @@ function OnPCAbilityUsed(keys)
 	caster.LastActionTime = GameRules:GetGameTime() 
 
 	caster:RemoveModifierByName("modifier_ta_invis")
-	Timers:CreateTimer(1.5, function() 
-		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+	Timers:CreateTimer(keys.CastDelay, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
 			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end
@@ -85,8 +85,8 @@ function OnPCAttacked(keys)
 	caster.LastActionTime = GameRules:GetGameTime() 
 
 	caster:RemoveModifierByName("modifier_ta_invis")
-	Timers:CreateTimer(1.5, function() 
-		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+	Timers:CreateTimer(keys.CastDelay, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
 			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end
@@ -100,8 +100,8 @@ function OnPCMoved(keys)
 	caster.LastActionTime = GameRules:GetGameTime() 
 
 	caster:RemoveModifierByName("modifier_ta_invis")
-	Timers:CreateTimer(1.5, function() 
-		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+	Timers:CreateTimer(keys.CastDelay, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
 			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end
@@ -113,8 +113,21 @@ function OnPCRespawn(keys)
 	local ply = caster:GetPlayerOwner()
 	caster.LastActionTime = GameRules:GetGameTime() 
 	caster:RemoveModifierByName("modifier_ta_invis")
-	Timers:CreateTimer(1.5, function() 
-		if GameRules:GetGameTime() >= caster.LastActionTime + 1.5 then
+	Timers:CreateTimer(keys.CastDelay, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
+			if not caster.IsPCImproved then PCStopOrder(keys) return end
+		end
+	end)
+end
+
+function OnPCDamageTaken(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	caster.LastActionTime = GameRules:GetGameTime() 
+	caster:RemoveModifierByName("modifier_ta_invis")
+	Timers:CreateTimer(keys.CastDelay, function() 
+		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_invis", {}) 
 			if not caster.IsPCImproved then PCStopOrder(keys) return end
 		end

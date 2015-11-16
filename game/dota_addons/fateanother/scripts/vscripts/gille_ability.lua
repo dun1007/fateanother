@@ -662,7 +662,7 @@ function OnIntegrateStart(keys)
 
 	Timers:CreateTimer(0.5, function()
 		if caster:IsAlive() then
-			if caster.IsIntegrated then
+			if hero.IsIntegrated then
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
 					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
 					keys.ability:EndCooldown()
@@ -670,11 +670,11 @@ function OnIntegrateStart(keys)
 				else
 					hero:RemoveModifierByName("modifier_integrate_gille")
 					caster:RemoveModifierByName("modifier_integrate")
-					caster.IsIntegrated = false
+					hero.IsIntegrated = false
 					caster.AttemptingIntegrate = false
 				end
 			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
-				caster.IsIntegrated = true
+				hero.IsIntegrated = true
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
 				caster:EmitSound("ZC.Tentacle1")
@@ -747,7 +747,7 @@ function OnHorrorTeleport(keys)
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Locate Within 500 Range from Caster" } )
 		keys.ability:EndCooldown()
 		return
-	elseif caster.IsIntegrated then
+	elseif hero.IsIntegrated then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Use While Integrated" } )
 		keys.ability:EndCooldown()
 		return		
