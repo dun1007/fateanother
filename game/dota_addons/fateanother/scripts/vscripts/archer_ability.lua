@@ -282,6 +282,7 @@ end
 -- Starts casting UBW
 function OnUBWCastStart(keys)
 	local caster = keys.caster
+	local casterLocation = caster:GetAbsOrigin()
 	if caster:GetAbsOrigin().y < -3500 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Already Within Reality Marble" } )
 		caster:SetMana(caster:GetMana() + 800)
@@ -304,46 +305,26 @@ function OnUBWCastStart(keys)
 			if caster.IsMartinAcquired then
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_shroud_of_martin_str_bonus", {})
 			end
+
+			local entranceFlashParticle = ParticleManager:CreateParticle("particles/custom/archer/ubw/entrance_flash.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControl(entranceFlashParticle, 0, casterLocation)
+			ParticleManager:CreateParticle("particles/custom/archer/ubw/exit_flash.vpcf", PATTACH_ABSORIGIN, caster)
 		end
 	end
 	})
 	ArcherCheckCombo(keys.caster, keys.ability)
 
+	-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, keys.Radius, true, 2.5)
 
-	-- Flame spread particle
-	local angle = 0
-	local increment_factor = 45
-	local origin = caster:GetAbsOrigin()
-	local forward = caster:GetForwardVector() * 1150
-	local destination = origin + forward
-	local ubwflame = 
-	{
-		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
-        iMoveSpeed = 575,
-        vSpawnOrigin = origin,
-        fDistance = 1150,
-        fStartRadius = 1000,
-        fEndRadius = 1000,
-        Source = caster,
-        bHasFrontalCone = true,
-        bReplaceExisting = false,
-        iUnitTargetTeam = DOTA_UNIT_TARGET_NONE,
-        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-        iUnitTargetType = DOTA_UNIT_TARGET_ALL,
-        fExpireTime = GameRules:GetGameTime() + 2.0,
-		bDeleteOnHit = false,
-		vVelocity = forward 
-	}
-	for i=1, 8 do
-		-- Start rotating
-		local theta = ( angle - i * increment_factor ) * math.pi / 180
-		local px = math.cos( theta ) * ( destination.x - origin.x ) - math.sin( theta ) * ( destination.y - origin.y ) + origin.x
-		local py = math.sin( theta ) * ( destination.x - origin.x ) + math.cos( theta ) * ( destination.y - origin.y ) + origin.y
-		local new_forward = ( Vector( px, py, origin.z ) - origin ):Normalized()
-		ubwflame.vVelocity = new_forward * 575
-		local projectile = ProjectileManager:CreateLinearProjectile(ubwflame)
-	end 
+	local particle = ParticleManager:CreateParticle("particles/custom/archer/ubw/firering.vpcf", PATTACH_ABSORIGIN, caster)
+	local particleRadius = 0
+	Timers:CreateTimer(0, function()
+		if particleRadius < keys.Radius then
+			particleRadius = particleRadius + keys.Radius * 0.03 / 2
+			ParticleManager:SetParticleControl(particle, 1, Vector(particleRadius,0,0))
+			return 0.03
+		end
+	end)
 	
 end
 

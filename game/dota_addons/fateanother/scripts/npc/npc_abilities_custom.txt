@@ -4851,7 +4851,9 @@
 		{
 			"particle"		"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
 			"particle"		"particles/custom/archer/archer_ubw_ring.vpcf"
-			"particle"		"particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf"
+			"particle"		"particles/custom/archer/ubw/firering.vpcf"
+			"particle"		"particles/custom/archer/ubw/entrance_flash.vpcf"
+			"particle"		"particles/custom/archer/ubw/exit_flash.vpcf"
 			"model"			"models/items/skeleton_king/weapon_shattered/weapon_shattered.vmdl"
 		}
 		
@@ -4930,18 +4932,8 @@
 				"IsHidden"		"1"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 				"Duration"				"2.0"
-								
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"			"TARGET"
-						"EffectName"		"particles/custom/archer/archer_ubw_ring.vpcf"
-						"EffectAttachType"	"start_at_origin"
-						"EffectRadius"		"%radius"
-					}
-				}
 			}
+
 			"modifier_ubw_death_checker"
 			{
 				"OnCreated"

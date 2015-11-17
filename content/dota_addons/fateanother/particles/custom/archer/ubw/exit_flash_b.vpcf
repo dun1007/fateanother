@@ -1,0 +1,146 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_ConstantColor =
+	[
+		255,
+		248,
+		185,
+		255,
+	]
+	m_ConstantNormal =
+	[
+		1.000000,
+		0.000000,
+		0.000000,
+	]
+	m_flConstantRadius = 30.000000
+	m_flConstantLifespan = 0.500000
+	m_nMaxParticles = 256
+	m_Operators =
+	[
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_BasicMovement"
+			m_fDrag = 0.150000
+		},
+		{
+			_class = "C_OP_SpinUpdate"
+		},
+		{
+			_class = "C_OP_ColorInterpolate"
+			m_ColorFade =
+			[
+				99,
+				16,
+				0,
+				255,
+			]
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flEndScale = 0.000000
+			m_flBias = 0.600000
+		},
+		{
+			_class = "C_OP_MovementRotateParticleAroundAxis"
+			m_vecRotAxis =
+			[
+				0.000000,
+				1.000000,
+				0.000000,
+			]
+			m_bDisableOperator = true
+		},
+	]
+	m_Renderers =
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nSequenceCombineMode = "2"
+			m_bAdditive = true
+			m_nRefractBlurType = "2"
+			m_bDisableZBuffering = true
+			m_flOverbrightFactor = 4.000000
+			m_hTexture = resource:"materials/particle/yellowflare2.vtex"
+		},
+	]
+	m_Initializers =
+	[
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 120.000000
+			m_flRadiusMax = 120.000000
+		},
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.750000
+			m_fLifetimeMax = 0.750000
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomRotationSpeed"
+			m_flDegreesMin = 80.000000
+			m_flDegreesMax = 120.000000
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+			m_fRadiusMin = 10.000000
+			m_fRadiusMax = 10.000000
+			m_fSpeedMin = 1200.000000
+			m_fSpeedMax = 1200.000000
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_INIT_PositionOffset"
+		},
+		{
+			_class = "C_INIT_RandomSequence"
+		},
+		{
+			_class = "C_INIT_CreateSpiralSphere"
+			m_nDensity = 1
+			m_flInitialRadius = 10.000000
+			m_flInitialSpeedMin = 1200.000000
+			m_flInitialSpeedMax = 1200.000000
+			m_bUseParticleCount = true
+		},
+		{
+			_class = "C_INIT_PositionWarp"
+			m_vecWarpMin =
+			[
+				5.000000,
+				5.000000,
+				1.000000,
+			]
+			m_vecWarpMax =
+			[
+				5.000000,
+				5.000000,
+				1.000000,
+			]
+		},
+	]
+	m_Emitters =
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 200
+		},
+	]
+	m_ForceGenerators =
+	[
+		{
+			_class = "C_OP_AttractToControlPoint"
+			m_fForceAmount = 12000.000000
+			m_fFalloffPower = 0.000000
+			m_bDisableOperator = true
+			m_flOpStartFadeInTime = 0.250000
+			m_flOpEndFadeInTime = 0.250000
+		},
+	]
+}
