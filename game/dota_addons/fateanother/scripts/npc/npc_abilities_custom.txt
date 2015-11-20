@@ -11277,8 +11277,9 @@
 		"precache"
 		{
 			"particle" 	"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
-			"particle"	particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf
+			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
 			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 		}
@@ -11409,6 +11410,7 @@
 				"Aura_Radius"   	"%radius"
 				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"    	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
+				"Aura_Flags"    	"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 				"Aura_ApplyToCaster" "0"
 			}
 
@@ -11420,6 +11422,16 @@
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"		"MODIFIER_STATE_VALUE_ENABLED"
+				}
+
+				"ThinkInterval"		"1.0" // The laziest possible fix to make this effect keep playing without actually going to the effort of re-implementing the particle
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"caster_ability.lua"
+						"Function"		"CreateSacrificeAllyParticle"
+					}
 				}
 			}
 		}

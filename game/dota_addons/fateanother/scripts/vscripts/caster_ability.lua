@@ -1023,6 +1023,10 @@ function OnSacrificeEnd(keys)
 	caster:RemoveModifierByName("modifier_sac_check")
 end
 
+function CreateSacrificeAllyParticle(keys)
+	ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf", PATTACH_ABSORIGIN_FOLLOW, keys.target)
+end
+
 function OnMTStart(keys)
 	local caster = keys.caster
 	local target = keys.target
