@@ -114,6 +114,7 @@ model_lookup["npc_dota_hero_shadow_shaman"] = "models/zc/gille.vmdl"
 model_lookup["npc_dota_hero_lina"] = "models/nero/nero.vmdl"
 model_lookup["npc_dota_hero_omniknight"] = "models/gawain/gawain.vmdl"
 model_lookup["npc_dota_hero_enchantress"] = "models/tamamo/tamamo.vmdl"
+model_lookup["npc_dota_hero_bloodseeker"] = "models/lishuen/lishuen.vmdl"
 
 DoNotKillAtTheEndOfRound = {
     "tamamo_charm",

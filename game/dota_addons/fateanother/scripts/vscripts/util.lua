@@ -544,6 +544,8 @@ function FindName(name)
         heroName = "White Saber(Extra)"
     elseif name == "npc_dota_hero_enchantress" then
         heroName = "Caster(Extra)"
+    elseif name == "npc_dota_hero_bloodseeker" then
+        heroName = "Assassin(Extra)"
     end
     return heroName
 end

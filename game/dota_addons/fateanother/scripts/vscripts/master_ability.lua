@@ -165,6 +165,10 @@ TamamoAttribute = {
 	attrCount = 4
 }
 
+--[[LiAttribute = {
+	attrCount = 4
+}]]
+
 function OnSeal1Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -375,6 +379,7 @@ end
 function AddMasterAbility(master, name)
     --local ply = master:GetPlayerOwner()
     local attributeTable = FindAttribute(name)
+    if attributeTable == nil then return end
     LoopThroughAttr(master, attributeTable)
 	master:AddAbility("master_strength")
 	master:AddAbility("master_agility")
@@ -441,6 +446,8 @@ function FindAttribute(name)
         attributes = GawainAttribute
     elseif name == "npc_dota_hero_enchantress" then
         attributes = TamamoAttribute
+    elseif name == "npc_dota_hero_bloodseeker" then
+    	attributes = LiAttribute
     end
     return attributes
 end 
@@ -451,6 +458,7 @@ function OnAttributeListOpen(keys)
 	local hero = ply:GetAssignedHero()
 
 	local attributeTable = FindAttribute(hero:GetName())
+
 
 	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), attributeTable[1], true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), attributeTable[2], true, true)

@@ -23,4 +23,5 @@
 	"npc_dota_hero_lina"				"1"		//Red Saber(Extra)
 	"npc_dota_hero_omniknight"			"1"		//White Saber(Extra)
 	"npc_dota_hero_enchantress"			"1"		//Caster(Extra)
+	"npc_dota_hero_bloodseeker"			"0"		//Assassin(Extra)
 }

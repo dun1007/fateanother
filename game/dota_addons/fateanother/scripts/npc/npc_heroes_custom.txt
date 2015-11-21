@@ -1154,5 +1154,49 @@
 		"VisionDaytimeRange"			"1000"
 		"VisionNighttimeRange"			"1000"
 	}
+	//=======================================
+	//	Assassin(Extra) - Li Shuwen 
+	//=======================================
+	"npc_dota_hero_li"
+	{
+		"override_hero"			"npc_dota_hero_bloodseeker"
+		"Model"					"models/lishuen/lishuen.vmdl"
+		"ModelScale"			"0.85"
+
+		"AbilityLayout"			"6"
+		"Ability15"				"presence_detection_passive"
+		"Ability16"				"attribute_bonus"
+		
+		"StatusHealth"					"1000"
+		"StatusHealthRegen"				"4.0"
+		"StatusMana"					"1300"
+		"StatusManaRegen"				"4.5"
+		
+		"ArmorPhysical"					"1"
+		"MagicalResistance"				"20"
+
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"125"
+		"AttackDamageMin"				"52"
+		"AttackDamageMax"				"57"
+		"AttackRate"					"0.8"
+		"AttackAcquisitionRange"		"1000"
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.6"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.9"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"1.5"
+		
+		"MovementSpeed"					"330"
+		"MovementTurnRate"				"0.8"
+
+		"VisionDaytimeRange"			"1000"
+		"VisionNighttimeRange"			"1000"
+	}
 
 }
