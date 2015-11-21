@@ -18,6 +18,9 @@
 		{
 			m_ChildRef = resource:"particles/custom/gilgamesh/enuma_elish/pulses.vpcf"
 		},
+		{
+			m_ChildRef = resource:"particles/custom/gilgamesh/enuma_elish/cracks.vpcf"
+		},
 	]
 	m_Operators =
 	[
