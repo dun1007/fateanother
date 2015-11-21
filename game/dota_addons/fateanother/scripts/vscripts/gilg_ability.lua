@@ -336,15 +336,22 @@ function OnEnumaStart(keys)
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
 	-- Create casting particle
 	local chargeFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	local endRadius = keys.EndRadius
+	local range = keys.Range
+	if caster.IsEnumaImproved then 
+		endRadius = endRadius * 1.5
+		range = range + 150
+	end
+
 	local enuma = 
 	{
 		Ability = keys.ability,
         EffectName = "",
         iMoveSpeed = keys.Speed,
         vSpawnOrigin = caster:GetAbsOrigin(),
-        fDistance = keys.Range - keys.EndRadius, -- We need this to take end radius of projectile into account
+        fDistance = range - endRadius, -- We need this to take end radius of projectile into account
         fStartRadius = keys.StartRadius,
-        fEndRadius = keys.EndRadius,
+        fEndRadius = endRadius,
         Source = caster,
         bHasFrontalCone = true,
         bReplaceExisting = false,
@@ -355,14 +362,9 @@ function OnEnumaStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * keys.Speed
 	}
-	if caster.IsEnumaImproved then 
-		enuma.fEndRadius = enuma.fEndRadius * 1.5
-		enuma.fDistance = enuma.fDistance + 150
-	end
 
 	Timers:CreateTimer(2.0, function() 
 		if caster:IsAlive() then
-
 			EmitGlobalSound("Gilgamesh.Enuma" ) 
 		end
 		return
@@ -384,36 +386,32 @@ function OnEnumaStart(keys)
 		Timers:CreateTimer(3.0, function() 
 			if caster:IsAlive() then
 				-- Create particle
+				local casterLocation = caster:GetAbsOrigin()
 				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, i)
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+				dummy:SetForwardVector(frontward)
+
+				local radius = keys.StartRadius
+				local fxIndex = ParticleManager:CreateParticle("particles/custom/gilgamesh/enuma_elish/projectile.vpcf", PATTACH_ABSORIGIN_FOLLOW, dummy)
+				ParticleManager:SetParticleControl(fxIndex, 3, targetPoint)
+
 				Timers:CreateTimer( function()
-						if IsValidEntity(dummy) and not dummy:IsNull() then
-							local newLoc = dummy:GetAbsOrigin() + keys.Speed * 0.03 * caster:GetForwardVector()
-							dummy:SetAbsOrigin( newLoc )
-							return 0.03
-						else
-							return nil
-						end
-					end
-				)
-				
-				local tornadoFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/enuma_elish.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-				ParticleManager:SetParticleControl( tornadoFxIndex, 0, dummy:GetAbsOrigin() )
-				ParticleManager:SetParticleControl( tornadoFxIndex, 1, caster:GetForwardVector() * keys.Speed )
-				ParticleManager:SetParticleControl( tornadoFxIndex, 2, Vector( keys.EndRadius+100, 0, 0 ) )
-				ParticleManager:SetParticleControl( tornadoFxIndex, 3, Vector( keys.Range / keys.Speed, 0, 0 ) )
-				
-				Timers:CreateTimer( 6.0, function()
-						ParticleManager:DestroyParticle( tornadoFxIndex, false )
-						ParticleManager:ReleaseParticleIndex( tornadoFxIndex )
-						Timers:CreateTimer( 0.5, function()
-								dummy:RemoveSelf()
-								return nil
-							end
-						)
+					if IsValidEntity(dummy) and not dummy:IsNull() then
+						local newLoc = GetGroundPosition(dummy:GetAbsOrigin() + keys.Speed * 0.03 * frontward, dummy)
+						dummy:SetAbsOrigin( newLoc )
+						radius = radius + (endRadius - keys.StartRadius) * keys.Speed * 0.03 / enuma.fDistance
+						-- radius = keys.StartRadius + (enuma.fEndRadius - keys.StartRadius) * (newLoc - casterLocation):Length2D() / enuma.fDistance
+						ParticleManager:SetParticleControl(fxIndex, 2, Vector(radius,0,0))
+						-- DebugDrawCircle(newLoc, Vector(255,0,0), 0.5, radius, true, 0.15)
+						return 0.03
+					else
 						return nil
 					end
-				)		
+				end
+				)
+				Timers:CreateTimer(enuma.fDistance / keys.Speed + 0.25, function()
+					dummy:RemoveSelf()
+				end)
 			end
 			return
 		end)

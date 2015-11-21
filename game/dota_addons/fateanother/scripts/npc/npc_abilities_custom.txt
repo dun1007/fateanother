@@ -9732,6 +9732,7 @@
 			"particle"		"particles/custom/gilgamesh/enuma_elish.vpcf"
 			"particle"		"particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf"
 			"particle"		"particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
+			"particle"		"particles/custom/gilgamesh/enuma_elish/projectile.vpcf"
 		}
 		
 		// Casting
