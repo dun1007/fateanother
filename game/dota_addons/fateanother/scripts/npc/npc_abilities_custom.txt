@@ -6198,12 +6198,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow"					"50"
+				"slow"					"-50"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"moderate_slow"					"30"
+				"moderate_slow"					"-30"
 			}
 			"06"
 			{
@@ -6245,20 +6245,20 @@
 			}
 			"modifier_madmans_roar_slow_strong"
 			{
-				"Duration"			"3.0"
+				"Duration"			"10.0"
 				"IsDebuff"			"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 				}
 			}
 			"modifier_madmans_roar_slow_moderate"
 			{
-				"Duration"			"3.0"
+				"Duration"			"10.0"
 				"IsDebuff"			"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%moderate_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%moderate_slow"
 				}
 			}
 		}
