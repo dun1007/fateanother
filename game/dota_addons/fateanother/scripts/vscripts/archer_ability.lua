@@ -717,10 +717,10 @@ function OnArrowRainBPHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local ability = caster:FindAbilityByName("archer_5th_broken_phantasm")
-	local targetdmg = ability:GetLevelSpecialValueFor("target_damage", ability:GetLevel())
-	local splashdmg = ability:GetLevelSpecialValueFor("splash_damage", ability:GetLevel())
+	local targetdmg = ability:GetLevelSpecialValueFor("target_damage", ability:GetLevel()-1)
+	local splashdmg = ability:GetLevelSpecialValueFor("splash_damage", ability:GetLevel()-1)
 	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel())
-	local stunDuration = ability:GetLevelSpecialValueFor("stun_duration", ability:GetLevel())
+	local stunDuration = ability:GetLevelSpecialValueFor("stun_duration", ability:GetLevel()-1)
 
 	DoDamage(caster, keys.target, targetdmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local targets = FindUnitsInRadius(caster:GetTeam(), keys.target:GetOrigin(), nil, radius

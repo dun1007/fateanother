@@ -57,7 +57,7 @@ function OnChargeStart(keys)
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
          DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-         keys.target:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
+         v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
     end
 
     --particle
@@ -215,7 +215,7 @@ function OnDeargStart(keys)
 	DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 	--print("Gae Dearg dealt " .. damage .. " damage to target")
 	if target:HasModifier("modifier_mark_of_mortality") then
-		local detonateDamage = caster:GetMaxHealth() * 15/100
+		local detonateDamage = target:GetMaxHealth() * 15/100
 		DoDamage(caster, target, detonateDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false) 
 		target:RemoveModifierByName("modifier_mark_of_mortality")
 	end

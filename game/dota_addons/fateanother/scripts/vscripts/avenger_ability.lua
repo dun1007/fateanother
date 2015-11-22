@@ -10,7 +10,7 @@ function OnDPStart(keys)
     	keys.ability:StartCooldown(1)
     end
 
-	if caster:HasModifier("modifier_purge") then 
+	if caster:HasModifier("modifier_purge") or caster:HasModifier("modifier_aestus_domus_aurea_lock") or caster:HasModifier("locked") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
 		keys.ability:EndCooldown()
 		return
@@ -336,7 +336,7 @@ function OnDCTick(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	-- If Demon Core is not toggled on or caster has less than 25 mana, remove buff 
-	if not ability:GetToggleState() or caster:GetMana() < 25 then 
+	if not ability:GetToggleState() or caster:GetMana() < 25 or not caster:HasModifier("modifier_true_form") then 
 		caster:RemoveModifierByName("modifier_demon_core")
 		return
 	end

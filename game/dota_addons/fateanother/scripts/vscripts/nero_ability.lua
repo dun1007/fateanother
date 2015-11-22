@@ -362,13 +362,13 @@ function OnTheatreStart(keys)
 
 	-- attribute loop
 	if caster.IsGloryAcquired then
-		keys.Damage = keys.Damage * 0.35
-		Timers:CreateTimer(function()
+		Timers:CreateTimer(1.0, function()
 			if caster:HasModifier("modifier_aestus_domus_aurea") and caster:IsAlive() then
+
 				local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-				
+				local newDamage = keys.Damage * 0.35
 				for k,v in pairs(targets) do
-					DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+					DoDamage(caster, v, newDamage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 					if not IsFacingUnit(v, caster, 180) then
 						local currentStack = v:GetModifierStackCount("modifier_aestus_domus_aurea_debuff_attribute", keys.ability)
 						if currentStack == 0 and v:HasModifier("modifier_aestus_domus_aurea_debuff_attribute") then currentStack = 1 end

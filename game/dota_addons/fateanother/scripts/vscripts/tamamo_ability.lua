@@ -455,7 +455,10 @@ function OnMantraStart(keys)
 	local ability = keys.ability
 	local orbAmount = keys.OrbAmount
 	local modifierName = 0
-	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	if caster:GetTeam() ~= target:GetTeam() then
+		if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+	end
+	
 	if target:HasModifier("modifier_mantra_ally") or target:HasModifier("modifier_mantra_enemy") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Target Already Affected By Mantra" } )
 		keys.ability:EndCooldown()

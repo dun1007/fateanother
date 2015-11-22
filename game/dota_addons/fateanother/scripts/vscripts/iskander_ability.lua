@@ -967,10 +967,11 @@ function OnHammerStart(keys)
 	end
 
 	for i=1,#cavalryTable do
+		local counter = 0
 		Timers:CreateTimer("hammer_charge" .. i, {
 			endTime = 0.0,
 			callback = function()
-
+			if counter > 3 then return end
 			local targets = FindUnitsInRadius(cavalryTable[i]:GetTeam(), cavalryTable[i]:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 	        for k,v in pairs(targets) do
 				if v.HammerChargeHit ~= true then 
@@ -985,6 +986,7 @@ function OnHammerStart(keys)
 	           		DoDamage(cavalryTable[i], v, keys.Damage/2, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	           	end
 	        end
+	        counter = counter+0.15
 			return 0.15
 		end})
 

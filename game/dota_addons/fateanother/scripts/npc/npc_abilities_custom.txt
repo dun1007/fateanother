@@ -6197,10 +6197,15 @@
 			}
 			"04"
 			{
-				"var_type"				"FIELD_INTEGER"
+				"var_type"				"FIELD_FLOAT"
 				"slow"					"50"
 			}
 			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"moderate_slow"					"30"
+			}
+			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"			"3.0"
@@ -6236,6 +6241,24 @@
 				"States"
 				{
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_madmans_roar_slow_strong"
+			{
+				"Duration"			"3.0"
+				"IsDebuff"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%slow"
+				}
+			}
+			"modifier_madmans_roar_slow_moderate"
+			{
+				"Duration"			"3.0"
+				"IsDebuff"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%moderate_slow"
 				}
 			}
 		}
@@ -6338,7 +6361,7 @@
 
 		"Modifiers"
 		{
-			"modifier_berserk_self_buff"
+			"modifier_berserk_eternal_rage_passive"
 			{
 				"Passive"				"1"
 				"OnAttackLanded"
@@ -6791,6 +6814,11 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"damage_sustain"				"20000"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_count_percentage"		"300"
 			}
 		}
 		
