@@ -106,6 +106,7 @@ end
 
 function OnRoarStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	giveUnitDataDrivenModifier(caster, caster, "rb_sealdisabled", 10.0)
 	caster:FindAbilityByName("berserker_5th_courage"):StartCooldown(27)
 	-- Set master's combo cooldown
@@ -131,10 +132,13 @@ function OnRoarStart(keys)
 			giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 3.0)
 		elseif dist > 300 and dist <= 1000 then
 			finaldmg = keys.Damage2
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_madmans_roar_slow_strong", {}) 
 		elseif dist > 1000 and dist <= 2000 then
 			finaldmg = keys.Damage3
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_madmans_roar_slow_moderate", {}) 
 		elseif dist > 2000 and dist <= 3000 then
 			finaldmg = 0
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_madmans_roar_slow_moderate", {}) 
 		end
 
 	    DoDamage(caster, v, finaldmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -150,7 +154,6 @@ function OnBerserkStart(keys)
 	local duration = keys.Duration
 	local damageTaken = keys.DamageTaken
 	local ply = caster:GetPlayerOwner()
-	if caster.IsEternalRageAcquired then duration = duration + 1 end
 	local berserkCounter = 0
 	caster.BerserkDamageTaken = 0
 
@@ -206,14 +209,14 @@ end
 function OnBerserkProc(keys)
 	local caster = keys.caster
 	local target = keys.target
-	target:EmitSound("Hero_Centaur.HoofStomp")
-	if not caster.IsRageBashOnCooldown then 
+	if not caster.IsRageBashOnCooldown and caster:HasModifier("modifier_courage_attack_damage_buff") then 
 		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
 	        DoDamage(caster, v, 300, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
 		end
 		caster.IsRageBashOnCooldown = true
+		target:EmitSound("Hero_Centaur.HoofStomp")
 		Timers:CreateTimer(4.0, function()
 			caster.IsRageBashOnCooldown = false
 		end)
@@ -405,7 +408,7 @@ end
 
 -- Check if anyone on this hero's team is still alive. 
 function IsTeamWiped(hero)
-	for i=0, 9 do
+	for i=0, 11 do
 		local player = PlayerResource:GetPlayer(i)
 		if player ~= nil then 
 			servant = PlayerResource:GetPlayer(i):GetAssignedHero()

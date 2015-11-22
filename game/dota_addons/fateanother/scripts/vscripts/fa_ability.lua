@@ -378,7 +378,7 @@ function OnQuickdrawStart(keys)
 	})
 
 	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
-		Timers:RemoveTimer("qickdraw_dash")
+		Timers:RemoveTimer("quickdraw_dash")
 		unit:OnPreBounce(nil)
 		unit:SetBounceMultiplier(0)
 		unit:PreventDI(false)

@@ -231,7 +231,6 @@ function OnDIZabHit(keys)
 		damage = damage + 100
 	end
 	DoDamage(hero, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	keys.ability:ApplyDataDrivenModifier(caster, keys.target, "modifier_ta_bleed", {})
 end
 
 function DIBleed(keys)

@@ -954,16 +954,18 @@ function CustomPing(playerid, location)
 end 
 
 function FAEyeAttribute(caster, enemy)
-	local eye = ParticleManager:CreateParticleForPlayer("particles/items_fx/dust_of_appearance_true_sight.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+	--local eye = ParticleManager:CreateParticleForPlayer("particles/items_fx/dust_of_appearance_true_sight.vpcf", PATTACH_ABSORIGIN, enemy, PlayerResource:GetPlayer(caster:GetPlayerID()))
+	local eye = ParticleManager:CreateParticle("particles/items_fx/dust_of_appearance_true_sight.vpcf", PATTACH_ABSORIGIN_FOLLOW, enemy)
+
 	ParticleManager:SetParticleControl(eye, 0, enemy:GetAbsOrigin())
 
-	local eyedummy = CreateUnitByName("sight_dummy_unit", enemy:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	local eyedummy = CreateUnitByName("visible_dummy_unit", enemy:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	eyedummy:SetDayTimeVisionRange(500)
 	eyedummy:SetNightTimeVisionRange(500)
 	eyedummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 100}) 
 	
 
-	local eyedummypassive = eyedummy:FindAbilityByName("dummy_unit_passive")
+	local eyedummypassive = eyedummy:FindAbilityByName("dummy_visible_unit_passive")
 	eyedummypassive:SetLevel(1)
 
 	local eyeCounter = 0
