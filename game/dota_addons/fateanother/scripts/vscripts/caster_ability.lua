@@ -1087,7 +1087,6 @@ function OnRBStart(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	print(caster:GetName())
 	if caster:GetName() == "npc_dota_hero_crystal_maiden" then
-		print("rb boys")
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_c_rule_breaker", {}) 
 	else
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_l_rule_breaker", {}) 

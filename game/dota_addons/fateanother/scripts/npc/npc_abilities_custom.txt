@@ -12881,11 +12881,6 @@
 				"ScriptFile"		"lancelot_ability"
 				"Function"			"OnKnightUsed"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_rule_breaker"
-				"Target"			"TARGET"
-			}
 			"FireEffect"
 			{
 				"EffectName"        "particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
