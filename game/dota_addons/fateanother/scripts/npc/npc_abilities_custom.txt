@@ -7733,6 +7733,7 @@
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
 			"particle"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
+			"particle"		"particles/custom/false_assassin/tsubame_gaeshi/slashes.vpcf"
 		}
 
 		"AbilitySpecial"

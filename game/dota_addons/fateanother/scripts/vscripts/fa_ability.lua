@@ -482,10 +482,11 @@ function OnTGStart(keys)
 		end)
 	end
 
-
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 
+	local particle = ParticleManager:CreateParticle("particles/custom/false_assassin/tsubame_gaeshi/slashes.vpcf", PATTACH_ABSORIGIN, caster)
+	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
 
 	Timers:CreateTimer(0.5, function()  
 		if caster:IsAlive() and target:IsAlive() then
@@ -500,13 +501,8 @@ function OnTGStart(keys)
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			end
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-			Timers:CreateTimer( 1.0, function()
-					ParticleManager:DestroyParticle( tsu, true )
-					ParticleManager:ReleaseParticleIndex( tsu )
-					return nil
-				end
-			)
+		else
+			ParticleManager:DestroyParticle(particle, true)
 		end
 	return end)
 
@@ -523,13 +519,8 @@ function OnTGStart(keys)
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 			end
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-			Timers:CreateTimer( 1.0, function()
-					ParticleManager:DestroyParticle( tsu, true )
-					ParticleManager:ReleaseParticleIndex( tsu )
-					return nil
-				end
-			)
+		else
+			ParticleManager:DestroyParticle(particle, true)
 		end
 	return end)
 
@@ -550,16 +541,10 @@ function OnTGStart(keys)
 			end
 			
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			local tsu = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-			Timers:CreateTimer( 1.0, function()
-					ParticleManager:DestroyParticle( tsu, true )
-					ParticleManager:ReleaseParticleIndex( tsu )
-					return nil
-				end
-			)
+		else
+			ParticleManager:DestroyParticle(particle, true)
 		end
 	return end)
-
 end
 
 
