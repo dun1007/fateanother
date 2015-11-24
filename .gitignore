@@ -237,3 +237,4 @@ content/dota_addons/fateanother/particles/*
 content/dota_addons/fateanother/materials/*
 content/dota_addons/fateanother/sounds/*
 content/dota_addons/fateanother/maps/fate_raw.vmap
+settings.kv

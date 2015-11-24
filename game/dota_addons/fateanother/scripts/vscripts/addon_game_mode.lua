@@ -1,3 +1,4 @@
+require("statcollection/init")
 require("timers")
 require('util' )
 require('archer_ability')
@@ -5,10 +6,7 @@ require('master_ability')
 require('gille_ability')
 require('notifications')
 require('items')
-require('lib.statcollection')
-statcollection.addStats({
-    modID = '8b2dca1df6a65593f2eb2c5a1d8038f1' --GET THIS FROM http://getdotastats.com/#d2mods__my_mods
-})
+
 
 _G.IsPickPhase = true
 _G.IsPreRound = true
@@ -436,6 +434,11 @@ function FateGameMode:PlayerSay(keys)
         end
     end
 
+    if text == "-declarewinner" then
+        if Convars:GetBool("developer") then 
+            GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
+        end
+    end
     -- manually end the round
     if text == "-finishround" then
         if Convars:GetBool("developer") then 
