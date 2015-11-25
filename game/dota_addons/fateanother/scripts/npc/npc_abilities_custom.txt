@@ -19977,7 +19977,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_invictus_spiritus_cooldown"
+			{
+				"IsDebuff"	"1"
 
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 	//=======================================

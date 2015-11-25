@@ -1,3 +1,5 @@
+require('util')
+
 function OnIPStart(keys)
 	local caster = keys.caster
 
@@ -585,15 +587,11 @@ function NeroTakeDamage(keys)
 	local healCounter = 0
 
 
-	if caster:GetHealth() == 0 and caster.IsISAcquired and caster.IsISOnCooldown == false and not caster:HasModifier("rb_sealdisabled") and not 
+	if caster:GetHealth() == 0 and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) and not 
 		caster:HasModifier("modifier_command_seal_2") and not caster:HasModifier("modifier_command_seal_3") and not caster:HasModifier("modifier_command_seal_4") then
 		
 		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
 		caster:SetHealth(1)
-		caster.IsISOnCooldown = true
-		Timers:CreateTimer(60.0, function()
-			caster.IsISOnCooldown = false
-		end)
 		Timers:CreateTimer(function()
 			if healCounter == 3 or not caster:IsAlive() then return end
 			caster:SetHealth(caster:GetHealth() + caster:GetMaxHealth() * 0.1)
@@ -602,6 +600,7 @@ function NeroTakeDamage(keys)
 		end)
 		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "rb_sealdisabled", 6.0)
+		caster:FindAbilityByName("nero_invictus_spiritus"):ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus_cooldown", {duration = 60})
 	end
 end
 
