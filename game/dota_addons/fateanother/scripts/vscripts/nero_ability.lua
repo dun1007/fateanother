@@ -460,6 +460,8 @@ end
 function OnNeroComboStart(keys)
 	local caster = keys.caster
 	caster.IsFieryFinaleActivated = true
+	local radius = caster:FindAbilityByName("nero_aestus_domus_aurea"):GetSpecialValueFor("radius")
+	local flamePillarRadius = 300
 
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
@@ -473,15 +475,16 @@ function OnNeroComboStart(keys)
 
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_aestus_domus_aurea") then
-			local flameVector = Vector( RandomFloat(-900, 900), RandomFloat(-900, 900), 100 )
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin() + flameVector, nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			local targetPoint = RandomPointInCircle(caster:GetAbsOrigin(), radius)
+			local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, flamePillarRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			-- DebugDrawCircle(targetPoint, Vector(255,0,0), 0.5, flamePillarRadius, true, 30)
 			for k,v in pairs(targets) do
 				DoDamage(caster, v, keys.FlameDamage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				v:AddNewModifier(caster, caster, "modifier_stunned", {Duration = 0.1})
 			end
 
 			local flameFx = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_e.vpcf", PATTACH_ABSORIGIN, caster )
-			ParticleManager:SetParticleControl( flameFx, 3, caster:GetAbsOrigin() + flameVector)
+			ParticleManager:SetParticleControl( flameFx, 3, targetPoint)
 			Timers:CreateTimer( 12.0, function()
 				ParticleManager:DestroyParticle( flameFx, false )
 				ParticleManager:ReleaseParticleIndex( flameFx )

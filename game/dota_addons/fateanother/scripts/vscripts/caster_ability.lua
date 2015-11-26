@@ -1123,7 +1123,7 @@ function OnHGStart(keys)
 	local targetPoint = keys.target_points[1]
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local radius = 750
+	local radius = keys.Radius
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
@@ -1186,11 +1186,10 @@ function OnHGStart(keys)
 			if maxBolt <= boltCount then return end
 		end
 
-		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-		while GridNav:IsBlocked(targetPoint + boltvector) or not GridNav:IsTraversable(targetPoint + boltvector) do
-			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
+		local rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
+		while GridNav:IsBlocked(rayTarget) or not GridNav:IsTraversable(rayTarget) do
+			rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
 		end
-		local rayTarget = GetGroundPosition(boltvector + caster:GetAbsOrigin(), caster)
 		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea/ray.vpcf")
 
 	    boltCount = boltCount + 1
@@ -1237,7 +1236,7 @@ function OnHGPStart(keys)
 	local targetPoint = keys.target_points[1]
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local radius = 750
+	local radius = keys.Radius
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
@@ -1293,11 +1292,10 @@ function OnHGPStart(keys)
 	Timers:CreateTimer(travelTime, function()
 		if boltCount == maxBolt then return end
 
-		boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
-		while GridNav:IsBlocked(targetPoint + boltvector) or not GridNav:IsTraversable(targetPoint + boltvector) do
-			boltvector = Vector(RandomFloat(-radius, radius), RandomFloat(-radius, radius), 0)
+		local rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
+		while GridNav:IsBlocked(rayTarget) or not GridNav:IsTraversable(rayTarget) do
+			rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
 		end
-		local rayTarget = GetGroundPosition(boltvector + caster:GetAbsOrigin(), caster)
 		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea_powered/ray.vpcf")
 
 	    boltCount = boltCount + 1
@@ -1314,7 +1312,7 @@ function OnHGPStart(keys)
 		end
   	  	local particle = ParticleManager:CreateParticle("particles/custom/caster/hecatic_graea_powered/area.vpcf", PATTACH_CUSTOMORIGIN, caster)
   	  	ParticleManager:SetParticleControl(particle, 0, targetPoint) 
-  	  	print(radius)
+  	  	-- print(radius)
 	    ParticleManager:SetParticleControl(particle, 1, Vector(barrageRadius * 2.5, 1, 1))
 	    ParticleManager:SetParticleControl(particle, 2, Vector(barrageRadius * 75, 1, 1))
 	    caster:EmitSound("Hero_ObsidianDestroyer.SanityEclipse.Cast")

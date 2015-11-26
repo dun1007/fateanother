@@ -914,6 +914,14 @@ function PrintTable(t, indent, done)
     end
 end
 
+-- hi i'm here to implement math i don't really understand and hope it works
+function RandomPointInCircle(origin, radius)
+    t = 2*math.pi*RandomFloat(0,radius)
+    u = RandomFloat(0, radius)+RandomFloat(0, radius)
+    if u > radius then u = radius * 2 - u end
+    return Vector(u*math.cos(t), u*math.sin(t),0) + origin
+end
+
 -- Colors
 COLOR_NONE = '\x06'
 COLOR_GRAY = '\x06'
