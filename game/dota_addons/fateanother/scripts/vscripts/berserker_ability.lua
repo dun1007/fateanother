@@ -161,8 +161,8 @@ function OnBerserkStart(keys)
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
 		if berserkCounter == duration then return end
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-    	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
+		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+  --   	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
 		caster:SetHealth(hplock)
 		berserkCounter = berserkCounter + 0.01
 		return 0.01
@@ -177,13 +177,15 @@ function OnBerserkStart(keys)
 		Timers:CreateTimer(function()
 			if caster:HasModifier("modifier_berserk_self_buff") == false then return end
 			if explosionCounter == duration then return end
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			local radius = 300
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
 		        DoDamage(caster, v, caster.BerserkDamageTaken/5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			end
 			caster.BerserkDamageTaken = 0
-			local berserkExp = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(berserkExp, 1, caster:GetAbsOrigin())
+			local berserkExp = ParticleManager:CreateParticle("particles/custom/berserker/berserk/eternal_rage_shockwave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			ParticleManager:SetParticleControl(berserkExp, 1, Vector(radius,0,radius))
+			-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
 
 			explosionCounter = explosionCounter + 1.0
 			return 1.0
@@ -192,7 +194,10 @@ function OnBerserkStart(keys)
 	end
 
 	BerCheckCombo(caster, keys.ability)
-	EmitGlobalSound("Berserker.Roar") 
+	EmitGlobalSound("Berserker.Roar")
+
+	-- hi i'm definitely not a hacky replacement for not being able to get status effect particles to work
+	caster:SetRenderColor(255, 127, 127)
 end
 
 function OnBerserkDamageTaken(keys)
@@ -202,6 +207,7 @@ function OnBerserkDamageTaken(keys)
 		caster.BerserkDamageTaken = caster.BerserkDamageTaken + damageTaken
 		print(caster.BerserkDamageTaken)
 		caster:SetMana(caster:GetMana() + damageTaken/5)
+		ParticleManager:CreateParticle("particles/custom/berserker/berserk/mana_conversion.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	end
 end
 
@@ -221,6 +227,10 @@ function OnBerserkProc(keys)
 			caster.IsRageBashOnCooldown = false
 		end)
 	end
+end
+
+function BerserkEnd(keys)
+	keys.caster:SetRenderColor(255, 255, 255)
 end
 
 function OnNineStart(keys)

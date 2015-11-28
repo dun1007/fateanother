@@ -6279,7 +6279,9 @@
 
 		"precache"
 		{
-			"particle"	"particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf"
+			"particle"	"particles/custom/berserker/berserk/buff.vpcf"
+			"particle"	"particles/custom/berserker/berserk/eternal_rage_shockwave.vpcf"
+			"particle"	"particles/custom/berserker/berserk/mana_conversion.vpcf"
 		}
 
 		// Time		
@@ -6336,6 +6338,18 @@
 						"DamageTaken"		"%attack_damage"
 					}
 				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"berserker_ability"
+						"Function"		"BerserkEnd"
+					}
+				}
+
+				"EffectName"		"particles/custom/berserker/berserk/buff.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 		}
 	}
