@@ -1035,6 +1035,7 @@ function OnHruntStart(keys)
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
 	end
+	EmitGlobalSound("Hero_Mirana.ArrowCast")
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
 	print(caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100 .. " " .. caster:GetMana())
 	caster:SetMana(0) 

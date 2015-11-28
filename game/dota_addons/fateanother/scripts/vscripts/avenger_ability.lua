@@ -370,7 +370,7 @@ function OnVergTakeDamage(keys)
 	if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
 	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
 	if caster:GetHealth() ~= 0 then
-		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, keys.ability, false)
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, keys.ability, false)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())

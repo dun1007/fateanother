@@ -83,9 +83,9 @@ function OnTerritoryCreated(keys)
 			if not caster.Territory:IsAlive() then return end
 		    local targets = FindUnitsInRadius(caster:GetTeam(), caster.Territory:GetOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 			for k,v in pairs(targets) do
-		         if v:GetUnitName() ~= "caster_5th_territory" then 
+		        --if v:GetUnitName() ~= "caster_5th_territory" then 
 		         	keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_territory_mana_regen", {Duration = 1.0}) 
-		         end
+		        --end
 		    end
 			return 1.0
 			end
@@ -411,8 +411,10 @@ function OnSummonDragon(keys)
 
 	Timers:CreateTimer(0.1, function()
 		-- Bonus properties(give it 0.1 sec delay just in case)
-		drag:SetMaxHealth(drag:GetMaxHealth() + hero:GetIntellect()*keys.HealthRatio)
-		drag:SetHealth(drag:GetMaxHealth())
+		local newHealth = drag:GetMaxHealth() + hero:GetIntellect()*keys.HealthRatio
+		drag:SetMaxHealth(newHealth)
+		drag:SetBaseMaxHealth(newHealth)
+		drag:SetHealth(newHealth)
 		drag:SetBaseMoveSpeed(drag:GetBaseMoveSpeed() + hero:GetIntellect()*keys.MSRatio)
 	end)
 
@@ -681,13 +683,13 @@ function OnMountStart(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	Timers:CreateTimer(0.2, function()
-		if caster:IsAlive() then
+		if caster:IsAlive() and not hero:HasModifier("jump_pause") then
 			if hero.IsMounted then
 				-- If Caster is attempting to unmount on not traversable terrain
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
 					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
 					keys.ability:EndCooldown()
-					return			
+					return								
 				else
 					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 					hero:RemoveModifierByName("modifier_mount_caster")
@@ -1068,6 +1070,11 @@ function OnAncientClosed(keys)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
 
+	local ultiName = "caster_5th_hecatic_graea"
+	if caster.IsHGComboEnabled then 
+		print("combo is currently active")
+		ultiName = "caster_5th_hecatic_graea_powered"
+	end
 	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", true ,true) 
 	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", true, true) 
 	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", true, true) 
@@ -1334,10 +1341,12 @@ function CasterCheckCombo(caster, ability)
 	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
 		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") and caster:FindAbilityByName("caster_5th_hecatic_graea"):IsCooldownReady() and caster:FindAbilityByName("caster_5th_hecatic_graea_powered"):IsCooldownReady() then
 			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
+			caster.IsHGComboEnabled = true
 			Timers:CreateTimer({
 				endTime = 5,
 				callback = function()
 				caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", true, false) 
+				caster.IsHGComboEnabled = false
 			end
 			})			
 		end

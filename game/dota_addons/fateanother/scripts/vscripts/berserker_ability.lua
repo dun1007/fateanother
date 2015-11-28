@@ -218,7 +218,7 @@ function OnBerserkProc(keys)
 	if not caster.IsRageBashOnCooldown and caster:HasModifier("modifier_courage_attack_damage_buff") then 
 		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
-	        DoDamage(caster, v, 300, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	        DoDamage(caster, v, 50, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
 		end
 		caster.IsRageBashOnCooldown = true

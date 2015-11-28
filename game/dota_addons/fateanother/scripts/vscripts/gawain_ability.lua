@@ -186,7 +186,7 @@ function OnGalatineStart(keys)
 			-- Explosion on allies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-				v:SetHealth(v:GetHealth() + keys.Damage * 66/100)
+				v:SetHealth(v:GetHealth() + keys.Damage * 33/100)
 				if caster.IsSunlightAcquired then
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
@@ -250,8 +250,10 @@ function OnEmbraceStart(keys)
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		-- process team effect
-		local currentHealth = target:GetMaxHealth() - target:GetHealth()
-		target:SetHealth(target:GetHealth() + currentHealth/2)
+		local healthDiff = target:GetMaxHealth() - target:GetHealth()
+		local healAmount = healthDiff * target:GetMagicalArmorValue()
+		print(healAmount)
+		target:SetHealth(target:GetHealth() + healAmount)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_ally",{})
 		if caster.IsSunlightAcquired then
 			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_sunlight_bonus",{})

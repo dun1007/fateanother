@@ -581,7 +581,7 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"1.4"
 		
-		"MovementSpeed"					"315"
+		"MovementSpeed"					"325"
 		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"800"

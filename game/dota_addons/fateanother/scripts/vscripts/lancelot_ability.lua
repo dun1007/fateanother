@@ -7,6 +7,12 @@ function OnEternalStart(keys)
         return
     end
 
+    if IsRevoked(caster) then
+        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Revoked from Master" } )
+        keys.ability:EndCooldown()
+        return
+    end
+
     caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
     HardCleanse(caster)
     local dispel = ParticleManager:CreateParticle( "particles/units/heroes/hero_abaddon/abaddon_death_coil_explosion.vpcf", PATTACH_ABSORIGIN, caster )
