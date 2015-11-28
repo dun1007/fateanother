@@ -390,7 +390,7 @@ function OnQuickdrawStart(keys)
 end
 
 function OnQuickdrawHit(keys)
-	local damage = 500 + keys.caster:GetAgility() * 16
+	local damage = 500 + keys.caster:GetAgility() * 13
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -493,7 +493,7 @@ function OnTGStart(keys)
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if caster.IsGanryuAcquired then 
-				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				end
@@ -511,7 +511,7 @@ function OnTGStart(keys)
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if caster.IsGanryuAcquired then
-				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				end
@@ -530,7 +530,7 @@ function OnTGStart(keys)
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if IsSpellBlocked(keys.target) and target:GetName() == "npc_dota_hero_legion_commander" then return end -- if target has instinct up, block the last hit
 			if caster.IsGanryuAcquired then
-				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 					targets[i]:AddNewModifier(caster, targets[i], "modifier_stunned", {Duration = 1.5})

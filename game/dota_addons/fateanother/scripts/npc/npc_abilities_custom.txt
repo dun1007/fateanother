@@ -5636,7 +5636,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"16"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -6680,12 +6680,12 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"bash_duration"				"0.5"
+				"bash_duration"				"0.6"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"bash_damage"				"300"
+				"bash_damage"				"50"
 			}
 			"04"
 			{
@@ -7094,7 +7094,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"16"
+				"agi_ratio"			"13"
 			}
 		}
 		
@@ -7661,7 +7661,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"AbilityDamage"					"400 500 600 700 800"
+		"AbilityDamage"					"%damage"
 
 		"precache"
 		{
@@ -7673,7 +7673,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 500 600 700 800"
+				"damage"				"400 475 550 625 700"
 			}
 			"02"
 			{
@@ -9656,7 +9656,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"30 45 60 75 90"
+				"damage"			"40 60 80 100 120"
 			}
 			
 			"02"
@@ -10476,7 +10476,7 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_mobilize"
-		"AbilityCastPoint"				"3.0"
+		"AbilityCastPoint"				"1.5"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
 
@@ -10523,7 +10523,7 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_immobilize"
-		"AbilityCastPoint"				"3.0"
+		"AbilityCastPoint"				"1.5"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
 
@@ -11890,7 +11890,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"workshop_mregen"		"10"
+				"workshop_mregen"		"20"
 			}
 			"03"
 			{
@@ -11923,7 +11923,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"8"
 
 		"precache"
 		{
@@ -14340,6 +14340,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"precache"
 		{
 			"particle"		"particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf"
@@ -14590,7 +14591,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
