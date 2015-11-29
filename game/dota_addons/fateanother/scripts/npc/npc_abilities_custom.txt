@@ -6013,6 +6013,9 @@
 		"precache"
 		{
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_axe.vsndevts"
+			"particle"				"particles/custom/berserker/courage/buff.vpcf"
+			"particle"				"particles/custom/berserker/courage/debuff.vpcf"
+			"particle"				"particles/custom/berserker/courage/stun_explosion.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -6081,18 +6084,6 @@
 				"EffectName"		"Hero_Axe.Berserkers_Call"
 				"Target"			"CASTER"
 			}
-			"FireEffect"
-			{
-				"EffectName"        "particles/units/heroes/hero_axe/axe_beserkers_call_owner.vpcf"
-				"EffectAttachType"  "start_at_customorigin"
-
-				"ControlPointEntities"
-				{
-					"CASTER"	"follow_origin"
-					"CASTER"	"follow_origin"
-					"CASTER"	"follow_origin"
-				}
-			}
 		}
 		
 		
@@ -6116,6 +6107,9 @@
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%damage_reduction"
 				}
+
+				"EffectName"		"particles/custom/berserker/courage/debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
 			}
 			"modifier_courage_attack_damage_buff"
 			{
@@ -6151,6 +6145,14 @@
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"		"%str_debuff"
 				}
 
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"berserker_ability"
+						"Function"		"OnCourageBuffEnded"
+					}
+				}
 			}
 		}
 	}

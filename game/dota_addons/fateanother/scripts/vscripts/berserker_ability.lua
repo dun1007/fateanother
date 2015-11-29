@@ -50,7 +50,8 @@ function OnCourageStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 400
+	local radius = 400
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		-- Apply armor reduction and damage reduction buff to nearby enemies
@@ -82,6 +83,15 @@ function OnCourageStart(keys)
 	if caster.IsEternalRageAcquired then
 		ReduceCooldown(caster:FindAbilityByName("berserker_5th_nine_lives"), 5)
 	end
+
+	caster.courage_particle = ParticleManager:CreateParticle("particles/custom/berserker/courage/buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	ParticleManager:SetParticleControl(caster.courage_particle, 1, Vector(currentStack + 1,1,1))
+	ParticleManager:SetParticleControl(caster.courage_particle, 3, Vector(radius,1,1))
+end
+
+function OnCourageBuffEnded(keys)
+	ParticleManager:DestroyParticle(keys.caster.courage_particle, false)
+	keys.caster.courage_particle = nil
 end
 
 function OnCourageAttackLanded(keys)
@@ -215,8 +225,9 @@ end
 function OnBerserkProc(keys)
 	local caster = keys.caster
 	local target = keys.target
-	if not caster.IsRageBashOnCooldown and caster:HasModifier("modifier_courage_attack_damage_buff") then 
-		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+	if not caster.IsRageBashOnCooldown and caster:HasModifier("modifier_courage_attack_damage_buff") then
+		local radius = 300
+		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
 	        DoDamage(caster, v, 50, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
@@ -226,6 +237,9 @@ function OnBerserkProc(keys)
 		Timers:CreateTimer(4.0, function()
 			caster.IsRageBashOnCooldown = false
 		end)
+
+		ParticleManager:CreateParticle("particles/custom/berserker/courage/stun_explosion.vpcf", PATTACH_ABSORIGIN, target)
+		-- DebugDrawCircle(target:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
 	end
 end
 
