@@ -496,7 +496,7 @@ function GaeBolgDummyEnd(dummy)
 end
 
 function LancerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") and caster:FindAbilityByName("lancer_5th_gae_bolg"):IsCooldownReady() and caster:FindAbilityByName("lancer_5th_wesen_gae_bolg"):IsCooldownReady()  then
 			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", false, true) 
 			Timers:CreateTimer({

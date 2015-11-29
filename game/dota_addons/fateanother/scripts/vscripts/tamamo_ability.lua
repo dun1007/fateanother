@@ -819,7 +819,7 @@ function OnPCFAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 
-	if hero:GetStrength() < 20 or hero:GetAgility() < 20 or hero:GetIntellect() < 20 then
+	if hero:GetStrength() < 19.5 or hero:GetAgility() < 19.5 or hero:GetIntellect() < 19.5 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Acquire 20 Stats" } )
 		keys.ability:EndCooldown()
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
@@ -851,7 +851,7 @@ function OnWitchcraftAcquired(keys)
 end
 
 function TamamoCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 and not caster.IsEscapeAcquired then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 and not caster.IsEscapeAcquired then
 		if ability == caster:FindAbilityByName("tamamo_subterranean_grasp") and caster:FindAbilityByName("tamamo_polygamist_castration_fist"):IsCooldownReady()  then
 			caster:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist", false, true) 
 			Timers:CreateTimer({

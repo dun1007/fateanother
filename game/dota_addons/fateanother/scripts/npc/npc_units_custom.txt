@@ -759,11 +759,12 @@
 		"ModelScale"				"1.0"
 		"Level"						"1"
 		"HealthBarOffset"			"140"
-		
+		"SoundSet"					"Hero_juggernaut"
+
 		// Abilities
 		//----------------------------------------------------------------
 		"Ability1"					"false_assassin_minds_eye"	 
-		"Ability2"					""	 
+		"Ability2"					"false_assassin_illusion_passive"	 
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -778,6 +779,7 @@
 		"AttackDamageMax"				"62"
 		"AttackRate"					"0.95"
 		"AttackAcquisitionRange"		"2000"
+		"AttackAnimationPoint"			"0.5"
 		"AttackRange"					"150"
 		
 		

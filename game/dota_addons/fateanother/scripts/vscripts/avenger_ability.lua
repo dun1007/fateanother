@@ -370,7 +370,7 @@ function OnVergTakeDamage(keys)
 	if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
 	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
 	if caster:GetHealth() ~= 0 then
-		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, keys.ability, false)
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, keys.ability, false)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
@@ -448,7 +448,7 @@ function OnOverdriveAttack(keys)
 end
 
 function AvengerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("avenger_true_form") and caster:FindAbilityByName("avenger_verg_avesta"):IsCooldownReady() and caster:FindAbilityByName("avenger_endless_loop"):IsCooldownReady()  then
 			caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", false, true) 
 			Timers:CreateTimer({

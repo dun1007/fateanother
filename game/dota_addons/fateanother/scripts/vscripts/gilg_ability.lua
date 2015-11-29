@@ -518,7 +518,7 @@ function OnMaxEnumaHit(keys)
 end
 
 function GilgaCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") and caster:FindAbilityByName("gilgamesh_enuma_elish"):IsCooldownReady() and caster:FindAbilityByName("gilgamesh_max_enuma_elish"):IsCooldownReady() then
 			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
 			Timers:CreateTimer({

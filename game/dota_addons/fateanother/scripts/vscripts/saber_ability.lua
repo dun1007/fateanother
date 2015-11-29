@@ -525,7 +525,7 @@ function StrikeAirPush(keys)
 end
 
 function SaberCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("saber_avalon") and caster:FindAbilityByName("saber_excalibur"):IsCooldownReady() and caster:FindAbilityByName("saber_max_excalibur"):IsCooldownReady() then
 			caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true) 
 			Timers:CreateTimer({

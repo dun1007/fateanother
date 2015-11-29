@@ -321,7 +321,7 @@ function OnBelleStart(keys)
 end
 
 function RiderCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("rider_5th_nail_swing") then
 			nailUsed = true
 			nailTime = GameRules:GetGameTime()

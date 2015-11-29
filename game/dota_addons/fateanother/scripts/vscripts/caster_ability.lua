@@ -731,6 +731,7 @@ function OnMountDeath(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:RemoveModifierByName("modifier_mount_caster")
 	caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+	hero.IsMounted = false
 end
 
 function OnItemStart(keys)
@@ -1338,7 +1339,7 @@ function OnHGPStart(keys)
 end
 
 function CasterCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") and caster:FindAbilityByName("caster_5th_hecatic_graea"):IsCooldownReady() and caster:FindAbilityByName("caster_5th_hecatic_graea_powered"):IsCooldownReady() then
 			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
 			caster.IsHGComboEnabled = true

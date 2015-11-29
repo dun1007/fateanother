@@ -1182,7 +1182,7 @@ end
 
 
 function ArcherCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() and caster:FindAbilityByName("archer_5th_arrow_rain"):IsCooldownReady() then
 			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
 			Timers:CreateTimer({

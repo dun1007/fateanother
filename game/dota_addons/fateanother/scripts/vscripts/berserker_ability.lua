@@ -404,7 +404,7 @@ QUsed = false
 QTime = 0
 
 function BerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("berserker_5th_fissure_strike") then
 			QUsed = true
 			QTime = GameRules:GetGameTime()

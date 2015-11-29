@@ -61,7 +61,6 @@ function OnHeartStart(keys)
 		caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
 		caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
 	end
-	SpawnFAIllusion(keys, 2)
 end
 
 function OnHeartLevelUp(keys)
@@ -74,9 +73,9 @@ function OnHeartAttackLanded(keys)
 	local caster = keys.caster
 	-- Process armor pen
 	local target = keys.target
-	local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
-	DoDamage(caster, target, caster:GetAttackDamage() * multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
-	print("dealt " .. caster:GetAttackDamage() * multiplier .. " bonus damage")
+	--local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
+	--DoDamage(caster, target, caster:GetAttackDamage() * multiplier , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	
 
 end
 
@@ -84,27 +83,33 @@ function OnHeartDamageTaken(keys)
 	-- process counter
 	local caster = keys.caster
 	local target = keys.attacker
+	local ability = keys.ability
 	local damageTaken = keys.DamageTaken
 	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-target:GetAbsOrigin()):Length2D() < 3000 then
 
 		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
+		SpawnFAIllusion(keys, 1)
 		--local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
-		local damage = caster:GetAttackDamage() * keys.Damage/100
-		DoDamage(caster, target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
-
-
+		--local damage = caster:GetAttackDamage() * keys.Damage/100
+		--DoDamage(caster, target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+		caster:RemoveModifierByName("modifier_heart_of_harmony")
+		caster:RemoveModifierByName("modifier_heart_of_harmony_invisible")
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_heart_of_harmony_movespeed_bonus", {})
+		caster:AddNewModifier(caster, caster, "modifier_camera_follow", {duration = 1.0})
+		-- cooldown
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_gate_keeper"), 15)
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_windblade"), 15)
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_tsubame_gaeshi"), 15)
 
+
 		target:EmitSound("FA.Omigoto")
 		EmitGlobalSound("FA.Quickdraw")
 		CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
-		caster:RemoveModifierByName("modifier_heart_of_harmony")
-		caster:RemoveModifierByName("modifier_heart_of_harmony_invisible")
+
 	end
+	
 end
 
 
@@ -152,7 +157,7 @@ function OnTMLanded(keys)
 	local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 	caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 	ApplyAirborne(caster, target, 1.5)
-	print("Starting Tsubame Mai")
+	--print("Starting Tsubame Mai")
 	caster:RemoveModifierByName("modifier_tsubame_mai")
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.5)
 	--keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_anim", {})
@@ -169,6 +174,7 @@ function OnTMLanded(keys)
 	Timers:CreateTimer(1.5, function()
 		if caster:IsAlive() then
 			--keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_finish_anim", {})
+			keys.IsCounter = false
 			OnTGStart(keys)
 		end
 	end)
@@ -191,7 +197,8 @@ function OnTMDamageTaken(keys)
 		local target = attacker
 
 		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
-		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
+		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100)
+		caster:AddNewModifier(caster, caster, "modifier_camera_follow", {duration = 1.0}) 
 		ApplyAirborne(caster, target, 2.0)
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 2.8)
 		caster:RemoveModifierByName("modifier_tsubame_mai")
@@ -231,6 +238,7 @@ function OnTMDamageTaken(keys)
 
 		Timers:CreateTimer(2.8, function()
 			if caster:IsAlive() then
+				keys.IsCounter = true
 				OnTGStart(keys)
 			end
 		end)
@@ -240,10 +248,13 @@ end
 
 function OnFADeath(keys)
 	local caster = keys.caster
-	for i=1, #caster.IllusionTable do
-		if IsValidEntity(caster.IllusionTable[i]) then
-			caster.IllusionTable[i]:ForceKill(true)
+	if caster:IsRealHero() then
+		for i=1, #caster.IllusionTable do
+			if IsValidEntity(caster.IllusionTable[i]) then
+				caster.IllusionTable[i]:ForceKill(true)
+			end
 		end
+		IllusionTable = nil
 	end
 end
 
@@ -259,18 +270,17 @@ function SpawnFAIllusion(keys, amount)
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
 
-	caster.IllusionTable = {}
+	if caster.IllusionTable == nil then
+		print("created new table")
+		caster.IllusionTable = {}
+	end
 	for ilu = 0, amount - 1 do
 		local illusion = CreateUnitByName("fa_clone", origin, true, caster, nil, caster:GetTeamNumber()) 
-		caster.IllusionTable[ilu+1] = illusion
+		table.insert(caster.IllusionTable, illusion)
 		--print(illusion:GetPlayerOwner())
 		--illusion:SetPlayerID(pid) 
-		illusion:SetOwner(caster:GetPlayerOwner())
+		illusion:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
 		illusion:SetControllableByPlayer(pid, true) 
-
-		for i=1,caster:GetLevel()-1 do
-			illusion:HeroLevelUp(false) 
-		end
 
 		--illusion:SetBaseStrength(caster:GetStrength())
 		--illusion:SetBaseAgility(caster:GetAgility())
@@ -279,8 +289,11 @@ function SpawnFAIllusion(keys, amount)
 		illusion:SetBaseMaxHealth(caster:GetMaxHealth())
 		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
 		illusion:SetBaseDamageMax(caster:GetBaseDamageMax())
+		illusion:SetBaseMoveSpeed(caster:GetBaseMoveSpeed())
+		illusion:SetBaseAttackTime(1/caster:GetAttacksPerSecond())
+		print(illusion:GetBaseAttackTime())
 		
-		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = 50, outgoing_damage = 70, incoming_damage = 200 })
+		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = 50, outgoing_damage = -35, incoming_damage = 300 })
 		--ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
 		--illusion:MakeIllusion()
 		
@@ -299,7 +312,7 @@ end
 function TPOnAttack(keys)
 	local caster = keys.caster
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	local rand = RandomInt(1, #targets) 
 	caster:SetAbsOrigin(targets[1]:GetAbsOrigin() + Vector(RandomFloat(-100, 100),RandomFloat(-100, 100),RandomFloat(-100, 100) ))		
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
@@ -443,6 +456,7 @@ end
 function OnTGStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	EmitGlobalSound("FA.Chop")
 
@@ -518,15 +532,23 @@ function OnTGStart(keys)
 			end
 			
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+			if ability:GetAbilityName() == "false_assassin_tsubame_mai" then
+				if keys.IsCounter then
+					SpawnFAIllusion(keys, 2)
+				else
+					SpawnFAIllusion(keys, 1)
+				end
+			end
 		else
 			ParticleManager:DestroyParticle(particle, true)
 		end
+
 	return end)
 end
 
 
 function FACheckCombo(caster, ability)
-	if caster:GetStrength() >= 25 and caster:GetAgility() >= 25 then
+	if caster:GetStrength() >= 24.5 and caster:GetAgility() >= 24.5 then
 		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") and caster:FindAbilityByName("false_assassin_heart_of_harmony"):IsCooldownReady() and caster:FindAbilityByName("false_assassin_tsubame_mai"):IsCooldownReady() then
 			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", true, true) 
 			Timers:CreateTimer({

@@ -6884,6 +6884,19 @@
 		
 		"Modifiers"
 		{
+			"modifier_fa_death_checker"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnFADeath"
+					}
+				}
+			}
 			"modifier_minds_eye_crit"
 			{
 				"IsHidden"	"0"
@@ -7286,15 +7299,20 @@
 			"06"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 175 250 325 400"
+				"illusion_outgoing_damage"				"65"
 			}
 			"07"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"illusion_incoming_damage"				"300"
+			}
+			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"stun_duration"				"0.5 0.75 1.0 1.25 1.5"
 			}
 
-			"08"
+			"09"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"gcd"					"15"
@@ -7371,6 +7389,17 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
+				}
+
+			}
+			"modifier_heart_of_harmony_movespeed_bonus"
+			{
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"		"follow_origin"	
+				"Duration"				"3.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"300"
 				}
 
 			}
@@ -7498,6 +7527,56 @@
 
 
 	//========================================
+	// False Assassin : Illusion Passive
+	//========================================
+	"false_assassin_illusion_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"false_assassin_illusion"
+		"precache"
+		{
+			"particle"					"sounds/weapons/hero/juggernaut/attack03.vsnd"
+		}
+
+		"Modifiers"
+		{
+			"modifier_fa_death_checker"
+			{
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnFADeath"
+					}
+				}
+			}
+			"modifier_psuedo_omnislash"
+			{
+				"Passive"					"1"
+				"AllowIllusionDuplicate"	"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"TPOnAttack"
+					}
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnIWDestroy"
+					}
+				}
+			}
+		}
+	}
+	//========================================
 	// False Assassin : Tsubame Mai
 	//========================================
 	"false_assassin_tsubame_mai"
@@ -7524,7 +7603,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"120"
+		"AbilityCooldown"				"150"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -7540,7 +7619,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"threshold"				"350"
+				"threshold"				"100"
 			}
 			"03"
 			{
@@ -19035,6 +19114,7 @@
 				"Function"		"OnMindEyeAcquired"
 			}
 		}
+
 	}
 	//=================================================================================================================
 	// Nero : Clairvoyance

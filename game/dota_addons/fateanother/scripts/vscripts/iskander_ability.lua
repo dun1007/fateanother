@@ -1051,7 +1051,7 @@ function OnAnnihilateStart(keys)
 end
 
 function IskanderCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("iskander_army_of_the_king") then
 			armyUsed = true
 			armyTime = GameRules:GetGameTime()

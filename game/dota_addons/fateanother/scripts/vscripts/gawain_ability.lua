@@ -191,7 +191,7 @@ function OnGalatineStart(keys)
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
 						if healTimer > 3 then return end
-						v:SetHealth(v:GetHealth() + keys.Damage/6)
+						v:SetHealth(v:GetHealth() + keys.Damage*11/100)
 						healTimer = healTimer + 1
 						return 1.0
 					end)
@@ -543,7 +543,7 @@ function OnSunCleanup(keys)
 end
 
 function GawainCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
 		if ability == caster:FindAbilityByName("gawain_invigorating_ray") and caster:FindAbilityByName("gawain_suns_embrace"):IsCooldownReady() and caster:FindAbilityByName("gawain_supernova"):IsCooldownReady() then
 			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
 			Timers:CreateTimer({
