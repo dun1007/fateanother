@@ -960,6 +960,9 @@ function FateGameMode:OnEntityKilled( keys )
         end
     end
     if killedUnit:IsRealHero() then
+        if killerEntity:IsIllusion() then
+            killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
+        end
         self.bIsCasuallyOccured = true
 
         if killerEntity:GetTeam() == killedUnit:GetTeam() then

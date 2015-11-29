@@ -61,6 +61,7 @@ function OnHeartStart(keys)
 		caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
 		caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
 	end
+	SpawnFAIllusion(keys, 2)
 end
 
 function OnHeartLevelUp(keys)
@@ -244,70 +245,46 @@ function OnFADeath(keys)
 			caster.IllusionTable[i]:ForceKill(true)
 		end
 	end
-
 end
 
-function OnIWStart(keys)
+function SpawnFAIllusion(keys, amount)
 	local caster = keys.caster
 
-	if not caster:IsHero() then
+	--[[if not caster:IsHero() then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast With Unit" } )
 		ability:EndCooldown()
 		return
-	end
+	end]]
 	local pid = caster:GetPlayerID()
 	local ability = keys.ability
 	local origin = caster:GetAbsOrigin() + RandomVector(100) 
 
-	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
-	masterCombo:EndCooldown()
-	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
-
-	caster:FindAbilityByName("false_assassin_heart_of_harmony"):StartCooldown(17)
-
-	
-	-- Create delay to unable enemy to detect which is caster
-	Timers:CreateTimer( 0.1, function()
-			local swordFx = ParticleManager:CreateParticle( "particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf", PATTACH_POINT_FOLLOW, caster )
-			ParticleManager:SetParticleControlEnt( swordFx, 0, caster, PATTACH_POINT_FOLLOW, "attach_sword", caster:GetAbsOrigin(), true )
-			caster.illusory_wanderer_particle_index = swordFx
-		end
-	)
-	
-	-- For illusion location
-	local maximum_illusion = ability:GetLevelSpecialValueFor( "maximum_illusion", ability:GetLevel() - 1 )
-	local illusion_spawn_distance = ability:GetLevelSpecialValueFor( "illusion_spawn_distance", ability:GetLevel() - 1 )
-	local destination = caster:GetAbsOrigin() + caster:GetForwardVector()
-	local origin = caster:GetAbsOrigin()
-	local increment_factor = 360 / maximum_illusion
-	
 	caster.IllusionTable = {}
-	for ilu = 0, maximum_illusion - 1 do
-		local illusion = CreateUnitByName(caster:GetUnitName(), origin, true, caster, nil, caster:GetTeamNumber()) 
+	for ilu = 0, amount - 1 do
+		local illusion = CreateUnitByName("fa_clone", origin, true, caster, nil, caster:GetTeamNumber()) 
 		caster.IllusionTable[ilu+1] = illusion
-		print(illusion:GetPlayerOwner())
-		illusion:SetPlayerID(pid) 
+		--print(illusion:GetPlayerOwner())
+		--illusion:SetPlayerID(pid) 
+		illusion:SetOwner(caster:GetPlayerOwner())
 		illusion:SetControllableByPlayer(pid, true) 
 
 		for i=1,caster:GetLevel()-1 do
 			illusion:HeroLevelUp(false) 
 		end
 
-		illusion:SetBaseStrength(caster:GetStrength())
-		illusion:SetBaseAgility(caster:GetAgility())
+		--illusion:SetBaseStrength(caster:GetStrength())
+		--illusion:SetBaseAgility(caster:GetAgility())
+		--illusion:SetAbilityPoints(0)
 
-		illusion:SetAbilityPoints(0)
-
-		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = keys.Duration, outgoing_damage = 70, incoming_damage = 200 })
-		ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
-		illusion:MakeIllusion()
+		illusion:SetBaseMaxHealth(caster:GetMaxHealth())
+		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
+		illusion:SetBaseDamageMax(caster:GetBaseDamageMax())
 		
-		-- Set location for illusion
-		local theta = ( ilu * increment_factor ) * math.pi / 180
-		local px = math.cos( theta ) * ( destination.x - origin.x ) - math.sin( theta ) * ( destination.y - origin.y ) + origin.x
-		local py = math.sin( theta ) * ( destination.x - origin.x ) + math.cos( theta ) * ( destination.y - origin.y ) + origin.y
-		local new_forward = ( Vector( px, py, origin.z ) - origin ):Normalized()
-		FindClearSpaceForUnit( illusion, origin + new_forward * illusion_spawn_distance, true )
+		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = 50, outgoing_damage = 70, incoming_damage = 200 })
+		--ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
+		--illusion:MakeIllusion()
+		
+		FindClearSpaceForUnit( illusion, origin, true )
 		
 		-- Create delay for particle to be able to attach properly
 		Timers:CreateTimer( 0.1, function()

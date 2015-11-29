@@ -7535,12 +7535,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"threshold"				"350"
+				"duration"				"3.0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"3.0"
+				"threshold"				"350"
 			}
 			"03"
 			{
@@ -7550,7 +7550,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ad_ratio"				"1.2"
+				"ad_ratio"				"1.0"
 			}
 		}
 		
@@ -7677,7 +7677,7 @@
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
-		"AbilityDamage"					"%damage"
+		"AbilityDamage"					"400 475 550 625 700"
 
 		"precache"
 		{

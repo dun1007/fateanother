@@ -750,6 +750,70 @@
 		"VisionNighttimeRange"		"350"		// Range of vision at night time.
 	}
 
+	"fa_clone"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/assassin/asn.vmdl"
+		"ModelScale"				"1.0"
+		"Level"						"1"
+		"HealthBarOffset"			"140"
+		
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"false_assassin_minds_eye"	 
+		"Ability2"					""	 
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"200"
+		"AttackDamageMin"				"48"
+		"AttackDamageMax"				"62"
+		"AttackRate"					"0.95"
+		"AttackAcquisitionRange"		"2000"
+		"AttackRange"					"150"
+		
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"CollisionSize"				"32"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.5"
+
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.7"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.8"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0"		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"1100"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"1000"
+	}
+
 	"iskander_infantry"
 	{
 		// General
