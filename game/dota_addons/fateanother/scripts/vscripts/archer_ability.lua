@@ -283,6 +283,7 @@ end
 function OnUBWCastStart(keys)
 	local caster = keys.caster
 	local casterLocation = caster:GetAbsOrigin()
+	local castDelay = 2
 	if caster:GetAbsOrigin().y < -3500 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Already Within Reality Marble" } )
 		caster:SetMana(caster:GetMana() + 800)
@@ -290,10 +291,10 @@ function OnUBWCastStart(keys)
 		return
 	end 
 	EmitGlobalSound("Archer.UBW")
-	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", castDelay)
 	keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_ubw_freeze",{})
 	Timers:CreateTimer({
-		endTime = 2,
+		endTime = castDelay,
 		callback = function()
 		if keys.caster:IsAlive() then 
 		    caster.UBWLocator = CreateUnitByName("ping_sign2", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
@@ -316,16 +317,21 @@ function OnUBWCastStart(keys)
 
 	-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, keys.Radius, true, 2.5)
 
-	local particle = ParticleManager:CreateParticle("particles/custom/archer/ubw/firering.vpcf", PATTACH_ABSORIGIN, caster)
-	local particleRadius = 0
-	Timers:CreateTimer(0, function()
-		if particleRadius < keys.Radius then
-			particleRadius = particleRadius + keys.Radius * 0.03 / 2
-			ParticleManager:SetParticleControl(particle, 1, Vector(particleRadius,0,0))
-			return 0.03
-		end
-	end)
-	
+	for i=2, 3 do
+		local dummy = CreateUnitByName("dummy_unit", casterLocation, false, caster, caster, i)
+		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+
+		local particle = ParticleManager:CreateParticleForTeam("particles/custom/archer/ubw/firering.vpcf", PATTACH_ABSORIGIN, dummy, i)
+		ParticleManager:SetParticleControl(particle, 6, casterLocation)
+		local particleRadius = 0
+		Timers:CreateTimer(0, function()
+			if particleRadius < keys.Radius then
+				particleRadius = particleRadius + keys.Radius * 0.03 / 2
+				ParticleManager:SetParticleControl(particle, 1, Vector(particleRadius,0,0))
+				return 0.03
+			end
+		end)
+	end
 end
 
 --ubwQuest = nil

@@ -67,6 +67,7 @@
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 6
 		},
 		{
 			_class = "C_INIT_RandomRotation"

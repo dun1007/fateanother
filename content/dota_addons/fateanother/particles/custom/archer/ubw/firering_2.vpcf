@@ -29,6 +29,7 @@
 		},
 		{
 			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 6
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
@@ -74,6 +75,7 @@
 			_class = "C_INIT_RingWave"
 			m_flInitialRadius = 1.000000
 			m_nOverrideCP = 1
+			m_nControlPointNumber = 6
 		},
 		{
 			_class = "C_INIT_RandomColor"
@@ -101,6 +103,7 @@
 		{
 			_class = "C_INIT_Orient2DRelToCP"
 			m_flRotOffset = 90.000000
+			m_nCP = 6
 		},
 		{
 			_class = "C_INIT_RandomRotation"

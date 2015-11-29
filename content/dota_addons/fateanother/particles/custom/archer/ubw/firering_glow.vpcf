@@ -23,6 +23,10 @@
 				255,
 			]
 		},
+		{
+			_class = "C_OP_PositionLock"
+			m_nControlPointNumber = 6
+		},
 	]
 	m_Renderers =
 	[
@@ -68,6 +72,7 @@
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
+			m_nControlPointNumber = 6
 		},
 		{
 			_class = "C_INIT_RandomRotation"

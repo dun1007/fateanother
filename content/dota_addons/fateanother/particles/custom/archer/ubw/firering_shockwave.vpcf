@@ -126,6 +126,7 @@
 			m_flInitialSpeedMin = 2500.000000
 			m_flInitialSpeedMax = 2500.000000
 			m_bEvenDistribution = true
+			m_nControlPointNumber = 6
 		},
 		{
 			_class = "C_INIT_PositionOffset"
@@ -145,6 +146,7 @@
 		},
 		{
 			_class = "C_INIT_Orient2DRelToCP"
+			m_nCP = 6
 		},
 		{
 			_class = "C_INIT_PositionPlaceOnGround"
