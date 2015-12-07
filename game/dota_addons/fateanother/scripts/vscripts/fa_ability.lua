@@ -288,7 +288,6 @@ function SpawnFAIllusion(keys, amount)
 		illusion:SetAbilityPoints(0)
 		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
 		illusion:SetBaseDamageMax(caster:GetBaseDamageMax())
-		Attributes:ModifyBonuses(illusion)
 		--[[
 		illusion:SetBaseMaxHealth(caster:GetMaxHealth())
 		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
@@ -319,7 +318,7 @@ end
 function TPOnAttack(keys)
 	local caster = keys.caster
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	local rand = RandomInt(1, #targets) 
 	caster:SetAbsOrigin(targets[1]:GetAbsOrigin() + Vector(RandomFloat(-100, 100),RandomFloat(-100, 100),RandomFloat(-100, 100) ))		
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)

@@ -19,6 +19,12 @@ function Attributes:Init()
     Attributes.mana_regen_adjustment = v.MANA_REGEN_PER_INT - DEFAULT_MANA_REGEN_PER_INT
     Attributes.armor_adjustment = v.ARMOR_PER_AGI - DEFAULT_ARMOR_PER_AGI
     Attributes.attackspeed_adjustment = v.ATKSPD_PER_AGI - DEFAULT_ATKSPD_PER_AGI
+    Attributes.ms_adjustment = v.MS_PER_AGI
+
+    Attributes.additional_movespeed_adjustment = v.MS_PER_STAT
+    Attributes.additional_armor_adjustment = v.ARMOR_PER_STAT
+    Attributes.additional_mana_regen_adjustment = v.MPREG_PER_STAT
+    Attributes.additional_hp_regen_adjustment = v.HPREG_PER_STAT
 
     Attributes.applier = CreateItem("item_stat_modifier", nil, nil)
 end
@@ -28,6 +34,16 @@ function Attributes:ModifyBonuses(hero)
     print("Modifying Stats Bonus of hero "..hero:GetUnitName())
 
     hero:AddNewModifier(hero, nil, "modifier_movespeed_cap", {})
+    hero.STRgained = 0
+    hero.AGIgained = 0
+    hero.INTgained = 0
+    hero.DMGgained = 0
+    hero.ARMORgained = 0
+    hero.HPREGgained = 0
+    hero.MPREGgained = 0
+    hero.MSgained = 0
+    hero.BaseArmor = hero:GetPhysicalArmorBaseValue()
+    hero.BaseMS = hero:GetBaseMoveSpeed()
     Timers:CreateTimer(function()
 
         if not IsValidEntity(hero) then
@@ -48,8 +64,12 @@ function Attributes:ModifyBonuses(hero)
         local intellect = hero:GetIntellect()
         
         -- Base Armor Bonus
-        local armor = agility * Attributes.armor_adjustment
+        local armor = hero.BaseArmor + agility * Attributes.armor_adjustment + hero.ARMORgained * Attributes.additional_armor_adjustment
         hero:SetPhysicalArmorBaseValue(armor)
+
+        -- Base MS bonus
+        local ms = hero.BaseMS + agility * Attributes.ms_adjustment + hero.MSgained * Attributes.additional_movespeed_adjustment
+        hero:SetBaseMoveSpeed(ms)
 
         -- STR
         if strength ~= hero.strength then

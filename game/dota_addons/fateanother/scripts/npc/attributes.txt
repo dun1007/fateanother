@@ -7,5 +7,13 @@
     "MANA_REGEN_PER_INT"    "0.25"
     "ARMOR_PER_AGI"         "0.3"
     "ATKSPD_PER_AGI"        "2"
+    "MS_PER_AGI"			"1"
     "MAX_MS"                "522"
+
+    //Fate values
+    "DMG_PER_STAT"			"3"
+    "ARMOR_PER_STAT"		"1.5"
+    "HPREG_PER_STAT"		"2"
+    "MPREG_PER_STAT"		"1"
+    "MS_PER_STAT"			"5"
 }

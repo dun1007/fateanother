@@ -364,6 +364,7 @@ function OnRidingAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SetBaseMoveSpeed(hero:GetBaseMoveSpeed() + 50) 
+	hero.BaseMS = hero.BaseMS+50
 	hero.IsRidingAcquired = true
 
 	-- Set master 1's mana 
