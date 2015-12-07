@@ -260,6 +260,29 @@ function SpawnVisionDummy(owner, location, radius, duration, bTrueSight)
     return visiondummy
 end
 
+function SpawnAttachedVisionDummy(owner, target, radius, duration, bTrueSight)
+    local visiondummy = CreateUnitByName("sight_dummy_unit", target:GetAbsOrigin(), false, owner, owner, owner:GetTeamNumber())
+    visiondummy:SetDayTimeVisionRange(radius)
+    visiondummy:SetNightTimeVisionRange(radius)
+    local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+    unseen:SetLevel(1)
+
+    if bTrueSight then
+        visiondummy:AddNewModifier(owner, owner, "modifier_item_ward_true_sight", {true_sight_range = radius}) 
+    end
+
+    local counter = 0
+    Timers:CreateTimer(function()
+        counter = counter + 0.10
+        if (counter > duration) then
+            visiondummy:RemoveSelf()
+            return
+        end
+        visiondummy:SetAbsOrigin(target:GetAbsOrigin())
+        return 0.10
+    end)
+    return visiondummy
+end
 
 -- Apply a modifier from item
 function giveUnitDataDrivenModifier(source, target, modifier,dur)
@@ -662,11 +685,12 @@ end
 
 function GetPhysicalDamageReduction(armor)
     local reduction = 0.06*armor / (1+0.06*armor)
-    if armor >= 0 then 
+    return reduction
+    --[[if armor >= 0 then 
         return reduction
     else
         return -reduction
-    end
+    end]]
 end
 
 
@@ -827,7 +851,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             elseif dmg_type == DAMAGE_TYPE_MAGICAL then
                 damageToAllies = dmgtable.damage * (1-MR)
             end   
-            damageToAllies = dmgtable.damage/#target.linkTable
+            damageToAllies = damageToAllies/#target.linkTable
             dmgtable.damage = dmgtable.damage/#target.linkTable
             -- Loop through linked heroes
             for i=1, #target.linkTable do
@@ -863,6 +887,16 @@ end
 function ApplyStrongDispel(target)
     for k,v in pairs(strongdispellable) do
         target:RemoveModifierByName(v)
+    end
+end
+
+-- Fills inventory with unusable placeholders
+function FillInventory(entity)
+    for i=0, 5 do
+        local hero_item = entity:GetItemInSlot(i)
+        if hero_item == nil then
+            entity:AddItem(CreateItem("item_dummy_item" , nil, nil))
+        end
     end
 end
 

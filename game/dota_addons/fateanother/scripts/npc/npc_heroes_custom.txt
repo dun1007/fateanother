@@ -989,7 +989,7 @@
 		"Ability8"				"nero_invictus_spiritus"
 		"Ability9"				"nero_acquire_divinity"
 		"Ability10"				"nero_acquire_golden_rule"
-		"Ability11"				"nero_acquire_item_construction"
+		"Ability11"				"nero_acquire_martial_arts"
 		"Ability12"				"nero_acquire_clairvoyance"
 		"Ability13"				"nero_close_spellbook"
 		"Ability14"				"presence_detection_passive"

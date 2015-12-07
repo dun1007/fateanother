@@ -5,7 +5,7 @@ function OnIPStart(keys)
 
 	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "nero_acquire_divinity", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "nero_acquire_golden_rule", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_acquire_item_construction", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_acquire_martial_arts", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "nero_close_spellbook", true, true)
 	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "nero_acquire_clairvoyance", true, true)
 end
@@ -19,7 +19,8 @@ end
 PassiveModifiers = {
 	"modifier_divinity_damage_block",
 	"modifier_golden_rule",
-	"modifier_minds_eye_crit"
+	"modifier_minds_eye_crit",
+	"modifier_martial_arts_critical"
 }
 function OnDivinityAcquired(keys)
 	local caster = keys.caster
@@ -90,6 +91,30 @@ function OnMindEyeAcquired(keys)
 		caster:FindAbilityByName("false_assassin_minds_eye"):SetLevel(1)
 	end
 	caster:SwapAbilities("false_assassin_minds_eye", "fate_empty1", true, true)
+	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
+	OnIPClose(keys)
+end
+
+function OnMartialArtsAcquired(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local currentPassive = caster:GetAbilityByIndex(3):GetName()
+	if currentPassive ~= "fate_empty1" then
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:RemoveAbility(currentPassive)
+	end
+	for i=1, #PassiveModifiers do
+		if caster:HasModifier(PassiveModifiers[i]) then
+			caster:RemoveModifierByName(PassiveModifiers[i])
+		end
+	end
+	caster:AddAbility("lishuwen_martial_arts")
+	if caster.IsPrivilegeImproved then
+		caster:FindAbilityByName("lishuwen_martial_arts"):SetLevel(2)
+	else
+		caster:FindAbilityByName("lishuwen_martial_arts"):SetLevel(1)
+	end
+	caster:SwapAbilities("lishuwen_martial_arts", "fate_empty1", true, true)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end

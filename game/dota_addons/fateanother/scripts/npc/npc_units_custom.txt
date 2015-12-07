@@ -665,7 +665,9 @@
 		"ModelScale"		"2.0"
 		"BaseClass"			"npc_dota_creature"
 		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
-
+		"ConsideredHero"			"1"
+		"HasInventory"				"1"
+		
 		"AbilityLayout"				"4"
 		"Ability1"					"caster_5th_dragon_chilling_breath"			// Ability 1
 		"Ability2"					"fate_empty2"			// Ability 2
@@ -1419,6 +1421,9 @@
 		"ModelScale"				"1.6"
 		"Level"						"1"
 		"HealthBarOffset"			"500"
+		"ConsideredHero"			"1"
+		"HasInventory"				"1"
+
 		
 		"AbilityLayout"				"6"
 		// Abilities

@@ -249,6 +249,42 @@
 	    }
 	}
 
+	"item_dummy_item" 
+	{
+	    "ID"           "1992"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" ""
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "0"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
+
+
+	    "SideShop"     "1" 
+	    "SecretShop"   "0"
+
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+	    //"AbilityCooldown"				"2.0"
+	    //"AbilityCastRange"				"0"
+	    "precache"
+	    {
+	    }
+
+
+	    "OnSpellStart"
+	    {
+	    }
+	}
 
 	"item_apply_modifiers"
 	{
@@ -328,6 +364,73 @@
 			}
 	    }
 
+	}
+
+	"item_stat_modifier"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass"						"item_datadriven"
+		"ItemPurchasable" "0"
+
+
+		"Modifiers"
+		{
+
+			"modifier_health_bonus"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_HEALTH_BONUS"	"1"
+				}
+			}
+
+			"modifier_health_regen_constant"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"0.01"
+				}
+			}
+
+			"modifier_mana_bonus"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_MANA_BONUS"	"1"
+				}
+			}
+
+			"modifier_base_mana_regen"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"	"0.01"
+				}
+			}
+
+			"modifier_attackspeed_bonus_constant"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"1"
+				}
+			}
+		}
 	}
 
 	"item_mana_essence" 

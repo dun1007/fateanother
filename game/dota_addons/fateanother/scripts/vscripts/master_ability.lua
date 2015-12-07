@@ -60,8 +60,9 @@ FAAttribute = {
 	"false_assassin_attribute_eye_of_serenity",
 	"false_assassin_attribute_quickdraw",
 	"false_assassin_attribute_vitrification",
+	"false_assassin_attribute_improve_minds_eye",
 	"false_assassin_tsubame_mai",
-	attrCount = 4
+	attrCount = 5
 }
 
 TAAttribute = {

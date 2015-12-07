@@ -1,0 +1,11 @@
+"AttributeBonus"
+{
+    // Custom Stat Values
+    "HP_PER_STR"            "19"
+    "HP_REGEN_PER_STR"      "0.25"
+    "MANA_PER_INT"          "14"
+    "MANA_REGEN_PER_INT"    "0.25"
+    "ARMOR_PER_AGI"         "0.3"
+    "ATKSPD_PER_AGI"        "2"
+    "MAX_MS"                "522"
+}

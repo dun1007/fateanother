@@ -425,7 +425,7 @@ function OnEndlessTakeDamage(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 
 	if caster:GetHealth() ~= 0 then
-		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, verg, false)
+		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, verg, false)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())

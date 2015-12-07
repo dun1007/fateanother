@@ -6869,7 +6869,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"critical_rate"			"15 17"
+				"critical_rate"			"15 20"
 			}
 			"01"
 			{
@@ -7962,7 +7962,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"19"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -8100,6 +8100,49 @@
 			{
 				"ScriptFile"	"fa_ability"
 				"Function"		"OnVitrificationAcquired"
+			}
+		}
+	}
+	//=======================================
+	// FA Attribute : Improve Mind's Eye
+	//=======================================
+	"false_assassin_attribute_improve_minds_eye"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"false_assassin_attribute_improve_minds_eye"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"10"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"critical_damage"		"300"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"critical_rate"		"20"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"fa_ability"
+				"Function"		"OnMindsEyeImproved"
 			}
 		}
 	}
@@ -17323,7 +17366,7 @@
 
 			"modifier_waver_root_aura"
 			{
-				"Aura"          	"modifier_waver_silence"
+				"Aura"          	"modifier_waver_root"
 				"Aura_Radius"   	"3000"
 				"Aura_Teams"    	"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"    	"DOTA_UNIT_TARGET_ALL"
@@ -19167,7 +19210,30 @@
 			}
 		}
 	}
-	
+	//=================================================================================================================
+	// Nero : Martial Arts
+	//=================================================================================================================
+	"nero_acquire_martial_arts"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_martial_arts"
+		
+		"AbilityCastPoint"				"0.0"
+		"precache"
+		{
+
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnMartialArtsAcquired"
+			}
+		}
+	}
 	"nero_close_spellbook"
 	{
 		"BaseClass"						"ability_datadriven"
@@ -19232,7 +19298,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_damage"				"360"
+				"max_damage"				"320"
 			}
 			"03"
 			{
@@ -19434,7 +19500,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_agi"				"17 24 31 38 45"
+				"bonus_agi"				"20 30 40 50 60"
 			}
 			"02"
 			{
@@ -22650,6 +22716,154 @@
 			}
 		}
 	}
+
+	//================================================
+	// Li Shuwen: Martial Arts
+	//================================================
+	"lishuwen_martial_arts"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "lishuwen_martial_arts"
+		"AbilityCastRange"				"%search_radius"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"MaxLevel"                      "2"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastRangeBuffer"		"250"
+		"AbilityCastPoint"				"0.4"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"search_radius"		"700 1050"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"2 4"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"vision_radius"		"200"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"critical_rate_percentage"			"30"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"critical_damage"			"150"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"silence_duration"	"1.5"
+			}
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnMartialStart"
+				"Duration"		"%silence_duration"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_martial_arts_aura"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Aura"					"modifier_martial_arts_aura_enemy"
+				"Aura_Radius"			"%search_radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+			}
+			"modifier_martial_arts_aura_enemy"
+			{
+				"IsHidden"		"1"
+				"IsDebuff"		"1"
+
+			}
+			"modifier_martial_arts_indicator_enemy"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"%duration"
+			}
+			"modifier_martial_arts_critical"
+			{
+				"IsHidden"	"0"
+				"Passive"	"1"
+				"OnAttackStart"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_martial_arts_crit_hit"
+						"Target"		"CASTER"
+					}
+					"RunScript"
+					{
+						"ScriptFile"	"lishuwen_ability"
+						"Function"		"OnMartialAttackStart"
+						"Chance"		"%critical_rate_percentage"
+					}
+				}
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lishuwen_ability"
+						"Function"		"OnMartialAttackLanded"
+					}
+				}
+			}
+
+			"modifier_martial_arts_crit_hit"
+			{
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%critical_damage"
+				}
+				"OnAttackLanded"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_juggernaut/jugg_crit_blur_impact.vpcf"
+			    		"EffectAttachType"	"attach_hitloc"
+			    		"Target"			"TARGET"
+			    	}
+			        "RemoveModifier"
+			        {
+			            "ModifierName"  	"modifier_instinct_crit_hit"
+			            "Target"   			"CASTER"    
+			        }			
+				}
+			}
+		}
+	}
+
+
 	//================================================
 	// dummy unit passve (collection of global modifiers)
 	//================================================
@@ -22991,6 +23205,7 @@
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
 			"particle"	"particles/ui_mouseactions/ping_world.vpcf"
 			"particle"	"particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_cast.vpcf"
+			"particle"				"particles/generic_gameplay/generic_silence.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -23058,6 +23273,16 @@
 			{
 				"IsDebuff"		"1"
 			}
+			"silenced"
+			{
+				"IsDebuff"		"1"
+				"EffectName"			"particles/generic_gameplay/generic_silence.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}				
+			}
 			"jump_pause"
 			{
 				"States"
@@ -23077,6 +23302,14 @@
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"invulnerable"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"gille_attack_speed_boost"

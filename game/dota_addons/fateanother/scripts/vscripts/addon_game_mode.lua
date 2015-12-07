@@ -1,4 +1,5 @@
 require("statcollection/init")
+require('modifiers/attributes')
 require("timers")
 require('util' )
 require('archer_ability')
@@ -38,7 +39,7 @@ USE_CUSTOM_TOP_BAR_VALUES = true -- Should we do customized top bar values or us
 TOP_BAR_VISIBLE = true -- Should we display the top bar score/count at all?
 SHOW_KILLS_ON_TOPBAR = true -- Should we display kills only on the top bar? (No denies, suicides, kills by neutrals) Requires USE_CUSTOM_TOP_BAR_VALUES
 ENABLE_TOWER_BACKDOOR_PROTECTION = false-- Should we enable backdoor protection for our towers?
-REMOVE_ILLUSIONS_ON_DEATH = true -- Should we remove all illusions if the main hero dies?
+REMOVE_ILLUSIONS_ON_DEATH = false -- Should we remove all illusions if the main hero dies?
 DISABLE_GOLD_SOUNDS = false -- Should we disable the gold sound when players get gold?
 END_GAME_ON_KILLS = false -- Should the game end after a certain number of kills?
 KILLS_TO_END_GAME_FOR_TEAM = 9999 -- How many kills for a team should signify an end of game?
@@ -540,7 +541,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero.CStock = 10
     hero.RespawnPos = hero:GetAbsOrigin()     
     hero.bIsDirectTransferEnabled = true -- True by default
-
+    Attributes:ModifyBonuses(hero)
     -- Set music off
     --local player = PlayerResource:GetPlayer(hero:GetPlayerID())
     --player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
@@ -831,20 +832,35 @@ local spellBooks = {
 -- An ability was used by a player
 function FateGameMode:OnAbilityUsed(keys)
     print('[BAREBONES] AbilityUsed')
-    
     local player = EntIndexToHScript(keys.PlayerID)
     local abilityname = keys.abilityname
     local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
+
+    -- Check whether ability is an item active or not
+    if not string.match(abilityname,"item") then
     -- Check if hero is affected by Amaterasu
-    if hero:HasModifier("modifier_amaterasu_ally") then
-        for i=1, #spellBooks do
-            if abilityname == spellBooks[i] then return end
+        if hero:HasModifier("modifier_amaterasu_ally") then
+            for i=1, #spellBooks do
+                if abilityname == spellBooks[i] then return end
+            end
+            hero:SetMana(hero:GetMana()+200)
+            hero:SetHealth(hero:GetHealth()+300)
+            hero:EmitSound("DOTA_Item.ArcaneBoots.Activate")
+            local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+            ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
         end
-        hero:SetMana(hero:GetMana()+200)
-        hero:SetHealth(hero:GetHealth()+300)
-        hero:EmitSound("DOTA_Item.ArcaneBoots.Activate")
-        local particle = ParticleManager:CreateParticle("particles/items_fx/arcane_boots.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
-        ParticleManager:SetParticleControl(particle, 0, hero:GetAbsOrigin())
+
+        -- Check if a hero with Martial Arts is nearby
+        if hero:HasModifier("modifier_martial_arts_aura_enemy") then
+            local targets = FindUnitsInRadius(hero:GetTeam(), hero:GetOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+            for k,v in pairs(targets) do
+                if v:HasAbility("lishuwen_martial_arts") then
+                    local abil = v:FindAbilityByName("lishuwen_martial_arts")
+                    abil:ApplyDataDrivenModifier(v, hero, "modifier_martial_arts_indicator_enemy", {})
+                    SpawnAttachedVisionDummy(v, hero, abil:GetLevelSpecialValueFor("vision_radius", abil:GetLevel()-1 ), abil:GetLevelSpecialValueFor("duration", abil:GetLevel()-1 ), false)
+                end
+            end
+        end
     end
 end
 
@@ -1134,12 +1150,14 @@ function OnHeroClicked(Index, keys)
         local units = FindUnitsInRadius(hero:GetTeam(), hero:GetAbsOrigin(), nil, 100, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
         for k,v in pairs(units) do
             local unitname = v:GetUnitName()
-            if unitname == "caster_5th_ancient_dragon" or unitname == "gille_gigantic_horror" then
-                local playerData = {
-                    transport = v:entindex()
-                }
-                CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero_in_transport", playerData )
-                return
+            if hero:IsAlive() and v:IsAlive() then
+                if unitname == "caster_5th_ancient_dragon" or unitname == "gille_gigantic_horror" then
+                    local playerData = {
+                        transport = v:entindex()
+                    }
+                    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero_in_transport", playerData )
+                    return
+                end
             end
         end
     end

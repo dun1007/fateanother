@@ -260,6 +260,7 @@ end
 
 function SpawnFAIllusion(keys, amount)
 	local caster = keys.caster
+	if not caster:IsAlive() then return end
 
 	--[[if not caster:IsHero() then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Cast With Unit" } )
@@ -275,27 +276,31 @@ function SpawnFAIllusion(keys, amount)
 		caster.IllusionTable = {}
 	end
 	for ilu = 0, amount - 1 do
-		local illusion = CreateUnitByName("fa_clone", origin, true, caster, nil, caster:GetTeamNumber()) 
+		local illusion = CreateUnitByName(caster:GetUnitName(), origin, true, caster, nil, caster:GetTeamNumber()) 
 		table.insert(caster.IllusionTable, illusion)
 		--print(illusion:GetPlayerOwner())
-		--illusion:SetPlayerID(pid) 
+		illusion:SetPlayerID(pid) 
 		illusion:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
 		illusion:SetControllableByPlayer(pid, true) 
 
-		--illusion:SetBaseStrength(caster:GetStrength())
-		--illusion:SetBaseAgility(caster:GetAgility())
-		--illusion:SetAbilityPoints(0)
+		illusion:SetBaseStrength(caster:GetStrength())
+		illusion:SetBaseAgility(caster:GetAgility())
+		illusion:SetAbilityPoints(0)
 
+		--[[
 		illusion:SetBaseMaxHealth(caster:GetMaxHealth())
 		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
 		illusion:SetBaseDamageMax(caster:GetBaseDamageMax())
 		illusion:SetBaseMoveSpeed(caster:GetBaseMoveSpeed())
 		illusion:SetBaseAttackTime(1/caster:GetAttacksPerSecond())
-		print(illusion:GetBaseAttackTime())
-		
+		print(illusion:GetBaseAttackTime())]]
+		illusion:AddAbility("false_assassin_illusion_passive")
+		illusion:FindAbilityByName("false_assassin_illusion_passive"):SetLevel(1)
+		illusion:FindAbilityByName("false_assassin_minds_eye"):SetLevel(caster:FindAbilityByName("false_assassin_minds_eye"):GetLevel())
 		illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = 50, outgoing_damage = -35, incoming_damage = 300 })
+		giveUnitDataDrivenModifier(caster, illusion, "invulnerable", 0.5)
 		--ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
-		--illusion:MakeIllusion()
+		illusion:MakeIllusion()
 		
 		FindClearSpaceForUnit( illusion, origin, true )
 		
@@ -516,6 +521,13 @@ function OnTGStart(keys)
 	return end)
 
 	Timers:CreateTimer(0.9, function()  
+		if ability:GetAbilityName() == "false_assassin_tsubame_mai" then
+			if keys.IsCounter then
+				SpawnFAIllusion(keys, 2)
+			else
+				SpawnFAIllusion(keys, 1)
+			end
+		end
 		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
@@ -532,13 +544,6 @@ function OnTGStart(keys)
 			end
 			
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-			if ability:GetAbilityName() == "false_assassin_tsubame_mai" then
-				if keys.IsCounter then
-					SpawnFAIllusion(keys, 2)
-				else
-					SpawnFAIllusion(keys, 1)
-				end
-			end
 		else
 			ParticleManager:DestroyParticle(particle, true)
 		end
@@ -601,6 +606,18 @@ function OnVitrificationAcquired(keys)
 	hero.IsVitrificationAcquired = true
 	hero:FindAbilityByName("false_assassin_presence_concealment"):SetLevel(1) 
 	hero:SwapAbilities("fate_empty2", "false_assassin_presence_concealment", true, true) 
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnMindsEyeImproved(keys)
+	local caster = keys.caster
+	local ply = caster:GetPlayerOwner()
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsMindsEyeAcquired = true
+	hero:FindAbilityByName("false_assassin_minds_eye"):SetLevel(2) 
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

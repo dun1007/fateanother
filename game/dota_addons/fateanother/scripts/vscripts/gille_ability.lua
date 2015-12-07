@@ -400,6 +400,7 @@ function OnContractStart(keys)
 				if caster.IsAbyssalConnection2Acquired then
 					tentacle:AddItem(CreateItem("item_gille_otherworldly_portal" , nil, nil))
 				end
+				FillInventory(tentacle) -- fill the rest of inventory with dummy items
 				tentacle:SetControllableByPlayer(caster:GetPlayerID(), true)
 				tentacle:SetOwner(caster)
 				caster.GiganticHorror = tentacle
@@ -719,6 +720,7 @@ end
 function OnIntegrateDeath(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	hero.IsIntegrated = false
 	hero:RemoveModifierByName("modifier_integrate_gille")
 end
 
