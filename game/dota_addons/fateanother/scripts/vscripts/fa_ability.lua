@@ -286,7 +286,9 @@ function SpawnFAIllusion(keys, amount)
 		illusion:SetBaseStrength(caster:GetStrength())
 		illusion:SetBaseAgility(caster:GetAgility())
 		illusion:SetAbilityPoints(0)
-
+		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
+		illusion:SetBaseDamageMax(caster:GetBaseDamageMax())
+		Attributes:ModifyBonuses(illusion)
 		--[[
 		illusion:SetBaseMaxHealth(caster:GetMaxHealth())
 		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())

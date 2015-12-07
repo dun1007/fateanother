@@ -204,7 +204,8 @@ CannotReset = {
     "tamamo_armed",
     "tamamo_polygamist_castration_fist",
     "tamamo_polygamist_castration_fist_2",
-    "tamamo_fates_call"
+    "tamamo_fates_call",
+    "lishuwen_martial_arts"
 }
 
 femaleservant = {

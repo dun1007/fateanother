@@ -977,7 +977,7 @@ function FateGameMode:OnEntityKilled( keys )
     end
     if killedUnit:IsRealHero() then
         if killerEntity:IsIllusion() then
-            killerEntity = killerEntity:GetPlayerOwner():GetAssignedHero()
+            killerEntity = PlayerResource:GetPlayer(killerEntity:GetPlayerID()):GetAssignedHero()
         end
         self.bIsCasuallyOccured = true
 
