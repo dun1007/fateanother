@@ -31,19 +31,15 @@ end
 
 function OnFissureHit(keys)
 	local caster = keys.caster
-	local target = keys.target 
+	local target = keys.target
+	local courageAbility = caster:FindAbilityByName("berserker_5th_courage") 
 	if caster:HasModifier("modifier_courage_damage_stack_indicator") then
-		keys.Damage = keys.Damage + courageAbilityHandle:GetLevelSpecialValueFor("bonus_damage", courageAbilityHandle:GetLevel()-1)
-		DeduceCourageDamageStack(caster)
+		keys.Damage = keys.Damage + courageAbility:GetLevelSpecialValueFor("bonus_damage", courageAbility:GetLevel()-1)
+		DeductCourageDamageStack(caster)
 	end 
 
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	if not IsImmuneToSlow(target) then keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_fissure_strike_slow", {}) end
-end
-
-courageAbilityHandle = nil
-function OnCourageLevelUp(keys)
-	courageAbilityHandle = keys.ability -- Store handle in global variable for future use
 end
 
 function OnCourageStart(keys)
@@ -98,19 +94,17 @@ function OnCourageAttackLanded(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	DeduceCourageDamageStack(caster)
-
+	DeductCourageDamageStack(caster)
 end
 
-function DeduceCourageDamageStack(caster)
+function DeductCourageDamageStack(caster)
+	local courageAbility = caster:FindAbilityByName("berserker_5th_courage")
 	-- Deduce a stack from damage buff
-	local currentStack = caster:GetModifierStackCount("modifier_courage_damage_stack_indicator", courageAbilityHandle)
-	caster:RemoveModifierByName("modifier_courage_damage_stack_indicator")
+	local currentStack = caster:GetModifierStackCount("modifier_courage_damage_stack_indicator", courageAbility)
 	if currentStack == 1 then
-		caster:RemoveModifierByName("modifier_courage_attack_damage_buff")
+		caster:RemoveModifierByName("modifier_courage_damage_stack_indicator")
 	else
-		courageAbilityHandle:ApplyDataDrivenModifier(caster, caster, "modifier_courage_damage_stack_indicator", {}) 
-		caster:SetModifierStackCount("modifier_courage_damage_stack_indicator", courageAbilityHandle, currentStack-1)
+		caster:SetModifierStackCount("modifier_courage_damage_stack_indicator", courageAbility, currentStack-1)
 	end
 end
 
@@ -307,6 +301,8 @@ end
 function OnNineLanded(caster, ability)
 	local tickdmg = ability:GetLevelSpecialValueFor("damage", ability:GetLevel() - 1)
 	local lasthitdmg = ability:GetLevelSpecialValueFor("damage_lasthit", ability:GetLevel() - 1)
+	local courageAbility = caster:FindAbilityByName("berserker_5th_courage")
+	local courageDamage = courageAbility:GetSpecialValueFor("bonus_damage")
 	local radius = ability:GetSpecialValueFor("radius")
 	local lasthitradius = ability:GetSpecialValueFor("radius_lasthit")
 	local stun = ability:GetSpecialValueFor("stun_duration")
@@ -323,7 +319,6 @@ function OnNineLanded(caster, ability)
 	end
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
-
 			if caster:GetName() == "npc_dota_hero_sven" then 
 				if math.random(0,1) == 0 then 
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
@@ -332,6 +327,11 @@ function OnNineLanded(caster, ability)
 				end
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
+
+			local particle = ParticleManager:CreateParticle("particles/custom/berserker/nine_lives/hit.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControlForward(particle, 0, caster:GetForwardVector() * -1)
+			ParticleManager:SetParticleControl(particle, 1, Vector(0,0,(nineCounter % 2) * 180))
+
 			if nineCounter == 8 then -- if it is last strike
 				if caster:GetName() == "npc_dota_hero_doom_bringer" then
 					EmitGlobalSound("Berserker.Roar")
@@ -343,14 +343,14 @@ function OnNineLanded(caster, ability)
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 1500, 0, true)
 				-- do damage to targets
-				local tempLasthitdmg = lasthitdmg -- store original tick damage 
+				local damage = lasthitdmg 
 				if caster:HasModifier("modifier_courage_damage_stack_indicator") then
-					lasthitdmg = lasthitdmg + courageAbilityHandle:GetLevelSpecialValueFor("bonus_damage", courageAbilityHandle:GetLevel()-1)
-					DeduceCourageDamageStack(caster)
+					damage = damage + courageDamage
+					DeductCourageDamageStack(caster)
 				end 
 				local lasthitTargets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, lasthitradius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, 1, false)
 				for k,v in pairs(lasthitTargets) do
-					DoDamage(caster, v, lasthitdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
 					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
 					-- push enemies back
@@ -364,37 +364,31 @@ function OnNineLanded(caster, ability)
 						v:PreventDI(false)
 						v:SetPhysicsVelocity(Vector(0,0,0))
 						v:OnPhysicsFrame(nil)
-					return end)
+					end)
 				end
-				lasthitdmg = tempLasthitdmg
-				-- add particles
-				local lasthitparticle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	   			ParticleManager:SetParticleControl(lasthitparticle1, 1, caster:GetAbsOrigin())
-	   			local lasthitparticle2 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	   			ParticleManager:SetParticleControl(lasthitparticle2, 1, caster:GetAbsOrigin())
-				return 
-			end
-			
-			-- if its not last hit, do regular hit stuffs
-			local tempTickdamage = tickdmg -- store original tick damage 
-			if caster:HasModifier("modifier_courage_damage_stack_indicator") then
-				tickdmg = tickdmg + courageAbilityHandle:GetLevelSpecialValueFor("bonus_damage", courageAbilityHandle:GetLevel()-1)
-				DeduceCourageDamageStack(caster)
-			end 
-			local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
-			for k,v in pairs(targets) do
-				DoDamage(caster, v, tickdmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
-				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-				giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
-			end
-			tickdmg = tempTickdamage -- revert to original
 
-			local particle1 = ParticleManager:CreateParticle("particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(particle1, 1, caster:GetAbsOrigin())
-			local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-			ParticleManager:SetParticleControl(particle2, 1, caster:GetAbsOrigin())
-			nineCounter = nineCounter + 1
-			return 0.3
+				ParticleManager:CreateParticle("particles/custom/berserker/nine_lives/last_hit.vpcf", PATTACH_ABSORIGIN, caster)
+
+				-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, lasthitradius, true, 0.5)
+			else
+				-- if its not last hit, do regular hit stuffs
+				local damage = tickdmg -- store original tick damage 
+				if caster:HasModifier("modifier_courage_damage_stack_indicator") then
+					damage = damage + courageDamage
+					DeductCourageDamageStack(caster)
+				end 
+				local targets = FindUnitsInRadius(caster:GetTeamNumber(), caster:GetAbsOrigin(), caster, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+				for k,v in pairs(targets) do
+					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
+					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
+				end
+
+				-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
+
+				nineCounter = nineCounter + 1
+				return 0.3
+			end
 		end 
 	end)
 end

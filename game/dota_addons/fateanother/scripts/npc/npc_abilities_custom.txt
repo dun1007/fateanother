@@ -6062,14 +6062,6 @@
 				"duration"			"12"
 			}
 		}
-		"OnUpgrade"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"berserker_ability"
-				"Function"		"OnCourageLevelUp"
-			}
-		}
 
 		"OnSpellStart"
 		{
@@ -6114,7 +6106,6 @@
 			"modifier_courage_attack_damage_buff"
 			{
 				"IsHidden"		"1"
-				"Duration"		"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
@@ -6132,6 +6123,15 @@
 			{
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Duration"		"%duration"
+
+				"OnDestroy"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"	"modifier_courage_attack_damage_buff"
+						"Target" 		"CASTER"
+					}
+				}
 			}
 			"modifier_courage_stackable_buff"
 			{
@@ -6421,13 +6421,10 @@
 		
 		"precache"
 		{
-			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
-			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_aftershock_warp_egset.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
-			"particle"	"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
+			"particle"		"particles/custom/berserker/nine_lives/hit.vpcf"
+			"particle"		"particles/custom/berserker/nine_lives/last_hit.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
 		
 		// Casting
