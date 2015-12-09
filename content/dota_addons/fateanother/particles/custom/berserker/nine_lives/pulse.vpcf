@@ -51,11 +51,12 @@
 			m_nCP1 = 2
 			m_vecCP1Pos =
 			[
-				300.000000,
-				0.000000,
-				0.000000,
+				1.000000,
+				1.000000,
+				500.000000,
 			]
 			m_nHeadLocation = 6
+			m_bDisableOperator = true
 		},
 	]
 	m_Renderers =

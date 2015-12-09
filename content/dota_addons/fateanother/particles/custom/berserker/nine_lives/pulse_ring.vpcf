@@ -98,9 +98,12 @@
 		{
 			_class = "C_INIT_RemapCPtoScalar"
 			m_nCPInput = 2
-			m_flInputMax = 1000.000000
-			m_flOutputMax = 1000.000000
+			m_flInputMax = 700.000000
+			m_flOutputMax = 600.000000
 			m_bScaleInitialRange = true
+			m_nField = 2
+			m_flInputMin = 350.000000
+			m_flOutputMin = 300.000000
 		},
 	]
 	m_Emitters =

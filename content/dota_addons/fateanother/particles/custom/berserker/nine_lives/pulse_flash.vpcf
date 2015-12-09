@@ -78,8 +78,9 @@
 		{
 			_class = "C_INIT_RingWave"
 			m_flInitialRadius = 50.000000
-			m_flInitialSpeedMin = 600.000000
-			m_flInitialSpeedMax = 700.000000
+			m_flInitialSpeedMin = 1.714286
+			m_flInitialSpeedMax = 2.000000
+			m_nOverrideCP = 2
 		},
 		{
 			_class = "C_INIT_InitialVelocityNoise"

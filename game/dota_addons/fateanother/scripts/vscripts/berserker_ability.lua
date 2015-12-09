@@ -367,6 +367,8 @@ function OnNineLanded(caster, ability)
 					end)
 				end
 
+				ParticleManager:SetParticleControl(particle, 2, Vector(1,1,lasthitradius))
+				ParticleManager:SetParticleControl(particle, 3, Vector(lasthitradius / 350,1,1))
 				ParticleManager:CreateParticle("particles/custom/berserker/nine_lives/last_hit.vpcf", PATTACH_ABSORIGIN, caster)
 
 				-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, lasthitradius, true, 0.5)
@@ -384,6 +386,8 @@ function OnNineLanded(caster, ability)
 					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
 				end
 
+				ParticleManager:SetParticleControl(particle, 2, Vector(1,1,radius))
+				ParticleManager:SetParticleControl(particle, 3, Vector(radius / 350,1,1))
 				-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
 
 				nineCounter = nineCounter + 1
