@@ -81,7 +81,7 @@ function KBStart(keys)
 
 	elseif caster.OveredgeCount == 3 then 
 		if caster:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
-			caster:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
+			caster:SwapAbilities("fate_empty1", "archer_5th_overedge", true, true) 
 		end
 	end
 
@@ -1107,7 +1107,7 @@ function OnOveredgeStart(keys)
 	caster.OveredgeCount = 0
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.59)
-	caster:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
+	caster:SwapAbilities("fate_empty1", "archer_5th_overedge", true, true) 
     local archer = Physics:Unit(caster)
     caster:PreventDI()
     caster:SetPhysicsFriction(0)
@@ -1289,7 +1289,7 @@ function OnOveredgeAcquired(keys)
 			hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
 		elseif hero.OveredgeCount == 3 then 
 			if hero:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
-				hero:SwapAbilities("rubick_empty1", "archer_5th_overedge", true, true) 
+				hero:SwapAbilities("DeductCourageDamageStackck_empty1", "archer_5th_overedge", true, true) 
 			end
 		end
 		return 20
