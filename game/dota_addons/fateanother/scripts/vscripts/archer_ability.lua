@@ -1113,18 +1113,11 @@ function OnOveredgeStart(keys)
     local archer = Physics:Unit(caster)
     caster:PreventDI()
     caster:SetPhysicsFriction(0)
-    caster:SetPhysicsVelocity(Vector(caster:GetForwardVector().x * dist, caster:GetForwardVector().y * dist, 400))
+    caster:SetPhysicsVelocity(Vector(caster:GetForwardVector().x * dist, caster:GetForwardVector().y * dist, 800))
     caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
     caster:FollowNavMesh(false)	
     caster:SetAutoUnstuck(false)
-
-	Timers:CreateTimer({
-		endTime = 0.3,
-		callback = function()
-		print("ascend")
-		caster:SetPhysicsVelocity(Vector(caster:GetForwardVector().x * dist, caster:GetForwardVector().y * dist, -400))
-	end
-	})
+    caster:SetPhysicsAcceleration(Vector(0,0,-2666))
 
 	Timers:CreateTimer({
 		endTime = 0.6,
