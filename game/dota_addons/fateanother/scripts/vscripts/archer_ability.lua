@@ -320,6 +320,8 @@ function OnUBWCastStart(keys)
 	for i=2, 3 do
 		local dummy = CreateUnitByName("dummy_unit", casterLocation, false, caster, caster, i)
 		dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+		dummy:SetAbsOrigin(ubwCenter)
+		AddFOWViewer(i, ubwCenter, 1800, 3, false)
 
 		local particle = ParticleManager:CreateParticleForTeam("particles/custom/archer/ubw/firering.vpcf", PATTACH_ABSORIGIN, dummy, i)
 		ParticleManager:SetParticleControl(particle, 6, casterLocation)

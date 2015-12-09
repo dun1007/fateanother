@@ -21,6 +21,9 @@
 		{
 			m_ChildRef = resource:"particles/custom/archer/ubw/firering_ring_glow.vpcf"
 		},
+		{
+			m_ChildRef = resource:"particles/custom/archer/ubw/firering_glow_dummy.vpcf"
+		},
 	]
 	m_Operators =
 	[
