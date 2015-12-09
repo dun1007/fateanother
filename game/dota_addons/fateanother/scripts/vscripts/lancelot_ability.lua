@@ -220,7 +220,7 @@ function OnKnightClosed(keys)
         if caster:HasAbility("lancelot_blessing_of_fairy") then 
             caster:SwapAbilities(a4:GetName(), "lancelot_blessing_of_fairy", true, true) 
         else 
-            caster:SwapAbilities(a4:GetName(), "rubick_empty1", true, true) 
+            caster:SwapAbilities(a4:GetName(), "fate_empty1", true, true) 
         end
         caster:SwapAbilities(a5:GetName(), "lancelot_arms_mastership", true, true) 
         caster:SwapAbilities(a6:GetName(), "lancelot_arondite", true, true )       
@@ -467,8 +467,8 @@ function OnBlessingAcquired(keys)
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero:AddAbility("lancelot_blessing_of_fairy") 
     hero:FindAbilityByName("lancelot_blessing_of_fairy"):SetLevel(1) 
-    hero:SwapAbilities("rubick_empty1", "lancelot_blessing_of_fairy", true, true) 
-    hero:RemoveAbility("rubick_empty1") 
+    hero:SwapAbilities("fate_empty1", "lancelot_blessing_of_fairy", true, true) 
+    hero:RemoveAbility("fate_empty1") 
     hero.IsFairyReady = true
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -513,7 +513,7 @@ function LancelotCheckCombo(caster, ability)
             })
         elseif ability == caster:FindAbilityByName("lancelot_smg_barrage") and caster:FindAbilityByName("lancelot_nuke"):IsCooldownReady()  then
             if WUsed == true then 
-                local abilname = "rubick_empty1"
+                local abilname = "fate_empty1"
                 if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
 
                 caster:SwapAbilities("lancelot_nuke", abilname, true, true) 
