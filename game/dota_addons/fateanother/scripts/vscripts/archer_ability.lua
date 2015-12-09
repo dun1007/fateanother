@@ -73,16 +73,8 @@ function KBStart(keys)
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 	
-	if caster.IsOveredgeAcquired and caster.OveredgeCount < 3 then
-		caster.OveredgeCount = caster.OveredgeCount + 1
-		caster:RemoveModifierByName("modifier_overedge_stack") 
-		caster:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(caster, caster, "modifier_overedge_stack", {}) 
-		caster:SetModifierStackCount("modifier_overedge_stack", caster, caster.OveredgeCount)
-
-	elseif caster.OveredgeCount == 3 then 
-		if caster:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
-			caster:SwapAbilities("fate_empty1", "archer_5th_overedge", true, true) 
-		end
+	if caster.IsOveredgeAcquired then
+		GrantOveredgeStack(caster)
 	end
 
 	if caster:HasModifier("modifier_ubw_death_checker") then
@@ -1107,7 +1099,7 @@ function OnOveredgeStart(keys)
 	caster.OveredgeCount = 0
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.59)
-	caster:SwapAbilities("fate_empty1", "archer_5th_overedge", true, true) 
+	keys.ability:SetActivated(false)
     local archer = Physics:Unit(caster)
     caster:PreventDI()
     caster:SetPhysicsFriction(0)
@@ -1275,6 +1267,8 @@ function OnOveredgeAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsOveredgeAcquired = true
 	hero.OveredgeCount = 0
+	hero:FindAbilityByName("archer_5th_overedge"):SetLevel(1)
+	hero:FindAbilityByName("archer_5th_overedge"):SetActivated(false)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -1282,17 +1276,20 @@ function OnOveredgeAcquired(keys)
 
 	Timers:CreateTimer(function()  
 		print("Adding overedge stack")
-		if hero.IsOveredgeAcquired and hero.OveredgeCount < 3 then
-			hero.OveredgeCount = hero.OveredgeCount + 1
-			hero:RemoveModifierByName("modifier_overedge_stack") 
-			hero:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(hero, hero, "modifier_overedge_stack", {}) 
-			hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
-		elseif hero.OveredgeCount == 3 then 
-			if hero:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
-				hero:SwapAbilities("DeductCourageDamageStackck_empty1", "archer_5th_overedge", true, true) 
-			end
-		end
+		GrantOveredgeStack(hero)
 		return 20
 	end)
 
+end
+
+function GrantOveredgeStack(hero)
+	if hero.OveredgeCount < 4 then
+		hero.OveredgeCount = hero.OveredgeCount + 1
+		hero:RemoveModifierByName("modifier_overedge_stack")
+		hero:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(hero, hero, "modifier_overedge_stack", {})
+		hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
+		if hero.OveredgeCount == 4 then 
+			hero:FindAbilityByName("archer_5th_overedge"):SetActivated(true)
+		end
+	end
 end
