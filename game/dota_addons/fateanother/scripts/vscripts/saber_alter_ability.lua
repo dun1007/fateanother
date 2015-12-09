@@ -169,13 +169,8 @@ vortigernCount = 0
 function OnVortigernStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	local damage = keys.Damage
 	local forward = ( keys.target_points[1] - caster:GetAbsOrigin() ):Normalized() -- caster:GetForwardVector() 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 0.8)
-	if caster.IsFerocityImproved then 
-		damage = damage + 100
-		keys.StunDuration = keys.StunDuration + 0.3
-	end
 	EmitGlobalSound("Saber_Alter.Vortigern")
 
 	local vortigernBeam =

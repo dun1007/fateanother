@@ -3672,12 +3672,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"vortigern_bonus_stun_duration"		"0.5"
+				"vortigern_bonus_stun_duration"		"0.3"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"uf_mana_cost"		"150"
+				"uf_mana_cost"		"100"
 			}
 			"04"
 			{
