@@ -4,7 +4,7 @@
 	m_Children =
 	[
 		{
-			m_ChildRef = resource:"particles/custom/reference/dark_pact/pulse.vpcf"
+			m_ChildRef = resource:"particles/custom/berserker/nine_lives/pulse.vpcf"
 		},
 		{
 			m_ChildRef = resource:"particles/custom/berserker/nine_lives/slash.vpcf"
