@@ -5458,6 +5458,11 @@
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"250"
 			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge_time"		"20"
+			}
 		}
 		
 		"OnSpellStart"
@@ -5485,11 +5490,17 @@
 			}
 			"modifier_overedge_stack"
 			{
-				"IsHidden"		"0"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				"Properties"
+				"Duration"	"%charge_time"
+
+				"Attributes"	"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"OnDestroy"
 				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%agi_increase"
+					"RunScript"
+					{
+						"ScriptFile"	"archer_ability"
+						"Function"		"OveredgeStackExpired"
+					}
 				}
 			}
 		}

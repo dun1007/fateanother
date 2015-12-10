@@ -1096,10 +1096,11 @@ function OnOveredgeStart(keys)
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
 		return 
 	end 
-	caster.OveredgeCount = 0
+	caster.OveredgeCount = -1
+	caster:RemoveModifierByName("modifier_overedge_stack")
+	keys.ability:SetActivated(false)
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.59)
-	keys.ability:SetActivated(false)
     local archer = Physics:Unit(caster)
     caster:PreventDI()
     caster:SetPhysicsFriction(0)
@@ -1269,27 +1270,28 @@ function OnOveredgeAcquired(keys)
 	hero.OveredgeCount = 0
 	hero:FindAbilityByName("archer_5th_overedge"):SetLevel(1)
 	hero:FindAbilityByName("archer_5th_overedge"):SetActivated(false)
+	GrantOveredgeStack(hero)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
 
-	Timers:CreateTimer(function()  
-		print("Adding overedge stack")
-		GrantOveredgeStack(hero)
-		return 20
-	end)
-
+function OveredgeStackExpired(keys)
+	GrantOveredgeStack(keys.caster)
 end
 
 function GrantOveredgeStack(hero)
+	print("Adding overedge stack")
+
 	if hero.OveredgeCount < 4 then
 		hero.OveredgeCount = hero.OveredgeCount + 1
-		hero:RemoveModifierByName("modifier_overedge_stack")
+	end
+	if not hero:HasModifier("modifier_overedge_stack") then
 		hero:FindAbilityByName("archer_5th_overedge"):ApplyDataDrivenModifier(hero, hero, "modifier_overedge_stack", {})
-		hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
-		if hero.OveredgeCount == 4 then 
-			hero:FindAbilityByName("archer_5th_overedge"):SetActivated(true)
-		end
+	end
+	hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
+	if hero.OveredgeCount == 4 then
+		hero:FindAbilityByName("archer_5th_overedge"):SetActivated(true)
 	end
 end
