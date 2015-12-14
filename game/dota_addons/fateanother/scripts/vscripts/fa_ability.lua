@@ -302,7 +302,6 @@ function SpawnFAIllusion(keys, amount)
 		giveUnitDataDrivenModifier(caster, illusion, "invulnerable", 0.5)
 		--ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
 		illusion:MakeIllusion()
-		
 		FindClearSpaceForUnit( illusion, origin, true )
 		
 		-- Create delay for particle to be able to attach properly

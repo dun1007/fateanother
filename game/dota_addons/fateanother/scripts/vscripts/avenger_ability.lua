@@ -209,7 +209,7 @@ function OnRemainMultiply(keys)
 	remain:SetOwner(caster:GetPlayerOwner():GetAssignedHero())
 	LevelAllAbility(remain)
 	FindClearSpaceForUnit(remain, remain:GetAbsOrigin(), true)
-	remain:FindAbilityByName("avenger_remain_passive"):SetLevel(keys.ability:GetLevel()-1)
+	remain:FindAbilityByName("avenger_remain_passive"):SetLevel(keys.ability:GetLevel())
 	remain:AddNewModifier(caster, nil, "modifier_kill", {duration = 45})
 	Timers:CreateTimer(3.0, function() 
 		if not remain:IsAlive() then return end

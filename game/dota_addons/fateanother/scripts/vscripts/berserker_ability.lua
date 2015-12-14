@@ -244,7 +244,7 @@ end
 function OnNineStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
-
+	local ability = keys.ability
 	local berserker = Physics:Unit(caster)
 	local origin = caster:GetAbsOrigin()
 	local distance = (targetPoint - origin):Length2D()
@@ -255,6 +255,7 @@ function OnNineStart(keys)
 	caster:SetPhysicsVelocity(caster:GetForwardVector()*distance)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
+
 
 	Timers:CreateTimer(1.0, function()
 		caster:OnPreBounce(nil)
@@ -301,8 +302,12 @@ end
 function OnNineLanded(caster, ability)
 	local tickdmg = ability:GetLevelSpecialValueFor("damage", ability:GetLevel() - 1)
 	local lasthitdmg = ability:GetLevelSpecialValueFor("damage_lasthit", ability:GetLevel() - 1)
-	local courageAbility = caster:FindAbilityByName("berserker_5th_courage")
-	local courageDamage = courageAbility:GetSpecialValueFor("bonus_damage")
+	local courageAbility = 0
+	local courageDamage = 0
+	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
+		courageAbility = caster:FindAbilityByName("berserker_5th_courage")
+		courageDamage = courageAbility:GetSpecialValueFor("bonus_damage")
+	end
 	local radius = ability:GetSpecialValueFor("radius")
 	local lasthitradius = ability:GetSpecialValueFor("radius_lasthit")
 	local stun = ability:GetSpecialValueFor("stun_duration")
@@ -310,15 +315,23 @@ function OnNineLanded(caster, ability)
 	local casterInitOrigin = caster:GetAbsOrigin() 
 	caster.NineLanded = true
 
+	-- swap animation
 	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
-		Timers:CreateTimer(0.033, function()
+		caster:RemoveModifierByName("modifier_dash_anim")
+		-- needs buffer so the existing animation ends
+		Timers:CreateTimer(0.1, function()
 			if caster:IsAlive() then
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
 			end
 		end)
 	end
+
+	-- main timer
 	Timers:CreateTimer(function()
 		if caster:IsAlive() then -- only perform actions while caster stays alive
+			local particle = ParticleManager:CreateParticle("particles/custom/berserker/nine_lives/hit.vpcf", PATTACH_ABSORIGIN, caster)
+			ParticleManager:SetParticleControlForward(particle, 0, caster:GetForwardVector() * -1)
+			ParticleManager:SetParticleControl(particle, 1, Vector(0,0,(nineCounter % 2) * 180))
 			if caster:GetName() == "npc_dota_hero_sven" then 
 				if math.random(0,1) == 0 then 
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
@@ -328,17 +341,8 @@ function OnNineLanded(caster, ability)
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
 
-			local particle = ParticleManager:CreateParticle("particles/custom/berserker/nine_lives/hit.vpcf", PATTACH_ABSORIGIN, caster)
-			ParticleManager:SetParticleControlForward(particle, 0, caster:GetForwardVector() * -1)
-			ParticleManager:SetParticleControl(particle, 1, Vector(0,0,(nineCounter % 2) * 180))
-
 			if nineCounter == 8 then -- if it is last strike
-				if caster:GetName() == "npc_dota_hero_doom_bringer" then
-					EmitGlobalSound("Berserker.Roar")
-				elseif caster:GetName() == "npc_dota_hero_sven" then
-					EmitGlobalSound("Lancelot.Roar1" )
-					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
-				end
+
 				caster:EmitSound("Hero_EarthSpirit.BoulderSmash.Target")
 				caster:RemoveModifierByName("pause_sealdisabled") 
 				ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 1500, 0, true)
@@ -367,6 +371,13 @@ function OnNineLanded(caster, ability)
 					end)
 				end
 
+				if caster:GetName() == "npc_dota_hero_doom_bringer" then
+					EmitGlobalSound("Berserker.Roar")
+				elseif caster:GetName() == "npc_dota_hero_sven" then
+					EmitGlobalSound("Lancelot.Roar1" )
+					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
+				end
+
 				ParticleManager:SetParticleControl(particle, 2, Vector(1,1,lasthitradius))
 				ParticleManager:SetParticleControl(particle, 3, Vector(lasthitradius / 350,1,1))
 				ParticleManager:CreateParticle("particles/custom/berserker/nine_lives/last_hit.vpcf", PATTACH_ABSORIGIN, caster)
@@ -393,6 +404,7 @@ function OnNineLanded(caster, ability)
 				nineCounter = nineCounter + 1
 				return 0.3
 			end
+
 		end 
 	end)
 end

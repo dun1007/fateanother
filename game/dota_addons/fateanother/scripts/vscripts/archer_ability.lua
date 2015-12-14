@@ -1119,6 +1119,9 @@ function OnOveredgeStart(keys)
     caster:SetAutoUnstuck(false)
     caster:SetPhysicsAcceleration(Vector(0,0,-2666))
 
+
+
+
 	Timers:CreateTimer({
 		endTime = 0.6,
 		callback = function()
