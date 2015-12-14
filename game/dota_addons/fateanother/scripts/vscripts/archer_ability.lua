@@ -1284,7 +1284,7 @@ function OnOveredgeAcquired(keys)
 			hero:SetModifierStackCount("modifier_overedge_stack", hero, hero.OveredgeCount)
 		elseif hero.OveredgeCount == 3 then 
 			if hero:GetAbilityByIndex(3):GetName() ~= "archer_5th_overedge" then
-				hero:SwapAbilities("DeductCourageDamageStackck_empty1", "archer_5th_overedge", true, true) 
+				hero:SwapAbilities("fate_empty1", "archer_5th_overedge", true, true) 
 			end
 		end
 		return 20
