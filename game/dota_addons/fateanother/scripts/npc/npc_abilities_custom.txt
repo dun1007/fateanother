@@ -5422,7 +5422,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -5434,8 +5434,8 @@
 		{
 			"particle"					"particles/custom/archer/archer_overedge_slash.vpcf"
 			"particle"					"particles/units/heroes/hero_centaur/centaur_warstomp.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_centaur.vsndevts"
 		}
 		
 		// Casting
@@ -5457,6 +5457,11 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"charge_time"		"20"
 			}
 		}
 		
@@ -5485,11 +5490,17 @@
 			}
 			"modifier_overedge_stack"
 			{
-				"IsHidden"		"0"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				"Properties"
+				"Duration"	"%charge_time"
+
+				"Attributes"	"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+
+				"OnDestroy"
 				{
-					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%agi_increase"
+					"RunScript"
+					{
+						"ScriptFile"	"archer_ability"
+						"Function"		"OveredgeStackExpired"
+					}
 				}
 			}
 		}

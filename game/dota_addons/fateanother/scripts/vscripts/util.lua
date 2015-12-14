@@ -166,7 +166,8 @@ donotlevel = {
     "true_assassin_weakening_venom_passive",
     "true_assassin_protection_from_wind",
     "avenger_overdrive",
-    "berserker_5th_reincarnation"
+    "berserker_5th_reincarnation",
+    "archer_5th_overedge",
 }
 
 CannotReset = {
