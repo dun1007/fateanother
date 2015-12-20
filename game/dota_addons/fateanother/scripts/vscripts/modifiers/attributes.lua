@@ -29,6 +29,18 @@ function Attributes:Init()
     Attributes.applier = CreateItem("item_stat_modifier", nil, nil)
 end
 
+function Attributes:ModifyIllusionAttackSpeed(illusion, original)
+    if not illusion:HasModifier("modifier_attackspeed_bonus_constant") then
+        Attributes.applier:ApplyDataDrivenModifier(illusion, illusion, "modifier_attackspeed_bonus_constant", {})
+    end
+
+    local attackspeed_stacks = math.abs(illusion:GetAgility() * Attributes.attackspeed_adjustment)
+    illusion:SetModifierStackCount("modifier_attackspeed_bonus_constant", Attributes.applier, attackspeed_stacks)
+   
+    illusion:SetBaseDamageMin(original:GetBaseDamageMin() - illusion:GetAgility())
+    illusion:SetBaseDamageMax(original:GetBaseDamageMax() - illusion:GetAgility())
+
+end
 function Attributes:ModifyBonuses(hero)
 
     print("Modifying Stats Bonus of hero "..hero:GetUnitName())
@@ -92,8 +104,7 @@ function Attributes:ModifyBonuses(hero)
         end
 
         -- AGI
-        if agility ~= hero.agility then        
-
+        if agility ~= hero.agility then    
             -- Attack Speed Bonus
             if not hero:HasModifier("modifier_attackspeed_bonus_constant") then
                 Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_attackspeed_bonus_constant", {})

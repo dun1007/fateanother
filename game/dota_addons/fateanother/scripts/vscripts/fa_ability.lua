@@ -249,12 +249,14 @@ end
 function OnFADeath(keys)
 	local caster = keys.caster
 	if caster:IsRealHero() then
-		for i=1, #caster.IllusionTable do
-			if IsValidEntity(caster.IllusionTable[i]) then
-				caster.IllusionTable[i]:ForceKill(true)
+		if caster.IllusionTable ~= nil then
+			for i=1, #caster.IllusionTable do
+				if IsValidEntity(caster.IllusionTable[i]) then
+					caster.IllusionTable[i]:ForceKill(true)
+				end
 			end
+			caster.IllusionTable = nil
 		end
-		IllusionTable = nil
 	end
 end
 
@@ -286,8 +288,6 @@ function SpawnFAIllusion(keys, amount)
 		illusion:SetBaseStrength(caster:GetStrength())
 		illusion:SetBaseAgility(caster:GetAgility())
 		illusion:SetAbilityPoints(0)
-		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
-		illusion:SetBaseDamageMax(caster:GetBaseDamageMax())
 		--[[
 		illusion:SetBaseMaxHealth(caster:GetMaxHealth())
 		illusion:SetBaseDamageMin(caster:GetBaseDamageMin())
@@ -302,6 +302,14 @@ function SpawnFAIllusion(keys, amount)
 		giveUnitDataDrivenModifier(caster, illusion, "invulnerable", 0.5)
 		--ability:ApplyDataDrivenModifier(illusion, illusion, "modifier_psuedo_omnislash", {})
 		illusion:MakeIllusion()
+		illusion.STRgained = caster.STRgained
+		illusion.AGIgained = caster.AGIgained
+		illusion.INTgained = caster.INTgained
+		illusion.DMGgained = caster.DMGgained
+		illusion.ARMORgained = caster.ARMORgained
+		illusion.HPREGgained = caster.HPREGgained
+		Attributes:ModifyIllusionAttackSpeed(illusion, caster)
+		
 		FindClearSpaceForUnit( illusion, origin, true )
 		
 		-- Create delay for particle to be able to attach properly
