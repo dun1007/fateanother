@@ -22815,10 +22815,11 @@
 				"IsDebuff"		"1"
 
 			}
-			"modifier_martial_arts_indicator_enemy"
+			"modifier_mark_of_fatality"
 			{
 				"IsDebuff"		"1"
 				"Duration"		"%duration"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 			}
 			"modifier_martial_arts_critical"
 			{
@@ -22873,7 +22874,1105 @@
 		}
 	}
 
+	//=================================================================================================================
+	// Assassin(Extra) : Presence Concealment
+	//=================================================================================================================
+	"lishuwen_concealment"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"lishuwen_concealment"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"0.7"
+		"precache"
+		{
+			"particle"			"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phantom_lancer.vsndevts"
+		}
+		
+		// Cast
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.8"
+		"AbilityCooldown"				"30 26 22 18 14"
+		"AbilityManaCost"				"100"
+		
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cast_delay"		"0.8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_percentage"				"2 3 4 5 6"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"movespeed_bonus_percentage"		"20 25 30 35 40"
+			}
+		}
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnConcealmentStart"
+			}
+		}
+				
+		"Modifiers"
+		{
+			"modifier_lishuwen_concealment"
+			{
+				"EffectName"				"particles\units\heroes\hero_pugna\pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"States"
+			    {
+				    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
+				    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
+			    }	
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_percentage"
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%heal_percentage"
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "lishuwen_ability"
+						"Function"      "OnConcealmentBroken"
+						"DamageTaken"	"%attack_damage"
+					}
+				}	
+				"OnUnitMoved"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lishuwen_ability"
+						"Function"		"OnConcealmentBroken"
+					}
+				}			
+			}
+		}
+	}
 
+	//=================================================================================================================
+	// Assassin(Extra) : Cosmic Orbit
+	//=================================================================================================================
+	"lishuwen_cosmic_orbit"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"lishuwen_cosmic_orbit"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1"
+		"precache"
+		{
+			"particle"					"particles/custom/generic/fate_red_shield.vpcf"
+			"particle"					"particles/items2_fx/satanic_buff.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
+		}
+		
+		// Cast
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastPoint"				"0.5"
+		"AbilityCooldown"				"22"
+		"AbilityManaCost"				"200"
+		
+		// Ability Special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"resist_duration"				"0.12 0.14 0.16 0.18 0.20"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mr_bonus"		"20 25 30 35 40"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_bonus"		"10 15 20 25 30"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_bonus_aspd"		"15 30 45 60 75"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_bonus_ms"		"15"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"8"
+			}
+		}
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnCosmicOrbitStart"
+			}
+		}
+				
+		"Modifiers"
+		{
+			"modifier_lishuwen_cosmic_orbit"
+			{	
+				"EffectName" "particles/items2_fx/satanic_buff.vpcf"
+	            "EffectAttachType" "follow_origin"	
+				"Duration"			"%active_duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%active_bonus_aspd"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%active_bonus_ms"
+				}							
+			}
+			"modifier_lishuwen_cosmic_orbit_momentary_resistance"
+			{
+				"EffectName"	"particles/custom/generic/fate_red_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"			"%resist_duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_bonus"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     	"%armor_bonus"
+				}				
+			}
+		}
+	}
+	//=================================================================================================================
+	// Assassin(Extra) : Fierce Tiger Strike(first strike)
+	//=================================================================================================================
+	"lishuwen_fierce_tiger_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lishuwen_fierce_tiger_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"0.7"
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_earthshaker.vsndevts"
+			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_fallback_low_egset.vpcf"
+			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
+			"particle"		"particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf"
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastRangeBuffer"		"1500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"29"
+		"AbilityManaCost"				"300"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_cast_delay"		"0.3"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"first_strike_damage"			"300 350 400 450 500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow"		"-30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_cast_delay"				"0.45"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_damage"				"300 350 400 450 500"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_cast_delay"				"0.6"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_damage"				"25"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slow"				"-60"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slow_duration"				"3.0"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnTigerStrike1Start"
+				"Damage"				"%first_strike_damage"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_fierce_tiger_strike_1_slow"
+			{
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%first_strike_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%first_strike_slow"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Assassin(Extra) : Fierce Tiger Strike(second strike)
+	//=================================================================================================================
+	"lishuwen_fierce_tiger_strike_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lishuwen_fierce_tiger_strike_2"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"precache"
+		{
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"250"
+		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastPoint"				"0.45"
+		"AbilityCooldown"				"29"
+		"AbilityManaCost"				"300"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_cast_delay"		"0.3"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"first_strike_damage"			"300 350 400 450 500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow"		"30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_cast_delay"				"0.45"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_damage"				"300 350 400 450 500"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_cast_delay"				"0.6"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_damage"				"25"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slow"				"60"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slow_duration"				"3.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnTigerStrike2Start"
+				"Damage"				"%second_strike_damage"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_fierce_tiger_strike_2_slow"
+			{
+				"Duration"		"%duration"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Assassin(Extra) : Fierce Tiger Strike(third strike)
+	//=================================================================================================================
+	"lishuwen_fierce_tiger_strike_3"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lishuwen_fierce_tiger_strike_3"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"0.7"
+		"precache"
+		{
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"250"
+		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastPoint"				"0.6"
+		"AbilityCooldown"				"29"
+		"AbilityManaCost"				"300"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_cast_delay"		"0.3"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"first_strike_damage"			"300 350 400 450 500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow"		"-30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_cast_delay"				"0.45"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_damage"				"300 350 400 450 500"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_cast_delay"				"0.6"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_damage"				"25"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slow"				"-60"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slow_duration"				"3.0"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnTigerStrike3Start"
+				"DamagePercent"				"%third_strike_damage"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_fierce_tiger_strike_3_slow"
+			{
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"-%third_strike_slow"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-%third_strike_slow"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Assassin(Extra) : No Second Strike
+	//=================================================================================================================
+	"lishuwen_no_second_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lishuwen_no_second_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AnimationPlaybackRate" 		"0.5"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"		
+			"particle"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"150"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCastPoint"				"0.7"
+		"AbilityCooldown"				"40"
+		"AbilityManaCost"				"800"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"cast_delay"		"0.7"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"initial_damage"	"600 700 800 900 1000"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"		"0.5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delayed_damage_delay"		"3.5"	
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delayed_damage_percentage"		"20 25 30 35 40"	
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delayed_stun_duration"		"0.5 0.75 1.0 1.25 1.5"	
+			}
+		}
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnNSSStart"
+				"Damage"				"%initial_damage"
+				"StunDuration"			"%stun_duration"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_no_second_strike_delay_indicator"
+			{
+		        "EffectName"    "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+		        "EffectAttachType"  "follow_origin"
+				"Duration"		"%delayed_damage_delay"
+				"IsDebuff"		"1"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"lishuwen_ability"
+						"Function"			"OnNSSDelayFinished"
+						"DelayedDamagePercentage"	"%delayed_damage_percentage"
+					}
+				}
+			}
+
+			"modifier_no_second_strike_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.5"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4_END"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"2.0"
+				}
+			}	
+		}
+	}
+
+	//=================================================================================================================
+	// Assassin(Extra) : Raging Dragon Strike(first strike)
+	//=================================================================================================================
+	"lishuwen_raging_dragon_strike"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lishuwen_raging_dragon_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"precache"
+		{
+			"particle"			"particles/econ/generic/generic_projectile_linear_1/generic_projectile_linear_1.vpcf"
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"600"
+		"AbilityCastRangeBuffer"		"1500"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"135"
+		"AbilityManaCost"				"200"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_cast_delay"		"0.3"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"first_strike_damage"			"600"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow"		"30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_cast_delay"				"0.45"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_damage"				"600"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_radius"				"500"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_stun_duration"				"1.0"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_cast_delay"				"0.6"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_aerial_damage"				"150"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_aerial_hit_count"				"7"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slam_damage"				"600"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_knockup_duration"				"1.7"
+			}
+		}
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnDragonStrike1Start"
+				"Damage"				"%first_strike_damage"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"lishuwen_ability"
+			 	"Function"		"OnDragonStrike1ProjectileHit"           	
+            }
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_fierce_tiger_strike_3_slow"
+			{
+				"Duration"		"%duration"
+			}
+		}
+	}
+
+
+
+	//=================================================================================================================
+	// Assassin(Extra) : Raging Dragon Strike(second strike)
+	//=================================================================================================================
+	"lishuwen_raging_dragon_strike_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"lishuwen_raging_dragon_strike"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"precache"
+		{
+			"particle"				"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"500"
+		"AbilityCastPoint"				"0.45"
+		"AbilityCooldown"				"135"
+		"AbilityManaCost"				"200"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_cast_delay"		"0.3"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"first_strike_damage"			"600"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow"		"30"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"first_strike_slow_duration"		"3"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_cast_delay"				"0.45"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_damage"				"600"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_radius"				"500"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"second_strike_stun_duration"				"1.0"
+			}
+			"09"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_cast_delay"				"0.6"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_aerial_damage"				"150"
+			}
+			"11"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_aerial_hit_count"				"7"
+			}
+			"12"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_slam_damage"				"600"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_knockup_duration"				"1.7"
+			}
+		}
+		
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnDragonStrike1Start2"
+				"Damage"				"%second_strike_damage"
+				"Radius"				"%second_strike_radius"
+				"StunDuration"			"%second_strike_stun_duration"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+            "RunScript"
+            {
+ 			 	"ScriptFile"	"lishuwen_ability"
+			 	"Function"		"OnDragonStrike1ProjectileHit"           	
+            }
+		}
+	
+		
+		"Modifiers"
+		{
+		}
+	}
+
+	//=======================================
+	// Assassin(Extra) Attribute : Circulatory Shock
+	//=======================================
+	"lishuwen_attribute_circulatory_shock"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"11"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"nss_bonus_damage"		"200"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_per_stack_percentage"			"5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnCirculatoryShockAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Assassin(Extra) Attribute : Improve Martial Arts
+	//=======================================
+	"lishuwen_attribute_improve_martial_arts"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_improve_martial_arts"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"detection_range"		"1050"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mark_duration"			"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_percentage"			"3.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnMartialArtsImproved"
+			}
+		}
+	}
+
+	//=======================================
+	// Assassin(Extra) Attribute : Dual Class
+	//=======================================
+	"lishuwen_attribute_dual_class"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_dual_class"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"12"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"duration"				"8"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"damage_bonus"			"100"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnDualClassAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Assassin(Extra) Attribute : Furious Chain
+	//=======================================
+	"lishuwen_attribute_furious_chain"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_furious_chain"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"agi_ratio"				"1.2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"mana_refund"			"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_aspd"			"20"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_ms"			"5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"lishuwen_ability"
+				"Function"		"OnFuriousChainAcquired"
+			}
+		}
+	}
 	//================================================
 	// dummy unit passve (collection of global modifiers)
 	//================================================

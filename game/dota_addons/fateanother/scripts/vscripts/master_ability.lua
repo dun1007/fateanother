@@ -166,6 +166,15 @@ TamamoAttribute = {
 	attrCount = 4
 }
 
+LiAttribute = {
+	"lishuwen_attribute_circulatory_shock",
+	"lishuwen_attribute_improve_martial_arts",
+	"lishuwen_attribute_dual_class",
+	"lishuwen_attribute_furious_chain",
+	"lishuwen_raging_dragon_strike",
+	attrCount = 4
+}
+
 --[[LiAttribute = {
 	attrCount = 4
 }]]

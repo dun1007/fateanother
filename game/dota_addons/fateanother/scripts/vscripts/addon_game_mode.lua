@@ -1,5 +1,6 @@
 require("statcollection/init")
 require('modifiers/attributes')
+require('lishuwen_ability')
 require("timers")
 require('util' )
 require('archer_ability')
@@ -174,6 +175,8 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_nero.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_gawain.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_tamamo.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_lishuwen.vsndevts", context)
+
     
 
     
@@ -836,9 +839,11 @@ function FateGameMode:OnAbilityUsed(keys)
     local abilityname = keys.abilityname
     local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
 
+
+
     -- Check whether ability is an item active or not
     if not string.match(abilityname,"item") then
-    -- Check if hero is affected by Amaterasu
+        -- Check if hero is affected by Amaterasu
         if hero:HasModifier("modifier_amaterasu_ally") then
             for i=1, #spellBooks do
                 if abilityname == spellBooks[i] then return end
@@ -856,7 +861,8 @@ function FateGameMode:OnAbilityUsed(keys)
             for k,v in pairs(targets) do
                 if v:HasAbility("lishuwen_martial_arts") then
                     local abil = v:FindAbilityByName("lishuwen_martial_arts")
-                    abil:ApplyDataDrivenModifier(v, hero, "modifier_martial_arts_indicator_enemy", {})
+                    --abil:ApplyDataDrivenModifier(v, hero, "modifier_mark_of_fatality", {})
+                    ApplyMarkOfFatality(v, hero)
                     SpawnAttachedVisionDummy(v, hero, abil:GetLevelSpecialValueFor("vision_radius", abil:GetLevel()-1 ), abil:GetLevelSpecialValueFor("duration", abil:GetLevel()-1 ), false)
                 end
             end

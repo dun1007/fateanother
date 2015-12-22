@@ -295,6 +295,12 @@ function giveUnitDataDrivenModifier(source, target, modifier,dur)
     dummyAbility:ApplyDataDrivenModifier( source, target, modifier, {duration=dur} )
 end
 
+function DoCompositeDamage(source, target, dmg, dmg_type, dmg_flag, abil, isLoop)
+    DoDamage(source, target , dmg/3, DAMAGE_TYPE_MAGICAL, dmg_flag, abil, isLoop)
+    DoDamage(source, target , dmg/3, DAMAGE_TYPE_PHYSICAL, dmg_flag, abil, isLoop)
+    DoDamage(source, target , dmg/3, DAMAGE_TYPE_PURE, dmg_flag, abil, isLoop)
+end
+
 function ApplyAirborne(source, target, duration)
     target:AddNewModifier(source, source, "modifier_stunned", {Duration = duration})
 
