@@ -232,6 +232,7 @@ function Precache( context )
     PrecacheResource("model", "models/nero/nero.vmdl", context)
     PrecacheResource("model", "models/gawain/gawain.vmdl", context)
     PrecacheResource("model", "models/tamamo/tamamo.vmdl", context)
+    PrecacheResource("model", "models/lishuen/lishuen.vmdl", context)
     
     
     -- AOTK Soldier assets

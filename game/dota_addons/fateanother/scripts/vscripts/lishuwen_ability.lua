@@ -16,7 +16,6 @@ function OnMartialStart(keys)
 			GrantFuriousChainBuff(caster) 
 		end
 	end
-
 	target:EmitSound("Hero_Nightstalker.Void")
 end
 
@@ -530,9 +529,6 @@ function OnDragonStrike3Start(keys)
     ParticleManager:SetParticleControl( groundFx2, 1, caster:GetAbsOrigin())
     ParticleManager:SetParticleControlOrientation(groundFx1, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
     ParticleManager:SetParticleControlOrientation(groundFx2, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
-	Timers:CreateTimer(keys.KnockupDuration, function()
-		EmitGlobalSound("Hero_EarthShaker.EchoSlam")
-	end)
 end
 
 function LishuwenCheckCombo(caster, ability)
