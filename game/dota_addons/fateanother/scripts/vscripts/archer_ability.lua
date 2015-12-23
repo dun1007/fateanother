@@ -294,6 +294,7 @@ function OnUBWCastStart(keys)
 		    caster.UBWLocator:AddNewModifier(caster, caster, "modifier_kill", {duration = 12.5})
 		    caster.UBWLocator:SetAbsOrigin(caster:GetAbsOrigin())
 			OnUBWStart(keys)
+
 			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.caster, "modifier_ubw_death_checker",{})
 			if caster.IsMartinAcquired then
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_shroud_of_martin_str_bonus", {})
@@ -393,8 +394,6 @@ function OnUBWStart(keys)
 			end
 		end
 	end]]
-	
-
 
     -- DUN DUN DUN DUN
     local dunCounter = 0
@@ -404,7 +403,6 @@ function OnUBWStart(keys)
 		dunCounter = dunCounter + 1
 		return 3.0 
 	end)
-	print("creating and units")
 	-- Add sword shooting dummies
 	local ubwdummy1 = CreateUnitByName("dummy_unit", ubwdummyLoc1, false, caster, caster, caster:GetTeamNumber())
 	local ubwdummy2 = CreateUnitByName("dummy_unit", ubwdummyLoc2, false, caster, caster, caster:GetTeamNumber())

@@ -1167,8 +1167,12 @@
 		"Ability5"				"fate_empty1"
 		"Ability6"				"lishuwen_no_second_strike"
 		"Ability7"				"lishuwen_raging_dragon_strike"
-		"Ability8"				"lishuwen_fierce_tiger_strike_2"
-		"Ability9"				"lishuwen_fierce_tiger_strike_3"
+		"Ability8"				"lishuwen_raging_dragon_strike_2"
+		"Ability9"				"lishuwen_raging_dragon_strike_3"
+		"Ability10"				"lishuwen_fierce_tiger_strike_2"
+		"Ability11"				"lishuwen_fierce_tiger_strike_3"
+		"Ability12"				"lishuwen_berserk"
+
 		"Ability15"				"presence_detection_passive"
 		"Ability16"				"attribute_bonus"
 		

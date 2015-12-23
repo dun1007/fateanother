@@ -41,7 +41,9 @@ softdispellable = {
     "nero_tres_fontaine_ardent",
     "modifier_invigorating_ray_ally",
     "modifier_invigorating_ray_armor_buff",
-    "modifier_blade_of_the_devoted"
+    "modifier_blade_of_the_devoted",
+    "modifier_lishuwen_cosmic_orbit",
+    "modifier_lishuwen_concealment"
 }
 
 strongdispellable = {
@@ -77,7 +79,8 @@ strongdispellable = {
     "modifier_gordius_wheel_mitigation_tier1",
     "modifier_gordius_wheel_mitigation_tier2",
     "modifier_gordius_wheel_mitigation_tier3",
-    "tamamo_mantra"
+    "tamamo_mantra",
+    "modifier_lishuwen_cosmic_orbit_momentary_resistance"
 }
 
 revokes = {
@@ -113,8 +116,12 @@ cleansable = {
     "modifier_aestus_domus_aurea_debuff_slow",
     "modifier_warriors_charge_slow",
     "modifier_fissure_strike_slow",
+    "modifier_amaterasu_witchcraft_slow",
     "modifier_gust_heaven_purge_slow_tier1",
     "modifier_gust_heaven_purge_slow_tier2",
+    "modifier_raging_dragon_strike_1_slow",
+    "modifier_fierce_tiger_strike_1_slow",
+    "modifier_fierce_tiger_strike_3_slow",
 
     -- Other CCs
     "modifier_stunned",
@@ -149,7 +156,10 @@ slowmodifier = {
     "modifier_fissure_strike_slow",
     "modifier_amaterasu_witchcraft_slow",
     "modifier_gust_heaven_purge_slow_tier1",
-    "modifier_gust_heaven_purge_slow_tier2"
+    "modifier_gust_heaven_purge_slow_tier2",
+    "modifier_raging_dragon_strike_1_slow",
+    "modifier_fierce_tiger_strike_1_slow",
+    "modifier_fierce_tiger_strike_3_slow"
 }
 
 donotlevel = {
@@ -206,7 +216,11 @@ CannotReset = {
     "tamamo_polygamist_castration_fist",
     "tamamo_polygamist_castration_fist_2",
     "tamamo_fates_call",
-    "lishuwen_martial_arts"
+    "lishuwen_martial_arts",
+    "lishuwen_raging_dragon_strike",
+    "lishuwen_raging_dragon_strike_2",
+    "lishuwen_raging_dragon_strike_3",
+    "lishuwen_berserk"
 }
 
 femaleservant = {

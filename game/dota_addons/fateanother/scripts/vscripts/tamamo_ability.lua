@@ -727,7 +727,7 @@ function OnKickStart(keys)
 	end
 
 	if caster.IsEscapeAcquired then
-		if caster:HasModifier("rb_sealdisabled") or caster:HasModifier("modifier_command_seal_2") or caster:HasModifier("modifier_command_seal_3") or caster:HasModifier("modifier_command_seal_4") then
+		if IsRevoked(caster) then
 			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used(Revoked)" } )
 			keys.ability:EndCooldown()
 			caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))

@@ -599,6 +599,14 @@ function FateGameMode:OnHeroInGame(hero)
         giveUnitDataDrivenModifier(hero, hero, "round_pause", 10)
     end
 
+    if Convars:GetBool("developer") then 
+        hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
+        hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
+
+        hero:SetBaseStrength(20) 
+        hero:SetBaseAgility(20) 
+        hero:SetBaseIntellect(20) 
+    end
     
     --hero:NotifyWearablesOfModelChange(false)
     --hero:ManageModelChanges()
@@ -1352,6 +1360,12 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
     -- DOTA_UNIT_ORDER_DISASSEMBLE_ITEM = 18
     -- DOTA_UNIT_ORDER_MOVE_ITEM = 19(drag and drop)
 
+    -- attack command
+    if orderType == 4 then
+        if caster:GetName() == "npc_dota_hero_bloodseeker" and caster:HasModifier("modifier_lishuwen_concealment") and target:IsRealHero() then
+            caster:FindAbilityByName("lishuwen_concealment"):ApplyDataDrivenModifier(caster, caster, "modifier_concealment_speed_boost", {})
+        end
+    end
     -- What do we do when handling the move between inventory and stash?
     if orderType == 11 then
         PrintTable(filterTable)
