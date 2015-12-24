@@ -412,7 +412,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"dota_update_default"
+				"reference_stack"		"src1_2d"
 				"operator_variables"
 				{
 					"vsnd_files"
