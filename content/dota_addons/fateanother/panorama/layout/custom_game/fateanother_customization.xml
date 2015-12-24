@@ -5,6 +5,7 @@
     </styles>
     <scripts>
         <include src="file://{resources}/scripts/custom_game/fateanother_customization.js" /> 
+        <include src="file://{resources}/scripts/sounds.js" />
     </scripts>
     <Panel class="CustomizationBoardRoot" hittest="false">
 	    <Panel id="CustomizationBoard" hittest="false" >

@@ -339,6 +339,7 @@ function OnTheatreStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 
+	Sounds:EmitSoundOnClient( caster:GetPlayerOwnerID(), "Hero_LegionCommander.Duel.Victory" )
 	EmitGlobalSound("Hero_LegionCommander.Duel.Victory")
 	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
 

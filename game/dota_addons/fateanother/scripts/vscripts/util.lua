@@ -409,13 +409,23 @@ function LevelAllAbility(hero)
     end
 end
 
-function EmitSoundOnAllClient(songname)
+--[[function EmitSoundOnAllClient(songname)
     for i=0, 11 do
         local player = PlayerResource:GetPlayer(i)
         if player ~= nil then
             EmitSoundOnClient(songname, player)
         end
     end
+end]]
+
+function EmitSoundOnAllClient(sound)
+    --[[for i=0, 11 do
+        local player = PlayerResource:GetPlayer(i)
+        if player then
+            CustomGameEventManager:Send_ServerToPlayer(player, "emit_client_sound", {sound=sound})
+        end
+    end]]
+    Sounds:EmitSoundOnAllClient(sound)
 end
 
 function CheckItemCombination(hero)

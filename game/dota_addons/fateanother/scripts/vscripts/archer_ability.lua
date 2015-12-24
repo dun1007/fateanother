@@ -394,12 +394,12 @@ function OnUBWStart(keys)
 			end
 		end
 	end]]
-
+	
     -- DUN DUN DUN DUN
     local dunCounter = 0
 	Timers:CreateTimer(function() 
 		if dunCounter == 5 then return end 
-		if caster:IsAlive() then EmitGlobalSound("Archer.UBWAmbient") else return end 
+		if caster:IsAlive() then Sounds:EmitSoundOnClient( caster:GetPlayerOwnerID(), "Archer.UBWAmbient" ) else return end 
 		dunCounter = dunCounter + 1
 		return 3.0 
 	end)

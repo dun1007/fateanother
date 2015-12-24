@@ -8,6 +8,7 @@ require('master_ability')
 require('gille_ability')
 require('notifications')
 require('items')
+require('utilities/sounds')
 
 
 _G.IsPickPhase = true
