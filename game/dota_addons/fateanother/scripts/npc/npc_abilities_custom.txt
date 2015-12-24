@@ -23015,7 +23015,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_percentage"
-					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%heal_percentage"
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"%heal_percentage"
 				}
 				"OnTakeDamage"
 				{
@@ -23552,7 +23552,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"initial_damage"	"600 700 800 900 1000"
+				"initial_damage"	"550 625 700 775 850"
 			}
 			"03"
 			{
@@ -23604,6 +23604,7 @@
 						"ScriptFile"		"lishuwen_ability"
 						"Function"			"OnNSSDelayFinished"
 						"DelayedDamagePercentage"	"%delayed_damage_percentage"
+						"DelayedStunDuration"		"%delayed_stun_duration"
 					}
 				}
 			}
@@ -24188,7 +24189,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"				"1.2"
+				"agi_ratio"				"3.0"
 			}
 			"02"
 			{

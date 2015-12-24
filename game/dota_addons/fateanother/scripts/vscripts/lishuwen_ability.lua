@@ -1,6 +1,6 @@
 ATTR_NSS_BONUS_DAMAGE = 200
 ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 5
-ATTR_AGI_RATIO = 1.2
+ATTR_AGI_RATIO = 3.0
 ATTR_MANA_REFUND = 200
 
 function OnMartialStart(keys)
@@ -327,6 +327,7 @@ function OnNSSDelayFinished(keys)
 	
 	target:SetMana(target:GetMana() - damage)
 	DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.DelayedStunDuration})
 
 	local manaBurnFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf", PATTACH_ABSORIGIN, target)
 	target:EmitSound("Hero_NyxAssassin.ManaBurn.Target")

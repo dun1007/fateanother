@@ -1176,9 +1176,9 @@
 		"Ability15"				"presence_detection_passive"
 		"Ability16"				"attribute_bonus"
 		
-		"StatusHealth"					"1000"
+		"StatusHealth"					"1050"
 		"StatusHealthRegen"				"4.0"
-		"StatusMana"					"975"
+		"StatusMana"					"1000"
 		"StatusManaRegen"				"3"
 		
 		"ArmorPhysical"					"4"
