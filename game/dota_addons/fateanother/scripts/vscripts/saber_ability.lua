@@ -7,6 +7,10 @@ combo_available = false
 currentHealth = 0
 
 function OnInstinctStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_instinct_active", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_instinct_cooldown", {})
 	keys.caster:AddNewModifier(keys.caster, nil, "modifier_item_sphere_target", {Duration = 1.0}) -- Just the particles
 end
 

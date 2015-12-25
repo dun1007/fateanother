@@ -140,6 +140,11 @@
 				"var_type"				"FIELD_FLOAT"
 				"spellshield_duration"	"1.0"
 			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cooldown"				"45"
+			}
 		}
 		
 		"OnSpellStart"
@@ -148,11 +153,6 @@
 			{
 				"ScriptFile"		"saber_ability"
 				"Function"			"OnInstinctStart"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_instinct_active"
-				"Target"			"CASTER"
 			}
 		}
 		
@@ -169,8 +169,14 @@
 			}
 			"modifier_instinct_active"
 			{
-				"Duration"		"1.0"
+				"Duration"		"%spellshield_duration"
 			}
+			"modifier_instinct_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"%cooldown"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}			
 			"modifier_instinct_crit"
 			{
 				"IsHidden"	"1"
