@@ -194,10 +194,10 @@
 						"Chance"	"%crit_rate"
 						"OnSuccess"
 						{
-							"ApplyModifier"
+							"RunScript"
 							{
-								"ModifierName"		"modifier_instinct_crit_hit"
-								"Target"			"CASTER"
+								"ScriptFile"			"saber_ability"
+								"Function"				"OnInstinctCrit"
 							}
 						}
 					}
@@ -320,17 +320,6 @@
 		{
 			"DeleteOnHit"			"true"
 			
-			"RemoveModifier"
-			{
-				"Target"			"TARGET"
-				"ModifierName"		"modifier_invisible_air_target"
-			}
-			
-			"ApplyModifier"
-			{
-				"Target"			"TARGET"
-				"ModifierName"		"modifier_invisible_air_target"
-			}
 			
 			"RunScript"
 			{
@@ -543,7 +532,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityTextureName"			"saber_excalibur"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"1.0"				// Adjust playback rate to reflect the ability was 0.9
+		"AnimationPlaybackRate" 		"1.1"				// Adjust playback rate to reflect the ability was 0.9
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_skywrath_mage/skywrath_mage_concussive_shot_cast.vpcf"
@@ -577,7 +566,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"cast_delay"			"2.5"
+				"cast_delay"			"2.8"
 			}
 			"02"
 			{
@@ -614,11 +603,6 @@
 			"ApplyModifier"
 			{
 				"ModifierName"		"saber_pause"
-				"Target"			"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_excalibur"
 				"Target"			"CASTER"
 			}
 			"RunScript"
@@ -658,23 +642,21 @@
 				"Duration"		"%delay"
 				"IsHidden"		"1"
 			}
-			"saber_pause"
+			"saber_anim_vfx"
 			{
 				"Duration"		"%pause_duration"
 				"IsHidden"	"1"
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"				
+				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.1"
+				}		
 				"OnCreated"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"		"TARGET"
-						"ModifierName"	"excalibur_vfx_phase_1"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"		"TARGET"
-						"ModifierName"	"excalibur_vfx_phase_3"
+					 	"ScriptFile"	"saber_ability"
+					 	"Function"		"OnExcaliburVfxStart"
 					}
 				}
 			}
@@ -873,27 +855,6 @@
 				"ScriptFile"	"saber_ability"
 				"Function"		"OnAvalonStart"
 			}
-			
-			"RemoveModifier"
-			{
-				"ModifierName"	"modifier_avalon"
-				"Target"		"CASTER"
-			}
-			
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_avalon"
-				"Target"		"CASTER"
-				"Duration"		"%duration"
-			}
-			
-			
-			"FireSound"
-			{
-				"Target"		"CASTER"
-				"EffectName"	"Hero_Omniknight.GuardianAngel.Cast"
-			}
-			
 		}
 				
 		"Modifiers"
@@ -1176,36 +1137,11 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"saber_pause"
-				"Target"			"CASTER"
-			}
-			
 			"RunScript"
 			{
 				"ScriptFile"    "saber_ability"
 				"Function"      "OnStrikeAirStart"
 			}
-			
-			"DelayedAction"
-			{
-				"Delay"			"1.5"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"Target"				"CASTER"
-						"ModifierName"			"modifier_strike_air_animation"
-					}
-				}
-			}
-			"FireSound"
-			{
-				"Target"		"CASTER"
-				"EffectName"	"Hero_Invoker.Tornado"
-			}
-			
 		}
 		
 		
@@ -1219,12 +1155,6 @@
 				"Damage"		"%damage"
 				"Speed"			"%speed"
 			}
-			
-			"ApplyModifier"
-			{
-				"Target"		"TARGET"
-				"ModifierName"	"modifier_strike_air_target_VFX"
-			}
 			"FireEffect"
 			{
 				"EffectName"        "particles/units/heroes/hero_keeper_of_the_light/keeper_of_the_light_illuminate_impact.vpcf"
@@ -1235,7 +1165,7 @@
 		
 		"Modifiers"
 		{
-			"saber_pause"
+			"saber_strike_air_anim_vfx"
 			{
 				"Duration"		"1.75"
 				
@@ -1249,7 +1179,11 @@
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-			
+			"modifier_strike_air_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}	
 			"modifier_strike_air_animation"
 			{
 				"IsHidden"			"1"
@@ -1319,7 +1253,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cast_time"				"3.0"
+				"cast_time"				"3.3"
 			}
 			"02"
 			{
@@ -1347,17 +1281,6 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"saber_pause"
-				"Target"			"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_max_excalibur"
-				"Target"			"CASTER"
-			}
-
 			"RunScript"
 			{
 				"ScriptFile"	"saber_ability"
@@ -1394,28 +1317,22 @@
 				"Duration"		"3.0"
 				"IsHidden"		"1"
 			}
-			"saber_pause"
+			"saber_max_excalibur_anim_vfx"
 			{
 				"Duration"		"5"
 				"IsHidden"	"1"
 				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_3"						
 				"OnCreated"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"		"TARGET"
-						"ModifierName"	"excalibur_vfx_phase_1"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"		"TARGET"
-						"ModifierName"	"excalibur_vfx_phase_3"
+						"ScriptFile"	"saber_ability"
+						"Function"		"OnMaxVfxStart"
 					}
 				}
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.9"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
 				}
 			}
 			
@@ -16212,6 +16129,7 @@
 				{
 					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-350"
 					"MODIFIER_PROPERTY_MOVESPEED_MAX"				"5000"
+					"MODIFIER_PROPERTY_MOVESPEED_LIMIT"				"5000"
 				}
 				"OnCreated"
 				{
@@ -22899,7 +22817,7 @@
 	"lishuwen_berserk"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"lishuwen_berserk"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"45"
@@ -23191,6 +23109,9 @@
 			"particle"		"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_fallback_low_egset.vpcf"
 			"particle"		"particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf"
 			"particle"		"particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf"
+			"particle"		"particles/custom/lishuwen/lishuwen_first_hit.vpcf"
+			"particle"		"particles/custom/lishuwen/lishuwen_second_hit.vpcf"
+			"particle"		"particles/custom/lishuwen/lishuwen_third_hit.vpcf"
 		}
 		
 		// Ability stats
@@ -23302,13 +23223,14 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"lishuwen_fierce_tiger_strike_2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"precache"
 		{
+			"particle"		"particles/custom/lishuwen/lishuwen_no_second_strike_hit.vpcf"
 		}
 		
 		// Ability stats
@@ -23408,7 +23330,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"lishuwen_fierce_tiger_strike_3"
@@ -23639,7 +23561,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"lishuwen_raging_dragon_strike"
@@ -23776,7 +23698,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"lishuwen_raging_dragon_strike_2"
@@ -23905,7 +23827,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"lishuwen_raging_dragon_strike_3"
