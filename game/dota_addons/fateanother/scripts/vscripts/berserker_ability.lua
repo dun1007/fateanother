@@ -7,7 +7,7 @@ function OnFissureStart(keys)
 	local fiss = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf",
+        EffectName = "particles/custom/berserker/fissure_strike/shockwave.vpcf",
         iMoveSpeed = keys.Range,
         vSpawnOrigin = nil,
         fDistance = keys.Range,
@@ -26,7 +26,6 @@ function OnFissureStart(keys)
 	fiss.vSpawnOrigin = caster:GetAbsOrigin() 
 	projectile = ProjectileManager:CreateLinearProjectile(fiss)
 	BerCheckCombo(caster, keys.ability)
-
 end
 
 function OnFissureHit(keys)

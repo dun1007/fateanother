@@ -5831,8 +5831,8 @@
 		
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_magnataur/magnataur_shockwave.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
+			"particle"		"particles/custom/berserker/fissure_strike/shockwave.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_magnataur.vsndevts"
 		}
 		
 		// Casting
