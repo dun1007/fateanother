@@ -10,7 +10,6 @@ require('notifications')
 require('items')
 require('utilities/sounds')
 
-
 _G.IsPickPhase = true
 _G.IsPreRound = true
 _G.RoundStartTime = 0
@@ -56,6 +55,11 @@ XP_TABLE = {}
 XP_PER_LEVEL_TABLE = {}
 BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
+PRE_ROUND_DURATION = 6
+PRESENCE_ALERT_DURATION = 60
+ROUND_DURATION = 150
+BLESSING_PERIOD = 600
+BLESSING_MANA_REWARD = 10
 mode = nil
 FATE_VERSION = "Beta Version"
 roundQuest = nil 
@@ -457,11 +461,13 @@ function FateGameMode:PlayerSay(keys)
         local hr = plyr:GetAssignedHero()
         hr:RemoveModifierByName("round_pause")
     end]]
-        self:LoopOverPlayers(function(player, playerID)
-            local hr = player:GetAssignedHero()
-            hr:RemoveModifierByName("round_pause")
-            --print("Looping through player" .. ply)
-        end)
+        --if Convars:GetBool("developer") then 
+            self:LoopOverPlayers(function(player, playerID)
+                local hr = player:GetAssignedHero()
+                hr:RemoveModifierByName("round_pause")
+                --print("Looping through player" .. ply)
+            end)
+        --end
     end
     
     -- Turns BGM on and off
@@ -1245,13 +1251,12 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "servant_customize", OnServantCustomizeActivated )
     CustomGameEventManager:RegisterListener( "check_hero_in_transport", OnHeroClicked )
     -- LUA modifiers
-    LinkLuaModifier("modifier_movespeed_cap", "modifiers/modifier_movespeed_cap", LUA_MODIFIER_MOTION_NONE)
+    LinkLuaModifier("modifier_ms_cap", "modifiers/modifier_ms_cap", LUA_MODIFIER_MOTION_NONE)
 
     
     -- Commands can be registered for debugging purposes or as functions that can be called by the custom Scaleform UI
     Convars:RegisterCommand( "command_example", Dynamic_Wrap(FateGameMode, 'ExampleConsoleCommand'), "A console command example", 0 )
     function FateGameMode:ExampleConsoleCommand()
-        print("im here")
     end
     
     -- Convars:RegisterCommand( "player_say", Dynamic_Wrap(FateGameMode, 'PlayerSay'), "Reads player chat", 0) 
@@ -1335,9 +1340,20 @@ function FateGameMode:ModifyGoldFilter(filterTable)
     -- Disable gold gain from hero kills
     if filterTable["reason_const"] == DOTA_ModifyGold_HeroKill then
         filterTable["gold"] = 0
-        return true
     end
 
+    return true
+end
+
+function FateGameMode:TakeDamageFilter(filterTable)
+
+    local damage = filterTable.damage
+    local damageType = filterTable.damagetype_const
+    local attacker = EntIndexToHScript(filterTable.entindex_attacker_const)
+    local victim = EntIndexToHScript(filterTable.entindex_victim_const)
+
+    if victim:HasModifier("modifier_avalon") and damageType == 1 then
+    end
     return true
 end
 
@@ -1447,31 +1463,31 @@ function FateGameMode:InitializeRound()
         print("[FateGameMode]First round started, initiating 10 minute timer...")
         IsGameStarted = true
         GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
-        CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
+        CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD-1, "ten_min_timer")
         Timers:CreateTimer('round_10min_bonus', {
-            endTime = 600,
+            endTime = BLESSING_PERIOD,
             callback = function()
                 CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
                 self:LoopOverPlayers(function(player, playerID)
                     local hero = player:GetAssignedHero()
                     hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
-                    hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+10) 
+                    hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+BLESSING_MANA_REWARD) 
                     hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
-                    hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+10)
+                    hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+BLESSING_MANA_REWARD)
                     MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
                 end)
                 Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
                 
-                return 600
+                return BLESSING_PERIOD
         end})
     end
     
     -- Flag game mode as pre round, and display tip
     _G.IsPreRound = true 
-    CreateUITimer("Pre-Round", 15, "pregame_timer")
+    CreateUITimer("Pre-Round", PRE_ROUND_DURATION, "pregame_timer")
     --FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 16, timerEnd = true, timerPosition = 0})
     DisplayTip()
-    Say(nil, string.format("Round %d will begin in 15 seconds.", self.nCurrentRound), false) 
+    Say(nil, string.format("Round %d will begin in " .. PRE_ROUND_DURATION .. " seconds.", self.nCurrentRound), false) 
     
     
     local msg = {
@@ -1496,7 +1512,7 @@ function FateGameMode:InitializeRound()
         local hero = ply:GetAssignedHero()
         
         ResetAbilities(hero)
-        giveUnitDataDrivenModifier(hero, hero, "round_pause", 15.0) -- Pause all heroes
+        giveUnitDataDrivenModifier(hero, hero, "round_pause", PRE_ROUND_DURATION) -- Pause all heroes
         hero:SetGold(0, false) 
         hero.CStock = 10
         
@@ -1519,12 +1535,12 @@ function FateGameMode:InitializeRound()
     
     
     Timers:CreateTimer('beginround', {
-        endTime = 15,
+        endTime = PRE_ROUND_DURATION,
         callback = function()
             print("[FateGameMode]Round started.")
             _G.IsPreRound = false
             _G.RoundStartTime = GameRules:GetGameTime()
-            CreateUITimer(("Round " .. self.nCurrentRound), 150, "round_timer" .. self.nCurrentRound)
+            CreateUITimer(("Round " .. self.nCurrentRound), ROUND_DURATION, "round_timer" .. self.nCurrentRound)
             --FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 151, timerEnd = true, timerPosition = 0})
             --roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
             
@@ -1537,28 +1553,28 @@ function FateGameMode:InitializeRound()
     })
     
     Timers:CreateTimer('presence_alert', {
-        endTime = 75,
+        endTime = PRESENCE_ALERT_DURATION + PRE_ROUND_DURATION,
         callback = function()
             GameRules:SendCustomMessage("#Fate_Presence_Alert", 0, 0) 
         end
     })
     
     Timers:CreateTimer('round_30sec_alert', {
-        endTime = 135,
+        endTime = PRE_ROUND_DURATION + ROUND_DURATION - 30,
         callback = function()
             FireGameEvent("show_center_message",alertmsg)
         end
     })
     
     Timers:CreateTimer('round_10sec_alert', {
-        endTime = 155,
+        endTime = PRE_ROUND_DURATION + ROUND_DURATION - 10,
         callback = function()
             FireGameEvent("show_center_message",alertmsg2)
         end
     })
     
     Timers:CreateTimer('round_timer', {
-        endTime = 165,
+        endTime = PRE_ROUND_DURATION + ROUND_DURATION,
         callback = function()
             print("[FateGameMode]Round timeout.")
             FireGameEvent("show_center_message",timeoutmsg)
@@ -1768,6 +1784,7 @@ function FateGameMode:CaptureGameMode()
         mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
         mode:SetExecuteOrderFilter( Dynamic_Wrap( FateGameMode, "ExecuteOrderFilter" ), FateGameMode )
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
+        --mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)
         SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()
         

@@ -208,7 +208,7 @@ function OnChariotStart(keys)
 
 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel", {}) 
-	caster:AddNewModifier(caster, nil, "modifier_movespeed_cap", {duration = keys.Duration+1})
+	caster:AddNewModifier(caster, nil, "modifier_ms_cap", {duration = keys.Duration+1})
 	--caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
 	caster:SetModel("models/iskander/iskander_chariot.vmdl")
     caster:SetOriginalModel("models/iskander/iskander_chariot.vmdl")
@@ -341,7 +341,7 @@ function OnChariotEnd(keys)
     caster:SetModelScale(1.0)
 
     caster:RemoveModifierByName("modifier_gordius_wheel_speed_boost")
-    caster:RemoveModifierByName("modifier_movespeed_cap")
+    caster:RemoveModifierByName("modifier_ms_cap")
 end
 
 function OnChariotChargeStart(keys)

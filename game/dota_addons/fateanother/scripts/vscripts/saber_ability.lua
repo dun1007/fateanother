@@ -14,6 +14,12 @@ function OnInstinctStart(keys)
 	keys.caster:AddNewModifier(keys.caster, nil, "modifier_item_sphere_target", {Duration = 1.0}) -- Just the particles
 end
 
+function OnInstinctCrit(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_instinct_crit_hit", {})
+end
+
 function CreateWind(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -62,9 +68,13 @@ function InvisibleAirPull(keys)
 	keys.caster.invisible_air_reach_target = true					-- Addition
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 
 	giveUnitDataDrivenModifier(caster, target, "drag_pause", 1.0)
+	target:RemoveModifierByName("modifier_invisible_air_target")
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_invisible_air_target", {})
+
 	if caster.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
 	DoDamage(caster, target , keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 
@@ -156,14 +166,23 @@ function OnCaliburnHit(keys)
 
 end
 
+function OnExcaliburVfxStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_1", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_3", {})
+end
+
 function OnExcaliburStart(keys)
 	EmitGlobalSound("Saber.Excalibur_Ready")
-	print("Excalibur")
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	local ability = keys.ability
 	keys.Range = keys.Range - keys.EndRadius -- We need this to take end radius of projectile into account
 	
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.0)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "saber_anim_vfx", {})
 	local excal = 
 	{
 		Ability = keys.ability,
@@ -249,12 +268,23 @@ function OnExcaliburHit(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
+function OnMaxVfxStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_1", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_3", {})
+end
+
 function OnMaxStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
+	keys.Range = keys.Range - keys.Width -- We need this to take end radius of projectile into account
+
 	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
-	keys.Range = keys.Range - keys.Width -- We need this to take end radius of projectile into account
+	ability:ApplyDataDrivenModifier(caster, caster, "saber_max_excalibur_anim_vfx", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "ApplyModifier", {})
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
@@ -353,7 +383,14 @@ function OnMaxHit(keys)
 end
 
 function OnAvalonStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	caster:RemoveModifierByName("modifier_avalon")
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_avalon", {})
 	currentHealth = keys.caster:GetHealth()
+
+	caster:EmitSound("Hero_Omniknight.GuardianAngel.Cast")
 	EmitGlobalSound("Saber.Avalon")
 	EmitGlobalSound("Saber.Avalon_Shout")
 	SaberCheckCombo(keys.caster, keys.ability)
@@ -452,6 +489,10 @@ end
 
 function OnStrikeAirStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.75)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_strike_air_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	local strikeair = 
 	{
 		Ability = keys.ability,
@@ -471,6 +512,10 @@ function OnStrikeAirStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * 5000
 	}
+
+	Timers:CreateTimer(1.5, function()
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_strike_air_animation", {})
+	end)
 	
 	Timers:CreateTimer({
 		endTime = 1.75, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
@@ -483,7 +528,8 @@ function OnStrikeAirStart(keys)
 	end})
 
 	EmitGlobalSound("Saber.StrikeAir_Cast")
-	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 1.75)
+	caster:EmitSound("Hero_Invoker.Tornado")
+	ability:ApplyDataDrivenModifier(caster, caster, "saber_strike_air_anim_vfx", {})
 	Timers:CreateTimer(1.75, function()  
 		local sound = RandomInt(1,2)
 		if sound == 1 then EmitGlobalSound("Saber.StrikeAir_Release1") else EmitGlobalSound("Saber.StrikeAir_Release2") end
@@ -492,11 +538,14 @@ function OnStrikeAirStart(keys)
 end
 
 function StrikeAirPush(keys)
+	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	if target:GetName() == "npc_dota_hero_bounty_hunter" and target.IsPFWAcquired then return end
 
 	DoDamage(keys.caster, keys.target, 650 + (keys.caster:FindAbilityByName("saber_caliburn"):GetLevel() + keys.caster:FindAbilityByName("saber_invisible_air"):GetLevel()) * 125, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	giveUnitDataDrivenModifier(keys.caster, keys.target, "pause_sealenabled", 0.5)
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_strike_air_target_VFX", {})
 
     local pushTarget = Physics:Unit(keys.target)
     keys.target:PreventDI()

@@ -199,6 +199,8 @@ function OnTigerStrike1Start(keys)
 	caster:EmitSound("Hero_EarthShaker.Attack")
     local groundFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN, target )
     ParticleManager:SetParticleControl( groundFx, 1, target:GetAbsOrigin())
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_first_hit.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
     --ParticleManager:SetParticleControlOrientation(groundFx, 0, RandomVector(300), Vector(0,1,0), Vector(1,0,0))
 end
 
@@ -221,13 +223,15 @@ function OnTigerStrike2Start(keys)
 		end
 	end
 	-- do damage and apply CC
-	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	keys.target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 0.1})
 	-- switch strike 1 with 2
 	caster:SwapAbilities("lishuwen_fierce_tiger_strike_2", "lishuwen_fierce_tiger_strike_3", false, true) 
 	caster:EmitSound("Hero_EarthShaker.Fissure")
     local groundFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_fallback_mid.vpcf", PATTACH_ABSORIGIN, target )
     ParticleManager:SetParticleControl( groundFx, 1, target:GetAbsOrigin())
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_second_hit.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
 function OnTigerStrike3Start(keys)
@@ -263,6 +267,8 @@ function OnTigerStrike3Start(keys)
     ParticleManager:SetParticleControl( groundFx2, 1, target:GetAbsOrigin())
     ParticleManager:SetParticleControlOrientation(groundFx1, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
     ParticleManager:SetParticleControlOrientation(groundFx2, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_third_hit.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
 function OnNSSStart(keys)
@@ -306,6 +312,8 @@ function OnNSSStart(keys)
     ParticleManager:SetParticleControl( groundFx2, 1, target:GetAbsOrigin())
     ParticleManager:SetParticleControlOrientation(groundFx1, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
     ParticleManager:SetParticleControlOrientation(groundFx2, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_no_second_strike_hit.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
 function OnNSSDelayFinished(keys)
@@ -413,6 +421,8 @@ function OnDragonStrike1Start(keys)
 	caster:EmitSound("Hero_EarthShaker.Attack")
     local groundFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN, target )
     ParticleManager:SetParticleControl( groundFx, 1, target:GetAbsOrigin())
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_first_hit.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
 function OnDragonStrike1ProjectileHit(keys)
@@ -439,6 +449,8 @@ function OnDragonStrike2Start(keys)
 	end
 	caster:EmitSound("Hero_Centaur.HoofStomp")
 	local risingWindFx = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_second_hit.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, caster:GetAbsOrigin())
 end
 
 vectors = {
@@ -530,6 +542,8 @@ function OnDragonStrike3Start(keys)
     ParticleManager:SetParticleControl( groundFx2, 1, caster:GetAbsOrigin())
     ParticleManager:SetParticleControlOrientation(groundFx1, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
     ParticleManager:SetParticleControlOrientation(groundFx2, 0, RandomVector(3), Vector(0,1,0), Vector(1,0,0))
+    local firstStrikeFx = ParticleManager:CreateParticle("particles/custom/lishuwen/lishuwen_third_hit.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl( firstStrikeFx, 0, caster:GetAbsOrigin())
 end
 
 function LishuwenCheckCombo(caster, ability)
@@ -543,7 +557,7 @@ function LishuwenCheckCombo(caster, ability)
                 QUsed = false
             end
             })
-        elseif ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady()  then
+        elseif ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
             if QUsed == true then 
                 caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
                 Timers:CreateTimer('raging_dragon_timer',{
