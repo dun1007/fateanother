@@ -511,12 +511,8 @@ function OnReincarnationDamageTaken(keys)
 	local ability = keys.ability
 	local damageTaken = keys.DamageTaken
 
-	if damageTaken > 100 then 
-		local currentStack = caster:GetModifierStackCount("modifier_reincarnation_stack", ability)
-		caster:RemoveModifierByName("modifier_reincarnation_stack")
-		if currentStack > 4 then currentStack = 4 end
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_reincarnation_stack", {}) 
-		caster:SetModifierStackCount("modifier_reincarnation_stack", ability, currentStack+1)
+	if damageTaken > 100 then
+		GainReincarnationRegenStack(caster, ability)
 	end
 
 	if caster:HasModifier("modifier_berserk_self_buff") then 
@@ -531,6 +527,19 @@ function OnReincarnationDamageTaken(keys)
 		caster:FindAbilityByName("berserker_5th_god_hand"):ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {})
 		caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)
 	end
+end
+
+function GainReincarnationRegenStack(caster, ability)
+	local modifier = ability:ApplyDataDrivenModifier(caster, caster, "modifier_reincarnation_stack", {})
+	if modifier:GetStackCount() < 5 then modifier:IncrementStackCount() end
+
+	if not caster.reincarnation_particle then caster.reincarnation_particle = ParticleManager:CreateParticle("particles/custom/berserker/reincarnation/regen_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster) end
+	ParticleManager:SetParticleControl(caster.reincarnation_particle, 1, Vector(modifier:GetStackCount(),0,0))
+end
+
+function OnReincarnationBuffEnded(keys)
+	ParticleManager:DestroyParticle(keys.caster.reincarnation_particle, false)
+	keys.caster.reincarnation_particle = nil
 end
 
 function OnImproveDivinityAcquired(keys)

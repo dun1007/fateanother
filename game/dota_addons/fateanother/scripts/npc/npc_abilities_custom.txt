@@ -6522,8 +6522,7 @@
 		"MaxLevel"						"1"
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf"
-			"particle"			"particles/items_fx/aegis_respawn.vpcf"
+			"particle"			"particles/custom/berserker/reincarnation/regen_buff.vpcf"
 		}
 
 		
@@ -6549,12 +6548,20 @@
 			}
 			"modifier_reincarnation_stack"
 			{
-				"IsHidden"		"0"
 				"Duration"		"10"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
+				"Attributes"	"MODIFIER_ATTRIBUTE_PERMANENT"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"12"
+				}
+
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"berserker_ability"
+						"Function"		"OnReincarnationBuffEnded"
+					}
 				}
 			}
 		}
