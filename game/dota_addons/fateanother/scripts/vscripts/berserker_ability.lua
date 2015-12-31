@@ -457,6 +457,7 @@ function OnGodHandDeath(keys)
 	local caster = keys.caster
 	local newRespawnPos = caster:GetOrigin()
 	local ply = caster:GetPlayerOwner()
+	local radius = 600
 
 	local dummy = CreateUnitByName("godhand_res_locator", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
@@ -475,14 +476,17 @@ function OnGodHandDeath(keys)
 			GameRules:SendCustomMessage("<font color='#FF0000'>----------!!!!!</font> Remaining God Hand stock : " .. caster.GodHandStock , 0, 0)
 			caster:SetRespawnPosition(dummy:GetAbsOrigin())
 			caster:RespawnHero(false,false,false)
-			caster:RemoveModifierByName("modifier_god_hand_stock") 
-			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {}) 
-			caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)
+			caster:RemoveModifierByName("modifier_god_hand_stock")
+			if caster.GodHandStock > 0 then
+				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {})
+				caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)
+			end
 
 			-- Apply revive damage
-			local resExp = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+			local resExp = ParticleManager:CreateParticle("particles/custom/berserker/god_hand/stomp.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
 			for k,v in pairs(targets) do
 		        DoDamage(caster, v, caster:GetMaxHealth() * 2.5/10, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			end	
@@ -524,6 +528,7 @@ function OnReincarnationDamageTaken(keys)
 	if caster.ReincarnationDamageTaken > 20000 and caster.IsGodHandAcquired then
 		caster.ReincarnationDamageTaken = 0
 		caster.GodHandStock = caster.GodHandStock + 1
+		caster:FindAbilityByName("berserker_5th_god_hand"):ApplyDataDrivenModifier(caster, caster, "modifier_god_hand_stock", {})
 		caster:SetModifierStackCount("modifier_god_hand_stock", caster, caster.GodHandStock)
 	end
 end
