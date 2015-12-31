@@ -600,11 +600,6 @@
 		//-------------------------------------------------------------------------------------------------------------		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"saber_pause"
-				"Target"			"CASTER"
-			}
 			"RunScript"
 			{
 			 	"ScriptFile"	"saber_ability"
@@ -701,16 +696,11 @@
 							"TARGET"		"attach_sword"
 						}
 					}
-				}
-				
-				"ThinkInterval"				"1.1"
-				"OnIntervalThink"
-				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"ModifierName"		"excalibur_vfx_phase_2"
-					}
+					 	"ScriptFile"	"saber_ability"
+					 	"Function"		"OnExcaliburSwordVfxStart"
+					}	
 				}
 			}
 			
@@ -1376,15 +1366,10 @@
 							"TARGET"		"attach_sword"
 						}
 					}
-				}
-				
-				"ThinkInterval"				"1.1"
-				"OnIntervalThink"
-				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"ModifierName"		"excalibur_vfx_phase_2"
+					 	"ScriptFile"	"saber_ability"
+					 	"Function"		"OnMaxSwordVfxStart"
 					}
 				}
 			}
@@ -1497,7 +1482,6 @@
 			"modifier_lancer_revive"
 			{
 				"Passive"	"1"
-				"IsPurgable"	"0"
 				"OnTakeDamage"
 				{
 					"RunScript"

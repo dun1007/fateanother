@@ -1406,16 +1406,6 @@
 				"Function"		"BScroll"
 				"ShieldAmount"	"%barrier_block"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_b_scroll"
-				"Target"		"CASTER"
-			}
-			"FireSound"
-			{
-				"EffectName"	"DOTA_Item.ArcaneBoots.Activate"
-				"Target"		"CASTER"
-			}
 	    }
 
 	    "Modifiers"
@@ -1490,15 +1480,10 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
+	    	"RunScript"
 			{
-				"ModifierName"	"modifier_a_scroll"
-				"Target"		"CASTER"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Oracle.FatesEdict.Cast"
-				"Target"		"CASTER"
+				"ScriptFile"	"items"
+				"Function"		"AScroll"
 			}
 			"SpendCharge" {}
 	    }
@@ -1722,16 +1707,6 @@
 				"ScriptFile"	"items"
 				"Function"		"SScroll"
 			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Zuus.GodsWrath.Target"
-				"Target"		"CASTER"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Zuus.GodsWrath.Target"
-				"Target"		"TARGET"
-			}
 			"SpendCharge" {}
 	    }
 	    "Modifiers"
@@ -1875,16 +1850,6 @@
 			{
 				"ScriptFile"	"items"
 				"Function"		"EXScroll"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Zuus.GodsWrath.Target"
-				"Target"		"CASTER"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Zuus.GodsWrath.Target"
-				"Target"		"TARGET"
 			}
 			"SpendCharge" {}
 	    }

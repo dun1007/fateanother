@@ -1,3 +1,5 @@
+-- where the misc functios gather
+
 heroes = {
     "npc_dota_hero_legion_commander",
     "npc_dota_hero_phantom_lancer",
@@ -17,6 +19,7 @@ heroes = {
     "npc_dota_hero_lina",
     "npc_dota_hero_omniknight"
 }
+
 
 softdispellable = {
     "modifier_aspd_increase",
@@ -242,6 +245,14 @@ itemComp = {
     {"item_a_scroll", "item_recipe_a_plus_scroll", "item_a_plus_scroll"}
 }
 
+tItemComboTable = {
+    item_c_scroll = "item_b_scroll",
+    item_b_scroll = "item_a_scroll",
+    item_a_scroll = "item_s_scroll",
+    item_s_scroll = "item_ex_scroll",
+    item_mana_essence = "item_condensed_mana_essence"
+}
+
 tipTable = { "<font color='#58ACFA'>Tip : C Scroll</font> is everyone's bread-and-butter item that you should be carrying at all times. Use it to guarantee your skill combo, or help your teammate by interrupting enemy.",
     "<font color='#58ACFA'>Tip : </font>Work towards gathering 20 all stats in order to acquire <font color='#58ACFA'>Combo</font>, a defining move of hero that can turn the tides of battle. You can level  Stat Bonus of your hero or buy stats with Master's mana  to boost the timing of acquisition.",
     "<font color='#58ACFA'>Tip : </font>To increase your survivability, consider carrying <font color='#58ACFA'>A Scroll and B Scroll</font> that grant you significant damage mitigation for duration.",
@@ -429,6 +440,88 @@ function EmitSoundOnAllClient(sound)
 end
 
 function CheckItemCombination(hero)
+    local bIsMatchingFound = false
+
+    -- loop through stash
+    for i=0,5 do
+        if bIsMatchingFound then break end
+
+        local currentItem = hero:GetItemInSlot(i)
+        if currentItem then
+
+            local currentItemName1 = currentItem:GetName()
+            local currentItemIndex1 = i
+            if GetMatchingItem(currentItemName1) then
+                -- first component found, find second component
+                for j=0,5 do
+                    if bIsMatchingFound then break end
+
+                    if j == currentItemIndex1 then goto continue end -- just continue if we are looking at the same slot as first component
+                    local currentItem2 = hero:GetItemInSlot(j)
+                    if currentItem2 ~= nil then
+                        local currentItemName2 = currentItem2:GetName()
+                        -- match found, combine item 1 and item 2
+                        if currentItemName1 == currentItemName2 then
+                            bIsMatchingFound = true
+                            if not currentItem:IsNull() then currentItem:RemoveSelf() end
+                            if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
+                            CreateItemAtSlot(hero, tItemComboTable[currentItemName1], 0, -1, true, false)
+                        end
+                    end
+                    ::continue::
+                end
+            end
+
+        end
+    end
+end
+
+function CheckItemCombinationInStash(hero)
+    local bIsMatchingFound = false
+
+    -- loop through stash
+    for i=6,11 do
+        if bIsMatchingFound then break end
+
+        local currentItem = hero:GetItemInSlot(i)
+        if currentItem then
+            local currentItemName1 = currentItem:GetName()
+            local currentItemIndex1 = i
+            if GetMatchingItem(currentItemName1) then
+                -- first component found, find second component
+                for j=6,11 do
+                    if bIsMatchingFound then break end
+
+                    if j == currentItemIndex1 then goto continue end -- just continue if we are looking at the same slot as first component
+                    local currentItem2 = hero:GetItemInSlot(j)
+                    if currentItem2 then
+                        local currentItemName2 = currentItem2:GetName()
+                        -- match found, combine item 1 and item 2
+                        if currentItemName1 == currentItemName2 then
+                            bIsMatchingFound = true
+                            if not currentItem:IsNull() then currentItem:RemoveSelf() end
+                            if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
+                            CreateItemAtSlot(hero, tItemComboTable[currentItemName1], 6, -1, false, true)
+                        end
+                    end
+                    ::continue::
+                end
+            end
+
+        end
+    end
+end
+
+function GetMatchingItem(name)
+    for k,v in pairs(tItemComboTable) do
+        if k == name then
+            return true
+        end
+    end
+    return false
+end
+
+--[[function CheckItemCombination(hero)
     local isMatchingFound = false
     --print("checking item combination of " .. hero:GetName())
     -- loop through stash
@@ -530,8 +623,10 @@ function CheckItemCombinationInStash(hero)
         end
         if isMatchingFound then break end
     end
-end
-function CreateItemAtSlot(hero, itemname, slot, charges)
+end]]--
+
+-- 
+function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bIsStashChecked)
     local dummyitemtable = {}
     for i = 0, slot-1 do
         if hero:GetItemInSlot(i) == nil then
@@ -554,8 +649,8 @@ function CreateItemAtSlot(hero, itemname, slot, charges)
     for i = 1, #dummyitemtable do
         hero:RemoveItem(dummyitemtable[i]) 
     end
-    CheckItemCombination(hero)
-    CheckItemCombinationInStash(hero)
+    if bIsInventoryChecked then CheckItemCombination(hero) end 
+    if bIsStashChecked then CheckItemCombinationInStash(hero) end
 end
 
 

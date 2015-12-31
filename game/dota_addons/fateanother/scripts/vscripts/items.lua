@@ -380,9 +380,18 @@ end
 
 function BScroll(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_b_scroll", {})
 	caster.BShieldAmount = keys.ShieldAmount
-	
+	caster:EmitSound("DOTA_Item.ArcaneBoots.Activate")
 
+end
+
+function AScroll(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_a_scroll", {})
+	caster:EmitSound("Hero_Oracle.FatesEdict.Cast")
 end
 
 
@@ -404,6 +413,8 @@ function SScroll(keys)
 		ParticleManager:DestroyParticle(boltFx, false)
 		ParticleManager:DestroyParticle(lightningBoltFx, false)
 	end)
+
+	target:EmitSound("Hero_Zuus.GodsWrath.Target")
 end
 
 function EXScroll(keys)
@@ -448,6 +459,7 @@ function EXScroll(keys)
 		ParticleManager:DestroyParticle(boltFx, false)
 		--ParticleManager:DestroyParticle(lightningBoltFx, false)
 	end)
+	target:EmitSound("Hero_Zuus.GodsWrath.Target")
 end
 
 

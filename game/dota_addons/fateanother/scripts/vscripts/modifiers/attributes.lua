@@ -45,7 +45,7 @@ function Attributes:ModifyBonuses(hero)
 
     print("Modifying Stats Bonus of hero "..hero:GetUnitName())
 
-    hero:AddNewModifier(hero, nil, "modifier_movespeed_cap", {})
+    --hero:AddNewModifier(hero, nil, "modifier_movespeed_cap", {})
     hero.STRgained = 0
     hero.AGIgained = 0
     hero.INTgained = 0

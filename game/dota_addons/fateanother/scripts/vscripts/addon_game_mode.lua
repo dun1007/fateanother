@@ -790,7 +790,6 @@ function FateGameMode:OnItemPurchased( keys )
             end
         end
     end
-    
 end
 
 
@@ -1402,15 +1401,17 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
         -- Item is currently placed in inventory, while target is in stash
         if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 6 and targetIndex <= 11) then
             ability:RemoveSelf()
-            CreateItemAtSlot(caster, itemName, targetIndex, charges)
+            CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
             return false
+        -- Item is currently placed in stash, while target is in inventory
         elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 0 and targetIndex <=5) then
             ability:RemoveSelf()
-            CreateItemAtSlot(caster, itemName, targetIndex, charges)
+            CreateItemAtSlot(caster, itemName, targetIndex, charges, true, false)
             return false
+        -- Item is currently placed in stash, and it is just being moved within there
         elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 6 and targetIndex <=11) then
             ability:RemoveSelf()
-            CreateItemAtSlot(caster, itemName, targetIndex, charges)
+            CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
             return false
         end
     -- What do we do when item is bought?

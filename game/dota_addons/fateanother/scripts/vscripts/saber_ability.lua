@@ -173,6 +173,14 @@ function OnExcaliburVfxStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_3", {})
 end
 
+function OnExcaliburSwordVfxStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	Timers:CreateTimer(1.1, function()
+		ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_2", {})
+	end)
+end
+
 function OnExcaliburStart(keys)
 	EmitGlobalSound("Saber.Excalibur_Ready")
 	local caster = keys.caster
@@ -273,6 +281,14 @@ function OnMaxVfxStart(keys)
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_1", {})
 	ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_3", {})
+end
+
+function OnMaxSwordVfxStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	Timers:CreateTimer(1.1, function()
+		ability:ApplyDataDrivenModifier(caster, caster, "excalibur_vfx_phase_2", {})
+	end)
 end
 
 function OnMaxStart(keys)
