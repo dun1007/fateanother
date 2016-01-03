@@ -132,6 +132,7 @@ end
 
 function OnRemainStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_avenger_death_checker", {})
 	local attackmove = {
 		UnitIndex = nil,

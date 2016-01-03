@@ -621,8 +621,11 @@ Apply the aura modifier to caster
 function OnAmaterasuStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability 
-	if IsValidEntity(caster.CurrentAmaterasuDummy) or not caster.CurrentAmaterasuDummy:IsNull() then
-		caster.CurrentAmaterasuDummy:RemoveModifierByName("modifier_amaterasu_aura")
+	if caster.CurrentAmaterasuDummy ~= nil then
+		if IsValidEntity(caster.CurrentAmaterasuDummy) or not caster.CurrentAmaterasuDummy:IsNull() then
+			caster.CurrentAmaterasuDummy:RemoveModifierByName("modifier_amaterasu_aura")
+		end
+	else
 	end
 
 	caster.AmaterasuCastLoc = caster:GetAbsOrigin()

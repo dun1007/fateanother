@@ -51,6 +51,7 @@ function Attributes:ModifyBonuses(hero)
     hero.INTgained = 0
     hero.DMGgained = 0
     hero.ARMORgained = 0
+    hero.ExtraARMORgained = 0
     hero.HPREGgained = 0
     hero.MPREGgained = 0
     hero.MSgained = 0
@@ -76,7 +77,7 @@ function Attributes:ModifyBonuses(hero)
         local intellect = hero:GetIntellect()
         
         -- Base Armor Bonus
-        local armor = hero.BaseArmor + agility * Attributes.armor_adjustment + hero.ARMORgained * Attributes.additional_armor_adjustment
+        local armor = hero.BaseArmor + agility * Attributes.armor_adjustment + hero.ARMORgained * Attributes.additional_armor_adjustment + hero.ExtraARMORgained
         hero:SetPhysicalArmorBaseValue(armor)
 
         -- Base MS bonus

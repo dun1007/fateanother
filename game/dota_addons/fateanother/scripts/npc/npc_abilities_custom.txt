@@ -5555,6 +5555,21 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"mr_bonus"			"5"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"armor_bonus"			"10"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"str_bonus"			"20"
+			}
 		}
 		
 		"OnSpellStart"

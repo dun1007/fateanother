@@ -197,7 +197,7 @@ function OnRhoStart(keys)
 			unit:AddNewModifier( unit, nil, "modifier_knockback", modifierKnockback );
 		end
 	end
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rho_aias_shield", {})
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_rho_aias_shield", {})
 	rhoTarget = target 
 	target.rhoShieldAmount = keys.ShieldAmount
 
@@ -1227,9 +1227,9 @@ function OnShroudOfMartinAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 10) 
 	hero:SetBaseMagicalResistanceValue(15)
 	hero.IsMartinAcquired = true
+	hero.ExtraARMORgained = 10
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

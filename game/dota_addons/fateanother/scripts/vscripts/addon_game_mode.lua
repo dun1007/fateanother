@@ -427,7 +427,7 @@ function FateGameMode:PlayerSay(keys)
 
     -- Below two commands are solely for test purpose, not to be used in normal games
     if text == "-testsetup" then
-        if Convars:GetBool("developer") then 
+        if Convars:GetBool("sv_cheats") then
             self:LoopOverPlayers(function(player, playerID)
                 local hero = player:GetAssignedHero()
                 hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
@@ -445,13 +445,13 @@ function FateGameMode:PlayerSay(keys)
     end
 
     if text == "-declarewinner" then
-        if Convars:GetBool("developer") then 
+        if Convars:GetBool("sv_cheats") then 
             GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
         end
     end
     -- manually end the round
     if text == "-finishround" then
-        if Convars:GetBool("developer") then 
+        if Convars:GetBool("sv_cheats") then 
             self:FinishRound(true, 1) 
         end
     end
@@ -461,13 +461,13 @@ function FateGameMode:PlayerSay(keys)
         local hr = plyr:GetAssignedHero()
         hr:RemoveModifierByName("round_pause")
     end]]
-        --if Convars:GetBool("developer") then 
+        if Convars:GetBool("sv_cheats") then 
             self:LoopOverPlayers(function(player, playerID)
                 local hr = player:GetAssignedHero()
                 hr:RemoveModifierByName("round_pause")
                 --print("Looping through player" .. ply)
             end)
-        --end
+        end
     end
     
     -- Turns BGM on and off
@@ -607,7 +607,7 @@ function FateGameMode:OnHeroInGame(hero)
         giveUnitDataDrivenModifier(hero, hero, "round_pause", 10)
     end
 
-    if Convars:GetBool("developer") then 
+    if Convars:GetBool("sv_cheats") then 
         hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
         hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
 
@@ -1023,11 +1023,19 @@ function FateGameMode:OnEntityKilled( keys )
             end
             -- Distribute XP to allies
             local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+            local realHeroCount = 0
             for i=1, #alliedHeroes do
                 if alliedHeroes[i]:IsHero() then
-                    alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)
+                    realHeroCount = realHeroCount + 1
                 end
             end
+
+            for i=1, #alliedHeroes do
+                if alliedHeroes[i]:IsHero() then
+                    alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/realHeroCount, false, false)
+                end               
+            end
+
             -- Give kill bounty 
             local bounty = BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]
             killerEntity:ModifyGold(bounty , true, 0)
