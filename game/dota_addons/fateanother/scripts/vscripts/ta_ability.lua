@@ -153,6 +153,7 @@ function OnDIStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_delusional_illusion_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	
 	Timers:CreateTimer(function()
 		if DICount > 8.0 or not caster:IsAlive() then return end 
@@ -250,6 +251,7 @@ end
 
 function OnAmbushStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	--caster:AddNewModifier(caster, caster, "modifier_invisible", {Duration = 12.0})
 	if caster.IsPCImproved then
 		local team = 0
@@ -277,6 +279,13 @@ function OnAmbushStart(keys)
 			end
 		end 
 	end
+
+	Timers:CreateTimer(1.0, function()
+		if caster:IsAlive() then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_ambush", {})
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_first_hit", {})
+		end
+	end)
 	TACheckCombo(caster, keys.ability)
 end
 
@@ -307,6 +316,10 @@ end
 
 function OnModStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_self_mod", {})
+
 	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_bane/bane_fiendsgrip_ground_rubble.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin())
 	-- Destroy particle after delay

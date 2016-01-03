@@ -111,11 +111,13 @@ function OnRoarStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	giveUnitDataDrivenModifier(caster, caster, "rb_sealdisabled", 10.0)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_madmans_roar_silence", {})
 	caster:FindAbilityByName("berserker_5th_courage"):StartCooldown(27)
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_madmans_roar_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	
 	-- Remove Berserk modifier and set health to max
 	if caster:HasModifier("modifier_berserk_self_buff") then
@@ -153,6 +155,7 @@ end
 
 function OnBerserkStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local hplock = keys.Health
 	local duration = keys.Duration
 	local damageTaken = keys.DamageTaken
@@ -160,7 +163,7 @@ function OnBerserkStart(keys)
 	local berserkCounter = 0
 	caster.BerserkDamageTaken = 0
 
-
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_berserk_self_buff", {})
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
 		if berserkCounter == duration then return end
@@ -254,7 +257,7 @@ function OnNineStart(keys)
 	caster:SetPhysicsVelocity(caster:GetForwardVector()*distance)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
-
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_dash_anim", {})
 
 	Timers:CreateTimer(1.0, function()
 		caster:OnPreBounce(nil)

@@ -1008,8 +1008,8 @@
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackRange"					"150"
-		"AttackDamageMin"				"46"
-		"AttackDamageMax"				"74"
+		"AttackDamageMin"				"59"
+		"AttackDamageMax"				"65"
 		"AttackRate"					"1.1"
 		"AttackAnimationPoint"			"0.3"
 		
@@ -1117,7 +1117,7 @@
 		"Ability15"				"presence_detection_passive"
 		"Ability16"				"attribute_bonus"
 		
-		"StatusHealth"					"1100"
+		"StatusHealth"					"1150"
 		"StatusHealthRegen"				"4.0"
 		"StatusMana"					"1300"
 		"StatusManaRegen"				"4.5"

@@ -3,8 +3,14 @@ require("util")
 
 bolgdummy = nil
 
+function OnBattleContinuationStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+end
+
 function LancerOnTakeDamage(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local currentHealth = caster:GetHealth()
 	local ply = caster:GetPlayerOwner()
 
@@ -21,6 +27,7 @@ function LancerOnTakeDamage(keys)
 	if currentHealth == 0 and keys.ability:IsCooldownReady() and keys.DamageTaken <= highend and keys.DamageTaken >= lowend  then
 		caster:SetHealth(health)
 		keys.ability:StartCooldown(cd) 
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_continuation_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 		local reviveFx = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(reviveFx, 3, caster:GetAbsOrigin())
 
@@ -201,7 +208,10 @@ function OnIncinerateHit(keys)
 end
 
 function OnRAStart(keys)
-	 LancerCheckCombo(keys.caster, keys.ability)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_aspd_increase", {duration = ability:GetCooldown(ability:GetLevel())})
+	LancerCheckCombo(caster, ability)
 end
 
 function GBAttachEffect(keys)
@@ -227,6 +237,7 @@ function OnGBTargetHit(keys)
 
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if caster.IsHeartSeekerAcquired == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
 
@@ -275,8 +286,9 @@ function OnGBTargetHit(keys)
 			return 0.3
 		end)
 	end]]
-	
-
+	if ability:GetAbilityName() == "lancer_5th_gae_bolg" then
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_bolg_pierce_anim", {}) 
+	end
 	-- Add dagon particle
 	local dagon_particle = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf",  PATTACH_ABSORIGIN_FOLLOW, keys.caster)
 	ParticleManager:SetParticleControlEnt(dagon_particle, 1, keys.target, PATTACH_POINT_FOLLOW, "attach_hitloc", keys.target:GetAbsOrigin(), false)
@@ -329,6 +341,7 @@ function OnGBComboHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
 
@@ -337,10 +350,12 @@ function OnGBComboHit(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	if caster.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + caster:GetAttackDamage()*1.5 + target:GetStrength() end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_anim", {}) 
 	caster:EmitSound("Lancer.Heartbreak")
 	target:EmitSound("Lancer.Heartbreak")
 	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
@@ -401,6 +416,7 @@ end
 
 function OnGBAOEStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
@@ -429,7 +445,7 @@ function OnGBAOEStart(keys)
 	
 	EmitGlobalSound("Lancer.GaeBolg")
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.6)
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_jump_throw_anim", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_jump_throw_anim", {}) 
 
   	Timers:CreateTimer('gb_throw', {
 		endTime = 0.45,

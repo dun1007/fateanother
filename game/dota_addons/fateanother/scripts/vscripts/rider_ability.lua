@@ -121,7 +121,7 @@ function OnBloodfortStart(keys)
 		for k,v in pairs(targets) do
 	        DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	        if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster,v, "modifier_bloodfort_slow", {}) end
-	        caster:SetHealth(caster:GetHealth()+keys.AbsorbAmount)
+	        caster:Heal(keys.AbsorbAmount, caster)
 			if caster.IsSealAcquired then  
 				forcemove.UnitIndex = v:entindex()
 				ExecuteOrderFromTable(forcemove) 
@@ -168,11 +168,13 @@ end
 
 function OnBelle2Start(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	caster:FindAbilityByName("rider_5th_bloodfort_andromeda"):StartCooldown(27.0)
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_bellerophon_2_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	
 	local belle2 = 
 	{

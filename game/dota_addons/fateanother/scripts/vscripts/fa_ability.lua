@@ -1,13 +1,22 @@
 IWActive = false
 
+function OnFACrit(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_minds_eye_crit_hit", {})
+end
+
 function OnGKStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	FACheckCombo(keys.caster, keys.ability)
 	if caster.IsQuickdrawAcquired then 
 		caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true) 
 		Timers:CreateTimer(5, function() return caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true)   end)
 	end
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gate_keeper_self_buff", {})
 
 	local gkdummy = CreateUnitByName("sight_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	gkdummy:SetDayTimeVisionRange(1300)
@@ -51,6 +60,7 @@ end
 
 function OnHeartStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 
 	if caster.IsVitrificationAcquired then
@@ -61,6 +71,8 @@ function OnHeartStart(keys)
 		caster:FindAbilityByName("false_assassin_windblade"):StartCooldown(keys.GCD) 
 		caster:FindAbilityByName("false_assassin_tsubame_gaeshi"):StartCooldown(keys.GCD) 
 	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_heart_of_harmony", {})
+	caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
 end
 
 function OnHeartLevelUp(keys)
@@ -85,7 +97,7 @@ function OnHeartDamageTaken(keys)
 	local target = keys.attacker
 	local ability = keys.ability
 	local damageTaken = keys.DamageTaken
-	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-target:GetAbsOrigin()):Length2D() < 3000 then
+	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-target:GetAbsOrigin()):Length2D() < 3000 and not target:IsInvulnerable() then
 
 		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
@@ -122,6 +134,12 @@ function OnHeartAttackLanded(keys)
 
 end
 
+function OnInvisibilityBroken(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	caster:RemoveModifierByName("modifier_heart_of_harmony_invisible")
+end
+
 function OnPCDeactivate(keys)
 	local caster = keys.caster
 	caster:RemoveModifierByName("modifier_fa_invis")
@@ -138,10 +156,14 @@ end
 
 function OnTMStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai", {})
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	
 end
 
 function OnTMLanded(keys)
@@ -186,7 +208,7 @@ function OnTMDamageTaken(keys)
 	local damageTaken = keys.DamageTaken
 
 	-- if caster is alive and damage is above threshold, do something
-	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-attacker:GetAbsOrigin()):Length2D() < 3000 then
+	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-attacker:GetAbsOrigin()):Length2D() < 3000 and not attacker:IsInvulnerable() then
 		print("Starting Tsubame Mai")
 		local tgabil = caster:FindAbilityByName("false_assassin_tsubame_gaeshi")
 		keys.Damage = tgabil:GetLevelSpecialValueFor("damage", tgabil:GetLevel()-1)
@@ -341,6 +363,7 @@ end
 
 function OnQuickdrawStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local qdProjectile = 
 	{
 		Ability = keys.ability,
@@ -360,6 +383,9 @@ function OnQuickdrawStart(keys)
 		bDeleteOnHit = false,
 		vVelocity = caster:GetForwardVector() * 1500
 	}
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_quickdraw_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+
 	local projectile = ProjectileManager:CreateLinearProjectile(qdProjectile)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.4)
 	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
@@ -613,7 +639,7 @@ function OnVitrificationAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsVitrificationAcquired = true
 	hero:FindAbilityByName("false_assassin_presence_concealment"):SetLevel(1) 
-	hero:SwapAbilities("fate_empty2", "false_assassin_presence_concealment", true, true) 
+	hero:SwapAbilities("fate_empty1", "false_assassin_presence_concealment", true, true) 
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

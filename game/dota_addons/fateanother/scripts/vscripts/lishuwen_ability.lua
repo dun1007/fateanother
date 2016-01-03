@@ -334,7 +334,7 @@ function OnNSSDelayFinished(keys)
 	end
 	
 	target:SetMana(target:GetMana() - damage)
-	DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
+	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.DelayedStunDuration})
 
 	local manaBurnFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf", PATTACH_ABSORIGIN, target)
@@ -351,6 +351,7 @@ function OnDragonStrike1Start(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	caster:FindAbilityByName("lishuwen_fierce_tiger_strike"):StartCooldown(29)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	if IsSpellBlocked(keys.target) then return end
 
@@ -409,14 +410,14 @@ function OnDragonStrike1Start(keys)
 
 
 	-- start a timer to revert layout back after set time(4 sec)
-    Timers:CreateTimer('raging_dragon_timer', {
+    --[[Timers:CreateTimer('raging_dragon_timer', {
         endTime = 4,
         callback = function()
 		local currentAbil = caster:GetAbilityByIndex(2)
 		if currentAbil:GetAbilityName() ~= "lishuwen_raging_dragon_strike" or not caster.bIsCurrentDSCycleFinished then
 			caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false) 
 		end
-	end})
+	end})]]
 
 	caster:EmitSound("Hero_EarthShaker.Attack")
     local groundFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN, target )
@@ -566,10 +567,14 @@ function LishuwenCheckCombo(caster, ability)
                     if not caster.bIsCurrentDSCycleFinished then
                     	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
                     	ReduceCooldown(abil, abil:GetCooldown(1)/2)
+                    	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
+                    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/2})
 						local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
-						ReduceCooldown(masterabil, abil:GetCooldown(1)/2)                	
-                    end
-                    caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", false, true) 
+						masterabil:EndCooldown()
+						masterabil:StartCooldown(masterabil:GetCooldown(1)/2)            	
+                    end	
+					local currentAbil = caster:GetAbilityByIndex(2)	
+					caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false) 
                     QUsed = false
                 end
                 })

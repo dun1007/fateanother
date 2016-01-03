@@ -49,6 +49,8 @@ end
 
 function OnDevoteStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_blade_of_the_devoted", {})
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_blade_of_the_devoted") then
 			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 300, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false) 
@@ -139,6 +141,7 @@ end
 
 function OnGalatineStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	local casterLoc = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
@@ -149,7 +152,7 @@ function OnGalatineStart(keys)
 	local flyingDist = 0
 	local InFirstLoop = true
 	caster.IsGalatineActive = true
-
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_vfx", {})
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.75)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_anim",{})
 	EmitGlobalSound("Gawain.Galatine")
@@ -306,8 +309,9 @@ end
 
 function OnSupernovaStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local target = keys.target
-	if target:HasModifier("modifier_invigorating_ray_ally") or target:HasModifier("modifier_invigorating_ray_enemy")then
+	if target:HasModifier("modifier_invigorating_ray_ally") or target:HasModifier("modifier_invigorating_ray_enemy") then
 	else
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Cast Both Q and R on Same Target" } )
 		keys.ability:EndCooldown()
@@ -322,6 +326,7 @@ function OnSupernovaStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_supernova_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	Timers:CreateTimer(4.0, function()
 		if target:IsAlive() then
@@ -478,11 +483,13 @@ end
 
 function OnFairyDamageTaken(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local currentHealth = caster:GetHealth()
 
 	if currentHealth == 0 and keys.ability:IsCooldownReady() then
 		caster:SetHealth(500)
 		keys.ability:StartCooldown(60) 
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gawain_blessing_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 		local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
 		Timers:CreateTimer( 3.0, function()
@@ -494,7 +501,9 @@ end
 
 function OnMeltdownStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false) 
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_meltdown_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	for k,v in pairs(targets) do
 		if v:GetUnitName() == "gawain_artificial_sun" then
 			keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_divine_meltdown", {})

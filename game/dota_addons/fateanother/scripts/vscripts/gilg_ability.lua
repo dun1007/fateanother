@@ -223,9 +223,9 @@ function OnGOBStart(keys)
 	caster.GOBLocation = casterloc
 	caster.IsGOBUp = true
 	GilgaCheckCombo(caster, keys.ability)
-	caster:EmitSound("Saber_Alter.Derange")
-	caster:EmitSound("Gilgamesh.GOB" ) 
-	caster:EmitSound("Archer.UBWAmbient")
+	EmitSoundOnClient("Saber_Alter.Derange", caster:GetPlayerOwner())
+	EmitSoundOnClient("Gilgamesh.GOB", caster:GetPlayerOwner())
+	EmitSoundOnClient("Archer.UBWAmbient", caster:GetPlayerOwner())
 	
 	-- Create particle
 	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() - 250 * frontward, false, caster, caster, caster:GetTeamNumber())
@@ -330,10 +330,12 @@ end
 
 function OnEnumaStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
+	ability:ApplyDataDrivenModifier(caster, caster, "enuma_elish_anim", {})
 	-- Create casting particle
 	local chargeFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enuma_elish_charge_wave.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	local endRadius = keys.EndRadius
@@ -421,16 +423,18 @@ end
 
 function OnMaxEnumaStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	caster:FindAbilityByName("gilgamesh_enuma_elish"):StartCooldown(47)
 	local targetPoint = keys.target_points[1]
 	local frontward = caster:GetForwardVector()
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 6.0)
-	
+	ability:ApplyDataDrivenModifier(caster, caster, "max_enuma_elish_anim", {})
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_max_enuma_elish_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	-- Create charge particle
 	local chargeFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_enuma_elish_charge.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 

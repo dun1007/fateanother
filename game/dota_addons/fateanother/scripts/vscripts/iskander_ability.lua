@@ -208,6 +208,8 @@ function OnChariotStart(keys)
 
 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel", {}) 
+	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_gordius_wheel_anim", {}) 
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 	caster:AddNewModifier(caster, nil, "modifier_ms_cap", {duration = keys.Duration+1})
 	--caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
 	caster:SetModel("models/iskander/iskander_chariot.vmdl")
@@ -1034,7 +1036,9 @@ function OnAnnihilateStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_annihilate_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_annihilate_caster", {})
 	EmitGlobalSound("Iskander.Annihilate")
 	Timers:CreateTimer(2.0, function()
 		EmitGlobalSound("Iskander.Aye")

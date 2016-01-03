@@ -176,9 +176,9 @@ rhoTarget = nil
 function OnRhoStart(keys)
 	local target = keys.target
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if caster.IsProjectionImproved then 
-		print("get knocked")
 		local knockBackUnits = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false )
 	 
 		local modifierKnockback =
@@ -197,11 +197,14 @@ function OnRhoStart(keys)
 			unit:AddNewModifier( unit, nil, "modifier_knockback", modifierKnockback );
 		end
 	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rho_aias_shield", {})
 	rhoTarget = target 
 	target.rhoShieldAmount = keys.ShieldAmount
 
 
-	EmitGlobalSound("Archer.RhoAias" ) 
+	caster:EmitSound("Archer.RhoAias" ) 
+	caster:EmitSound("Hero_EmberSpirit.FlameGuard.Cast")
+
 	
 	-- Attach particle for shield facing the forward vector
 	local rhoShieldParticleIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_rhoaias_shield.vpcf", PATTACH_ABSORIGIN_FOLLOW, target )
@@ -741,21 +744,16 @@ end
 
 function OnUBWBarrageStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
 	if caster.IsProjectionImproved then 
 		keys.Damage = keys.Damage + (caster:GetStrength() + caster:GetIntellect())*2
 	end	
-	caster:EmitSound("Archer.UBWAmbient")
 
-	if math.random(1,2) == 1 then
-		caster:EmitSound("Archer.Bladeoff")
-	else
-		caster:EmitSound("Archer.Yuke")
-	end
 	local barrageCount = 0
-	
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_sword_barrage", {})
 	-- Vector
 	local forwardVec = ( targetPoint - caster:GetAbsOrigin() ):Normalized()
 	
@@ -821,6 +819,14 @@ function OnUBWBarrageStart(keys)
 			return
 		end
     end)
+
+	caster:EmitSound("Archer.UBWAmbient")
+
+	if math.random(1,2) == 1 then
+		caster:EmitSound("Archer.Bladeoff")
+	else
+		caster:EmitSound("Archer.Yuke")
+	end
 end
 
 function OnBarrageCanceled(keys)
@@ -829,12 +835,14 @@ end
 
 function OnUBWBarrageConfineStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if caster.IsProjectionImproved then 
 		giveUnitDataDrivenModifier(caster, keys.target, "rb_sealdisabled", 3.0)
 		giveUnitDataDrivenModifier(caster, target, "locked",3.0)
 	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_sword_barrage_confine", {})
 	target:AddNewModifier(caster, target, "modifier_stunned", {duration = 0.1})
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	for i=1,8 do
@@ -1030,14 +1038,14 @@ end
 
 function OnHruntStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
 	end
-	EmitGlobalSound("Hero_Mirana.ArrowCast")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_hrunting_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
-	print(caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100 .. " " .. caster:GetMana())
 	caster:SetMana(0) 
 	
 	local info = {
@@ -1056,6 +1064,8 @@ function OnHruntStart(keys)
 	if IsValidEntity(target) then
 		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
 	end
+	
+	EmitGlobalSound("Archer.Hrunting_Fireoff")
 end
 
 function OnHruntHit(keys)
@@ -1088,10 +1098,9 @@ end
 
 function OnOveredgeStart(keys)
 	local caster = keys.caster 
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() * 10/6
-	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
-	caster:RemoveModifierByName("modifier_overedge_stack") 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(600) 
@@ -1112,7 +1121,10 @@ function OnOveredgeStart(keys)
     caster:SetAutoUnstuck(false)
     caster:SetPhysicsAcceleration(Vector(0,0,-2666))
 
-
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_anim", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
+	caster:RemoveModifierByName("modifier_overedge_stack") 
 
 
 	Timers:CreateTimer({

@@ -1204,7 +1204,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"AbilityTextureName"			"saber_max_excal"
+		"AbilityTextureName"			"saber_max_excalibur"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"0.9"
 		"precache"
@@ -1302,6 +1302,11 @@
 		
 		"Modifiers"
 		{
+			"modifier_max_excalibur_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}	
 			"modifier_max_excalibur"
 			{
 				"Duration"		"3.0"
@@ -1470,11 +1475,6 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_lancer_revive"
-				"Target"		"CASTER"
-			}
 		}
 
 		"Modifiers"
@@ -1482,6 +1482,7 @@
 			"modifier_lancer_revive"
 			{
 				"Passive"	"1"
+				"IsHidden"	"1"
 				"OnTakeDamage"
 				{
 					"RunScript"
@@ -1492,6 +1493,11 @@
 					}
 				}
 			}
+			"modifier_battle_continuation_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}	
 		}
 	}
 
@@ -1899,12 +1905,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_aspd_increase"
-				"Target"		"CASTER"
-				"Duration"		"9.0"
-			}
 			"RunScript"
 			{
 				"ScriptFile"	"lancer_ability"
@@ -1917,6 +1917,7 @@
 		{
 			"modifier_aspd_increase"
 			{
+				"Duration"			"%duration"
 				"OnCreated"
 				{
 					"AttachEffect"
@@ -2027,11 +2028,6 @@
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold"
 			 }
-			 "ApplyModifier"
-			 {
-			 	"ModifierName"	"modifier_gae_bolg_pierce_anim"
-			 	"Target"		"CASTER"
-			 }
 		}
 		"Modifiers"
 		{
@@ -2115,12 +2111,6 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"GBAttachEffect"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_wesen_gae_bolg_anim"
-				"Target"		"CASTER"
-			}
-
 		}
 		"OnSpellStart"
 		{
@@ -2149,6 +2139,11 @@
 				"IsHidden"			"1"
 				"Duration"			"1.0"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_3_END"
+			}
+			"modifier_wesen_gae_bolg_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
 		}
 	}
@@ -2239,11 +2234,6 @@
 			 	"ScriptFile"	"lancer_ability"
 			 	"Function"		"OnGBAOEStart"
 			 	"Target"		"POINT"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_gae_jump_throw_anim"
-				"Target"		"CASTER"
 			}
 		}
 
@@ -2453,7 +2443,9 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"saber_alter_mana_shroud"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		
 		"AbilitySpecial"
 		{
@@ -2467,15 +2459,15 @@
 				"var_type"				"FIELD_INTEGER"
 				"mana_regen_bonus"		"7"
 			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor"					"0 20"
+			}
 		}
 		
 		"OnSpelLStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_mana_shroud_aura"
-				"Target"			"CASTER"
-			}
 		}
 		
 		"Modifiers"
@@ -2495,6 +2487,7 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_bonus"
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
 				}
 			}
 		}
@@ -2554,13 +2547,7 @@
 		}
 		
 		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_unleashed_ferocity_caster_VFX_controller"
-			}
-			
+		{			
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
@@ -2581,26 +2568,20 @@
 			
 				"OnCreated"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnUFCreateVfx"
 					}
 				}
 				
 				"ThinkInterval"					"0.5"
 				"OnIntervalThink"
 				{
-					"RemoveModifier"
+					"RunScript"
 					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"				"TARGET"
-						"ModifierName"			"modifier_unleashed_ferocity_caster_VFX"
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnUFCreateVfx"
 					}
 				}
 			}
@@ -2667,10 +2648,10 @@
 						"Chance"	"25"
 						"OnSuccess"
 						{
-							"ApplyModifier"
+							"RunScript"
 							{
-								"ModifierName"		"modifier_darklight_crit_hit"
-								"Target"			"CASTER"
+								"ScriptFile"	"saber_alter_ability"
+								"Function"		"OnDarklightCrit"
 							}
 						}
 					}
@@ -2756,19 +2737,10 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_derange"
-				"Target"		"CASTER"
-			}
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
 				"Function"		"OnDerangeStart"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Saber_Alter.Derange"
 			}
 		}
 		
@@ -2790,11 +2762,10 @@
 				}
 				"OnAttackStart"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"	"modifier_armor_reduction"
-						"Target"	"TARGET"
-						"Duration"	"1.0"
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnDerangeAttackStart"
 					}
 				}
 			}
@@ -2802,6 +2773,7 @@
 			"modifier_armor_reduction"
 			{
 				"Duration"	"1.0"
+				"IsDebuff"	"1"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"%armor_reduction"
@@ -2917,12 +2889,6 @@
 				"ModifierName"	"modifier_mana_burst_VFX"
 			}
 		
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_mana_burst_VFX"
-			}
-		
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
@@ -2979,7 +2945,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
-		"AbilityTextureName"			"saber_alter_mmb"
+		"AbilityTextureName"			"saber_alter_max_mana_burst"
 		"AOERadius"						"%radius"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
 		"AnimationPlaybackRate" 		"0.5"
@@ -3028,12 +2994,6 @@
 				"ModifierName"	"modifier_max_mana_burst_VFX"
 			}
 		
-			"ApplyModifier"
-			{
-				"Target"		"CASTER"
-				"ModifierName"	"modifier_max_mana_burst_VFX"
-			}
-		
 			"RunScript"
 			{
 				"ScriptFile"	"saber_alter_ability"
@@ -3044,6 +3004,11 @@
 		
 		"Modifiers"
 		{
+			"modifier_max_mana_burst_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 			"modifier_max_mana_burst_VFX"
 			{
 				"IsHidden"		"1"
@@ -3261,13 +3226,7 @@
 		// Data driven
 		//-------------------------------------------------------------------------------------------------------------
 		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"dark_excalibur_VFX_controller"
-				"Target"			"CASTER"
-			}
-		
+		{		
 			"RunScript"
 			{
 				"ScriptFile"    "saber_alter_ability"
@@ -3306,16 +3265,10 @@
 				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"				
 				"OnCreated"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"		"TARGET"
-						"ModifierName"	"dark_excalibur_vfx_phase_1"
-					}
-					
-					"ApplyModifier"
-					{
-						"Target"		"TARGET"
-						"ModifierName"	"dark_excalibur_vfx_phase_3"
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnDexVfxControllerStart"
 					}
 				}
 			}
@@ -3365,10 +3318,10 @@
 				"ThinkInterval"				"1.1"
 				"OnIntervalThink"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"Target"			"TARGET"
-						"ModifierName"		"dark_excalibur_vfx_phase_2"
+						"ScriptFile"	"saber_alter_ability"
+						"Function"		"OnDexVfxPhase2Start"
 					}
 				}
 			}
@@ -3987,6 +3940,7 @@
 			"modifier_bloodfort_slow"
 			{
 				"Duration"		"3.0"
+				"IsDebuff"		"1"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow"
@@ -4089,6 +4043,11 @@
 			
 		"Modifiers"
 		{
+			"modifier_bellerophon_2_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 	
@@ -4551,7 +4510,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cast_delay"			"2.0"
+				"cast_delay"			"2.5"
 			}
 			"02"
 			{
@@ -4687,11 +4646,6 @@
 				"ScriptFile"	"archer_ability"
 				"Function"		"OnRhoStart"
 				"ShieldAmount"	"%damage_absorb"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_rho_aias_shield"
-				"Target"		"TARGET"
 			}
 			"FireSound"
 			{
@@ -4963,11 +4917,6 @@
 			 	"Damage"		"%damage"
 			 	"Radius"		"%radius"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_sword_barrage"
-				"Target"			"CASTER"
-			}
 		}
 		"OnChannelFinish"
 		{
@@ -5115,11 +5064,6 @@
 
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_sword_barrage_confine"
-				"Target"			"TARGET"
-			}
 			"RunScript"
 			{
 				"ScriptFile"		"archer_ability"
@@ -5352,7 +5296,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"
+		"AbilityCooldown"				"5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5381,15 +5325,15 @@
 				"Target"			"POINT"
 				"Radius"			"%radius"
 			}
-			"ApplyModifier"
-			{
-				"Target"			"CASTER"
-				"ModifierName"		"modifier_overedge_anim"
-			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_overedge_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 			"modifier_overedge_anim"
 			{
 				"OverrideAnimation"		"ACT_DOTA_ATTACK"
@@ -5475,11 +5419,6 @@
 				"ScriptFile"		"archer_ability"
 				"Function"			"OnHruntStart"
 			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Mirana.ArrowCast"
-				"Target"		"CASTER"
-			}
 		}
 		
 		"OnProjectileHitUnit"
@@ -5493,6 +5432,11 @@
 			
 		"Modifiers"
 		{
+			"modifier_hrunting_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 
@@ -6143,17 +6087,18 @@
 				"Damage3"			"%damage3"
 				"StunDuration"		"%stun_duration"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_madmans_roar_silence"
-				"Target"			"CASTER"
-			}
 		}
 		
 		
 		
 		"Modifiers"
 		{
+			"modifier_madmans_roar_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_madmans_roar_silence"
 			{
 				"Duration"			"10.0"
@@ -6236,11 +6181,6 @@
 				"Function"			"OnBerserkStart"
 				"Duration"			"%duration"
 				"Health"			"%health_constant"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_berserk_self_buff"
-				"Target"			"CASTER"
 			}
 		}
 
@@ -6395,11 +6335,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_dash_anim"
-				"Target"		"CASTER"
-			}
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
@@ -6841,10 +6776,10 @@
 						"Chance"	"%critical_rate"
 						"OnSuccess"
 						{
-							"ApplyModifier"
+							"RunScript"
 							{
-								"ModifierName"		"modifier_minds_eye_crit_hit"
-								"Target"			"CASTER"
+								"ScriptFile"		"fa_ability"
+								"Function"			"OnFACrit"
 							}
 						}
 					}
@@ -6953,12 +6888,6 @@
 				"EffectName"	"Hero_TemplarAssassin.Refraction"
 				"Target"		"CASTER"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_gate_keeper_self_buff"
-				"Target"		"CASTER"
-			}
-
 		}
 		
 		
@@ -7072,6 +7001,16 @@
 			 	"Function"		"OnQuickdrawHit"
 			}
 		}
+
+		"Modifiers"
+		{
+			"modifier_quickdraw_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+		}
 	}
 
 	//=====================================
@@ -7080,7 +7019,7 @@
 	"false_assassin_presence_concealment"
 	{
 		"BaseClass"          			    "ability_datadriven"
-		"AbilityTextureName"           		"false_assassin_vitrification"
+		"AbilityTextureName"           		"false_assassin_attribute_vitrification"
 		"AbilityBehavior"					"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityCastPoint"		"1.5"
 		"AbilityCooldown"		"0.0"
@@ -7254,16 +7193,6 @@
 				"Function"			"OnHeartStart"
 				"GCD"				"%gcd"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_heart_of_harmony"
-				"Target"		"CASTER"
-			}
-			"FireSound"
-			{
-				"EffectName"	"Hero_Abaddon.AphoticShield.Cast"
-				"Target"		"CASTER"
-			}
 		}
 		
 		"OnUpgrade"
@@ -7341,6 +7270,22 @@
 				    "MODIFIER_STATE_INVISIBLE" "MODIFIER_STATE_VALUE_ENABLED"
 				    "MODIFIER_STATE_NO_UNIT_COLLISION" "MODIFIER_STATE_VALUE_ENABLED"
 			    }
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnInvisibilityBroken"
+					}								
+				}
+				"OnAttackStart"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"fa_ability"
+						"Function"			"OnInvisibilityBroken"
+					}
+				}
 			}
 		}
 	}
@@ -7567,15 +7512,15 @@
 				"ScriptFile"		"fa_ability"
 				"Function"			"OnTMStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_tsubame_mai"
-				"Target"			"CASTER"
-			}
 		}
 		
 		"Modifiers"
 		{
+			"modifier_tsubame_mai_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 			"modifier_tsubame_mai"
 			{
 				"Duration"			"%duration"
@@ -8011,7 +7956,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"13"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -8483,24 +8428,6 @@
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnAmbushStart"
 			}
-			"DelayedAction"
-			{
-				"Delay"		"1.0"
-				"Action"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_ambush"
-						"Target"			"CASTER"
-					}
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_first_hit"
-						"Target"			"CASTER"
-					}
-				}
-
-			}
 
 		}
 
@@ -8656,6 +8583,12 @@
 		}
 		"Modifiers"
 		{
+			"modifier_delusional_illusion_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 		}
 	}
 
@@ -8778,7 +8711,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_increase"			"0.75 1.5 2.25 3 3.75"
+				"agi_increase"			"1 1.5 2 2.5 3"
 			}
 			"04"
 			{
@@ -8804,11 +8737,6 @@
 				"ScriptFile"		"ta_ability"
 				"Function"			"OnModStart"
 				"StatIncrease"		"%stat_increase"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_ta_self_mod"
-				"Target"			"CASTER"
 			}
 		}
 
@@ -9883,12 +9811,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"enuma_elish_anim"
-				"Target"			"CASTER"
-			}
-
 			"RunScript"
 			{
 			 	"ScriptFile"	"gilg_ability"
@@ -10007,12 +9929,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"max_enuma_elish_anim"
-				"Target"			"CASTER"
-			}
-
 			"RunScript"
 			{
 			 	"ScriptFile"	"gilg_ability"
@@ -10045,6 +9961,12 @@
 
 		"Modifiers"
 		{
+			"modifier_max_enuma_elish_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"max_enuma_elish_anim"
 			{
 				"Duration"	"6.0"
@@ -10331,11 +10253,6 @@
 			 	"Function"		"OnTerritoryCreated"
 			 	"Target"		"POINT"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_caster_death_checker"
-				"Target"		"CASTER"
-			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_Rubick.Telekinesis.Cast"
@@ -10559,11 +10476,6 @@
 			{
 				"ScriptFile"	"caster_ability"
 				"Function"		"OnTerritoryMobilize"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_mobilize"
-				"Target"		"CASTER"
 			}
 		}
 
@@ -10922,7 +10834,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"8"
 		"RequiredLevel"					"25"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -10941,7 +10853,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"1300"
 		"AbilityCastPoint"				"2.0"
 
 		// Time		
@@ -11062,11 +10974,6 @@
 				"Function"		"OnArgosStart"
 				"ShieldAmount"	"%shield_amount"
 				"MaxShield"		"%max_shield"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_argos_shield"
-				"Target"		"CASTER"
 			}
 			"FireSound"
 			{
@@ -12154,6 +12061,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_eternal_arms_mastership_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 		}
 	}
 	
@@ -12333,11 +12246,6 @@
 				"ArmorShred"	"%armor_reduction_percentage"
 				"Duration"		"%duration"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_smg_armor_reduction"
-				"Target"		"TARGET"
-			}
 		}
 
 		"Modifiers"
@@ -12417,21 +12325,6 @@
 			{
 				"ScriptFile"		"lancelot_ability"
 				"Function"			"OnDEStart"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_double_edge"
-				"Target"			"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_double_edge_ms_tier1"
-				"Target"			"CASTER"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_double_edge_ms_tier2"
-				"Target"			"CASTER"
 			}
 			"FireSound"
 			{
@@ -12821,11 +12714,6 @@
 		
 		"OnSpellStart"
 		{
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_dash_anim"
-				"Target"			"CASTER"
-			}
 			"RunScript"
 			{
 				"ScriptFile"		"berserker_ability"
@@ -13159,11 +13047,6 @@
 				"Duration"			"%duration"
 				"Damage"			"%damage"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_arondite"
-				"Target"			"CASTER"
-			}
 			"FireSound"
 			{
 				"EffectName"	"Hero_Sven.GodsStrength"
@@ -13244,10 +13127,10 @@
 						"Chance"	"25"
 						"OnSuccess"
 						{
-							"ApplyModifier"
+							"RunScript"
 							{
-								"ModifierName"		"modifier_arondite_crit_hit"
-								"Target"			"CASTER"
+								"ScriptFile"		"lancelot_ability"
+								"Function"			"OnAronditeCrit"
 							}
 						}
 					}
@@ -13533,6 +13416,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_nuke_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 		}
 	}
 
@@ -13720,11 +13609,6 @@
 				"ScriptFile"		"avenger_ability"
 				"Function"			"OnMurderStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_murderous_instinct"
-				"Target"			"CASTER"
-			}
 			"FireSound"
 			{
 				"EffectName"	"Hero_OgreMagi.Bloodlust.Cast"
@@ -13766,11 +13650,11 @@
 						"Chance"	"%critical_rate"
 						"OnSuccess"
 						{
-							"ApplyModifier"
+							"RunScript"
 							{
-								"ModifierName"		"modifier_murderous_instinct_crit_hit"
-								"Target"			"CASTER"
-							}							
+								"ScriptFile"	"avenger_ability"
+								"Function"		"OnMurderCrit"
+							}						
 						}
 					}
 				}	      	
@@ -14235,6 +14119,16 @@
 				"Target"			"TARGET"
 			}
 		}
+
+		"Modifiers"
+		{
+			"modifier_blood_mark_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+		}
 	}
 	//========================================
 	// Avenger : True Form
@@ -14269,9 +14163,14 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"400 460 520 580 640"
+				"bonus_health"			"200 300 400 500 600"
 			}
 			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana"			"300"
+			}
+			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"8 10 12 14 16"
@@ -14311,6 +14210,7 @@
 				{
 					//"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
 					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
+					"MODIFIER_PROPERTY_MANA_BONUS"			"%bonus_mana"
 				}
 				"OnDestroy"
 				{
@@ -14362,10 +14262,10 @@
 				"EffectName"		"Hero_Huskar.Inner_Vitality"
 				"Target"			"CASTER"
 			}
-			"ApplyModifier"
+			"RunScript"
 			{
-				"ModifierName"		"modifier_demon_core"
-				"Target"			"CASTER"
+				"ScriptFile"		"avenger_ability"
+				"Function"			"OnDCToggleOn"
 			}
 		}
 
@@ -14443,11 +14343,6 @@
 			{
 				"ScriptFile"		"avenger_ability"
 				"Function"			"OnVergStart"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_verg_avesta"
-				"Target"			"CASTER"
 			}
 			"FireEffect"
 			{
@@ -14531,11 +14426,6 @@
 				"ScriptFile"		"avenger_ability"
 				"Function"			"OnEndlessStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_endless_loop"
-				"Target"			"CASTER"
-			}
 			"FireEffect"
 			{
 				"Target"			"CASTER"
@@ -14546,6 +14436,12 @@
 
 		"Modifiers"
 		{
+			"modifier_endless_loop_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_endless_loop"
 			{
 				"Duration"		"%duration"
@@ -14744,11 +14640,13 @@
 					{
 						"ModifierName"		"modifier_overdrive_tier2"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_overdrive_tier1"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}
 				"Properties"
@@ -14766,11 +14664,13 @@
 					{
 						"ModifierName"		"modifier_overdrive_tier3"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_overdrive_tier2"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}			
 				"Properties"
@@ -14788,11 +14688,13 @@
 					{
 						"ModifierName"		"modifier_overdrive_tier4"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_overdrive_tier3"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}		
 				"Properties"
@@ -14810,11 +14712,13 @@
 					{
 						"ModifierName"		"modifier_overdrive_tier5"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_overdrive_tier4"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}		
 				"Properties"
@@ -14832,11 +14736,13 @@
 					{
 						"ModifierName"		"modifier_overdrive_tier6"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_overdrive_tier5"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}			
 				"Properties"
@@ -14854,6 +14760,7 @@
 					{
 						"ModifierName"		"modifier_overdrive_tier6"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}			
 				"Properties"
@@ -15137,11 +15044,6 @@
 				"ScriptFile"		"diarmuid_ability"
 				"Function"			"OnDSStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_double_spearsmanship"
-				"Target"			"CASTER"
-			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_Invoker.Alacrity"
@@ -15236,15 +15138,16 @@
 				"ScriptFile"		"diarmuid_ability"
 				"Function"			"OnRampantWarriorStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_rampant_warrior"
-				"Target"			"CASTER"
-			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_rampant_warrior_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_rampant_warrior"
 			{
 				"EffectName"		"particles/units/heroes/hero_ursa/ursa_enrage_buff.vpcf"
@@ -15263,10 +15166,10 @@
 						"Chance"	"100"
 						"OnSuccess"
 						{
-							"ApplyModifier"
+							"RunScript"
 							{
-								"ModifierName"		"modifier_rampant_warrior_crit_hit"
-								"Target"			"CASTER"
+								"ScriptFile"		"diarmuid_ability"
+								"Function"			"OnRampantWarriorCrit"
 							}
 						}
 					}
@@ -15329,7 +15232,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"250"
 		"AbilityCastRangeBuffer"		"250"
-		"AbilityCastPoint"				"1.1"
+		"AbilityCastPoint"				"1.2"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -16126,14 +16029,6 @@
 					"MODIFIER_PROPERTY_MOVESPEED_MAX"				"5000"
 					"MODIFIER_PROPERTY_MOVESPEED_LIMIT"				"5000"
 				}
-				"OnCreated"
-				{
-					"ApplyModifier"
-					{
-						"ModifierName"		"modifier_gordius_wheel_freeze"
-						"Target"			"CASTER"
-					}
-				}
 				"OnDestroy"
 				{
 					"RunScript"
@@ -16143,7 +16038,7 @@
 					}				
 				}
 			}
-			"modifier_gordius_wheel_freeze"
+			"modifier_gordius_wheel_anim"
 			{
 				"Duration"		"1.0"
 				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
@@ -16152,12 +16047,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"modifier_gordius_wheel_speed_boost"
@@ -17348,15 +17237,16 @@
 				"ScriptFile"		"iskander_ability"
 				"Function"			"OnAnnihilateStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_annihilate_caster"
-				"Target"			"CASTER"
-			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_annihilate_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_annihilate_caster"
 			{
 				"Duration"		"12.0"
@@ -18090,6 +17980,11 @@
 		
 		"Modifiers"
 		{
+			"modifier_larret_de_mort_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 			"modifier_exquisite_cadaver_demon"
 			{
 				"Duration"		"1.5"
@@ -18754,6 +18649,7 @@
 		
 		"Modifiers"
 		{
+
 		}
 	}
 
@@ -19248,11 +19144,6 @@
 				"ModifierName"		"modifier_gladiusanus_blauserum"
 				"Target"			"CASTER"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_gladiusanus_blauserum_mitigation"
-				"Target"			"CASTER"
-			}
 		}
 
 		"OnChannelFinish"
@@ -19318,10 +19209,10 @@
 				}
 				"OnAttackStart"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"		"modifier_gladiusanus_blauserum_anim"
-						"Target"			"CASTER"
+						"ScriptFile"		"nero_ability"
+						"Function"			"OnGBAttackStart"
 					}
 				}
 				"OnAttackLanded"
@@ -19454,11 +19345,6 @@
 				"ScriptFile"		"nero_ability"
 				"Function"			"OnTFAStart"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_tres_fontaine_ardent"
-				"Target"			"CASTER"
-			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_EmberSpirit.SleightOfFist.Cast"
@@ -19554,11 +19440,6 @@
 				"Function"				"OnRIStart"
 				"MaxRange"				"%max_range"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_rosa_ichthys_anim"
-				"Target"			"CASTER"
-			}
 		}
 		
 		"OnProjectileHitUnit"
@@ -19644,7 +19525,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"8.0"
+				"duration"				"10.0"
 			}
 			"04"
 			{
@@ -19667,11 +19548,6 @@
 				"Radius"		"%radius"
 				"Damage"		"%damage"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_theatre_anim"
-				"Target"		"CASTER"
-			}	
 		}
 
 		"OnRespawn"
@@ -19810,6 +19686,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_fiery_finale_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 		}
 	}
 
@@ -19882,6 +19764,11 @@
 		
 		"Modifiers"
 		{
+			"modifier_laus_saint_cladius_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 	//=======================================
@@ -20230,6 +20117,12 @@
 					}
 				}
 			}
+			"modifier_gawain_blessing_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 		}
 	}
 
@@ -20388,11 +20281,6 @@
 			{
 				"ScriptFile"	"gawain_ability"
 				"Function"		"OnDevoteStart"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_blade_of_the_devoted"
-				"Target"			"CASTER"
 			}
 		}
 
@@ -20852,6 +20740,12 @@
 		}
 		"Modifiers"
 		{
+			"modifier_meltdown_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_divine_meltdown"
 			{
 				"IsHidden"	"1"
@@ -20944,6 +20838,11 @@
 		
 		"Modifiers"
 		{
+			"modifier_supernova_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 	    	"modifier_supernova"
 	    	{
 	    		"Duration"		"8.0"
@@ -22099,6 +21998,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_fates_call_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_fates_call"
 			{
 				"Duration"		"%duration"
@@ -22156,7 +22061,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1000"
+				"radius"			"1150"
 			}	
 			"03"
 			{
@@ -22346,14 +22251,15 @@
 				"RecoilDistance"	"%recoil_distance"
 				"ExplosionRatio"	"%explosion_int_ratio"
 			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_polygamist"
-				"Target"			"CASTER"
-			}
 		}
 		"Modifiers"
 		{
+			"modifier_polygamist_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_polygamist"
 			{
 				"Duration"		"2.2"
@@ -22438,11 +22344,6 @@
 				"Damage"			"%kick_damage"
 				"RecoilDistance"	"%recoil_distance"
 				"ExplosionRatio"	"%explosion_int_ratio"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_polygamist"
-				"Target"			"CASTER"
 			}
 		}
 		"Modifiers"
@@ -23445,6 +23346,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityTextureName"			"lishuwen_no_second_strike"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"0.5"
@@ -23667,6 +23569,12 @@
 		
 		"Modifiers"
 		{
+			"modifier_raging_dragon_strike_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_raging_dragon_strike_1_slow"
 			{
 				"Duration"		"%first_strike_slow_duration"

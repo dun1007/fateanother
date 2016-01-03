@@ -174,6 +174,8 @@ function OnIPClose(keys)
 end
 function OnGBStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gladiusanus_blauserum_mitigation", {})
 	caster.IsGBActive = true
 	caster:EmitSound("Hero_DoomBringer.ScorchedEarthAura")
 	Timers:CreateTimer(0.033, function()
@@ -187,6 +189,12 @@ function OnGBStart(keys)
 			return
 		end
 	end)
+end
+
+function OnGBAttackStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gladiusanus_blauserum_anim", {})
 end
 
 function OnGBEnd(keys)
@@ -233,6 +241,8 @@ end
 
 function OnTFAStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tres_fontaine_ardent", {})
 end
 
 function OnTFACleave(keys)
@@ -247,6 +257,7 @@ end
 
 function OnRIStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local target = keys.target
 	if IsSpellBlocked(keys.target) then return end
 	
@@ -254,7 +265,7 @@ function OnRIStart(keys)
 		OnLSCStart(keys)
 		return
 	end
-
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rosa_ichthys_anim", {})
 	EmitGlobalSound("Nero.Rosa")
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.25)
 	local slash = 
@@ -319,6 +330,10 @@ end
 
 function OnTheatreCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_theatre_anim", {})
+
+
 	if caster:HasModifier("modifier_aestus_domus_aurea") then 
 		caster:SetMana(caster:GetMana()+800)
 		keys.ability:EndCooldown()
@@ -483,6 +498,7 @@ end
 
 function OnNeroComboStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	caster.IsFieryFinaleActivated = true
 	local radius = caster:FindAbilityByName("nero_aestus_domus_aurea"):GetSpecialValueFor("radius")
 	local flamePillarRadius = 300
@@ -491,10 +507,10 @@ function OnNeroComboStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_fiery_finale_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	caster:FindAbilityByName("nero_tres_fontaine_ardent"):StartCooldown(21.0)
 
-	print("combo activated")
 	caster.ScreenOverlay = ParticleManager:CreateParticle("particles/custom/screen_lightred_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 
 	Timers:CreateTimer(function()

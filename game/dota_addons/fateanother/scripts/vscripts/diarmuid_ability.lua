@@ -71,16 +71,23 @@ function OnChargeStart(keys)
 end
 
 function OnDSStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 end
 
 function OnRampantWarriorStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	caster:EmitSound("Hero_Clinkz.DeathPact")
 	caster:FindAbilityByName("diarmuid_double_spearsmanship"):StartCooldown(19)
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior", {})
 
 	caster:FindAbilityByName("diarmuid_double_spearsmanship"):ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
@@ -89,6 +96,12 @@ function OnRampantWarriorStart(keys)
 		ParticleManager:DestroyParticle( particle, false )
 		ParticleManager:ReleaseParticleIndex( particle )
 	end)
+end
+
+function OnRampantWarriorCrit(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_crit_hit", {})
 end
 
 function OnGaeCastStart(keys)

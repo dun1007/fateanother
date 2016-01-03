@@ -1,5 +1,6 @@
 function OnEternalStart(keys)
     local caster = keys.caster
+    local ability = keys.ability
     local ply = caster:GetPlayerOwner()
     if caster.IsEternalImproved ~= true then
         FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
@@ -14,6 +15,7 @@ function OnEternalStart(keys)
     end
 
     caster:EmitSound("Hero_Abaddon.AphoticShield.Cast")
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_eternal_arms_mastership_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
     HardCleanse(caster)
     local dispel = ParticleManager:CreateParticle( "particles/units/heroes/hero_abaddon/abaddon_death_coil_explosion.vpcf", PATTACH_ABSORIGIN, caster )
     ParticleManager:SetParticleControl( dispel, 1, caster:GetAbsOrigin())
@@ -26,6 +28,7 @@ end
 
 function OnSMGStart(keys)
     LancelotCheckCombo(keys.caster, keys.ability)
+
        --[[print("dudududu")
 	local caster = keys.caster
 	local frontward = caster:GetForwardVector()
@@ -108,6 +111,7 @@ function OnSMGHit(keys)
     DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, ability, false)
     local armorShred = math.floor(target:GetPhysicalArmorBaseValue() * keys.ArmorShred/100)
     target:SetPhysicalArmorBaseValue(target:GetPhysicalArmorBaseValue() - armorShred)
+    ability:ApplyDataDrivenModifier(caster, target, "modifier_smg_armor_reduction", {})
     Timers:CreateTimer( keys.Duration, function()
             target:SetPhysicalArmorBaseValue(target:GetPhysicalArmorBaseValue() + armorShred) 
             return
@@ -115,7 +119,12 @@ function OnSMGHit(keys)
 end
 
 function OnDEStart(keys)
+    local caster = keys.caster
+    local ability = keys.ability
     LancelotCheckCombo(keys.caster, keys.ability)
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_edge", {})
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_edge_ms_tier1", {})
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_edge_ms_tier2", {})
 end
 
 function OnDEAttack(keys)
@@ -290,6 +299,7 @@ function OnAronditeStart(keys)
         return 
     end]]
     local caster = keys.caster
+    local ability = keys.ability
     local ply = caster:GetPlayerOwner()
     local groundcrack = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_thunder_clap.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
     -- Destroy particle after delay
@@ -297,7 +307,7 @@ function OnAronditeStart(keys)
         ParticleManager:DestroyParticle( groundcrack, false )
         ParticleManager:ReleaseParticleIndex( groundcrack )
     end)
-
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite", {})
     local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
     for k,v in pairs(targets) do
             DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
@@ -305,6 +315,12 @@ function OnAronditeStart(keys)
     if caster.IsTAAcquired then
         keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite_crit", {}) 
     end
+end
+
+function OnAronditeCrit(keys)
+    local caster = keys.caster
+    local ability = keys.ability
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite_crit_hit", {})
 end
 
 function OnFairyDmgTaken(keys)
@@ -321,6 +337,7 @@ end
 
 function OnNukeStart(keys)
     local caster = keys.caster
+    local ability = keys.ability
     local targetPoint = keys.target_points[1]
     EmitGlobalSound("Lancelot.Nuke_Alert") 
 
@@ -328,6 +345,7 @@ function OnNukeStart(keys)
     local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
     masterCombo:EndCooldown()
     masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+    ability:ApplyDataDrivenModifier(caster, caster, "modifier_nuke_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
     local nukemsg = {
         message = "Engaging Enemy, HQ.",
@@ -411,7 +429,7 @@ function OnNukeStart(keys)
     end)
 
     Timers:CreateTimer(7.0, function()
-        EmitGlobalSound("Hero_Gyrocopter.CallDown.Damage") 
+        EmitGlobalSound("Lancelot.Nuke_Impact")
         local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 1500, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
         for k,v in pairs(targets) do
             DoDamage(caster, v, 2000, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

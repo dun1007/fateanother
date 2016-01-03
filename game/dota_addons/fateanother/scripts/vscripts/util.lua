@@ -743,6 +743,9 @@ function IsRevoked(target)
     return false
 end
 
+function IsLocked(target)
+end
+
 function IsFemaleServant(target)
     for i=1, #femaleservant do
         if target:GetName() == femaleservant[i] then

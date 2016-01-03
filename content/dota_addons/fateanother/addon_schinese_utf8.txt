@@ -8,7 +8,12 @@
 		// Bounty and other misc stuffs
 		"DOTA_Chat_NoBattlePoints_WrongLobby"		""		//"Battle Points will not be awarded for this match because it is a practice lobby."
 		"Dota_shared_content_available"				""		//"Players are sharing items in the Shared Content tab."
-		
+
+		// Stat override
+		"DOTA_StatTooltip_StrengthBonus"	"- 每点增加19点生命值\n- 每点提升0.25点的生命回复速率\n"
+		"DOTA_StatTooltip_AgilityBonus"		"- 每点增加0.3点护甲\n- 每点提升2点攻击速度\n"
+		"DOTA_StatTooltip_IntelligenceBonus"	"- 每点增加14点魔力值上限\n- 每点提升0.25点的魔力回复速率\n"
+
 	    "DOTA_Chat_PlayerKilled"    ""
 	    "DOTA_Chat_PlayerKilledNearby"    ""
 	    "DOTA_Chat_PlayerKilledNearbySingle"    ""
@@ -785,9 +790,10 @@
 		"DOTA_Tooltip_ability_lancer_5th_rune_of_conversion_percentage" "%转化率："
 
 		"DOTA_Tooltip_Ability_lancer_5th_rune_of_flame"                                 "卢恩符文之火焰"
-		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_Description"     "炙热的符文铭刻在魔枪迦耶伯格之上，普通攻击造成额外伤害。"
-		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_Lore"    ""
-		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_extra_damage"    "额外伤害："
+		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_Description"	"炙热的符文铭刻在魔枪迦耶伯格之上，使得库丘林的攻击能够造成可叠加的额外伤害，同时使得库丘林的技能能够对目标造成基于其当前生命值百分比的额外伤害。"
+		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_Lore"	""	
+		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_extra_damage"	"攻击额外伤害："
+		"DOTA_Tooltip_ability_lancer_5th_rune_of_flame_extra_ability_bonus_damage"	"%技能额外伤害："
 
 		"DOTA_Tooltip_Ability_lancer_5th_close_spellbook"                                       "关闭符文之书"
 		"DOTA_Tooltip_ability_lancer_5th_close_spellbook_Description"   "关闭符文之书以使用库丘林的魔枪之力."
@@ -1095,7 +1101,7 @@
 		
 		
 		"DOTA_Tooltip_Ability_archer_5th_attribute_hrunting"                            "赤原猎犬"
-		"DOTA_Tooltip_ability_archer_5th_attribute_hrunting_Description"        "<font color='#58ACFA'>御主魔力需求：16</font>\n在施放'千里眼'之后允许使用'赤原猎犬'。\n<font color='#58ACFA'>赤原猎犬:</font>施法4秒之后，英灵卫宫将他所有的法力注入到投影的武器之中朝目标发射，造成基于英灵卫宫现有魔法及当前等级'幻想崩坏'的伤害，对周围的敌人造成半额伤害。\n伤害：现有法力值+幻想崩坏等级*100+250"
+		"DOTA_Tooltip_ability_archer_5th_attribute_hrunting_Description"        "<font color='#58ACFA'>御主魔力需求：14</font>\n在施放'千里眼'之后允许使用'赤原猎犬'。\n<font color='#58ACFA'>赤原猎犬:</font>施法4秒之后，英灵卫宫将他所有的法力注入到投影的武器之中朝目标发射，造成基于英灵卫宫现有魔法及当前等级'幻想崩坏'的伤害，对周围的敌人造成半额伤害。\n伤害：现有法力值+幻想崩坏等级*100+250"
 
 		"DOTA_Tooltip_Ability_archer_5th_attribute_shroud_of_martin"                            "概念武装"
 		"DOTA_Tooltip_ability_archer_5th_attribute_shroud_of_martin_Description"        "<font color='#58ACFA'>御主魔力需求：13</font>\n提升英灵卫宫的对魔力和护甲，同时使得英灵卫宫在无限剑制期间获得力量提升。"
@@ -1104,7 +1110,15 @@
 		"DOTA_Tooltip_Ability_archer_5th_attribute_shroud_of_martin_str_bonus"				"无限剑制期间力量提升："
 		
 		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection"                          "强化投影"
-		"DOTA_Tooltip_ability_archer_5th_attribute_improve_projection_Description"      "<font color='#58ACFA'>御主魔力需求：14</font>\n提升在无限剑制结界之中的能力：\n<font color='#58ACFA'>干将·莫邪：</font>每击造成数值等同于智力的额外伤害，每次施放缩短'剑幕轰杀'1秒冷却时间。\n<font color='#58ACFA'>剑幕压制：</font>持续时间内禁止目标使用令咒和闪烁卷轴。\n<font color='#58ACFA'>炽天覆七重圆环：</font>击退施放目标周围的敌人。\n<font color='#58ACFA'>剑幕轰杀：</font>造成数值等同于力量+智力的额外伤害。\n<font color='#58ACFA'>射杀百头：</font>造成相当于目标5%%当前生命值的额外魔法伤害。"
+		"DOTA_Tooltip_ability_archer_5th_attribute_improve_projection_Description"	"<font color='#58ACFA'>御主魔力需求：14</font>\n提升英灵卫宫的投影能力。这项强化宝具可以提升两次。\n\n<font color='#58ACFA'>等级1：</font> <font color='#58ACFA'>\n干将·莫邪：</font>每击造成数值等同于智力值的额外伤害，每次释放缩短剑幕轰杀1秒冷却时间。\n<font color='#58ACFA'>剑幕压制：</font>持续时间内禁止目标使用令咒和闪烁卷轴。\n<font color='#58ACFA'>炽天覆七重圆环：</font>轻微击退施放目标周围的敌人。\n<font color='#58ACFA'>剑幕轰杀：</font>造成数值等同于力量+智力的额外伤害。\n<font color='#58ACFA'>射杀百头：</font>造成相当于目标5%%当前生命值的额外魔法伤害。\n\n<font color='#58ACFA'>等级2：</font>\n使无限剑制能够被动地攻击其中的敌人。每隔一小段时间，宝剑便会自动射向结界内的一个随机敌人，造成基于英灵卫宫智力值的物理伤害。"	
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_sword_interval"	"宝剑攻击速度："
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_sword_base_damage"	"宝剑基础伤害："
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_sword_int_ratio"	"宝剑智力伤害系数："
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_level2"				"强化投影-等级2"
+		"DOTA_Tooltip_ability_archer_5th_attribute_improve_projection_level2_Description"	"<font color='#58ACFA'>御主魔力需求：14</font>\n使无限剑制能够被动地攻击其中的敌人。每隔一小段时间，宝剑便会自动射向结界内的一个随机敌人，造成基于英灵卫宫智力值的物理伤害。"	
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_level2_sword_interval"	"宝剑攻击速度："
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_level2_sword_base_damage"	"宝剑基础伤害："
+		"DOTA_Tooltip_Ability_archer_5th_attribute_improve_projection_level2_sword_int_ratio"	"宝剑智力伤害系数："
 
 		"DOTA_Tooltip_Ability_archer_5th_attribute_overedge"                            "鹤翼三连"
 		"DOTA_Tooltip_ability_archer_5th_attribute_overedge_Description"        "<font color='#58ACFA'>御主魔力需求：12</font>\n在充能达到4之后允许使用鹤翼三连。每20秒增加1次充能，每施放干将·莫邪增加1次充能。\n<font color='#58ACFA'>鹤翼三连：</font>英灵卫宫投影出更强的干将·莫邪刺向指定目标区域，对区域中所有敌人造成基于智力的魔法伤害。\n伤害：智力*20+700" 
@@ -1119,9 +1133,9 @@
 		"DOTA_Tooltip_ability_berserker_5th_divinity_damage_reduction"	"伤害减免："
 		
 		"DOTA_Tooltip_Ability_berserker_5th_fissure_strike"	"地裂强击"
-		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_Description"	"赫拉克勒斯用巨大的力量敲击地面，形成一道巨大的裂缝对一条直线上的敌人造成伤害和<font color='#FF3399'>减速</font>。"
+		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_Description"	"赫拉克勒斯用蛮力猛击地面，形成一道巨大的裂缝，对一条直线上的敌人造成伤害和<font color='#FF3399'>减速</font>。"
 		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_Lore"	""
-		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_range"	"距离"
+		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_range"	"距离："
 		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_slow_amount"	"%移动速度减缓："
 		"DOTA_Tooltip_ability_berserker_5th_fissure_strike_duration"	"减速持续时间："
 
@@ -1139,6 +1153,7 @@
 		"DOTA_Tooltip_ability_berserker_5th_courage_duration"	"持续时间："
 		"DOTA_Tooltip_ability_berserker_5th_courage_Note0"	"勇猛的效果不能被驱散。"
 		"DOTA_Tooltip_ability_berserker_5th_courage_Note1"	"力量减少效果不能将力量值减小到0以下。"		
+
 		"DOTA_Tooltip_Ability_berserker_5th_berserk"	"狂暴"
 		"DOTA_Tooltip_ability_berserker_5th_berserk_Description"	"赫拉克勒斯进入狂暴状态，使得他的生命值锁定于某数值。在这段时间内，赫拉克勒斯不会受到任何伤害，除非该伤害能够立即致死。\n\n宝具强化：无穷之暴怒。"
 		"DOTA_Tooltip_ability_berserker_5th_berserk_Lore"	"在激烈的战斗中，对愤怒的狂战士而言，疼痛只是一个小问题。"
@@ -1157,13 +1172,13 @@
 		"DOTA_Tooltip_ability_berserker_5th_nine_lives_Note0"	"在施法结束前，赫拉克勒斯处于眩晕状态并禁用令咒。"
 
 		"DOTA_Tooltip_Ability_berserker_5th_madmans_roar"	"狂战士的咆哮"
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_Description"	"<font color='#58ACFA'>连击条件：全属性20点以上</font>\n<font color='#58ACFA'>连击序列：4秒内Q-E-W</font>\n赫拉克勒斯发出震耳欲聋的咆哮，使所有玩家无法控制自己的从者并且屏幕被遮挡。3000范围内的所有敌方单位将受到伤害和负面效果，效果根据其与赫拉克勒斯之间的距离决定；300范围内的敌方单位将受到伤害和<font color='#FF3399'>眩晕</font>，在1000和2000范围内的敌方单位将受到不同程度的伤害和<font color='#FF3399'>减速</font>，而在3000范围内的敌方单位将只受到<font color='#FF3399'>减速</font>效果。"
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_Lore"	"狂战士的咆哮将恐惧刻在敌人内心的最深处，甚至能够短暂操控他们的视觉。"
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_damage"	"最近距离伤害："
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_stun_duration"	"最近距离眩晕："		
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_damage2"	"近距离伤害："
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_damage"	"中距离伤害："
-		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_slow"	"%减速："
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_Description"	"<font color='#58ACFA'>连击条件：全属性20点以上</font>\n<font color='#58ACFA'>连击序列：4秒内Q-E-W</font>\n赫拉克勒斯发出震耳欲聋的咆哮，使所有玩家无法控制自己的从者并且屏幕被遮挡。3000范围内的所有敌方单位将受到伤害和群体控制效果，效果根据其与赫拉克勒斯之间的距离决定。\n300范围内的敌人将受到<font color='#FF3399'>眩晕</font>和<font color='#FF3399'>禁用令咒</font>效果以及较高伤害。\n1000范围内的敌人将受到较强的<font color='#FF3399'>减速</font>效果以及适中的伤害。\n2000范围内的敌人将受到较弱的<font color='#FF3399'>减速</font>效果以及较少伤害。\n3000范围内的敌人将只受到较弱的<font color='#FF3399'>减速</font>效果。"
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_damage"	"较高伤害："
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_stun_duration"	"眩晕持续时间："
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_damage2"	"适中伤害："
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_damage3"	"较少伤害："
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_slow"	"%较强减速："	
+		"DOTA_Tooltip_ability_berserker_5th_madmans_roar_moderate_slow"	"%较弱减速："	
 
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_improve_divinity"				"强化神性"
 		"DOTA_Tooltip_ability_berserker_5th_attribute_improve_divinity_Description"	"<font color='#58ACFA'>御主魔力需求：16</font>\n给予赫拉克勒斯对魔力提升，同时使得他可以在每次受到物理攻击时格挡更多伤害。"
@@ -1171,33 +1186,34 @@
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_improve_divinity_damage_block"				"物理伤害格挡："
 			
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk"				"无穷之暴怒"
-		"DOTA_Tooltip_ability_berserker_5th_attribute_berserk_Description"	"<font color='#58ACFA'>御主魔力需求：14</font>\n勇猛将使得赫拉克勒斯在攻击时有几率造成<font color='#FF3399'>眩晕</font>并造成额外伤害，同时减少射杀百头的当前冷却时间。\n狂暴将使得赫拉克勒斯受到的一部分伤害转化为他的魔力，同时将其暴怒期间受到的一部分伤害返还给周围的敌人，对其造成持续伤害。"
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_Note0"				"击晕效果有1.5秒冷却时间。"	
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_Note1"				"狂暴的持续伤害与之前1秒内回复的魔力值相同。"
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_bash_chance"				"%勇猛击晕概率："
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_bash_duration"			"勇猛击晕持续时间："
+		"DOTA_Tooltip_ability_berserker_5th_attribute_berserk_Description"	"勇猛使得赫拉克勒斯的攻击有几率<font color='#FF3399'>击晕</font>目标并造成额外伤害，并缩短射杀百头的冷却时间。\n狂暴将使得赫拉克勒斯受到伤害的一定比例转化为他的魔力值，而赫拉克勒斯不断增长的狂怒将使他对周围的敌人持续造成等量的伤害。"
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_Note0"				"击晕有1.5秒的冷却时间。"	
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_Note1"				"赫拉克勒斯造成的持续伤害量等同于其由前1秒内所受伤害转化而来的魔力值。"
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_bash_chance"				"%勇猛击晕几率："
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_bash_duration"			"勇猛击晕眩晕时间："
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_bash_damage"				"勇猛击晕额外伤害："
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_nine_cdr"				"射杀百头冷却时间减少："
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_mana_convert_ratio"				"狂暴转化魔力值比例："
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_nine_cdr"				"射杀百头冷却时间缩短："
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_berserk_mana_convert_ratio"				"狂暴魔力值转换系数："
 
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand"				"十二试炼"
-		"DOTA_Tooltip_ability_berserker_5th_attribute_god_hand_Description"	"<font color='#58ACFA'>御主魔力需求：23</font>\n给予赫拉克勒斯11条额外生命，使得他在死亡时可以立即复活并踩踏周围的敌方单位造成相当于自身最大生命值一定比例的伤害。\n复活后，赫拉克勒斯的移动速度、力量值和视野范围都将降低。"
+		"DOTA_Tooltip_ability_berserker_5th_attribute_god_hand_Description"	"使赫拉克勒斯获得额外的11条生命，允许他在死亡时立即复活并猛击周围的敌人造成基于他们最大生命值百分比的魔法伤害。\n复活后，赫拉克勒斯的移动速度、力量值和视野范围都将受损。"
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_Note0"				"只要赫拉克勒斯还有额外生命，而且他的队友没有全灭，他就可以在死亡时立即复活。"
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_health_percent"				"%复活时造成伤害："
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_duration"				"复活惩罚状态持续时间："
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_aspd_penalty"				"%攻击速度惩罚："
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_ms_penalty"				"%移动速度惩罚："
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_vision_penalty"				"视野惩罚："
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_vision_penalty"				"视野范围惩罚："
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_str_penalty"				"力量值惩罚："
 
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation"				"重生"
-		"DOTA_Tooltip_ability_berserker_5th_attribute_reincarnation_Description"	"<font color='#58ACFA'>御主魔力需求：15</font>\n当赫拉克勒斯受到超过伤害阈值的伤害时给予他可叠加的生命回复速率。另外，使得赫拉克勒斯在承受一定数值的伤害后恢复一条十二试炼的生命。\n当开启狂暴时，承受的伤害将按双倍计算伤害积累，并且当赫拉克勒斯获得一条十二试炼生命时，伤害积累清零。"	
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_Note0"				"伤害积累在伤害减免之后结算。"
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_Note1"				"如果在没有习得十二试炼时，伤害积累满足条件，则不能获得十二试炼的额外生命。"
+		"DOTA_Tooltip_ability_berserker_5th_attribute_reincarnation_Description"	"当赫拉克勒斯受到超过伤害阈值的伤害时给予他可叠加的生命回复速率。另外，使得赫拉克勒斯在承受一定数值的伤害后恢复一条十二试炼的生命。\n当开启狂暴时，伤害积累将比平时更快。当赫拉克勒斯获得一条十二试炼生命时，伤害积累清零。"	
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_Note0"				"伤害在减免之后再与伤害阈值进行比较。"
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_Note1"				"如果在没有习得十二试炼时，即使伤害积累满足条件，也不能获得十二试炼的额外生命。"
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_threshold"				"伤害阈值："	
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_health_regen"				"每层生命回复速率："	
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_max_stack"				"最大叠加层数："	
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_damage_sustain"				"获得额外生命所需伤害积累："		
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_health_regen"				"每次叠加生命回复速率："	
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_max_stack"				"生命回复速率最大叠加层数："	
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_damage_sustain"				"获得额外生命所需积累伤害量："	
+		"DOTA_Tooltip_Ability_berserker_5th_attribute_reincarnation_bonus_count_percentage"		"%开启狂暴后伤害积累加速比率："
 		//=================================================================================================================
 		//      False Assassin(5th)
 		//=================================================================================================================
@@ -1219,17 +1235,20 @@
 		"DOTA_Tooltip_ability_false_assassin_gate_keeper_movespeed_decrease"    "%移动速度降低："
 		"DOTA_Tooltip_ability_false_assassin_gate_keeper_duration"      "持续时间："
 	   
-		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony"  "宗和之素养"
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_Description"      "摆起反击姿势，短时间内提升对魔力。\n伤害超过阈值时向目标反击，造成数倍攻击伤害与<font color='#FF3399'>眩晕</font>。\n成功发动反击后所有技能冷却减少15秒。\n\n宝具强化：透化。"
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_Lore"     "即使对同一个对手重复同样的招式多少次，命中精准度也不会下降的特殊技能。"
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_duration" "反击持续时间："
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_bonus_mr" "%对魔力提高："
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_damage"   "%反击伤害："
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_stun_duration"    "眩晕时间："
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_threshold"        "反击阀值："
-		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_gcd"      "再动时间："
+		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony"	"宗和之素养"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_Description"	"佐佐木小次郎架起反击姿势，短时间内提升对魔力。\n一旦受到超出伤害阈值的伤害，佐佐木小次郎将立即飞跃至攻击者身后，<font color='#FF3399'>眩晕</font>之并获得移动速度加成。同时将产生一个佐佐木小次郎的幻象。\n一旦触发反击，佐佐木小次郎的所有技能冷却时间将缩短15秒。\n\n宝具强化：透化。"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_Lore"	"精准源自于和谐。"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_duration"	"反击持续时间："
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_bonus_mr"	"%对魔力提升："
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_illusion_outgoing_damage"	"%幻象造成伤害："
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_illusion_incoming_damage"	"%幻象受到伤害："
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_stun_duration"	"眩晕时间："
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_threshold"	"伤害阈值："
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_gcd"	"再动时间："
 		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note0"	"如果伤害来源在3000码以外则无法触发反击。"
 		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note1"	"伤害减免判定先于反击阈值判定。"
+		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note2"	"幻象继承佐佐木小次郎的属性和心眼(伪)技能。"
+		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note3"	"反击后的跳跃有500的索敌范围。"
 		
 		"DOTA_Tooltip_Ability_false_assassin_windblade" "风之刃"
 		"DOTA_Tooltip_ability_false_assassin_windblade_Description"     "佐佐木小次郎挥动长剑，劈开周身的风，将周围敌军击退。"
@@ -1255,17 +1274,17 @@
 		"DOTA_Tooltip_ability_false_assassin_illusory_wanderer_Lore"    ""
 		"DOTA_Tooltip_ability_false_assassin_illusory_wanderer_duration"        "持续时间："
 
-		"DOTA_Tooltip_Ability_false_assassin_tsubame_mai"       "秘剑·燕舞"
-		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Description"   "<font color='#58ACFA'>连击条件：敏捷和力量都在25点以上</font>\n<font color='#58ACFA'>连击序列：2秒内Q-W</font>\n佐佐木小次郎准备施展其秘技，依攻击或因受到伤害超过阈值而反击发动不同的效果。<font color='#58ACFA'>\n由攻击触发</font>：<font color='#FF3399'>击飞</font>目标1.5秒，接着发动秘剑·燕返。\n<font color='#58ACFA'>由反击触发</font>：立即冲向伤害来源，<font color='#FF3399'>击飞</font>目标2秒并对其连续进行若干次斩击，接着发动秘剑·燕返。"
-		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Lore"  "终极的剑术奥义。"
-		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_threshold"     "反击阀值："
-		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_duration"	"持续时间："
+		"DOTA_Tooltip_Ability_false_assassin_tsubame_mai"	"秘剑·燕舞"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Description"	"<font color='#58ACFA'>连击条件：敏捷和力量都在25点以上</font>\n<font color='#58ACFA'>连击序列：2秒内Q-W</font>\n佐佐木小次郎准备施展其秘技，依主动发动攻击或因受到伤害超过阈值而反击发动不同的效果。<font color='#58ACFA'>\n由攻击触发</font>：<font color='#FF3399'>击飞</font>目标1.5秒，接着对其发动秘剑·燕返，随后产生一个佐佐木小次郎的幻象。\n<font color='#58ACFA'>由反击触发</font>：佐佐木小次郎迅速冲向伤害来源的身后，<font color='#FF3399'>击飞</font>目标2秒，对其进行若干次斩击，造成基于攻击力的物理伤害，接着对其发动秘剑·燕返，随后产生两个佐佐木小次郎的幻象。"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Lore"	"终极的剑术奥义。"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_duration"	"反击状态持续时间："
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_threshold"	"反击伤害阈值："
 		"DOTA_Tooltip_Ability_false_assassin_tsubame_mai_slash_amount"	"反击触发的斩击数："
 		"DOTA_Tooltip_Ability_false_assassin_tsubame_mai_ad_ratio"	"反击触发的斩击伤害系数："
-		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Note0"		"秘剑·燕舞发动的秘剑·燕返伤害等同于当前等级的秘剑·燕返。"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Note0"		"秘剑·燕舞发动的秘剑·燕返伤害和幻象属性等同于当前等级的秘剑·燕返。"
 
 		"DOTA_Tooltip_Ability_false_assassin_attribute_ganryu"                          "严流"
-		"DOTA_Tooltip_ability_false_assassin_attribute_ganryu_Description"      "<font color='#58ACFA'>御主魔力需求：19</font>\n风之刃取消再动时间，使用后将移动到最近的敌人身旁。\n秘剑·燕返将影响主要目标250范围内的所有敌方单位。"
+		"DOTA_Tooltip_ability_false_assassin_attribute_ganryu_Description"      "<font color='#58ACFA'>御主魔力需求：16</font>\n风之刃取消再动时间，使用后将移动到最近的敌人身旁。\n秘剑·燕返将影响主要目标250范围内的所有敌方单位。"
 
 		"DOTA_Tooltip_Ability_false_assassin_attribute_eye_of_serenity"                         "明镜止水"
 		"DOTA_Tooltip_ability_false_assassin_attribute_eye_of_serenity_Description"     "<font color='#58ACFA'>御主魔力需求：16</font>\n探测到敌方从者存在时显示其视野。"
@@ -1281,6 +1300,11 @@
 		"DOTA_Tooltip_Ability_false_assassin_presence_concealment"      "气息遮断"
 		"DOTA_Tooltip_ability_false_assassin_presence_concealment_Description"  "1.5秒后，佐佐木小次郎进入隐形状态与自然融为一体。在佐佐木小次郎进行其他动作之前，他可以一直保持隐形。"
         	"DOTA_Tooltip_ability_false_assassin_presence_concealment_Lore" ""
+
+		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye"				"强化心眼(伪)"
+		"DOTA_Tooltip_ability_false_assassin_attribute_improve_minds_eye_Description"	"<font color='#58ACFA'>御主魔力需求：10</font>\n提升心眼(伪)的致命一击伤害和几率。"
+		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye_critical_damage"	"%致命一击伤害："
+		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye_critical_rate"		"%致命一击几率："
 
 		//=================================================================================================================
 		//	True Assassin(5th)
@@ -1458,7 +1482,7 @@
 
 		
 		"DOTA_Tooltip_Ability_caster_5th_territory_creation"	"阵地作成"
-		"DOTA_Tooltip_ability_caster_5th_territory_creation_Description"	"美狄亚作为魔术师能够制造对自己有利的工房。通过工房，美狄亚可以召回所有她的随从并以此建立防御上的优势。敌方英雄每隔15秒可以探测一次美狄亚的工房，当工房被摧毁时，美狄亚所有的随从都将随之死亡。\n\n宝具强化：强化阵地作成。"
+		"DOTA_Tooltip_ability_caster_5th_territory_creation_Description"	"美狄亚作为魔术师能够制造对自己有利的工房。通过工房，美狄亚可以召回所有她的随从并以此建立防御上的优势。敌方英雄每隔15秒可以都探测到美狄亚的工房一次。当工房被摧毁时，美狄亚所有的随从都将随之死亡。\n\n宝具强化：强化阵地作成。"
 		"DOTA_Tooltip_ability_caster_5th_territory_creation_Lore"	"建立对自己有利的阵地是魔术师的第一步。"
 		"DOTA_Tooltip_ability_caster_5th_territory_creation_Note0"	"同一时刻只能存在一个工房。"
 		"DOTA_Tooltip_ability_caster_5th_territory_creation_Note1"	"摧毁工房将杀死美狄亚控制的所有随从。"
@@ -1471,7 +1495,7 @@
 		"DOTA_Tooltip_ability_caster_5th_int_ratio"	"智力比例系数："
 
 		"DOTA_Tooltip_Ability_caster_5th_territory_explosion"	"工房自毁"
-		"DOTA_Tooltip_ability_caster_5th_territory_explosion_Description"	"美狄亚使工房的魔力暴走，令其自毁并对周围的地方单位造成基于工房当前魔力值和美狄亚智力值的伤害。\n\n工房的魔力越多，基于智力值的伤害比例系数越大\n伤害：300+0.5*工房当前魔力值+美狄亚智力值*8~20"
+		"DOTA_Tooltip_ability_caster_5th_territory_explosion_Description"	"美狄亚使工房的魔力暴走，令其自毁并对周围的敌方单位造成基于工房当前魔力值的伤害。\n\n工房的魔力越多，基于智力值的伤害比例系数越大。\n伤害：300+0.5*工房当前魔力值+美狄亚智力值*8~20"
 
 		"DOTA_Tooltip_Ability_caster_5th_mobilize"	"工房移动"
 		"DOTA_Tooltip_ability_caster_5th_mobilize_Description"	"允许工房漂浮在空中进行缓慢的移动，工房在漂浮时不能使用它的技能或物品。"
@@ -1484,22 +1508,24 @@
 		"DOTA_Tooltip_ability_caster_5th_recall_Description"	"在美狄亚身上释放传送魔法，持续3秒。如果美狄亚在这段时间内没有受到伤害，则她将被召回到工房所在地。"
 
 		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash"		"重击"
-		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash_Description"		"龙牙战士在攻击时有几率重击敌人造成<font color='#FF3399'>眩晕</font>。"
-		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash_bash_chance"		"%重击几率："
-		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash_bash_duration"		"重击眩晕时间："
+		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash_Description"		"龙牙战士在攻击时有几率重击敌人，造成<font color='#FF3399'>眩晕</font>。"
+		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash_bash_chance"		"重击几率："
+		"DOTA_Tooltip_Ability_caster_5th_skeleton_bash_bash_duration"		"眩晕时间："
 
 
 		"DOTA_Tooltip_Ability_caster_5th_dragon_chilling_breath"	"霜冷呼吸"
-		"DOTA_Tooltip_Ability_caster_5th_dragon_chilling_breath_Description"	"神代巨龙的攻击令被攻击的目标感觉寒冷刺骨，造成强烈的<font color='#FF3399'>减速</font>效果。"
+		"DOTA_Tooltip_Ability_caster_5th_dragon_chilling_breath_Description"	"神代巨龙的攻击令被攻击的目标感觉寒冷刺骨，造成强烈的<font color='#FF3399'>减速</font>。"
 		"DOTA_Tooltip_Ability_caster_5th_dragon_chilling_breath_duration"		"减速持续时间："
-		"DOTA_Tooltip_Ability_caster_5th_dragon_chilling_breath_slow"			"移动速度减缓："
+		"DOTA_Tooltip_Ability_caster_5th_dragon_chilling_breath_slow"			"%移动速度减缓："
+
 
 		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite"	"冰霜禁制"
-		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_Description"		"神代巨龙向前方锥形区域释放出寒冷的气息，对其中的敌人造成伤害并将其<font color='#FF3399'>冻结</font>在原地。"
+		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_Description"		"神代巨龙向前方锥形区域释放出寒冷的气息，对其中的敌人造成伤害并将其<font color='#FF3399'>禁锢</font>在原地。"
 		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_delay"			"施法延迟："
 		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_radius"		"末端宽度："
-		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_total_duration"	"冻结时间："
+		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_total_duration"	"禁锢时间："
 		"DOTA_Tooltip_Ability_caster_5th_dragon_frostbite_damage"		"伤害："
+
 
 		"DOTA_Tooltip_Ability_caster_5th_dragon_arcane_wrath"	"奥术之怒"
 		"DOTA_Tooltip_Ability_caster_5th_dragon_arcane_wrath_Description"	"神代巨龙向目标区域释放出高度凝练的魔力，对其中的敌方单位造成伤害和<font color='#FF3399'>眩晕</font>。\n\n本技能只有在美狄亚骑乘在巨龙身上时才可以使用。"
@@ -1620,7 +1646,7 @@
 
 
 		"DOTA_Tooltip_Ability_caster_5th_attribute_improve_argos"				"强化护盾"
-		"DOTA_Tooltip_ability_caster_5th_attribute_improve_argos_Description"	"<font color='#58ACFA'>御主魔力需求：14</font>\n提升魔力护盾的每次释放增加的能量和能量上限。"
+		"DOTA_Tooltip_ability_caster_5th_attribute_improve_argos_Description"	"<font color='#58ACFA'>御主魔力需求：8</font>\n提升魔力护盾的每次释放增加的能量和能量上限。"
 		"DOTA_Tooltip_ability_caster_5th_attribute_improve_argos_bonus_durability"	"能量上限提升："
 		"DOTA_Tooltip_ability_caster_5th_attribute_improve_argos_bonus_charge"	"每次释放能量提升："
 
@@ -2170,6 +2196,9 @@
 		"DOTA_Tooltip_Ability_nero_acquire_clairvoyance"        "获得千里眼"
 		"DOTA_Tooltip_ability_nero_acquire_clairvoyance_Description"    "获得千里眼，可以驱散小范围的迷雾。"
 
+		"DOTA_Tooltip_Ability_nero_acquire_martial_arts"	"获得中华武术"
+		"DOTA_Tooltip_ability_nero_acquire_martial_arts_Description"	"获得中华武术，使得尼禄可以感知周围敌人的杀气并揭露他们的弱点。"
+
 		"DOTA_Tooltip_Ability_nero_close_spellbook"     "关闭列表"
 		"DOTA_Tooltip_ability_nero_close_spellbook_Description" "关闭技能列表以使用尼禄的其他技能。"
  
@@ -2218,16 +2247,16 @@
         "DOTA_Tooltip_Ability_nero_attribute_pari_tenu_blauserum_stun_duration"          "眩晕时间："
         
 		"DOTA_Tooltip_Ability_nero_attribute_improve_imperial_privilege"          "强化皇帝特权"
-        "DOTA_Tooltip_ability_nero_attribute_improve_imperial_privilege_Description"       "<font color='#58ACFA'>御主魔力消耗：14</font>\n增强皇帝特权列表中可以选择的所有天生技能。\n<font color='#58ACFA'>神性</font>：提高20%%对魔力，受到普通攻击格挡24点伤害。\n<font color='#58ACFA'>心眼</font>：17%%几率3倍致命一击。\n<font color='#58ACFA'>千里眼</font>：作用范围提升到1400且能探测隐形单位。\n<font color='#58ACFA'>黄金律</font>:每秒获得20金钱，击杀金钱提高50%%。"    
+        "DOTA_Tooltip_ability_nero_attribute_improve_imperial_privilege_Description"       "<font color='#58ACFA'>御主魔力需求：14</font>\n增强皇帝特权列表中可以选择的所有天生技能。\n<font color='#58ACFA'>神性</font>：提高20%%对魔力，受到普通攻击格挡24点伤害。\n<font color='#58ACFA'>心眼</font>：17%%几率3倍致命一击。\n<font color='#58ACFA'>千里眼</font>：作用范围提升到1400且能探测隐形单位。\n<font color='#58ACFA'>黄金律</font>:每秒获得20金钱，击杀金钱提高50%%。"    
  
         "DOTA_Tooltip_Ability_nero_attribute_invictus_spiritus"          "三番面对夕阳"
-        "DOTA_Tooltip_ability_nero_attribute_invictus_spiritus_Description"       "<font color='#58ACFA'>御主魔力消耗：12</font>\n如果尼禄没有被<font color='#FF3399'>禁用令咒</font>，则允许尼禄在受到致命伤时在3秒内回复最大生命值一定比例的生命。回复之后，尼禄将<font color='#FF3399'>禁用令咒</font>。"
+        "DOTA_Tooltip_ability_nero_attribute_invictus_spiritus_Description"       "<font color='#58ACFA'>御主魔力需求：12</font>\n如果尼禄没有被<font color='#FF3399'>禁用令咒</font>，则允许尼禄在受到致命伤时在3秒内回复最大生命值一定比例的生命。回复之后，尼禄将<font color='#FF3399'>禁用令咒</font>。"
 		"DOTA_Tooltip_Ability_nero_attribute_invictus_spiritus_heal_amount"          "%复活生命值："
         "DOTA_Tooltip_Ability_nero_attribute_invictus_spiritus_cooldown"          "复活冷却时间："
         "DOTA_Tooltip_Ability_nero_attribute_invictus_spiritus_revoke_duration"          "复活后与禁用令咒时间："
  
         "DOTA_Tooltip_Ability_nero_attribute_soverigns_glory"          "掌权者之荣光"
-        "DOTA_Tooltip_ability_nero_attribute_soverigns_glory_Description"       "<font color='#58ACFA'>御主魔力消耗：14</font>\n邀至心荡神驰的黄金剧场对内部所有敌军额外造成额外的对视伤害。\n背对尼禄的敌方单位将每秒削弱护甲和对魔力。"
+        "DOTA_Tooltip_ability_nero_attribute_soverigns_glory_Description"       "<font color='#58ACFA'>御主魔力需求：14</font>\n邀至心荡神驰的黄金剧场对内部所有敌军额外造成额外的对视伤害。\n背对尼禄的敌方单位将每秒削弱护甲和对魔力。"
 		"DOTA_Tooltip_Ability_nero_attribute_soverigns_glory_damage"          "%额外对视伤害："
         "DOTA_Tooltip_Ability_nero_attribute_soverigns_glory_armor_reduction"          "每秒削弱护甲："
         "DOTA_Tooltip_Ability_nero_attribute_soverigns_glory_mr_reduction"          "%每秒削弱对魔力："
@@ -2235,7 +2264,7 @@
 		//====================================
 		//      White Saber(Extra)
 		//====================================
-		"npc_dota_hero_omniknight"              "莱昂纳多·贝斯特里欧·哈维-Saber(Extra)"
+		"npc_dota_hero_omniknight"              "莱昂纳多·B·哈维-Saber(Extra)"
 
         "DOTA_Tooltip_Ability_gawain_solar_embodiment"     "回转的太阳"
         "DOTA_Tooltip_ability_gawain_solar_embodiment_Description" "哈维在目标地点释放拟似太阳，照亮周围的视野并提升附近友军的对魔力与闪避率。"
@@ -2259,14 +2288,14 @@
         "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_heal_amount"          "回复量："
  
         "DOTA_Tooltip_ability_gawain_excalibur_galatine"        "轮转胜利之剑"
-        "DOTA_Tooltip_ability_gawain_excalibur_galatine_Description"    "哈维释放一个向目标地点行进的能量球并引爆\n<font color='#58ACFA'>对友方单位</font>：回复相当于伤害值66%%的生命值。\n<font color='#58ACFA'>对敌方单位</font>：造成魔法伤害。\n可再次激活以提前引爆。"
+        "DOTA_Tooltip_ability_gawain_excalibur_galatine_Description"    "哈维释放一个向目标地点行进的能量球并引爆\n<font color='#58ACFA'>对友方单位</font>：回复相当于伤害值33%%的生命值。\n<font color='#58ACFA'>对敌方单位</font>：造成魔法伤害。\n可再次激活以提前引爆。"
         "DOTA_Tooltip_ability_gawain_excalibur_galatine_Lore"           "誓约胜利之剑的姐妹剑，剑柄内封有拟似太阳，能放出拟似太阳一举歼敌。"
 		"DOTA_Tooltip_ability_gawain_excalibur_galatine_cast_delay"		"施法延迟："
         "DOTA_Tooltip_ability_gawain_excalibur_galatine_damage"         "伤害："
         "DOTA_Tooltip_ability_gawain_excalibur_galatine_radius"         "爆炸范围："
  
-        "DOTA_Tooltip_ability_gawain_suns_embrace"      "烈阳之簇拥"
-        "DOTA_Tooltip_ability_gawain_suns_embrace_Description"  "哈维将太阳的光辉加注在目标身上，灼烧附近敌军造成持续伤害。\n<font color='#58ACFA'>对友方单位</font>：使其对魔力翻倍并回复目标50%%其缺失生命值。\n<font color='#58ACFA'>对敌方单位</font>：依目标的对魔力值提高其所受的物理伤害和纯粹伤害。"
+        "DOTA_Tooltip_ability_gawain_suns_embrace"	"烈阳之簇拥"
+        "DOTA_Tooltip_ability_gawain_suns_embrace_Description"	"哈维将太阳的光辉加注在目标身上，灼烧附近敌军造成持续的魔法伤害。\n<font color='#58ACFA'>对友军</font>：治疗相当于目标当前已损失生命值一定百分比的生命值，数值等同于目标对魔力的值。随后使目标对魔力翻倍。\n<font color='#58ACFA'>对敌军</font>：百分比提高目标所受到来自于技能的物理伤害和纯粹伤害，数值等同于其当前对魔力的值。" 
         "DOTA_Tooltip_ability_gawain_suns_embrace_Lore" "天堂之光普照战场净化凡人的罪恶，令崩溃边缘的灵魂感到温暖，令恶棍惧怕审判日的到来。"
         "DOTA_Tooltip_ability_gawain_suns_embrace_cast_delay"	"施法延迟："
         "DOTA_Tooltip_ability_gawain_suns_embrace_total_damage" "总伤害："
@@ -2284,69 +2313,239 @@
 		"DOTA_Tooltip_Ability_gawain_supernova_stun_duration"				"眩晕时间："
 
         "DOTA_Tooltip_Ability_gawain_attribute_dawnbringer"         "黎明使者"
-        "DOTA_Tooltip_ability_gawain_attribute_dawnbringer_Description"       "<font color='#58ACFA'>御主魔力消耗：13</font>\n使得拟似太阳自动跟随范围内最近的英雄，提升拟似太阳50%%的视野，同时获得333范围的真实视域。另外，回转的太阳提供的对魔力和护甲提升翻倍。"
+        "DOTA_Tooltip_ability_gawain_attribute_dawnbringer_Description"       "<font color='#58ACFA'>御主魔力需求：13</font>\n使得拟似太阳自动跟随范围内最近的英雄，提升拟似太阳50%%的视野，同时获得333范围的真实视域。另外，回转的太阳提供的对魔力和护甲提升翻倍。"
  
         "DOTA_Tooltip_Ability_gawain_attribute_blessing_of_fairy"        "精灵之加护"
-        "DOTA_Tooltip_ability_gawain_attribute_blessing_of_fairy_Description"    "<font color='#58ACFA'>御主魔力消耗：12</font>\n哈维受到致命伤时将立刻回复500生命值。"
+        "DOTA_Tooltip_ability_gawain_attribute_blessing_of_fairy_Description"    "<font color='#58ACFA'>御主魔力需求：12</font>\n哈维受到致命伤时将立刻回复500生命值。"
  
         "DOTA_Tooltip_Ability_gawain_attribute_divine_meltdown"         "九州之消融"
-        "DOTA_Tooltip_ability_gawain_attribute_divine_meltdown_Description"       "<font color='#58ACFA'>御主魔力消耗：13</font>\n允许使用九州之消融。\n<font color='#58ACFA'>九州之消融：</font>释放出整个拟似太阳烘烤大地，持续5秒。根据800范围内敌军当前生命值对其造成纯粹伤害，每秒伤害从9%%逐渐下降到5%%。"  
+        "DOTA_Tooltip_ability_gawain_attribute_divine_meltdown_Description"       "<font color='#58ACFA'>御主魔力需求：13</font>\n允许使用九州之消融。\n<font color='#58ACFA'>九州之消融：</font>释放出整个拟似太阳烘烤大地，持续5秒。根据800范围内敌军当前生命值对其造成纯粹伤害，每秒伤害从9%%逐渐下降到5%%。"  
  
         "DOTA_Tooltip_Ability_gawain_attribute_sunlight"         "日光"
-        "DOTA_Tooltip_ability_gawain_attribute_sunlight_Description"       "<font color='#58ACFA'>御主魔力消耗：17</font>\n强化对友军的效果，增强哈维的辅助能力。\n<font color='#58ACFA'>圣光的照射</font>：回复等量魔力值并提高20点护甲。\n<font color='#58ACFA'>忠义之剑闪</font>：解除群体控制效果并减少所有技能冷却15秒。\n<font color='#58ACFA'>轮转胜利之剑</font>：3秒后额外回复50%%生命值。\n<font color='#58ACFA'>烈阳之簇拥</font>：获得额外30%%对魔力提升。\n\n<font color='#FF0000'>哈维只能选择日光或月光其中一种晋升。</font>"  
+        "DOTA_Tooltip_ability_gawain_attribute_sunlight_Description"       "<font color='#58ACFA'>御主魔力需求：17</font>\n强化对友军的效果，增强哈维的辅助能力。\n<font color='#58ACFA'>圣光的照射</font>：回复等量魔力值并提高20点护甲。\n<font color='#58ACFA'>忠义之剑闪</font>：解除群体控制效果并减少所有技能冷却15秒。\n<font color='#58ACFA'>轮转胜利之剑</font>：3秒后额外回复50%%生命值。\n<font color='#58ACFA'>烈阳之簇拥</font>：获得额外30%%对魔力提升。\n\n<font color='#FF0000'>哈维只能选择日光或月光其中一种晋升。</font>"  
  
         "DOTA_Tooltip_Ability_gawain_attribute_eclipse"         "月光"
-        "DOTA_Tooltip_ability_gawain_attribute_eclipse_Description"      "<font color='#58ACFA'>御主魔力消耗：17</font>\n强化对敌军效果，增加哈维的进攻能力。\n<font color='#58ACFA'>圣光的照射</font>：造成全额伤害。\n<font color='#58ACFA'>忠义之剑闪</font>：3秒内普通攻击效果造成第一击额外伤害50%%的伤害。\n<font color='#58ACFA'>轮转胜利之剑</font>：伤害依敌军与中心距离最多提高50%%。\n<font color='#58ACFA'>烈阳之簇拥</font>：造成1.5秒眩晕。\n\n<font color='#FF0000'>哈维只能选择日光或月光其中一种晋升。</font>"
+        "DOTA_Tooltip_ability_gawain_attribute_eclipse_Description"      "<font color='#58ACFA'>御主魔力需求：17</font>\n强化对敌军效果，增加哈维的进攻能力。\n<font color='#58ACFA'>圣光的照射</font>：造成全额伤害。\n<font color='#58ACFA'>忠义之剑闪</font>：3秒内普通攻击效果造成第一击额外伤害50%%的伤害。\n<font color='#58ACFA'>轮转胜利之剑</font>：伤害依敌军与中心距离最多提高50%%。\n<font color='#58ACFA'>烈阳之簇拥</font>：造成1.5秒眩晕。\n\n<font color='#FF0000'>哈维只能选择日光或月光其中一种晋升。</font>"
 		
-		//====================================
-		//	Caster(Extra)
-		//====================================
-		"npc_dota_hero_enchantress"		"玉藻前-Caster(Extra)"
+        //====================================
+        //      Caster(Extra)
+        //====================================
+        "npc_dota_hero_enchantress"             "玉藻前-Caster(Extra)"
+ 
+        "DOTA_Tooltip_Ability_tamamo_armed_up"     "咒相"
+        "DOTA_Tooltip_ability_tamamo_armed_up_Description" "技能书：玉藻前准备好由不同元素加护的护符，使她的普通攻击和噬魂魔术。护符的效果可以在目标身上叠加至多五次，第六次叠加将消耗掉之前所有叠加层数并对目标施加额外效果。"
+        "DOTA_Tooltip_ability_tamamo_armed_up_Lore"             "自然的力量被神代术者束缚于神秘的咒术纸片中。"
+        "DOTA_Tooltip_ability_tamamo_armed_up_charge"             "每次释放充能数："
+ 
+        "DOTA_Tooltip_Ability_tamamo_fiery_heaven"     "咒相·炎天"
+        "DOTA_Tooltip_ability_tamamo_fiery_heaven_Description" "使玉藻前的每次攻击都能点燃目标，造成基于目标当前生命值百分比的伤害\n<font color='#58ACFA'>第六次叠加效果：</font>造成基于目标当前损失生命值百分比的伤害。"
+        //"DOTA_Tooltip_Ability_tamamo_fiery_heaven_radius"     "额外范围："
+        "DOTA_Tooltip_Ability_tamamo_fiery_heaven_damage"     "%伤害："
+        "DOTA_Tooltip_Ability_tamamo_fiery_heaven_stack_damage"     "%第六次叠加伤害："
+        "DOTA_Tooltip_Ability_tamamo_fiery_heaven_Note0"     ""
+ 
+        "DOTA_Tooltip_Ability_tamamo_frigid_heaven"     "咒相·冰天"
+        "DOTA_Tooltip_ability_tamamo_frigid_heaven_Description" "使玉藻前的每次攻击都能冰入骨髓，短时间<font color='#FF3399'>缴械</font>并<font color='#FF3399'>减速</font>目标。\n<font color='#58ACFA'>第六次叠加效果：</font><font color='#FF3399'>眩晕</font>目标。"
+        "DOTA_Tooltip_Ability_tamamo_frigid_heaven_duration"     "缴械及减速持续时间："
+        "DOTA_Tooltip_Ability_tamamo_frigid_heaven_slow"     "%减速："
+        "DOTA_Tooltip_Ability_tamamo_frigid_heaven_stack_stun_duration"     "第六次叠加眩晕时间："
 
-        "DOTA_Tooltip_Ability_tamamo_armed_up"     "全副武装"
-        "DOTA_Tooltip_ability_tamamo_armed_up_Description" "技能书 - 玉藻前在多种魔力护符中选择一种，使得她的普通攻击和灵魂源泉带有某种特殊效果。魔力护符的特殊效果在同一个目标上最多叠加5次，第6次叠加将施加额外效果并重置所有叠加层数。"
-        "DOTA_Tooltip_ability_tamamo_armed_up_Lore"		""
-
-        "DOTA_Tooltip_Ability_tamamo_fiery_heaven"     "烈火天堂"
-        "DOTA_Tooltip_ability_tamamo_fiery_heaven_Description" "玉藻前的每次攻击或灵魂源泉都将点燃目标，造成基于目标当前生命值的伤害。\n<font color='#58ACFA'>第6次叠加效果：</font>造成小范围基于目标当前生命值的伤害。"
-
-        "DOTA_Tooltip_Ability_tamamo_frigid_heaven"     "寒冰天堂"
-        "DOTA_Tooltip_ability_tamamo_frigid_heaven_Description" "玉藻前的每次攻击或灵魂源泉都将使目标感觉寒冷刺骨，造成0.1秒减速和沉默。\n<font color='#58ACFA'>第6次叠加效果：</font>对目标造成1秒眩晕。"
-
-        "DOTA_Tooltip_Ability_tamamo_gust_heaven"     "狂风天堂"
-        "DOTA_Tooltip_ability_tamamo_gust_heaven_Description" "玉藻前的每次攻击或灵魂源泉将创造出毁灭性的强风摧毁目标的防御，降低目标的对魔力。\n<font color='#58ACFA'>第6次叠加效果：</font>净化目标，移除其身上大部分增益效果。在1秒内禁用闪烁卷轴，并造成强烈但随效果时间减弱的减速效果。对普通单位造成额外伤害。"
-
-        "DOTA_Tooltip_Ability_tamamo_void_cleft"     "虚空纹饰"
-        "DOTA_Tooltip_ability_tamamo_void_cleft_Description" "玉藻前的每次攻击或灵魂源泉都将造成基于目标已损失生命值的伤害。提高普通攻击的射程以及灵魂源泉的作用范围。\n<font color='#58ACFA'>第6次叠加效果：</font>眩晕目标0.5秒，并造成基于其已损失生命值的伤害。"
-
-        "DOTA_Tooltip_Ability_tamamo_soulstream"     "灵魂源泉"
-        "DOTA_Tooltip_ability_tamamo_soulstream_Description" "玉藻前召唤几个地底灵魂，这些灵魂先在玉藻前身后划出一道弧线然后冲向目标地点。在此过程中如果灵魂触碰到敌方单位，将会爆炸，造成伤害并施加由全副武装选择的魔力护符对应的特殊效果。\n10秒内再次释放此技能将会使造成的伤害增加20%%，但增加100点魔力消耗。"
-
+ 
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven"     "咒相·密天"
+        "DOTA_Tooltip_ability_tamamo_gust_heaven_Description" "使玉藻前的每次攻击都能造成击破魔力的狂风，降低目标的对魔力并且<font color='#FF3399'>沉默</font>目标。\n<font color='#58ACFA'>第六次叠加效果：</font><font color='#FF3399'>维度锁定</font>目标，净化目标身上的增益效果并造成随时间逐渐降低的<font color='#FF3399'>减速</font>效果。"
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_mr_reduction"     "%对魔力降低："
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_duration"     "沉默持续时间："
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_stack_lock_duration"     "第六次叠加锁定时间："
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_stack_slow_duration"     "第六次叠加减速时间："
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_stack_initial_slow"     "%初始减速："
+ 
+        "DOTA_Tooltip_Ability_tamamo_void_cleft"     "咒相·裂天"
+        "DOTA_Tooltip_ability_tamamo_void_cleft_Description" "使玉藻前的每次攻击造成基于目标当前损失生命值百分比的伤害。提升普通攻击和噬魂魔术的范围。\n<font color='#58ACFA'>第六次叠加效果：</font>眩晕目标0.5秒，并造成基于目标当前损失生命值的伤害。"
+ 
+        "DOTA_Tooltip_Ability_tamamo_soulstream"     "噬魂魔术"
+        "DOTA_Tooltip_ability_tamamo_soulstream_Description" "玉藻前将5个灵体物质化，使役它们向目标地点冲去。一旦碰到敌人，物质化的灵体就将爆炸，造成伤害。\n连续释放将获得伤害加成，并使玉藻前获得移动速度加成，但魔力消耗将增加。"
+        "DOTA_Tooltip_Ability_tamamo_soulstream_damage"     "灵体爆炸伤害："
+        "DOTA_Tooltip_Ability_tamamo_soulstream_radius"     "灵体爆炸范围："
+        "DOTA_Tooltip_Ability_tamamo_soulstream_stack_damage_bonus"     "%每次连续释放伤害加成："
+        "DOTA_Tooltip_Ability_tamamo_soulstream_stack_ms"     "%每次连续释放移动速度加成："
+        "DOTA_Tooltip_Ability_tamamo_soulstream_stack_mana_cost"     "每次连续释放增加魔力消耗："
+        "DOTA_Tooltip_Ability_tamamo_soulstream_Lore"     ""
+        "DOTA_Tooltip_Ability_tamamo_soulstream_Note0"     "伤害加成将额外计算伤害次数，并且也可以增加由宝具升级获得的额外伤害。"
+ 
         "DOTA_Tooltip_Ability_tamamo_subterranean_grasp"     "大地之握"
-        "DOTA_Tooltip_ability_tamamo_subterranean_grasp_Description" "玉藻前标记地图上的任意敌方单位，在1秒延迟之后，大地之魂将束缚目标，阻止其移动并降低对魔力。"
-
-
+        "DOTA_Tooltip_ability_tamamo_subterranean_grasp_Description" "玉藻前标记地图上的任意敌方单位，在短暂延迟后，地缚灵将伸出地面将目标<font color='#FF3399'>禁锢</font>在原地，并降低其对魔力。"
+        "DOTA_Tooltip_Ability_tamamo_subterranean_grasp_Lore"		"恶灵和迷途的旅者是民间传说中最喜爱的两个元素。" 
+        "DOTA_Tooltip_Ability_tamamo_subterranean_grasp_delay"     "禁锢延迟："
+        "DOTA_Tooltip_Ability_tamamo_subterranean_grasp_duration"     "禁锢持续时间："
+        "DOTA_Tooltip_Ability_tamamo_subterranean_grasp_mr_reduction"     "%对魔力降低："
+ 
+ 
         "DOTA_Tooltip_Ability_tamamo_mantra"     "咒术"
-        "DOTA_Tooltip_ability_tamamo_mantra_Description" "玉藻前命令若干个咒术球环绕目标单位。当该目标单位受到攻击时，环绕他的一个咒术球将被摧毁，如果是友方单位则减少其受到的伤害，如果是敌方单位则增加其受到的伤害。\n该单位必须受到超过100点的攻击伤害才能触发其身上的咒术球。咒术的效果将在目标身上的咒术球都被摧毁或时间用尽时结束。"
-        "DOTA_Tooltip_ability_tamamo_mantra_Lore"	""
+        "DOTA_Tooltip_ability_tamamo_mantra_Description" "玉藻前用凝聚魔力的法球环绕目标，当目标受到伤害时，一个法球将被摧毁，同时如果目标是友方将降低其所受伤害，如果是敌方将增加其所受伤害。"
+        "DOTA_Tooltip_ability_tamamo_mantra_Lore"      "谐律之球凝聚起厚厚的一层魔力，在玉藻前的控制下，这种魔力可以共鸣外界的魔术或者摧毁外界的魔术。"
+        "DOTA_Tooltip_Ability_tamamo_mantra_cast_delay"     "施法延迟："
+        "DOTA_Tooltip_Ability_tamamo_mantra_damage_modifier"     "伤害该变量："
+        "DOTA_Tooltip_Ability_tamamo_mantra_orb_amount"     "法球数目："
+        "DOTA_Tooltip_Ability_tamamo_mantra_duration"     "持续时间："
+        "DOTA_Tooltip_Ability_tamamo_mantra_Note0"     "咒术法球抵挡的是减免过的伤害。"
+        "DOTA_Tooltip_Ability_tamamo_mantra_Note1"     "当释放于敌方时，伤害触发有0.3秒的冷却时间。"
 
-        "DOTA_Tooltip_Ability_tamamo_amaterasu"     "水天日光天照八野镇石"
-        "DOTA_Tooltip_ability_tamamo_amaterasu_Description" "Caster creates a mythical zone around her, blessing all allied heroes within area with bonus mana regen and intelligence. In addition, any spellcast by Caster and her allies refunds flat amount of health and mana."
+        "DOTA_Tooltip_Ability_tamamo_fates_call"     "命运感召"
+        "DOTA_Tooltip_Ability_tamamo_fates_call_Description"     "在短暂延迟后将连接的英雄传送至目标地点。目标与玉藻前之间的距离越远，延迟时间越长。如果在延迟期间玉藻前被眩晕，则传送效果取消。"
+        
+        "DOTA_Tooltip_Ability_tamamo_amaterasu"     "水天日光天照八野鎮石"
+        "DOTA_Tooltip_ability_tamamo_amaterasu_Description" "被动增加玉藻前的智力值。主动释放时，玉藻前在她身旁创造一个魔术结界，结界中的友军将获得额外的魔法回复速率加成与移动速度加成，而敌军将获得相反的效果。另外，玉藻前和友军在结界中释放技能将获得一定量的生命值和魔力值回复。"
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_Lore"     "神界之境在空中照耀，给予众生原初的魔力。"
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_intelligence"     "被动智力值增加："
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_radius"     "作用范围："
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_mana_regen"     "%魔法回复速率加成："
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_movespeed_modifier"     "%移动速度加成："
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_heal_amount"     "生命值回复："
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_mana_amount"     "魔力值回复："
+        "DOTA_Tooltip_Ability_tamamo_amaterasu_duration"     "持续时间："
+ 
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist"                                "咒法·玉天崩"
+        "DOTA_Tooltip_ability_tamamo_polygamist_castration_fist_Description"    "<font color='#58ACFA'>连击条件：全属性20点以上</font>\n<font color='#58ACFA'>连击序列：2秒内W-F</font>\n玉藻前进入无敌状态，并跃向周围的随机目标3次，对他们造成伤害并<font color='#FF3399'>打断持续施法</font>。最后一击将击退目标，同时玉藻前也将被弹向相反方向，并造成爆炸，造成基于玉藻前智力值的伤害。"
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist_search_radius"                                "寻敌范围："
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist_lunge_delay"                                "跳跃延迟："
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist_kick_damage"                                "跳跃伤害："
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist_recoil_distance"                                "反弹距离："
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist_explosion_int_ratio"                                "爆炸智力伤害系数："
+ 
+        "DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist_2"                                "咒法·玉天崩"
+        "DOTA_Tooltip_ability_tamamo_polygamist_castration_fist_2_Description"    "激活连击技能：咒法·玉天崩，但伤害和跳跃延迟减半，只要玉藻前没有被<font color='#FF3399'>禁用令咒</font>。"
 
- 		"DOTA_Tooltip_Ability_tamamo_polygamist_castration_fist"				"Polygamist Castration Fist"
-		"DOTA_Tooltip_ability_tamamo_polygamist_castration_fist_Description"	"<font color='#58ACFA'>Combo Requirement : 20 all stats</font>\n<font color='#58ACFA'>Combo Sequence : E - F in 2 seconds</font>\nCaster becomes invulnerable and lunges onto nearby random targets 3 times with 0.75 second interval, dealing damage and stunning for 0.75 seconds. The last strike knocks target back and causes Caster to recoil in opposite direction as well, followed by an explosion dealing damage based on target's missing health."
+        "DOTA_Tooltip_Ability_tamamo_attribute_spirit_theft"         "盗魂魔术"
+        "DOTA_Tooltip_ability_tamamo_attribute_spirit_theft_Description"       "<font color='#58ACFA'>御主魔力需求：12</font>\n噬魂魔术造成基于智力值的额外伤害，并且在目标身上吸取魔力值。\n另外，大地之握将在持续时间内禁止目标使用令咒。"  
+        "DOTA_Tooltip_Ability_tamamo_attribute_spirit_theft_int_ratio"         "智力伤害系数："
+        "DOTA_Tooltip_Ability_tamamo_attribute_spirit_theft_mana_drain"         "魔力抽取量："
+ 
+        "DOTA_Tooltip_Ability_tamamo_attribute_tamamo_escape"         "小玉猫的紧急逃遁！"
+        "DOTA_Tooltip_Ability_tamamo_attribute_tamamo_escape_Description"       "<font color='#58ACFA'>御主魔力需求：15</font>\n连击技能：咒法·玉天崩的技能快捷键被移至D，在玉藻前没有被<font color='#FF3399'>禁用令咒</font>时可以随时释放。伤害和跳跃延迟将减少。\n<font color='#FF0000'>玉藻前首先需要满足连击条件以获得此项升级。</font>"
+        "DOTA_Tooltip_Ability_tamamo_attribute_tamamo_escape_reduction"         "%咒法·玉天崩的跳跃延迟和伤害减少："
+ 
+        "DOTA_Tooltip_Ability_tamamo_attribute_severed_fate"         "命运连接"
+        "DOTA_Tooltip_ability_tamamo_attribute_severed_fate_Description"       "<font color='#58ACFA'>御主魔力需求：13</font>\n释放咒术将给予目标额外的对魔力，并且在目标与玉藻前之间建立命运连接。当连接存在时，可以使用命运感召技能。\n<font color='#58ACFA'>命运感召：</font>在短暂延迟后将连接的英雄传送至目标地点。目标与玉藻前之间的距离越远，延迟时间越长。如果在延迟期间玉藻前被眩晕，则传送效果取消。"
+        "DOTA_Tooltip_Ability_tamamo_attribute_severed_fate_Note0"         "咒术也可以用在玉藻前自身以连接她自己。" 
+        "DOTA_Tooltip_Ability_tamamo_attribute_severed_fate_bonus_mr"         "%咒术对魔力提升：" 
+        "DOTA_Tooltip_Ability_tamamo_attribute_severed_fate_distance"         "连接最大距离："
+        "DOTA_Tooltip_Ability_tamamo_attribute_severed_fate_fates_call_max_delay"         "命运感召最大延迟时间："
+ 
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft"         "古代咒术"
+        "DOTA_Tooltip_ability_tamamo_attribute_witchcraft_Description"       "<font color='#58ACFA'>御主魔力需求：16</font>\n水天日光天照八野镇石在释放时将<font color='#FF3399'>沉默</font>并<font color='#FF3399'>减速</font>其中的敌军，魔法被结界减少至0的敌军将被<font color='#FF3399'>眩晕</font>。同时减少咒术的冷却时间。"  
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_Note0"        "眩晕效果有6秒的冷却时间。"
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_cc_duration"         "群体控制效果持续时间："
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_slow_amount"         "%移动速度减缓："
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_cooldown"         "咒术冷却时间："
 
-        "DOTA_Tooltip_Ability_tamamo_attribute_spirit_theft"         "Spirit Theft"
-        "DOTA_Tooltip_ability_tamamo_attribute_spirit_theft_Description"       "<font color='#58ACFA'>Master Mana Required : 12</font>\nSoulstream inflicts (INT*2) bonus magical damage, and drains 25 mana from target.\nSubterranean Grasp leaves a debuff that sucks away 5%% of target's max mana and deals same amount of damage whenever target receives damage. Lasts 3 seconds."  
 
-        "DOTA_Tooltip_Ability_tamamo_attribute_tamamo_escape"         "Tama-Chan's Grand Escape!"
-        "DOTA_Tooltip_ability_tamamo_attribute_polygamist_castration_fist_Description"       "<font color='#58ACFA'>Master Mana Required : 15</font>\nPolygamist Castration Fist can be activated with only F button and whenever Caster's Command Spell is available, whether she is under Crowd Control or not. Also, damage, cooldown, and jump interval are reduced by 50%%." 
+        //====================================
+        //      Assassin(Extra)
+        //====================================
+        "npc_dota_hero_bloodseeker"             "李书文-Assassin(Extra)"
 
-        "DOTA_Tooltip_Ability_tamamo_attribute_severed_fate"         "Severed Fate"
-        "DOTA_Tooltip_ability_tamamo_attribute_severed_fate_Description"       "<font color='#58ACFA'>Master Mana Required : 13</font>\nCasting Mantra creates tether, which breaks when target moves away farther than 1250 range or Mantra disppears. While tether lasts, Fate's Call can be used.\n<font color='#58ACFA'>Fate's Call :</font>Teleports tethered hero to targeted location after delay, increasing up to 1.5 second based on target's distance from Caster."  
+        //Innate
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts"		"中华武术"
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_Description"		"<font color='#58ACFA'>被动：</font>李书文感知空气中的杀意，当敌人在李书文周围释放技能时，便以<font color='#58ACFA'>死之宿命</font>之。\n<font color='#58ACFA'>主动：</font>李书文将他的杀戮欲望集中到一个目标身上，将其<font color='#FF3399'>沉默</font>并标记以死之宿命。\n死之宿命标记使得李书文获得该单位周围的视野，并且在攻击被标记的敌人时有几率致命一击。"
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_Lore"		"眼见为实。实感为启。"
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_search_radius"		"寻敌范围："
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_duration"			"死之宿命标记持续时间："
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_vision_radius"		"死之宿命获得视野范围："
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_critical_rate_percentage"	"%死之宿命致命一击几率："
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_critical_damage"	"%死之宿命致命一击伤害："
+        "DOTA_Tooltip_Ability_lishuwen_martial_arts_silence_duration"	"沉默持续时间："
 
-        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft"         "Witchcraft"
-        "DOTA_Tooltip_ability_tamamo_attribute_witchcraft_Description"       "<font color='#58ACFA'>Master Mana Required : 16</font>\nEightfold Blessing of Amaterasu silences enemies and slows them down by 35%% for 1 second. This effect can only occur once every 10 seconds.\nAlso, Armed Up's cooldown is reduced to 5 seconds and Void Cleft is enabled.\n<font color='#58ACFA'>Void Cleft :</font> Each hit deals damage based on target's missing health. In addition, base attack and Soulstream's radius is increased.\n<font color='#58ACFA'>6th Hit Effect : </font>Stuns target for 0.5 second, and inflicts damage based on target's missing health."  
+        "DOTA_Tooltip_Ability_lishuwen_berserk"		"狂暴"
+        "DOTA_Tooltip_Ability_lishuwen_berserk_Description"	"李书文进入暴怒状态，并变为Berserker职阶，移除自身所有负面效果和群体控制效果。本技能仅当李书文没有被禁用令咒时使用。\n在持续时间内，李书文获得攻击力加成，但是不能释放无二打。"
+        "DOTA_Tooltip_Ability_lishuwen_lishuwen_berserk_duration"	"持续时间："
+
+
+        "DOTA_Tooltip_Ability_lishuwen_concealment"			"气息遮断"
+        "DOTA_Tooltip_Ability_lishuwen_concealment_Description"		"李书文融入自然，进入隐形状态并获得额外的生命值和魔力值回复。此效果在李书文不做任何行动时可以一直持续下去。\n如果李书文以攻击敌方英雄的命令破除隐身状态，他将获得暂时的移动速度提升。"
+        "DOTA_Tooltip_Ability_lishuwen_concealment_Note0"		""
+        "DOTA_Tooltip_Ability_lishuwen_concealment_Lore"		"在圈境中的冥想给予李书文与外界隔绝自身存在感的能力，为无声的杀戮做好准备。"
+        "DOTA_Tooltip_Ability_lishuwen_concealment_heal_percentage"		"%每秒生命值和魔力值回复："
+        "DOTA_Tooltip_Ability_lishuwen_concealment_movespeed_bonus_percentage"	"%移动速度加成："
+        "DOTA_Tooltip_Ability_lishuwen_concealment_movespeed_duration"			"移动速度加成持续时间："
+
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit"			"周天：聚气"
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_Description"	"<font color='#58ACFA'>被动：</font>当释放此技能时，李书文获得暂时性的对魔力和护甲加成。另外，每四次攻击都将在目标身上自动释放中华武术。\n<font color='#58ACFA'>主动：</font>获得攻击速度和移动速度提升。"
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_Lore"		""
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_mr_bonus"			"%对魔力加成："
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_armor_bonus"		"护甲加成："
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_resist_duration"	"持续时间："
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_active_bonus_aspd"	"%主动释放攻击速度提升："
+        "DOTA_Tooltip_Ability_lishuwen_cosmic_orbit_active_bonus_ms"	"%主动释放移动速度加成："
+
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike"		"猛虎硬爬山"
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_Description"		"李书文对敌人连续进行三次猛烈的击打，三拳必须以同一个单位为目标。\n<font color='#58ACFA'>一打：</font>冲刺到目标面前，造成魔法伤害和<font color='#FF3399'>减速</font>。\n<font color='#58ACFA'>二击：</font>身体下按横扫目标，造成魔法伤害并<font color='#FF3399'>打断持续施法</font>。\n<font color='#58ACFA'>三杀：</font>以手肘粉碎对手的要害，造成基于目标最大生命值百分比的纯粹伤害并造成大量<font color='#FF3399'>减速</font>效果。"
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_Lore"	"八极拳的奥义，猛虎的爪子具有辟天裂地的能力，能在须臾中将物体化为齑粉。"
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_first_strike_cast_delay"		"一打施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_first_strike_damage"			"一打伤害："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_first_strike_slow"			"%一打减速："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_first_strike_slow_duration"	"一打减速持续时间："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_second_strike_cast_delay"	"二击施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_second_strike_damage"		"二击伤害："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_third_strike_cast_delay"		"三杀施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_third_strike_damage"			"%三杀伤害："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_third_strike_slow"			"%三杀减速："
+        "DOTA_Tooltip_Ability_lishuwen_fierce_tiger_strike_third_strike_slow_duration"	"三杀减速持续时间："
+
+
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike"		"无二打"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Description"	"李书文用身体猛击敌人要害，短暂<font color='#FF3399'>眩晕</font>目标并造成纯粹伤害。\n数秒后，第二次冲击将损毁目标当前魔力值的一定百分比，并造成等量的魔法伤害（如果目标没有魔力值则造成基于其已损失生命值的伤害），并<font color='#FF3399'>眩晕</font>一段时间。"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Lore"		"李书文用气的涡旋扰乱受害者的经脉，给任何对手都能带来真切的死亡。"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_cast_delay"		"施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_initial_damage"	"初始伤害："
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_stun_duration"	"眩晕时间："
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_delayed_damage_delay"		"第二次冲击延迟时间："
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_delayed_damage_percentage"	"%延迟伤害："
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_delayed_stun_duration"		"第二次冲击后眩晕时间："
+
+        //combo
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike"	"龙之逆鳞"
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Description"	"<font color='#58ACFA'>连击条件：全属性20点以上</font>\n<font color='#58ACFA'>连击序列：3秒内Q-W-E</font>\n李书文连续进行三次致命的步法。\n<font color='#58ACFA'>一打：</font>冲向目标，对路径上所有敌方单位造成魔法伤害和<font color='#FF3399'>减速</font>。\n<font color='#58ACFA'>二击：</font>猛踩地面，对周围的敌方单位造成物理伤害并对具有死之宿命标记的单位造成眩晕。\n<font color='#58ACFA'>三杀：</font>跃起并挥出强有力的一击，<font color='#FF3399'>击飞</font>敌人。李书文随后极速冲刺到每个滞空敌人身后，对其进行多次攻击，造成复合伤害并标记以死之宿命。\n如果李书文没能使用出三杀，则本技能的冷却时间减半。"
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Lore"		""
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Note0"		"每个敌人最多承受4次三杀中的攻击。"
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Note1"		"复合伤害中，物理伤害、魔法伤害和纯粹伤害各占三分之一。"
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_first_strike_cast_delay"		"一打施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_first_strike_damage"			"一打伤害："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_first_strike_slow"				"%一打减速："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_first_strike_slow_duration"		"一打减速持续时间："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_second_strike_cast_delay"		"二击施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_second_strike_damage"			"二击伤害："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_second_strike_radius"			"二击作用范围："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_second_strike_stun_duration"	"二击眩晕时间："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_third_strike_cast_delay"		"三杀施法延迟："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_third_strike_aerial_damage"		"三杀空中连击伤害："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_third_strike_aerial_hit_count"	"三杀空中连击次数："
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_third_strike_knockup_duration"	"三杀击飞持续时间："
+
+        //attribute
+        "DOTA_Tooltip_Ability_lishuwen_attribute_circulatory_shock"		"无二打·休克"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_circulatory_shock_Description"		"提升无二打的伤害，延迟的效果将消耗掉目标身上所有的死之宿命叠加数造成基于其已损失生命值百分比的魔法伤害。"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_circulatory_shock_nss_bonus_damage"	"无二打伤害提升："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_circulatory_shock_damage_per_stack_percentage"	"%每层叠加额外伤害："
+
+        "DOTA_Tooltip_Ability_lishuwen_attribute_improve_martial_arts"	"进阶中华武术"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_improve_martial_arts_Description"		"提升杀意探知范围，死之宿命标记持续时间，并允许对带有死之宿命标记单位的攻击造成基于其最大生命值百分比的魔法伤害。同时使得猛虎硬爬山和无二打对目标标记死之宿命。"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_improve_martial_arts_detection_range"	"杀意探知范围："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_improve_martial_arts_mark_duration"	"死之宿命标记持续时间："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_improve_martial_arts_damage_percentage"	"%攻击造成额外伤害："
+
+        "DOTA_Tooltip_Ability_lishuwen_attribute_dual_class"	"双重职阶"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_dual_class_Description"	"允许使用狂暴。\n<font color='#58ACFA'>狂暴：</font>李书文进入暴怒状态，并变为Berserker职阶，移除自身所有负面效果和群体控制效果。本技能仅当李书文没有被禁用令咒时使用。\n在持续时间内，李书文获得攻击力加成，但是不能释放无二打。"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_dual_class_duration"	"持续时间："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_dual_class_damage_bonus"	"攻击力提升："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_dual_class_Note0"			"狂暴效果不能被驱散。"
+
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain"		"致命连击"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain_Description"	"使得李书文的单一目标技能能够造成基于李书文敏捷值的额外伤害，如果对带有死之宿命标记的单位释放将返还少量消耗的魔力值。同时使得李书文每次释放技能时获得可叠加的攻击速度和移动速度提升。"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain_Note0"			"额外伤害的伤害类型与所使用技能的伤害类型相同。"
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain_agi_ratio"		"敏捷伤害系数："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain_mana_refund"		"魔力值返还量："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain_bonus_aspd"		"%每次叠加攻击速度提升："
+        "DOTA_Tooltip_Ability_lishuwen_attribute_furious_chain_bonus_ms"		"%每次叠加移动速度提升："
 //=============================GENERAL============================================
 		"DOTA_Tooltip_Ability_master_attribute_list"                            "打开宝具强化列表"
 		"DOTA_Tooltip_ability_master_attribute_list_Description"        "消耗御主的魔力以强化从者的宝具。"
@@ -2383,40 +2582,40 @@
 		"DOTA_Tooltip_ability_master_shard_of_prosperity_Description"   "提高御主20点魔力与1点生命上限。"
 
 		"DOTA_Tooltip_Ability_cmd_seal_1"                               "第一令咒"
-		"DOTA_Tooltip_ability_cmd_seal_1_Description"           "<font color='#58ACFA'>御主魔力消耗：2</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n消耗模式：20秒内魔力消耗降为1并移除冷却。"
+		"DOTA_Tooltip_ability_cmd_seal_1_Description"           "<font color='#58ACFA'>御主魔力需求：2</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n消耗模式：20秒内魔力消耗降为1并移除冷却。"
 
 		"DOTA_Tooltip_Ability_cmd_seal_2"                               "第二令咒"
-		"DOTA_Tooltip_ability_cmd_seal_2_Description"           "<font color='#58ACFA'>御主魔力消耗：2</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n冷却刷新：刷新从者所有技能和物品冷却。"
+		"DOTA_Tooltip_ability_cmd_seal_2_Description"           "<font color='#58ACFA'>御主魔力需求：2</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n冷却刷新：刷新从者所有技能和物品冷却。"
 
 		"DOTA_Tooltip_Ability_cmd_seal_3"                               "第三令咒"
-		"DOTA_Tooltip_ability_cmd_seal_3_Description"           "<font color='#58ACFA'>御主魔力消耗：1</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n生命刷新：回复从者所有生命值。"
+		"DOTA_Tooltip_ability_cmd_seal_3_Description"           "<font color='#58ACFA'>御主魔力需求：1</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n生命刷新：回复从者所有生命值。"
 
 		"DOTA_Tooltip_Ability_cmd_seal_4"                               "第四令咒"
-		"DOTA_Tooltip_ability_cmd_seal_4_Description"           "<font color='#58ACFA'>御主魔力消耗：1</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n魔法刷新：回复从者所有魔力值。"
+		"DOTA_Tooltip_ability_cmd_seal_4_Description"           "<font color='#58ACFA'>御主魔力需求：1</font>\n<font color='#FF0000'>御主生命值需求：1</font>\n魔法刷新：回复从者所有魔力值。"
 
 		"DOTA_Tooltip_Ability_master_strength"                          "强化力量"
-		"DOTA_Tooltip_ability_master_strength_Description"              "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高1点力量。"
+		"DOTA_Tooltip_ability_master_strength_Description"              "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高1点力量。"
 
 		"DOTA_Tooltip_Ability_master_agility"                           "强化敏捷"
-		"DOTA_Tooltip_ability_master_agility_Description"               "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高1点敏捷。"
+		"DOTA_Tooltip_ability_master_agility_Description"               "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高1点敏捷。"
 
 		"DOTA_Tooltip_Ability_master_intelligence"                              "强化智力"
-		"DOTA_Tooltip_ability_master_intelligence_Description"          "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高1点智力。"
+		"DOTA_Tooltip_ability_master_intelligence_Description"          "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高1点智力。"
 
 		"DOTA_Tooltip_Ability_master_damage"                            "强化攻击"
-		"DOTA_Tooltip_ability_master_damage_Description"                "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高3点攻击。"
+		"DOTA_Tooltip_ability_master_damage_Description"                "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高3点攻击。"
 
 		"DOTA_Tooltip_Ability_master_armor"                             "强化护甲"
-		"DOTA_Tooltip_ability_master_armor_Description"         "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高2点护甲。"
+		"DOTA_Tooltip_ability_master_armor_Description"         "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高2点护甲。"
 	   
 		"DOTA_Tooltip_Ability_master_health_regen"                              "强化生命回复"
-		"DOTA_Tooltip_ability_master_health_regen_Description"          "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高2点生命回复。"
+		"DOTA_Tooltip_ability_master_health_regen_Description"          "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高2点生命回复。"
 
 		"DOTA_Tooltip_Ability_master_mana_regen"                                "强化魔法回复"
-		"DOTA_Tooltip_ability_master_mana_regen_Description"            "<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高1点每秒魔法回复。"
+		"DOTA_Tooltip_ability_master_mana_regen_Description"            "<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高1点每秒魔法回复。"
 
 		"DOTA_Tooltip_Ability_master_movement_speed"                            "强化移动速度"
-		"DOTA_Tooltip_ability_master_movement_speed_Description"		"<font color='#58ACFA'>御主魔力消耗：1</font>\n为从者提高5点移动速度。"	
+		"DOTA_Tooltip_ability_master_movement_speed_Description"		"<font color='#58ACFA'>御主魔力需求：1</font>\n为从者提高5点移动速度。"	
 		
 //==============================ITEM===============================================
  
@@ -2817,7 +3016,7 @@
         "Fatepedia_playing_against_RedSaber(Extra)_2"   "当喝采声犹如剑戟交错完全充能时尽量避免与尼禄战斗。"
         "Fatepedia_playing_against_RedSaber(Extra)_3"   "尼禄造成的伤害大多是物理伤害，提升护甲可以减少她对你造成的伤害。"
 
-        "Fatepedia_White_Saber_Extra"           "莱昂纳多·贝斯特里欧·哈维-Saber(Extra)"
+        "Fatepedia_White_Saber_Extra"           "莱昂纳多·B·哈维-Saber(Extra)"
         "Fatepedia_playing_as_WhiteSaber(Extra)_1"      "哈维的所有技能都具有进攻性和防御性两种用法，这使得哈维可以适应多种位置，请根据你队伍的需求灵活调整。"
         "Fatepedia_playing_as_WhiteSaber(Extra)_2"      "烈阳之簇拥可以与其他非魔法伤害技能构成致命的连击，例如轮转胜利之剑或佐佐木小次郎的秘剑·燕返。"
         "Fatepedia_playing_as_WhiteSaber(Extra)_3"      "连击技能-超新星爆发最好用在具有极高伤害输出，但自身十分脆弱的从者身上，例如佐佐木小次郎。"

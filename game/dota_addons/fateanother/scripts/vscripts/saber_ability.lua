@@ -300,11 +300,12 @@ function OnMaxStart(keys)
 	caster:FindAbilityByName("saber_excalibur"):StartCooldown(37.0)
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 5.0)
 	ability:ApplyDataDrivenModifier(caster, caster, "saber_max_excalibur_anim_vfx", {})
-	ability:ApplyDataDrivenModifier(caster, caster, "ApplyModifier", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_max_excalibur", {})
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_max_excalibur_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	
 	local max_excal = 
 	{

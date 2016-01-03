@@ -563,7 +563,9 @@ end
 
 function OnFatesCallCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	caster.IsInMarbleAtStart = false
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_fates_call_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	if caster:GetAbsOrigin().y <  -2000 then
 		caster.IsInMarbleAtStart = true
 	end
@@ -711,6 +713,7 @@ end
 
 function OnKickStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local lungeDelay = keys.LungeDelay
 	local damage = keys.Damage
 	local expDamageRatio = keys.ExplosionRatio
@@ -724,6 +727,7 @@ function OnKickStart(keys)
 		local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 		masterCombo:EndCooldown()
 		masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_polygamist_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	end
 
 	if caster.IsEscapeAcquired then

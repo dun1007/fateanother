@@ -203,6 +203,7 @@ end
 
 function OnECStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 
 	-- check if combo can be cast
@@ -760,6 +761,7 @@ end
 
 function OnGilleComboStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local tentacle = caster.GiganticHorror
 	local radius = 1000
 
@@ -768,6 +770,7 @@ function OnGilleComboStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName("gille_larret_de_mort")
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(150)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_larret_de_mort_cooldown", {duration = 150})
 
 	keys.ability:ApplyDataDrivenModifier(caster, tentacle, "modifier_gigantic_horror_freeze", {})
 	-- Damage enemies

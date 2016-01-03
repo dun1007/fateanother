@@ -267,11 +267,30 @@ function Blink(keys)
 	local targetPoint = keys.target_points[1]
 	local newTargetPoint = nil
 
-	if caster:HasModifier("modifier_purge") or caster:HasModifier("modifier_aestus_domus_aurea_lock") or caster:HasModifier("locked") then 
+	if caster:HasModifier("modifier_purge") or caster:HasModifier("locked") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 		keys.ability:EndCooldown()
 		return
 	end
+
+	if caster:HasModifier("modifier_aestus_domus_aurea_lock") then
+		local target = 0
+		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		for i=1, #targets do
+			target = targets[i]
+			if target:GetName() == "npc_dota_hero_lina" then
+				break
+			end
+		end
+		if not IsFacingUnit(caster, target, 180) then
+			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
+			keys.ability:EndCooldown()
+			return
+		end
+	end 
+
+
+
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown()  

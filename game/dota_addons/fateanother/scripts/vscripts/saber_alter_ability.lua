@@ -6,8 +6,12 @@ require("util")
 
 function OnDerangeStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	
+	DSCheckCombo(keys.caster, keys.ability)
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_derange", {} )
+
 	if caster.IsManaBlastAcquired then
 		--[[
 			Fix a bug where user can have more than 7 charges and add VFX
@@ -47,7 +51,15 @@ function OnDerangeStart(keys)
 		-- Update the charge
 		caster:SetModifierStackCount( "modifier_derange_counter", caster, caster.ManaBlastCount )
 	end
-	DSCheckCombo(keys.caster, keys.ability)
+
+	caster:EmitSound("Saber_Alter.Derange")
+end
+
+function OnDerangeAttackStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier( caster, target, "modifier_armor_reduction", {} )
 end
 
 function OnDerangeDeath(keys)
@@ -62,6 +74,7 @@ end
 
 function OnUFStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	local UFCount = 0
 	local bonusDamage = 0
@@ -83,12 +96,26 @@ function OnUFStart(keys)
 		return 0.5
 		end
 	)
+
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_unleashed_ferocity_caster_VFX_controller", {} )
+end
+
+function OnUFCreateVfx(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_unleashed_ferocity_caster_VFX", {} )
+end
+
+function OnDarklightCrit(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_darklight_crit_hit", {} )
 end
 
 function OnMBStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
-
 
 	if caster.IsManaShroudImproved == true then 
 		keys.Radius = keys.Radius + 200 
@@ -129,6 +156,8 @@ function OnMBStart(keys)
 	    DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	    v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 	end
+
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_mana_burst_VFX", {} )
 end
 
 function OnManaBlastHit(keys)
@@ -137,12 +166,14 @@ end
 
 function OnMMBStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_max_mana_burst_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	caster:FindAbilityByName("saber_alter_mana_burst"):StartCooldown(15.0)
 
@@ -163,6 +194,8 @@ function OnMMBStart(keys)
 	for k,v in pairs(targets) do
 	    DoDamage(caster, v, dmg , DAMAGE_TYPE_MAGICAL, 0, keys.ability)
 	end
+
+	ability:ApplyDataDrivenModifier( caster, caster, "modifier_max_mana_burst_VFX", {} )
 end
 
 vortigernCount = 0
@@ -306,12 +339,28 @@ end
     end
 end]]
 
+function OnDexVfxControllerStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "dark_excalibur_vfx_phase_1", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "dark_excalibur_vfx_phase_3", {})
+end
+
+function OnDexVfxPhase2Start(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "dark_excalibur_vfx_phase_2", {})
+end
+
+
 function OnDexStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "pause_sealdisabled", 4.75)
 	keys.Range = keys.Range - keys.Width -- We need this to take end radius of projectile into account
 	print(keys.Range)
 	EmitGlobalSound("Saber.Caliburn")
+	ability:ApplyDataDrivenModifier(caster, caster, "dark_excalibur_VFX_controller", {})
 	local dex = 
 	{
 		Ability = keys.ability,
@@ -461,8 +510,8 @@ function OnImproveManaShroundAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	print("mana shroud acquired" .. hero:GetPhysicalArmorBaseValue())
-	hero:SetPhysicalArmorBaseValue(hero:GetPhysicalArmorBaseValue() + 20) 
+
+	hero:FindAbilityByName("saber_alter_mana_shroud"):SetLevel(2)
 	hero:SetBaseMagicalResistanceValue(25)
 	hero:CalculateStatBonus()
 	hero.IsManaShroudImproved = true

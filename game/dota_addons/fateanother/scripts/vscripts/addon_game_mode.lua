@@ -59,7 +59,7 @@ PRE_ROUND_DURATION = 6
 PRESENCE_ALERT_DURATION = 60
 ROUND_DURATION = 150
 BLESSING_PERIOD = 600
-BLESSING_MANA_REWARD = 10
+BLESSING_MANA_REWARD = 15
 mode = nil
 FATE_VERSION = "Beta Version"
 roundQuest = nil 
@@ -1022,7 +1022,7 @@ function FateGameMode:OnEntityKilled( keys )
                 end
             end
             -- Distribute XP to allies
-            local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
+            local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
             for i=1, #alliedHeroes do
                 if alliedHeroes[i]:IsHero() then
                     alliedHeroes[i]:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/#alliedHeroes, false, false)

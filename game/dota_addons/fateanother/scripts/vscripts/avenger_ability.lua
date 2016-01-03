@@ -77,7 +77,17 @@ function OnDPStart(keys)
 end
 
 function OnMurderStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_murderous_instinct", {})
 end
+
+function OnMurderCrit(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_murderous_instinct_crit_hit", {})
+end
+
 
 function OnMurderLevelUp(keys)
 	local caster = keys.caster
@@ -122,6 +132,7 @@ end
 
 function OnRemainStart(keys)
 	local caster = keys.caster
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_avenger_death_checker", {})
 	local attackmove = {
 		UnitIndex = nil,
 		OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
@@ -265,7 +276,10 @@ end
 
 function OnBloodStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local target = keys.target
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_blood_mark_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+
 	if IsSpellBlocked(keys.target) then return end
 	local initHealth = caster:GetHealth() 
 	local initTargetHealth = target:GetHealth()
@@ -331,6 +345,12 @@ function OnTFEnd(keys)
     caster:SetModelScale(0.8)
 end
 
+function OnDCToggleOn(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_demon_core", {})
+end
+
 
 function OnDCTick(keys)
 	local caster = keys.caster
@@ -359,6 +379,8 @@ function TurnDCOff(keys)
 end
 function OnVergStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_verg_avesta", {})
 	EmitGlobalSound("Avenger.Berg")
 
 end
@@ -383,6 +405,7 @@ end
 
 function OnEndlessStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local resetCounter = 0
 	local initHealth = caster:GetHealth()
 
@@ -390,9 +413,11 @@ function OnEndlessStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_endless_loop_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	EmitGlobalSound("Avenger.Berg")
 	EmitGlobalSound("Hero_Nightstalker.Darkness")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_endless_loop", {})
 	Timers:CreateTimer(3.0, function() 
 		if resetCounter == 4 or not caster:IsAlive() then return end
 	caster:SetHealth(initHealth) 
@@ -438,11 +463,9 @@ end
 
 function OnOverdriveAttack(keys)
 	local caster = keys.caster
-	print("hey attack actually started")
 	if caster:HasModifier("modifier_overdrive_tier1") or caster:HasModifier("modifier_overdrive_tier2") or caster:HasModifier("modifier_overdrive_tier3") or caster:HasModifier("modifier_overdrive_tier4") or caster:HasModifier("modifier_overdrive_tier5") or caster:HasModifier("modifier_overdrive_tier6") then
-		print("overdrive already present")
+
 	else
-		print("applying speed buff")
 		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_overdrive_tier1", {}) 
 	end
 end

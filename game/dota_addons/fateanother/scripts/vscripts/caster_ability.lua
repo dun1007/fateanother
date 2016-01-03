@@ -14,6 +14,7 @@ function OnTerritoryCreated(keys)
 	local caster = keys.caster
 	local pid = caster:GetPlayerID()
 	local ply = caster:GetPlayerOwner()
+	local ability = keys.ability
 	local hero = ply:GetAssignedHero()
 	local targetPoint = keys.target_points[1]
 	territoryAbilHandle = keys.ability
@@ -26,6 +27,8 @@ function OnTerritoryCreated(keys)
 	else
 		caster.IsTerritoryPresent = true
 	end
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_caster_death_checker", {})
 
 	-- Create Workshop at location
 	caster.Territory = CreateUnitByName("caster_5th_territory", targetPoint, true, caster, caster, caster:GetTeamNumber()) 
@@ -487,7 +490,9 @@ end
 
 function OnTerritoryMobilize(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	caster:RemoveModifierByName("modifier_territory_root")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_mobilize", {})
 	caster.IsMobilized = true
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", false, true) 
 
@@ -764,12 +769,15 @@ end
 
 function OnArgosStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if caster.IsArgosImproved then 
 		keys.MaxShield = keys.MaxShield + 150 
 		keys.ShieldAmount = keys.ShieldAmount + 100
 	end
 
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_argos_shield", {})
+	
 	if caster.argosShieldAmount == nil then 
 		caster.argosShieldAmount = keys.ShieldAmount
 	else
