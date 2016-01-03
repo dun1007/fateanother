@@ -621,10 +621,13 @@ Apply the aura modifier to caster
 function OnAmaterasuStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability 
-	caster.AmaterasuCastLoc = caster:GetAbsOrigin()
-	
+	if IsValidEntity(caster.CurrentAmaterasuDummy) or not caster.CurrentAmaterasuDummy:IsNull() then
+		caster.CurrentAmaterasuDummy:RemoveModifierByName("modifier_amaterasu_aura")
+	end
 
+	caster.AmaterasuCastLoc = caster:GetAbsOrigin()
 	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+	caster.CurrentAmaterasuDummy = dummy
 	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=keys.Duration+0.5})
@@ -645,10 +648,17 @@ function OnAmaterasuStart(keys)
     ParticleManager:SetParticleControl(circleFx, 1, Vector(keys.Radius,0,0))
 	local counter = 0
     Timers:CreateTimer(function()
-    	if counter > keys.Duration then return end
-	   	local circleFx = ParticleManager:CreateParticle('particles/custom/tamamo/tamamo_amaterasu_continuous.vpcf', PATTACH_CUSTOMORIGIN, dummy) 
-	    ParticleManager:SetParticleControl(circleFx, 0, dummy:GetOrigin())
-	    ParticleManager:SetParticleControl(circleFx, 1, Vector(keys.Radius,0,0))
+    	if counter > keys.Duration or caster.CurrentAmaterasuDummy:IsNull() or not IsValidEntity(caster.CurrentAmaterasuDummy) then 
+			ParticleManager:DestroyParticle( caster.CurrentAmaterasuParticle, false )
+			ParticleManager:ReleaseParticleIndex( caster.CurrentAmaterasuParticle )
+			return
+    	end
+    	if not dummy:IsNull() and IsValidEntity(dummy) then
+			local circleFx = ParticleManager:CreateParticle('particles/custom/tamamo/tamamo_amaterasu_continuous.vpcf', PATTACH_CUSTOMORIGIN, dummy) 
+			caster.CurrentAmaterasuParticle = circleFx
+		    ParticleManager:SetParticleControl(circleFx, 0, dummy:GetOrigin())
+		    ParticleManager:SetParticleControl(circleFx, 1, Vector(keys.Radius,0,0))
+	   	end
 	    counter = counter+1
 	    return 0.9
     end)

@@ -11818,6 +11818,12 @@
 
 		"Modifiers"
 		{
+			"modifier_hecatic_graea_powered_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 			"modifier_hecatic_graea_powered_anim"
 			{
 				//"IsHidden"			"1"

@@ -1250,6 +1250,7 @@ end
 
 function OnHGPStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
@@ -1268,6 +1269,7 @@ function OnHGPStart(keys)
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_powered_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	
 	if caster.IsHGImproved then
 		barrageRadius = barrageRadius + 300
