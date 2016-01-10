@@ -1183,6 +1183,11 @@
 	   		"02"
 			{
 				"var_type"				"FIELD_INTEGER"
+				"armor_amount"				"25"
+			}
+	   		"03"
+			{
+				"var_type"				"FIELD_INTEGER"
 				"radius"				"600"
 			}
 		}
@@ -1199,6 +1204,18 @@
 				"ScriptFile"	"items"
 				"Function"		"HealingScroll"
 			}
+	    }
+
+	    "Modifiers"
+	    {
+	    	"modifier_healing_scroll"
+	    	{	
+	    		"Duration"		"5.0"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_amount"
+	    		}
+	    	}
 	    }
 	}
 
@@ -1488,7 +1505,7 @@
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
-	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+	    			//"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
 	    		}
 	    	}
 	    }

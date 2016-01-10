@@ -333,6 +333,11 @@ function SpawnFAIllusion(keys, amount)
 		Attributes:ModifyIllusionAttackSpeed(illusion, caster)
 		
 		FindClearSpaceForUnit( illusion, origin, true )
+		ExecuteOrderFromTable({
+			UnitIndex = illusion:entindex(),
+			OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+			Position = illusion:GetAbsOrigin()
+		})
 		
 		-- Create delay for particle to be able to attach properly
 		Timers:CreateTimer( 0.1, function()

@@ -311,12 +311,12 @@ function OnSupernovaStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
-	if target:HasModifier("modifier_invigorating_ray_ally") or target:HasModifier("modifier_invigorating_ray_enemy") then
+	--[[if target:HasModifier("modifier_invigorating_ray_ally") or target:HasModifier("modifier_invigorating_ray_enemy") then
 	else
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Cast Both Q and R on Same Target" } )
 		keys.ability:EndCooldown()
 		return
-	end
+	end]]
 
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_supernova", {})
 	caster.IsComboActive = true

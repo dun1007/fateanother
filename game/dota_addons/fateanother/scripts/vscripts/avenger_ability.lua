@@ -390,6 +390,13 @@ function OnVergTakeDamage(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
+
+	if not attacker:IsHero() and IsValidEntity(attacker:GetPlayerOwner()) then
+		attacker = attacker:GetPlayerOwner():GetAssignedHero()
+	elseif attacker:IsIllusion() then
+		attacker = PlayerResource:GetPlayer(attacker:GetPlayerID()):GetAssignedHero()
+	end
+
 	if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
 	local returnDamage = keys.DamageTaken * keys.Multiplier / 100
 	if caster:GetHealth() ~= 0 then

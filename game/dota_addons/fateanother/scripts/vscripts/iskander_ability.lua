@@ -1032,6 +1032,7 @@ end
 
 function OnAnnihilateStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()

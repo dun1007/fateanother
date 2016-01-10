@@ -485,6 +485,9 @@ end
 
 function HealingScroll(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_healing_scroll", {})
 	local healFx = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600

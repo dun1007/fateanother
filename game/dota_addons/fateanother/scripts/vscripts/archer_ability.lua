@@ -693,7 +693,7 @@ function OnRainStart(keys)
 	-- BP Attack
 	local bpCount = 0 
 	Timers:CreateTimer(2.8, function()
-		if bpCount == 5 then return end
+		if bpCount == 5 or not caster:IsAlive() then return end
 		local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		info.Target = units[math.random(#units)]
 		if info.Target ~= nil then 
