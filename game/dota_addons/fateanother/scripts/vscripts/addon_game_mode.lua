@@ -554,8 +554,8 @@ function FateGameMode:OnHeroInGame(hero)
     hero.bIsDirectTransferEnabled = true -- True by default
     Attributes:ModifyBonuses(hero)
     -- Set music off
-    --local player = PlayerResource:GetPlayer(hero:GetPlayerID())
-    --player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
+    local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+    player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
     
     -- Create Command Seal master for hero
     master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())

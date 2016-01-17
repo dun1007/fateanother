@@ -451,7 +451,7 @@ function OnUBWStart(keys)
 				ParticleManager:SetParticleControl( swordFxIndex, 1, swordVector * 5000 )
 				Timers:CreateTimer(0.1, function()
 					if swordTarget:IsAlive() then
-						DoDamage(caster, swordTarget, 50+caster:GetIntellect()*0.5 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+						DoDamage(caster, swordTarget, 85+caster:GetIntellect()*0.3 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 					end
 					ParticleManager:DestroyParticle( swordFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( swordFxIndex )
