@@ -4880,7 +4880,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"200"
 		
 		"AbilitySpecial"
 		{
@@ -5108,16 +5108,15 @@
 		"AnimationPlaybackRate" 		"1.0"		
 		"AOERadius"						"%radius"
 		
+		
 		"precache"
 		{
-			"particle"			"particles/units/heroes/hero_centaur/centaur_warstomp_shockwave.vpcf"
-			"particle"			"particles/units/heroes/hero_elder_titan/elder_titan_echo_stomp.vpcf"
-			"particle"			"particles/units/heroes/hero_ember_spirit/ember_spirit_hit_shockwave.vpcf"
-			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_low_egset.vpcf"
-			"particle"			"particles/econ/items/earthshaker/egteam_set/hero_earthshaker_egset/earthshaker_echoslam_start_magma_cracks_egset.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
+			"particle"		"particles/custom/berserker/nine_lives/hit.vpcf"
+			"particle"		"particles/custom/berserker/nine_lives/last_hit.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_earth_spirit.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_ogre_magi.vsndevts"
 		}
+		
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -5172,17 +5171,34 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"		"archer_ability"
-				"Function"			"OnUBWNineStart"
+				"ScriptFile"		"berserker_ability"
+				"Function"			"OnNineStart"
 				"Target"			"POINT"
 			}
 		}
 		
 		"Modifiers"
 		{
-			"modifier_ubw_nine_anim"
+			"modifier_dash_anim"
 			{
-				"Duration"			"3.0"
+				"IsHidden"				"1"
+				"OverrideAnimation"     "ACT_DOTA_RUN"
+				"Duration"				"3.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+			}
+
+			"modifier_nine_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.2"
+				"OverrideAnimation"		"ACT_DOTA_ATTACK"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
+				}
 			}
 		}
 	}

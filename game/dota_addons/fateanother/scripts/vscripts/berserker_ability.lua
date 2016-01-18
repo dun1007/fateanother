@@ -286,7 +286,9 @@ function OnNineStart(keys)
 		end
 	end)
 
-	
+	if caster:GetName() == "npc_dota_hero_ember_spirit" then
+		caster:EmitSound("Archer.NineLives")
+	end
 
 
 	--[[Timers:CreateTimer(function()
@@ -309,6 +311,10 @@ function OnNineLanded(caster, ability)
 	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
 		courageAbility = caster:FindAbilityByName("berserker_5th_courage")
 		courageDamage = courageAbility:GetSpecialValueFor("bonus_damage")
+	end
+	local returnDelay = 0.3
+	if caster:GetName() == "npc_dota_hero_ember_spirit" then
+		returnDelay = 0.1
 	end
 	local radius = ability:GetSpecialValueFor("radius")
 	local lasthitradius = ability:GetSpecialValueFor("radius_lasthit")
@@ -340,6 +346,9 @@ function OnNineLanded(caster, ability)
 				else
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim3", {}) 
 				end
+			elseif caster:GetName() == "npc_dota_hero_ember_spirit" then 
+				print("asdasd")
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
 
@@ -378,6 +387,8 @@ function OnNineLanded(caster, ability)
 				elseif caster:GetName() == "npc_dota_hero_sven" then
 					EmitGlobalSound("Lancelot.Roar1" )
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
+				elseif caster:GetName() == "npc_dota_hero_ember_spirit" then
+					caster:EmitSound("Archer.NineFinish") 
 				end
 
 				ParticleManager:SetParticleControl(particle, 2, Vector(1,1,lasthitradius))
@@ -404,7 +415,7 @@ function OnNineLanded(caster, ability)
 				-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
 
 				nineCounter = nineCounter + 1
-				return 0.3
+				return returnDelay
 			end
 
 		end 

@@ -877,9 +877,10 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             if abil:GetAbilityName() == v then IsBScrollIgnored = true break end
         end
         if IsBScrollIgnored == false and target:HasModifier("modifier_b_scroll") then 
+            local originalDamage = dmg - target.BShieldAmount * 1/(1-MR)
             target.BShieldAmount = target.BShieldAmount - dmg * (1-MR)
             if target.BShieldAmount <= 0 then
-                dmg = -target.BShieldAmount
+                dmg = originalDamage
                 target:RemoveModifierByName("modifier_b_scroll")
             else 
                 dmg = 0
@@ -903,12 +904,13 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         elseif dmg_type == DAMAGE_TYPE_MAGICAL then
             reduction = target:GetMagicalArmorValue() 
         end 
+        local originalDamage = dmg - target.rhoShieldAmount * 1/(1-reduction)
         target.rhoShieldAmount = target.rhoShieldAmount - dmg * (1-reduction)
 
         -- if damage is beyond the shield's block amount, update remaining damage
         if target.rhoShieldAmount <= 0 then
             --print("Rho Aias has been broken through by " .. -target.rhoShieldAmount)
-            dmg = -target.rhoShieldAmount
+            dmg = originalDamage
             target:RemoveModifierByName("modifier_rho_aias_shield")
             target.argosShieldAmount = 0
         -- if shield has enough durability, set a flag that the damage is fully absorbed
@@ -945,14 +947,13 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         elseif dmg_type == DAMAGE_TYPE_MAGICAL then
             reduction = target:GetMagicalArmorValue() 
         end 
+        local originalDamage = dmg - target.argosShieldAmount * 1/(1-reduction)
         target.argosShieldAmount = target.argosShieldAmount - dmg * (1-reduction)
         if target.argosShieldAmount <= 0 then
-            print("Argos has been broken through by " .. -target.argosShieldAmount)
-            dmg = -target.argosShieldAmount
+            dmg = originalDamage
             target:RemoveModifierByName("modifier_argos_shield") 
             target.argosShieldAmount = 0
         else
-            print("Argos absorbed full damage")
             dmg = 0
             IsAbsorbed = true
         end
@@ -1000,6 +1001,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         -- if target is not linked, apply damage normally
         else 
             dmgtable.victim = target
+            print(dmg)
             ApplyDamage(dmgtable)
             --print(dmgtable.attacker:GetName() .. " dealt " .. dmgtable.damage .. " damage to " .. dmgtable.victim:GetName())
         end

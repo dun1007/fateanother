@@ -1776,15 +1776,43 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
                 end
             end
             _G.IsPreRound = true
+
             self:LoopOverPlayers(function(ply, plyID)
                 local pHero = ply:GetAssignedHero()
-                if pHero.RespawnPos == SPAWN_POSITION_RADIANT then
+                --[[if pHero.RespawnPos == SPAWN_POSITION_RADIANT then
                     pHero.RespawnPos = SPAWN_POSITION_DIRE
                     --print(pHero:GetName() .. "'s location is set to DIRE spawn")
                 elseif pHero.RespawnPos == SPAWN_POSITION_DIRE then
                     pHero.RespawnPos = SPAWN_POSITION_RADIANT
                     --print(pHero:GetName() .. "'s location is set to RADIANT spawn")
+                end]]
+
+                --[[if RADIANT then
+                    check if RADIANT team 
+                        if round = 0 or 1, 
+                        if odd rounds, set spawn location to RADIANT
+                        else DIRE
+                    end
+                --]]
+                if pHero:GetTeam() == 2 then
+                    if self.nCurrentRound == 0 or self.nCurrentRound == 1 then -- if round = 0 or 1, do not change anything
+                        
+                    elseif self.nCurrentRound % 2 == 0 then -- if even rounds, set spawn to DIRE
+                        pHero.RespawnPos = SPAWN_POSITION_DIRE 
+                    else
+                        pHero.RespawnPos = SPAWN_POSITION_RADIANT
+                    end
+                elseif pHero:GetTeam() == 3 then
+                    if self.nCurrentRound == 0 or self.nCurrentRound == 1 then -- if round = 0 or 1, do not change anything
+                        
+                    elseif self.nCurrentRound % 2 == 0 then -- if even rounds, set spawn to RADIANT
+                        pHero.RespawnPos = SPAWN_POSITION_RADIANT 
+                    else
+                        pHero.RespawnPos = SPAWN_POSITION_DIRE
+                    end
                 end
+
+
                 --print(pHero.RespawnPos)
                 pHero:SetRespawnPosition(pHero.RespawnPos)
                 pHero:RespawnHero(false, false, false)

@@ -870,6 +870,7 @@ function OnUBWRBStart(keys)
 	EmitGlobalSound("Caster.RuleBreaker") 
 end
 
+
 function OnUBWNineStart(keys)
 	local caster = keys.caster
 	local travelCounter = 0
@@ -888,12 +889,13 @@ function OnUBWNineStart(keys)
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
 	Timers:CreateTimer(1.00, function() 
-		if caster:HasModifier("modifier_ubw_nine_anim") == false then
+		if caster:HasModifier("modifier_ubw_nine_anim") == false and not caster.NineLanded then
+			caster:RemoveModifierByName("modifier_ubw_nine_anim")
 			OnUBWNineLanded(caster, keys.ability) 
 		end
 	return end)
 
-	caster:OnPhysicsFrame(function(unit)
+	--[[caster:OnPhysicsFrame(function(unit)
 		local diff = unit:GetAbsOrigin() - origin
 		-- print(distance .. " and " .. diff:Length2D())
 		if diff:Length2D() > distance then
@@ -903,7 +905,7 @@ function OnUBWNineStart(keys)
 			FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 			unit:OnPhysicsFrame(nil)
 		end
-	end)
+	end)]]
 
 	caster:OnPreBounce(function(unit, normal) -- stop the pushback when unit hits wall
 		OnUBWNineLanded(caster, keys.ability)
@@ -913,6 +915,10 @@ function OnUBWNineStart(keys)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 		unit:OnPreBounce(nil)
+		if caster:IsAlive() and not caster.NineLanded then
+			caster:RemoveModifierByName("modifier_ubw_nine_anim")
+			OnUBWNineLanded(caster, keys.ability)
+		end
 	end)
 end
 
