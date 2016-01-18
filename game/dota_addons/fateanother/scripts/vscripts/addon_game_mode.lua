@@ -60,6 +60,8 @@ PRESENCE_ALERT_DURATION = 60
 ROUND_DURATION = 150
 BLESSING_PERIOD = 600
 BLESSING_MANA_REWARD = 15
+SPAWN_POSITION_RADIANT = Vector(-7650, 2200, 900)
+SPAWN_POSITION_DIRE = Vector(7600, 2000, 340)
 mode = nil
 FATE_VERSION = "Beta Version"
 roundQuest = nil 
@@ -550,12 +552,28 @@ function FateGameMode:OnHeroInGame(hero)
     LevelAllAbility(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
     hero.CStock = 10
-    hero.RespawnPos = hero:GetAbsOrigin()     
+
+    Timers:CreateTimer(1.0, function()
+        if hero:GetTeam() == 2 then 
+            if self.nCurrentRound == 0 or self.nCurrentRound == 1 then
+                hero.RespawnPos = SPAWN_POSITION_RADIANT
+            elseif self.nCurrentRound % 2 == 0 then
+                hero.RespawnPos = SPAWN_POSITION_DIRE
+            end
+        elseif hero:GetTeam() == 3 then
+            if self.nCurrentRound == 0 or self.nCurrentRound == 1 then
+                hero.RespawnPos = SPAWN_POSITION_DIRE
+            elseif self.nCurrentRound % 2 == 0 then
+                hero.RespawnPos = SPAWN_POSITION_RADIANT
+            end
+        end 
+        print("Respawn location registered : " .. hero.RespawnPos.x .. " BY " .. hero:GetName() )
+    end)
     hero.bIsDirectTransferEnabled = true -- True by default
     Attributes:ModifyBonuses(hero)
     -- Set music off
     local player = PlayerResource:GetPlayer(hero:GetPlayerID())
-    player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 0)
+    player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 100000)
     
     -- Create Command Seal master for hero
     master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
@@ -888,7 +906,7 @@ end
 -- A non-player entity (necro-book, chen creep, etc) used an ability
 function FateGameMode:OnNonPlayerUsedAbility(keys)
     print('[BAREBONES] OnNonPlayerUsedAbility')
-    PrintTable(keys)
+    --PrintTable(keys)
     
     local abilityname= keys.abilityname
 end
@@ -896,7 +914,7 @@ end
 -- A player changed their name
 function FateGameMode:OnPlayerChangedName(keys)
     print('[BAREBONES] OnPlayerChangedName')
-    PrintTable(keys)
+    --PrintTable(keys)
     
     local newName = keys.newname
     local oldName = keys.oldName
@@ -905,7 +923,7 @@ end
 -- A player leveled up an ability
 function FateGameMode:OnPlayerLearnedAbility( keys)
     print ('[BAREBONES] OnPlayerLearnedAbility')
-    PrintTable(keys)
+    --PrintTable(keys)
     
     local player = EntIndexToHScript(keys.player)
     local abilityname = keys.abilityname
@@ -914,7 +932,7 @@ end
 -- A channelled ability finished by either completing or being interrupted
 function FateGameMode:OnAbilityChannelFinished(keys)
     print ('[BAREBONES] OnAbilityChannelFinished')
-    PrintTable(keys)
+    --PrintTable(keys)
     
     local abilityname = keys.abilityname
     local interrupted = keys.interrupted == 1
@@ -923,7 +941,7 @@ end
 -- A player leveled up
 function FateGameMode:OnPlayerLevelUp(keys)
     print ('[BAREBONES] OnPlayerLevelUp')
-    PrintTable(keys)
+    --PrintTable(keys)
     
     local player = EntIndexToHScript(keys.player)
     local hero = player:GetAssignedHero() 
@@ -938,7 +956,7 @@ end
 -- A player last hit a creep, a tower, or a hero
 function FateGameMode:OnLastHit(keys)
     print ('[BAREBONES] OnLastHit')
-    PrintTable(keys)
+    --PrintTable(keys)
     
     local isFirstBlood = keys.FirstBlood == 1
     local isHeroKill = keys.HeroKill == 1
@@ -949,7 +967,7 @@ end
 -- A player picked a hero
 function FateGameMode:OnPlayerPickHero(keys)
     print ('[BAREBONES] OnPlayerPickHero')
-    PrintTable(keys)
+    --PrintTable(keys)
     local heroClass = keys.hero
     local heroEntity = EntIndexToHScript(keys.heroindex)
     local player = EntIndexToHScript(keys.player)
@@ -958,7 +976,7 @@ end
 -- A player killed another player in a multi-team context
 function FateGameMode:OnTeamKillCredit(keys)
     print ('[BAREBONES] OnTeamKillCredit')
-    PrintTable(keys)
+    --PrintTable(keys)
     local p = keys.splitscreenplayer 
     local killerPlayer = PlayerResource:GetPlayer(keys.killer_userid)
     local victimPlayer = PlayerResource:GetPlayer(keys.victim_userid)
@@ -970,7 +988,7 @@ end
 -- An entity died
 function FateGameMode:OnEntityKilled( keys )
     print( '[BAREBONES] OnEntityKilled Called' )
-    PrintTable( keys )
+    --PrintTable( keys )
     
     -- The Unit that was Killed
     local killedUnit = EntIndexToHScript( keys.entindex_killed )
@@ -1633,6 +1651,8 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
     CreateUITimer(("Round " .. self.nCurrentRound), 0, "round_timer" .. self.nCurrentRound)
     CreateUITimer("Pre-Round", 0, "pregame_timer")
+
+    -- clean up marbles and pause heroes for 5 seconds
     self:LoopOverPlayers(function(ply, plyID)
         if ply:GetAssignedHero():IsAlive() then
             giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
@@ -1647,6 +1667,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
         end
     end)
+
     -- Remove all units
     local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
     local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
@@ -1668,6 +1689,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             end
         end
     end
+
     -- decide the winner
     if winner == 0 then 
         GameRules:SendCustomMessage("#Fate_Round_Winner_1", 0, 0)
@@ -1693,7 +1715,16 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     winnerEventData.direScore = self.nDireScore
     CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
     GameRules:SendCustomMessage("#Fate_Round_Gold_Note", 0, 0)
-    
+    self:LoopOverPlayers(function(ply, plyID)
+        local pHero = ply:GetAssignedHero()
+        -- radiant = 2(equivalent to 0)
+        -- dire = 3(equivalent to 1)
+        if pHero:GetTeam() - 2 ~= winnerEventData.winnerTeam then
+            pHero.MasterUnit:GiveMana(1)
+            pHero.MasterUnit2:SetMana(pHero.MasterUnit:GetMana())
+            --print("granted 1 mana to " .. pHero:GetName())
+        end
+    end)
     -- Set score 
     mode:SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireScore )
     mode:SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantScore )
@@ -1727,7 +1758,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             for k,v in pairs(units) do
                 if not v:IsRealHero() and IsValidEntity(v) then
                     for i=1, #DoNotKillAtTheEndOfRound do
-                        print(v:GetUnitName())
+                        --print(v:GetUnitName())
                         if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
                             v:ForceKill(true)
                         end
@@ -1737,7 +1768,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             for k,v in pairs(units2) do
                 if not v:IsRealHero() and IsValidEntity(v) then
                     for i=1, #DoNotKillAtTheEndOfRound do
-                        print(v:GetUnitName())
+                        --print(v:GetUnitName())
                         if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
                             v:ForceKill(true)
                         end
@@ -1746,8 +1777,18 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             end
             _G.IsPreRound = true
             self:LoopOverPlayers(function(ply, plyID)
-                ply:GetAssignedHero():RespawnHero(false, false, false)
-                ProjectileManager:ProjectileDodge(ply:GetAssignedHero())
+                local pHero = ply:GetAssignedHero()
+                if pHero.RespawnPos == SPAWN_POSITION_RADIANT then
+                    pHero.RespawnPos = SPAWN_POSITION_DIRE
+                    --print(pHero:GetName() .. "'s location is set to DIRE spawn")
+                elseif pHero.RespawnPos == SPAWN_POSITION_DIRE then
+                    pHero.RespawnPos = SPAWN_POSITION_RADIANT
+                    --print(pHero:GetName() .. "'s location is set to RADIANT spawn")
+                end
+                --print(pHero.RespawnPos)
+                pHero:SetRespawnPosition(pHero.RespawnPos)
+                pHero:RespawnHero(false, false, false)
+                ProjectileManager:ProjectileDodge(pHero)
             end)
             self:InitializeRound()
         end
