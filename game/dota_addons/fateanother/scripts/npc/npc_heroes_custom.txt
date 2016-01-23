@@ -335,6 +335,7 @@
 	{
 		"override_hero"			"npc_dota_hero_doom_bringer"
 		"Model"					"models/berserker/berserker.vmdl"
+		"ModelScale"			"1.00"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		//"HeroID"					"116"
 		"Enabled"					"1"	
