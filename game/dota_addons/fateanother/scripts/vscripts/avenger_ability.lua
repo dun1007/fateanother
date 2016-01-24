@@ -305,6 +305,7 @@ function OnTFStart(keys)
 	--local a1 = caster:GetAbilityByIndex(0)
 	--local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
+    caster:GiveMana(keys.BonusMana)
     if caster.IsBloodMarkAcquired then 
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
     else

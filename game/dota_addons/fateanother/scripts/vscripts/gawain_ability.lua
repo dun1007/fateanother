@@ -252,12 +252,16 @@ function OnEmbraceStart(keys)
 	GenerateArtificialSun(caster, target:GetAbsOrigin())
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
+		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_ally",{})
+
 		-- process team effect
 		local healthDiff = target:GetMaxHealth() - target:GetHealth()
-		local healAmount = healthDiff * target:GetMagicalArmorValue()
-		print(healAmount)
-		target:SetHealth(target:GetHealth() + healAmount)
-		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_ally",{})
+		local targetMR = target:GetMagicalArmorValue()
+		local targetActualMR = targetMR + (1-targetMR)*targetMR -- calculates actual MR of target after application of Sun's Embrace
+		--print(targetActualMR)
+		local healAmount = healthDiff * targetActualMR  
+		target:Heal(healAmount, caster)
+
 		if caster.IsSunlightAcquired then
 			keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_suns_embrace_sunlight_bonus",{})
 		end

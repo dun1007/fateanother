@@ -1001,7 +1001,6 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         -- if target is not linked, apply damage normally
         else 
             dmgtable.victim = target
-            print(dmg)
             ApplyDamage(dmgtable)
             --print(dmgtable.attacker:GetName() .. " dealt " .. dmgtable.damage .. " damage to " .. dmgtable.victim:GetName())
         end

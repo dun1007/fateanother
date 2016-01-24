@@ -133,10 +133,15 @@ function OnCosmicOrbitAttackLanded(keys)
 	if caster.nBaseAttackCount == nil then
 		caster.nBaseAttackCount = 0
 	end
+
+
 	if caster.nBaseAttackCount == 3 then
-		keys.Duration = 1.5
-		OnMartialStart(keys)
-		caster.nBaseAttackCount = 0
+		if not caster:HasModifier("modifier_lishuwen_cosmic_orbit_silence_cooldown") then
+			keys.Duration = 1.5
+			OnMartialStart(keys)
+			caster.nBaseAttackCount = 0
+			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_lishuwen_cosmic_orbit_silence_cooldown", {}) 
+		end
 	else
 		caster.nBaseAttackCount = caster.nBaseAttackCount + 1
 	end

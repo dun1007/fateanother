@@ -679,12 +679,6 @@ function OnArcaneWrathStart(keys)
 	end)
 end
 
---[[
-	Author: Dun1007
-	Date: 8.25.2015.
-	
-	Allows Caster to mount on Dragon
-]]
 function OnMountStart(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
@@ -713,6 +707,10 @@ function OnMountStart(keys)
 	end)
 end
 
+function RemoveSacrificeModifier(keys)
+	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo")
+	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo_channeling")
+end
 --[[
 	Author: Dun1007
 	Date: 8.25.2015.
