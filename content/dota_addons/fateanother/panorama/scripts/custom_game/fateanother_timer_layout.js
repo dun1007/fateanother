@@ -35,7 +35,7 @@ function CreateTimer(data) {
 	timerPanel = $.CreatePanel("Panel", parent, "");
 	timerTable[desc] = timerPanel;
 	timerPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_timer.xml", false, false );
-	timerPanel.data().SetTimer(message, duration);
+	timerPanel.SetTimer(message, duration);
 }
 
 

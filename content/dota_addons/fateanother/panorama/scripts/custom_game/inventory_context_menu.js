@@ -7,19 +7,19 @@ function DismissMenu()
 
 function OnSell()
 {
-	Items.LocalPlayerSellItem( $.GetContextPanel().data().Item );
+	Items.LocalPlayerSellItem( $.GetContextPanel().Item );
 	DismissMenu();
 }
 
 function OnDisassemble()
 {
-	Items.LocalPlayerDisassembleItem( $.GetContextPanel().data().Item );
+	Items.LocalPlayerDisassembleItem( $.GetContextPanel().Item );
 	DismissMenu();
 }
 
 function OnShowInShop()
 {
-	var itemName = Abilities.GetAbilityName( $.GetContextPanel().data().Item );
+	var itemName = Abilities.GetAbilityName( $.GetContextPanel().Item );
 	
 	var itemClickedEvent = {
 		"link": ( "dota.item." + itemName ),
@@ -32,18 +32,18 @@ function OnShowInShop()
 
 function OnDropFromStash()
 {
-	Items.LocalPlayerDropItemFromStash( $.GetContextPanel().data().Item );
+	Items.LocalPlayerDropItemFromStash( $.GetContextPanel().Item );
 	DismissMenu();
 }
 
 function OnMoveToStash()
 {
-	Items.LocalPlayerMoveItemToStash( $.GetContextPanel().data().Item );
+	Items.LocalPlayerMoveItemToStash( $.GetContextPanel().Item );
 	DismissMenu();
 }
 
 function OnAlert()
 {
-	Items.LocalPlayerItemAlertAllies( $.GetContextPanel().data().Item );
+	Items.LocalPlayerItemAlertAllies( $.GetContextPanel().Item );
 	DismissMenu();
 }

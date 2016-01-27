@@ -52,7 +52,7 @@ function UpdateTimer(message, duration)
 
 (function()
 {
-	$.GetContextPanel().data().SetTimer = SetTimer;
+	$.GetContextPanel().SetTimer = SetTimer;
 	//GameEvents.Subscribe( "dota_ability_changed", RebuildAbilityUI ); // major rebuild
 	//AutoUpdateAbility(); // initial update of dynamic state
 })();

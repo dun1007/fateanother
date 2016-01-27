@@ -13,7 +13,7 @@ function UpdateInventory()
 	{
 		var inventoryPanel = m_InventoryPanels[i]
 		var item = Entities.GetItemInSlot( queryUnit, i );
-		inventoryPanel.data().SetItem( queryUnit, item );
+		inventoryPanel.SetItem( queryUnit, item );
 	}
 }
 
@@ -44,7 +44,7 @@ function CreateInventoryPanels()
 
 		var inventoryPanel = $.CreatePanel( "Panel", parentPanel, "" );
 		inventoryPanel.BLoadLayout( "file://{resources}/layout/custom_game/inventory_item.xml", false, false );
-		inventoryPanel.data().SetItemSlot( i );
+		inventoryPanel.SetItemSlot( i );
 
 		m_InventoryPanels.push( inventoryPanel );
 	}

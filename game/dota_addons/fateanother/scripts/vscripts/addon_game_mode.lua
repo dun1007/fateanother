@@ -634,73 +634,16 @@ function FateGameMode:OnHeroInGame(hero)
         hero:SetBaseIntellect(20) 
     end
     
-    --hero:NotifyWearablesOfModelChange(false)
-    --hero:ManageModelChanges()
-
-    --[[local model = hero:FirstMoveChild()
-    while model ~= nil do
-        if model:GetClassname() == "dota_item_wearable" then
-            model:AddEffects(EF_NODRAW) -- Set model hidden
-        end
-        model = model:NextMovePeer()
-    end]]
-    --[[UTIL_MessageText(hero:GetPlayerID()+1,"IMPORTANT : You can provide your hero with item support, customize your hero and cast powerful Command Seal as a Master, located on the right bottom of the map. ",255,255,255,255)
-    Timers:CreateTimer(30.0, function() 
-        UTIL_ResetMessageText(hero:GetPlayerID()+1)
-    end) ]]
-    
-    
-    --[[ -- This is needed because model is somehow not yet rendered while this is called, so we need a little bit of delay
-    Timers:CreateTimer( 0.5, function()
-        
-        -- Setup variables\
-        local model_name = ""
-        
-        -- Check if npc is hero
-        if IsValidEntity(hero) then
-            if not hero:IsHero() then return end
-        else return 
-        end
-        
-        -- Getting model name
-        if model_lookup[ hero:GetName() ] ~= nil and hero:GetModelName() ~= model_lookup[ hero:GetName() ] then
-            model_name = model_lookup[ hero:GetName() ]
-            -- print( "Swapping in: " .. model_name )
-        else
-            return nil
-        end
-        
-        -- Check if it's correct format
-        --if hero:GetModelName() ~= "models/development/invisiblebox.vmdl" then return nil end
-        
-        
-        -- Never got changed before
-        local toRemove = {}
-        local wearable = hero:FirstMoveChild()
-        while wearable ~= nil do
-            if wearable:GetClassname() == "dota_item_wearable" then
-                -- print( "Removing wearable: " .. wearable:GetModelName() )
-                table.insert( toRemove, wearable )
-            end
-            wearable = wearable:NextMovePeer()
-        end
-        
-        -- Remove wearables
-        for k, v in pairs( toRemove ) do
-            print("removing " .. v:GetName())
-            --v:SetModel( "models/development/invisiblebox.vmdl" )
-            v:RemoveSelf()
-        end
-        
-        -- Set model
-        hero:SetModel( model_name )
-        hero:SetOriginalModel( model_name ) -- This is needed because when state changes, model will revert back
-        hero:RespawnUnit() 
-    end)]]
     -- Wait 1 second for loadup
     Timers:CreateTimer(1.0, function()
+        local children = hero:GetChildren()
+        for k,child in pairs(children) do
+           if child:GetClassname() == "dota_item_wearable" then
+               child:RemoveSelf()
+           end
+        end
         print("victory condition set")
-        CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
+        CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Display victory condition for player
     end)
 end
 

@@ -49,7 +49,7 @@ function CreateAbilityPanel(panel, unit, abilityIndex)
 	var ability = Entities.GetAbility(unit, abilityIndex); 
 	var abilityPanel = $.CreatePanel("Panel", panel, "");
 	abilityPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_ability.xml", false, false );
-	abilityPanel.data().SetAbility(ability, unit, Game.IsInAbilityLearnMode());
+	abilityPanel.SetAbility(ability, unit, Game.IsInAbilityLearnMode());
 }
 
 function UpdateStatPanel(data)
