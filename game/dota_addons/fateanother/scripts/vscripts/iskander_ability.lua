@@ -4,13 +4,13 @@ require("util")
 function OnIskanderCharismaStart(keys)
 	local caster = keys.caster
 	StartCharismaTimer(keys)
-	print("charisma start")
+	--print("charisma start")
 end
 
 function OnIskanderCharismaDeath(keys)
 	local caster = keys.caster
 	Timers:RemoveTimer("charisma_passive_timer")
-	print("charisma end")
+	--print("charisma end")
 end
 
 function OnIskanderCharismaRespawn(keys)
@@ -351,7 +351,7 @@ function OnChariotChargeStart(keys)
 	caster:EmitSound("Iskander.Charge")
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 2.0)
 	local currentMS = caster:GetMoveSpeedModifier(caster:GetBaseMoveSpeed())
-	print(currentMS)
+	--print(currentMS)
 
 	local unit = Physics:Unit(caster)
 	caster:SetPhysicsFriction(0)
@@ -472,8 +472,8 @@ function OnAOTKCastStart(keys)
 	EmitGlobalSound("Iskander.AOTK")
 
 	-- particle
-	local aotkParticle = ParticleManager:CreateParticle("particles/custom/iskandar/iskandar_aotk.vpcf", PATTACH_ABSORIGIN, caster)
-	ParticleManager:SetParticleControl(aotkParticle, 0, caster:GetAbsOrigin())
+	--CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", caster:GetAbsOrigin(), 0)
+	CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()})
 
 	local firstRowPos = aotkCenter + Vector(300, -500,0) 
 	local maharajaPos = aotkCenter + Vector(600, 0,0)
@@ -520,15 +520,6 @@ function OnAOTKCastStart(keys)
 		return 0.1
 	end)
 	
-	Timers:CreateTimer( 2.0, function()
-			ParticleManager:DestroyParticle(aotkParticle, false)
-			ParticleManager:ReleaseParticleIndex(aotkParticle)
-			return nil
-		end
-	)
-	
-
-
 	Timers:CreateTimer({
 		endTime = 2,
 		callback = function()
@@ -724,7 +715,7 @@ end
 function OnAOTKSoldierDeath(keys)
 	local caster = keys.caster
 	caster.AOTKSoldierCount = caster.AOTKSoldierCount - 1
-	print("Current number of remaining soldiers : " .. caster.AOTKSoldierCount)
+	--print("Current number of remaining soldiers : " .. caster.AOTKSoldierCount)
 	if caster.AOTKSoldierCount < keys.SustainLimit and caster.IsAOTKActive then
 		EndAOTK(caster)
 	end
@@ -779,7 +770,7 @@ function EndAOTK(caster)
 	end
 
     for i=1, #units do
-    	print("removing units in AOTK")
+    	--print("removing units in AOTK")
     	if IsValidEntity(units[i]) and not units[i]:IsNull() then 
 	    	-- Disjoint all projectiles
 	    	ProjectileManager:ProjectileDodge(units[i])
@@ -885,7 +876,7 @@ function ModifySoldierHealth(keys)
 	local ply = caster:GetPlayerOwner() 
 	local newHP = unit:GetMaxHealth() + keys.HealthBonus
 	local newcurrentHP = unit:GetHealth() + keys.HealthBonus
-	print(newHP .. " " .. newcurrentHP)
+	--print(newHP .. " " .. newcurrentHP)
 
 	if caster.IsBeyondTimeAcquired then 
 		newHP = newHP + caster:GetMaxHealth() * 30/100

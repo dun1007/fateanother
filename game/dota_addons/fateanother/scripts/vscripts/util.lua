@@ -859,6 +859,16 @@ function CreateUITimer(message, duration, description)
     CustomGameEventManager:Send_ServerToAllClients( "display_timer", timerData ) 
 end
 
+-- Create a particle that is visible by anyone in both teams
+-- example: CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()})
+function CreateGlobalParticle(particle_name, controlpoints)
+    for i=2,3 do
+        local particle = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_CUSTOMORIGIN, nil, i)
+        for k,v in pairs(controlpoints) do
+            ParticleManager:SetParticleControl(particle, k, v)
+        end
+    end
+end
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 

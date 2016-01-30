@@ -404,7 +404,7 @@ end
 
 function LoopThroughAttr(hero, attrTable)
     for i=1, #attrTable do
-        print("Added " .. attrTable[i])
+        --print("Added " .. attrTable[i])
         hero:AddAbility(attrTable[i])
     end
     if #attrTable-1 == 4 then
