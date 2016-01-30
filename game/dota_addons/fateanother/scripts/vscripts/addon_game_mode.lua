@@ -1319,14 +1319,39 @@ function FateGameMode:ModifyGoldFilter(filterTable)
 end
 
 function FateGameMode:TakeDamageFilter(filterTable)
-
+    PrintTable(filterTable)
     local damage = filterTable.damage
     local damageType = filterTable.damagetype_const
     local attacker = EntIndexToHScript(filterTable.entindex_attacker_const)
+    local inflictor = nil
+    if filterTable.entindex_inflictor_const then
+        inflictor = EntIndexToHScript(filterTable.entindex_inflictor_const) -- the skill name
+    end
     local victim = EntIndexToHScript(filterTable.entindex_victim_const)
+    --if inflictor then print(inflictor:GetName()) end
+
+    if victim:HasModifier("modifier_verg_avesta") then
+
+        --[[if not attacker:IsHero() and IsValidEntity(attacker:GetPlayerOwner()) then
+            attacker = attacker:GetPlayerOwner():GetAssignedHero()
+        elseif attacker:IsIllusion() then
+            attacker = PlayerResource:GetPlayer(attacker:GetPlayerID()):GetAssignedHero()
+        end
+
+        if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
+        local returnDamage = keys.DamageTaken * keys.Multiplier / 100
+        if caster:GetHealth() ~= 0 then
+            DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, keys.ability, false)
+            if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
+            local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
+            ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
+        end]]
+    end
 
     if victim:HasModifier("modifier_avalon") and damageType == 1 then
     end
+
+
     return true
 end
 

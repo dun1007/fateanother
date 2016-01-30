@@ -449,10 +449,10 @@ function OnEndlessTakeDamage(keys)
 	if caster.IsDIAcquired then multiplier = multiplier + 25 end
 	local returnDamage = keys.DamageTaken * multiplier / 100
 
-	-- Set master's combo cooldown
+	--[[-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
-	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))]]
 
 	if caster:GetHealth() ~= 0 then
 		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, verg, false)
