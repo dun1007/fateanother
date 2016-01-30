@@ -400,7 +400,7 @@ function FateGameMode:OnDisconnect(keys)
     local userid = keys.userid
     local playerID = self.vPlayerList[userid]
     print(name .. " just got disconnected from game! Player ID: " .. playerID)
-    PlayerResource:GetSelectedHeroEntity(playerID):ForceKill(false)
+    --PlayerResource:GetSelectedHeroEntity(playerID):ForceKill(false)
     --table.remove(self.vPlayerList, userid) -- remove player from list
 end
 
@@ -431,8 +431,8 @@ function FateGameMode:PlayerSay(keys)
     -- Below two commands are solely for test purpose, not to be used in normal games
     if text == "-testsetup" then
         if Convars:GetBool("sv_cheats") then
-            self:LoopOverPlayers(function(player, playerID)
-                local hero = player:GetAssignedHero()
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                local hero = playerHero
                 hero.MasterUnit:SetMana(1000)
                 hero.MasterUnit2:SetMana(1000)
                 hero.MasterUnit:SetMaxHealth(1000)
@@ -469,8 +469,8 @@ function FateGameMode:PlayerSay(keys)
         hr:RemoveModifierByName("round_pause")
     end]]
         if Convars:GetBool("sv_cheats") then 
-            self:LoopOverPlayers(function(player, playerID)
-                local hr = player:GetAssignedHero()
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                local hr = playerHero
                 hr:RemoveModifierByName("round_pause")
                 --print("Looping through player" .. ply)
             end)
@@ -1030,9 +1030,9 @@ function FateGameMode:OnEntityKilled( keys )
         
         local nRadiantAlive = 0
         local nDireAlive = 0
-        self:LoopOverPlayers(function(player, playerID)
-            if player:GetAssignedHero():IsAlive() then
-                if player:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
+        self:LoopOverPlayers(function(player, playerID, playerHero)
+            if playerHero:IsAlive() then
+                if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
                     nRadiantAlive = nRadiantAlive + 1
                 else 
                     nDireAlive = nDireAlive + 1
@@ -1443,8 +1443,8 @@ function FateGameMode:InitializeRound()
             endTime = BLESSING_PERIOD,
             callback = function()
                 CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
-                self:LoopOverPlayers(function(player, playerID)
-                    local hero = player:GetAssignedHero()
+                self:LoopOverPlayers(function(player, playerID, playerHero)
+                    local hero = playerHero
                     hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
                     hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+BLESSING_MANA_REWARD) 
                     hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
@@ -1483,8 +1483,8 @@ function FateGameMode:InitializeRound()
     }
     
     -- Set up heroes for new round
-    self:LoopOverPlayers(function(ply, plyID)
-        local hero = ply:GetAssignedHero()
+    self:LoopOverPlayers(function(ply, plyID, playerHero)
+        local hero = playerHero
         
         ResetAbilities(hero)
         giveUnitDataDrivenModifier(hero, hero, "round_pause", PRE_ROUND_DURATION) -- Pause all heroes
@@ -1493,7 +1493,7 @@ function FateGameMode:InitializeRound()
         
         -- Grant gold 
         if hero:GetGold() < 5000 then -- 
-            print("[FateGameMode] " .. hero:GetName() .. " gained 3000 gold at the start of round")
+            --print("[FateGameMode] " .. hero:GetName() .. " gained 3000 gold at the start of round")
             if hero.AvariceCount ~= nil then
                 hero:ModifyGold(3000 + hero.AvariceCount * 1500, true, 0) 
             else
@@ -1519,8 +1519,8 @@ function FateGameMode:InitializeRound()
             --FireGameEvent('cgm_timer_display', { timerMsg = ("Round " .. self.nCurrentRound), timerSeconds = 151, timerEnd = true, timerPosition = 0})
             --roundQuest = StartQuestTimer("roundTimerQuest", "Round " .. self.nCurrentRound, 150)
             
-            self:LoopOverPlayers(function(player, playerID)
-                player:GetAssignedHero():RemoveModifierByName("round_pause")
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                playerHero:RemoveModifierByName("round_pause")
             end)
             
             FireGameEvent("show_center_message",msg)
@@ -1556,9 +1556,9 @@ function FateGameMode:InitializeRound()
             local nRadiantAlive = 0
             local nDireAlive = 0
             -- Check how many people are alive in each team
-            self:LoopOverPlayers(function(ply, plyID)
-                if ply:GetAssignedHero():IsAlive() then -- BUGG(C++)
-                    if ply:GetAssignedHero():GetTeam() == DOTA_TEAM_GOODGUYS then
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                if playerHero:IsAlive() then -- BUGG(C++)
+                    if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
                         nRadiantAlive = nRadiantAlive + 1
                     else 
                         nDireAlive = nDireAlive + 1
@@ -1601,18 +1601,18 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     CreateUITimer("Pre-Round", 0, "pregame_timer")
 
     -- clean up marbles and pause heroes for 5 seconds
-    self:LoopOverPlayers(function(ply, plyID)
-        if ply:GetAssignedHero():IsAlive() then
-            giveUnitDataDrivenModifier(ply:GetAssignedHero(), ply:GetAssignedHero(), "round_pause", 5.0)
+    self:LoopOverPlayers(function(player, playerID, playerHero)
+        if playerHero:IsAlive() then
+            giveUnitDataDrivenModifier(playerHero, playerHero, "round_pause", 5.0)
         end
-        if ply:GetAssignedHero():GetName() == "npc_dota_hero_ember_spirit" and ply:GetAssignedHero():HasModifier("modifier_ubw_death_checker") then
-            ply:GetAssignedHero():RemoveModifierByName("modifier_ubw_death_checker")
+        if playerHero:GetName() == "npc_dota_hero_ember_spirit" and playerHero:HasModifier("modifier_ubw_death_checker") then
+            playerHero:RemoveModifierByName("modifier_ubw_death_checker")
         end
-        if ply:GetAssignedHero():GetName() == "npc_dota_hero_chen" and ply:GetAssignedHero():HasModifier("modifier_army_of_the_king_death_checker") then
-            ply:GetAssignedHero():RemoveModifierByName("modifier_army_of_the_king_death_checker")
+        if playerHero:GetName() == "npc_dota_hero_chen" and playerHero:HasModifier("modifier_army_of_the_king_death_checker") then
+            playerHero:RemoveModifierByName("modifier_army_of_the_king_death_checker")
         end
-        if ply:GetAssignedHero():GetName() == "npc_dota_hero_doom_bringer" then
-            ply:GetAssignedHero():SetRespawnPosition(ply:GetAssignedHero().RespawnPos)
+        if playerHero:GetName() == "npc_dota_hero_doom_bringer" then
+            playerHero:SetRespawnPosition(playerHero.RespawnPos)
         end
     end)
 
@@ -1663,8 +1663,8 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     winnerEventData.direScore = self.nDireScore
     CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
     GameRules:SendCustomMessage("#Fate_Round_Gold_Note", 0, 0)
-    self:LoopOverPlayers(function(ply, plyID)
-        local pHero = ply:GetAssignedHero()
+    self:LoopOverPlayers(function(player, playerID, playerHero)
+        local pHero = playerHero
         -- radiant = 2(equivalent to 0)
         -- dire = 3(equivalent to 1)
         if pHero:GetTeam() - 2 ~= winnerEventData.winnerTeam then
@@ -1725,8 +1725,8 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             end
             _G.IsPreRound = true
 
-            self:LoopOverPlayers(function(ply, plyID)
-                local pHero = ply:GetAssignedHero()
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                local pHero = playerHero
                 --[[if pHero.RespawnPos == SPAWN_POSITION_RADIANT then
                     pHero.RespawnPos = SPAWN_POSITION_DIRE
                     --print(pHero:GetName() .. "'s location is set to DIRE spawn")
@@ -1774,12 +1774,15 @@ end
 
 function FateGameMode:LoopOverPlayers(callback)
     for i=0, 11 do
+        local playerID = i
         local player = PlayerResource:GetPlayer(i)
-        if player ~= nil and player:GetAssignedHero() ~= nil then 
-            if callback(player, player:GetPlayerID()) then
+        local playerHero = PlayerResource:GetSelectedHeroEntity(playerID)
+        if playerHero then
+            --print("Looping through hero " .. playerHero:GetName())
+            if callback(player, playerID, playerHero) then
                 break
-            end 
-        end
+            end
+        end 
     end
 end
 

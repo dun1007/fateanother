@@ -457,8 +457,9 @@ end
 function IsTeamWiped(hero)
 	for i=0, 11 do
 		local player = PlayerResource:GetPlayer(i)
-		if player ~= nil then 
-			servant = PlayerResource:GetPlayer(i):GetAssignedHero()
+		local playerHero = PlayerResource:GetSelectedHeroEntity(i)
+		if playerHero ~= nil then 
+			servant = playerHero
 			if servant:GetTeam() == hero:GetTeam() and servant:IsAlive() then 
 				return false
 			end

@@ -998,12 +998,12 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             for i=1, #target.linkTable do
                 -- do ApplyDamage if it's primary target since the shield processing is already done
                 if target.linkTable[i] == target then
-                    print("Damage dealt to primary target : " .. dmgtable.damage .. " dealt by " .. dmgtable.attacker:GetName())
+                    --print("Damage dealt to primary target : " .. dmgtable.damage .. " dealt by " .. dmgtable.attacker:GetName())
                     ApplyDamage(dmgtable)                
                 -- for other linked targets, we need DoDamage
                 else
                     if target.linkTable[i] ~= nil then 
-                        print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. damageToAllies )
+                        --print("Damage dealt to " .. target.linkTable[i]:GetName() .. " by link : " .. damageToAllies )
                         DoDamage(source, target.linkTable[i], damageToAllies,  DAMAGE_TYPE_MAGICAL, 0, abil, true)
                     end 
                 end
@@ -1299,14 +1299,14 @@ function LogDeepPrint(debugInstance, prefix)
 end
 
 function LoopOverHeroes(callback)
-  for i=0, 11 do
-    local player = PlayerResource:GetPlayer(i)
-    if player ~= nil and player:GetAssignedHero() ~= nil then 
-      if callback(player:GetAssignedHero()) then
-        break
-      end 
+    for i=0, 11 do
+        local hero = PlayerResource:GetSelectedHeroEntity(i)
+        if hero ~= nil then 
+            if callback(hero) then
+                break
+            end 
+        end
     end
-  end
 end
 
 function LoopOverPlayers(callback)
@@ -1325,7 +1325,7 @@ function RemoveHeroFromLinkTables(targethero)
         if hero.linkTable ~= nil then
             for i=1, #hero.linkTable do
                 if hero.linkTable[i] == targethero then
-                    print("Removed " .. hero.linkTable[i]:GetName() .. " from table")
+                    --print("Removed " .. hero.linkTable[i]:GetName() .. " from table")
                     table.remove(hero.linkTable, i)
                 end
             end

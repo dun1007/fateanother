@@ -405,10 +405,6 @@ function OnVergTakeDamage(keys)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
-		Timers:CreateTimer( 2.0, function()
-			ParticleManager:DestroyParticle( particle, false )
-			ParticleManager:ReleaseParticleIndex( particle )
-		end)
 	end
 end
 
