@@ -641,7 +641,7 @@ function OnAmaterasuStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster.AmaterasuCastLoc, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
 			if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster, v, "modifier_amaterasu_witchcraft_slow", {}) end
-			v:AddNewModifier(caster, target, "modifier_silence", {Duration = 1.5})
+			v:AddNewModifier(caster, caster, "modifier_silence", {Duration = 1.5})
 		end
 	end
 
