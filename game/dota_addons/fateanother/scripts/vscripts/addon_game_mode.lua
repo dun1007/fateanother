@@ -894,9 +894,9 @@ function FateGameMode:OnPlayerLevelUp(keys)
     local player = EntIndexToHScript(keys.player)
     local hero = player:GetAssignedHero() 
     local level = keys.level
-    hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 4)
-    hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 4)
-    Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>4 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
+    hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 3)
+    hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 3)
+    Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
     
     MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
 end
@@ -1319,7 +1319,6 @@ function FateGameMode:ModifyGoldFilter(filterTable)
 end
 
 function FateGameMode:TakeDamageFilter(filterTable)
-    PrintTable(filterTable)
     local damage = filterTable.damage
     local damageType = filterTable.damagetype_const
     local attacker = EntIndexToHScript(filterTable.entindex_attacker_const)
@@ -1328,24 +1327,29 @@ function FateGameMode:TakeDamageFilter(filterTable)
         inflictor = EntIndexToHScript(filterTable.entindex_inflictor_const) -- the skill name
     end
     local victim = EntIndexToHScript(filterTable.entindex_victim_const)
-    --if inflictor then print(inflictor:GetName()) end
+    if inflictor then print(inflictor:GetName() .. damage) end
 
-    if victim:HasModifier("modifier_verg_avesta") then
-
-        --[[if not attacker:IsHero() and IsValidEntity(attacker:GetPlayerOwner()) then
-            attacker = attacker:GetPlayerOwner():GetAssignedHero()
-        elseif attacker:IsIllusion() then
-            attacker = PlayerResource:GetPlayer(attacker:GetPlayerID()):GetAssignedHero()
+    -- if target is affected by Verg and damage is not lethal
+    if (victim:HasModifier("modifier_verg_avesta") or victim:HasModifier("modifier_endless_loop")) and (victim:GetHealth() - damage) > 0 then
+        -- check if the damage source is not eligible for return
+        if not attacker:IsRealHero() and inflictor then
+            attacker = PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerID())
+        elseif attacker:IsRealHero() and inflictor then
+            if inflictor:GetName() == "archer_5th_ubw" then 
+                return true 
+            end
         end
 
-        if caster.IsDIAcquired then keys.Multiplier = keys.Multiplier + 25 end
-        local returnDamage = keys.DamageTaken * keys.Multiplier / 100
-        if caster:GetHealth() ~= 0 then
-            DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, keys.ability, false)
-            if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
-            local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
-            ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
-        end]]
+        -- calculate return damage
+        local vergHandle = victim:FindAbilityByName("avenger_verg_avesta")
+        local multiplier = vergHandle:GetLevelSpecialValueFor("multiplier", vergHandle:GetLevel()-1)
+        if victim.IsDIAcquired then multiplier = multiplier + 25 end
+        local returnDamage = damage * multiplier / 100
+
+        DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, vergHandle, false)
+        if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
+        local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_CUSTOMORIGIN, nil)
+        ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
     end
 
     if victim:HasModifier("modifier_avalon") and damageType == 1 then
@@ -1692,7 +1696,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         local pHero = playerHero
         -- radiant = 2(equivalent to 0)
         -- dire = 3(equivalent to 1)
-        if pHero:GetTeam() - 2 ~= winnerEventData.winnerTeam then
+        if pHero:GetTeam() - 2 ~= winnerEventData.winnerTeam and winnerEventData.winnerTeam ~= 2 then
             pHero.MasterUnit:GiveMana(1)
             pHero.MasterUnit2:SetMana(pHero.MasterUnit:GetMana())
             --print("granted 1 mana to " .. pHero:GetName())
@@ -1838,7 +1842,7 @@ function FateGameMode:CaptureGameMode()
         mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
         mode:SetExecuteOrderFilter( Dynamic_Wrap( FateGameMode, "ExecuteOrderFilter" ), FateGameMode )
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
-        --mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)
+        mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)
         SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()
         

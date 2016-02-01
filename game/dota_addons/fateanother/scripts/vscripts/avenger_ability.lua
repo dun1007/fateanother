@@ -300,12 +300,13 @@ end
 function OnTFStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local newMana = caster:GetMana() + 300
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_true_form", {}) 
 	AvengerCheckCombo(keys.caster, keys.ability)
 	--local a1 = caster:GetAbilityByIndex(0)
 	--local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
-    caster:GiveMana(keys.BonusMana)
+    caster:SetMana(newMana)
     if caster.IsBloodMarkAcquired then 
     	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
     else
@@ -388,7 +389,7 @@ function OnVergStart(keys)
 end
 
 function OnVergTakeDamage(keys)
-	local caster = keys.caster
+	--[[local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
 
@@ -405,7 +406,7 @@ function OnVergTakeDamage(keys)
 		if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
 		local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, attacker)
 		ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
-	end
+	end]]
 end
 
 function OnEndlessStart(keys)
@@ -441,18 +442,13 @@ function OnEndlessStart(keys)
 end
 
 function OnEndlessTakeDamage(keys)
-	local caster = keys.caster
+	--[[local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local attacker = keys.attacker
 	local verg = caster:FindAbilityByName("avenger_verg_avesta")
 	local multiplier = verg:GetLevelSpecialValueFor("multiplier", verg:GetLevel()-1)
 	if caster.IsDIAcquired then multiplier = multiplier + 25 end
 	local returnDamage = keys.DamageTaken * multiplier / 100
-
-	--[[-- Set master's combo cooldown
-	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
-	masterCombo:EndCooldown()
-	masterCombo:StartCooldown(keys.ability:GetCooldown(1))]]
 
 	if caster:GetHealth() ~= 0 then
 		DoDamage(caster, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, verg, false)
@@ -463,7 +459,7 @@ function OnEndlessTakeDamage(keys)
 			ParticleManager:DestroyParticle( particle, false )
 			ParticleManager:ReleaseParticleIndex( particle )
 		end)
-	end
+	end]]
 end
 
 function OnOverdriveAttack(keys)

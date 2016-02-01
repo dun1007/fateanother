@@ -860,13 +860,17 @@ function CreateUITimer(message, duration, description)
 end
 
 -- Create a particle that is visible by anyone in both teams
--- example: CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()})
-function CreateGlobalParticle(particle_name, controlpoints)
+-- example: CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()}, 2)
+function CreateGlobalParticle(particle_name, controlpoints, duration)
     for i=2,3 do
         local particle = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_CUSTOMORIGIN, nil, i)
         for k,v in pairs(controlpoints) do
             ParticleManager:SetParticleControl(particle, k, v)
         end
+        Timers:CreateTimer(duration, function()
+            ParticleManager:DestroyParticle( particle, false )
+            ParticleManager:ReleaseParticleIndex( particle )
+        end)
     end
 end
 

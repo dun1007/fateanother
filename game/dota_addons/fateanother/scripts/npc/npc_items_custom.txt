@@ -897,7 +897,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"1000"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"0"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
@@ -2238,11 +2238,6 @@
 			{
 				"ScriptFile"	"items"
 				"Function"		"AntiMagic"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"	"modifier_magic_immunity"
-				"Target"		"CASTER"
 			}
 	    }
 
