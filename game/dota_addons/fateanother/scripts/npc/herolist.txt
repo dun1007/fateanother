@@ -24,6 +24,6 @@
 	"npc_dota_hero_omniknight"			"1"		//White Saber(Extra)
 	"npc_dota_hero_enchantress"			"1"		//Caster(Extra)
 	"npc_dota_hero_bloodseeker"			"1"		//Assassin(Extra)
-	"npc_dota_hero_mirana"				"0"		//Ruler(Apocrypha)
+	"npc_dota_hero_mirana"				"1"		//Ruler(Apocrypha)
 	"npc_dota_hero_sniper"				"0"		//Green Archer(Extra)
 }

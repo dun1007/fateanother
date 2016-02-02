@@ -122,6 +122,8 @@ model_lookup["npc_dota_hero_lina"] = "models/nero/nero.vmdl"
 model_lookup["npc_dota_hero_omniknight"] = "models/gawain/gawain.vmdl"
 model_lookup["npc_dota_hero_enchantress"] = "models/tamamo/tamamo.vmdl"
 model_lookup["npc_dota_hero_bloodseeker"] = "models/lishuen/lishuen.vmdl"
+model_lookup["npc_dota_hero_mirana"] = "models/jeanne/jeanne.vmdl"
+
 
 DoNotKillAtTheEndOfRound = {
     "tamamo_charm",
@@ -240,6 +242,7 @@ function Precache( context )
     PrecacheResource("model", "models/gawain/gawain.vmdl", context)
     PrecacheResource("model", "models/tamamo/tamamo.vmdl", context)
     PrecacheResource("model", "models/lishuen/lishuen.vmdl", context)
+    PrecacheResource("model", "models/jeanne/jeanne.vmdl", context)
     
     
     -- AOTK Soldier assets
@@ -1818,7 +1821,7 @@ function FateGameMode:CaptureGameMode()
         -- Set FateGameMode parameters
         mode = GameRules:GetGameModeEntity() 
         mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
-        mode:SetCameraDistanceOverride(1500)
+        mode:SetCameraDistanceOverride(1600)
         mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
         mode:SetCustomBuybackCooldownEnabled( CUSTOM_BUYBACK_COOLDOWN_ENABLED )
         mode:SetBuybackEnabled( BUYBACK_ENABLED )
