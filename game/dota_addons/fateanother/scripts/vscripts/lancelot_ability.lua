@@ -362,7 +362,7 @@ function OnNukeStart(keys)
 
     local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
     unseen:SetLevel(1)
-    local nukeMarker = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf", PATTACH_CUSTOMORIGIN, caster )
+    local nukeMarker = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_marker.vpcf", PATTACH_CUSTOMORIGIN, nil )
     ParticleManager:SetParticleControl( nukeMarker, 0, targetPoint)
     ParticleManager:SetParticleControl( nukeMarker, 1, Vector(300, 300, 300))
     -- Destroy particle after delay
@@ -406,10 +406,10 @@ function OnNukeStart(keys)
             if not v:IsMagicImmune() then v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.75}) end
         end
         -- particle
-        local barrageImpact1 = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        local barrageImpact1 = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, nil )
         ParticleManager:SetParticleControl( barrageImpact1, 0, targetPoint+barrageVec1)
          ParticleManager:SetParticleControl( barrageImpact1, 1, Vector(300, 300, 300))
-        local barrageImpact2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_impact_sparks.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        local barrageImpact2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_impact_sparks.vpcf", PATTACH_CUSTOMORIGIN, nil )
         ParticleManager:SetParticleControl( barrageImpact2, 0, targetPoint+barrageVec1)
         visiondummy:EmitSound("Hero_Gyrocopter.Rocket_Barrage.Launch")
         -- Destroy particle after delay
@@ -436,7 +436,7 @@ function OnNukeStart(keys)
             if not v:IsMagicImmune() then v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0}) end
         end
         -- particle
-        local impactFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_explosion_second.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        local impactFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_calldown_explosion_second.vpcf", PATTACH_CUSTOMORIGIN, nil )
         ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint)
         ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(2500, 2500, 1500))
         ParticleManager:SetParticleControl( impactFxIndex, 2, Vector(2500, 2500, 2500))
@@ -444,7 +444,7 @@ function OnNukeStart(keys)
         ParticleManager:SetParticleControl( impactFxIndex, 4, Vector(2500, 2500, 2500))
         ParticleManager:SetParticleControl( impactFxIndex, 5, Vector(2500, 2500, 2500))
 
-        local mushroom = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+        local mushroom = ParticleManager:CreateParticle( "particles/units/heroes/hero_lina/lina_spell_light_strike_array_explosion.vpcf", PATTACH_CUSTOMORIGIN, nil )
         ParticleManager:SetParticleControl( mushroom, 0, targetPoint)
 
         -- Destroy particle after delay

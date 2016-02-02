@@ -864,13 +864,24 @@ function OnProsperityAcquired(keys)
 		hero.ShardAmount = hero.ShardAmount - 1
 	end
 
-
 	local master = hero.MasterUnit 
 	local master2 = hero.MasterUnit2
+
+	for i=1,5 do
+		if hero:GetLevel() ~= 24 then
+			hero:HeroLevelUp(true)
+		else
+			master:SetMana(master:GetMana()+3)
+			master2:SetMana(master:GetMana())		
+		end
+	end
+
+
+	--[[
 	master:SetMana(master:GetMana()+20)
+	master2:SetMana(master:GetMana())]]
 	master:SetMaxHealth(master:GetMaxHealth()+1) 
 	master:SetHealth(master:GetHealth()+1)
-	master2:SetMana(master:GetMana())
 	master2:SetMaxHealth(master:GetMaxHealth()) 
 	master2:SetHealth(master:GetHealth())
 end

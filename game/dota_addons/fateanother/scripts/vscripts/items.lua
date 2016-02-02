@@ -505,7 +505,10 @@ end
 
 function AntiMagic(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	caster:EmitSound("DOTA_Item.BlackKingBar.Activate")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_immunity", {})
+
 end
 
 function FullHeal(keys)

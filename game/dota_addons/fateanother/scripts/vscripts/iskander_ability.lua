@@ -473,7 +473,7 @@ function OnAOTKCastStart(keys)
 
 	-- particle
 	--CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", caster:GetAbsOrigin(), 0)
-	CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()})
+	CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()}, 2)
 
 	local firstRowPos = aotkCenter + Vector(300, -500,0) 
 	local maharajaPos = aotkCenter + Vector(600, 0,0)

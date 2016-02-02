@@ -14200,7 +14200,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_health"			"200 300 400 500 600"
+				"bonus_health"			"300 350 400 450 500"
 			}
 			"02"
 			{
@@ -14208,6 +14208,11 @@
 				"bonus_mana"			"300"
 			}
 			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_damage_percentage"			"10 14 18 22 26"
+			}
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"8 10 12 14 16"
@@ -14246,7 +14251,7 @@
 				"EffectAttachType"  "follow_origin"
 				"Properties"
 				{
-					//"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"%bonus_damage_percentage"
 					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%bonus_health"
 					"MODIFIER_PROPERTY_MANA_BONUS"			"%bonus_mana"
 				}
@@ -19834,12 +19839,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_ratio"					"5"
+				"str_ratio"					"0"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_ratio"					"5"
+				"agi_ratio"					"8"
 			}
 			"03"
 			{
@@ -24590,7 +24595,7 @@
 		"AbilityTextureName"			"obs_ward"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
-		"AbilityGoldCost"				"800"
+		"AbilityGoldCost"				"1000"
 		
 		"OnSpellStart"
 		{
