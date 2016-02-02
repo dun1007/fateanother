@@ -62,7 +62,102 @@
 	m_pAnimGroup =
 	{
 		_class = "CVanimGroupReference"
-		m_pObject = null
+		m_pObject =
+		{
+			_class = "CVanimGroup"
+			m_Name = ""
+			m_pReferenceSkeleton =
+			{
+				_class = "CVReferenceSkeletonReference"
+				m_pObject = null
+			}
+			m_pBoneFlagList =
+			{
+				_class = "CVBoneFlagListReference"
+				m_pObject = null
+			}
+			m_pSeqGroup =
+			{
+				_class = "CVseqGroupReference"
+				m_pObject = null
+			}
+			m_pAnimGroups =
+			[
+			]
+			m_Vanim =
+			[
+				{
+					_class = "CVanim"
+					m_Animationname = "jeanne_anim"
+					m_Filepath = "models/jeanne/jeanne_anim.FBX"
+					m_nStartframe = 0
+					m_nEndframe = 156
+					m_flFps = 15.000000
+					m_Loop =
+					{
+						_class = "CAnimationLoop"
+						m_bLoop = false
+						m_bSmoothLoop = false
+						m_nSmoothLoopStart = 0
+						m_nSmoothLoopEnd = 0
+						m_StartLoop =
+						{
+							_class = "CVAnimCmdStartLoop"
+							m_bEnabled = false
+							m_nLoopRestart = 0
+						}
+					}
+					m_bHidden = false
+					m_bDisable = false
+					m_Activities =
+					[
+					]
+					m_AnimationEvents =
+					[
+					]
+					m_MotionFrames =
+					[
+					]
+					m_pIkRules =
+					[
+					]
+					m_pAlignAnimation = null
+					m_adjustAnimation =
+					{
+						_class = "CAdjustAnimation"
+						m_translation =
+						[
+							0.000000,
+							0.000000,
+							0.000000,
+						]
+						m_rotation =
+						[
+							0.000000,
+							0.000000,
+							0.000000,
+						]
+					}
+					m_Keywords =
+					[
+					]
+					m_sequenceParams =
+					{
+						_class = "CVAnimResourceSequenceParams"
+						m_flFadeInTime = 0.200000
+						m_flFadeOutTime = 0.200000
+					}
+					m_folderName = ""
+					m_MotionFramesRootBone = ""
+				},
+			]
+			m_sScripts =
+			[
+			]
+			m_folderNames =
+			[
+			]
+		}
 	}
 	m_pMaterialGroupList =
 	{
@@ -107,7 +202,108 @@
 	m_scriptFiles =
 	[
 	]
-	m_pMaterialRemapList = null
+	m_pMaterialRemapList =
+	{
+		_class = "CVMaterialRemapList"
+		m_vMaterialRemapList =
+		[
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model1.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model2.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model3.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model4.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_cloth.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model5.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_acc.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model6.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_cloth.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model7.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_body.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model8.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_acc.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model9.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_acc.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model10.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headdress.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model11.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_cloth.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model12.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_arm.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model13.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_acc.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model14.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_acc.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model15.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model16.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model17.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model18.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_headgear.vmat"
+			},
+			{
+				_class = "CVMaterialRemap"
+				m_sSearchMaterial = "model19.vmat"
+				m_sReplaceMaterial = "materials/jeanne/jeanne_body.vmat"
+			},
+		]
+	}
 	m_flFbxScale = 1.000000
 	m_flQCScale = 1.000000
 	m_vOrigin =
