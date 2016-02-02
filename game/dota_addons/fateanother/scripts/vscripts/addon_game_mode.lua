@@ -1352,10 +1352,6 @@ function FateGameMode:TakeDamageFilter(filterTable)
         ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
     end
 
-    if victim:HasModifier("modifier_avalon") and damageType == 1 then
-    end
-
-
     return true
 end
 
