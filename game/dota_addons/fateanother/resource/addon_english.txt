@@ -2802,7 +2802,7 @@
 
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex"	"Magic Resistance: EX"
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_Description"	"Ruler's unwavering piety grants her protection from magic. The protection is temporarily disabled when she takes a number of hits, and takes time to regenerate."
-        "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_Note0"		"Protection buff can be removed by soft dispel(i.e S Scroll)."
+        "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_Note0"		"Protection buff can be removed by soft dispel effects (e.g., S Scroll)."
 
 		"DOTA_Tooltip_Ability_jeanne_saint"		"Saint"
         "DOTA_Tooltip_Ability_jeanne_saint_Description"	"Each round, Ruler judges each enemy Servant by their K/D counts. Servants whose Kills are higher than their Deaths are marked as <font color='#ff9900'>Unjust.</font>\nRuler's abilities gain special effects against Unjust enemies."
