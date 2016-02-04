@@ -24098,6 +24098,633 @@
 			}
 		}
 	}
+
+	//=================================================================================================================
+	// Jeanne d'Arc: Magic Resistance: EX
+	//=================================================================================================================
+	"jeanne_magic_resistance_ex"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"berserker_5th_divinity"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mr"				"10"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_magic_resistance_ex"
+			{
+				"Passive"		"1"
+				"IsHidden"		"0"
+			}
+			"modifier_magic_resistance_ex_shield"
+			{
+				"IsHidden"		"0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"%damage_reduction"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Jeanne d'Arc: Saint
+	//=================================================================================================================
+	"jeanne_saint"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"berserker_5th_divinity"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_saint"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+			}
+		}
+	}
+
+
+	//=================================================================================================================
+	// Jeanne d'Arc: Identity Discernment
+	//=================================================================================================================
+	"jeanne_magic_identity_discernment"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"saber_instinct"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"9999"
+		"precache"
+		{
+		}
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"jeanne_ability"
+				"Function"			""
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_identity_discernment_unjust"
+			{
+				"IsHidden"		"0"
+				"IsDebuff"		"1"
+			}
+		}
+	}
+	
+	//=================================================================================================================
+	// Jeanne : Charisma
+	//=================================================================================================================
+	"jeanne_charisma"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"gawain_invigorating_ray"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"precache"
+		{
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastRangeBuffer"		"200"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"16"
+		"AbilityManaCost"				"100"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stat_modifier"			"10 15 20 25 30"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_modifier"				"500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"2 2.75 3.5 4.25 5"
+			}
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"gawain_ability"
+				"Function"				"OnIRStart"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_jeanne_charisma_str"
+			{
+				"EffectName"			""
+				"EffectAttachType"		""
+				"Duration"				"%duration"
+			}
+			"modifier_jeanne_charisma_agi"
+			{
+				"EffectName"			""
+				"EffectAttachType"		""
+				"Duration"				"%duration"
+			}
+			"modifier_jeanne_charisma_int"
+			{
+				"EffectName"			""
+				"EffectAttachType"		""
+				"Duration"				"%duration"
+			}
+			
+		}
+	}
+
+	//===================================================
+	// Jeanne d'Arc: Purge the Unjust
+	//===================================================
+	"jeanne_purge_the_unjust"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AbilityTextureName"			"gille_torment"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AnimationPlaybackRate" 		"1.0"
+		"AOERadius"						"%radius"		
+		
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"850"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"18.0"
+
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"400"
+			}			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"delay"			"0.7"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"		"300 375 450 525 600"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_damage_perkill"		"40"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"silence_duration"		"0.5 0.75 1.0 1.25 1.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"jeanne_ability"
+				"Function"			""
+				"Target"			"POINT"
+				"Radius"			"%radius"
+			}
+		}
+		
+		"Modifiers"
+		{	
+			"modifier_purge_the_unjust_slow"
+			{
+				"EffectName"	""
+				"EffectAttachType"	""
+				"IsDebuff"		"1"
+				"Duration"		""
+			}
+		}
+	}
+
+	//========================================
+	// Jeanne : God's Resolution
+	//========================================
+	"jeanne_gods_resolution"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"iskander_gordius_wheel"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"precache"
+		{
+		}
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"31"
+		"AbilityCastPoint"				"0.4"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"400"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"passive_chance"			"35"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"passive_damage_percentage"			"4 5 6 7 8"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"passive_revoke_duration"			"2.5"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"active_total_damage"			"500 600 700 800 900"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"active_duration"			"2.0"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"450"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"slow_amount"			"70"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"jeanne_ability"
+				"Function"			""
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_gods_resolution"
+			{		
+				"Passive"		"1"
+			}
+			"modifier_gods_resolution_slow"
+			{
+				"Duration"		"1.0"
+			}
+		}
+	}
+
+
+	//====================================
+	// Jeanne d'Arc : Luminosite Eternelle
+	//====================================
+	"jeanne_luminosite_eternelle"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityTextureName"			"lancer_5th_gae_bolg_jump"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"0.5"
+		"precache"
+		{
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.7"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"47.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delay"				"0.7"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"1000"
+			}
+			
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"max_cc_duration"			"3"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_reduction"			"10 15 20 25 30"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"flag_health"			"8 11 14 17 20"
+			}
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"jeanne_ability"
+			 	"Function"		""
+			 	"Target"		"POINT"
+			}
+		}
+
+		"OnProjectileHitUnit" 
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"jeanne_ability"
+				"Function"		""
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_luminosite_eternelle_protection"
+			{
+				"IsHidden"			"1"
+				"Duration"			"1.0"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+			}	
+		}
+	}
+
+
+	//=======================================
+	// Jeanne Attribute : Identity Discernment
+	//=======================================
+	"jeanne_attribute_identity_discernment"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"14"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"vision_duration"		"200"
+			}		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"jeanne_ability"
+				"Function"		""
+			}
+		}
+	}
+
+	//=======================================
+	// Jeanne Attribute : Improve Saint
+	//=======================================
+	"jeanne_attribute_improve_saint"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"10"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"kill_credit"		"3"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"jeanne_ability"
+				"Function"		""
+			}
+		}
+	}
+
+	//=======================================
+	// Jeanne Attribute : Punishment
+	//=======================================
+	"jeanne_attribute_punishment"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_amount"		"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"		"3"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"jeanne_ability"
+				"Function"		""
+			}
+		}
+	}
+
+	//=======================================
+	// Jeanne Attribute : Divine Symbol
+	//=======================================
+	"jeanne_attribute_divine_symbol"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"slow_amount"		"3"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"active_duration"		"3"
+			}		
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"jeanne_ability"
+				"Function"		""
+			}
+		}
+	}
 	//================================================
 	// dummy unit passve (collection of global modifiers)
 	//================================================
