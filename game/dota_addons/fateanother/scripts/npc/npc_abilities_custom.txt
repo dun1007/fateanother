@@ -24118,11 +24118,6 @@
 				"var_type"				"FIELD_INTEGER"
 				"bonus_mr"				"10"
 			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				""				"0 20"
-			}
 		}
 		
 		"Modifiers"
