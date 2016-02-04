@@ -175,6 +175,14 @@ LiAttribute = {
 	attrCount = 4
 }
 
+JeanneAttribute = {
+	"jeanne_attribute_identity_discernment",
+	"jeanne_attribute_improve_saint",
+	"jeanne_attribute_punishment",
+	"jeanne_attribute_divine_symbol",
+	attrCount = 4
+}
+
 --[[LiAttribute = {
 	attrCount = 4
 }]]
@@ -458,6 +466,8 @@ function FindAttribute(name)
         attributes = TamamoAttribute
     elseif name == "npc_dota_hero_bloodseeker" then
     	attributes = LiAttribute
+    elseif name == "npc_dota_hero_mirana" then
+    	attributes = JeanneAttribute
     end
     return attributes
 end 

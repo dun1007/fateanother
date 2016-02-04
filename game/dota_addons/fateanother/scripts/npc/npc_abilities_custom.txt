@@ -24106,7 +24106,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"berserker_5th_divinity"
+		"AbilityTextureName"			"jeanne_magic_resistance_ex"
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -24116,7 +24116,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mr"				"10"
+				"bonus_mr_per_stack"				"15"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"hits_required"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"regen_duration"			"30"
 			}
 		}
 		
@@ -24146,7 +24156,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-		"AbilityTextureName"			"berserker_5th_divinity"
+		"AbilityTextureName"			"jeanne_saint"
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -24217,7 +24227,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"AbilityTextureName"			"gawain_invigorating_ray"
+		"AbilityTextureName"			"jeanne_charisma"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"precache"
 		{
@@ -24304,7 +24314,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
-		"AbilityTextureName"			"gille_torment"
+		"AbilityTextureName"			"jeanne_purge_the_unjust"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AnimationPlaybackRate" 		"1.0"
@@ -24383,7 +24393,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"iskander_gordius_wheel"
+		"AbilityTextureName"			"jeanne_gods_resolution"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
@@ -24476,7 +24486,7 @@
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
-		"AbilityTextureName"			"lancer_5th_gae_bolg_jump"
+		"AbilityTextureName"			"jeanne_luminosite_eternelle"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"0.5"
 		"precache"
@@ -24570,7 +24580,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		"AbilityTextureName"			"jeanne_identity_discernment"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -24608,7 +24618,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		"AbilityTextureName"			"jeanne_saint"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -24647,7 +24657,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		"AbilityTextureName"			"jeanne_gods_resolution"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -24691,7 +24701,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lishuwen_attribute_circulatory_shock"
+		"AbilityTextureName"			"jeanne_attribute_divine_symbol"
 		
 		
 		"AbilityCastPoint"				"0.0"
