@@ -1317,14 +1317,18 @@ end
 
 function LoopOverPlayers(callback)
     for i=0, 11 do
+        local playerID = i
         local player = PlayerResource:GetPlayer(i)
-        if player ~= nil and player:GetAssignedHero() ~= nil then 
-            if callback(player, player:GetPlayerID()) then
+        local playerHero = PlayerResource:GetSelectedHeroEntity(playerID)
+        if playerHero then
+            --print("Looping through hero " .. playerHero:GetName())
+            if callback(player, playerID, playerHero) then
                 break
-            end 
-        end
+            end
+        end 
     end
 end
+
 
 function RemoveHeroFromLinkTables(targethero)
     LoopOverHeroes(function(hero)

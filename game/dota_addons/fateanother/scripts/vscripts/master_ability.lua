@@ -180,6 +180,7 @@ JeanneAttribute = {
 	"jeanne_attribute_improve_saint",
 	"jeanne_attribute_punishment",
 	"jeanne_attribute_divine_symbol",
+	"jeanne_combo_la_pucelle",
 	attrCount = 4
 }
 

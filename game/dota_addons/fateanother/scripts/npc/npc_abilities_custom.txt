@@ -24116,17 +24116,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_mr_per_stack"				"15"
+				"bonus_mr_per_stack"	"3"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"hits_required"			"5"
+				"max_stack"				"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_duration"			"30"
+				"regen_duration"			"25"
 			}
 		}
 		
@@ -24136,14 +24136,45 @@
 			{
 				"Passive"		"1"
 				"IsHidden"		"0"
+				"Duration"		"%regen_duration"
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnMREXRecharge"
+						"MaxStack"		"%max_stack"
+					}
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnMREXDamageTaken"
+						"DamageTaken"	"%attack_damage"	
+						"MaxStack"		"%max_stack"
+					}
+				}
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnMREXRespawn"
+						"MaxStack"		"%max_stack"
+					}
+				}
 			}
 			"modifier_magic_resistance_ex_shield"
 			{
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"EffectName"	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
 				"IsHidden"		"0"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PHYSICAL_CONSTANT_BLOCK"	"%damage_reduction"
-					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr_per_stack"
 				}
 			}
 		}
@@ -24161,8 +24192,14 @@
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
 
+		"precache"
+		{
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
+		}
+
 		"AbilitySpecial"
 		{
+
 		}
 		
 		"Modifiers"
@@ -24170,7 +24207,19 @@
 			"modifier_saint"
 			{
 				"Passive"		"1"
-				"IsHidden"		"1"
+				"IsHidden"		"0"
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnSaintRespawn"
+					}
+				}
+			}
+			"modifier_saint_debuff"
+			{
+				"IsDebuff"		"1"
 			}
 		}
 	}
@@ -24192,6 +24241,11 @@
 		
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"unjust_vision_duration"			"3"
+			}
 		}
 		
 		"OnSpellStart"
@@ -24229,6 +24283,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"jeanne_charisma"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.5"
 		"precache"
 		{
 		}
@@ -24253,12 +24308,12 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius_modifier"				"500"
+				"radius_modifier"				"300 350 400 450 500"
 			}
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"duration"			"2 2.75 3.5 4.25 5"
+				"var_type"			"FIELD_FLOAT"
+				"duration"			"4 4.5 5 5.5 6"
 			}
 		}
 		
@@ -24315,7 +24370,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityTextureName"			"jeanne_purge_the_unjust"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"		
@@ -24331,7 +24386,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"18.0"
+		"AbilityCooldown"				"16.0"
 
 		
 		"AbilitySpecial"
@@ -24343,7 +24398,7 @@
 			}			
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"delay"			"0.7"
 			}
 			"03"
@@ -24397,7 +24452,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"precache"
 		{
 		}
@@ -24405,7 +24460,7 @@
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"31"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24431,7 +24486,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"active_total_damage"			"500 600 700 800 900"
+				"active_total_damage"			"600 700 800 900 1000"
 			}
 			"05"
 			{
@@ -24441,7 +24496,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"450"
+				"radius"			"500"
 			}
 			"07"
 			{
@@ -24487,8 +24542,8 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityTextureName"			"jeanne_luminosite_eternelle"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
-		"AnimationPlaybackRate" 		"0.5"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
 		}
@@ -24522,7 +24577,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"max_cc_duration"			"3"
+				"max_cc_duration"			"2 2.3 2.6 2.9 3.2"
 			}
 			"04"
 			{
@@ -24570,6 +24625,52 @@
 		}
 	}
 
+
+	//=================================================================================================================
+	// Jeanne d'Arc: La Pucelle
+	//=================================================================================================================
+	"jeanne_combo_la_pucelle"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"jeanne_la_pucelle"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"8"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_aspd"		"80"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"bonus_ms"			"40"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"flame_damage_per_sec"			"300"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_la_pucelle"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+			}
+		}
+	}
 
 	//=======================================
 	// Jeanne Attribute : Identity Discernment
@@ -25730,7 +25831,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"juggernaut_blade_dance"
+		"AbilityTextureName"			"stat_damage"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"1"
@@ -25757,7 +25858,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"lich_frost_armor"
+		"AbilityTextureName"			"stat_armor"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"1"
@@ -25783,7 +25884,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"huskar_inner_vitality"
+		"AbilityTextureName"			"stat_health_regen"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"1"
@@ -25809,7 +25910,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"crystal_maiden_brilliance_aura"
+		"AbilityTextureName"			"stat_mana_regen"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"1"
@@ -25835,7 +25936,7 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"clinkz_wind_walk"
+		"AbilityTextureName"			"stat_movement_speed"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"1"

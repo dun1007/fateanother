@@ -1224,6 +1224,8 @@
 		"Ability4"					"jeanne_magic_resistance_ex"
 		"Ability5"					"jeanne_saint"
 		"Ability6"					"jeanne_luminosite_eternelle"
+		"Ability7"					"jeanne_combo_la_pucelle"
+		"Ability8"					"jeanne_identity_discernment"
 		"Ability15"					"presence_detection_passive"
 		"Ability16"					"attribute_bonus"
 

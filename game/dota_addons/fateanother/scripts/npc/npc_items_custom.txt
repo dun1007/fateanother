@@ -1386,6 +1386,8 @@
 	    "precache"
 	    {
 			"particle"			"particles/custom/generic/fate_green_shield.vpcf"
+			"particle"			"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+			"particle"			"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
 	    }
 	    "AbilitySpecial"
 		{
@@ -1415,8 +1417,17 @@
 	    {
 	    	"modifier_b_scroll"
 	    	{
-				"EffectName"	"particles/custom/generic/fate_green_shield.vpcf"
+				"EffectName"	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
 				"EffectAttachType"	"follow_origin"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
 	    		"Duration" "20.0"
 	    	}
 	    }
@@ -1466,6 +1477,7 @@
 	    "precache"
 	    {
 	    	"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+	    	"particle"		"particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf"
 	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
 	    "AbilitySpecial"
@@ -1502,6 +1514,15 @@
 	    	{
 	    		"Duration"		"10.0"
 				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"

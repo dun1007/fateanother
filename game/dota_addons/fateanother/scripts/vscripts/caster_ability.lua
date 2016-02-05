@@ -152,9 +152,9 @@ end
 function OnTerritoryPingThink(keys)
 	local caster = keys.caster
 	local enemyTeamNumber = 0
-    LoopOverPlayers(function(ply, plyID)
-        if ply:GetAssignedHero():GetTeamNumber() ~= caster:GetTeamNumber() then
-        	enemyTeamNumber = ply:GetAssignedHero():GetTeamNumber()
+    LoopOverPlayers(function(ply, plyID, playerHero)
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        	enemyTeamNumber = playerHero:GetTeamNumber()
         	return
         end
     end)

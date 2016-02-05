@@ -16,6 +16,7 @@
 <Image src="file://{images}/spellicons/archer_5th_sword_barrage.png" />
 <Image src="file://{images}/spellicons/archer_5th_sword_barrage_confine.png" />
 <Image src="file://{images}/spellicons/archer_5th_ubw.png" />
+<Image src="file://{images}/spellicons/armor.png" />
 <Image src="file://{images}/spellicons/avenger_attribute_blood_mark.png" />
 <Image src="file://{images}/spellicons/avenger_attribute_demon_incarnate.png" />
 <Image src="file://{images}/spellicons/avenger_attribute_improve_dark_passage.png" />
@@ -63,6 +64,7 @@
 <Image src="file://{images}/spellicons/cmd_seal_2.png" />
 <Image src="file://{images}/spellicons/cmd_seal_3.png" />
 <Image src="file://{images}/spellicons/cmd_seal_4.png" />
+<Image src="file://{images}/spellicons/damage.png" />
 <Image src="file://{images}/spellicons/diarmuid_attribute_double_spear_strike.png" />
 <Image src="file://{images}/spellicons/diarmuid_attribute_improve_love_spot.png" />
 <Image src="file://{images}/spellicons/diarmuid_attribute_minds_eye.png" />
@@ -125,6 +127,7 @@
 <Image src="file://{images}/spellicons/gille_summon_demon.png" />
 <Image src="file://{images}/spellicons/gille_throw_corpse.png" />
 <Image src="file://{images}/spellicons/gille_torment.png" />
+<Image src="file://{images}/spellicons/health_regen.png" />
 <Image src="file://{images}/spellicons/intelligence.png" />
 <Image src="file://{images}/spellicons/iskander_annihilate.png" />
 <Image src="file://{images}/spellicons/iskander_army_of_the_king.png" />
@@ -139,6 +142,15 @@
 <Image src="file://{images}/spellicons/iskander_summon_hephaestion.png" />
 <Image src="file://{images}/spellicons/iskander_summon_waver.png" />
 <Image src="file://{images}/spellicons/iskander_via_expugnatio.png" />
+<Image src="file://{images}/spellicons/jeanne_attribute_divine_symbol.png" />
+<Image src="file://{images}/spellicons/jeanne_charisma.png" />
+<Image src="file://{images}/spellicons/jeanne_gods_resolution.png" />
+<Image src="file://{images}/spellicons/jeanne_identity_discernment.png" />
+<Image src="file://{images}/spellicons/jeanne_la_pucelle.png" />
+<Image src="file://{images}/spellicons/jeanne_luminosite_eternelle.png" />
+<Image src="file://{images}/spellicons/jeanne_magic_resistance_ex.png" />
+<Image src="file://{images}/spellicons/jeanne_purge_the_unjust.png" />
+<Image src="file://{images}/spellicons/jeanne_saint.png" />
 <Image src="file://{images}/spellicons/lancelot_arms_mastership.png" />
 <Image src="file://{images}/spellicons/lancelot_arondite.png" />
 <Image src="file://{images}/spellicons/lancelot_attribute_blessing_of_fairy.png" />
@@ -170,6 +182,7 @@
 <Image src="file://{images}/spellicons/lishuwen_attribute_dual_class.png" />
 <Image src="file://{images}/spellicons/lishuwen_attribute_furious_chain.png" />
 <Image src="file://{images}/spellicons/lishuwen_attribute_improve_martial_arts.png" />
+<Image src="file://{images}/spellicons/lishuwen_berserk.png" />
 <Image src="file://{images}/spellicons/lishuwen_concealment.png" />
 <Image src="file://{images}/spellicons/lishuwen_cosmic_orbit.png" />
 <Image src="file://{images}/spellicons/lishuwen_fierce_tiger_strike.png" />
@@ -181,6 +194,8 @@
 <Image src="file://{images}/spellicons/lishuwen_raging_dragon_strike_2.png" />
 <Image src="file://{images}/spellicons/lishuwen_raging_dragon_strike_3.png" />
 <Image src="file://{images}/spellicons/mana_background_102px.png" />
+<Image src="file://{images}/spellicons/mana_regen.png" />
+<Image src="file://{images}/spellicons/movement_speed.png" />
 <Image src="file://{images}/spellicons/nero_aestus_domus_aurea.png" />
 <Image src="file://{images}/spellicons/nero_attribute_improve_imperial_privilege.png" />
 <Image src="file://{images}/spellicons/nero_attribute_invictus_spiritus.png" />
