@@ -101,6 +101,17 @@ function OnIRStart(keys)
 	SpawnAttachedVisionDummy(caster, target, radius, duration, true)
 
 	target:EmitSound("Hero_Dazzle.Shadow_Wave")
+
+	if not target.jeanne_charisma_particle then
+		target.jeanne_charisma_particle = ParticleManager:CreateParticle("particles/custom/ruler/charisma/buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
+	end
+	ParticleManager:SetParticleControl(target.jeanne_charisma_particle, 1, Vector(radius,0,0))
+	-- DebugDrawCircle(caster:GetAbsOrigin(), Vector(255,0,0), 0.5, radius, true, 0.5)
+end
+
+function OnCharismaBuffEnd(keys)
+	ParticleManager:DestroyParticle(keys.target.jeanne_charisma_particle, false)
+	keys.target.jeanne_charisma_particle = nil
 end
 
 function OnPurgeStart(keys)

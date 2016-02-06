@@ -24289,6 +24289,7 @@
 		"precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"particle"			"particles/custom/ruler/charisma/buff.vpcf"
 		}
 		
 		// Ability stats
@@ -24342,32 +24343,53 @@
 		{
 			"modifier_jeanne_charisma_str"
 			{
-				"EffectName"			""
-				"EffectAttachType"		""
 				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%stat_modifier"
 				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"jeanne_ability"
+						"Function"				"OnCharismaBuffEnd"
+					}
+				}
 			}
 			"modifier_jeanne_charisma_agi"
 			{
-				"EffectName"			""
-				"EffectAttachType"		""
 				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%stat_modifier"
 				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"jeanne_ability"
+						"Function"				"OnCharismaBuffEnd"
+					}
+				}
 			}
 			"modifier_jeanne_charisma_int"
 			{
-				"EffectName"			""
-				"EffectAttachType"		""
 				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%stat_modifier"
+				}
+				
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"jeanne_ability"
+						"Function"				"OnCharismaBuffEnd"
+					}
 				}
 			}
 			
