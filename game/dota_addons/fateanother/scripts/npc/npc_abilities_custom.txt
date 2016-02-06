@@ -24641,6 +24641,7 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
+			"particle"			"particles/custom/ruler/luminosite_eternelle/luminosite_eternelle.vpcf"
 		}
 		
 		// Casting

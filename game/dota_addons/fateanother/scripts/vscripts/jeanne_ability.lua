@@ -215,6 +215,26 @@ function OnLEStart(keys)
 	local ability = keys.ability
 
 	-- create linear projectile
+	local projectile = 
+	{
+		Ability = keys.ability,
+        EffectName = "particles/custom/ruler/luminosite_eternelle/luminosite_eternelle.vpcf",
+        iMoveSpeed = 3000,
+        vSpawnOrigin = caster:GetAbsOrigin(),
+        fDistance = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() - 200,
+        fStartRadius = 200,
+        fEndRadius = 200,
+        Source = caster,
+        bHasFrontalCone = true,
+        bReplaceExisting = false,
+        iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+        iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+        fExpireTime = GameRules:GetGameTime() + 0.1,
+		bDeleteOnHit = false,
+		vVelocity = caster:GetForwardVector() * 9999
+	}
+	ProjectileManager:CreateLinearProjectile(projectile)
 
 	-- create flag unit at where it lands(must check for untraversable destination and choose closest traversable tile)
 end
