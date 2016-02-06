@@ -17,38 +17,14 @@
 							"value0"		"sounds/tamamo/tamamo_amaterasu.vsnd"
 						}
 					}
-					"volume_min"
-					{
-						"value"		"1.000000"
-					}
-					"volume_max"
-					{
-						"value"		"1.000000"
-					}
-					"pitch_min"
-					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
-					}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
 				}
 			}
 		}
