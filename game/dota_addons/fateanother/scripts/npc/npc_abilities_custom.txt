@@ -24220,6 +24220,7 @@
 			"modifier_saint_debuff"
 			{
 				"IsDebuff"		"1"
+				"Duration"		"300"
 			}
 		}
 	}
@@ -24228,11 +24229,11 @@
 	//=================================================================================================================
 	// Jeanne d'Arc: Identity Discernment
 	//=================================================================================================================
-	"jeanne_magic_identity_discernment"
+	"jeanne_identity_discernment"
 	{
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
-		"AbilityTextureName"			"saber_instinct"
+		"AbilityTextureName"			"jeanne_identity_discernment"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"9999"
 		"precache"
@@ -24253,7 +24254,8 @@
 			"RunScript"
 			{
 				"ScriptFile"		"jeanne_ability"
-				"Function"			""
+				"Function"			"OnIDPing"
+				"Duration"			"%unjust_vision_duration"
 			}
 		}
 		
@@ -24279,13 +24281,14 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"jeanne_charisma"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		"precache"
 		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
 		}
 		
 		// Ability stats
@@ -24293,7 +24296,7 @@
 		"AbilityCastRange"				"800"
 		"AbilityCastRangeBuffer"		"200"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"16"
+		"AbilityCooldown"				"14"
 		"AbilityManaCost"				"100"
 		
 		// Ability special
@@ -24313,7 +24316,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"4 4.5 5 5.5 6"
+				"duration"			"3 4 5 6 7"
 			}
 		}
 		
@@ -24327,8 +24330,10 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"			"gawain_ability"
+				"ScriptFile"			"jeanne_ability"
 				"Function"				"OnIRStart"
+				"Radius"				"%radius_modifier"
+				"Duration"				"%duration"
 			}
 		}
 	
@@ -24340,18 +24345,30 @@
 				"EffectName"			""
 				"EffectAttachType"		""
 				"Duration"				"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%stat_modifier"
+				}
 			}
 			"modifier_jeanne_charisma_agi"
 			{
 				"EffectName"			""
 				"EffectAttachType"		""
 				"Duration"				"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%stat_modifier"
+				}
 			}
 			"modifier_jeanne_charisma_int"
 			{
 				"EffectName"			""
 				"EffectAttachType"		""
 				"Duration"				"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%stat_modifier"
+				}
 			}
 			
 		}
@@ -24377,6 +24394,9 @@
 		
 		"precache"
 		{
+			"particle"			"particles/custom/jeanne/jeanne_purge_the_unjust.vpcf"
+			"particle"			"particles/units/heroes/hero_chen/chen_penitence.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 		}
 		
 		// Casting
@@ -24386,7 +24406,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16.0"
+		"AbilityCooldown"				"15.0"
 
 		
 		"AbilitySpecial"
@@ -24394,7 +24414,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"400"
+				"radius"			"350"
 			}			
 			"02"
 			{
@@ -24423,9 +24443,13 @@
 			"RunScript"
 			{
 				"ScriptFile"		"jeanne_ability"
-				"Function"			""
+				"Function"			"OnPurgeStart"
 				"Target"			"POINT"
 				"Radius"			"%radius"
+				"Delay"				"%delay"
+				"Damage"			"%damage"
+				"DamagePerKill"		"%bonus_damage_perkill"
+				"SilenceDuration"	"%silence_duration"
 			}
 		}
 		
@@ -24453,14 +24477,19 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"precache"
 		{
+			"particle"				"particles/custom/jeanne/jeanne_purge_the_unjust.vpcf"
+			"particle"				"particles/units/heroes/hero_chen/chen_teleport_flash_sparks.vpcf"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_arc_warden.vsndevts"
 		}
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"31"
 		"AbilityCastPoint"				"0.3"
+		"AbilityCastRange"				"%radius"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -24486,22 +24515,27 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"active_total_damage"			"600 700 800 900 1000"
+				"active_total_damage"			"600 725 850 975 1100"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"active_duration"			"2.0"
+				"active_damage_per_tick"		"60 72.5 85 97.5 110"
 			}
 			"06"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"radius"			"500"
+				"var_type"			"FIELD_FLOAT"
+				"active_duration"			"2.0"
 			}
 			"07"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"slow_amount"			"70"
+				"radius"			"500"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_amount"			"-70"
 			}
 		}
 		
@@ -24510,7 +24544,10 @@
 			"RunScript"
 			{
 				"ScriptFile"		"jeanne_ability"
-				"Function"			""
+				"Function"			"OnGodResolutionStart"
+				"TickDamage"		"%active_damage_per_tick"
+				"Radius"			"%radius"
+				"Duration"			"%active_duration"
 			}
 		}
 
@@ -24519,11 +24556,47 @@
 			"modifier_gods_resolution"
 			{		
 				"Passive"		"1"
+				"IsHidden"	"0"
+				"Passive"	"1"
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"%passive_chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"jeanne_ability"
+								"Function"			"OnGodResolutionProc"
+								"Damage"			"%passive_damage_percentage"
+								"RevokeDuration"	"%passive_revoke_duration"
+							}
+						}
+					}
+				}
 			}
 			"modifier_gods_resolution_slow"
 			{
 				"Duration"		"1.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_amount"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
+				}
 			}
+
+			"modifier_gods_resolution_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"3"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+				}
+			}
+
 		}
 	}
 
@@ -24576,7 +24649,7 @@
 			
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"max_cc_duration"			"2 2.3 2.6 2.9 3.2"
 			}
 			"04"
@@ -24600,7 +24673,7 @@
 			"RunScript"
 			{
 			 	"ScriptFile"	"jeanne_ability"
-			 	"Function"		""
+			 	"Function"		"OnLEStart"
 			 	"Target"		"POINT"
 			}
 		}
@@ -24610,7 +24683,7 @@
 			"RunScript"
 			{
 				"ScriptFile"	"jeanne_ability"
-				"Function"		""
+				"Function"		"OnLEHit"
 			}
 		}
 		
@@ -24620,8 +24693,12 @@
 			{
 				"IsHidden"			"1"
 				"Duration"			"1.0"
-				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_4"
 			}	
+
+			"modifier_luminosite_eternelle_flag_aura"
+			{
+			
+			}
 		}
 	}
 
@@ -25178,6 +25255,7 @@
 			"particle"	"particles/ui_mouseactions/ping_world.vpcf"
 			"particle"	"particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_cast.vpcf"
 			"particle"				"particles/generic_gameplay/generic_silence.vpcf"
+			"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield_mark.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -25254,6 +25332,22 @@
 				{
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}				
+			}
+			"stunned"
+			{
+				"IsDebuff"		"1"
+				"EffectName"			"particles/generic_gameplay/generic_stunned.vpcf"
+				"EffectAttachType"		"follow_overhead"
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}						
+			}
+			"revoked"
+			{
+				"IsDebuff"		"1"
+				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield_mark.vpcf"
+				"EffectAttachType"		"follow_overhead"
 			}
 			"jump_pause"
 			{
