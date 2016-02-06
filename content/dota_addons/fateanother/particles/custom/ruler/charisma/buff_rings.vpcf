@@ -52,7 +52,7 @@
 			m_nSequenceCombineMode = "2"
 			m_bAdditive = true
 			m_nRefractBlurType = "2"
-			m_hTexture = resource:"materials/particle/particle_ring_softouter.vtex"
+			m_hTexture = resource:"materials/particle/particle_ring_wave.vtex"
 			VisibilityInputs =
 			{
 				m_flInputMax = 0.000000
