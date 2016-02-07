@@ -1248,7 +1248,7 @@
 		"AttackDamageMin"				"57"
 		"AttackDamageMax"				"63"
 		"AttackRate"					"1.25"
-		"AttackAcquisitionRange"		"250"
+		"AttackAcquisitionRange"		"800"
 		"AttackRange"					"125"
 
 		

@@ -332,7 +332,142 @@ function OnFlagCleanup(keys)
 	end
 end
 
+function OnLaPucelleTakeDamage(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local pid = caster:GetPlayerID()
+	local duration = keys.Duration
+	local originalScale = caster:GetModelScale()
+
+	if caster:GetHealth() == 0 then
+		if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 and ability:IsCooldownReady() then
+			caster:SetHealth(caster:GetMaxHealth())
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+			ability:StartCooldown(ability:GetCooldown(1))
+			-- Set master's combo cooldown
+			local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+			masterCombo:EndCooldown()
+			masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+
+			-- pause for 2 seconds, display msg, then whack whack
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_spirit_form", {})
+			caster:SetModelScale(3)
+			caster.JeanneOriginalScale = originalScale
+
+			local counter = 0
+			Timers:CreateTimer(function()
+				if counter == duration then 
+					caster:SetModelScale(originalScale)
+					return 
+				end
+				caster:MoveToPositionAggressive(caster:GetAbsOrigin())
+				counter = counter+1 
+				return 1.0
+			end)
+		end
+	end
+end
+
+function OnLaPucelleDeath(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	caster:ForceKill(true)
+	caster:SetModelScale(caster.JeanneOriginalScale)
+	-- announce message
+end
+
+function OnIDAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnSaintImproved(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnPunishmentAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnDivineSymbolAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+
+
+
 function template(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 end
+
+
+
+			--[[local spirit = CreateUnitByName("jeanne_spirit_form", caster:GetAbsOrigin(), true, caster, nil, caster:GetTeamNumber()) 
+			spirit:SetOwner(caster)
+			spirit:SetControllableByPlayer(pid, true)
+			spirit:FindAbilityByName("jeanne_gods_resolution"):SetLevel(caster:FindAbilityByName("jeanne_gods_resolution"):GetLevel())]]
+
+			-- clone based method
+			--[[local illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeamNumber()) 
+
+			illusion:SetPlayerID(pid) 
+			illusion:SetOwner(caster)
+			illusion:SetControllableByPlayer(pid, true) 
+			illusion:SetBaseStrength(caster:GetStrength())
+			illusion:SetBaseAgility(caster:GetAgility())
+			illusion:SetBaseIntellect(caster:GetIntellect())
+			illusion:SetAbilityPoints(0)
+
+
+			illusion:AddAbility("jeanne_gods_resolution")
+			illusion:FindAbilityByName("jeanne_gods_resolution"):SetLevel(caster:FindAbilityByName("jeanne_gods_resolution"):GetLevel())
+			illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration})
+			illusion:MakeIllusion()
+			illusion.STRgained = caster.STRgained
+			illusion.AGIgained = caster.AGIgained
+			illusion.INTgained = caster.INTgained
+			illusion.DMGgained = caster.DMGgained
+			illusion.ARMORgained = caster.ARMORgained
+			illusion.HPREGgained = caster.HPREGgained
+			--Attributes:ModifyIllusionAttackSpeed(illusion, caster)
+			ability:ApplyDataDrivenModifier(caster, illusion, "modifier_la_pucelle_spirit_form", {})
+			FindClearSpaceForUnit( illusion, illusion:GetAbsOrigin(), true )
+			ExecuteOrderFromTable({
+				UnitIndex = illusion:entindex(),
+				OrderType = DOTA_UNIT_ORDER_ATTACK_MOVE,
+				Position = illusion:GetAbsOrigin()
+			})
+			Timers:CreateTimer(0.1, function()
+				ability:ApplyDataDrivenModifier(caster, illusion, "modifier_la_pucelle_spirit_form", {})
+			end)
+			
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+			ability:StartCooldown(ability:GetCooldown(1))
+			-- Set master's combo cooldown
+			local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+			masterCombo:EndCooldown()
+			masterCombo:StartCooldown(keys.ability:GetCooldown(1))]]

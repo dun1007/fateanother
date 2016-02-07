@@ -752,6 +752,63 @@
 		"VisionNighttimeRange"		"350"		// Range of vision at night time.
 	}
 
+	"jeanne_spirit_form"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/jeanne/jeanne.vmdl"
+		"ModelScale"				"3.0"
+		"Level"						"1"
+		"HealthBarOffset"			"140"
+		"SoundSet"					"Hero_mirana"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"jeanne_gods_resolution"	 
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"125"
+		"AttackDamageMin"				"57"
+		"AttackDamageMax"				"63"
+		"AttackRate"					"1.25"
+		"AttackAcquisitionRange"		"3000"
+		"AttackRange"					"150"
+		
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"CollisionSize"				"32"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.8"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"9999999"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1500"
+		"VisionNighttimeRange"		"1500"
+	}
+
 	"fa_clone"
 	{
 		// General
