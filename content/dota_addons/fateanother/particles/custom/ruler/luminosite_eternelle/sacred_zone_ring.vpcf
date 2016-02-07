@@ -19,12 +19,6 @@
 		{
 			_class = "C_OP_BasicMovement"
 			m_fDrag = 0.100000
-			m_Gravity =
-			[
-				0.000000,
-				0.000000,
-				50.000000,
-			]
 		},
 		{
 			_class = "C_OP_FadeOutSimple"
@@ -108,15 +102,18 @@
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 60
+			m_nAlphaMax = 60
 		},
 		{
 			_class = "C_INIT_RingWave"
 			m_flParticlesPerOrbit = 31.000000
 			m_flInitialRadius = 50.000000
-			m_flInitialSpeedMin = 800.000000
-			m_flInitialSpeedMax = 800.000000
+			m_flInitialSpeedMin = 3.000000
+			m_flInitialSpeedMax = 3.000000
 			m_flYaw = 210.000000
 			m_bEvenDistribution = true
+			m_nOverrideCP = 1
 		},
 		{
 			_class = "C_INIT_RemapParticleCountToScalar"
@@ -170,6 +167,21 @@
 				1.000000,
 				1.000000,
 				1.000000,
+			]
+		},
+		{
+			_class = "C_INIT_VelocityRandom"
+			m_LocalCoordinateSystemSpeedMin =
+			[
+				0.000000,
+				0.000000,
+				150.000000,
+			]
+			m_LocalCoordinateSystemSpeedMax =
+			[
+				0.000000,
+				0.000000,
+				150.000000,
 			]
 		},
 	]

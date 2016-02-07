@@ -54,6 +54,7 @@
 				300.000000,
 				0.000000,
 			]
+			m_bDisableOperator = true
 		},
 		{
 			_class = "C_OP_SetParentControlPointsToChildCP"

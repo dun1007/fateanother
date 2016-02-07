@@ -220,11 +220,11 @@ end
 function OnLEStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local targetPoint = keys.target_points[1]
 	local delay = keys.Delay
 	local range = keys.Range
 	local duration = keys.FlagDuration
 	local health = keys.FlagHealth
+	local travelTime = 1/3
 
 	if caster.CurrentFlag and not caster.CurrentFlag:IsNull() then
 		caster.CurrentFlag:RemoveModifierByName("modifier_luminosite_eternelle_flag_aura")
@@ -234,19 +234,18 @@ function OnLEStart(keys)
 	local projectileDestination = caster:GetAbsOrigin() + caster:GetForwardVector() * range
 	for i=1, 20 do
 		if GridNav:IsBlocked(projectileDestination) or not GridNav:IsTraversable(projectileDestination) then
-			projectileDestination =  projectileDestination - caster:GetForwardVector() * range/20 * i
+			projectileDestination = projectileDestination - caster:GetForwardVector() * range/20 * i
 		else
 			break
 		end
 	end 
 	local projectileRange = (caster:GetAbsOrigin() - projectileDestination):Length2D()
 
-	-- create blank linear projectile(powershot particle as placeholder while testing)
+	-- Create invisible linear projectile to check for enemies on the trail
 	local linearProjectile = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/econ/items/windrunner/windrunner_weapon_sparrowhawk/windrunner_spell_powershot_sparrowhawk.vpcf",
-        iMoveSpeed = range*3,
+        -- EffectName = "particles/custom/reference/luminosite_eternelle/luminosite_eternelle.vpcf",
         vSpawnOrigin = caster:GetAbsOrigin(),
         fDistance = projectileRange - 300,
         fStartRadius = 300,
@@ -257,19 +256,30 @@ function OnLEStart(keys)
         iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
         iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-        fExpireTime = GameRules:GetGameTime() + 1.0,
+        fExpireTime = GameRules:GetGameTime() + travelTime,
 		bDeleteOnHit = false,
-		vVelocity = caster:GetForwardVector() * range*3
+		vVelocity = caster:GetForwardVector() * projectileRange / travelTime
 	}
-
-
-	-- Create blank projectile to check for enemies on the trail
 	ProjectileManager:CreateLinearProjectile(linearProjectile)
+
+	-- Create particle dummy
+	local origin_location = caster:GetAbsOrigin()
+	local projectile = CreateUnitByName("dummy_unit", origin_location, false, caster, caster, caster:GetTeamNumber())
+	projectile:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+	projectile:SetAbsOrigin(origin_location)
+
+	local particle_name = "particles/custom/ruler/luminosite_eternelle/luminosite_eternelle.vpcf"
+	local throw_particle = ParticleManager:CreateParticle(particle_name, PATTACH_ABSORIGIN_FOLLOW, projectile)
+	ParticleManager:SetParticleControl(throw_particle, 1, (projectileDestination - projectile:GetAbsOrigin()) / travelTime)
+	projectile:SetForwardVector(caster:GetForwardVector())
+
 
 	EmitGlobalSound("Ruler.Eternelle")
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_luminosite_eternelle_anim", {})
 
-	Timers:CreateTimer(projectileRange/(range*3), function()
+	Timers:CreateTimer(travelTime, function()
+		projectile:RemoveSelf()
+
 		local flag = CreateUnitByName("jeanne_banner", projectileDestination, true, caster, caster, caster:GetTeamNumber())
 		flag:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})
 		--flag:SetAbsOrigin(projectileDestination)
@@ -279,12 +289,20 @@ function OnLEStart(keys)
 		caster.CurrentFlagHealth = health
 		ability:ApplyDataDrivenModifier(caster, flag, "modifier_luminosite_eternelle_flag_aura", {})
 
-		-- requires radius CP
+		-- wow control points are an adventure
 		local sacredZoneFx = ParticleManager:CreateParticle("particles/custom/ruler/luminosite_eternelle/sacred_zone.vpcf", PATTACH_CUSTOMORIGIN, nil)
-		ParticleManager:SetParticleControl( sacredZoneFx, 0, projectileDestination)
+		ParticleManager:SetParticleControl(sacredZoneFx, 0, projectileDestination)
+		ParticleManager:SetParticleControl(sacredZoneFx, 1, Vector(1,1,range))
+		ParticleManager:SetParticleControl(sacredZoneFx, 14, Vector(range,range,0))
+		ParticleManager:SetParticleControl(sacredZoneFx, 4, Vector(-range * .9,0,0) + projectileDestination) -- Cross arm lengths
+		ParticleManager:SetParticleControl(sacredZoneFx, 5, Vector(range * .9,0,0) + projectileDestination)
+		ParticleManager:SetParticleControl(sacredZoneFx, 6, Vector(0,-range * .9,0) + projectileDestination)
+		ParticleManager:SetParticleControl(sacredZoneFx, 7, Vector(0,range * .9,0) + projectileDestination)
 		caster.CurrentFlagParticle = sacredZoneFx
 
 		EmitSoundOnLocationWithCaster(projectileDestination, "Hero_Omniknight.GuardianAngel.Cast", caster)
+
+		-- DebugDrawCircle(projectileDestination, Vector(255,0,0), 0.5, range, true, duration)
 	end)
 end
 

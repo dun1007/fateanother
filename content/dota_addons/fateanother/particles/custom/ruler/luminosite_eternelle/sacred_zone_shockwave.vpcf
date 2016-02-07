@@ -127,8 +127,8 @@
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 140.000000
-			m_flRadiusMax = 160.000000
+			m_flRadiusMin = 0.420000
+			m_flRadiusMax = 0.480000
 		},
 		{
 			_class = "C_INIT_RemapCPtoVector"
@@ -149,6 +149,14 @@
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nCPInput = 1
+			m_nField = 2
+			m_flInputMax = 1000.000000
+			m_flOutputMax = 1000.000000
+			m_bScaleInitialRange = true
 		},
 	]
 	m_Emitters =

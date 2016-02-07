@@ -55,6 +55,7 @@
 			m_nOrientationType = 2
 			m_bAdditive = true
 			m_hTexture = resource:"materials/particle/particle_glow_irregular1_brightmod.vtex"
+			m_flOverbrightFactor = 0.500000
 		},
 	]
 	m_Initializers =
@@ -69,8 +70,8 @@
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 30.000000
-			m_flRadiusMax = 30.000000
+			m_flRadiusMin = 0.100000
+			m_flRadiusMax = 0.100000
 		},
 		{
 			_class = "C_INIT_RandomColor"
@@ -110,6 +111,14 @@
 			m_nFieldOutput = 4
 			m_flInputMax = 360.000000
 			m_flOutputMax = 360.000000
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nCPInput = 1
+			m_nField = 2
+			m_flInputMax = 1000.000000
+			m_flOutputMax = 1000.000000
+			m_bScaleInitialRange = true
 		},
 	]
 	m_Emitters =

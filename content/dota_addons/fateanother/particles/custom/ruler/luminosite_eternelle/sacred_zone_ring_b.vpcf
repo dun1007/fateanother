@@ -8,7 +8,7 @@
 		0,
 		255,
 	]
-	m_flConstantRadius = 15.000000
+	m_flConstantRadius = 0.003000
 	m_Operators =
 	[
 		{
@@ -108,6 +108,7 @@
 			m_flOutputMin = 75.000000
 			m_flOutputMax = 200.000000
 			m_bWrap = true
+			m_bScaleInitialRange = true
 		},
 		{
 			_class = "C_INIT_RemapParticleCountToScalar"
@@ -155,6 +156,14 @@
 			_class = "C_INIT_RandomAlpha"
 			m_nAlphaMin = 150
 			m_nAlphaMax = 150
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nCPInput = 1
+			m_nField = 2
+			m_flInputMax = 1000.000000
+			m_flOutputMax = 1000.000000
+			m_bScaleInitialRange = true
 		},
 	]
 	m_Emitters =

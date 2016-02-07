@@ -104,13 +104,14 @@
 		},
 		{
 			_class = "C_INIT_CreateWithinSphere"
-			m_fRadiusMax = 300.000000
+			m_fRadiusMax = 0.900000
 			m_vecDistanceBias =
 			[
 				1.000000,
 				1.000000,
 				0.000000,
 			]
+			m_nScaleCP = 14
 		},
 		{
 			_class = "C_INIT_RemapCPtoVector"

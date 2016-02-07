@@ -87,8 +87,9 @@
 				1.000000,
 				0.000000,
 			]
-			m_fSpeedMin = 1000.000000
-			m_fSpeedMax = 2000.000000
+			m_fSpeedMin = 3.000000
+			m_fSpeedMax = 6.000000
+			m_nScaleCP = 14
 		},
 		{
 			_class = "C_INIT_RandomRadius"
