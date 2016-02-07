@@ -124,7 +124,7 @@ function OnPurgeStart(keys)
 	local damagePerKill = keys.DamagePerKill
 	local silenceDuration = keys.SilenceDuration
 
-	local markFx = ParticleManager:CreateParticle("particles/units/heroes/hero_chen/chen_penitence.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	local markFx = ParticleManager:CreateParticle("particles/custom/ruler/purge_the_unjust/ruler_purge_the_unjust_marker.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl( markFx, 0, targetPoint)
 	EmitSoundOnLocationWithCaster(targetPoint, "Hero_Chen.PenitenceImpact", caster)	
 
@@ -140,7 +140,7 @@ function OnPurgeStart(keys)
 	    end
 
 	    EmitSoundOnLocationWithCaster(targetPoint, "Hero_Chen.TestOfFaith.Target", caster)		
-		local purgeFx = ParticleManager:CreateParticle("particles/custom/jeanne/jeanne_purge_the_unjust.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		local purgeFx = ParticleManager:CreateParticle("particles/custom/ruler/purge_the_unjust/ruler_purge_the_unjust_a.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl( purgeFx, 0, targetPoint)
 		ParticleManager:SetParticleControl( purgeFx, 1, targetPoint)
 		ParticleManager:SetParticleControl( purgeFx, 2, targetPoint)
@@ -203,50 +203,134 @@ function OnGodResolutionStart(keys)
 
 	    end
 
-		local purgeFx = ParticleManager:CreateParticle("particles/custom/jeanne/jeanne_purge_the_unjust.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		local purgeFx = ParticleManager:CreateParticle("particles/custom/ruler/gods_resolution/gods_resolution_active_circle.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl( purgeFx, 0, caster:GetAbsOrigin())
 
 		return tickPeriod
 	end)
 end
 
+function OnLECastStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
+	EmitGlobalSound("Ruler.Luminosite")
+end
+
 function OnLEStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local targetPoint = keys.target_points[1]
+	local delay = keys.Delay
+	local range = keys.Range
+	local duration = keys.FlagDuration
+	local health = keys.FlagHealth
 
-	-- create linear projectile
-	local projectile = 
+	if caster.CurrentFlag and not caster.CurrentFlag:IsNull() then
+		caster.CurrentFlag:RemoveModifierByName("modifier_luminosite_eternelle_flag_aura")
+	end
+	caster.LETargetTable = {}
+
+	local projectileDestination = caster:GetAbsOrigin() + caster:GetForwardVector() * range
+	for i=1, 20 do
+		if GridNav:IsBlocked(projectileDestination) or not GridNav:IsTraversable(projectileDestination) then
+			projectileDestination =  projectileDestination - caster:GetForwardVector() * range/20 * i
+		else
+			break
+		end
+	end 
+	local projectileRange = (caster:GetAbsOrigin() - projectileDestination):Length2D()
+
+	-- create blank linear projectile(powershot particle as placeholder while testing)
+	local linearProjectile = 
 	{
 		Ability = keys.ability,
-        EffectName = "particles/custom/ruler/luminosite_eternelle/luminosite_eternelle.vpcf",
-        iMoveSpeed = 3000,
+        EffectName = "particles/econ/items/windrunner/windrunner_weapon_sparrowhawk/windrunner_spell_powershot_sparrowhawk.vpcf",
+        iMoveSpeed = range*3,
         vSpawnOrigin = caster:GetAbsOrigin(),
-        fDistance = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D() - 200,
-        fStartRadius = 200,
-        fEndRadius = 200,
+        fDistance = projectileRange - 300,
+        fStartRadius = 300,
+        fEndRadius = 300,
         Source = caster,
         bHasFrontalCone = true,
         bReplaceExisting = false,
         iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
         iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-        fExpireTime = GameRules:GetGameTime() + 0.1,
+        fExpireTime = GameRules:GetGameTime() + 1.0,
 		bDeleteOnHit = false,
-		vVelocity = caster:GetForwardVector() * 9999
+		vVelocity = caster:GetForwardVector() * range*3
 	}
-	ProjectileManager:CreateLinearProjectile(projectile)
 
-	-- create flag unit at where it lands(must check for untraversable destination and choose closest traversable tile)
+
+	-- Create blank projectile to check for enemies on the trail
+	ProjectileManager:CreateLinearProjectile(linearProjectile)
+
+	EmitGlobalSound("Ruler.Eternelle")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_luminosite_eternelle_anim", {})
+
+	Timers:CreateTimer(projectileRange/(range*3), function()
+		local flag = CreateUnitByName("jeanne_banner", projectileDestination, true, caster, caster, caster:GetTeamNumber())
+		flag:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})
+		--flag:SetAbsOrigin(projectileDestination)
+		FindClearSpaceForUnit(flag, flag:GetAbsOrigin(), true)
+		flag:SetBaseMaxHealth(health)
+		caster.CurrentFlag = flag
+		caster.CurrentFlagHealth = health
+		ability:ApplyDataDrivenModifier(caster, flag, "modifier_luminosite_eternelle_flag_aura", {})
+
+		-- requires radius CP
+		local sacredZoneFx = ParticleManager:CreateParticle("particles/custom/ruler/luminosite_eternelle/sacred_zone.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl( sacredZoneFx, 0, projectileDestination)
+		caster.CurrentFlagParticle = sacredZoneFx
+
+		EmitSoundOnLocationWithCaster(projectileDestination, "Hero_Omniknight.GuardianAngel.Cast", caster)
+	end)
 end
 
 function OnLEHit(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
-
+	local duration = keys.CCDuration
+	--print(target:GetName() .. " hit by Luminosite Eternelle")
 	-- apply CC
+	table.insert(caster.LETargetTable, target)
+	giveUnitDataDrivenModifier(caster, target, "locked", duration)
+	giveUnitDataDrivenModifier(caster, target, "rooted", duration)
+	target:EmitSound("Hero_ArcWarden.Flux.Cast")
 end
 
+function OnLEAllyDamageTaken(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local victim = keys.unit
+	local attacker = keys.attacker
+	if not caster.CurrentFlag:IsNull() then
+		caster.CurrentFlagHealth = caster.CurrentFlagHealth - 1
+		if caster.CurrentFlagHealth <= 0 then
+			caster.CurrentFlag:RemoveModifierByName("modifier_luminosite_eternelle_flag_aura")
+		else
+			caster.CurrentFlag:SetHealth(caster.CurrentFlagHealth)
+		end
+	end
+end
+
+function OnFlagCleanup(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+
+	if not caster.CurrentFlag:IsNull() then
+		for i=1, #caster.LETargetTable do
+			caster.LETargetTable[i]:RemoveModifierByName("rooted")
+			caster.LETargetTable[i]:RemoveModifierByName("locked")
+		end
+		caster.CurrentFlag:RemoveSelf()
+		ParticleManager:DestroyParticle( caster.CurrentFlagParticle, false )
+		ParticleManager:ReleaseParticleIndex( caster.CurrentFlagParticle )
+	end
+end
 
 function template(keys)
 	local caster = keys.caster

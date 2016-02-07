@@ -24416,8 +24416,8 @@
 		
 		"precache"
 		{
-			"particle"			"particles/custom/jeanne/jeanne_purge_the_unjust.vpcf"
-			"particle"			"particles/units/heroes/hero_chen/chen_penitence.vpcf"
+			"particle"			"particles/custom/ruler/purge_the_unjust/ruler_purge_the_unjust.vpcf"
+			"particle"			"particles/custom/ruler/purge_the_unjust/ruler_purge_the_unjust_marker.vpcf"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 		}
 		
@@ -24502,7 +24502,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"precache"
 		{
-			"particle"				"particles/custom/jeanne/jeanne_purge_the_unjust.vpcf"
+			"particle"				"particles/custom/ruler/gods_resolution/gods_resolution_active_circle.vpcf"
 			"particle"				"particles/units/heroes/hero_chen/chen_teleport_flash_sparks.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_arc_warden.vsndevts"
 		}
@@ -24537,12 +24537,12 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"active_total_damage"			"600 725 850 975 1100"
+				"active_total_damage"			"700 825 950 1075 1200"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"active_damage_per_tick"		"60 72.5 85 97.5 110"
+				"active_damage_per_tick"		"70 82.5 95 107.5 120"
 			}
 			"06"
 			{
@@ -24642,12 +24642,16 @@
 		"precache"
 		{
 			"particle"			"particles/custom/ruler/luminosite_eternelle/luminosite_eternelle.vpcf"
+			"particle"			"particles/custom/ruler/luminosite_eternelle/sacred_zone.vpcf"
+			"particle"			"particles/econ/items/windrunner/windrunner_weapon_sparrowhawk/windrunner_spell_powershot_sparrowhawk.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1000"
-		"AbilityCastPoint"				"0.7"
+		"AbilityCastPoint"				"0.9"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -24662,7 +24666,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"delay"				"0.7"
+				"delay"				"0.9"
 			}
 			"02"
 			{
@@ -24677,18 +24681,28 @@
 			}
 			"04"
 			{
-				"var_type"			"FIELD_INTEGER"
-				"damage_reduction"			"10 15 20 25 30"
+				"var_type"			"FIELD_FLOAT"
+				"damage_reduction"			"-10 -15 -20 -25 -30"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"flag_health"			"8 11 14 17 20"
 			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"flag_duration"		"7"
+			}
 		}
 		
 		"OnAbilityPhaseStart"
 		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"jeanne_ability"
+			 	"Function"		"OnLECastStart"
+			}
 		}
 
 		"OnSpellStart"
@@ -24698,29 +24712,88 @@
 			 	"ScriptFile"	"jeanne_ability"
 			 	"Function"		"OnLEStart"
 			 	"Target"		"POINT"
+			 	"Delay"			"%delay"
+			 	"Range"			"%range"
+			 	"FlagDuration"	"%flag_duration"
+			 	"FlagHealth"	"%flag_health"
 			}
 		}
 
 		"OnProjectileHitUnit" 
 		{
+			"DeleteOnHit"			"false"
 			"RunScript"
 			{
 				"ScriptFile"	"jeanne_ability"
 				"Function"		"OnLEHit"
+				"CCDuration"	"%max_cc_duration"
 			}
 		}
 		
 		"Modifiers"
 		{
-			"modifier_luminosite_eternelle_protection"
-			{
-				"IsHidden"			"1"
-				"Duration"			"1.0"
-			}	
-
 			"modifier_luminosite_eternelle_flag_aura"
 			{
-			
+				"Duration"				"%flag_duration"
+				"IsHidden"				"0"
+				"Aura"					"modifier_luminosite_eternelle_flag_aura_buff"
+				"Aura_Radius"			"%range"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"		
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnFlagCleanup"
+					}
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnFlagCleanup"
+					}
+				}
+			}
+			"modifier_luminosite_eternelle_flag_aura_buff"
+			{
+				"EffectName"	"particles/units/heroes/hero_medusa/medusa_mana_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_reduction"
+				}
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "jeanne_ability"
+						"Function"      "OnLEAllyDamageTaken"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+			}	
+			"modifier_luminosite_eternelle_anim"
+			{
+				"IsHidden"			"1"
+				"Duration"			"0.2"
+				"OverrideAnimation"		"ACT_DOTA_ATTACK_EVENT"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
+				}
+			}
+			"modifier_luminosite_eternelle_anim2"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%delay"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_6"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
+				}
 			}
 		}
 	}
@@ -25279,6 +25352,7 @@
 			"particle"	"particles/units/heroes/hero_elder_titan/elder_titan_ancestral_spirit_cast.vpcf"
 			"particle"				"particles/generic_gameplay/generic_silence.vpcf"
 			"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield_mark.vpcf"
+			"particle"	"particles/units/heroes/hero_oracle/oracle_fortune_purge.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -25342,10 +25416,6 @@
 			{
 				"IsDebuff"		"1"
 			}
-			"locked"
-			{
-				"IsDebuff"		"1"
-			}
 			"silenced"
 			{
 				"IsDebuff"		"1"
@@ -25371,6 +25441,22 @@
 				"IsDebuff"		"1"
 				"EffectName"			"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield_mark.vpcf"
 				"EffectAttachType"		"follow_overhead"
+			}
+			"locked"
+			{
+				"IsDebuff"		"1"
+				"EffectName"			"particles/units/heroes/hero_oracle/oracle_fortune_purge.vpcf"
+				"EffectAttachType"		"follow_origin"
+			}
+			"rooted"
+			{
+				"IsDebuff"		"1"
+				"EffectName"	"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_borealis.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 			"jump_pause"
 			{

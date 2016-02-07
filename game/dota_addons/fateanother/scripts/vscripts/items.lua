@@ -300,10 +300,12 @@ function Blink(keys)
 
 	
 	-- particle
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(particle, 0, casterPos)
 	caster:EmitSound("Hero_Antimage.Blink_out")
-	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(particle2, 0, targetPoint)
+	EmitSoundOnLocationWithCaster(targetPoint, "Hero_Antimage.Blink_in", caster)
 
 	-- blink
 	local diff = targetPoint - caster:GetAbsOrigin()
@@ -326,7 +328,6 @@ function Blink(keys)
 	end
 
 	
-	caster:EmitSound("Hero_Antimage.Blink_in")
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 
 	Timers:CreateTimer(2.0, function()

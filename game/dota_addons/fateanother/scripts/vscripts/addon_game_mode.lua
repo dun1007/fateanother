@@ -185,6 +185,7 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_gawain.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_tamamo.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_lishuwen.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/hero_ruler.vsndevts", context)
 
     
 
