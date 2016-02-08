@@ -2236,18 +2236,6 @@
 			 	"Target"		"POINT"
 			}
 		}
-
-		"OnProjectileHitUnit" 
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"OnGBAOEHit"
-				"Target"		"POINT"
-			 	"Damage"		"%damage"
-			 	"Radius"		"%radius"
-			}
-		}
 		
 		"Modifiers"
 		{
