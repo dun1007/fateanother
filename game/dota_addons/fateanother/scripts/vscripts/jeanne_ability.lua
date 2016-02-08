@@ -370,14 +370,16 @@ function OnLEAllyDamageTaken(keys)
 	local ability = keys.ability
 	local victim = keys.unit
 	local attacker = keys.attacker
-	if caster.IsSaintImproved and not attacker:HasModifier("modifier_saint_debuff") then
-		if not caster.CurrentFlag:IsNull() then
-			caster.CurrentFlagHealth = caster.CurrentFlagHealth - 1
-			if caster.CurrentFlagHealth <= 0 then
-				caster.CurrentFlag:RemoveModifierByName("modifier_luminosite_eternelle_flag_aura")
-			else
-				caster.CurrentFlag:SetHealth(caster.CurrentFlagHealth)
-			end
+	if caster.IsSaintImproved and attacker:HasModifier("modifier_saint_debuff") then
+		return
+	end
+
+	if not caster.CurrentFlag:IsNull() then
+		caster.CurrentFlagHealth = caster.CurrentFlagHealth - 1
+		if caster.CurrentFlagHealth <= 0 then
+			caster.CurrentFlag:RemoveModifierByName("modifier_luminosite_eternelle_flag_aura")
+		else
+			caster.CurrentFlag:SetHealth(caster.CurrentFlagHealth)
 		end
 	end
 end
