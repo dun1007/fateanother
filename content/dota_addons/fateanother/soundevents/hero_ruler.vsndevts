@@ -61,3 +61,36 @@
 		}
 	}
 }
+
+"Hero_Mirana.Attack"
+{
+"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"src1_2d"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/weapons/hero/juggernaut/attack02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"0.5000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}

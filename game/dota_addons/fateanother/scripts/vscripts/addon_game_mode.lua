@@ -14,6 +14,7 @@ _G.IsPickPhase = true
 _G.IsPreRound = true
 _G.RoundStartTime = 0
 _G.nCountdown = 0
+_G.CurrentGameState = "FATE_PRE_GAME"
 
 ENABLE_HERO_RESPAWN = false -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = true -- Should the main shop contain Secret Shop items as well as regular items
@@ -138,7 +139,12 @@ voteResultTable = {
     voteFor6Rounds = 0, 
     voteFor4Rounds = 0
 }
-
+gameState = {
+    "FATE_PRE_GAME",
+    "FATE_PRE_ROUND",
+    "FATE_ROUND_ONGOING",
+    "FATE_POST_ROUND"
+}
 
 
 if FateGameMode == nil then
@@ -434,7 +440,7 @@ function FateGameMode:PlayerSay(keys)
 
     -- Below two commands are solely for test purpose, not to be used in normal games
     if text == "-testsetup" then
-        --if Convars:GetBool("sv_cheats") then
+        if Convars:GetBool("sv_cheats") then
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local hero = playerHero
                 hero.MasterUnit:SetMana(1000)
@@ -452,7 +458,7 @@ function FateGameMode:PlayerSay(keys)
                     hero:SetBaseIntellect(20) 
                 end
             end)
-        --end
+        end
     end
 
     if text == "-declarewinner" then
@@ -472,15 +478,28 @@ function FateGameMode:PlayerSay(keys)
         local hr = plyr:GetAssignedHero()
         hr:RemoveModifierByName("round_pause")
     end]]
-        --if Convars:GetBool("sv_cheats") then 
+        if Convars:GetBool("sv_cheats") then 
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local hr = playerHero
                 hr:RemoveModifierByName("round_pause")
                 --print("Looping through player" .. ply)
             end)
-        --end
+        end
     end
     
+    if text == "-tt" then
+        if Convars:GetBool("sv_cheats") then 
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                local hr = playerHero
+                if hr:GetName() == "npc_dota_hero_mirana" then
+                    print(hr:FindAbilityByName("jeanne_combo_la_pucelle"):GetCooldownTimeRemaining())
+                elseif hr:GetName() == "npc_dota_hero_ember_spirit" then
+                    print(hr:FindAbilityByName("archer_5th_arrow_rain"):GetCooldownTimeRemaining())
+                end
+            end)
+        end
+    end
+
     -- Turns BGM on and off
     if text == "-bgmoff" then
         print("Turning BGM off")
@@ -967,11 +986,13 @@ function FateGameMode:OnEntityKilled( keys )
         end
     end
     if killedUnit:IsRealHero() then
+        self.bIsCasuallyOccured = true -- someone died this round
+        -- if killed by illusion, change the killer to the owner of illusion instead
         if killerEntity:IsIllusion() then
             killerEntity = PlayerResource:GetPlayer(killerEntity:GetPlayerID()):GetAssignedHero()
         end
-        self.bIsCasuallyOccured = true
 
+        -- if TK occured, do nothing and announce it
         if killerEntity:GetTeam() == killedUnit:GetTeam() then
             GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain friendly Servant <font color='#FF5050'>" .. killedUnit.name .. "</font>!", 0, 0)
         else
@@ -980,6 +1001,12 @@ function FateGameMode:OnEntityKilled( keys )
                 killedUnit.DeathCount = 1
             else
                 killedUnit.DeathCount = killedUnit.DeathCount + 1
+            end
+            -- Add to kill count if victim is Ruler
+            if killedUnit:GetName() == "npc_dota_hero_mirana" and killedUnit.IsSaintImproved then
+                print("killed ruler with attribute. current kills: " .. killerEntity:GetKills() .. ". adding 2 extra kills...")
+                killerEntity:IncrementKills(1)
+                killerEntity:IncrementKills(1)
             end
             -- check if unit can receive a shard
             if killedUnit.DeathCount == 7 then
@@ -1013,7 +1040,7 @@ function FateGameMode:OnEntityKilled( keys )
             if killerEntity:FindAbilityByName("gilgamesh_golden_rule") and killerEntity:FindAbilityByName("gilgamesh_golden_rule"):GetLevel() == 2 then 
                 killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
             end 
-            print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
+            --print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
             -- Create gold popup
             local goldPopupFx = ParticleManager:CreateParticle("particles/msg_fx/msg_gold.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit)
             ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
@@ -1026,6 +1053,8 @@ function FateGameMode:OnEntityKilled( keys )
         
         -- Need condition check for GH
         --if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
+
+
         if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
             self.nRadiantDead = self.nRadiantDead + 1
         else 
@@ -1043,23 +1072,26 @@ function FateGameMode:OnEntityKilled( keys )
                 end
             end
         end)
-        
-        if nRadiantAlive == 0 then
-            print("All Radiant heroes eliminated, removing existing timers and declaring winner...")
-            Timers:RemoveTimer('round_timer')
-            Timers:RemoveTimer('alertmsg')
-            Timers:RemoveTimer('alertmsg2')
-            Timers:RemoveTimer('timeoutmsg')
-            Timers:RemoveTimer('presence_alert')
-            self:FinishRound(false, 1)
-        elseif nDireAlive == 0 then 
-            print("All Dire heroes eliminated, removing existing timers and declaring winner...")
-            Timers:RemoveTimer('round_timer')
-            Timers:RemoveTimer('alertmsg')
-            Timers:RemoveTimer('alertmsg2')
-            Timers:RemoveTimer('timeoutmsg')
-            Timers:RemoveTimer('presence_alert')
-            self:FinishRound(false, 0)
+        print(_G.CurrentGameState)
+        -- check for game state before deciding round
+        if _G.CurrentGameState ~= "FATE_POST_ROUND" then
+            if nRadiantAlive == 0 then
+                --print("All Radiant heroes eliminated, removing existing timers and declaring winner...")
+                Timers:RemoveTimer('round_timer')
+                Timers:RemoveTimer('alertmsg')
+                Timers:RemoveTimer('alertmsg2')
+                Timers:RemoveTimer('timeoutmsg')
+                Timers:RemoveTimer('presence_alert')
+                self:FinishRound(false, 1)
+            elseif nDireAlive == 0 then 
+                --print("All Dire heroes eliminated, removing existing timers and declaring winner...")
+                Timers:RemoveTimer('round_timer')
+                Timers:RemoveTimer('alertmsg')
+                Timers:RemoveTimer('alertmsg2')
+                Timers:RemoveTimer('timeoutmsg')
+                Timers:RemoveTimer('presence_alert')
+                self:FinishRound(false, 0)
+            end
         end
     end
 end
@@ -1542,6 +1574,7 @@ function FateGameMode:InitializeRound()
         endTime = PRE_ROUND_DURATION,
         callback = function()
             print("[FateGameMode]Round started.")
+            _G.CurrentGameState = "FATE_ROUND_ONGOING"
             _G.IsPreRound = false
             _G.RoundStartTime = GameRules:GetGameTime()
             CreateUITimer(("Round " .. self.nCurrentRound), ROUND_DURATION, "round_timer" .. self.nCurrentRound)
@@ -1586,7 +1619,15 @@ function FateGameMode:InitializeRound()
             local nDireAlive = 0
             -- Check how many people are alive in each team
             self:LoopOverPlayers(function(player, playerID, playerHero)
-                if playerHero:IsAlive() then -- BUGG(C++)
+                if playerHero:IsAlive() then 
+                    if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                        nRadiantAlive = nRadiantAlive + 1
+                    else 
+                        nDireAlive = nDireAlive + 1
+                    end
+                elseif playerHero:GetName() == "npc_dota_hero_mirana" and playerHero.bIsLaPucelleActivatedThisRound then
+                    print("ruler special round condition triggered")
+                    playerHero.bIsLaPucelleActivatedThisRound = false
                     if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
                         nRadiantAlive = nRadiantAlive + 1
                     else 
@@ -1626,6 +1667,7 @@ end
 function FateGameMode:FinishRound(IsTimeOut, winner)
     print("[FATE] Winner decided")
     --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
+    _G.CurrentGameState = "FATE_POST_ROUND"
     CreateUITimer(("Round " .. self.nCurrentRound), 0, "round_timer" .. self.nCurrentRound)
     CreateUITimer("Pre-Round", 0, "pregame_timer")
 
@@ -1641,7 +1683,9 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             playerHero:RemoveModifierByName("modifier_army_of_the_king_death_checker")
         end
         if playerHero:GetName() == "npc_dota_hero_doom_bringer" then
-            playerHero:SetRespawnPosition(playerHero.RespawnPos)
+            if playerHero.RespawnPos then
+                playerHero:SetRespawnPosition(playerHero.RespawnPos)
+            end
         end
     end)
 
@@ -1796,6 +1840,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
                 ProjectileManager:ProjectileDodge(pHero)
             end)
             self:InitializeRound()
+            _G.CurrentGameState = "FATE_PRE_ROUND"
         end
     })
     

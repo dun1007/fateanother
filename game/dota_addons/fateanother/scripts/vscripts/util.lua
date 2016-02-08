@@ -46,7 +46,11 @@ softdispellable = {
     "modifier_invigorating_ray_armor_buff",
     "modifier_blade_of_the_devoted",
     "modifier_lishuwen_cosmic_orbit",
-    "modifier_lishuwen_concealment"
+    "modifier_lishuwen_concealment",
+    "modifier_jeanne_charisma_str",
+    "modifier_jeanne_charisma_agi",
+    "modifier_jeanne_charisma_int",
+    "modifier_magic_resistance_ex_shield"
 }
 
 strongdispellable = {
@@ -74,6 +78,12 @@ strongdispellable = {
     "modifier_invigorating_ray_ally",
     "modifier_invigorating_ray_armor_buff",
     "modifier_blade_of_the_devoted",
+    "modifier_lishuwen_cosmic_orbit",
+    "modifier_lishuwen_concealment",
+    "modifier_jeanne_charisma_str",
+    "modifier_jeanne_charisma_agi",
+    "modifier_jeanne_charisma_int",
+    "modifier_magic_resistance_ex_shield",
 
     -- Strong Dispelable
     "modifier_b_scroll",
@@ -91,7 +101,8 @@ revokes = {
     "modifier_enkidu_hold",
     "jump_pause",
     "pause_sealdisabled",
-    "rb_sealdisabled"
+    "rb_sealdisabled",
+    "revoked"
 }
 
 
@@ -125,7 +136,8 @@ cleansable = {
     "modifier_raging_dragon_strike_1_slow",
     "modifier_fierce_tiger_strike_1_slow",
     "modifier_fierce_tiger_strike_3_slow",
-
+    "modifier_purge_the_unjust_slow",
+    "modifier_gods_resolution_slow",
     -- Other CCs
     "modifier_stunned",
     "modifier_rule_breaker",
@@ -140,6 +152,10 @@ cleansable = {
     "modifier_tentacle_wrap",
     "modifier_gust_heaven_purge",
     "modifier_subterranean_grasp",
+    "revoked",
+    "locked",
+    "rooted",
+    "stunned",
 
     -- Debuffs
     "modifier_gust_heaven_indicator_enemy"
@@ -162,7 +178,9 @@ slowmodifier = {
     "modifier_gust_heaven_purge_slow_tier2",
     "modifier_raging_dragon_strike_1_slow",
     "modifier_fierce_tiger_strike_1_slow",
-    "modifier_fierce_tiger_strike_3_slow"
+    "modifier_fierce_tiger_strike_3_slow",
+    "modifier_purge_the_unjust_slow",
+    "modifier_gods_resolution_slow"
 }
 
 donotlevel = {
@@ -223,7 +241,9 @@ CannotReset = {
     "lishuwen_raging_dragon_strike",
     "lishuwen_raging_dragon_strike_2",
     "lishuwen_raging_dragon_strike_3",
-    "lishuwen_berserk"
+    "lishuwen_berserk",
+    "jeanne_combo_la_pucelle",
+    "jeanne_identity_discernment"
 }
 
 femaleservant = {
@@ -657,7 +677,7 @@ end
 
 function FindName(name)
     local heroName = nil
-    print("Finding name")
+    --print("Finding name")
     if name == "npc_dota_hero_legion_commander" then
         heroName = "Saber"
     elseif name == "npc_dota_hero_phantom_lancer" then
@@ -838,7 +858,7 @@ function DisplayTip()
     local tipchoice = 0
     local tipRef = ""
     while tipchoice == lastTipChoice do
-        print("Rerolling tip choice")
+        --print("Rerolling tip choice")
         tipchoice = RandomInt(1, 10) 
         tipRef = ("#Fate_Tip" .. tipchoice)
     end
@@ -1023,6 +1043,21 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         
     end
 
+end
+
+-- Check if anyone on this hero's team is still alive. 
+function IsTeamWiped(hero)
+    for i=0, 11 do
+        local player = PlayerResource:GetPlayer(i)
+        local playerHero = PlayerResource:GetSelectedHeroEntity(i)
+        if playerHero ~= nil then 
+            servant = playerHero
+            if servant:GetTeam() == hero:GetTeam() and servant:IsAlive() then 
+                return false
+            end
+        end
+    end
+    return true
 end
 
 function ApplyPurge(target)

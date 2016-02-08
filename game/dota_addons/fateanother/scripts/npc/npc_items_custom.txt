@@ -1385,8 +1385,7 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-			"particle"			"particles/custom/generic/fate_green_shield.vpcf"
-			"particle"			"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+			"particle"			"particles/custom/item/item_b_scroll_shield.vpcf"
 			"particle"			"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
 	    }
 	    "AbilitySpecial"
@@ -1417,7 +1416,7 @@
 	    {
 	    	"modifier_b_scroll"
 	    	{
-				"EffectName"	"particles/units/heroes/hero_oracle/oracle_fatesedict.vpcf"
+				"EffectName"	"particles/custom/item/item_b_scroll_shield.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"OnCreated"
 				{

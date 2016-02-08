@@ -453,20 +453,7 @@ function BerCheckCombo(caster, ability)
 	end
 end
 
--- Check if anyone on this hero's team is still alive. 
-function IsTeamWiped(hero)
-	for i=0, 11 do
-		local player = PlayerResource:GetPlayer(i)
-		local playerHero = PlayerResource:GetSelectedHeroEntity(i)
-		if playerHero ~= nil then 
-			servant = playerHero
-			if servant:GetTeam() == hero:GetTeam() and servant:IsAlive() then 
-				return false
-			end
-		end
-	end
-	return true
-end
+
 
 function OnGodHandDeath(keys)
 	local caster = keys.caster
