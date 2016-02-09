@@ -9673,7 +9673,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"40 60 80 100 120"
+				"damage"			"30 45 60 75 90"
 			}
 			
 			"02"
@@ -9684,7 +9684,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"6 8 10 12 14"
+				"duration"			"6"
 			}
 		}
 		
@@ -9709,7 +9709,69 @@
 			 	"Damage"		"%damage"
 			}
 		}
+
+		"Modifiers"
+		{
+			"modifier_gob_thinker"
+			{
+				"Duration"			"%duration"
+	            "ThinkInterval"		"0.15"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+					 	"ScriptFile"	"gilg_ability"
+					 	"Function"		"OnGOBThink"
+					}
+				}	
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"gilg_ability"
+					 	"Function"		"OnGOBEnd"
+					}					
+				}			
+			}
+		}
 	}
+	//=======================================
+	// Gilgamesh : GOB Toggle
+	//=======================================
+	"gilgamesh_gate_of_babylon_toggle"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityTextureName"			"gilgamesh_gate_of_babylon"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+		}
+		
+		"OnToggleOn"
+		{	
+		}
+		"OnSpellStart"
+		{
+		}
+		"OnUpgrade"
+		{		
+		}
+	}
+
 
 	//=====================================
 	// Gilgamesh : Power of Sumer Arrow Shot
@@ -9733,6 +9795,11 @@
 
 		"AbilitySpecial"
 		{
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"dmg_ratio"			"0.3"
+			}
 		}
 
 		"OnSpellStart"
@@ -17689,7 +17756,12 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"summon_number"			"3 3 3 4 4"
-			}						
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"summon_number_no_corpse"			"1 1 1 2 3"
+			}							
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
@@ -17711,6 +17783,7 @@
 				"Target"			"POINT"
 				"Radius"			"%radius"
 				"Number"			"%summon_number"
+				"NumberNoCorpse"	"%summon_number_no_corpse"
 				"Health"			"%health"
 			}
 		}
@@ -17830,7 +17903,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.8"
+		"AbilityCastPoint"				"0.65"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -17857,7 +17930,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"0.3"
+				"stun_duration"		"0.4"
 			}
 		}
 		
@@ -17869,6 +17942,7 @@
 				"Function"			"OnTormentStart"
 				"Target"			"POINT"
 				"Radius"			"%radius"
+				"StunDuration"		"%stun_duration"
 			}
 			"FireSound"
 			{
@@ -18018,7 +18092,7 @@
 			}
 			"modifier_exquisite_cadaver_demon"
 			{
-				"Duration"		"1.5"
+				"Duration"		"1.0"
 				"EffectName"		"particles/units/heroes/hero_viper/viper_viper_strike_debuff.vpcf"
 				"EffectAttachType"	"follow_origin"		
 				"OnDestroy"
@@ -18105,6 +18179,7 @@
 			"particle"	"particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf"
 			"particle"	"particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf"
 			"particle"	"particles/units/heroes/hero_pugna/pugna_netherblast.vpcf"
+			"particle"	"particles/econ/items/enigma/enigma_world_chasm/enigma_blackhole_ti5_dark_swirl.vpcf"
 
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_spectre.vsndevts"
@@ -18114,6 +18189,7 @@
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_warlock.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_tidehunter.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_lion.vsndevts"
+			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_enigma.vsndevts"
 		}
 		
 		// Casting
@@ -18152,6 +18228,11 @@
 			{
 				"var_type"			"FIELD_INTEGER"
 				"attack_damage"		"100 150 200 250 300"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"summon_disable_duration"	"15"
 			}
 		}
 		
@@ -18655,7 +18736,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"knockup_duration"			"1.0"
+				"knockup_duration"			"0.5"
 			}		
 			"03"
 			{
@@ -19561,7 +19642,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"100 120 140 180 200"
+				"damage"				"110 145 180 215 250"
 			}
 			"05"
 			{
@@ -19816,7 +19897,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"10"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -19832,7 +19913,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"agi_ratio"					"8"
+				"agi_ratio"					"5"
 			}
 			"03"
 			{
@@ -21568,7 +21649,7 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCooldown"				"3 2.5 2 1.5 1"
 		"AbilityManaCost"				"100"
-		"AbilityCastRange"				"900"
+		"AbilityCastRange"				"1150"
 		
 		"AbilitySpecial"
 		{
@@ -21590,7 +21671,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_ms"				"5 5.5 6 6.5 7"
+				"stack_ms"				"5 7 9 11 13"
 			}
 			"05"
 			{
@@ -21818,7 +21899,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700"
 		"AbilityCastRangeBuffer"		"300"
-		"AbilityCastPoint"				"0.6"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"29"
 		"AbilityManaCost"				"400"
 		
@@ -21829,7 +21910,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"cast_delay"		"0.6"
+				"cast_delay"		"0.5"
 			}
 			"02"
 			{
@@ -21968,6 +22049,134 @@
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"15"
 				}
 			}
+			"modifier_mantra_mr_buff"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"15"
+				}				
+			}
+			"modifier_mantra_mr_debuff"
+			{
+				"IsHidden"		"1"
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"-15"
+				}				
+			}
+		}
+	}
+	//=================================================================================================================
+	// Tamamo : Mystic Shackle
+	//=================================================================================================================
+	"tamamo_mystic_shackle"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"wisp_tether"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf"
+		}
+		
+		// Ability stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"45"
+		"AbilityManaCost"				"200"
+		
+		// Ability special
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+		}
+		
+		// Data driven
+		//-------------------------------------------------------------------------------------------------------------
+		"precache"						
+		{
+		}
+		
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"tamamo_ability"
+				"Function"				"On"
+			}			
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"tamamo_ability"
+				"Function"				"OnShackleStart"
+				"OrbAmount"				"%orb_amount"
+				"Target"				"POINT"
+			}
+		}
+	
+		
+		"Modifiers"
+		{
+			"modifier_mystic_shackle_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
+			"modifier_mystic_shackle"
+			{
+				"IsDebuff"		"1"
+				"Duration"			"3.0"
+				"ThinkInterval" 		"0.033"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"tamamo_ability"
+						"Function"				"OnShackleThink"
+					}
+				}
+				"OnCreated"
+				{
+					"FireSound"
+					{
+						"EffectName"		"Hero_Wisp.Tether.Target"
+						"Target"			"TARGET"
+					}
+					
+					"AttachEffect"
+					{
+						"EffectName"		"particles/units/heroes/hero_wisp/wisp_tether.vpcf"
+						"EffectAttachType"	"attach_origin"
+						"Target"			"TARGET"
+						
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_origin"
+							"TARGET"	"attach_origin"
+						}
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "tamamo_ability"
+						"Function"      "OnMantraShackleEnd"
+					}
+				}
+			}
 		}
 	}
 
@@ -22066,7 +22275,7 @@
 
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1050"
+		"AbilityCastRange"				"800 850 900 950 1000"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"49"
@@ -22088,17 +22297,17 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"intelligence"			"0 8 16 24 32"
+				"intelligence"			"0 10 20 30 40"
 			}	
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"1050"
+				"radius"			"800 850 900 950 1000"
 			}	
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"mana_regen"			"7"
+				"mana_regen"			"4 5 6 7 8"
 			}
 			"04"
 			{
@@ -22123,7 +22332,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"mana_regen_enemy"			"-7"
+				"mana_regen_enemy"			"-4 -5 -6 -7 -8"
 			}
 			"09"
 			{
@@ -22491,6 +22700,50 @@
 	}
 
 	//=======================================
+	// Tamamo : Mystic Shackle
+	//=======================================
+	"tamamo_attribute_mystic_shackle"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"wisp_tether"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"bonus_mr"			"15"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"distance"			"700"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"tamamo_ability"
+				"Function"		"OnSeveredFateAcquired"
+			}
+		}
+	}
+
+	//=======================================
 	// Tamamo : Polygamist Castration Fist
 	//=======================================
 	"tamamo_attribute_tamamo_escape"
@@ -22554,7 +22807,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"cc_duration"			"1.5"
+				"silence_duration"			"0.5"
 			}
 			"02"
 			{
@@ -22562,6 +22815,11 @@
 				"slow_amount"			"70"
 			}
 			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"stun_duration"			"2"
+			}
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"cooldown"			"15"
@@ -23425,17 +23683,17 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"delayed_damage_delay"		"3.5"	
+				"open_wound_duration"		"5"	
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"delayed_damage_percentage"		"30 35 40 45 50"	
+				"open_wound_damage"		"250"	
 			}
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"delayed_stun_duration"		"0.5 0.75 1.0 1.25 1.5"	
+				"open_wound_stun_duration"		"0.7"	
 			}
 		}
 		
@@ -23460,14 +23718,24 @@
 		        "EffectAttachType"  "follow_origin"
 				"Duration"		"%delayed_damage_delay"
 				"IsDebuff"		"1"
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lishuwen_ability"
+						"Function"		"OnNSSTakeDamage"
+						"DamageTaken"	"%attack_damage"	
+						"Damage"		"%open_wound_damage"
+					}
+				}
 				"OnDestroy"
 				{
 					"RunScript"
 					{
 						"ScriptFile"		"lishuwen_ability"
 						"Function"			"OnNSSDelayFinished"
-						"DelayedDamagePercentage"	"%delayed_damage_percentage"
-						"DelayedStunDuration"		"%delayed_stun_duration"
+						//"DelayedDamagePercentage"	"%delayed_damage_percentage"
+						//"DelayedStunDuration"		"%delayed_stun_duration"
 					}
 				}
 			}
@@ -24422,6 +24690,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"850"
 		"AbilityCastPoint"				"0.3"
+		"AbilityManaCost"				"200"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -25625,7 +25894,7 @@
 		"AbilityTextureName"			"obs_ward"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"0"
-		"AbilityGoldCost"				"1000"
+		"AbilityGoldCost"				"800"
 		
 		"OnSpellStart"
 		{

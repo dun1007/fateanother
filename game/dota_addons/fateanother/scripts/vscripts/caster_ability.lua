@@ -152,13 +152,14 @@ end
 function OnTerritoryPingThink(keys)
 	local caster = keys.caster
 	local enemyTeamNumber = 0
+	--[[
     LoopOverPlayers(function(ply, plyID, playerHero)
         if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
         	enemyTeamNumber = playerHero:GetTeamNumber()
         	return
         end
     end)
-	MinimapEvent( enemyTeamNumber, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+	MinimapEvent( enemyTeamNumber, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )]]
 end
 
 --[[
@@ -861,7 +862,6 @@ function OnAncientStart(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-
 	caster:SwapAbilities("caster_5th_wall_of_flame", a1:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) 

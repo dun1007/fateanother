@@ -35,7 +35,7 @@ function OnArmedUpStart(keys)
 	if caster:GetAbilityByIndex(2):GetAbilityName() == "tamamo_mantra" then
 		a3 = caster:FindAbilityByName("tamamo_mantra") -- Mantra
 	else
-		a3 = caster:FindAbilityByName("tamamo_fates_call")
+		a3 = caster:FindAbilityByName("tamamo_mystic_shackle")
 	end
 	local a4 = caster:FindAbilityByName("fate_empty1") -- Armed Up
 	local a5 = caster:FindAbilityByName("tamamo_armed_up") -- fate_empty1
@@ -148,10 +148,10 @@ function CloseCharmList(keys)
 
 	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
-	if not caster.IsSeveredFateActive then
+	if caster:FindAbilityByName("tamamo_mystic_shackle"):IsHidden() then
 		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
 	else
-		caster:SwapAbilities("tamamo_fates_call", a3:GetName(), true, true) 
+		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, true) 
 	end
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
@@ -470,16 +470,28 @@ function OnMantraStart(keys)
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		modifierName = "modifier_mantra_ally"
+		if caster.IsSeveredFateAcquired then
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_mr_buff", {})
+		end
 	else
 		if IsSpellBlocked(keys.target) then return end
 		modifierName = "modifier_mantra_enemy"
+		if caster.IsSeveredFateAcquired then
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_mr_debuff", {})
+		end
 	end
 
 	if caster.IsSeveredFateAcquired then
-		caster.IsSeveredFateActive = true
+		--caster.IsSeveredFateActive = true
 		caster.TetheredTarget = target
-		ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
-		caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,true) 
+		
+		--ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
+		if caster:GetAbilityByIndex(2):GetName() == "tamamo_mantra" then
+			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,true) 
+			Timers:CreateTimer(3.0, function()
+				caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,false) 
+			end)
+		end
 	end
 
 	local castFx = ParticleManager:CreateParticle('particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf', PATTACH_CUSTOMORIGIN, target) 
@@ -492,11 +504,32 @@ function OnMantraStart(keys)
 	for i=1, orbAmount do ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_vfx", {}) end
 end
 
-function OnMantraTetherEnd(keys)
-	local caster = keys.caster -- Caster
-	local target = keys.target -- Target of tether
-	caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,false) 
-	caster.IsSeveredFateActive = false
+function OnShackleThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
+	if dist > 2500 then
+		target:RemoveModifierByName("modifier_mystic_shackle")
+	elseif dist > 700 then
+		local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
+		local normal = diff:Normalized()
+		target:SetAbsOrigin(caster:GetAbsOrigin()+normal*700)
+		FindClearSpaceForUnit( target, target:GetAbsOrigin(), true )
+	end
+end
+
+function OnShackleStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_mystic_shackle_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	ability:ApplyDataDrivenModifier(caster, caster.MantraTarget, "modifier_mystic_shackle", {})
+	giveUnitDataDrivenModifier(caster, caster, "locked", 3.0)
+end
+
+function OnShackleEnd(keys)
+	local caster = keys.caster
+	local ability = keys.ability
 end
 
 function OnMantraTakeDamage(keys)
@@ -550,69 +583,6 @@ function OnMantraTakeDamage(keys)
 		target:SetModifierStackCount(modifierName, ability, currentStack-1)
 		--for i=1, currentStack-1 do ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_vfx", {}) end
 	end
-end
-
-function OnMantraTetherTick(keys)
-	local caster = keys.caster
-	local target = keys.target
-	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
-	if dist > 1250 then
-		target:RemoveModifierByName("modifier_mantra_tether")
-	end
-end
-
-function OnFatesCallCast(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	caster.IsInMarbleAtStart = false
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_fates_call_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
-	if caster:GetAbsOrigin().y <  -2000 then
-		caster.IsInMarbleAtStart = true
-	end
-end
-
-function OnFatesCallStart(keys)
-	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-	local dist = (caster.TetheredTarget:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
-	local delay = dist*0.002
-	caster.IsStunnedDuringFatesCall = false
-	caster.IsInMarbleAtEnd = false
-
-
-	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
-	ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
-	caster.TetheredTarget:EmitSound("Hero_Wisp.Relocate")
-
-	-- Check if Caster got stunned 
-	local count = 0
-	Timers:CreateTimer(function()
-		if count > delay then return end
-		if caster:HasModifier("modifier_stunned") then
-			caster.IsStunnedDuringFatesCall = true
-			print("caster stunned during fate's call, canceling it...")
-			return
-		end
-		count = count + 0.033
-		return 0.033
-	end)
-
-	Timers:CreateTimer(delay, function()
-		if caster:GetAbsOrigin().y <  -2000 then
-			caster.IsInMarbleAtEnd = true
-		end
-		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") and not caster.IsStunnedDuringFatesCall and 
-			(caster.IsInMarbleAtStart == caster.IsInMarbleAtEnd) then
-
-			caster.TetheredTarget:SetAbsOrigin(targetPoint)
-			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")
-			Timers:CreateTimer(0.033, function()
-				local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
-				ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
-				caster.TetheredTarget:EmitSound("Hero_Wisp.Return")
-			end)
-		end
-	end)
 end
 
 --[[
@@ -880,3 +850,75 @@ function TamamoCheckCombo(caster, ability)
 		end
 	end
 end
+
+--[[
+function OnMantraTetherEnd(keys)
+	local caster = keys.caster -- Caster
+	local target = keys.target -- Target of tether
+	caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,false) 
+	caster.IsSeveredFateActive = false
+end
+
+
+function OnMantraTetherTick(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
+	if dist > 1250 then
+		target:RemoveModifierByName("modifier_mantra_tether")
+	end
+end
+
+function OnFatesCallCast(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	caster.IsInMarbleAtStart = false
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_fates_call_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	if caster:GetAbsOrigin().y <  -2000 then
+		caster.IsInMarbleAtStart = true
+	end
+end
+
+function OnFatesCallStart(keys)
+	local caster = keys.caster
+	local targetPoint = keys.target_points[1]
+	local dist = (caster.TetheredTarget:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+	local delay = dist*0.002
+	caster.IsStunnedDuringFatesCall = false
+	caster.IsInMarbleAtEnd = false
+
+
+	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
+	ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
+	caster.TetheredTarget:EmitSound("Hero_Wisp.Relocate")
+
+	-- Check if Caster got stunned 
+	local count = 0
+	Timers:CreateTimer(function()
+		if count > delay then return end
+		if caster:HasModifier("modifier_stunned") then
+			caster.IsStunnedDuringFatesCall = true
+			print("caster stunned during fate's call, canceling it...")
+			return
+		end
+		count = count + 0.033
+		return 0.033
+	end)
+
+	Timers:CreateTimer(delay, function()
+		if caster:GetAbsOrigin().y <  -2000 then
+			caster.IsInMarbleAtEnd = true
+		end
+		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") and not caster.IsStunnedDuringFatesCall and 
+			(caster.IsInMarbleAtStart == caster.IsInMarbleAtEnd) then
+
+			caster.TetheredTarget:SetAbsOrigin(targetPoint)
+			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")
+			Timers:CreateTimer(0.033, function()
+				local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
+				ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
+				caster.TetheredTarget:EmitSound("Hero_Wisp.Return")
+			end)
+		end
+	end)
+end]]

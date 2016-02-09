@@ -53,7 +53,7 @@ LOSE_GOLD_ON_DEATH = false               -- Should we have players lose the norm
 VICTORY_CONDITION = 12 -- Round required for win
 
 XP_TABLE = {}
-XP_PER_LEVEL_TABLE = {}
+_G.XP_PER_LEVEL_TABLE = {}
 BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
 PRE_ROUND_DURATION = 6
@@ -76,11 +76,11 @@ for i=2,MAX_LEVEL do
 end
 
 -- EXP required to reach next level
-XP_PER_LEVEL_TABLE[0] = 0
-XP_PER_LEVEL_TABLE[1] = 200
-XP_PER_LEVEL_TABLE[24] = 0
+_G.XP_PER_LEVEL_TABLE[0] = 0
+_G.XP_PER_LEVEL_TABLE[1] = 200
+_G.XP_PER_LEVEL_TABLE[24] = 0
 for i=2,MAX_LEVEL-1 do
-    XP_PER_LEVEL_TABLE[i] = XP_TABLE[i+1] - XP_TABLE[i] -- XP required per level formula : Previous level XP requirement + Level * 100
+    _G.XP_PER_LEVEL_TABLE[i] = XP_TABLE[i+1] - XP_TABLE[i] -- XP required per level formula : Previous level XP requirement + Level * 100
 end
 
 for i=1, MAX_LEVEL do
@@ -333,6 +333,14 @@ function FateGameMode:OnAllPlayersLoaded()
             PlayBGM(player)
         end
     end
+
+
+    --[[GameRules:GetGameModeEntity():SetContextThink("aasdasd",function()
+        caster:SetAbsOrigin(Vector(0,0,0))
+        print("hello im thinking every 3 seconds")
+        return 1
+    end, 3) ]]
+
 
     Timers:CreateTimer('30secondalert', {
         endTime = 30,
@@ -1564,8 +1572,8 @@ function FateGameMode:InitializeRound()
         
         if self.nCurrentRound ~= 1 then 
             local multiplier = (0.5+0.01*(hero:GetDeaths()-hero:GetKills()))
-            --print("[FateGameMode]" .. hero:GetName() .. " of player " .. hero:GetPlayerID() .. " gained " .. (XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier) .. " experience at the start of round")
-            hero:AddExperience(XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier , false, false) 
+            --print("[FateGameMode]" .. hero:GetName() .. " of player " .. hero:GetPlayerID() .. " gained " .. (_G.XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier) .. " experience at the start of round")
+            hero:AddExperience(_G.XP_PER_LEVEL_TABLE[hero:GetLevel()] * multiplier , false, false) 
         end
     end)
     
@@ -1636,6 +1644,8 @@ function FateGameMode:InitializeRound()
                 end
             end)
 
+            if nRadiantAlive > 6 then nRadiantAlive = 6 end
+            if nDireAlive > 6 then nDireAlive = 6 end
             -- if remaining players are equal
             if nRadiantAlive == nDireAlive then
                 -- Default Radiant Win

@@ -897,7 +897,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"
+		"ItemCost"						"800"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"0"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
@@ -2460,7 +2460,7 @@
 				"var_type"			"FIELD_INTEGER"
 				"movespeed"			"150"
 			}	
-			"01"
+			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"attackspeed"			"50"
@@ -2561,6 +2561,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delay"			"2.0"
+			}	
 		}
 
 	    "OnSpellStart"
@@ -2570,6 +2575,7 @@
 				"ScriptFile"	"gille_ability"
 				"Function"		"OnHorrorTeleport"
 				"Target"		"POINT"
+				"Delay"			"%delay"
 			}
 	    }
 

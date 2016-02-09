@@ -604,9 +604,10 @@
 		"Ability5"				"gilgamesh_sword_barrage"
 		"Ability6"				"gilgamesh_enuma_elish"
 		"Ability7"				"gilgamesh_max_enuma_elish"
-		"Ability8"				"gilgamesh_sword_barrage_improved"
-		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability8"				"gilgamesh_gate_of_babylon_toggle"
+		"Ability9"				"gilgamesh_sword_barrage_improved"
+		"Ability10"				"presence_detection_passive"
+		"Ability11"				"attribute_bonus"
 
 		"Combo"						"gilgamesh_max_enuma_elish"
 		"AttributeNumber"			"4"
@@ -1112,7 +1113,7 @@
 		"Ability11"				"tamamo_void_cleft"
 		"Ability12"				"tamamo_close_spellbook"
 		"Ability13"				"fate_empty2"
-		"Ability14"				"tamamo_fates_call"
+		"Ability14"				"tamamo_mystic_shackle"
 		"Ability15"				"presence_detection_passive"
 		"Ability16"				"attribute_bonus"
 		

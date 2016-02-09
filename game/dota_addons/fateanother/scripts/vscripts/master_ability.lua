@@ -159,7 +159,7 @@ GawainAttribute = {
 
 TamamoAttribute = {
 	"tamamo_attribute_spirit_theft",
-	"tamamo_attribute_severed_fate",
+	"tamamo_attribute_mystic_shackle",
 	"tamamo_attribute_tamamo_escape",
 	"tamamo_attribute_witchcraft",
 	"tamamo_polygamist_castration_fist",
@@ -868,19 +868,21 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
+	--[[if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
-	end
+	end]]
 
 	local master = hero.MasterUnit 
 	local master2 = hero.MasterUnit2
 
 	for i=1,5 do
-		if hero:GetLevel() ~= 24 then
-			hero:HeroLevelUp(true)
+		local level = hero:GetLevel()
+		if level ~= 24 then
+			hero:AddExperience(_G.XP_PER_LEVEL_TABLE[level], false, false)
+			--hero:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/realHeroCount, false, false)
 		else
 			master:SetMana(master:GetMana()+3)
 			master2:SetMana(master:GetMana())		

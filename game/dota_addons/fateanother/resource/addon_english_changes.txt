@@ -11,6 +11,51 @@
 
  		"DOTA_Tooltip_ability_avenger_true_form_bonus_damage_percentage"	"BONUS DAMAGE:"
 
+
+        "DOTA_Tooltip_Ability_tamamo_mystic_shackle"	"Mystic Shackle"
+        "DOTA_Tooltip_Ability_tamamo_mystic_shackle_Description"	"Sews the target's spirit with Caster's, forcing it to stay within certain distance. Caster is dimensionally locked while Mystic Shackle lasts."
+        "DOTA_Tooltip_Ability_tamamo_mystic_shackle_Note0"		"Shackle is removed when the distance between target and Caster becomes further than 2500."
+
+        "DOTA_Tooltip_Ability_tamamo_attribute_mystic_shackle"		"Mystic Shackle"
+        "DOTA_Tooltip_Ability_tamamo_attribute_mystic_shackle_Description"	"Casting Mantra grants bonus magic resistance to an allied target, or reduces magic resistance of an enemy. In addition, Mystic Shackled can be used.\n<font color='#58ACFA'>Mystic Shackle :</font> Sews the target's spirit with Caster's, forcing it to stay within certain distance. Caster is dimensionally locked while Mystic Shackle lasts"
+
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft"         "Witchcraft"
+        "DOTA_Tooltip_ability_tamamo_attribute_witchcraft_Description"       "<font color='#58ACFA'>Master Mana Required : 16</font>\nEightfold Blessing of Amaterasu <font color='#FF3399'>silences</font> and <font color='#FF3399'>slows</font> enemies at the cast, and also <font color='#FF3399'>stuns</font> if its effect would reduce target's mana below 0. Also, Armed Up's cooldown is reduced."  
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_Note0"        "Stun effect has 6 seconds cooldown."
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_silence_duration"         "SILENCE AND SLOW DURATION:"
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_slow_amount"         "%SLOW AMOUNT:"
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_stun_duration"		"STUN DURATION:"
+        "DOTA_Tooltip_Ability_tamamo_attribute_witchcraft_cooldown"         "ARMED UP COOLDOWN:"
+
+		"DOTA_Tooltip_Ability_caster_5th_territory_creation"	"Territory Creation"
+		"DOTA_Tooltip_ability_caster_5th_territory_creation_Description"	"Caster builds a Workshop, the stronghold of a magus. When the Workshop is destroyed, all summons of Caster die along with it.\n\nUpgradable by attribute Territory Creation."
+		"DOTA_Tooltip_ability_caster_5th_territory_creation_Lore"	"Setting up an advantageous field is the first step of a magus."
+		"DOTA_Tooltip_ability_caster_5th_territory_creation_Note0"	"Only 1 Workshop can be present at a time."
+		"DOTA_Tooltip_ability_caster_5th_territory_creation_Note1"	"Destroying the Workshop kills all summons under Caster's command."
+
+        "DOTA_Tooltip_Ability_gille_summon_demon"     "Summon Oceanic Demon"
+        "DOTA_Tooltip_ability_gille_summon_demon_Description" "Caster sacrifices one corpse at at target location to summon several minions from otherverse to do his bidding. If no corpse is used as material, fewer minions are summoned.\nOceanic Demons slow movement speed on attack and can degenerate to death at master's will.\n\nUpgradable by Attribute Abyssal Connection."
+        "DOTA_Tooltip_ability_gille_summon_demon_summon_number"	"SUMMON AMOUNT:"
+        "DOTA_Tooltip_ability_gille_summon_demon_summon_number_no_corpse"	"SUMMON AMOUNT WITHOUT CORPSE:"
+
+		"DOTA_Tooltip_ability_gilgamesh_gate_of_babylon_Note2"	"Only one Gate of Babylon can be present at a time."
+
+		"DOTA_Tooltip_Ability_gilgamesh_gate_of_babylon_toggle"		"Gate of Babylon On/Off"
+		"DOTA_Tooltip_Ability_gilgamesh_gate_of_babylon_toggle_Description"		"Toggle this ability to disable weapon projectile from Gate of Babylon."
+
+		"DOTA_Tooltip_ability_gille_abyssal_contract_summon_disable_duration"	"HORROR RE-SUMMON INTERVAL:"
+
+		"DOTA_Tooltip_Ability_item_gille_otherworldly_portal_delay"		"PORTAL DELAY:"
+
+
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike"		"No Second Strike"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Description"	"Assassin decimates target with a devastating body blow to a vital spot, <font color='#FF3399'>stunning</font>, inflicting pure damage, and leaving <font color='#00FFFF'>Open Wound</font> for several seconds.\nWhile Open Wound lasts, further damage done by Assassin will deal magic damage again. Each consecutive hit reduces the effectiveness by half."
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Lore"		"The swirl of Chi shatters its victim's inner system, bringing them sure death regardless of physical prowess."
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_cast_delay"		"CAST DELAY:"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_initial_damage"	"INITIAL DAMAGE:"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_stun_duration"	"STUN DURATION"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_open_wound_duration"		"OPEN WOUND DURATION:"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_open_wound_damage"			"OPEN WOUND DAMAGE"
          //====================================
         //      Ruler(Apocrypha)
         //====================================

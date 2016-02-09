@@ -88,54 +88,44 @@ function OnSummonDemonStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
+	local number = keys.Number
 	local targets = Entities:FindAllByNameWithin("npc_dota_creature", targetPoint, keys.Radius)
 	if caster.IsAbyssalConnection2Acquired then
 		keys.Health = keys.Health * 1.3
 	end
-	if #targets == 0 then
-		-- print error and return
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Corpse at Location" } )
-		keys.ability:EndCooldown()
-		return
-	else
-		-- Get rid of unit
-		local unit = 0
-		for i=1, #targets do
-			if not targets[i]:IsAlive() then 
-				print("found dead unit")
-				unit = targets[i]
-				break
-			end
-		end
-		if unit == 0 then 
-			--print error and return
-			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Corpse at Location" } )
-			keys.ability:EndCooldown()
-			return 
-		end
-		unit:EmitSound("Hero_Nevermore.Shadowraze")
-		local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, unit)
-		ParticleManager:SetParticleControl(particle, 0, unit:GetAbsOrigin()) 
-		Timers:CreateTimer( 2.0, function()
-			ParticleManager:DestroyParticle( particle, false )
-			ParticleManager:ReleaseParticleIndex( particle )
-		end)
 
-		for i=1,keys.Number do
-			local tentacle = CreateUnitByName("gille_oceanic_demon", unit:GetAbsOrigin(), true, nil, nil, caster:GetTeamNumber())
-			if caster.IsAbyssalConnection2Acquired then
-				giveUnitDataDrivenModifier(caster, tentacle, "gille_attack_speed_boost", 999.0)
-			end
-			tentacle:SetControllableByPlayer(caster:GetPlayerID(), true)
-			tentacle:SetOwner(caster)
-			tentacle:SetMaxHealth(keys.Health)
-			tentacle:SetBaseMaxHealth(keys.Health)
-			tentacle:SetHealth(keys.Health)
-			tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 40.0})
-			--tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 30.0})
-			FindClearSpaceForUnit(tentacle, tentacle:GetAbsOrigin(), true)
+	-- check if corpse is present
+	local unit = nil
+	for i=1, #targets do
+		if not targets[i]:IsAlive() then 
+			print("found dead unit")
+			unit = targets[i]
+			break
 		end
+	end
+	if not unit then
+		number = keys.NumberNoCorpse
+	else
 		unit:RemoveSelf()
+	end
+
+	EmitSoundOnLocationWithCaster(targetPoint, "Hero_Nevermore.Shadowraze", caster)
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(particle, 0, targetPoint) 
+
+	for i=1,number do
+		local tentacle = CreateUnitByName("gille_oceanic_demon", targetPoint, true, nil, nil, caster:GetTeamNumber())
+		if caster.IsAbyssalConnection2Acquired then
+			giveUnitDataDrivenModifier(caster, tentacle, "gille_attack_speed_boost", 999.0)
+		end
+		tentacle:SetControllableByPlayer(caster:GetPlayerID(), true)
+		tentacle:SetOwner(caster)
+		tentacle:SetMaxHealth(keys.Health)
+		tentacle:SetBaseMaxHealth(keys.Health)
+		tentacle:SetHealth(keys.Health)
+		tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 40.0})
+		--tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 30.0})
+		FindClearSpaceForUnit(tentacle, tentacle:GetAbsOrigin(), true)
 	end
 end
 
@@ -147,6 +137,7 @@ end
 function OnTormentStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
+	local duration = keys.StunDuration
 
 	local madnessCost = math.floor(caster.MadnessStackCount / 2)
 	if madnessCost ~= 0 then AdjustMadnessStack(caster, -madnessCost) end
@@ -155,7 +146,7 @@ function OnTormentStart(keys)
     local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_torment", {}) 
-		v:AddNewModifier(v, v, "modifier_stunned", {Duration = 0.3})
+		v:AddNewModifier(v, v, "modifier_stunned", {Duration = duration})
 		v.AccumulatedDamage = 0
 	end
 
@@ -207,9 +198,9 @@ function OnECStart(keys)
 	local targetPoint = keys.target_points[1]
 
 	-- check if combo can be cast
-	local combotargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 20000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	local combotargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 800, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(combotargets) do
-		if v:GetUnitName() == "gille_gigantic_horror" and caster.IsComboReady then
+		if v:GetUnitName() == "gille_gigantic_horror" and caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
 			OnGilleComboStart(keys)
 			return
 		end
@@ -345,7 +336,7 @@ function OnContractStart(keys)
 	end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
-	GilleCheckCombo(caster, keys.ability)
+	--GilleCheckCombo(caster, keys.ability)
 
 	local madnessCost = math.floor(caster.MadnessStackCount / 2)
 	if madnessCost ~= 0 then AdjustMadnessStack(caster, -madnessCost) end
@@ -471,7 +462,7 @@ function OnHorrorTakeDamage(keys)
 	local threshold = keys.Threshold
 	local multiplier = 0.3
 	if hero.IsAbyssalConnection1Acquired then
-		multiplier = 0.2
+		multiplier = 0.1
 	end
 	if damageTaken > threshold then 
 		DoDamage(keys.attacker, caster, damageTaken * multiplier, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -589,8 +580,8 @@ function OnSubSkewerStart(keys)
 		Ability = keys.ability,
         EffectName = "",
         iMoveSpeed = 3000,
-        vSpawnOrigin = casterLoc,
-        fDistance = 1000,
+        vSpawnOrigin = casterLoc - frontward*100,
+        fDistance = 1000 + 100,
         fStartRadius = 200,
         fEndRadius = 200,
         Source = caster,
@@ -636,8 +627,10 @@ end
 
 function OnContaminateStart(keys)
 	local caster = keys.caster
+	local totalDamage = 250 + 250 * PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID()):FindAbilityByName("gille_abyssal_contract"):GetLevel()
     local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
+		DoDamage(caster, v, totalDamage/2, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 		keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_contaminate", {}) 
 	end
 
@@ -653,8 +646,8 @@ end
 function OnContaminateThink(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local ult = caster:GetPlayerOwner():GetAssignedHero():FindAbilityByName("gille_abyssal_contract")
-	local damage = (250 + 250 * ult:GetLevel()) / 20
+	local ult = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID()):FindAbilityByName("gille_abyssal_contract")
+	local damage = (250 + 250 * ult:GetLevel()) / 40
 	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -744,8 +737,9 @@ end
 
 function OnHorrorTeleport(keys)
 	local caster = keys.caster
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
 	local targetPoint = keys.target_points[1]
+	local delay = keys.Delay
 	if (targetPoint - hero:GetAbsOrigin()):Length2D() > 500 then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Locate Within 500 Range from Caster" } )
 		keys.ability:EndCooldown()
@@ -755,7 +749,18 @@ function OnHorrorTeleport(keys)
 		keys.ability:EndCooldown()
 		return		
 	else
-		caster:SetAbsOrigin(targetPoint)
+		EmitSoundOnLocationWithCaster(targetPoint, "Hero_Enigma.Demonic_Conversion", caster)
+		local darkZoneFx = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_vacuum.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl(darkZoneFx, 0, targetPoint)
+		ParticleManager:SetParticleControl(darkZoneFx, 1, Vector(500,0,0))
+		ParticleManager:SetParticleControl(darkZoneFx, 2, Vector(500,0,0))
+		Timers:CreateTimer(delay, function()
+			--ParticleManager:DestroyParticle( darkZoneFx, false )
+			--ParticleManager:ReleaseParticleIndex( darkZoneFx )
+			if caster:IsAlive() and hero:IsAlive() then
+				caster:SetAbsOrigin(targetPoint)
+			end
+		end)
 	end
 end
 
@@ -777,7 +782,7 @@ function OnGilleComboStart(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		ApplyAirborne(tentacle, v, 1.0)
+		ApplyAirborne(tentacle, v, 0.5)
 	end
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 300)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 650)
@@ -825,8 +830,9 @@ end
 
 
 function GilleCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
-		if ability == caster:FindAbilityByName("gille_abyssal_contract") and caster:FindAbilityByName("gille_larret_de_mort"):IsCooldownReady() then
+	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 and ability:GetAbilityName() == "gille_exquisite_cadaver" then
+		caster.IsComboReady = true
+		--[[if ability == caster:FindAbilityByName("gille_abyssal_contract") and caster:FindAbilityByName("gille_larret_de_mort"):IsCooldownReady() then
 			caster.IsComboReady = true 
 			print("ready to combo")
 			Timers:CreateTimer({
@@ -835,7 +841,7 @@ function GilleCheckCombo(caster, ability)
 				caster.IsComboReady = false
 			end
 			})
-		end
+		end]]
 	end
 end
 
