@@ -37,8 +37,7 @@
       "#DOTA_Item_Build_Luxury"
       {
         "item"   "item_ex_scroll"
-        "item"  "item_a_plus_scroll" 
-        "item"  "item_healing_scroll" 
+        "item"  "item_s_scroll" 
       }
    }
 }

@@ -280,6 +280,9 @@ function OnNSSStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	caster.ProcDamage = keys.ProcDamage
+	caster.ProcStunDuration = keys.ProcStunDuration
+	target.IsNSSProcReady = true
 	if caster:HasModifier("modifier_lishuwen_berserk") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used(Berserk)" } )
 		keys.ability:EndCooldown()
@@ -321,15 +324,37 @@ function OnNSSStart(keys)
 	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
+function OnNSSTakeDamage(keys)
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local attacker = keys.attacker
+	local damage = caster.ProcDamage
+	local stunDuration = caster.ProcStunDuration
+
+	if attacker:GetName() == "npc_dota_hero_bloodseeker" and target.IsNSSProcReady then
+		target.IsNSSProcReady = false
+		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = stunDuration})
+		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		Timers:CreateTimer(caster.ProcStunDuration + 0.3, function()
+			target.IsNSSProcReady = true
+		end)
+		caster.ProcDamage = caster.ProcDamage /2
+		caster.ProcStunDuration = caster.ProcStunDuration/2
+
+		target:EmitSound("hero_bloodseeker.rupture.cast")
+	end
+end
+
 function OnNSSDelayFinished(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	
-	local damage = target:GetMana() * keys.DelayedDamagePercentage/100
+	local damage = 0
+	--[[local damage = target:GetMana() * keys.DelayedDamagePercentage/100
 	if target:GetName() == "npc_dota_hero_juggernaut" or target:GetName() == "npc_dota_hero_shadow_shaman" then
 		damage = (target:GetMaxHealth() - target:GetHealth()) * keys.DelayedDamagePercentage/100
-	end
+	end]]
 
 
 	if target:HasModifier("modifier_mark_of_fatality") then
@@ -337,10 +362,10 @@ function OnNSSDelayFinished(keys)
 		local currentStack = target:GetModifierStackCount("modifier_mark_of_fatality", abil)
 		damage = damage + (target:GetMaxHealth() - target:GetHealth()) * ATTR_NSS_STACK_DAMAGE_PERCENTAGE * currentStack/100
 	end
-	
-	target:SetMana(target:GetMana() - damage)
+	print("dealt "	.. damage .. " damage")
+	--target:SetMana(target:GetMana() - damage)
 	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.DelayedStunDuration})
+	--target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.DelayedStunDuration})
 
 	local manaBurnFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf", PATTACH_ABSORIGIN, target)
 	target:EmitSound("Hero_NyxAssassin.ManaBurn.Target")

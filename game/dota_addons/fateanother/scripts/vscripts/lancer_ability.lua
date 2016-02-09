@@ -428,7 +428,7 @@ function OnGBAOEStart(keys)
 	end
 	
 	EmitGlobalSound("Lancer.GaeBolg")
-	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.6)
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.8)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_jump_throw_anim", {}) 
 
 	Timers:CreateTimer('gb_throw', {

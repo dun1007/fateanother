@@ -321,6 +321,7 @@ function OnContractStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local targetPoint = keys.target_points[1]
+	local delay = keys.Delay
 	if caster.IsAbyssalConnection1Acquired then
 		keys.Radius = keys.Radius + 200
 		keys.Damage = keys.Damage + 200
@@ -329,12 +330,16 @@ function OnContractStart(keys)
 		keys.Health = keys.Health * 1.3
 	end
 
-	if caster:HasModifier("modifier_gigantic_horror_penalty_timer") then
+	if caster:HasModifier("modifier_gigantic_horror_penalty_timer") or caster.IsAbyssalContractInProgress then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Summon Yet" } )
 		keys.ability:EndCooldown()
 		return
 	end
-
+	caster.IsAbyssalContractInProgress = true
+	Timers:CreateTimer(delay, function()
+		caster.IsAbyssalContractInProgress = false
+	end)
+	
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 	--GilleCheckCombo(caster, keys.ability)
 

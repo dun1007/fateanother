@@ -49,13 +49,15 @@
 
 
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike"		"No Second Strike"
-        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Description"	"Assassin decimates target with a devastating body blow to a vital spot, <font color='#FF3399'>stunning</font>, inflicting pure damage, and leaving <font color='#00FFFF'>Open Wound</font> for several seconds.\nWhile Open Wound lasts, further damage done by Assassin will deal magic damage again. Each consecutive hit reduces the effectiveness by half."
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Description"	"Assassin decimates target with a devastating body blow to a vital spot, <font color='#FF3399'>stunning</font>, inflicting pure damage, and leaving <font color='#00FFFF'>Open Wound</font> for several seconds.\nWhile Open Wound lasts, further damage done by Assassin will <font color='#FF3399'>stun</font> and deal magic damage again. Each consecutive hit reduces the effectiveness by half."
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Lore"		"The swirl of Chi shatters its victim's inner system, bringing them sure death regardless of physical prowess."
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike_cast_delay"		"CAST DELAY:"
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike_initial_damage"	"INITIAL DAMAGE:"
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike_stun_duration"	"STUN DURATION"
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike_open_wound_duration"		"OPEN WOUND DURATION:"
         "DOTA_Tooltip_Ability_lishuwen_no_second_strike_open_wound_damage"			"OPEN WOUND DAMAGE"
+       	"DOTA_Tooltip_Ability_lishuwen_no_second_strike_open_wound_stun_duration"		"OPEN WOUND STUN DURATION:"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Note0"		"Open Wound effect has (current stun duration+0.3) cooldown."
          //====================================
         //      Ruler(Apocrypha)
         //====================================

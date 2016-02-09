@@ -9795,10 +9795,10 @@
 
 		"AbilitySpecial"
 		{
-			"03"
+			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"dmg_ratio"			"0.3"
+				"dmg_ratio"			"0.35"
 			}
 		}
 
@@ -10131,7 +10131,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"arrow_damage"				"500"
+				"dmg_ratio"			"0.35"
 			}
 		}
 		
@@ -17925,7 +17925,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"total_damage"		"400 500 600 700 800"
+				"total_damage"		"300 400 500 600 700"
 			}
 			"04"
 			{
@@ -18246,6 +18246,7 @@
 				"Radius"			"%radius"
 				"Damage"			"%damage"
 				"Health"			"%health"
+				"Delay"				"%delay"
 			}
 		}
 		
@@ -21915,7 +21916,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_modifier"			"200 225 250 275 300"
+				"damage_modifier"			"190 205 220 235 250"
 			}
 			"03"
 			{
@@ -22288,7 +22289,9 @@
 			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave.vpcf"
 			"particle"		"particles/custom/tamamo/tamamo_amaterasu_continuous.vpcf"
 			"particle"		"particles/units/heroes/hero_visage/visage_grave_chill_tgt.vpcf"
-			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_keeper_of_the_light.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_dazzle.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_visage.vsndevts"
 			"model"			"models/misc/templedoor.vmdl"
 		}
 		
@@ -23311,7 +23314,7 @@
 		"AbilityCastRange"				"600"
 		"AbilityCastRangeBuffer"		"1500"
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"29"
+		"AbilityCooldown"				"20"
 		"AbilityManaCost"				"200"
 		
 		// Ability special
@@ -23651,6 +23654,7 @@
 			"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"		
 			"particle"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
 		}
 		
 		// Ability stats
@@ -23706,6 +23710,8 @@
 				"Function"				"OnNSSStart"
 				"Damage"				"%initial_damage"
 				"StunDuration"			"%stun_duration"
+				"ProcDamage"			"%open_wound_damage"
+				"ProcStunDuration"		"%open_wound_stun_duration"
 			}
 		}
 	
@@ -23716,7 +23722,7 @@
 			{
 		        "EffectName"    "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
 		        "EffectAttachType"  "follow_origin"
-				"Duration"		"%delayed_damage_delay"
+				"Duration"		"%open_wound_duration"
 				"IsDebuff"		"1"
 				"OnTakeDamage"
 				{
@@ -23725,7 +23731,6 @@
 						"ScriptFile"	"lishuwen_ability"
 						"Function"		"OnNSSTakeDamage"
 						"DamageTaken"	"%attack_damage"	
-						"Damage"		"%open_wound_damage"
 					}
 				}
 				"OnDestroy"

@@ -868,12 +868,12 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	--[[if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
+	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
-	end]]
+	end
 
 	local master = hero.MasterUnit 
 	local master2 = hero.MasterUnit2

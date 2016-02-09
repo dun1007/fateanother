@@ -468,19 +468,6 @@ function FateGameMode:PlayerSay(keys)
             end)
         end
     end
-
-    if text == "-declarewinner" then
-        if Convars:GetBool("sv_cheats") then 
-            GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
-        end
-    end
-    -- manually end the round
-    if text == "-finishround" then
-        if Convars:GetBool("sv_cheats") then 
-            self:FinishRound(true, 1) 
-        end
-    end
-        
     if text == "-unpause" then
         --[[for _,plyr in pairs(self.vPlayerList) do
         local hr = plyr:GetAssignedHero()
@@ -494,6 +481,19 @@ function FateGameMode:PlayerSay(keys)
             end)
         end
     end
+
+    if text == "-declarewinner" then
+        if Convars:GetBool("sv_cheats") then 
+            GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
+        end
+    end
+    -- manually end the round
+    if text == "-finishround" then
+        if Convars:GetBool("sv_cheats") then 
+            self:FinishRound(true, 1) 
+        end
+    end
+        
     
     if text == "-tt" then
         if Convars:GetBool("sv_cheats") then 

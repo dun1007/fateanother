@@ -269,9 +269,9 @@ function OnGOBThink(keys)
 		{
 			Ability = ability,
 	        EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
-	        iMoveSpeed = 800,
+	        iMoveSpeed = 1000,
 	        vSpawnOrigin = casterLoc - 150 * frontward,
-	        fDistance = 800,
+	        fDistance = 1000,
 	        fStartRadius = 100,
 	        fEndRadius = 100,
 	        Source = caster,
@@ -282,7 +282,7 @@ function OnGOBThink(keys)
 	        iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
 	        fExpireTime = GameRules:GetGameTime() + 1.2,
 			bDeleteOnHit = true,
-			vVelocity = frontward * 800
+			vVelocity = frontward * 1000
 		}
 
 		local leftvec = Vector(-frontward.y, frontward.x, 0)
@@ -306,7 +306,7 @@ function OnGOBHit(keys)
 	local caster = keys.caster
 	local damage = keys.Damage
 	if caster.IsSumerAcquired then
-		damage = damage + caster:GetAttackDamage()*0.3
+		damage = damage + caster:GetAttackDamage()*0.35
 	end
 	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*2.5 end
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

@@ -598,6 +598,7 @@ function OnAmaterasuStart(keys)
 	else
 	end
 
+	EmitGlobalSound("Hero_KeeperOfTheLight.ManaLeak.Cast")
 	caster.AmaterasuCastLoc = caster:GetAbsOrigin()
 	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	caster.CurrentAmaterasuDummy = dummy
@@ -606,6 +607,7 @@ function OnAmaterasuStart(keys)
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=keys.Duration+0.5})
 	ability:ApplyDataDrivenModifier(caster, dummy, "modifier_amaterasu_aura", {})
 	dummy.TempleDoors = CreateTempleDoorInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), "Hero_Dazzle.Shallow_Grave", caster)
 
 	if caster.IsWitchcraftAcquired then 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster.AmaterasuCastLoc, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
