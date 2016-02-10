@@ -23692,12 +23692,12 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"open_wound_damage"		"250"	
+				"open_wound_damage"		"50 100 150 200 250"	
 			}
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"open_wound_stun_duration"		"0.7"	
+				"open_wound_stun_duration"		"0.3 0.4 0.5 0.6 0.7"	
 			}
 		}
 		

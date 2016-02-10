@@ -450,7 +450,7 @@ function FateGameMode:PlayerSay(keys)
 
     -- Below two commands are solely for test purpose, not to be used in normal games
     if text == "-testsetup" then
-        if Convars:GetBool("sv_cheats") then
+        --if Convars:GetBool("sv_cheats") then
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local hero = playerHero
                 hero.MasterUnit:SetMana(1000)
@@ -468,20 +468,20 @@ function FateGameMode:PlayerSay(keys)
                     hero:SetBaseIntellect(20) 
                 end
             end)
-        end
+        --end
     end
     if text == "-unpause" then
         --[[for _,plyr in pairs(self.vPlayerList) do
         local hr = plyr:GetAssignedHero()
         hr:RemoveModifierByName("round_pause")
     end]]
-        if Convars:GetBool("sv_cheats") then 
+        --if Convars:GetBool("sv_cheats") then 
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local hr = playerHero
                 hr:RemoveModifierByName("round_pause")
                 --print("Looping through player" .. ply)
             end)
-        end
+        --end
     end
 
     if text == "-declarewinner" then
