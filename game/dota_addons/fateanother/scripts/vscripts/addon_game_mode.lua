@@ -9,6 +9,7 @@ require('gille_ability')
 require('notifications')
 require('items')
 require('utilities/sounds')
+require('utilities/popups')
 
 _G.IsPickPhase = true
 _G.IsPreRound = true
@@ -222,12 +223,13 @@ function Precache( context )
     PrecacheItemByNameSync("item_shard_of_anti_magic", context)
     PrecacheItemByNameSync("item_shard_of_replenishment", context)
     
-    -- Master and Stash
+    -- Master, Stash, and System stuffs
     PrecacheResource("model", "models/shirou/shirouanim.vmdl", context)
     PrecacheResource("model", "models/items/courier/catakeet/catakeet_boxes.vmdl", context)
     PrecacheResource("model", "models/tohsaka/tohsaka.vmdl", context)
     PrecacheResource( "particle", "particles/units/heroes/hero_silencer/silencer_global_silence_sparks.vpcf", context)
-    
+    PrecacheResource( "particle", "particles/custom/system/damage_popup.vpcf", context)
+
     -- Servants
     PrecacheResource("model", "models/saber/saber.vmdl", context)
     PrecacheResource("model", "models/lancer/lancer2.vmdl", context)
@@ -1362,6 +1364,9 @@ function FateGameMode:ModifyGoldFilter(filterTable)
     return true
 end
 
+local COLOR_MAGICAL_POPUP = Vector(94,239,239)
+local COLOR_PHYSICAL_POPUP = Vector(240,76,76)
+local COLOR_PURE_POPUP = Vector(255,14,255)
 function FateGameMode:TakeDamageFilter(filterTable)
     local damage = filterTable.damage
     local damageType = filterTable.damagetype_const
@@ -1371,16 +1376,16 @@ function FateGameMode:TakeDamageFilter(filterTable)
         inflictor = EntIndexToHScript(filterTable.entindex_inflictor_const) -- the skill name
     end
     local victim = EntIndexToHScript(filterTable.entindex_victim_const)
-    if inflictor then print(inflictor:GetName() .. damage) end
+    --if inflictor then print(inflictor:GetName() .. damage) end
 
-    -- if target is affected by Verg and damage is not lethal
+    -- if target is affected by Verg and damage is not lethalrr
     if (victim:HasModifier("modifier_verg_avesta") or victim:HasModifier("modifier_endless_loop")) and (victim:GetHealth() - damage) > 0 then
         -- check if the damage source is not eligible for return
         if not attacker:IsRealHero() and inflictor then
             attacker = PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerID())
         elseif attacker:IsRealHero() and inflictor then
             if inflictor:GetName() == "archer_5th_ubw" then 
-                return true 
+                return true
             end
         end
 
@@ -1396,6 +1401,18 @@ function FateGameMode:TakeDamageFilter(filterTable)
         ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
     end
 
+    -- pop up color text on target
+    local color
+    if damageType == 1 then 
+        color = COLOR_PHYSICAL_POPUP
+    elseif damageType == 2 then
+        color = COLOR_MAGICAL_POPUP
+    elseif damageType == 4 then
+        color = COLOR_PURE_POPUP
+    end
+    if damageType == 1 or damageType == 2 or damageType == 4 then
+        PopupDamage(victim, math.floor(damage), color)
+    end
     return true
 end
 

@@ -4,9 +4,9 @@ function OnMREXDamageTaken(keys)
 	local ability = keys.ability
 	local attacker = keys.attacker
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_resistance_ex", {})
-	if caster.IsSaintImproved and not attacker:HasModifier("modifier_saint_debuff") then
-		ChangeMREXStack(keys, -1)
-	end
+	if caster.IsSaintImproved and attacker:HasModifier("modifier_saint_debuff") then return end
+	print("asdasd")
+	ChangeMREXStack(keys, -1)
 end
 
 
