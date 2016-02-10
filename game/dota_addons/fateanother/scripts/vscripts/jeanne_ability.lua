@@ -76,7 +76,7 @@ function OnIDPing(keys)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
         	MinimapEvent( caster:GetTeamNumber(), caster, playerHero:GetAbsOrigin().x, playerHero:GetAbsOrigin().y + 500, DOTA_MINIMAP_EVENT_HINT_LOCATION, 5 )
-        	ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_identity_discernment_unjust", {})
+        	--ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_identity_discernment_unjust", {})
         	if playerHero:HasModifier("modifier_saint_debuff") then
         		SpawnAttachedVisionDummy(caster, playerHero, 200, duration, true)
         	end
@@ -89,6 +89,7 @@ function OnIDRespawn(keys)
 	local ability = keys.ability
 	-- reset CD
 	ability:EndCooldown()
+	print("asdasd")
 end
 
 

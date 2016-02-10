@@ -9745,7 +9745,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_TOGGLE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_TOGGLE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"gilgamesh_gate_of_babylon"
 		
 		
@@ -24519,21 +24519,21 @@
 			}
 		}
 		
-		"OnRespawn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"jeanne_ability"
-				"Function"		"OnIDRespawn"
-			}
-		}
 
 		"Modifiers"
 		{
-			"modifier_identity_discernment_unjust"
+			"modifier_identity_discernment"
 			{
-				"IsHidden"		"0"
-				"IsDebuff"		"1"
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnIDRespawn"
+					}
+				}
 			}
 		}
 	}
@@ -25080,7 +25080,7 @@
 	"jeanne_combo_la_pucelle"
 	{
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"jeanne_la_pucelle"
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
