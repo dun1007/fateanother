@@ -71,11 +71,16 @@ function OnIDPing(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local duration = keys.Duration
+	local delay = 0
 	GameRules:SendCustomMessage("#identity_discernment_alert", 0, 0)
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
-        	MinimapEvent( caster:GetTeamNumber(), caster, playerHero:GetAbsOrigin().x, playerHero:GetAbsOrigin().y + 500, DOTA_MINIMAP_EVENT_HINT_LOCATION, 5 )
+        	--print("looping through " .. playerHero:GetName())
+        	delay = delay + 0.15
+        	Timers:CreateTimer(delay, function()
+        		MinimapEvent( caster:GetTeamNumber(), caster, playerHero:GetAbsOrigin().x, playerHero:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2)
+        	end)
         	--ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_identity_discernment_unjust", {})
         	if playerHero:HasModifier("modifier_saint_debuff") then
         		SpawnAttachedVisionDummy(caster, playerHero, 200, duration, true)
