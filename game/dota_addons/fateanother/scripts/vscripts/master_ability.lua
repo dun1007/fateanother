@@ -938,41 +938,43 @@ function OnPresenceDetectionThink(keys)
 	-- Do the ping for everyone with IsPresenceDetected marked as true
 	for i=1, #newEnemyTable do
 		local enemy = newEnemyTable[i]
+		if enemy:IsRealHero() and not enemy:IsIllusion() then
 
-		-- Filter TA from ping if he has improved presence concealment attribute
-		if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy.IsPCImproved  then 
-			if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
-		end
-
-		if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
-			--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
-			MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
-			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
-			local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
-
-
-			ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
-			ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
-			
-			--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
-			EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
-			-- Process Eye of Serenity attribute
-			if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
-				enemy.IsSerenityOnCooldown = true
-				Timers:CreateTimer(10.0, function() 
-					enemy.IsSerenityOnCooldown = false
-				end)					
-				FAEyeAttribute(caster, enemy)
+			-- Filter TA from ping if he has improved presence concealment attribute
+			if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy.IsPCImproved  then 
+				if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
 			end
-			-- Process Eye for Art attribute
-			if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster.IsEyeForArtAcquired == true then
-				local choice = math.random(1,3)
-				if choice == 1 then
-					Say(caster:GetPlayerOwner(), FindName(enemy:GetName()) .. ", dare to enter the demon's lair on your own?", true) 
-				elseif choice == 2 then
-					Say(caster:GetPlayerOwner(), "This presence...none other than " .. FindName(enemy:GetName()) .. "!", true) 
-				elseif choice == 3 then
-					Say(caster:GetPlayerOwner(), "Come forth, " .. FindName(enemy:GetName()) .. "...The fresh terror awaits you!", true) 
+
+			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
+				--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+				MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
+				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+
+
+				ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
+				
+				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
+				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+				-- Process Eye of Serenity attribute
+				if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
+					enemy.IsSerenityOnCooldown = true
+					Timers:CreateTimer(10.0, function() 
+						enemy.IsSerenityOnCooldown = false
+					end)					
+					FAEyeAttribute(caster, enemy)
+				end
+				-- Process Eye for Art attribute
+				if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster.IsEyeForArtAcquired == true then
+					local choice = math.random(1,3)
+					if choice == 1 then
+						Say(caster:GetPlayerOwner(), FindName(enemy:GetName()) .. ", dare to enter the demon's lair on your own?", true) 
+					elseif choice == 2 then
+						Say(caster:GetPlayerOwner(), "This presence...none other than " .. FindName(enemy:GetName()) .. "!", true) 
+					elseif choice == 3 then
+						Say(caster:GetPlayerOwner(), "Come forth, " .. FindName(enemy:GetName()) .. "...The fresh terror awaits you!", true) 
+					end
 				end
 			end
 		end

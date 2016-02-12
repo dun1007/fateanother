@@ -4,8 +4,8 @@ function OnMREXDamageTaken(keys)
 	local ability = keys.ability
 	local attacker = keys.attacker
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_resistance_ex", {})
-	if caster.IsSaintImproved and attacker:HasModifier("modifier_saint_debuff") then return end
-	print("asdasd")
+	if caster.IsSaintImproved and PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff") then return end
+	--print("asdasd")
 	ChangeMREXStack(keys, -1)
 end
 
@@ -21,7 +21,9 @@ function OnMREXRespawn(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_resistance_ex", {})
-	ChangeMREXStack(keys, 4)
+	Timers:CreateTimer(6, function()
+		ChangeMREXStack(keys, 4)
+	end)
 end
 
 function ChangeMREXStack(keys, modifier)
@@ -50,21 +52,21 @@ end
 function OnSaintRespawn(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	--print("saint respawn")
+	Timers:CreateTimer(6, function()
+	    LoopOverPlayers(function(player, playerID, playerHero)
+	    	--print("looping through " .. playerHero:GetName())
+	        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+	        	print(playerHero:GetName() ..  " " .. playerHero:GetKills() .. " " .. playerHero:GetDeaths())
+	        	if playerHero:GetKills() > playerHero:GetDeaths() then
+	        		--print("applying modifier to " .. playerHero:GetName())
+		        	ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
+		        	playerHero:EmitSound("Hero_Chen.TestOfFaith.Cast")
+	        	end
 
-    LoopOverPlayers(function(player, playerID, playerHero)
-    	--print("looping through " .. playerHero:GetName())
-        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
-        	if playerHero:HasModifier("modifier_saint_debuff") then
-        		playerHero:RemoveModifierByName("modifier_saint_debuff")
-        	end
-
-        	if playerHero:GetKills() > playerHero:GetDeaths() then
-	        	ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
-	        	playerHero:EmitSound("Hero_Chen.TestOfFaith.Cast")
-        	end
-
-        end
-    end)
+	        end
+	    end)
+	 end)
 end
 
 function OnIDPing(keys)
@@ -94,7 +96,7 @@ function OnIDRespawn(keys)
 	local ability = keys.ability
 	-- reset CD
 	ability:EndCooldown()
-	print("asdasd")
+	--print("asdasd")
 end
 
 
@@ -243,9 +245,17 @@ end
 function OnLECastStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
-	EmitGlobalSound("Ruler.Luminosite")
-
+	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
+	if #enemies == 0 then 
+		EmitSoundOnClient("Hero_Chen.HandOfGodHealHero", caster:GetPlayerOwner())
+		EmitSoundOnClient("Ruler.Luminosite", caster:GetPlayerOwner())		
+	else
+		EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
+		EmitGlobalSound("Ruler.Luminosite")
+	end
+	Timers:CreateTimer(1.5, function()
+		caster.IsLEWindupSoundAvailable = false
+	end)
 	if caster.LETargetTable then
 		for i=1, #caster.LETargetTable do
 			if IsValidEntity(caster.LETargetTable[i]) and caster.LETargetTable[i]:IsAlive() then
@@ -376,7 +386,7 @@ function OnLEAllyDamageTaken(keys)
 	local ability = keys.ability
 	local victim = keys.unit
 	local attacker = keys.attacker
-	if caster.IsSaintImproved and attacker:HasModifier("modifier_saint_debuff") then
+	if caster.IsSaintImproved and PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff") then
 		return
 	end
 
