@@ -131,7 +131,8 @@ DoNotKillAtTheEndOfRound = {
     "tamamo_charm",
     "master_1",
     "master_2",
-    "master_3"
+    "master_3",
+    "jeanne_banner"
 }
 voteResultTable = {
     voteFor12Rounds = 0,
@@ -1719,18 +1720,18 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     local units = FindUnitsInRadius(DOTA_TEAM_GOODGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
     local units2 = FindUnitsInRadius(DOTA_TEAM_BADGUYS, Vector(0,0,0), nil, 20000, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
     for k,v in pairs(units) do
-        if not v:IsRealHero() and IsValidEntity(v) then
+        if not v:IsNull() and IsValidEntity(v) and not v:IsRealHero() then
             for i=1, #DoNotKillAtTheEndOfRound do
-                if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+                if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
                     v:ForceKill(true)
                 end
             end
         end
     end
     for k,v in pairs(units2) do
-        if not v:IsRealHero() and IsValidEntity(v) then
+        if not v:IsNull() and IsValidEntity(v) and not v:IsRealHero() then
             for i=1, #DoNotKillAtTheEndOfRound do
-                if v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+                if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
                     v:ForceKill(true)
                 end
             end

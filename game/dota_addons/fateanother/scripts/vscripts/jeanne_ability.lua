@@ -406,6 +406,7 @@ function OnFlagCleanup(keys)
 	local target = keys.target
 
 	if not caster.CurrentFlag:IsNull() then
+		--caster.CurrentFlag:ForceKill(false)
 		caster.CurrentFlag:RemoveSelf()
 		ParticleManager:DestroyParticle( caster.CurrentFlagParticle, false )
 		ParticleManager:ReleaseParticleIndex( caster.CurrentFlagParticle )
