@@ -221,70 +221,85 @@ function OnGOBStart(keys)
 	local duration = keys.Duration
 	local frontward = caster:GetForwardVector()
 	local casterloc = caster:GetAbsOrigin()
-	if caster:HasModifier("modifier_gob_thinker") then caster:RemoveModifierByName("modifier_gob_thinker") end
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gob_thinker", {})
-	caster.GOBLocation = casterloc
-	caster.FrontVec = frontward
-	GilgaCheckCombo(caster, keys.ability)
 
-	-- Create particle
-	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() - 250 * frontward, false, caster, caster, caster:GetTeamNumber())
-	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
-	caster.GOBDummy = dummy
-	dummy:SetForwardVector(caster:GetForwardVector())
-	
-	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
-	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 400, 400, 400 ) )
-	caster.GOBParticle = portalFxIndex
+	local gobWeapon = 
+	{
+		Ability = ability,
+        EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
+        iMoveSpeed = 1000,
+        vSpawnOrigin = Vector(0,0,0),
+        fDistance = 1000,
+        fStartRadius = 100,
+        fEndRadius = 100,
+        Source = caster,
+        bHasFrontalCone = false,
+        bReplaceExisting = false,
+        iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+        iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+        fExpireTime = GameRules:GetGameTime() + duration + 1.0,
+		bDeleteOnHit = true,
+		vVelocity = nil
+	}
+
+	--if caster:HasModifier("modifier_gob_thinker") then caster:RemoveModifierByName("modifier_gob_thinker") end
+	GilgaCheckCombo(caster, keys.ability)
+	CreateGOB(keys, gobWeapon)
 	
 	EmitSoundOnClient("Saber_Alter.Derange", caster:GetPlayerOwner())
 	EmitSoundOnClient("Gilgamesh.GOB", caster:GetPlayerOwner())
 	EmitSoundOnClient("Archer.UBWAmbient", caster:GetPlayerOwner())
 end
 
-function OnGOBEnd(keys)
+function CreateGOB(keys, proj)
 	local caster = keys.caster
 	local ability = keys.ability
-	ParticleManager:DestroyParticle( caster.GOBParticle, false )
-	ParticleManager:ReleaseParticleIndex( caster.GOBParticle )
-	caster.GOBDummy:RemoveSelf()
+	local targetPoint = keys.target_points[1]
+	local duration = keys.Duration
+	local frontward = caster:GetForwardVector()
+	local casterloc = caster:GetAbsOrigin()
+
+
+
+	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() - 250 * frontward, false, caster, caster, caster:GetTeamNumber())
+	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
+	dummy:SetForwardVector(caster:GetForwardVector())
+	
+	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 400, 400, 400 ) )
+
+	dummy.GOBProjectile = proj
+	dummy.GOBParticle = portalFxIndex
+	caster.LatestGOB = dummy
+	ability:ApplyDataDrivenModifier(caster, dummy, "modifier_gob_thinker", {})
+end
+
+function OnGOBEnd(keys)
+	local caster = keys.caster
+	local unit = keys.target
+	local ability = keys.ability
+	ParticleManager:DestroyParticle( unit.GOBParticle, false )
+	ParticleManager:ReleaseParticleIndex( unit.GOBParticle )
+	unit:RemoveSelf()
 end
 
 function OnGOBThink(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	local casterLoc = caster.GOBLocation
-	local frontward = caster.FrontVec
+	local unit = keys.target
+	local origin = unit:GetAbsOrigin()
+	local frontward = unit:GetForwardVector()
 	local toggleAbil = caster:FindAbilityByName("gilgamesh_gate_of_babylon_toggle")
-	if caster.IsSumerAcquired then
-		casterLoc = caster:GetAbsOrigin()
+	if caster.IsSumerAcquired and unit == caster.LatestGOB then
+		origin = caster:GetAbsOrigin()
 		frontward = caster:GetForwardVector()
-		caster.GOBDummy:SetAbsOrigin(caster:GetAbsOrigin() - caster:GetForwardVector() * 150)
-		caster.GOBDummy:SetForwardVector( caster:GetForwardVector() )
+		caster.LatestGOB:SetAbsOrigin(caster:GetAbsOrigin() - caster:GetForwardVector() * 150)
+		caster.LatestGOB:SetForwardVector( caster:GetForwardVector() )
 	end
 
 	if not caster.IsSumerAcquired or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
-		local gobWeapon = 
-		{
-			Ability = ability,
-	        EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
-	        iMoveSpeed = 1000,
-	        vSpawnOrigin = casterLoc - 150 * frontward,
-	        fDistance = 1000,
-	        fStartRadius = 100,
-	        fEndRadius = 100,
-	        Source = caster,
-	        bHasFrontalCone = false,
-	        bReplaceExisting = false,
-	        iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
-	        iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
-	        iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-	        fExpireTime = GameRules:GetGameTime() + 1.2,
-			bDeleteOnHit = true,
-			vVelocity = frontward * 1000
-		}
-
+		local projectile = unit.GOBProjectile
 		local leftvec = Vector(-frontward.y, frontward.x, 0)
 		local rightvec = Vector(frontward.y, -frontward.x, 0)
 		local gobCount = 0
@@ -293,11 +308,12 @@ function OnGOBThink(keys)
 		local random2 = RandomInt(0,1) -- whether weapon will spawn on left or right side of hero
 
 		if random2 == 0 then 
-			gobWeapon.vSpawnOrigin = casterLoc + leftvec*random1
+			projectile.vSpawnOrigin = origin + leftvec*random1
 		else 
-			gobWeapon.vSpawnOrigin = casterLoc + rightvec*random1
+			projectile.vSpawnOrigin = origin + rightvec*random1
 		end
-		ProjectileManager:CreateLinearProjectile(gobWeapon)
+		projectile.vVelocity = frontward * 1000
+		ProjectileManager:CreateLinearProjectile(projectile)
 	end
 end
 

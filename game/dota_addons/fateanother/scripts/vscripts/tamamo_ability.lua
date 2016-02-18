@@ -296,6 +296,7 @@ end
 
 function OnSoulstreamProjectileTick(keys)
 	local caster = keys.caster
+	local radius = keys.Radius
 	local target = keys.target 
 	local casterLoc = target:GetAbsOrigin()
 	local ability = keys.ability
@@ -303,77 +304,80 @@ function OnSoulstreamProjectileTick(keys)
 	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.5 end
 	damage = damage + damage*caster.CurrentSoulstreamStack*keys.StackBonus/100
 
-	local radius, charmDamage, stackDamage, ccDuration, StackStunDuration, mrReduction = 0
-	-- Is Charm loaded for current projectile?
-	if target.IsCharmLoaded then
-		if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
-			charmDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("damage", 0)
-			stackDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_damage", 0)
-		elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
-			ccDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("duration", 0)
-			StackStunDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_stun_duration", 0)
-		elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
-			mrReduction = target.LoadedCharmHandle:GetLevelSpecialValueFor("mr_reduction", 0)
-		end
-	end
-	-- If target is found, remove projectile and do damage
-	local targets = FindUnitsInRadius(caster:GetTeam(), casterLoc, nil, 75, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-	if #targets ~= 0 then
-
-
-		for k,v in pairs(targets) do
+	if target:IsAlive() then
+		local charmDamage, stackDamage, ccDuration, StackStunDuration, mrReduction = 0
+		-- Is Charm loaded for current projectile?
+		if target.IsCharmLoaded then
 			if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
-				-- 6 stacks
-				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
-					v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
-					DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-
-					local explodeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, v )
-					ParticleManager:SetParticleControl( explodeFx, 0, v:GetAbsOrigin())
-					v:EmitSound("Ability.LightStrikeArray")
-				else
-					DoDamage(caster, v, v:GetHealth()*charmDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-				end
+				charmDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("damage", 0)
+				stackDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_damage", 0)
 			elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
-				-- 6 stacks
-				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
-					v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
-					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
-
-					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_stun_fx", {})
-					v:EmitSound("Ability.FrostBlast")
-				else
-					v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
-					ability:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
-				end
+				ccDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("duration", 0)
+				StackStunDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_stun_duration", 0)
 			elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
-				-- 6 stacks
-				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
-					v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
-					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
-					if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
-					if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
-					v:EmitSound("DOTA_Item.DiffusalBlade.Activate")
-
-				else
-					v:AddNewModifier(caster, v, "modifier_silence", {Duration = 0.1})
-				end 
-			end	
-			DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-			if caster.IsSpiritTheftAcquired then 
-				v:SetMana(v:GetMana()-25)
-				caster:SetMana(caster:GetMana()+25)
+				mrReduction = target.LoadedCharmHandle:GetLevelSpecialValueFor("mr_reduction", 0)
 			end
 		end
+		-- Move the charm
+		local diff = target.destination - casterLoc
+		target:SetAbsOrigin(target:GetAbsOrigin()+diff/10)
+		-- If target is found, remove projectile and do damage
+		local targets = FindUnitsInRadius(caster:GetTeam(), casterLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		if #targets ~= 0 then
 
 
-		target:EmitSound("Hero_Wisp.Spirits.Target")
-		local explosionFx = ParticleManager:CreateParticle(target.spiritExpParticleName, PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
-		OnSoulstreamProjectileEnd(keys)
+			for k,v in pairs(targets) do
+				if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
+					-- 6 stacks
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
+						v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
+						DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+						local explodeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, v )
+						ParticleManager:SetParticleControl( explodeFx, 0, v:GetAbsOrigin())
+						v:EmitSound("Ability.LightStrikeArray")
+					else
+						DoDamage(caster, v, v:GetHealth()*charmDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					end
+				elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
+					-- 6 stacks
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
+						v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
+						v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
+
+						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_stun_fx", {})
+						v:EmitSound("Ability.FrostBlast")
+					else
+						v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
+						ability:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
+					end
+				elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
+					-- 6 stacks
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
+						v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
+						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
+						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
+						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
+						v:EmitSound("DOTA_Item.DiffusalBlade.Activate")
+
+					else
+						v:AddNewModifier(caster, v, "modifier_silence", {Duration = 0.1})
+					end 
+				end	
+				DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				if caster.IsSpiritTheftAcquired then 
+					v:SetMana(v:GetMana()-25)
+					caster:SetMana(caster:GetMana()+25)
+				end
+			end
+
+
+			target:EmitSound("Hero_Wisp.Spirits.Target")
+			local explosionFx = ParticleManager:CreateParticle(target.spiritExpParticleName, PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
+			OnSoulstreamProjectileEnd(keys)
+		end
 	end
-	local diff = target.destination - casterLoc
-	target:SetAbsOrigin(target:GetAbsOrigin()+diff/10)
 end
 
 function IncrementCharmStack(caster, target, handle, modifierName)
@@ -392,6 +396,7 @@ function OnSoulstreamProjectileEnd(keys)
 	ParticleManager:DestroyParticle( target.spiritParticle, false )
 	ParticleManager:ReleaseParticleIndex( target.spiritParticle )
 	target:ForceKill(false)
+	--target:RemoveSelf() 
 end
 --[[
 	local LRvec = Vector(0,0,0)

@@ -9673,7 +9673,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"30 45 60 75 90"
+				"damage"			"30 50 70 90 110"
 			}
 			
 			"02"
@@ -9684,7 +9684,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"6"
+				"duration"			"8"
 			}
 		}
 		
@@ -21662,7 +21662,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"radius"				"250"
+				"radius"				"175"
 			}
 			"03"
 			{
@@ -21716,7 +21716,7 @@
 			{
 				"IsHidden"			"1"
 				"Duration"			"2.0"
-				"ThinkInterval" 		"0.033"
+				"ThinkInterval" 		"0.03"
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -21725,6 +21725,7 @@
 						"Function"				"OnSoulstreamProjectileTick"
 						"Damage"				"%damage"
 						"StackBonus"			"%stack_damage_bonus"
+						"Radius"		"%radius"
 					}
 				}
 				"OnDestroy"
@@ -24969,6 +24970,11 @@
 				"var_type"			"FIELD_FLOAT"
 				"flag_duration"		"7"
 			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_amp"		"30"
+			}
 		}
 		
 		"OnAbilityPhaseStart"
@@ -25048,6 +25054,15 @@
 						"Function"      "OnLEAllyDamageTaken"
 						"DamageTaken"	"%attack_damage"
 					}
+				}
+			}	
+			"modifier_luminosite_eternelle_unjust_debuff"
+			{
+				"Duration"			"%max_cc_duration"
+				"IsDebuff"			"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%damage_amp"
 				}
 			}	
 			"modifier_luminosite_eternelle_anim"
