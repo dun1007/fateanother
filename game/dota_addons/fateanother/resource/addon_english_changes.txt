@@ -38,8 +38,6 @@
         "DOTA_Tooltip_ability_gille_summon_demon_summon_number"	"SUMMON AMOUNT:"
         "DOTA_Tooltip_ability_gille_summon_demon_summon_number_no_corpse"	"SUMMON AMOUNT WITHOUT CORPSE:"
 
-		"DOTA_Tooltip_ability_gilgamesh_gate_of_babylon_Note2"	"Only one Gate of Babylon can be present at a time."
-
 		"DOTA_Tooltip_Ability_gilgamesh_gate_of_babylon_toggle"		"Gate of Babylon On/Off"
 		"DOTA_Tooltip_Ability_gilgamesh_gate_of_babylon_toggle_Description"		"Toggle this ability to disable weapon projectile from Gate of Babylon."
 
