@@ -230,6 +230,9 @@ function Precache( context )
     PrecacheResource("model", "models/tohsaka/tohsaka.vmdl", context)
     PrecacheResource( "particle", "particles/units/heroes/hero_silencer/silencer_global_silence_sparks.vpcf", context)
     PrecacheResource( "particle", "particles/custom/system/damage_popup.vpcf", context)
+    PrecacheResource( "particle", "particles/custom/system/damage_popup_magical.vpcf", context)
+    PrecacheResource( "particle", "particles/custom/system/damage_popup_physical.vpcf", context)
+    PrecacheResource( "particle", "particles/custom/system/damage_popup_pure.vpcf", context)
 
     -- Servants
     PrecacheResource("model", "models/saber/saber.vmdl", context)
@@ -1361,9 +1364,6 @@ function FateGameMode:ModifyGoldFilter(filterTable)
     return true
 end
 
-local COLOR_MAGICAL_POPUP = Vector(94,239,239)
-local COLOR_PHYSICAL_POPUP = Vector(240,76,76)
-local COLOR_PURE_POPUP = Vector(255,14,255)
 function FateGameMode:TakeDamageFilter(filterTable)
     local damage = filterTable.damage
     local damageType = filterTable.damagetype_const
@@ -1398,17 +1398,9 @@ function FateGameMode:TakeDamageFilter(filterTable)
         ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
     end
 
-    -- pop up color text on target
-    local color
-    if damageType == 1 then 
-        color = COLOR_PHYSICAL_POPUP
-    elseif damageType == 2 then
-        color = COLOR_MAGICAL_POPUP
-    elseif damageType == 4 then
-        color = COLOR_PURE_POPUP
-    end
+
     if damageType == 1 or damageType == 2 or damageType == 4 then
-        PopupDamage(victim, math.floor(damage), color)
+        PopupDamage(victim, math.floor(damage), Vector(255,255,255), damageType)
     end
     return true
 end

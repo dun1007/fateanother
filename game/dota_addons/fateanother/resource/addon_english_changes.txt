@@ -1,6 +1,6 @@
 		"DOTA_Tooltip_ability_master_shard_of_prosperity_Description"	"Instantly grants 5 level to Servant and 1 maximum Health to Master."
 
-		"DOTA_Tooltip_ability_gawain_suns_embrace_Note0"		"Heal amount is based on target's magic resistance after being modified by ability's effect."
+		"DOTA_Tooltip_ability_gawain_suns_embrace_Note0"		"Heal amount is based on target's magic resistance after being modified by this ability's effect."
 
 		"DOTA_Tooltip_ability_nero_attribute_pari_tenu_blauserum_Description"       "<font color='#58ACFA'>Master Mana Required : 10</font>\nGladiusanus Blauserum inflicts bonus magic damage based on AGI, and <font color='#FF3399'>stuns</font> enemies in small radius."  
 

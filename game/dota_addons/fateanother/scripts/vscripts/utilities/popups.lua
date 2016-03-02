@@ -20,15 +20,17 @@ POPUP_SYMBOL_POST_EYE = 6
 POPUP_SYMBOL_POST_SHIELD = 7
 POPUP_SYMBOL_POST_POINTFIVE = 8
 
-
+COLOR_MAGICAL_POPUP = Vector(94,239,239)
+COLOR_PHYSICAL_POPUP = Vector(240,76,76)
+COLOR_PURE_POPUP = Vector(255,14,255)
 -- e.g. when healed by an ability
 function PopupHealing(target, amount)
     PopupNumbers(target, "heal", Vector(0, 255, 0), 3.0, amount, POPUP_SYMBOL_PRE_PLUS, nil)
 end
 
 -- e.g. the popup you get when you suddenly take a large portion of your health pool in damage at once
-function PopupDamage(target, amount, color)
-    PopupNumbers(target, "damage", color, 2.0, amount, nil, POPUP_SYMBOL_POST_DROP)
+function PopupDamage(target, amount, color, damageType)
+    PopupNumbers(target, "damage", color, 1.5, amount, nil, POPUP_SYMBOL_POST_DROP, damageType)
 end
 
 -- e.g. when dealing critical damage
@@ -93,10 +95,20 @@ function PopupSpellDamage(target, amount)
 end
 
 -- Customizable version.
-function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbol)
+function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbol, damagetype)
     local pfxPath = string.format("particles/msg_fx/msg_%s.vpcf", pfx)
+    local popupColor = color
     if pfx == "damage" then 
-        pfxPath = "particles/custom/system/damage_popup.vpcf"
+        if damagetype == 1 then
+            pfxPath = "particles/custom/system/damage_popup_physical.vpcf"
+            popupColor = COLOR_PHYSICAL_POPUP
+        elseif damagetype == 2 then
+            pfxPath = "particles/custom/system/damage_popup_magical.vpcf"
+            popupColor = COLOR_MAGICAL_POPUP
+        elseif damagetype == 4 then
+            pfxPath = "particles/custom/system/damage_popup_pure.vpcf"
+            popupColor = COLOR_PURE_POPUP
+        end
     end
     local pidx
     if pfx == "gold" or pfx == "lumber" then
@@ -118,5 +130,5 @@ function PopupNumbers(target, pfx, color, lifetime, number, presymbol, postsymbo
 
     ParticleManager:SetParticleControl(pidx, 1, Vector(tonumber(presymbol), tonumber(number), tonumber(postsymbol)))
     ParticleManager:SetParticleControl(pidx, 2, Vector(lifetime, digits, 0))
-    ParticleManager:SetParticleControl(pidx, 3, color)
+    ParticleManager:SetParticleControl(pidx, 3, popupColor)
 end
