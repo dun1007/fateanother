@@ -219,6 +219,7 @@ function OnGodResolutionStart(keys)
 	caster:EmitSound("Hero_ArcWarden.MagneticField")
 
 	Timers:CreateTimer(function()
+		if not caster:IsAlive() then return end
 		elapsedTime = elapsedTime + tickPeriod
 		if elapsedTime > duration then 
 			caster:StopSound("Hero_ArcWarden.MagneticField")
@@ -261,6 +262,7 @@ function OnLECastStart(keys)
 			if IsValidEntity(caster.LETargetTable[i]) and caster.LETargetTable[i]:IsAlive() then
 				caster.LETargetTable[i]:RemoveModifierByName("rooted")
 				caster.LETargetTable[i]:RemoveModifierByName("locked")
+				caster.LETargetTable[i]:RemoveModifierByName("modifier_luminosite_eternelle_unjust_debuff")
 			end
 		end
 	end
@@ -378,6 +380,7 @@ function OnLEHit(keys)
 	table.insert(caster.LETargetTable, target)
 	giveUnitDataDrivenModifier(caster, target, "locked", duration)
 	giveUnitDataDrivenModifier(caster, target, "rooted", duration)
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_luminosite_eternelle_unjust_debuff", {}) 
 	target:EmitSound("Hero_ArcWarden.Flux.Cast")
 end
 

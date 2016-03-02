@@ -38,8 +38,6 @@
         "DOTA_Tooltip_ability_gille_summon_demon_summon_number"	"SUMMON AMOUNT:"
         "DOTA_Tooltip_ability_gille_summon_demon_summon_number_no_corpse"	"SUMMON AMOUNT WITHOUT CORPSE:"
 
-		"DOTA_Tooltip_ability_gilgamesh_gate_of_babylon_Note2"	"Only one Gate of Babylon can be present at a time."
-
 		"DOTA_Tooltip_Ability_gilgamesh_gate_of_babylon_toggle"		"Gate of Babylon On/Off"
 		"DOTA_Tooltip_Ability_gilgamesh_gate_of_babylon_toggle_Description"		"Toggle this ability to disable weapon projectile from Gate of Babylon."
 
@@ -110,13 +108,15 @@
 
 
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle"		"Luminosite Eternelle"
-        "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Description"	"Ruler hurls her flag in target direction, <font color='#FF3399'>rooting</font> and dimensionally <font color='#FF3399'>locking</font> enemies along its path. The flag is then planted in the ground, creating a sacred zone that reduces incoming damage for allied heroes.\nWhenever allies suffer damage, the flag is damaged as well. Destroying the flag removes root and lock statuses remaining on victims.\n<font color='#ff9900'>UNJUST BONUS:</font> Engulfs the player's vision in blinding light.\nFlag may be manually detonated by pressing the button again."
+        "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle"      "Luminosite Eternelle"
+        "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Description"  "Ruler hurls her flag in target direction, <font color='#FF3399'>rooting</font> and dimensionally <font color='#FF3399'>locking</font> enemies along its path. The flag is then planted in the ground, creating a sacred zone that reduces incoming damage for allied heroes.\nWhenever allies suffer damage, the flag is damaged as well. Destroying the flag removes root and lock statuses remaining on victims.\n<font color='#ff9900'>UNJUST BONUS:</font> Causes victim of spear to take additional damage for the duration of CC."
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Lore"			""
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_delay"		"CAST DELAY:"
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_range"		"MAX RANGE:"
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_max_cc_duration"	"MAX CROWD CONTROL DURATION:"
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_damage_reduction"	"%DAMAGE REDUCTION:"
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_flag_health"		"FLAG HEALTH:"
+        "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_damage_amp"       "%DAMAGE AMPLIFICATION TO UNJUST ENEMY:"
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Note0"			"Only one instance of Luminousite Eternelle can exist at a time."
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Note1"			"Winding up for new Luminousite Eternelle removes crowd control effects from last instance."
 
