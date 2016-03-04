@@ -16,6 +16,7 @@ _G.IsPreRound = true
 _G.RoundStartTime = 0
 _G.nCountdown = 0
 _G.CurrentGameState = "FATE_PRE_GAME"
+_G.GameMap = ""
 
 ENABLE_HERO_RESPAWN = false -- Should the heroes automatically respawn on a timer or stay dead until manually respawned
 UNIVERSAL_SHOP_MODE = true -- Should the main shop contain Secret Shop items as well as regular items
@@ -146,6 +147,12 @@ gameState = {
     "FATE_PRE_ROUND",
     "FATE_ROUND_ONGOING",
     "FATE_POST_ROUND"
+}
+
+gameMaps = {
+    "fate_dm_6v6",
+    "fate_ffa",
+    "fate_trio_rumble_3v3v3v3"
 }
 
 
@@ -605,7 +612,7 @@ function FateGameMode:OnHeroInGame(hero)
                 hero.RespawnPos = SPAWN_POSITION_RADIANT
             end
         end 
-        print("Respawn location registered : " .. hero.RespawnPos.x .. " BY " .. hero:GetName() )
+        --print("Respawn location registered : " .. hero.RespawnPos.x .. " BY " .. hero:GetName() )
     end)
     hero.bIsDirectTransferEnabled = true -- True by default
     Attributes:ModifyBonuses(hero)
@@ -1208,9 +1215,35 @@ end
 -- It can be used to pre-initialize any values/tables that will be needed later
 function FateGameMode:InitGameMode()
     FateGameMode = self
+
+    -- Find out which map we are using
+    _G.GameMap = GetMapName()
+    if _G.GameMap == "fate_dm_6v6" then
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 6)
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 6)
+        GameRules:SetHeroRespawnEnabled(false) 
+
+    elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 3)
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 3)
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 3)
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 3)
+
+    elseif _G.GameMap == "fate_ffa" then
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_5, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
+        GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
+    end
     print('[FateGameMode] Starting to load Barebones FateGameMode...')
     -- Set game rules
-    GameRules:SetHeroRespawnEnabled(false) 
+    --GameRules:SetHeroRespawnEnabled(false) 
     GameRules:SetUseUniversalShopMode(true) 
     GameRules:SetSameHeroSelectionEnabled(false)
     GameRules:SetHeroSelectionTime(0)
@@ -1220,8 +1253,6 @@ function FateGameMode:InitGameMode()
     GameRules:SetGoldPerTick(0)
     GameRules:SetUseBaseGoldBountyOnHeroes(false)
     GameRules:SetCustomGameSetupTimeout(20)
-    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_GOODGUYS, 6)
-    GameRules:SetCustomGameTeamMaxPlayers(DOTA_TEAM_BADGUYS, 6)
     GameRules:SetFirstBloodActive(false)
     
     -- Random seed for RNG

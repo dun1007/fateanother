@@ -1,0 +1,8 @@
+fate_dm_6v6
+{
+	material materials/overviews/fate_dm_6v6.vmat
+	pos_x -8192
+	pos_y 8192
+	scale 16.000
+}
+
