@@ -796,6 +796,15 @@ function IsFacingUnit(source, target, angle)
     end
 end
 
+-- 
+function OnMiddleEntered(trigger)
+    local hero = trigger.activator
+    if hero:IsRealHero() and not hero:IsIllusion() then
+        -- add xp
+        print("xpxpxp")
+    end
+end
+
 function AssignRandomHero(player)
     local heroesTable = heroes
     for i=0,11 do

@@ -63,8 +63,12 @@ PRESENCE_ALERT_DURATION = 60
 ROUND_DURATION = 150
 BLESSING_PERIOD = 600
 BLESSING_MANA_REWARD = 15
-SPAWN_POSITION_RADIANT = Vector(-7650, 2200, 900)
-SPAWN_POSITION_DIRE = Vector(7600, 2000, 340)
+SPAWN_POSITION_RADIANT_DM = Vector(-7650, 2200, 900)
+SPAWN_POSITION_DIRE_DM = Vector(7600, 2000, 340)
+SPAWN_POSITION_T1_TRIO = Vector(-796,7032,512)
+SPAWN_POSITION_T2_TRIO = Vector(5676,6800,512)
+SPAWN_POSITION_T3_TRIO = Vector(5780,2504,512)
+SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 mode = nil
 FATE_VERSION = "Beta Version"
 roundQuest = nil 
@@ -202,9 +206,6 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_lishuwen.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_ruler.vsndevts", context)
 
-    
-
-    
     -- Items
     PrecacheItemByNameSync("item_apply_modifiers", context)
     PrecacheItemByNameSync("item_mana_essence", context)
@@ -264,7 +265,6 @@ function Precache( context )
     PrecacheResource("model", "models/lishuen/lishuen.vmdl", context)
     PrecacheResource("model", "models/jeanne/jeanne.vmdl", context)
     
-    
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)
     PrecacheResource("model_folder", "models/items/chen", context)
@@ -319,26 +319,26 @@ function FateGameMode:OnAllPlayersLoaded()
     GameRules:SendCustomMessage("Fate/Another " .. FATE_VERSION .. " by Dun1007", 0, 0)
     --GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
     GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
-    --GameStartTimerStart()
-    --CreateUITimer("Unlimited Blade Works", 12)
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     
-    -- Reveal the vote winner
-    local maxval = voteResultTable.voteFor12Rounds
-    local maxkey = "voteFor12Rounds"
-    for k,v in pairs(voteResultTable) do
-        if v > maxval then
-            maxval = v
-            maxkey = k
+    -- Announce the goal of game
+    if _G.GameMap == "fate_dm_6v6" then
+        -- Reveal the vote winner
+        local maxval = voteResultTable.voteFor12Rounds
+        local maxkey = "voteFor12Rounds"
+        for k,v in pairs(voteResultTable) do
+            if v > maxval then
+                maxval = v
+                maxkey = k
+            end
         end
+        VICTORY_CONDITION = tonumber(string.match(maxkey, "%d+"))
+        victoryConditionData.victoryCondition = VICTORY_CONDITION
+        --VICTORY_CONDITION = 1
+        GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for <font color='#FF3399'>" .. VICTORY_CONDITION .. " rounds victory.</font>", 0, 0)
     end
-    VICTORY_CONDITION = tonumber(string.match(maxkey, "%d+"))
-    victoryConditionData.victoryCondition = VICTORY_CONDITION
-    --VICTORY_CONDITION = 1
-    GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for <font color='#FF3399'>" .. VICTORY_CONDITION .. " rounds victory.</font>", 0, 0)
 
-    local lastChoice = 0
-    local delayInBetween = 2.0
+    -- Turn on music
     for i=0, 11 do
         local player = PlayerResource:GetPlayer(i)
         if player ~= nil then
@@ -346,14 +346,6 @@ function FateGameMode:OnAllPlayersLoaded()
             PlayBGM(player)
         end
     end
-
-
-    --[[GameRules:GetGameModeEntity():SetContextThink("aasdasd",function()
-        caster:SetAbsOrigin(Vector(0,0,0))
-        print("hello im thinking every 3 seconds")
-        return 1
-    end, 3) ]]
-
 
     Timers:CreateTimer('30secondalert', {
         endTime = 30,
@@ -364,21 +356,17 @@ function FateGameMode:OnAllPlayersLoaded()
             DisplayTip()
         end
     })
+
     Timers:CreateTimer('startgame', {
         endTime = 60,
         callback = function()
             IsPickPhase = false
-            for i=0,11 do
-                local ply = PlayerResource:GetPlayer(i)
-                if ply and ply:GetAssignedHero() == nil then
-                    --ply:MakeRandomHeroSelection()
-                    --AssignRandomHero(ply)
-                end
-            end
             -- Set a think function for timer
             GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
-            self.nCurrentRound = 1
-            self:InitializeRound() -- Start the game after forcing a pick for every player
+            if _G.GameMap == "fate_dm_6v6" then
+                self.nCurrentRound = 1
+                self:InitializeRound() -- Start the game after forcing a pick for every player
+            end
         end
     })
 end
@@ -601,15 +589,15 @@ function FateGameMode:OnHeroInGame(hero)
     Timers:CreateTimer(1.0, function()
         if hero:GetTeam() == 2 then 
             if self.nCurrentRound == 0 or self.nCurrentRound == 1 then
-                hero.RespawnPos = SPAWN_POSITION_RADIANT
+                hero.RespawnPos = SPAWN_POSITION_RADIANT_DM
             elseif self.nCurrentRound % 2 == 0 then
-                hero.RespawnPos = SPAWN_POSITION_DIRE
+                hero.RespawnPos = SPAWN_POSITION_DIRE_DM
             end
         elseif hero:GetTeam() == 3 then
             if self.nCurrentRound == 0 or self.nCurrentRound == 1 then
-                hero.RespawnPos = SPAWN_POSITION_DIRE
+                hero.RespawnPos = SPAWN_POSITION_DIRE_DM
             elseif self.nCurrentRound % 2 == 0 then
-                hero.RespawnPos = SPAWN_POSITION_RADIANT
+                hero.RespawnPos = SPAWN_POSITION_RADIANT_DM
             end
         end 
         --print("Respawn location registered : " .. hero.RespawnPos.x .. " BY " .. hero:GetName() )
@@ -1071,43 +1059,44 @@ function FateGameMode:OnEntityKilled( keys )
         -- Need condition check for GH
         --if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
 
-
-        if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
-            self.nRadiantDead = self.nRadiantDead + 1
-        else 
-            self.nDireDead = self.nDireDead + 1
-        end
-        
-        local nRadiantAlive = 0
-        local nDireAlive = 0
-        self:LoopOverPlayers(function(player, playerID, playerHero)
-            if playerHero:IsAlive() then
-                if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
-                    nRadiantAlive = nRadiantAlive + 1
-                else 
-                    nDireAlive = nDireAlive + 1
-                end
+        if _G.GameMap == "fate_dm_6v6" then
+            if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
+                self.nRadiantDead = self.nRadiantDead + 1
+            else 
+                self.nDireDead = self.nDireDead + 1
             end
-        end)
-        print(_G.CurrentGameState)
-        -- check for game state before deciding round
-        if _G.CurrentGameState ~= "FATE_POST_ROUND" then
-            if nRadiantAlive == 0 then
-                --print("All Radiant heroes eliminated, removing existing timers and declaring winner...")
-                Timers:RemoveTimer('round_timer')
-                Timers:RemoveTimer('alertmsg')
-                Timers:RemoveTimer('alertmsg2')
-                Timers:RemoveTimer('timeoutmsg')
-                Timers:RemoveTimer('presence_alert')
-                self:FinishRound(false, 1)
-            elseif nDireAlive == 0 then 
-                --print("All Dire heroes eliminated, removing existing timers and declaring winner...")
-                Timers:RemoveTimer('round_timer')
-                Timers:RemoveTimer('alertmsg')
-                Timers:RemoveTimer('alertmsg2')
-                Timers:RemoveTimer('timeoutmsg')
-                Timers:RemoveTimer('presence_alert')
-                self:FinishRound(false, 0)
+            
+            local nRadiantAlive = 0
+            local nDireAlive = 0
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                if playerHero:IsAlive() then
+                    if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                        nRadiantAlive = nRadiantAlive + 1
+                    else 
+                        nDireAlive = nDireAlive + 1
+                    end
+                end
+            end)
+            --print(_G.CurrentGameState)
+            -- check for game state before deciding round
+            if _G.CurrentGameState ~= "FATE_POST_ROUND" then
+                if nRadiantAlive == 0 then
+                    --print("All Radiant heroes eliminated, removing existing timers and declaring winner...")
+                    Timers:RemoveTimer('round_timer')
+                    Timers:RemoveTimer('alertmsg')
+                    Timers:RemoveTimer('alertmsg2')
+                    Timers:RemoveTimer('timeoutmsg')
+                    Timers:RemoveTimer('presence_alert')
+                    self:FinishRound(false, 1)
+                elseif nDireAlive == 0 then 
+                    --print("All Dire heroes eliminated, removing existing timers and declaring winner...")
+                    Timers:RemoveTimer('round_timer')
+                    Timers:RemoveTimer('alertmsg')
+                    Timers:RemoveTimer('alertmsg2')
+                    Timers:RemoveTimer('timeoutmsg')
+                    Timers:RemoveTimer('presence_alert')
+                    self:FinishRound(false, 0)
+                end
             end
         end
     end
@@ -1222,12 +1211,14 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 6)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 6)
         GameRules:SetHeroRespawnEnabled(false) 
+        GameRules:SetGoldPerTick(0)
 
     elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 3)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 3)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 3)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 3)
+        GameRules:SetGoldPerTick(25)
 
     elseif _G.GameMap == "fate_ffa" then
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
@@ -1240,25 +1231,23 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
+        GameRules:SetGoldPerTick(25)
     end
-    print('[FateGameMode] Starting to load Barebones FateGameMode...')
     -- Set game rules
-    --GameRules:SetHeroRespawnEnabled(false) 
     GameRules:SetUseUniversalShopMode(true) 
     GameRules:SetSameHeroSelectionEnabled(false)
     GameRules:SetHeroSelectionTime(0)
     GameRules:SetPreGameTime(60)
-    --GameRules:SetPostGameTime(60)
     GameRules:SetUseCustomHeroXPValues(true)
-    GameRules:SetGoldPerTick(0)
     GameRules:SetUseBaseGoldBountyOnHeroes(false)
     GameRules:SetCustomGameSetupTimeout(20)
     GameRules:SetFirstBloodActive(false)
-    
+    GameRules:SetCustomGameEndDelay(30)
+    GameRules:SetCustomVictoryMessageDuration(30)
+
     -- Random seed for RNG
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
     math.randomseed(tonumber(timeTxt)) 
-    
     
     -- Event Hooks
     ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap(FateGameMode, 'OnPlayerLevelUp'), self)
@@ -1319,8 +1308,6 @@ function FateGameMode:InitGameMode()
         keys.text = table.concat(arg, " ")
         self:PlayerSay(keys) 
     end, "Player said something", 0)
-    
-    
     
     -- Initialized tables for tracking state
     self.nRadiantScore = 0
@@ -1797,6 +1784,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         end
     end)
     -- Set score 
+    mode = GameRules:GetGameModeEntity()
     mode:SetTopBarTeamValue ( DOTA_TEAM_BADGUYS, self.nDireScore )
     mode:SetTopBarTeamValue ( DOTA_TEAM_GOODGUYS, self.nRadiantScore )
     self.nCurrentRound = self.nCurrentRound + 1
@@ -1850,11 +1838,11 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
 
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local pHero = playerHero
-                --[[if pHero.RespawnPos == SPAWN_POSITION_RADIANT then
-                    pHero.RespawnPos = SPAWN_POSITION_DIRE
+                --[[if pHero.RespawnPos == SPAWN_POSITION_RADIANT_DM then
+                    pHero.RespawnPos = SPAWN_POSITION_DIRE_DM
                     --print(pHero:GetName() .. "'s location is set to DIRE spawn")
-                elseif pHero.RespawnPos == SPAWN_POSITION_DIRE then
-                    pHero.RespawnPos = SPAWN_POSITION_RADIANT
+                elseif pHero.RespawnPos == SPAWN_POSITION_DIRE_DM then
+                    pHero.RespawnPos = SPAWN_POSITION_RADIANT_DM
                     --print(pHero:GetName() .. "'s location is set to RADIANT spawn")
                 end]]
 
@@ -1869,17 +1857,17 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
                     if self.nCurrentRound == 0 or self.nCurrentRound == 1 then -- if round = 0 or 1, do not change anything
                         
                     elseif self.nCurrentRound % 2 == 0 then -- if even rounds, set spawn to DIRE
-                        pHero.RespawnPos = SPAWN_POSITION_DIRE 
+                        pHero.RespawnPos = SPAWN_POSITION_DIRE_DM 
                     else
-                        pHero.RespawnPos = SPAWN_POSITION_RADIANT
+                        pHero.RespawnPos = SPAWN_POSITION_RADIANT_DM
                     end
                 elseif pHero:GetTeam() == 3 then
                     if self.nCurrentRound == 0 or self.nCurrentRound == 1 then -- if round = 0 or 1, do not change anything
                         
                     elseif self.nCurrentRound % 2 == 0 then -- if even rounds, set spawn to RADIANT
-                        pHero.RespawnPos = SPAWN_POSITION_RADIANT 
+                        pHero.RespawnPos = SPAWN_POSITION_RADIANT_DM 
                     else
-                        pHero.RespawnPos = SPAWN_POSITION_DIRE
+                        pHero.RespawnPos = SPAWN_POSITION_DIRE_DM
                     end
                 end
 
