@@ -1904,19 +1904,16 @@ function FateGameMode:CaptureGameMode()
     if mode == nil then
         -- Set FateGameMode parameters
         mode = GameRules:GetGameModeEntity() 
-        mode:SetRecommendedItemsDisabled( RECOMMENDED_BUILDS_DISABLED )
+
+
         mode:SetCameraDistanceOverride(1600)
         mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
         mode:SetCustomBuybackCooldownEnabled( CUSTOM_BUYBACK_COOLDOWN_ENABLED )
         mode:SetBuybackEnabled( BUYBACK_ENABLED )
-        mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
         mode:SetTopBarTeamValuesVisible( TOP_BAR_VISIBLE )
         mode:SetUseCustomHeroLevels ( true )
         mode:SetCustomHeroMaxLevel ( MAX_LEVEL )
         mode:SetCustomXPRequiredToReachNextLevel( XP_TABLE )
-        
-        --mode:SetBotThinkingEnabled( USE_STANDARD_DOTA_BOT_THINKING )
-        mode:SetTowerBackdoorProtectionEnabled( ENABLE_TOWER_BACKDOOR_PROTECTION )
         mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
         mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
         mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
@@ -1926,9 +1923,13 @@ function FateGameMode:CaptureGameMode()
         mode:SetExecuteOrderFilter( Dynamic_Wrap( FateGameMode, "ExecuteOrderFilter" ), FateGameMode )
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
         mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)
+        mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
         SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()
-        
+
+        if _G.GameMap == "fate_dm_6v6" then
+            mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
+        end        
     end 
 end
 

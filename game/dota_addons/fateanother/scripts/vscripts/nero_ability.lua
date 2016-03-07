@@ -530,7 +530,7 @@ function OnNeroComboStart(keys)
 				ParticleManager:ReleaseParticleIndex( flameFx )
 			end)
 			caster:EmitSound("Hero_Batrider.Firefly.Cast")
-			print("rawr")
+			--print("rawr")
 			return 0.1
 		else
 			OnNeroComboEnd(keys)

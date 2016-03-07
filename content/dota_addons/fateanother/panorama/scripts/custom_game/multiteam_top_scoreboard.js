@@ -50,6 +50,9 @@ function UpdateRoundScore( data )
 	g_ScoreboardHandle = ScoreboardUpdater_InitializeScoreboard( scoreboardConfig, $( "#MultiteamScoreboard" ) );
 
 	UpdateScoreboard();
-	GameEvents.Subscribe( "winner_decided", UpdateRoundScore );
+
+	if (Game.GetMapInfo().map_display_name == "fate_dm_6v6") { 
+		GameEvents.Subscribe( "winner_decided", UpdateRoundScore );
+	}
 })();
 
