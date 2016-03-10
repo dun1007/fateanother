@@ -54,6 +54,7 @@ DISABLE_ANNOUNCER = false               -- Should we disable the announcer from 
 LOSE_GOLD_ON_DEATH = false               -- Should we have players lose the normal amount of dota gold on death?
 VICTORY_CONDITION = 12 -- Round required for win
 
+
 XP_TABLE = {}
 _G.XP_PER_LEVEL_TABLE = {}
 BOUNTY_PER_LEVEL_TABLE = {}
@@ -140,12 +141,31 @@ DoNotKillAtTheEndOfRound = {
     "jeanne_banner"
 }
 voteResultTable = {
-    voteFor12Rounds = 0,
-    voteFor10Rounds = 0, 
-    voteFor8Rounds = 0, 
-    voteFor6Rounds = 0, 
-    voteFor4Rounds = 0
+    0, -- 12 kills
+    0,  -- 10
+    0, -- 8
+    0,  -- 6
+    0  -- 4
 }
+--[[voteResultTable = {
+    v_OPTION_1 = 0, -- 12 kills
+    v_OPTION_2 = 0,  -- 10
+    v_OPTION_3 = 0, -- 8
+    v_OPTION_4 = 0,  -- 6
+    v_OPTION_5 = 0  -- 4
+}]]--
+voteResults_DM = {
+    12, 10, 8, 6, 4
+}
+
+voteResults_TRIO = {
+    35, 30, 25, 20, 15
+}
+
+voteResults_FFA = {
+    20, 17, 14, 11, 8
+}
+
 gameState = {
     "FATE_PRE_GAME",
     "FATE_PRE_ROUND",
@@ -322,21 +342,34 @@ function FateGameMode:OnAllPlayersLoaded()
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     
     -- Announce the goal of game
+    -- Reveal the vote winner
+    local maxval = voteResultTable[1]
+    local maxkey = 1
+    local votePool = nil
     if _G.GameMap == "fate_dm_6v6" then
-        -- Reveal the vote winner
-        local maxval = voteResultTable.voteFor12Rounds
-        local maxkey = "voteFor12Rounds"
-        for k,v in pairs(voteResultTable) do
-            if v > maxval then
-                maxval = v
-                maxkey = k
-            end
-        end
-        VICTORY_CONDITION = tonumber(string.match(maxkey, "%d+"))
-        victoryConditionData.victoryCondition = VICTORY_CONDITION
-        --VICTORY_CONDITION = 1
-        GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for <font color='#FF3399'>" .. VICTORY_CONDITION .. " rounds victory.</font>", 0, 0)
+        votePool = voteResults_DM
+        maxkey = 12
+    elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
+        votePool = voteResults_TRIO
+        maxkey = 35
+    elseif _G.GameMap == "fate_ffa" then
+        votePool = voteResults_FFA
+        maxkey = 20
     end
+
+    for i=1, 5 do
+        if voteResultTable[i] > maxval then
+            maxval = i
+            maxkey = votePool[i]
+        end
+    end
+
+    VICTORY_CONDITION = maxkey
+    victoryConditionData.victoryCondition = VICTORY_CONDITION
+    --VICTORY_CONDITION = 1
+    GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for victory score: <font color='#FF3399'>" .. VICTORY_CONDITION .. ".</font>", 0, 0)
+
+
 
     -- Turn on music
     for i=0, 11 do
@@ -449,7 +482,7 @@ function FateGameMode:PlayerSay(keys)
 
     -- Below two commands are solely for test purpose, not to be used in normal games
     if text == "-testsetup" then
-        if Convars:GetBool("sv_cheats") then
+        if GameRules:IsCheatMode() then
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local hero = playerHero
                 hero.MasterUnit:SetMana(1000)
@@ -474,7 +507,7 @@ function FateGameMode:PlayerSay(keys)
         local hr = plyr:GetAssignedHero()
         hr:RemoveModifierByName("round_pause")
     end]]
-        if Convars:GetBool("sv_cheats") then 
+        if GameRules:IsCheatMode() then 
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local hr = playerHero
                 hr:RemoveModifierByName("round_pause")
@@ -507,7 +540,6 @@ function FateGameMode:PlayerSay(keys)
 
     -- Turns BGM on and off
     if text == "-bgmoff" then
-        print("Turning BGM off")
         Timers:RemoveTimer("BGMTimer" .. ply:GetPlayerID())
         ply:StopSound(ply.CurrentBGM)
     end
@@ -1059,7 +1091,14 @@ function FateGameMode:OnEntityKilled( keys )
         -- Need condition check for GH
         --if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
 
-        if _G.GameMap == "fate_dm_6v6" then
+        if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
+            print(PlayerResource:GetTeamKills(killerEntity:GetTeam()))
+            print(VICTORY_CONDITION)
+            if PlayerResource:GetTeamKills(killerEntity:GetTeam()) >= VICTORY_CONDITION then
+                GameRules:SetSafeToLeave( true )
+                GameRules:SetGameWinner( killerEntity:GetTeam() )
+            end
+        elseif _G.GameMap == "fate_dm_6v6" then
             if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
                 self.nRadiantDead = self.nRadiantDead + 1
             else 
@@ -1105,19 +1144,18 @@ end
 function OnVoteFinished(Index,keys)
     print("[FateGameMode]vote finished by player with result :" .. keys.killsVoted)
     local voteResult = keys.killsVoted
-    if voteResult == 1 then
-        
-        voteResultTable.voteFor12Rounds = voteResultTable.voteFor12Rounds+1
-        print(voteResultTable.voteFor12Rounds)
+    voteResultTable[voteResult] = voteResultTable[voteResult] + 1
+    --[[if voteResult == 1 then
+        voteResultTable.v_OPTION_1 = voteResultTable.v_OPTION_1+1
     elseif voteResult == 2 then
-        voteResultTable.voteFor10Rounds = voteResultTable.voteFor10Rounds+1
+        voteResultTable.v_OPTION_2 = voteResultTable.v_OPTION_2+1
     elseif voteResult == 3 then
-        voteResultTable.voteFor8Rounds = voteResultTable.voteFor8Rounds+1
+        voteResultTable.v_OPTION_3 = voteResultTable.v_OPTION_3+1
     elseif voteResult == 4 then
-        voteResultTable.voteFor6Rounds = voteResultTable.voteFor6Rounds+1
+        voteResultTable.v_OPTION_4 = voteResultTable.v_OPTION_4+1
     elseif voteResult == 5 then
-        voteResultTable.voteFor4Rounds = voteResultTable.voteFor4Rounds+1
-    end
+        voteResultTable.v_OPTION_5 = voteResultTable.v_OPTION_5+1
+    end]]
 end
 
 function OnDirectTransferChanged(Index, keys)
@@ -1915,11 +1953,11 @@ function FateGameMode:CaptureGameMode()
         mode:SetCustomHeroMaxLevel ( MAX_LEVEL )
         mode:SetCustomXPRequiredToReachNextLevel( XP_TABLE )
         mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
-        mode:SetGoldSoundDisabled( DISABLE_GOLD_SOUNDS )
-        mode:SetRemoveIllusionsOnDeath( REMOVE_ILLUSIONS_ON_DEATH )
+        mode:SetGoldSoundDisabled( true )
+        mode:SetRemoveIllusionsOnDeath( true )
         mode:SetStashPurchasingDisabled ( false )
-        mode:SetAnnouncerDisabled( DISABLE_ANNOUNCER )
-        mode:SetLoseGoldOnDeath( LOSE_GOLD_ON_DEATH )
+        mode:SetAnnouncerDisabled( true )
+        mode:SetLoseGoldOnDeath( false )
         mode:SetExecuteOrderFilter( Dynamic_Wrap( FateGameMode, "ExecuteOrderFilter" ), FateGameMode )
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
         mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)

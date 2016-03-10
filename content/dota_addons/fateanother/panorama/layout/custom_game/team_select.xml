@@ -17,12 +17,12 @@
 				<Label id="VoteListLabel" text="VOTE" />
 				<Panel id="VoteGroup" >
 					<Panel id="VoteGroupRound" >
-						<Label id="VoteGroupRoundTitle" text="VOTE FOR ROUNDS NEEDED FOR VICTORY" />
-						<RadioButton group="GameKills" checked="checked" id="RoundButton1" text="12(Standard)" />
-						<RadioButton group="GameKills" id="RoundButton2" text="10"/>
-						<RadioButton group="GameKills" id="RoundButton3" text="8"/>
-						<RadioButton group="GameKills" id="RoundButton4" text="6"/>
-						<RadioButton group="GameKills" id="RoundButton5" text="4"/>
+						<Label id="VoteGroupRoundTitle" text="VOTE FOR GAME DURATION" />
+						<RadioButton group="GameKills" checked="true" id="RoundButton1" text="Longest(Standard)" />
+						<RadioButton group="GameKills" id="RoundButton2" text="Longer"/>
+						<RadioButton group="GameKills" id="RoundButton3" text="Average"/>
+						<RadioButton group="GameKills" id="RoundButton4" text="Shorter"/>
+						<RadioButton group="GameKills" id="RoundButton5" text="Shortest"/>
 					</Panel>
 
 				</Panel>

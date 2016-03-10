@@ -347,7 +347,6 @@ function OnNineLanded(caster, ability)
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim3", {}) 
 				end
 			elseif caster:GetName() == "npc_dota_hero_ember_spirit" then 
-				print("asdasd")
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
