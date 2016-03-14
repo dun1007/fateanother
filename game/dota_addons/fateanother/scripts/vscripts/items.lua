@@ -49,11 +49,23 @@ end
 
 function OnTrioBaseEntered(trigger)
 	local hero = trigger.activator
-	hero.IsInBase = false
+	hero.IsInBase = true
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
 end
 
 function OnTrioBaseLeft(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+end
+
+function OnFFABaseEntered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+end
+
+function OnFFABaseLeft(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
