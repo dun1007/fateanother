@@ -47,16 +47,80 @@ function OnBaseLeft(trigger)
 	--print("Base left")
 end
 
-function OnTrioBaseEntered(trigger)
+function OnTrioBase1Entered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
 end
 
-function OnTrioBaseLeft(trigger)
+function OnTrioBase1Left(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnTrioBase2Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_BADGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase2Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_BADGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnTrioBase3Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_1 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase3Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_1 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnTrioBase4Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_2 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase4Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_2 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
 end
 
 function OnFFABaseEntered(trigger)

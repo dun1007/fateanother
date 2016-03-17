@@ -24391,15 +24391,7 @@
 				"regen_duration"			"25"
 			}
 		}
-		"OnRespawn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"jeanne_ability"
-				"Function"		"OnMREXRespawn"
-				"MaxStack"		"%max_stack"
-			}
-		}
+
 		"Modifiers"
 		{
 			"modifier_magic_resistance_ex"
@@ -24423,6 +24415,15 @@
 						"ScriptFile"	"jeanne_ability"
 						"Function"		"OnMREXDamageTaken"
 						"DamageTaken"	"%attack_damage"	
+						"MaxStack"		"%max_stack"
+					}
+				}
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"jeanne_ability"
+						"Function"		"OnMREXRespawn"
 						"MaxStack"		"%max_stack"
 					}
 				}
@@ -25731,6 +25732,7 @@
 			"particle"				"particles/generic_gameplay/generic_silence.vpcf"
 			"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield_mark.vpcf"
 			"particle"	"particles/units/heroes/hero_oracle/oracle_fortune_purge.vpcf"
+			"particle"	"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -25740,7 +25742,6 @@
 		"OnSpellStart"
 		{
 		}
-
 		"Modifiers"
 		{
 			"modifier_detect"
@@ -25756,12 +25757,12 @@
 					 	"Function"		"OnPresenceDetectionThink"
 					}
 				}
-				"OnCreated"
+				"OnRespawn"
 				{
 					"RunScript"
 					{
-					 	"ScriptFile"	"master_ability"
-					 	"Function"		"test"
+						"ScriptFile"	"master_ability"
+						"Function"		"OnHeroRespawn"
 					}
 				}
 			}
@@ -25857,8 +25858,15 @@
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-			"invulnerable"
+			"spawn_invulnerable"
 			{
+				"EffectName"	"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"	"10"
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"	"10"			
+				}
 				"States"
 				{
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
@@ -26616,6 +26624,49 @@
 		  	}
 		}
 	}
+
+	"fate_experience_thinker"
+	{
+		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+		"MaxLevel"                      "3"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"range"					"1300 1800 2500"
+			}
+		}
+		"Modifiers"
+		{
+			"fate_experience_passive_aura"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"Aura"		"fate_experience_passive"
+				"Aura_Radius"	"%range"
+				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_BOTH"
+				"Aura_Types"	"DOTA_UNIT_TARGET_HERO"
+				"Aura_Flags"  "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		  	}
+			"fate_experience_passive"
+			{ 
+				"ThinkInterval"					"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"util"
+						"Function"		"OnExperienceZoneThink"
+					}
+				}
+		  	}
+		}
+	}
+
+
 
 	"fate_empty1"
 	{

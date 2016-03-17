@@ -797,11 +797,11 @@ function IsFacingUnit(source, target, angle)
 end
 
 -- 
-function OnMiddleEntered(trigger)
-    local hero = trigger.activator
+function OnExperienceZoneThink(keys)
+    local hero = keys.target
     if hero:IsRealHero() and not hero:IsIllusion() then
-        -- add xp
-        print("xpxpxp")
+        hero:AddExperience(hero:GetLevel()*2+15, false, false)
+        hero:ModifyGold(20, true, 0)
     end
 end
 

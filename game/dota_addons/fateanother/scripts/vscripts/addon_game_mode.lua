@@ -10,6 +10,7 @@ require('notifications')
 require('items')
 require('utilities/sounds')
 require('utilities/popups')
+require('event')
 
 _G.IsPickPhase = true
 _G.IsPreRound = true
@@ -393,13 +394,37 @@ function FateGameMode:OnAllPlayersLoaded()
     Timers:CreateTimer('startgame', {
         endTime = 60,
         callback = function()
-            IsPickPhase = false
             -- Set a think function for timer
-            GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
             if _G.GameMap == "fate_dm_6v6" then
                 self.nCurrentRound = 1
                 self:InitializeRound() -- Start the game after forcing a pick for every player
+                BLESSING_PERIOD = 600
+            elseif _G.GameMap == "fate_ffa" then 
+                BLESSING_PERIOD = 400
+            elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then 
+                BLESSING_PERIOD = 500
             end
+            GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
+            IsPickPhase = false
+            IsGameStarted = true
+            GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
+            CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD-1, "ten_min_timer")
+            Timers:CreateTimer('round_10min_bonus', {
+                endTime = BLESSING_PERIOD,
+                callback = function()
+                    CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
+                    self:LoopOverPlayers(function(player, playerID, playerHero)
+                        local hero = playerHero
+                        hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
+                        hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+BLESSING_MANA_REWARD) 
+                        hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
+                        hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+BLESSING_MANA_REWARD)
+                        MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+                    end)
+                    Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                    
+                    return BLESSING_PERIOD
+            end})
         end
     })
 end
@@ -413,6 +438,27 @@ This function is called once and only once when the game completely begins (abou
         ]]
 function FateGameMode:OnGameInProgress()
     print("[FATE] The game has officially begun")
+    -- add xp granter and level its skills
+    local bIsDummyNeeded = true
+    local dummyLevel = 0
+    local dummyLoc = Vector(0,0,0)
+    if _G.GameMap == "fate_ffa" then
+        dummyLevel = 1
+        dummyLoc = Vector(368,3868,1000)
+    elseif _G.GameMap == "fate_dm_6v6" then
+        bIsDummyNeeded = false
+    elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
+        dummyLevel = 2
+        dummyLoc = Vector(2436,4132,1000)
+    end
+
+    if bIsDummyNeeded then
+        local xpGranter = CreateUnitByName("dummy_unit", Vector(0, 0, 1000), true, nil, nil, DOTA_TEAM_NEUTRALS)
+        xpGranter:AddAbility("fate_experience_thinker")
+        xpGranter:FindAbilityByName("fate_experience_thinker"):SetLevel(dummyLevel)
+        xpGranter:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
+        xpGranter:SetAbsOrigin(dummyLoc)
+    end
 
 end
 
@@ -514,6 +560,22 @@ function FateGameMode:PlayerSay(keys)
                 --print("Looping through player" .. ply)
             end)
         end
+    end
+
+    if text == "-unstuck" then
+        local bIsMarbleActive = true
+        self:LoopOverPlayers(function(player, playerID, playerHero)
+            local hr = playerHero
+            if hr:GetUnitName() == "npc_dota_hero_ember_spirit" or hr:GetUnitName() == "npc_dota_hero_chen" then
+                if not hr.IsUBWActive and not hr.IsAOTKActive then
+                    bIsMarbleActive = false
+                end
+            end
+
+            if PlayerResource:GetSelectedHeroEntity(plyID) == hr then
+                hr:SetAbsOrigin(hr.RespawnPos)
+            end
+        end)
     end
 
     if text == "-declarewinner" then
@@ -698,9 +760,14 @@ function FateGameMode:OnHeroInGame(hero)
         hero:SetBaseAgility(20) 
         hero:SetBaseIntellect(20) 
     end
+
     
     -- Wait 1 second for loadup
     Timers:CreateTimer(2.0, function()
+        if _G.GameMap == "fate_ffa" or "fate_trio_rumble_3v3v3v3" then
+            hero:HeroLevelUp(false)
+            hero:HeroLevelUp(false)
+        end
         local children = hero:GetChildren()
         for k,child in pairs(children) do
            if child:GetClassname() == "dota_item_wearable" then
@@ -957,7 +1024,6 @@ function FateGameMode:OnPlayerLevelUp(keys)
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 3)
     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 3)
     Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
-    
     MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
 end
 
@@ -1024,6 +1090,7 @@ function FateGameMode:OnEntityKilled( keys )
     end
     if killedUnit:IsRealHero() then
         self.bIsCasuallyOccured = true -- someone died this round
+        killedUnit:SetTimeUntilRespawn(killedUnit:GetLevel() + 3)
         -- if killed by illusion, change the killer to the owner of illusion instead
         if killerEntity:IsIllusion() then
             killerEntity = PlayerResource:GetPlayer(killerEntity:GetPlayerID()):GetAssignedHero()
@@ -1256,7 +1323,7 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 3)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 3)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 3)
-        GameRules:SetGoldPerTick(25)
+        GameRules:SetGoldPerTick(7.5)
 
     elseif _G.GameMap == "fate_ffa" then
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
@@ -1269,7 +1336,7 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
-        GameRules:SetGoldPerTick(25)
+        GameRules:SetGoldPerTick(7.5)
     end
     -- Set game rules
     GameRules:SetUseUniversalShopMode(true) 
@@ -1566,7 +1633,7 @@ end
 function FateGameMode:InitializeRound()
     -- do first round stuff
     if self.nCurrentRound == 1 then
-        print("[FateGameMode]First round started, initiating 10 minute timer...")
+        --[[print("[FateGameMode]First round started, initiating 10 minute timer...")
         IsGameStarted = true
         GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
         CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD-1, "ten_min_timer")
@@ -1585,7 +1652,7 @@ function FateGameMode:InitializeRound()
                 Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
                 
                 return BLESSING_PERIOD
-        end})
+        end})]]
     end
     
     -- Flag game mode as pre round, and display tip
@@ -2012,19 +2079,3 @@ function FateGameMode:OnConnectFull(keys)
     self.vSteamIds[PlayerResource:GetSteamAccountID(playerID)] = ply
     
 end
-
-
---[[ This is an example console command
-function FateGameMode:ExampleConsoleCommand()
-    print( '******* Example Console Command ***************' )
-    local cmdPlayer = Convars:GetCommandClient()
-    if cmdPlayer then
-        local playerID = cmdPlayer:GetPlayerID()
-        if playerID ~= nil and playerID ~= -1 then
-            -- Do something here for the player who called this command
-            PlayerResource:ReplaceHeroWith(playerID, "npc_dota_hero_viper", 1000, 1000)
-        end
-    end
-    
-    print( '*********************************************' )
-end]]

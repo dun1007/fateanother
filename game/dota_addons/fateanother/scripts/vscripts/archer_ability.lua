@@ -1299,7 +1299,7 @@ function OveredgeStackExpired(keys)
 end
 
 function GrantOveredgeStack(hero)
-	print("Adding overedge stack")
+	--print("Adding overedge stack")
 	if hero.OveredgeCount < 4 then
 		hero.OveredgeCount = hero.OveredgeCount + 1
 	end

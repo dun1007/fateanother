@@ -899,9 +899,6 @@ function OnProsperityAcquired(keys)
 	master2:SetHealth(master:GetHealth())
 end
 
-function test(keys)
-	print("detection started")
-end
 
 function OnPresenceDetectionThink(keys)
 	local caster = keys.caster
@@ -1012,4 +1009,13 @@ function FAEyeAttribute(caster, enemy)
 		eyeCounter = eyeCounter + 0.2
 		return 0.2
 	end)
+end
+
+function OnHeroRespawn(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
+		caster:ModifyGold(2000, true, 0) 
+		giveUnitDataDrivenModifier(keys.caster, keys.caster, "spawn_invulnerable", 3.0)
+	end
 end
