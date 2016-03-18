@@ -472,7 +472,7 @@ function OnOverdriveAttack(keys)
 end
 
 function AvengerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("avenger_true_form") and caster:FindAbilityByName("avenger_verg_avesta"):IsCooldownReady() and caster:FindAbilityByName("avenger_endless_loop"):IsCooldownReady()  then
 			caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", false, true) 
 			Timers:CreateTimer({

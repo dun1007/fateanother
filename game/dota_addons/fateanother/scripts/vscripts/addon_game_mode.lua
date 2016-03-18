@@ -262,6 +262,7 @@ function Precache( context )
     PrecacheResource( "particle", "particles/custom/system/damage_popup_magical.vpcf", context)
     PrecacheResource( "particle", "particles/custom/system/damage_popup_physical.vpcf", context)
     PrecacheResource( "particle", "particles/custom/system/damage_popup_pure.vpcf", context)
+    PrecacheResource( "particle", "particles/custom/system/gold_popup.vpcf", context)
 
     -- Servants
     PrecacheResource("model", "models/saber/saber.vmdl", context)
@@ -401,14 +402,19 @@ function FateGameMode:OnAllPlayersLoaded()
                 BLESSING_PERIOD = 600
             elseif _G.GameMap == "fate_ffa" then 
                 BLESSING_PERIOD = 400
+                _G.CurrentGameState = "FATE_ROUND_ONGOING"
             elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then 
                 BLESSING_PERIOD = 500
+                _G.CurrentGameState = "FATE_ROUND_ONGOING"
             end
             GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
             IsPickPhase = false
             IsGameStarted = true
             GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
             CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD-1, "ten_min_timer")
+            self:LoopOverPlayers(function(player, playerID, playerHero)
+                playerHero:RemoveModifierByName("round_pause") 
+            end)
             Timers:CreateTimer('round_10min_bonus', {
                 endTime = BLESSING_PERIOD,
                 callback = function()
@@ -745,11 +751,18 @@ function FateGameMode:OnHeroInGame(hero)
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
 
     --HideWearables(hero)
-    if self.nCurrentRound == 0 then
-        giveUnitDataDrivenModifier(hero, hero, "round_pause", 75)
-    elseif self.nCurrentRound >= 1 then 
-        hero:ModifyGold(3000, true, 0) 
-        giveUnitDataDrivenModifier(hero, hero, "round_pause", 10)
+    if _G.GameMap == "fate_dm_6v6" then
+        if self.nCurrentRound == 0 then
+            giveUnitDataDrivenModifier(hero, hero, "round_pause", 60)
+        elseif self.nCurrentRound >= 1 then 
+            hero:ModifyGold(3000, true, 0) 
+            giveUnitDataDrivenModifier(hero, hero, "round_pause", 10)
+        end
+    else
+        hero:ModifyGold(3000, true, 0)
+        if _G.CurrentGameState == "FATE_PRE_GAME" then
+            giveUnitDataDrivenModifier(hero, hero, "round_pause", 60)
+        end
     end
 
     if Convars:GetBool("sv_cheats") then 
@@ -764,7 +777,7 @@ function FateGameMode:OnHeroInGame(hero)
     
     -- Wait 1 second for loadup
     Timers:CreateTimer(2.0, function()
-        if _G.GameMap == "fate_ffa" or "fate_trio_rumble_3v3v3v3" then
+        if _G.GameMap == "fate_ffa" or _G.GameMap == "fate_trio_rumble_3v3v3v3" then
             hero:HeroLevelUp(false)
             hero:HeroLevelUp(false)
         end
@@ -1146,10 +1159,10 @@ function FateGameMode:OnEntityKilled( keys )
             end 
             --print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
             -- Create gold popup
-            local goldPopupFx = ParticleManager:CreateParticle("particles/msg_fx/msg_gold.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit)
+            local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit, killerEntity:GetTeamNumber())
             ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
             ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
-            ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(5,#tostring(bounty)+1, 0))
+            ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
             ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
             -- Display gold message
             GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold!", 0, 0)
@@ -1482,6 +1495,7 @@ function FateGameMode:ModifyGoldFilter(filterTable)
     -- Disable gold gain from hero kills
     if filterTable["reason_const"] == DOTA_ModifyGold_HeroKill then
         filterTable["gold"] = 0
+        return false
     end
 
     return true
@@ -1515,7 +1529,7 @@ function FateGameMode:TakeDamageFilter(filterTable)
         if victim.IsDIAcquired then multiplier = multiplier + 25 end
         local returnDamage = damage * multiplier / 100
 
-        DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, vergHandle, false)
+        DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, {DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, DOTA_DAMAGE_FLAG_BYPASSES_MAGIC_IMMUNITY}, vergHandle, false)
         if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
         local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_CUSTOMORIGIN, nil)
         ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())

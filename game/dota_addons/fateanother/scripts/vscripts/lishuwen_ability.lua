@@ -578,7 +578,7 @@ function OnDragonStrike3Start(keys)
 end
 
 function LishuwenCheckCombo(caster, ability)
-    if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+    if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
         if ability == caster:FindAbilityByName("lishuwen_concealment") then
             QUsed = true
             Qtime = GameRules:GetGameTime()

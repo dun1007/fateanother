@@ -29,7 +29,8 @@ function OnIRTickAlly(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
-	target:SetHealth(target:GetHealth() + keys.Damage/5)
+	target:Heal(keys.Damage/5, caster)
+	--target:SetHealth(target:GetHealth() + keys.Damage/5)
 	if caster.IsSunlightAcquired then
 		target:SetMana(target:GetMana() + keys.Damage/5)
 	end
@@ -389,6 +390,9 @@ function OnSupernovaStart(keys)
 		end
 	end) 
 	target:EmitSound("Hero_Enigma.Black_Hole")
+	Timers:CreateTimer(8.0, function()
+		StopSoundEvent("Hero_Enigma.Black_Hole", target)
+	end)
 	target:EmitSound("DOTA_Item.BlackKingBar.Activate")
 end
 
@@ -439,7 +443,6 @@ function OnSupernovaEnd(keys)
 		ParticleManager:ReleaseParticleIndex( splashFx )
 	end)
 	EmitGlobalSound("Hero_Phoenix.SuperNova.Explode")
-	StopSoundEvent("Hero_Enigma.Black_Hole", target)
 end
 
 function GenerateArtificialSun(caster, location)
@@ -556,7 +559,7 @@ function OnSunCleanup(keys)
 end
 
 function GawainCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gawain_invigorating_ray") and caster:FindAbilityByName("gawain_suns_embrace"):IsCooldownReady() and caster:FindAbilityByName("gawain_supernova"):IsCooldownReady() then
 			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
 			Timers:CreateTimer({

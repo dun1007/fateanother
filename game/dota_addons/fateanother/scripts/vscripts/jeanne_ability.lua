@@ -426,7 +426,7 @@ function OnLaPucelleTakeDamage(keys)
 	local originalScale = caster:GetModelScale()
 
 	if caster:GetHealth() == 0 then
-		if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 and ability:IsCooldownReady() and not IsTeamWiped(caster) then
+		if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() and not IsTeamWiped(caster) then
 			caster:SetHealth(caster:GetMaxHealth())
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_spirit_form", {})
 			giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", delay)

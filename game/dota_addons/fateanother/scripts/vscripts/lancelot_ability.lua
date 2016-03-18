@@ -519,7 +519,7 @@ function OnTAAcquired(keys)
 end
 
 function LancelotCheckCombo(caster, ability)
-    if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+    if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
         if ability == caster:FindAbilityByName("lancelot_double_edge") then
             WUsed = true
             WTime = GameRules:GetGameTime()

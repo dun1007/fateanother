@@ -1164,6 +1164,9 @@ function OnHGStart(keys)
 	--EmitGlobalSound("Caster.Hecatic") 
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", descendTime)
+	Timers:CreateTimer(descendTime, function()
+		giveUnitDataDrivenModifier(caster, caster, "jump_pause_postdelay", 0.15)
+	end)
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
@@ -1349,7 +1352,7 @@ function OnHGPStart(keys)
 end
 
 function CasterCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") and caster:FindAbilityByName("caster_5th_hecatic_graea"):IsCooldownReady() and caster:FindAbilityByName("caster_5th_hecatic_graea_powered"):IsCooldownReady() then
 			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
 			caster.IsHGComboEnabled = true

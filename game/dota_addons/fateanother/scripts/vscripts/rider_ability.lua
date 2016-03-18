@@ -243,9 +243,10 @@ function OnBelleStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local ascendCount = 0
 	local descendCount = 0
-	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 then 
+	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 or GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then 
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
-		keys.ability:EndCooldown() 
+		keys.ability:EndCooldown()
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Target Location" } ) 
 		return
 	end
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
@@ -323,7 +324,7 @@ function OnBelleStart(keys)
 end
 
 function RiderCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("rider_5th_nail_swing") then
 			nailUsed = true
 			nailTime = GameRules:GetGameTime()

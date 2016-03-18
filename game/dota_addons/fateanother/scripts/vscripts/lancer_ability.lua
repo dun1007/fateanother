@@ -429,6 +429,9 @@ function OnGBAOEStart(keys)
 	
 	EmitGlobalSound("Lancer.GaeBolg")
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.8)
+	Timers:CreateTimer(0.8, function()
+		giveUnitDataDrivenModifier(caster, caster, "jump_pause_postdelay", 0.15)
+	end)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_jump_throw_anim", {}) 
 
 	Timers:CreateTimer('gb_throw', {
@@ -508,7 +511,7 @@ function OnGBAOEHit(keys, projectile)
 end
 
 function LancerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("lancer_5th_relentless_spear") and caster:FindAbilityByName("lancer_5th_gae_bolg"):IsCooldownReady() and caster:FindAbilityByName("lancer_5th_wesen_gae_bolg"):IsCooldownReady()  then
 			caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", false, true) 
 			Timers:CreateTimer({

@@ -15,20 +15,15 @@
 		"File"		"CustomError"
 		"Depth"		"50"
 	}
-	"4"
-	{
-		"File"		"RPGDialog"
-		"Depth"		"999"
-	}
-    "5"
+    "4"
     {
         "File"      "CustomUI_Timer"
         "Depth"     "40"
     }
-    "6"
+    "5"
     {
     	"File"		"Fatepedia"
-    	"Depth"		"999"
+    	"Depth"		"50"
     }
     //pip currently disabled
    	//"6"
