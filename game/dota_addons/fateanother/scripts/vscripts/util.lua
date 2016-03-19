@@ -904,6 +904,17 @@ function CreateGlobalParticle(particle_name, controlpoints, duration)
         end)
     end
 end
+-- check whether two locations belong in same realm
+-- loc 1 = vector
+-- loc 2 = vector
+function IsInSameRealm(loc1, loc2)
+    if loc1.y < -2000 and loc2.y > -2000 then
+        return false
+    elseif loc1.y > -2000 and loc2.y < -2000 then
+        return false
+    end
+    return true
+end
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 

@@ -218,8 +218,11 @@ function OnBelle2Start(keys)
 	newLocation = caster:GetAbsOrigin() + locationDelta
 	for i=1, 20 do
 		if GridNav:IsBlocked(newLocation) or not GridNav:IsTraversable(newLocation) then
-			locationDelta =  caster:GetForwardVector() * (keys.Range - 100)
-			newLocation = caster:GetAbsOrigin() + locationDelta
+			--locationDelta =  caster:GetForwardVector() * (keys.Range - 100)
+			newLocation = caster:GetAbsOrigin() + caster:GetForwardVector() * (20 - i) * 100
+			if not IsInSameRealm(caster:GetAbsOrigin(), newLocation) then
+				newLocation.y = caster:GetAbsOrigin().y
+			end
 		else
 			break
 		end
@@ -243,7 +246,7 @@ function OnBelleStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local ascendCount = 0
 	local descendCount = 0
-	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 or GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then 
+	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 or not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then 
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
 		keys.ability:EndCooldown()
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Target Location" } ) 

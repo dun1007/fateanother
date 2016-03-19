@@ -339,6 +339,13 @@ function OnNukeStart(keys)
     local caster = keys.caster
     local ability = keys.ability
     local targetPoint = keys.target_points[1]
+    if not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then 
+        caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
+        keys.ability:EndCooldown()
+        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Target Location" } ) 
+        return
+    end
+
     EmitGlobalSound("Lancelot.Nuke_Alert") 
 
     -- Set master's combo cooldown

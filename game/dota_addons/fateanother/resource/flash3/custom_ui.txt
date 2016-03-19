@@ -20,11 +20,11 @@
         "File"      "CustomUI_Timer"
         "Depth"     "40"
     }
-    "5"
-    {
-    	"File"		"Fatepedia"
-    	"Depth"		"50"
-    }
+    //"5"
+    //{
+    //	"File"		"Fatepedia"
+    //	"Depth"		"50"
+    //}
     //pip currently disabled
    	//"6"
 	//{

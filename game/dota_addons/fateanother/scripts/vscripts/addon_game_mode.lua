@@ -1160,7 +1160,7 @@ function FateGameMode:OnEntityKilled( keys )
             end 
             --print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
             -- Create gold popup
-            local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_ABSORIGIN_FOLLOW, killedUnit, killerEntity:GetTeamNumber())
+            local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, killerEntity:GetTeamNumber())
             ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
             ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
             ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
