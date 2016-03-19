@@ -443,6 +443,7 @@ function OnSupernovaEnd(keys)
 		ParticleManager:ReleaseParticleIndex( splashFx )
 	end)
 	EmitGlobalSound("Hero_Phoenix.SuperNova.Explode")
+	StopSoundEvent("Hero_Enigma.Black_Hole", target)
 end
 
 function GenerateArtificialSun(caster, location)
@@ -465,11 +466,11 @@ function GenerateArtificialSun(caster, location)
 		artSun.IsAttached = true
 
 		local targets = FindUnitsInRadius(caster:GetTeam(), location, nil, 666, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false) 
-		print("finding targets")
+		--print("finding targets")
 		if #targets == 0 then
 			artSun.IsAttached = false
 		else
-			print("found target " .. targets[1]:GetUnitName())
+			--print("found target " .. targets[1]:GetUnitName())
 			artSun.AttachTarget = targets[1]
 		end
 	end
@@ -527,7 +528,7 @@ function OnMeltdownStart(keys)
 				end
 				StopSoundOn("Hero_DoomBringer.ScorchedEarthAura", v)
 			end)
-			print("found sun")
+			--print("found sun")
 		end
 	end
 end

@@ -21,9 +21,7 @@ function OnMREXRespawn(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_resistance_ex", {})
-	Timers:CreateTimer(6, function()
-		ChangeMREXStack(keys, 4)
-	end)
+	ChangeMREXStack(keys, 4)
 end
 
 function ChangeMREXStack(keys, modifier)
@@ -53,20 +51,18 @@ function OnSaintRespawn(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	--print("saint respawn")
-	Timers:CreateTimer(6, function()
-	    LoopOverPlayers(function(player, playerID, playerHero)
-	    	--print("looping through " .. playerHero:GetName())
-	        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
-	        	print(playerHero:GetName() ..  " " .. playerHero:GetKills() .. " " .. playerHero:GetDeaths())
-	        	if playerHero:GetKills() > playerHero:GetDeaths() then
-	        		--print("applying modifier to " .. playerHero:GetName())
-		        	ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
-		        	playerHero:EmitSound("Hero_Chen.TestOfFaith.Cast")
-	        	end
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	--print("looping through " .. playerHero:GetName())
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        	--print(playerHero:GetName() ..  " " .. playerHero:GetKills() .. " " .. playerHero:GetDeaths())
+        	if playerHero:GetKills() > playerHero:GetDeaths() then
+        		--print("applying modifier to " .. playerHero:GetName())
+	        	ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
+	        	--playerHero:EmitSound("Hero_Chen.TestOfFaith.Cast")
+        	end
 
-	        end
-	    end)
-	 end)
+        end
+    end)
 end
 
 function OnIDPing(keys)
@@ -343,14 +339,16 @@ function OnLEStart(keys)
 		caster.CurrentFlagHealth = health
 		ability:ApplyDataDrivenModifier(caster, flag, "modifier_luminosite_eternelle_flag_aura", {})
 
-		local targets = FindUnitsInRadius(caster:GetTeam(), flag:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
-		for k,v in pairs(targets) do
-			local newKeys = keys
-			newKeys.ability = caster:FindAbilityByName("jeanne_charisma")
-			newKeys.target = v
-			newKeys.Radius = newKeys.ability:GetSpecialValueFor("radius_modifier")
-	 		newKeys.Duration = newKeys.ability:GetSpecialValueFor("duration")
-			OnIRStart(newKeys)
+		if caster.IsDivineSymbolAcquired then
+			local targets = FindUnitsInRadius(caster:GetTeam(), flag:GetAbsOrigin(), nil, range, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+			for k,v in pairs(targets) do
+				local newKeys = keys
+				newKeys.ability = caster:FindAbilityByName("jeanne_charisma")
+				newKeys.target = v
+				newKeys.Radius = newKeys.ability:GetSpecialValueFor("radius_modifier")
+		 		newKeys.Duration = newKeys.ability:GetSpecialValueFor("duration")
+				OnIRStart(newKeys)
+			end
 		end
 
 		-- wow control points are an adventure

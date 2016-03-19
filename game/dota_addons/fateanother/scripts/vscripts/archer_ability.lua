@@ -370,7 +370,7 @@ function OnUBWStart(keys)
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
 			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
-				print("dummy or a hero with jump state detected. Removing current index")
+				--print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(ubwTargets, i)
 			end
 		end
@@ -440,7 +440,7 @@ function OnUBWStart(keys)
 		Timers:CreateTimer(function() 
 			if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
 				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
-	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				local targetIndex = RandomInt(1, #weaponTargets)
 				local swordTarget = weaponTargets[targetIndex]
 				local swordOrigin = caster:GetAbsOrigin() + Vector(0,0,500) + RandomVector(1000)

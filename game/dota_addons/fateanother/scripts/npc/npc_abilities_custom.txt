@@ -19256,6 +19256,7 @@
 			{
 				"ModifierName"		"modifier_gladiusanus_blauserum"
 				"Target"			"CASTER"
+				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 		}
 
@@ -19270,6 +19271,7 @@
 			{
 				"ModifierName"		"modifier_gladiusanus_blauserum_mitigation"
 				"Target"			"CASTER"
+				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 		}
 
@@ -24470,7 +24472,8 @@
 			{
 				"Passive"		"1"
 				"IsHidden"		"0"
-				"OnRespawn"
+				"ThinkInterval"				"2.0"
+				"OnIntervalThink"
 				{
 					"RunScript"
 					{

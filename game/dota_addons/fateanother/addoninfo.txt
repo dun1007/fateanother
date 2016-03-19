@@ -1,6 +1,6 @@
 "AddonInfo"
 {
-	"maps"			"fate_dm_6v6 fate_ffa fate_trio_rumble_3v3v3v3"
+	"maps"			"fate_dm_6v6"
 	"IsPlayable"	"1"
 	"fate_dm_6v6"
 	{
