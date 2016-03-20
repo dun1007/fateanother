@@ -1529,12 +1529,11 @@ function FateGameMode:TakeDamageFilter(filterTable)
         local multiplier = vergHandle:GetLevelSpecialValueFor("multiplier", vergHandle:GetLevel()-1)
         if victim.IsDIAcquired then multiplier = multiplier + 25 end
         local returnDamage = damage * multiplier / 100
-
         if attacker:IsMagicImmune() then 
             returnDamage = returnDamage * (100 - attacker:GetMagicalArmorValue())/100
             DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_PURE, {DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, DOTA_DAMAGE_FLAG_BYPASSES_MAGIC_IMMUNITY}, vergHandle, false)
         else
-            DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, {DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY}, vergHandle, false)
+            DoDamage(victim, attacker, returnDamage, DAMAGE_TYPE_MAGICAL, DOTA_DAMAGE_FLAG_BYPASSES_INVULNERABILITY, vergHandle, false)
         end
         if attacker:IsRealHero() then attacker:EmitSound("Hero_WitchDoctor.Maledict_Tick") end
         local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_CUSTOMORIGIN, nil)
