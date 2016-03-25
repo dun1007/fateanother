@@ -162,11 +162,11 @@ voteResults_DM = {
 }
 
 voteResults_TRIO = {
-    35, 30, 25, 20, 15
+    45, 40, 35, 30, 25
 }
 
 voteResults_FFA = {
-    20, 17, 14, 11, 8
+    30, 27, 24, 21, 18
 }
 
 gameState = {
@@ -354,13 +354,13 @@ function FateGameMode:OnAllPlayersLoaded()
     local votePool = nil
     if _G.GameMap == "fate_elim_6v6" then
         votePool = voteResults_DM
-        maxkey = 12
+        maxkey = voteResults_DM[1]
     elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
         votePool = voteResults_TRIO
-        maxkey = 35
+        maxkey = voteResults_TRIO[1]
     elseif _G.GameMap == "fate_ffa" then
         votePool = voteResults_FFA
-        maxkey = 20
+        maxkey = voteResults_FFA[1]
     end
 
     for i=1, 5 do
@@ -1250,8 +1250,8 @@ function FateGameMode:OnEntityKilled( keys )
         --if killedUnit:GetName() == "npc_dota_hero_doom_bringer" and killedUnit:GetPlayerOwner().IsGodHandAcquired then
 
         if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
-            print(PlayerResource:GetTeamKills(killerEntity:GetTeam()))
-            print(VICTORY_CONDITION)
+            --print(PlayerResource:GetTeamKills(killerEntity:GetTeam()))
+            --print(VICTORY_CONDITION)
             if PlayerResource:GetTeamKills(killerEntity:GetTeam()) >= VICTORY_CONDITION then
                 GameRules:SetSafeToLeave( true )
                 GameRules:SetGameWinner( killerEntity:GetTeam() )
