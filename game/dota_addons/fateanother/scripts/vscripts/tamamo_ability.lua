@@ -471,6 +471,7 @@ function OnMantraStart(keys)
 		return	
 	end
 	caster.MantraTarget = target
+	caster.MantraLocation = caster:GetAbsOrigin()
 	target.IsMantraProcOnCooldown = false 
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
@@ -527,6 +528,13 @@ end
 function OnShackleStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+
+	if (caster:GetAbsOrigin() - caster.MantraLocation):Length2D() > 500 then
+		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
+		keys.ability:EndCooldown()
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Too Far From Initial Castpoint" } ) 
+		return
+	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_mystic_shackle_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	ability:ApplyDataDrivenModifier(caster, caster.MantraTarget, "modifier_mystic_shackle", {})
 	giveUnitDataDrivenModifier(caster, caster, "locked", 3.0)

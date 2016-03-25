@@ -1,8 +1,8 @@
 "AddonInfo"
 {
-	"maps"			"fate_dm_6v6"
+	"maps"			"fate_elim_6v6 fate_ffa fate_trio_rumble_3v3v3v3"
 	"IsPlayable"	"1"
-	"fate_dm_6v6"
+	"fate_elim_6v6"
 	{
 		"MaxPlayers" "12"
 	}

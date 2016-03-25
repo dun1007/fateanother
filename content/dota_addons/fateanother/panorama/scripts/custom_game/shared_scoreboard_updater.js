@@ -229,7 +229,7 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 		teamsInfo.max_team_players = teamPlayers.length;
 	}
 
-	if (Game.GetMapInfo().map_display_name == "fate_dm_6v6") { 
+	if (Game.GetMapInfo().map_display_name == "fate_elim_6v6") { 
 		if (teamId == 2)
 		{
 			_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", g_RadiantScore );

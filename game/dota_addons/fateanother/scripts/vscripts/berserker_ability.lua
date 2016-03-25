@@ -465,7 +465,7 @@ function OnGodHandDeath(keys)
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=1.1})
 
-	print("God Hand activated")
+	--print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()

@@ -175,7 +175,7 @@ gameState = {
 }
 
 gameMaps = {
-    "fate_dm_6v6",
+    "fate_elim_6v6",
     "fate_ffa",
     "fate_trio_rumble_3v3v3v3"
 }
@@ -189,6 +189,13 @@ end
 function Activate()
     GameRules.AddonTemplate = FateGameMode()
     GameRules.AddonTemplate:InitGameMode()
+end
+
+function CreateShardDrop(location)
+    --Spawn the treasure chest at the selected item spawn location
+    local newItem = CreateItem( "item_shard_of_anti_magic", nil, nil )
+    local drop = CreateItemOnPositionForLaunch( location, newItem )
+    newItem:LaunchLootInitialHeight( false, 0, 50, 0.25, location )
 end
 
 function Precache( context )
@@ -348,7 +355,7 @@ function FateGameMode:OnAllPlayersLoaded()
     local maxval = voteResultTable[1]
     local maxkey = 1
     local votePool = nil
-    if _G.GameMap == "fate_dm_6v6" then
+    if _G.GameMap == "fate_elim_6v6" then
         votePool = voteResults_DM
         maxkey = 12
     elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
@@ -396,7 +403,7 @@ function FateGameMode:OnAllPlayersLoaded()
         endTime = 60,
         callback = function()
             -- Set a think function for timer
-            if _G.GameMap == "fate_dm_6v6" then
+            if _G.GameMap == "fate_elim_6v6" then
                 self.nCurrentRound = 1
                 self:InitializeRound() -- Start the game after forcing a pick for every player
                 BLESSING_PERIOD = 600
@@ -451,7 +458,7 @@ function FateGameMode:OnGameInProgress()
     if _G.GameMap == "fate_ffa" then
         dummyLevel = 1
         dummyLoc = Vector(368,3868,1000)
-    elseif _G.GameMap == "fate_dm_6v6" then
+    elseif _G.GameMap == "fate_elim_6v6" then
         bIsDummyNeeded = false
     elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
         dummyLevel = 2
@@ -599,10 +606,7 @@ function FateGameMode:PlayerSay(keys)
     
     if text == "-tt" then
         if Convars:GetBool("sv_cheats") then 
-            self:LoopOverPlayers(function(player, playerID, playerHero)
-                local hr = playerHero
-                hr:IncrementKills(5)
-            end)
+            CreateShardDrop(hero:GetAbsOrigin())
         end
     end
 
@@ -751,7 +755,7 @@ function FateGameMode:OnHeroInGame(hero)
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
 
     --HideWearables(hero)
-    if _G.GameMap == "fate_dm_6v6" then
+    if _G.GameMap == "fate_elim_6v6" then
         if self.nCurrentRound == 0 then
             giveUnitDataDrivenModifier(hero, hero, "round_pause", 60)
         elseif self.nCurrentRound >= 1 then 
@@ -1122,8 +1126,10 @@ function FateGameMode:OnEntityKilled( keys )
             -- Add to kill count if victim is Ruler
             if killedUnit:GetName() == "npc_dota_hero_mirana" and killedUnit.IsSaintImproved then
                 --print("killed ruler with attribute. current kills: " .. killerEntity:GetKills() .. ". adding 2 extra kills...")
-                killerEntity:IncrementKills(1)
-                killerEntity:IncrementKills(1)
+                if _G.GameMap == "fate_elim_6v6" then
+                    killerEntity:IncrementKills(1)
+                    killerEntity:IncrementKills(1)
+                end
 
             end
             -- check if unit can receive a shard
@@ -1160,11 +1166,14 @@ function FateGameMode:OnEntityKilled( keys )
             end 
             --print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
             -- Create gold popup
-            local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, killerEntity:GetTeamNumber())
-            ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
-            ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
-            ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
-            ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
+            if killerEntity:GetPlayerOwner() ~= nil then
+                local goldPopupFx = ParticleManager:CreateParticleForPlayer("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, killerEntity:GetPlayerOwner())
+                --local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, killerEntity:GetTeamNumber())
+                ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
+                ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,bounty,0))
+                ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
+                ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
+            end
             -- Display gold message
             GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold!", 0, 0)
         end
@@ -1179,7 +1188,7 @@ function FateGameMode:OnEntityKilled( keys )
                 GameRules:SetSafeToLeave( true )
                 GameRules:SetGameWinner( killerEntity:GetTeam() )
             end
-        elseif _G.GameMap == "fate_dm_6v6" then
+        elseif _G.GameMap == "fate_elim_6v6" then
             if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
                 self.nRadiantDead = self.nRadiantDead + 1
             else 
@@ -1326,7 +1335,7 @@ function FateGameMode:InitGameMode()
 
     -- Find out which map we are using
     _G.GameMap = GetMapName()
-    if _G.GameMap == "fate_dm_6v6" then
+    if _G.GameMap == "fate_elim_6v6" then
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 6)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 6)
         GameRules:SetHeroRespawnEnabled(false) 
@@ -2051,7 +2060,7 @@ function FateGameMode:CaptureGameMode()
         SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()
 
-        if _G.GameMap == "fate_dm_6v6" then
+        if _G.GameMap == "fate_elim_6v6" then
             mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
         end        
     end 

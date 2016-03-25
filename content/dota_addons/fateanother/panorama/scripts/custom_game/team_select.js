@@ -345,7 +345,7 @@ function SendVotes( )
 	$( "#TeamSelectContainer" ).SetAcceptsFocus( true ); // Prevents the chat window from taking focus by default
 	$( "#RoundButton1" ).checked = true;
 	/*gameMap = Game.GetMapInfo().map_display_name
-	if (gameMap == "fate_dm_6v6") { 
+	if (gameMap == "fate_elim_6v6") { 
 		voteOption1 = 12
 		voteOption2 = 10
 		voteOption3 = 8

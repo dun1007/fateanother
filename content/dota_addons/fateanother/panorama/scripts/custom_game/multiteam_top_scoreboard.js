@@ -51,7 +51,7 @@ function UpdateRoundScore( data )
 
 	UpdateScoreboard();
 
-	if (Game.GetMapInfo().map_display_name == "fate_dm_6v6") { 
+	if (Game.GetMapInfo().map_display_name == "fate_elim_6v6") { 
 		GameEvents.Subscribe( "winner_decided", UpdateRoundScore );
 	}
 })();

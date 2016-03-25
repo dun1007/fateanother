@@ -243,7 +243,8 @@ CannotReset = {
     "lishuwen_raging_dragon_strike_3",
     "lishuwen_berserk",
     "jeanne_combo_la_pucelle",
-    "jeanne_identity_discernment"
+    "jeanne_identity_discernment",
+    "tamamo_mystic_shackle"
 }
 
 femaleservant = {
@@ -1067,6 +1068,8 @@ end
 
 -- Check if anyone on this hero's team is still alive. 
 function IsTeamWiped(hero)
+    if not _G.GameMap == "fate_elim_6v6" then return false end
+
     for i=0, 11 do
         local player = PlayerResource:GetPlayer(i)
         local playerHero = PlayerResource:GetSelectedHeroEntity(i)

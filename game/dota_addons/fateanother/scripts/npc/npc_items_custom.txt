@@ -2217,7 +2217,7 @@
 	    "ID"           "1129"
 	    "BaseClass"    "item_datadriven"
 	    "AbilityTextureName" "shard_of_anti_magic"
-	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Model"        "models/props_gameplay/gem01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
 
@@ -2289,7 +2289,7 @@
 	    "ID"           "1130"
 	    "BaseClass"    "item_datadriven"
 	    "AbilityTextureName" "shard_of_replenishment"
-	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Model"        "models/props_gameplay/gem01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
 

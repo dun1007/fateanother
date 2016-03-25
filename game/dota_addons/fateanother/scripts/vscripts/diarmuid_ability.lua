@@ -168,7 +168,7 @@ function OnBuidheStart(keys)
 	end)
 
 	if caster.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_dearg"):IsCooldownReady() and caster:GetMana() >= 550 then
-		print("Double spear activated")
+		--print("Double spear activated")
 		local dearg = caster:FindAbilityByName("diarmuid_gae_dearg")
 		local minDamage = dearg:GetLevelSpecialValueFor("min_damage", dearg:GetLevel()-1)
 		local maxDamage = dearg:GetLevelSpecialValueFor("max_damage", dearg:GetLevel()-1)
