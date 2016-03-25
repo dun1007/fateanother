@@ -572,7 +572,7 @@ function OnAOTKStart(keys)
 	for i=1, #aotkTargets do
 		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(aotkTargets[i]) -- Disjoint particles
-			if aotkTargets[i]:HasModifier("jump_pause") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
+			if aotkTargets[i]:HasModifier("jump_pause") or aotkTargets[i]:HasModifier("spawn_invulnerable") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
 				print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(aotkTargets, i)
 			end

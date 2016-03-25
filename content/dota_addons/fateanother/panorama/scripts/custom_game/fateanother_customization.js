@@ -62,7 +62,9 @@ function UpdateStatPanel(data)
 	$("#HPREGAmount").text = data.HPREG;
 	$("#MPREGAmount").text = data.MPREG;
 	$("#MSAmount").text = data.MS;
+	$("#CustomizationShardNumber").text = data.ShardAmount;
 }
+
 
 function AttributeShowTooltip()
 {

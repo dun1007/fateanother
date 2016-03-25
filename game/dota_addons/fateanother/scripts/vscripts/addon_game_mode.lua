@@ -71,6 +71,8 @@ SPAWN_POSITION_T1_TRIO = Vector(-796,7032,512)
 SPAWN_POSITION_T2_TRIO = Vector(5676,6800,512)
 SPAWN_POSITION_T3_TRIO = Vector(5780,2504,512)
 SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
+TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
+FFA_CENTER = Vector(368,3868,1000)
 mode = nil
 FATE_VERSION = "Beta Version"
 roundQuest = nil 
@@ -191,12 +193,6 @@ function Activate()
     GameRules.AddonTemplate:InitGameMode()
 end
 
-function CreateShardDrop(location)
-    --Spawn the treasure chest at the selected item spawn location
-    local newItem = CreateItem( "item_shard_of_anti_magic", nil, nil )
-    local drop = CreateItemOnPositionForLaunch( location, newItem )
-    newItem:LaunchLootInitialHeight( false, 0, 50, 0.25, location )
-end
 
 function Precache( context )
     print("Starting precache")
@@ -233,6 +229,7 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_tamamo.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_lishuwen.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_ruler.vsndevts", context)
+    PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
 
     -- Items
     PrecacheItemByNameSync("item_apply_modifiers", context)
@@ -403,29 +400,38 @@ function FateGameMode:OnAllPlayersLoaded()
         endTime = 60,
         callback = function()
             -- Set a think function for timer
+            local CENTER_POSITION = Vector(0,0,0)
+            local SHARD_DROP_PERIOD = 0
             if _G.GameMap == "fate_elim_6v6" then
                 self.nCurrentRound = 1
                 self:InitializeRound() -- Start the game after forcing a pick for every player
                 BLESSING_PERIOD = 600
             elseif _G.GameMap == "fate_ffa" then 
-                BLESSING_PERIOD = 400
+                BLESSING_PERIOD = 300
+                SHARD_DROP_PERIOD = 180
+                CENTER_POSITION = FFA_CENTER
+                CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
                 _G.CurrentGameState = "FATE_ROUND_ONGOING"
             elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then 
-                BLESSING_PERIOD = 500
+                BLESSING_PERIOD = 300
+                SHARD_DROP_PERIOD = 180
+                CENTER_POSITION = TRIO_RUMBLE_CENTER
+                CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
                 _G.CurrentGameState = "FATE_ROUND_ONGOING"
+
             end
             GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
             IsPickPhase = false
             IsGameStarted = true
             GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
-            CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD-1, "ten_min_timer")
+            CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 playerHero:RemoveModifierByName("round_pause") 
             end)
             Timers:CreateTimer('round_10min_bonus', {
                 endTime = BLESSING_PERIOD,
                 callback = function()
-                    CreateUITimer("Next Holy Grail's Blessing", 599, "ten_min_timer")
+                    CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
                     self:LoopOverPlayers(function(player, playerID, playerHero)
                         local hero = playerHero
                         hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth()) 
@@ -438,6 +444,26 @@ function FateGameMode:OnAllPlayersLoaded()
                     
                     return BLESSING_PERIOD
             end})
+            if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
+                Timers:CreateTimer('shard_drop_alert', {
+                    endTime = SHARD_DROP_PERIOD - 5,
+                    callback = function()
+                    Notifications:TopToAll("<font color='#58ACFA'>Shard of Holy Grail </font> inbound! It will drop onto random location within center area.", 5, nil, {color="rgb(255,255,255)", ["font-size"]="35px"})
+                    EmitGlobalSound( "powerup_03" )
+                    return SHARD_DROP_PERIOD
+                end})
+                Timers:CreateTimer('shard_drop_event', {
+                    endTime = SHARD_DROP_PERIOD,
+                    callback = function()
+                    CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
+                    --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                    for i=1, 2 do
+                        local itemVector = CENTER_POSITION + Vector(RandomInt(-1300,1300), RandomFloat(-1300, 1300), 0)
+                        CreateShardDrop(itemVector)
+                    end
+                    return SHARD_DROP_PERIOD
+                end})
+            end
         end
     })
 end
@@ -457,12 +483,12 @@ function FateGameMode:OnGameInProgress()
     local dummyLoc = Vector(0,0,0)
     if _G.GameMap == "fate_ffa" then
         dummyLevel = 1
-        dummyLoc = Vector(368,3868,1000)
+        dummyLoc = FFA_CENTER
     elseif _G.GameMap == "fate_elim_6v6" then
         bIsDummyNeeded = false
     elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
         dummyLevel = 2
-        dummyLoc = Vector(2436,4132,1000)
+        dummyLoc = TRIO_RUMBLE_CENTER
     end
 
     if bIsDummyNeeded then
@@ -606,6 +632,7 @@ function FateGameMode:PlayerSay(keys)
     
     if text == "-tt" then
         if Convars:GetBool("sv_cheats") then 
+            hero.ShardAmount = 10
             CreateShardDrop(hero:GetAbsOrigin())
         end
     end
@@ -689,6 +716,7 @@ function FateGameMode:OnHeroInGame(hero)
     LevelAllAbility(hero)
     hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
     hero.CStock = 10
+    hero.ShardAmount = 0
 
     Timers:CreateTimer(1.0, function()
         if hero:GetTeam() == 2 then 
@@ -812,16 +840,54 @@ end
 
 -- An item was picked up off the ground
 function FateGameMode:OnItemPickedUp(keys)
-    --print ( '[BAREBONES] OnItemPickedUp' )
-    PrintTable(keys)
     
     local heroEntity = nil
     local player = nil
+    local item = EntIndexToHScript( keys.ItemEntityIndex )
     if keys.HeroEntityIndex ~= nil then
         heroEntity = EntIndexToHScript(keys.HeroEntityIndex)
         player = PlayerResource:GetPlayer(keys.PlayerID)
     end
     local itemname = keys.itemname
+    if itemname == "item_shard_drop" then
+        -- add shard
+        UTIL_Remove( item ) -- otherwise it pollutes the player inventory
+        if heroEntity then AddRandomShard(heroEntity) end
+    end
+end
+
+
+function CreateShardDrop(location)
+    --Spawn the treasure chest at the selected item spawn location
+    local newItem = CreateItem( "item_shard_drop", nil, nil )
+    local drop = CreateItemOnPositionForLaunch( location + Vector(0,0,1500), newItem )
+    newItem:LaunchLootInitialHeight( false, 700, 50, 0.5, location )
+end
+
+function AddRandomShard(hero)
+    local shardDropTable = {
+        "master_shard_of_avarice",
+        "master_shard_of_anti_magic",
+        "master_shard_of_replenishment",
+        "master_shard_of_prosperity"
+    }
+    local shardRealNameTable = {
+        "Shard of Avarice",
+        "Shard of Anti-Magic",
+        "Shard of Replenishment",
+        "Shard of Prosperity"
+    }
+    if not hero.ShardAmount then
+        hero.ShardAmount = 1
+    else
+        hero.ShardAmount = hero.ShardAmount + 1
+    end
+    local masterUnit = hero.MasterUnit
+    local choice = math.random(#shardDropTable)
+    local ability = masterUnit:FindAbilityByName(shardDropTable[choice])
+    masterUnit:CastAbilityImmediately(ability, hero:GetPlayerOwnerID())
+    Notifications:TopToAll(FindName(hero:GetName()) .. " has acquired <font color='#FF6600'>" .. shardRealNameTable[choice] .. "</font>!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="35px"})
+
 end
 
 -- A player has reconnected to the game. This function can be used to repaint Player-based particles or change
@@ -1141,6 +1207,8 @@ function FateGameMode:OnEntityKilled( keys )
                     killedUnit.ShardAmount = killedUnit.ShardAmount + 1
                     killedUnit.DeathCount = 0
                 end
+                local statTable = CreateTemporaryStatTable(killedUnit)
+                CustomGameEventManager:Send_ServerToPlayer( killedUnit:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
             end
             -- Distribute XP to allies
             local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
@@ -1256,16 +1324,6 @@ function OnDirectTransferChanged(Index, keys)
     print("Direct tranfer set to " .. transferEnabled .. " for " .. PlayerResource:GetPlayer(playerID):GetAssignedHero():GetName())
 end
 
-local statTable = {
-    STR = 0,
-    AGI = 0,
-    INT = 0,
-    DMG = 0,
-    ARMOR = 0,
-    HPREG = 0,
-    MPREG = 0,
-    MS = 0
-}
 
 function OnServantCustomizeActivated(Index, keys)
     local caster = EntIndexToHScript(keys.unitEntIndex)
@@ -1282,16 +1340,7 @@ function OnServantCustomizeActivated(Index, keys)
         return
     end
     caster:CastAbilityImmediately(ability, caster:GetPlayerOwnerID()) 
-    -- Save updated stats 
-    statTable.STR = hero.STRgained 
-    statTable.AGI = hero.AGIgained
-    statTable.INT = hero.INTgained
-    statTable.DMG = hero.DMGgained
-    statTable.ARMOR = hero.ARMORgained
-    statTable.HPREG = hero.HPREGgained
-    statTable.MPREG = hero.MPREGgained
-    statTable.MS = hero.MSgained
-
+    local statTable = CreateTemporaryStatTable(hero)
     CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 
     hero:EmitSound("Item.DropGemWorld")

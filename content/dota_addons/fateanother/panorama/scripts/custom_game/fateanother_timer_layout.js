@@ -26,7 +26,7 @@ function CreateTimer(data) {
 			timerPanel = timerTable[desc]
 			timerTable[desc].RemoveAndDeleteChildren();
 			delete timerTable[desc];	
-			return;
+			//return;
 		}
 	}
 	else

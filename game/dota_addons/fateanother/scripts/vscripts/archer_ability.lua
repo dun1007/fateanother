@@ -369,7 +369,7 @@ function OnUBWStart(keys)
 	for i=1, #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
-			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
+			if ubwTargets[i]:HasModifier("jump_pause") or ubwTargets[i]:HasModifier("spawn_invulnerable") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
 				--print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(ubwTargets, i)
 			end

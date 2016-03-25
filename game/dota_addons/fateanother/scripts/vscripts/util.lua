@@ -1153,6 +1153,29 @@ function PrintTable(t, indent, done)
     end
 end
 
+function CreateTemporaryStatTable(hero)
+    local statTable = {
+        STR = 0,
+        AGI = 0,
+        INT = 0,
+        DMG = 0,
+        ARMOR = 0,
+        HPREG = 0,
+        MPREG = 0,
+        MS = 0,
+        ShardAmount = 0
+    }
+    statTable.STR = hero.STRgained 
+    statTable.AGI = hero.AGIgained
+    statTable.INT = hero.INTgained
+    statTable.DMG = hero.DMGgained
+    statTable.ARMOR = hero.ARMORgained
+    statTable.HPREG = hero.HPREGgained
+    statTable.MPREG = hero.MPREGgained
+    statTable.MS = hero.MSgained
+    statTable.ShardAmount = hero.ShardAmount
+    return statTable
+end
 -- hi i'm here to implement math i don't really understand and hope it works
 function RandomPointInCircle(origin, radius)
     t = 2*math.pi*RandomFloat(0,radius)

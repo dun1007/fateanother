@@ -98,6 +98,16 @@
     margin-left: 70px;
 }
 
+#CustomizationShardTextLayout
+{
+    flow-children: right;
+}
+
+#CustomizationShardNumber
+{
+    margin-left: 40px;
+}
+
 #CustomizationShardLayout
 {
     margin-top: 30px;

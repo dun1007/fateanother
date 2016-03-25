@@ -802,6 +802,7 @@ function OnAvariceAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Avarice shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return 
@@ -832,12 +833,15 @@ function OnAvariceAcquired(keys)
 		print("Distributing " .. goldperperson .. " per person")
 		teamTable[i]:ModifyGold(goldperperson, true, 0)
 	end
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 function OnAMAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("AMP shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
@@ -846,28 +850,31 @@ function OnAMAcquired(keys)
 	end
 
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
-	
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 function OnReplenishmentAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Replenish shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
 	end
-
 	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
-	
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Prosperity shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
@@ -897,6 +904,8 @@ function OnProsperityAcquired(keys)
 	master:SetHealth(master:GetHealth()+1)
 	master2:SetMaxHealth(master:GetMaxHealth()) 
 	master2:SetHealth(master:GetHealth())
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 
