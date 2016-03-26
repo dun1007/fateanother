@@ -1982,19 +1982,18 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"cmd_seal_1"			// Ability 1.
 		"Ability2"					"cmd_seal_2"			// Ability 2.
 		"Ability3"					"cmd_seal_3"			// Ability 3.	
-		"Ability4"					"cmd_seal_4"			
-		"Ability5"					"master_passive"			
-		"Ability6"					""
-		"Ability7"					""
-		"Ability8"					""
-		"Ability9"					"master_shard_of_avarice"
-		"Ability10"					"master_shard_of_anti_magic"
-		"Ability11"					"master_shard_of_replenishment"
-		"Ability12"					"master_shard_of_prosperity"
+		"Ability4"					"fate_empty7"			
+		"Ability5"					"fate_empty8"			
+		"Ability6"					"cmd_seal_4"
+		"Ability7"					"master_shard_of_avarice"
+		"Ability8"					"master_shard_of_anti_magic"
+		"Ability9"					"master_shard_of_replenishment"
+		"Ability10"					"master_shard_of_prosperity"
+		"Ability11"					"master_passive"
 
 		// Armor
 		//----------------------------------------------------------------

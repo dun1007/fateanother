@@ -197,8 +197,9 @@ function OnBuidheOwnerDeath(keys)
 end
 
 function OnBuidheBearerDeath(keys)
-	local caster = keys.caster
-	print(caster:GetName())
+	--PrintTable(keys)
+	local unit = keys.unit
+	unit:RemoveModifierByName("modifier_gae_buidhe")
 end
 
 function OnDeargStart(keys)

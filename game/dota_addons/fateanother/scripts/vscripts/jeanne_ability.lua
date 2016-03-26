@@ -22,6 +22,7 @@ function OnMREXRespawn(keys)
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_resistance_ex", {})
 	ChangeMREXStack(keys, 4)
+	caster.bIsLaPucelleActivatedThisRound = false
 end
 
 function ChangeMREXStack(keys, modifier)
@@ -423,8 +424,10 @@ function OnLaPucelleTakeDamage(keys)
 	local delay = keys.Delay
 	local originalScale = caster:GetModelScale()
 
-	if caster:GetHealth() == 0 then
-		if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() and not IsTeamWiped(caster) then
+	if caster:GetHealth() == 0 and caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() then
+		if _G.GameMap == "fate_elim_6v6" and IsTeamWiped(caster) then
+			return
+		else
 			caster:SetHealth(caster:GetMaxHealth())
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_spirit_form", {})
 			giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", delay)
@@ -472,7 +475,7 @@ function OnLaPucelleDeath(keys)
 
 	if _G.CurrentGameState == "FATE_ROUND_ONGOING" or _G.CurrentGameState == "FATE_PRE_GAME" then
 		caster:Kill(ability, caster.LaPucelleKiller)
-		if not IsTeamWiped(caster) then
+		if _G.GameMap == "fate_elim_6v6" and not IsTeamWiped(caster) then
 			GameRules:SendCustomMessage("#la_pucelle_alert_2", 0, 0)
 		end
 	end

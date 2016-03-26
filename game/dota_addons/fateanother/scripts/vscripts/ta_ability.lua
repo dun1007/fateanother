@@ -254,15 +254,16 @@ function OnAmbushStart(keys)
 	local ability = keys.ability
 	--caster:AddNewModifier(caster, caster, "modifier_invisible", {Duration = 12.0})
 	if caster.IsPCImproved then
-		local team = 0
+		--[[local team = 0
 		if caster:GetTeam() == DOTA_TEAM_GOODGUYS then 
 			team = DOTA_TEAM_BADGUYS 
 		else 
 			team = DOTA_TEAM_GOODGUYS
-		end
+		end]]
 		--local units = FindUnitsInRadius(enemyTeamNumber, caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
-		local units = FindUnitsInRadius(team, caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+		local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_CLOSEST, false)
 		for i=1, #units do
+			print(units[i]:GetUnitName())
 			if units[i]:GetUnitName() == "ward_familiar" then
 				local visiondummy = CreateUnitByName("sight_dummy_unit", units[i]:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
 				visiondummy:SetDayTimeVisionRange(100)

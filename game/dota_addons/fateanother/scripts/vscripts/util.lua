@@ -800,6 +800,7 @@ end
 -- 
 function OnExperienceZoneThink(keys)
     local hero = keys.target
+    print("xp")
     if hero:IsRealHero() and not hero:IsIllusion() then
         hero:AddExperience(hero:GetLevel()*2+15, false, false)
         hero:ModifyGold(20, true, 0)
@@ -894,7 +895,7 @@ end
 -- Create a particle that is visible by anyone in both teams
 -- example: CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()}, 2)
 function CreateGlobalParticle(particle_name, controlpoints, duration)
-    for i=2,3 do
+    for i=2,13 do
         local particle = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_CUSTOMORIGIN, nil, i)
         for k,v in pairs(controlpoints) do
             ParticleManager:SetParticleControl(particle, k, v)

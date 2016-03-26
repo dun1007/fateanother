@@ -37,7 +37,7 @@ function UpdateAttributeList(data)
 		CreateAbilityPanel(statPanel, queryUnit, i);
 	}
 
-	for(i=5; i<9; i++) {
+	for(i=6; i<10; i++) {
 		CreateAbilityPanel(shardPanel, queryUnit2, i);
 	}
 

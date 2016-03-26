@@ -26070,7 +26070,7 @@
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"1"
-		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
+		//"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		
 		
 		"OnSpellStart"
@@ -26720,5 +26720,19 @@
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "rubick_empty1"
 	}	
+	"fate_empty7"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}
+	"fate_empty8"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}
 }
 

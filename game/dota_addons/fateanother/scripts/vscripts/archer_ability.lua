@@ -426,14 +426,14 @@ function OnUBWStart(keys)
 		ubwdummies[i]:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1000})
 	end
 	-- spawn sight dummy for enemies
-	local enemyTeamNumber = 0
+	--[[local enemyTeamNumber = 0
 	if caster:GetTeamNumber() == 0 then enemyTeamNumber = 1 end
 	local truesightdummy2 = CreateUnitByName("sight_dummy_unit", ubwdummyLoc1, false, keys.caster, keys.caster, enemyTeamNumber)
 	truesightdummy2:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
 	truesightdummy2:SetDayTimeVisionRange(2500)
 	truesightdummy2:SetNightTimeVisionRange(2500)
 	local unseen2 = truesightdummy2:FindAbilityByName("dummy_unit_passive")
-	unseen2:SetLevel(1)
+	unseen2:SetLevel(1)]]
 
 	-- Automated weapon shots
 	if caster.IsProjection2Improved then

@@ -603,14 +603,14 @@ function OnAOTKStart(keys)
 	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
 	-- spawn sight dummy for enemies
-	local enemyTeamNumber = 0
+	--[[local enemyTeamNumber = 0
 	if caster:GetTeamNumber() == 0 then enemyTeamNumber = 1 end
 	local truesightdummy2 = CreateUnitByName("sight_dummy_unit", aotkCenter, false, keys.caster, keys.caster, enemyTeamNumber)
 	truesightdummy2:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
 	truesightdummy2:SetDayTimeVisionRange(2500)
 	truesightdummy2:SetNightTimeVisionRange(2500)
 	local unseen2 = truesightdummy2:FindAbilityByName("dummy_unit_passive")
-	unseen2:SetLevel(1)
+	unseen2:SetLevel(1)]]
 
 	-- Summon soldiers
 	local marbleCenter = 0

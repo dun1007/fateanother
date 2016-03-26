@@ -4,3 +4,10 @@
 
         "DOTA_Tooltip_Ability_tamamo_attribute_mystic_shackle"      "Mystic Shackle"
         "DOTA_Tooltip_Ability_tamamo_attribute_mystic_shackle_Description"  "Casting Mantra grants bonus magic resistance to an allied target, or reduces magic resistance of an enemy. In addition, Mystic Shackle can be used within 3 seconds after casting Mantra.\n<font color='#58ACFA'>Mystic Shackle :</font> Sews the target's spirit with Caster's, forcing it to stay within certain distance. Caster is dimensionally <font color='#FF3399'>locked</font> while Mystic Shackle lasts. Caster must be no further than 500 distance away from where she initially casted Mantra to activate this ability."
+
+
+		//====================================
+		// Shard on the ground
+		//===================================
+		"DOTA_Tooltip_ability_item_shard_drop"	"Immaterialized Shard"
+		"DOTA_Tooltip_ability_item_shard_drop_Description"	"Pick this item up to uncover one of Shards as reward."
