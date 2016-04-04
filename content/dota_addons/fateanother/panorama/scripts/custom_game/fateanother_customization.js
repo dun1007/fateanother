@@ -44,12 +44,20 @@ function UpdateAttributeList(data)
 	$.Msg("done!")
 }
 
+// create an ability button
 function CreateAbilityPanel(panel, unit, abilityIndex)
 {
 	var ability = Entities.GetAbility(unit, abilityIndex); 
 	var abilityPanel = $.CreatePanel("Panel", panel, "");
 	abilityPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_ability.xml", false, false );
 	abilityPanel.SetAbility(ability, unit, Game.IsInAbilityLearnMode());
+}
+
+// create an ability context button, which does not reference existing ability of unit
+function CreateContextAbilityPanel(panel)
+{
+	var abilityPanel = $.CreatePanel("Panel", panel, "");
+	abilityPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_context_ability.xml", false, false );
 }
 
 function UpdateStatPanel(data)

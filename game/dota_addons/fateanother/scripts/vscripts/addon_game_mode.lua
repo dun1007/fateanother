@@ -347,6 +347,7 @@ function FateGameMode:OnAllPlayersLoaded()
     GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     
+    -- Send KV to fatepedia
     -- Announce the goal of game
     -- Reveal the vote winner
     local maxval = voteResultTable[1]
@@ -808,7 +809,7 @@ function FateGameMode:OnHeroInGame(hero)
 
     
     -- Wait 1 second for loadup
-    Timers:CreateTimer(2.0, function()
+    Timers:CreateTimer(1.0, function()
         if _G.GameMap == "fate_ffa" or _G.GameMap == "fate_trio_rumble_3v3v3v3" then
             hero:HeroLevelUp(false)
             hero:HeroLevelUp(false)
@@ -821,6 +822,7 @@ function FateGameMode:OnHeroInGame(hero)
         end
         print("victory condition set")
         CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Display victory condition for player
+        SendKVToFatepedia(player) -- send KV to fatepedia
     end)
 end
 

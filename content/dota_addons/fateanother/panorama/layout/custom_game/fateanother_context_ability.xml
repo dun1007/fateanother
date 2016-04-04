@@ -1,0 +1,26 @@
+//an ability button that does not require existing entity
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    </styles>
+    <script>
+        function SkillShowTooltip() {
+            var ability_name = $.GetContextPanel().GetAttributeString("ability_name", "");
+            $.Msg(ability_name);
+            $.DispatchEvent("DOTAShowAbilityTooltip", $.GetContextPanel(), ability_name);
+        }
+        function SkillHideTooltip() {
+            $.DispatchEvent("DOTAHideAbilityTooltip");
+        }
+        (function () {
+            var aid = $.GetContextPanel().GetAttributeString("ability_name", "");
+            $.Msg(aid);
+            $("#Icon").abilityname = aid;
+        })();
+    </script>
+    <Panel class="HeroSelectSkill">
+        <Button hittest="true" onmouseover="SkillShowTooltip()" onmouseout="SkillHideTooltip()" >
+            <DOTAAbilityImage hittest="true" id="Icon" abilityname="saber_invisible_air"/>
+        </Button>
+    </Panel>
+</root>

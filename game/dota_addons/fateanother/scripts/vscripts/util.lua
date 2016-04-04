@@ -1,26 +1,5 @@
 -- where the misc functios gather
 
-heroes = {
-    "npc_dota_hero_legion_commander",
-    "npc_dota_hero_phantom_lancer",
-    "npc_dota_hero_spectre",
-    "npc_dota_hero_ember_spirit", 
-    "npc_dota_hero_templar_assassin",
-    "npc_dota_hero_doom_bringer",
-    "npc_dota_hero_juggernaut",
-    "npc_dota_hero_bounty_hunter",
-    "npc_dota_hero_crystal_maiden",
-    "npc_dota_hero_skywrath_mage",
-    "npc_dota_hero_sven", 
-    "npc_dota_hero_vengefulspirit",
-    "npc_dota_hero_huskar",
-    "npc_dota_hero_chen",
-    "npc_dota_hero_shadow_shaman",
-    "npc_dota_hero_lina",
-    "npc_dota_hero_omniknight"
-}
-
-
 softdispellable = {
     "modifier_aspd_increase",
     "modifier_derange",
@@ -807,23 +786,6 @@ function OnExperienceZoneThink(keys)
     end
 end
 
-function AssignRandomHero(player)
-    local heroesTable = heroes
-    for i=0,11 do
-        local ply = PlayerResource:GetPlayer(i)
-        if ply and ply:GetAssignedHero() ~= nil then
-            for i=1, #heroesTable do
-                if heroesTable[i] == ply:GetAssignedHero():GetName() then
-                    table.remove(heroesTable, i)
-                    print("removed " .. ply:GetAssignedHero():GetName() .. " from table")
-                end
-            end
-        elseif ply and ply:GetAssignedHero() == nil then
-            CreateHeroForPlayer(heroesTable[math.random(#heroesTable)], ply)
-        end
-    end
-end
-
 function HardCleanse(target)
     for i=1, #cleansable do
         if target:HasModifier(cleansable[i]) then
@@ -1152,6 +1114,14 @@ function PrintTable(t, indent, done)
             end
         end
     end
+end
+
+function SendKVToFatepedia(player)
+    local abilKV = LoadKeyValues('scripts/npc/npc_abilities_custom.txt')
+    local heroKV = LoadKeyValues('scripts/npc/npc_heroes_custom.txt')
+    local KVData = {abilKV, heroKV}
+    CustomGameEventManager:Send_ServerToPlayer( player, "fatepedia_kv_sent", KVData )
+    print("KV sent")
 end
 
 function CreateTemporaryStatTable(hero)

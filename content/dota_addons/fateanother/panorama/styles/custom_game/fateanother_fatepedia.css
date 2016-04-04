@@ -1,0 +1,44 @@
+.FatepediaRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 15.5%;
+    margin-left: 49.5%;
+    flow-children: down;
+}
+
+#FatepediaOpenButton
+{
+    width: 150px;
+    height: 40px;
+}
+
+#FatepediaBoard
+{
+    width: 750px;
+    height: 600px;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
+    border-radius: 50px 50px 50px 50px;
+    border:3px solid #DAA520;
+    //box-shadow: fill #fffb84 1px 3px 2px 2px; // outer, filled
+    overflow: scroll;
+}
+
+#FatepediaOpenButtonImage
+{
+}
+
+#FatepediaOpenButtonImageText
+{
+    horizontal-align: center;
+    vertical-align: middle;
+}
+
+.FatepediaOpenText
+{
+    font-weight: bold;
+    color: white;
+    font-size: 26px;
+    text-shadow: 2px 2px 2px #000000;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
+}
