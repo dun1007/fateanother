@@ -1,7 +1,7 @@
-//an ability button that does not require existing entity
 <root>
     <styles>
         <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_fatepedia.css" />
     </styles>
     <script>
         function SkillShowTooltip() {

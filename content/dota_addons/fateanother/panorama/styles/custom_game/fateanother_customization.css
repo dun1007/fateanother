@@ -2,7 +2,7 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 27%;
+    margin-bottom: 30%;
     margin-left: 0%;
     flow-children: down;
 }
@@ -11,7 +11,7 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 27%;
+    margin-bottom: 30%;
     margin-left: 0%;
     flow-children: down;
 }
@@ -20,7 +20,7 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 27%;
+    margin-bottom: 30%;
     margin-left: 0%;
     flow-children: down;
 }
@@ -29,7 +29,7 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 27%;
+    margin-bottom: 28.5%;
     margin-left: 0%;
     flow-children: down;
 }
@@ -39,6 +39,7 @@
     margin-left: 0%;
     width: 300px;
     height: 50px;
+    brightness: 1.5;
 }
 
 #CustomizationBoard
@@ -51,6 +52,7 @@
     border:3px solid #DAA520;
     //box-shadow: fill #fffb84 1px 3px 2px 2px; // outer, filled
     overflow: scroll;
+    opacity: 0.9;
 }
 
 .CustomizationText

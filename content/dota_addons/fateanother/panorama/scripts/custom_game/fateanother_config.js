@@ -1,0 +1,4 @@
+(function()
+{
+    $("#FateConfigBoard").visible = false;
+})();
