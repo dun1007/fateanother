@@ -19,7 +19,7 @@ var heroes = [
 	"npc_dota_hero_enchantress",
 	"npc_dota_hero_bloodseeker",
 	"npc_dota_hero_mirana"
-	
+
 ]
 
 function OnFatepediaButtonPressed()
@@ -45,13 +45,14 @@ function SetFatepediaHeroButtons()
 (function()
 {
 	$("#FatepediaBoard").visible = false;
+	$("#FatepediaHeroInfoPanel").visible = false;
 	//GameEvents.Subscribe( "fatepedia_kv_sent", GetKV);
 	SetFatepediaHeroButtons();
 	//for (i=0; i<6; i++) {
 	//	CreateContextAbilityPanel($("#FatepediaHeroSkillPanel"), "saber_invisible_air");
 	//}
 	//for (i=0; i<4; i++) {
-	//	CreateContextAbilityPanel($("#FatepediaHeroAttrPanel"), "saber_invisible_air");
+	//	CreateContextAbilityPanel($("#Fate pediaHeroAttrPanel"), "saber_invisible_air");
 	//}
 	//CreateContextAbilityPanel($("#FatepediaBoard"), "saber_invisible_air");
 })();

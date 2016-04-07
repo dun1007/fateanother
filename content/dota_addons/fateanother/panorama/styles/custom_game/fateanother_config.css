@@ -50,6 +50,10 @@
     border:3px solid #DAA520;
     flow-children: right;
     overflow: scroll;
+    background-image: url("file://{images}/custom_game/pepe.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 #FateConfigButtonImageText

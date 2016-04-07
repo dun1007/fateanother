@@ -14,21 +14,21 @@
                 <Panel id="FatepediaHeroIntroPanel" hittest="false">
                     <Panel id="FatepediaHeroIntroImage" hittest="false">
                     </Panel>
-                    <Label id="FatepediaHeroName" text="Saberasdaksdjh" hittest="false">
+                    <Label id="FatepediaHeroName" hittest="false">
                     </Label>
                 </Panel>
+                <Label id="InnateText" class="FatepediaSkillContextText" contentheight="200px" text="Innates" hittest="true"/>
+                <Label id="QWERText" class="FatepediaSkillContextText" text="Abilities" hittest="true"/>
+                <Label id="ComboText" class="FatepediaSkillContextText" text="Combo" hittest="true"/>
+                <Label id="AttrText" class="FatepediaSkillContextText" text="Attributes" hittest="false"/>
+                // add innate and qwer skills here
                 <Panel id="FatepediaHeroSkillPanel" hittest="false">
-                    <Label id="InnateText" class="FatepediaSkillContextText" contentheight="200px" text="Innates" hittest="true"/>
-                    <Label id="QWERText" class="FatepediaSkillContextText" text="Abilities" hittest="true"/>
-                    // add innate and qwer skills here
                 </Panel>
+                
+                // add innate and qwer skills here
                 <Panel id="FatepediaHeroAttrPanel" hittest="false">
-                    <Label id="AttrText" class="FatepediaSkillContextText" text="Attributes" hittest="false"/>
-                    // add innate and qwer skills here
                 </Panel>
-
-
-                <Label html="true" class="FatepediaSkillContextText" id="WikiLink" text="&lt;a href=&quot;http://fa-d2.wikia.com/wiki/Gilgamesh#MAX_Enuma_Elish_.28Combo.29&quot;&gt;Click here for quick build guide and tips!&lt;a&gt;" />
+                <Label html="true" class="FatepediaSkillContextText" id="WikiLink" text="&lt;a href=&quot;http://www.example.com&quot;&gt;here&lt;a&gt;"/>
             </Panel>
         </Panel>
 

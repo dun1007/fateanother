@@ -7710,7 +7710,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		
-		"AbilityCastPoint"				"0.7"
+		"AbilityCastPoint"				"1.0"
 		"AbilityCastRange"				"150"
 		"AbilityCastRangeBuffer"		"100"
 		"AbilityCooldown"				"50"
@@ -23664,7 +23664,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"150"
 		"AbilityCastRangeBuffer"		"100"
-		"AbilityCastPoint"				"0.7"
+		"AbilityCastPoint"				"1.0"
 		"AbilityCooldown"				"40"
 		"AbilityManaCost"				"800"
 		

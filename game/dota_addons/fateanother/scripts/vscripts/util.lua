@@ -996,12 +996,12 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             -- Calculate the damage to secondary targets separately, in order to prevent MR from being twice as effective on primary target.
             local damageToAllies =  dmgtable.damage
 
-            if dmg_type == DAMAGE_TYPE_PHYSICAL then
+            --[[if dmg_type == DAMAGE_TYPE_PHYSICAL then
                 local AR = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
                 damageToAllies = dmgtable.damage * (1-AR)
             elseif dmg_type == DAMAGE_TYPE_MAGICAL then
                 damageToAllies = dmgtable.damage * (1-MR)
-            end   
+            end]]
             damageToAllies = damageToAllies/#target.linkTable
             dmgtable.damage = dmgtable.damage/#target.linkTable
             -- Loop through linked heroes

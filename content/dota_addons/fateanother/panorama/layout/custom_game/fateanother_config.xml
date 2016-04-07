@@ -13,7 +13,7 @@
             <Panel id="FatepediaHeroesInfoPanel" hittest="false">
             </Panel>
         </Panel>
-        <Button id="FateConfigButton" onactivate="OnFatepediaButtonPressed()" hittest="true">
+        <Button id="FateConfigButton" onactivate="OnFateConfigButtonPressed()" hittest="true">
             <Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
             <Label id="FateConfigButtonImageText" class="FateConfigOpenText" text="Configuration" hittest="false"/>
         </Button>

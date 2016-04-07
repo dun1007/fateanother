@@ -108,32 +108,39 @@
 #FatepediaHeroSkillPanel
 {
     width: 480px;
-    height: 120px;
+    height: 70px;
     flow-children: right-wrap;
 }
 
 #InnateText
 {
     margin-left: 8px;
-    width: 160px;
+    width: 125px;
 }
 
 #QWERText
 {
-    width: 300px;
+    width: 250px;
+}
+
+#ComboText
+{
+    margin-left: 3px;
+    width: 90px;
 }
 
 #FatepediaHeroAttrPanel
 {
     width: 320px;
-    height: 120px;    
+    height: 70px;    
     flow-children: right-wrap;
 }
 
 #AttrText
 {
     margin-left: 8px;
-    width: 300px;
+    width: 250px;
+    text-align: center;
 }
 
 #WikiLink
@@ -181,7 +188,7 @@
 
 .HeroSelectSkill
 {
-    width: 64px;
-    height: 64px;
-    margin: 6px;
+    width: 55px;
+    height: 55px;
+    margin: 5px;
 }
