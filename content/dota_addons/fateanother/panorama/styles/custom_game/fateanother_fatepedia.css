@@ -131,7 +131,8 @@
 
 #FatepediaHeroAttrPanel
 {
-    width: 320px;
+    margin-left: -10px;
+    width: 330px;
     height: 70px;    
     flow-children: right-wrap;
 }

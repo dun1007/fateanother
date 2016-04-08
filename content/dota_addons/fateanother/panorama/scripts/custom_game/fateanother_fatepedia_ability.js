@@ -188,7 +188,7 @@ function OnHeroButtonPressed() {
     CreateContextAbilityPanel(skillPanel, abilities[curIndex][5]);
     CreateContextAbilityPanel(skillPanel, comboes[curIndex]);
     // attributes 
-	for (i=0; i<4; i++) {
+	for (i=0; i<attributes[curIndex].length; i++) {
 		CreateContextAbilityPanel(attrPanel, attributes[curIndex][i]);
 	}
 	//linkPanel.text = '<a href="http://www.w3schools.com/html/">Visit our HTML tutorial</a>';

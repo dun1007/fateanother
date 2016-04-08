@@ -78,9 +78,10 @@ function KBStart(keys)
 	end
 
 	if caster:HasModifier("modifier_ubw_death_checker") then
-		print("UBW up")
+		--print("UBW up")
 		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(3.0)
+		caster:GiveMana(ability:GetManaCost(1))
 	end	
 
 	if caster.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
@@ -134,13 +135,37 @@ function OnBPStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if keys.target:IsHero() then
-		Say(ply, "Broken Phantasm fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 then 
+		Say(ply, "Broken Phantasm failed.", true)
+		return 
 	end
+
+	local info = {
+		Target = keys.target,
+		Source = keys.caster, 
+		Ability = keys.ability,
+		EffectName = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf",
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		iMoveSpeed = 3000,
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+		bDodgeable = true
+	}
+	ProjectileManager:CreateTrackingProjectile(info) 
 	-- give vision for enemy
 	if IsValidEntity(target) then
 		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
 	end
+	
+	if keys.target:IsHero() then
+		Say(ply, "Broken Phantasm fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
+end
+
+function OnBPInterrupted(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Broken Phantasm failed.", true)
 end
 
 function OnBPHit(keys)
@@ -1048,8 +1073,9 @@ function OnHruntStart(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if keys.target:IsHero() then
-		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 4000 then 
+		Say(ply, "Broken Phantasm failed.", true)
+		return 
 	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_hrunting_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
@@ -1071,8 +1097,18 @@ function OnHruntStart(keys)
 	if IsValidEntity(target) then
 		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
 	end
-	
 	EmitGlobalSound("Archer.Hrunting_Fireoff")
+	if keys.target:IsHero() then
+		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
+end
+
+function OnHruntInterrupted(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Hrunting failed.", true)
+	caster:StopSound("Hero_Invoker.EMP.Charge")
 end
 
 function OnHruntHit(keys)

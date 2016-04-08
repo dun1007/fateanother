@@ -322,7 +322,7 @@ function OnGOBHit(keys)
 	local caster = keys.caster
 	local damage = keys.Damage
 	if caster.IsSumerAcquired then
-		damage = damage + caster:GetAttackDamage()*0.35
+		damage = damage + caster:GetAttackDamage()*0.5
 	end
 	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*2.5 end
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

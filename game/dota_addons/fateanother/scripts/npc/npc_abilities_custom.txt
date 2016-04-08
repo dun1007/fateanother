@@ -4356,7 +4356,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"900 1400"
+				"radius"			"800 1100"
 			}
 
 			"02"
@@ -4411,7 +4411,7 @@
 			"particle"	"particles/econ/courier/courier_mechjaw/mechjaw_death_sparks.vpcf"
 		}
 		
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.1"
 		"AbilityCastRange"				"500"
 		"AbilityCooldown"				"8"
 		"AbilityManaCost"				"100"
@@ -4471,7 +4471,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -4480,7 +4480,8 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"
 		
-		"AbilityCastPoint"				"2.5"
+		"AbilityCastPoint"				"0.5"
+		"AbilityChannelTime"			"2.0"		
 		"AbilityCastRange"				"3000"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCooldown"				"20"
@@ -4542,17 +4543,16 @@
 			}
 		}
 		
-		"OnSpellStart"
+		"OnChannelInterrupted"
 		{
-			"TrackingProjectile"
+			"RunScript"
 			{
-				"Dodgeable"		"1"
-				"ProvidesVision"	"0"
-				"EffectName"	"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
-				"MoveSpeed"		"3000"
-				"Target"		"TARGET"
-				"Dodgeable"		"1"
+				"ScriptFile"	"archer_ability"
+				"Function"		"OnBPInterrupted"
 			}
+		}
+		"OnChannelSucceeded"
+		{
 			"RunScript"
 			{
 				"ScriptFile"	"archer_ability"
@@ -5374,7 +5374,7 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_CHANNELED"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -5391,10 +5391,11 @@
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 		}
 		
-		"AbilityCastPoint"				"4.0"
+		"AbilityCastPoint"				"0.5"
+		"AbilityChannelTime"			"3.5"
 		"AbilityCastRange"				"4000"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCooldown"				"70"
+		"AbilityCooldown"				"100"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
@@ -5420,8 +5421,16 @@
 			}
 		}
 		
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"archer_ability"
+				"Function"			"OnHruntInterrupted"
+			}			
+		}
 		
-		"OnSpellStart"
+		"OnChannelSucceeded"
 		{
 			"RunScript"
 			{
@@ -5507,7 +5516,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -5605,7 +5614,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -7732,7 +7741,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"delay"					"0.7"
+				"delay"					"1.0"
 			}
 			"02"
 			{
@@ -9564,13 +9573,13 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"gilgamesh_gram"
 		
-		"AbilityCastPoint"				"0.8"
+		"AbilityCastPoint"				"0.6"
 		"AbilityCastRange"				"800"
 		"AbilityCastRangeBuffer"		"600"
 		"AbilityCooldown"				"17"
 		"AbilityManaCost"				"200"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK2"
-		"AnimationPlaybackRate" 		"0.5"
+		"AnimationPlaybackRate" 		"0.9"
 
 		"AbilityDamage"			"400 480 560 640 720"
 		
@@ -9586,7 +9595,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cast_delay"			"0.8"
+				"cast_delay"			"0.6"
 			}
 			"02"
 			{
@@ -10198,7 +10207,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"19"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -12982,7 +12991,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		
-		"AbilityCastPoint"				"0.7"
+		"AbilityCastPoint"				"1.0"
 		"AbilityCastRange"				"150"
 		"AbilityCastRangeBuffer"		"100"
 		"AbilityCooldown"				"50"
@@ -23200,7 +23209,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"resist_duration"				"0.12 0.14 0.16 0.18 0.20"
+				"resist_duration"				"0.25"
 			}
 			"02"
 			{
@@ -23675,7 +23684,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"cast_delay"		"0.7"
+				"cast_delay"		"1.0"
 			}
 			"02"
 			{
