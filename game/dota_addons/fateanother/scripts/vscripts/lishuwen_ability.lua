@@ -1,6 +1,6 @@
-ATTR_NSS_BONUS_DAMAGE = 200
+ATTR_NSS_BONUS_DAMAGE = 150
 ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 5
-ATTR_AGI_RATIO = 3.0
+ATTR_AGI_RATIO = 1.6
 ATTR_MANA_REFUND = 200
 
 function OnMartialStart(keys)
@@ -494,6 +494,11 @@ vectors = {
 	Vector(500, 500, 500),
 	Vector(-500,-500,300),
 	Vector(-300, 400, 500),
+	Vector(500, 500, 500),
+	Vector(-500,-500,300),
+	Vector(500,-500,400),
+	Vector(-300, 400, 500),
+	Vector(0,-500, 500),
 	Vector(0,0, 0)
 }
 
@@ -525,22 +530,31 @@ function OnDragonStrike3Start(keys)
 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", keys.KnockupDuration)
 
-	Timers:CreateTimer(0.4, function()
-		if counter == 10 then 
+	Timers:CreateTimer(0.2, function()
+		if counter == 15 then 
 			FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 			return 
 		end
 
 		local target = nil
-		for k,v in pairs(targets) do
-			if v.nDragonStrikeComboCount < 4 then
-				v.nDragonStrikeComboCount = v.nDragonStrikeComboCount + 1
-				target = v
+
+		for i=1, #targets do
+			local curIndex = math.random(#targets)
+			if targets[curIndex].nDragonStrikeComboCount < 8 then
+				targets[curIndex].nDragonStrikeComboCount = targets[curIndex].nDragonStrikeComboCount + 1
+				target = targets[curIndex]
 				break
 			end
 		end
+		--[[for k,v in pairs(targets) do
+			if v.nDragonStrikeComboCount < 8 then
+				v.nDragonStrikeComboCount = v.nDragonStrikeComboCount + 1
+				target = v
+			end
+		end]]
 		
 		if target ~= nil then
+			--print(target:GetName() .. counter)
 			DoCompositeDamage(caster, target, keys.Damage, DAMAGE_TYPE_COMPOSITE, 0, keys.ability, false)
 			ApplyMarkOfFatality(caster, target)
 		end
@@ -562,7 +576,7 @@ function OnDragonStrike3Start(keys)
 		beginpoint = newpoint
 		caster:EmitSound("Hero_Tusk.WalrusPunch.Target")
 		counter = counter + 1
-		return 0.15
+		return 0.08
 	end)
 
 	caster:EmitSound("Hero_Earthshaker.Pick")

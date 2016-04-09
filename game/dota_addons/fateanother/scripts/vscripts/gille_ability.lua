@@ -169,9 +169,9 @@ end
 function OnGilleComboThink(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local damage = target:GetMaxHealth()*5/100
+	local damage = target:GetMaxHealth()*7.5/100
 	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	print("dealing damage")
+	--print("dealing damage")
 end
 
 function OnTormentTakeDamage(keys)

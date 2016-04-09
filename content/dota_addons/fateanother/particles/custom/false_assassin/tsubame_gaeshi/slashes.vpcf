@@ -110,4 +110,10 @@
 			m_nHeadLocation = 16
 		},
 	]
+	m_Initializers =
+	[
+		{
+			_class = "C_INIT_CreateFromCPs"
+		},
+	]
 }

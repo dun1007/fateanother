@@ -76,6 +76,21 @@ function OnDSStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 end
 
+function OnDSLanded(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	if not caster.bIsDoubleAttackOnCD then
+		Timers:CreateTimer(0.033, function()
+			caster:PerformAttack(target, true, true, true, true, false)
+			caster.bIsDoubleAttackOnCD = true
+			Timers:CreateTimer(0.066, function()
+				caster.bIsDoubleAttackOnCD = false
+			end)
+		end)
+	end
+end
+
 function OnRampantWarriorStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -335,6 +350,8 @@ function OnMindEyeAcquired(keys)
     hero.IsMindEyeAcquired = true
     hero:AddAbility("diarmuid_minds_eye") 
     hero:FindAbilityByName("diarmuid_minds_eye"):SetLevel(1)
+    hero:SetDayTimeVisionRange(1100)
+    hero:SetNightTimeVisionRange(1100)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

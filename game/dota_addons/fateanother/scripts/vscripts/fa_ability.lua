@@ -6,6 +6,20 @@ function OnFACrit(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_minds_eye_crit_hit", {})
 end
 
+function OnMindsEyeAttacked(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	local ratio = keys.Ratio
+	local revokedRatio = keys.RatioRevoked
+
+	if IsRevoked(target) then
+		DoDamage(caster, target, caster:GetAgility() * revokedRatio , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	else
+		DoDamage(caster, target, caster:GetAgility() * ratio , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	end
+end
+
 function OnGKStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -102,7 +116,6 @@ function OnHeartDamageTaken(keys)
 		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.StunDuration})
-		SpawnFAIllusion(keys, 1)
 		--local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
 		--local damage = caster:GetAttackDamage() * keys.Damage/100
 		--DoDamage(caster, target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
@@ -115,11 +128,18 @@ function OnHeartDamageTaken(keys)
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_windblade"), 15)
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_tsubame_gaeshi"), 15)
 
+		local counter = 0
+		Timers:CreateTimer(function()
+			if counter == keys.AttackCount then return end 
+			caster:PerformAttack(target, true, true, true, true, false)
+			CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(500), target:GetAbsOrigin()+RandomVector(500))
+			counter = counter+1
+			return 0.1
+		end)
+
 
 		target:EmitSound("FA.Omigoto")
 		EmitGlobalSound("FA.Quickdraw")
-		CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
-
 	end
 	
 end
@@ -169,6 +189,7 @@ end
 function OnTMLanded(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 
 	local tgabil = caster:FindAbilityByName("false_assassin_tsubame_gaeshi")
 	keys.Damage = tgabil:GetLevelSpecialValueFor("damage", tgabil:GetLevel()-1)
@@ -177,26 +198,44 @@ function OnTMLanded(keys)
 	keys.GCD = 0
 
 	local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
-	caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
-	ApplyAirborne(caster, target, 1.5)
-	--print("Starting Tsubame Mai")
+	caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100)
+	caster:AddNewModifier(caster, caster, "modifier_camera_follow", {duration = 1.0}) 
+	ApplyAirborne(caster, target, 2.0)
+	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 2.0)
 	caster:RemoveModifierByName("modifier_tsubame_mai")
-	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.5)
-	--keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_anim", {})
-	EmitGlobalSound("FA.Kiero")
+	EmitGlobalSound("FA.Owarida")
 	EmitGlobalSound("FA.Quickdraw")
 	CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
 
-	Timers:CreateTimer(0.7, function()
+	local slashCounter = 0
+	Timers:CreateTimer(0.8, function()
+		if slashCounter == 0 then caster:SetModel("models/development/invisiblebox.vmdl") ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_baseattack_reduction", {}) end
+		if slashCounter == 5 or not caster:IsAlive() then caster:SetModel("models/assassin/asn.vmdl") return end
+		caster:PerformAttack(target, true, true, true, true, false)
+		CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(400), target:GetAbsOrigin()+RandomVector(400))
+		caster:SetAbsOrigin(target:GetAbsOrigin()+RandomVector(400))
+		EmitGlobalSound("FA.Quickdraw") 
+
+		slashCounter = slashCounter + 1
+		return 0.2-slashCounter*0.03
+	end)
+
+	Timers:CreateTimer(2.0, function()
 		if caster:IsAlive() then
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_tg_cast_anim", {})
 			EmitGlobalSound("FA.TGReady")
+			ExecuteOrderFromTable({
+				UnitIndex = caster:entindex(),
+				OrderType = DOTA_UNIT_ORDER_STOP,
+				Queue = false
+			})
+			caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()) 
 		end
 	end)
-	Timers:CreateTimer(1.5, function()
+
+	Timers:CreateTimer(2.8, function()
 		if caster:IsAlive() then
-			--keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_finish_anim", {})
-			keys.IsCounter = false
+			keys.IsCounter = true
 			OnTGStart(keys)
 		end
 	end)
@@ -209,68 +248,14 @@ function OnTMDamageTaken(keys)
 
 	-- if caster is alive and damage is above threshold, do something
 	if damageTaken > keys.Threshold and caster:GetHealth() ~= 0 and (caster:GetAbsOrigin()-attacker:GetAbsOrigin()):Length2D() < 3000 and not attacker:IsInvulnerable() then
-		print("Starting Tsubame Mai")
-		local tgabil = caster:FindAbilityByName("false_assassin_tsubame_gaeshi")
-		keys.Damage = tgabil:GetLevelSpecialValueFor("damage", tgabil:GetLevel()-1)
-		keys.LastDamage = tgabil:GetLevelSpecialValueFor("lasthit_damage", tgabil:GetLevel()-1)
-		keys.StunDuration = tgabil:GetLevelSpecialValueFor("stun_duration", tgabil:GetLevel()-1)
-		keys.GCD = 0
-		keys.target = attacker
-		local target = attacker
-
-		local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
-		caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100)
-		caster:AddNewModifier(caster, caster, "modifier_camera_follow", {duration = 1.0}) 
-		ApplyAirborne(caster, target, 2.0)
-		giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 2.8)
-		caster:RemoveModifierByName("modifier_tsubame_mai")
-		EmitGlobalSound("FA.Owarida")
-		EmitGlobalSound("FA.Quickdraw")
-		CreateSlashFx(caster, target:GetAbsOrigin()+Vector(300, 300, 0), target:GetAbsOrigin()+Vector(-300,-300,0))
-
-		local slashCounter = 0
-		Timers:CreateTimer(0.6, function()
-			if slashCounter == 7 or not caster:IsAlive() then return end
-			--local multiplier = GetPhysicalDamageReduction(target:GetPhysicalArmorValue()) * caster.ArmorPen / 100
-			local damage = caster:GetAttackDamage() * 1.2
-			if math.random(100) < 15 then
-				damage = damage * 2.5
-			end
-			DoDamage(caster, target, damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
-			CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(400), target:GetAbsOrigin()+RandomVector(400))
-			caster:SetAbsOrigin(target:GetAbsOrigin()+RandomVector(400))
-			EmitGlobalSound("FA.Quickdraw") 
-
-			slashCounter = slashCounter + 1
-			return 0.2-slashCounter*0.02
-		end)
-
-		Timers:CreateTimer(2.0, function()
-			if caster:IsAlive() then
-				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_tg_cast_anim", {})
-				EmitGlobalSound("FA.TGReady")
-				ExecuteOrderFromTable({
-					UnitIndex = caster:entindex(),
-					OrderType = DOTA_UNIT_ORDER_STOP,
-					Queue = false
-				})
-				caster:SetForwardVector((target:GetAbsOrigin() - caster:GetAbsOrigin()):Normalized()) 
-			end
-		end)
-
-		Timers:CreateTimer(2.8, function()
-			if caster:IsAlive() then
-				keys.IsCounter = true
-				OnTGStart(keys)
-			end
-		end)
-		
+		keys.target = keys.attacker
+		OnTMLanded(keys)
 	end
 end
 
 function OnFADeath(keys)
 	local caster = keys.caster
-	if caster:IsRealHero() then
+	--[[if caster:IsRealHero() then
 		if caster.IllusionTable ~= nil then
 			for i=1, #caster.IllusionTable do
 				if IsValidEntity(caster.IllusionTable[i]) then
@@ -279,7 +264,7 @@ function OnFADeath(keys)
 			end
 			caster.IllusionTable = nil
 		end
-	end
+	end]]
 end
 
 function SpawnFAIllusion(keys, amount)
@@ -519,6 +504,7 @@ function OnTGStart(keys)
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tg_baseattack_reduction", {})
 
 	local particle = ParticleManager:CreateParticle("particles/custom/false_assassin/tsubame_gaeshi/slashes.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
@@ -531,9 +517,11 @@ function OnTGStart(keys)
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+					caster:PerformAttack(target, true, true, true, true, false)
 				end
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				caster:PerformAttack(target, true, true, true, true, false)
 			end
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		else
@@ -549,9 +537,11 @@ function OnTGStart(keys)
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+					caster:PerformAttack(target, true, true, true, true, false)
 				end
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				caster:PerformAttack(target, true, true, true, true, false)
 			end
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		else
@@ -560,13 +550,6 @@ function OnTGStart(keys)
 	return end)
 
 	Timers:CreateTimer(0.9, function()  
-		if ability:GetAbilityName() == "false_assassin_tsubame_mai" then
-			if keys.IsCounter then
-				SpawnFAIllusion(keys, 2)
-			else
-				SpawnFAIllusion(keys, 1)
-			end
-		end
 		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
@@ -575,10 +558,12 @@ function OnTGStart(keys)
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+					caster:PerformAttack(target, true, true, true, true, false)
 					targets[i]:AddNewModifier(caster, targets[i], "modifier_stunned", {Duration = 1.5})
 				end
 			else
 				DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				caster:PerformAttack(target, true, true, true, true, false)
 				target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 			end
 			

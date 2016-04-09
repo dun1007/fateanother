@@ -819,7 +819,7 @@
 		"AttackRange"					"250"
 		"AttackDamageMin"				"40"
 		"AttackDamageMax"				"46"
-		"AttackRate"					"0.7"
+		"AttackRate"					"0.8"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"
@@ -1070,10 +1070,10 @@
 		"MagicalResistance"				"20"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackRange"					"100"
+		"AttackRange"					"185"
 		"AttackDamageMin"				"52"
 		"AttackDamageMax"				"52"
-		"AttackRate"					"1.2"
+		"AttackRate"					"1.0"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
 		"AttributeBaseStrength"			"0"
@@ -1248,7 +1248,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"57"
 		"AttackDamageMax"				"63"
-		"AttackRate"					"1.25"
+		"AttackRate"					"1.2"
 		"AttackAcquisitionRange"		"800"
 		"AttackRange"					"125"
 

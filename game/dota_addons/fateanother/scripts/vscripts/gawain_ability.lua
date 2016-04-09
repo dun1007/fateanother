@@ -537,9 +537,9 @@ function OnMeltdownThink(keys)
 	local caster = keys.caster
 	local target = keys.target
 	if target.MeltdownCounter == nil then 
-		target.MeltdownCounter = 9
+		target.MeltdownCounter = 15
 	else
-		target.MeltdownCounter = target.MeltdownCounter - 1
+		target.MeltdownCounter = target.MeltdownCounter - 2
 	end
 	print(target.MeltdownCounter)
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 

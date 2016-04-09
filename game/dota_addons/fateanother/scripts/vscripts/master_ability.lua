@@ -96,7 +96,7 @@ LancelotAttribute = {
 	"lancelot_attribute_blessing_of_fairy",
 	"lancelot_attribute_improve_eternal",
 	"lancelot_attribute_improve_knight_of_honor",
-	"lancelot_attribute_total_assault",
+	"lancelot_attribute_eternal_flame",
 	"lancelot_nuke",
 	attrCount = 4
 }

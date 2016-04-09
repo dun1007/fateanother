@@ -889,6 +889,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"Model"							"models/props_gameplay/observer_ward_bundle.mdl"
 		"AbilityTextureName" "item_observer_ward"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -1244,6 +1245,7 @@
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 	    "AbilityCooldown"				"30"
 	    "AbilityCastRange"				"20000"
 		"precache"

@@ -125,7 +125,9 @@ end
 
 function OnBPCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
+	ability:EndCooldown()
 	if keys.target:IsHero() then
 		Say(ply, "Broken Phantasm targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
@@ -134,12 +136,13 @@ end
 function OnBPStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 then 
 		Say(ply, "Broken Phantasm failed.", true)
 		return 
 	end
-
+	ability:StartCooldown(ability:GetCooldown(1))
 	local info = {
 		Target = keys.target,
 		Source = keys.caster, 
@@ -1045,11 +1048,12 @@ end
 
 function OnHruntCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
-	 
+	ability:EndCooldown()
 	-- Show hrunting cast
 	if caster.hrunting_particle ~= nil then
 		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
@@ -1077,6 +1081,7 @@ function OnHruntStart(keys)
 		Say(ply, "Broken Phantasm failed.", true)
 		return 
 	end
+	ability:StartCooldown(ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_hrunting_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
 	caster:SetMana(0) 

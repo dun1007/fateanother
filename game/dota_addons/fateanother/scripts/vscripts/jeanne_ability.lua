@@ -129,7 +129,7 @@ function OnCharismaBuffEnd(keys)
 	keys.target.jeanne_charisma_particle = nil
 end
 
-ATTRIBUTE_PUNISHMENT_BONUS_DAMAGE = 45
+ATTRIBUTE_PUNISHMENT_BONUS_DAMAGE = 60
 function OnPurgeStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -498,7 +498,8 @@ function LeaveFireTrail(keys, location, duration)
 		if counter > duration then return end
 		local targets = FindUnitsInRadius(caster:GetTeam(), location, nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		for k,v in pairs(targets) do
-			DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			dmg = v:GetHealth() * damage / 100
+			DoDamage(caster, v, dmg, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 		end
 		return period
 	end)

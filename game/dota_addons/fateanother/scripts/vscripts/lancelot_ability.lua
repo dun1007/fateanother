@@ -130,10 +130,11 @@ end
 function OnDEAttack(keys)
     local caster = keys.caster
     local target = keys.target
+    local ability = keys.ability
     local ply = caster:GetPlayerOwner()
-    if caster.IsTAAcquired then
-        keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_double_edge_slow", {}) 
-    end
+
+    keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_double_edge_slow", {}) 
+    target:SetMana(target:GetMana() - keys.ManaBurn)
 end
 
 function OnKnightStart(keys)
@@ -308,13 +309,52 @@ function OnAronditeStart(keys)
         ParticleManager:ReleaseParticleIndex( groundcrack )
     end)
     ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite", {})
-    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+    --[[local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
     for k,v in pairs(targets) do
             DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
     end
     if caster.IsTAAcquired then
         keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite_crit", {}) 
+    end]]
+end
+
+function OnAronditeAttackLanded(keys)
+    local caster = keys.caster
+    local target = keys.target
+    local ability = keys.ability
+
+    if caster.IsEFAcquired and caster:GetMana() > 50 then
+        caster:SetMana(caster:GetMana() - 50)
+        local flame = 
+        {
+                Ability = ability,
+                EffectName = "particles/units/heroes/hero_dragon_knight/dragon_knight_breathe_fire.vpcf",
+                iMoveSpeed = 1000,
+                vSpawnOrigin = caster:GetAbsOrigin(),
+                fDistance = 300,
+                fStartRadius = 100,
+                fEndRadius = 200,
+                Source = caster,
+                bHasFrontalCone = true,
+                bReplaceExisting = false,
+                iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
+                iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
+                iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
+                fExpireTime = GameRules:GetGameTime() + 0.5,
+                bDeleteOnHit = false,
+                vVelocity = caster:GetForwardVector() * 1000
+        }
+        ProjectileManager:CreateLinearProjectile(flame)
+        caster:EmitSound("Hero_Phoenix.FireSpirits.Launch")
     end
+end
+
+function OnEternalFlameHit(keys)
+    local caster = keys.caster
+    local target = keys.target
+    local ability = keys.ability
+    DoDamage(caster, target, 100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
 end
 
 function OnAronditeCrit(keys)
@@ -515,6 +555,15 @@ function OnKnightImproved(keys)
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 end
 
+function OnEFAcquired(keys)
+    local caster = keys.caster
+    local ply = caster:GetPlayerOwner()
+    local hero = caster:GetPlayerOwner():GetAssignedHero()
+    hero.IsEFAcquired = true
+    -- Set master 1's mana 
+    local master = hero.MasterUnit
+    master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
 function OnTAAcquired(keys)
     local caster = keys.caster
     local ply = caster:GetPlayerOwner()

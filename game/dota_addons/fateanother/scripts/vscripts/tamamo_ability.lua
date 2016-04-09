@@ -301,7 +301,7 @@ function OnSoulstreamProjectileTick(keys)
 	local casterLoc = target:GetAbsOrigin()
 	local ability = keys.ability
 	local damage = keys.Damage
-	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.5 end
+	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.75 end
 	damage = damage + damage*caster.CurrentSoulstreamStack*keys.StackBonus/100
 
 	if target:IsAlive() then
