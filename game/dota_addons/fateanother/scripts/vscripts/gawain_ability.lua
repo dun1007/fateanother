@@ -190,12 +190,12 @@ function OnGalatineStart(keys)
 			-- Explosion on allies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-				v:SetHealth(v:GetHealth() + keys.Damage * 33/100)
+				v:Heal(v:GetHealth() + keys.Damage * 33/100, caster)
 				if caster.IsSunlightAcquired then
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
 						if healTimer > 3 then return end
-						v:SetHealth(v:GetHealth() + keys.Damage*11/100)
+						v:Heal(v:GetHealth() + keys.Damage * 11/100, caster)
 						healTimer = healTimer + 1
 						return 1.0
 					end)

@@ -74,6 +74,11 @@
 		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye_agi_ratio"	"AGI RATIO:"
 		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye_agi_ratio_revoked"		"AGI RATIO AGAINST REVOKED ENEMY:"
 
+        "DOTA_Tooltip_Ability_diarmuid_double_spearsmanship"     "Double Spearsmanship"
+        "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_Description" "Lancer's mastery in double spear allows him to attack relentlessly with duel wielding, granting a chance to do one additional attack."
+        "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_proc_chance"    "DOUBLE ATTACK CHANCE:"
+        "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_Lore"     ""
+        
 		"DOTA_Tooltip_Ability_diarmuid_attribute_minds_eye"                           "Mind's Eye"
         "DOTA_Tooltip_ability_diarmuid_attribute_minds_eye_Description"       "<font color='#58ACFA'>Master Mana Required : 12</font>\nIncreases Lancer's vision range, and grants vision over obstacles."
         

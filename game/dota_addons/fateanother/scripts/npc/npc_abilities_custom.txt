@@ -565,8 +565,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"cast_delay"			"2.8"
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"			"2.5"
 			}
 			"02"
 			{
@@ -609,6 +609,7 @@
 			 	"EndRadius"		"%width"
 			 	"Speed"			"%speed"
 			 	"Range"			"%length"
+			 	"Delay"			"%cast_delay"
 			}
 		}
 		
@@ -7145,7 +7146,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"false_assassin_heart_of_harmony"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
-		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 		"AnimationPlaybackRate" 		"1.0"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
@@ -8028,7 +8029,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"10"
+		"AbilityManaCost"				"7"
 
 		"precache"
 		{
@@ -10146,7 +10147,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"dmg_ratio"			"0.35"
+				"dmg_ratio"			"0.5"
 			}
 		}
 		
@@ -19729,6 +19730,7 @@
 			"particle"			"models/particle/legion_duel_banner.vmdl"
 			"particle"			"particles/items2_fx/radiance_owner.vpcf"
 			"particle"			"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
+			"particle"			"particles/custom/nero/nero_domus_ring_border.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 		}
 		
@@ -19773,17 +19775,10 @@
 				"Function"		"OnTheatreCast"
 				"Radius"		"%radius"
 				"Damage"		"%damage"
+				"Duration"		"%duration"
 			}
 		}
 
-		"OnRespawn"
-		{
-			"RunScript"
-			{
-				"ScriptFile"	"nero_ability"
-				"Function"		"OnTheatreEnd"
-			}
-		}
 
 		"Modifiers"
 		{
@@ -19798,7 +19793,11 @@
 				"IsHidden"		"1"
 				"EffectName"			"particles/items2_fx/radiance_owner.vpcf"
 				"EffectAttachType"		"follow_origin"
-				
+				"RunScript"
+				{
+					"ScriptFile"	"nero_ability"
+					"Function"		"OnTheatreEnd"
+				}
 			}
 			"modifier_aestus_domus_aurea_lock"
 			{
@@ -25283,7 +25282,7 @@
 				"Duration"	"%duration+%delay"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"100"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"50"
 					"MODIFIER_PROPERTY_HEALTH_BONUS"			"99999999"
 					"MODIFIER_PROPERTY_BONUS_DAY_VISION"		"1000"
@@ -25299,7 +25298,7 @@
 					//"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
-				"ThinkInterval"				"0.3"
+				"ThinkInterval"				"0.2"
 				"OnIntervalThink"
 				{
 					"RunScript"

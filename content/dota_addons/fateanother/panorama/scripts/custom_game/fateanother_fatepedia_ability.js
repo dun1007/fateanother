@@ -80,8 +80,8 @@ var attributes = [
 	["berserker_5th_attribute_improve_divinity", "berserker_5th_attribute_berserk", "berserker_5th_attribute_god_hand", "berserker_5th_attribute_reincarnation"],
 	["gilgamesh_attribute_improve_golden_rule", "gilgamesh_attribute_power_of_sumer", "gilgamesh_attribute_rain_of_swords", "gilgamesh_attribute_sword_of_creation"],
 	["avenger_attribute_improve_dark_passage", "avenger_attribute_blood_mark", "avenger_attribute_overdrive", "avenger_attribute_demon_incarnate"],
-	["diarmuid_attribute_improve_love_spot", "diarmuid_attribute_minds_eye", "diarmuid_attribute_minds_eye", "diarmuid_attribute_double_spear_strike"],
-	["lancelot_attribute_improve_eternal", "lancelot_attribute_blessing_of_fairy", "lancelot_attribute_improve_knight_of_honor", "lancelot_attribute_total_assault"],
+	["diarmuid_attribute_improve_love_spot", "diarmuid_attribute_minds_eye", "diarmuid_attribute_rosebloom", "diarmuid_attribute_double_spear_strike"],
+	["lancelot_attribute_improve_eternal", "lancelot_attribute_blessing_of_fairy", "lancelot_attribute_improve_knight_of_honor", "lancelot_attribute_eternal_flame"],
 	["gille_attribute_eye_for_art", "gille_attribute_improve_black_magic", "gille_attribute_mental_pollution", "gille_attribute_abyssal_connection", "gille_attribute_abyssal_connection_2"],
 	["iskander_attribute_improve_charisma", "iskander_attribute_thundergods_wrath", "iskander_attribute_via_expugnatio", "iskander_attribute_bond_beyond_time"],
 	["nero_attribute_pari_tenu_blauserum", "nero_attribute_improve_imperial_privilege", "nero_attribute_invictus_spiritus", "nero_attribute_soverigns_glory"],
@@ -89,7 +89,6 @@ var attributes = [
 	["tamamo_attribute_spirit_theft", "tamamo_attribute_mystic_shackle", "tamamo_attribute_tamamo_escape", "tamamo_attribute_witchcraft"],
 	["lishuwen_attribute_circulatory_shock", "lishuwen_attribute_improve_martial_arts", "lishuwen_attribute_dual_class", "lishuwen_attribute_furious_chain"],
 	["jeanne_attribute_identity_discernment", "jeanne_attribute_improve_saint", "jeanne_attribute_punishment", "jeanne_attribute_divine_symbol"]
-
 ]
 
 var comboes = [

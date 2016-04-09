@@ -496,7 +496,7 @@ function LeaveFireTrail(keys, location, duration)
 	Timers:CreateTimer(function()
 		counter = counter + period
 		if counter > duration then return end
-		local targets = FindUnitsInRadius(caster:GetTeam(), location, nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+		local targets = FindUnitsInRadius(caster:GetTeam(), location, nil, 325, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		for k,v in pairs(targets) do
 			dmg = v:GetHealth() * damage / 100
 			DoDamage(caster, v, dmg, DAMAGE_TYPE_MAGICAL, 0, ability, false)

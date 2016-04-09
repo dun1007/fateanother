@@ -152,6 +152,7 @@ function OnCaliburnHit(keys)
 	end
 	local aoedmg = keys.Damage * keys.AoEDamage
 	DoDamage(caster, target , keys.Damage - aoedmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+	giveUnitDataDrivenModifier(caster, target, "modifier_stunned", 0.2)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), target:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -217,7 +218,7 @@ function OnExcaliburStart(keys)
 	end)
 
 	-- Create linear projectile
-	Timers:CreateTimer(2.5, function()
+	Timers:CreateTimer(keys.Delay - 0.3, function()
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			excal.vVelocity = caster:GetForwardVector() * keys.Speed
@@ -228,7 +229,7 @@ function OnExcaliburStart(keys)
 	
 	local casterFacing = caster:GetForwardVector()
 	-- for i=0,1 do
-		Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
+		Timers:CreateTimer(keys.Delay - 0.3, function() -- Adjust 2.5 to 3.2 to match the sound
 			if caster:IsAlive() then
 				-- Create Particle for projectile
 				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())

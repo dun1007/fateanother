@@ -692,7 +692,7 @@
 		"AttackRange"					"100"
 		"AttackDamageMin"				"47"
 		"AttackDamageMax"				"69"
-		"AttackRate"					"1.1"
+		"AttackRate"					"0.8"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"

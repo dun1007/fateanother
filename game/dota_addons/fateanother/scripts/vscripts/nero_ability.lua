@@ -358,9 +358,14 @@ function OnTheatreStart(keys)
 	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
 
 	local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-	Timers:CreateTimer( 12.0, function()
+	local theatreFx2 = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_border.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControl( theatreFx2, 1, Vector(keys.Radius,0,0))
+
+	Timers:CreateTimer( keys.Duration, function()
 		ParticleManager:DestroyParticle( theatreFx, false )
 		ParticleManager:ReleaseParticleIndex( theatreFx )
+		ParticleManager:DestroyParticle( theatreFx2, false )
+		ParticleManager:ReleaseParticleIndex( theatreFx2 )
 	end)	
 
 	local banners = CreateBannerInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
