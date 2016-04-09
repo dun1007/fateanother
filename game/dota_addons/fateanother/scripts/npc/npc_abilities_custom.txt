@@ -7520,7 +7520,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slash_damage_percentage"				"50"
+				"slash_damage_percentage"				"20"
 			}
 		}
 		
