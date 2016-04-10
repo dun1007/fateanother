@@ -14765,12 +14765,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"consec_time"			"2.5"
+				"consec_time"			"1.5"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"initial_aspd"			"80"
+				"initial_aspd"			"20"
 			}
 			"03"
 			{
@@ -14809,7 +14809,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"duration"				"2.5"
+				"duration"				"1.5"
 			}
 		}
 		
@@ -14849,7 +14849,7 @@
 				}
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"80"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"20"
 				}
 			}
 			"modifier_overdrive_tier2"
@@ -14873,7 +14873,7 @@
 				}			
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"160"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"40"
 				}
 			}
 			"modifier_overdrive_tier3"
@@ -14897,7 +14897,7 @@
 				}		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"320"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"80"
 				}
 			}
 			"modifier_overdrive_tier4"
@@ -14908,14 +14908,20 @@
 				{
 					"ApplyModifier"
 					{
-						"ModifierName"		"modifier_overdrive_tier4"
+						"ModifierName"		"modifier_overdrive_tier5"
 						"Target"			"CASTER"
 						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+					}
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_overdrive_tier4"
+						"Target"		"CASTER"
+						"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}		
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"640"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"160"
 				}
 			}
 			"modifier_overdrive_tier5"

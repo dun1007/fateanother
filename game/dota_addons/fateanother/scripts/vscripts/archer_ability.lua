@@ -128,6 +128,7 @@ function OnBPCast(keys)
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	ability:EndCooldown()
+	caster:GiveMana(ability:GetManaCost(1))
 	if keys.target:IsHero() then
 		Say(ply, "Broken Phantasm targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
@@ -138,11 +139,12 @@ function OnBPStart(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
-	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 then 
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 or caster:GetMana() < ability:GetManaCost(1) then 
 		Say(ply, "Broken Phantasm failed.", true)
 		return 
 	end
 	ability:StartCooldown(ability:GetCooldown(1))
+	caster:SetMana(caster:GetMana() - ability:GetManaCost(1))
 	local info = {
 		Target = keys.target,
 		Source = keys.caster, 
