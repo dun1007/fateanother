@@ -209,7 +209,7 @@ function OnGBStrike(keys)
 	if caster.IsPTBAcquired then
 		local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 400, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
 		for k,v in pairs(targets) do
-			DoDamage(caster, v, caster:GetAgility() * 8, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			DoDamage(caster, v, caster:GetAgility() * 5, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			target:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.75})
 		end
 	end
@@ -358,9 +358,14 @@ function OnTheatreStart(keys)
 	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
 
 	local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
-	Timers:CreateTimer( 12.0, function()
+	local theatreFx2 = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_border.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControl( theatreFx2, 1, Vector(keys.Radius,0,0))
+
+	Timers:CreateTimer( keys.Duration, function()
 		ParticleManager:DestroyParticle( theatreFx, false )
 		ParticleManager:ReleaseParticleIndex( theatreFx )
+		ParticleManager:DestroyParticle( theatreFx2, false )
+		ParticleManager:ReleaseParticleIndex( theatreFx2 )
 	end)	
 
 	local banners = CreateBannerInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
@@ -530,7 +535,7 @@ function OnNeroComboStart(keys)
 				ParticleManager:ReleaseParticleIndex( flameFx )
 			end)
 			caster:EmitSound("Hero_Batrider.Firefly.Cast")
-			print("rawr")
+			--print("rawr")
 			return 0.1
 		else
 			OnNeroComboEnd(keys)

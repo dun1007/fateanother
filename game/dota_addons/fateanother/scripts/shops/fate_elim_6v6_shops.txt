@@ -1,0 +1,15 @@
+"dota_shops"
+{
+	"consumables"
+	{
+		"item"		"item_mana_essence"
+		"item"		"item_c_scroll" 
+		"item"		"item_ward_familiar"
+		"item"		"item_scout_familiar"
+		"item"		"item_berserk_scroll"
+		"item"		"item_gem_of_speed"
+		"item"		"item_spirit_link"
+		"item"		"item_healing_scroll"
+		"item"		"item_teleport_scroll"
+	}
+}

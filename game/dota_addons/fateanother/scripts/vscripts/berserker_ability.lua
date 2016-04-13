@@ -347,7 +347,6 @@ function OnNineLanded(caster, ability)
 					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim3", {}) 
 				end
 			elseif caster:GetName() == "npc_dota_hero_ember_spirit" then 
-				print("asdasd")
 				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
@@ -427,7 +426,7 @@ QUsed = false
 QTime = 0
 
 function BerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("berserker_5th_fissure_strike") then
 			QUsed = true
 			QTime = GameRules:GetGameTime()
@@ -453,20 +452,7 @@ function BerCheckCombo(caster, ability)
 	end
 end
 
--- Check if anyone on this hero's team is still alive. 
-function IsTeamWiped(hero)
-	for i=0, 11 do
-		local player = PlayerResource:GetPlayer(i)
-		local playerHero = PlayerResource:GetSelectedHeroEntity(i)
-		if playerHero ~= nil then 
-			servant = playerHero
-			if servant:GetTeam() == hero:GetTeam() and servant:IsAlive() then 
-				return false
-			end
-		end
-	end
-	return true
-end
+
 
 function OnGodHandDeath(keys)
 	local caster = keys.caster
@@ -479,7 +465,7 @@ function OnGodHandDeath(keys)
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=1.1})
 
-	print("God Hand activated")
+	--print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()

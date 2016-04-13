@@ -35,7 +35,7 @@ function OnArmedUpStart(keys)
 	if caster:GetAbilityByIndex(2):GetAbilityName() == "tamamo_mantra" then
 		a3 = caster:FindAbilityByName("tamamo_mantra") -- Mantra
 	else
-		a3 = caster:FindAbilityByName("tamamo_fates_call")
+		a3 = caster:FindAbilityByName("tamamo_mystic_shackle")
 	end
 	local a4 = caster:FindAbilityByName("fate_empty1") -- Armed Up
 	local a5 = caster:FindAbilityByName("tamamo_armed_up") -- fate_empty1
@@ -148,10 +148,10 @@ function CloseCharmList(keys)
 
 	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
-	if not caster.IsSeveredFateActive then
+	if caster:FindAbilityByName("tamamo_mystic_shackle"):IsHidden() then
 		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
 	else
-		caster:SwapAbilities("tamamo_fates_call", a3:GetName(), true, true) 
+		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, true) 
 	end
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
@@ -296,84 +296,88 @@ end
 
 function OnSoulstreamProjectileTick(keys)
 	local caster = keys.caster
+	local radius = keys.Radius
 	local target = keys.target 
 	local casterLoc = target:GetAbsOrigin()
 	local ability = keys.ability
 	local damage = keys.Damage
-	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.5 end
+	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.75 end
 	damage = damage + damage*caster.CurrentSoulstreamStack*keys.StackBonus/100
 
-	local radius, charmDamage, stackDamage, ccDuration, StackStunDuration, mrReduction = 0
-	-- Is Charm loaded for current projectile?
-	if target.IsCharmLoaded then
-		if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
-			charmDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("damage", 0)
-			stackDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_damage", 0)
-		elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
-			ccDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("duration", 0)
-			StackStunDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_stun_duration", 0)
-		elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
-			mrReduction = target.LoadedCharmHandle:GetLevelSpecialValueFor("mr_reduction", 0)
-		end
-	end
-	-- If target is found, remove projectile and do damage
-	local targets = FindUnitsInRadius(caster:GetTeam(), casterLoc, nil, 75, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-	if #targets ~= 0 then
-
-
-		for k,v in pairs(targets) do
+	if target:IsAlive() then
+		local charmDamage, stackDamage, ccDuration, StackStunDuration, mrReduction = 0
+		-- Is Charm loaded for current projectile?
+		if target.IsCharmLoaded then
 			if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
-				-- 6 stacks
-				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
-					v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
-					DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-
-					local explodeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, v )
-					ParticleManager:SetParticleControl( explodeFx, 0, v:GetAbsOrigin())
-					v:EmitSound("Ability.LightStrikeArray")
-				else
-					DoDamage(caster, v, v:GetHealth()*charmDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-				end
+				charmDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("damage", 0)
+				stackDamage = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_damage", 0)
 			elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
-				-- 6 stacks
-				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
-					v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
-					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
-
-					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_stun_fx", {})
-					v:EmitSound("Ability.FrostBlast")
-				else
-					v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
-					ability:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
-				end
+				ccDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("duration", 0)
+				StackStunDuration = target.LoadedCharmHandle:GetLevelSpecialValueFor("stack_stun_duration", 0)
 			elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
-				-- 6 stacks
-				if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
-					v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
-					target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
-					if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
-					if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
-					v:EmitSound("DOTA_Item.DiffusalBlade.Activate")
-
-				else
-					v:AddNewModifier(caster, v, "modifier_silence", {Duration = 0.1})
-				end 
-			end	
-			DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-			if caster.IsSpiritTheftAcquired then 
-				v:SetMana(v:GetMana()-25)
-				caster:SetMana(caster:GetMana()+25)
+				mrReduction = target.LoadedCharmHandle:GetLevelSpecialValueFor("mr_reduction", 0)
 			end
 		end
+		-- Move the charm
+		local diff = target.destination - casterLoc
+		target:SetAbsOrigin(target:GetAbsOrigin()+diff/10)
+		-- If target is found, remove projectile and do damage
+		local targets = FindUnitsInRadius(caster:GetTeam(), casterLoc, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		if #targets ~= 0 then
 
 
-		target:EmitSound("Hero_Wisp.Spirits.Target")
-		local explosionFx = ParticleManager:CreateParticle(target.spiritExpParticleName, PATTACH_ABSORIGIN_FOLLOW, target)
-		ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
-		OnSoulstreamProjectileEnd(keys)
+			for k,v in pairs(targets) do
+				if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
+					-- 6 stacks
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
+						v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
+						DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+						local explodeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_lina/lina_spell_light_strike_array.vpcf", PATTACH_ABSORIGIN_FOLLOW, v )
+						ParticleManager:SetParticleControl( explodeFx, 0, v:GetAbsOrigin())
+						v:EmitSound("Ability.LightStrikeArray")
+					else
+						DoDamage(caster, v, v:GetHealth()*charmDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+					end
+				elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
+					-- 6 stacks
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
+						v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
+						v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
+
+						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_stun_fx", {})
+						v:EmitSound("Ability.FrostBlast")
+					else
+						v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
+						ability:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
+					end
+				elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
+					-- 6 stacks
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
+						v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
+						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
+						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
+						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
+						v:EmitSound("DOTA_Item.DiffusalBlade.Activate")
+
+					else
+						v:AddNewModifier(caster, v, "modifier_silence", {Duration = 0.1})
+					end 
+				end	
+				DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				if caster.IsSpiritTheftAcquired then 
+					v:SetMana(v:GetMana()-25)
+					caster:SetMana(caster:GetMana()+25)
+				end
+			end
+
+
+			target:EmitSound("Hero_Wisp.Spirits.Target")
+			local explosionFx = ParticleManager:CreateParticle(target.spiritExpParticleName, PATTACH_ABSORIGIN_FOLLOW, target)
+			ParticleManager:SetParticleControl(explosionFx, 0, target:GetAbsOrigin())
+			OnSoulstreamProjectileEnd(keys)
+		end
 	end
-	local diff = target.destination - casterLoc
-	target:SetAbsOrigin(target:GetAbsOrigin()+diff/10)
 end
 
 function IncrementCharmStack(caster, target, handle, modifierName)
@@ -392,6 +396,7 @@ function OnSoulstreamProjectileEnd(keys)
 	ParticleManager:DestroyParticle( target.spiritParticle, false )
 	ParticleManager:ReleaseParticleIndex( target.spiritParticle )
 	target:ForceKill(false)
+	--target:RemoveSelf() 
 end
 --[[
 	local LRvec = Vector(0,0,0)
@@ -466,20 +471,33 @@ function OnMantraStart(keys)
 		return	
 	end
 	caster.MantraTarget = target
+	caster.MantraLocation = caster:GetAbsOrigin()
 	target.IsMantraProcOnCooldown = false 
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		modifierName = "modifier_mantra_ally"
+		if caster.IsSeveredFateAcquired then
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_mr_buff", {})
+		end
 	else
 		if IsSpellBlocked(keys.target) then return end
 		modifierName = "modifier_mantra_enemy"
+		if caster.IsSeveredFateAcquired then
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_mr_debuff", {})
+		end
 	end
 
 	if caster.IsSeveredFateAcquired then
-		caster.IsSeveredFateActive = true
+		--caster.IsSeveredFateActive = true
 		caster.TetheredTarget = target
-		ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
-		caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,true) 
+		
+		--ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
+		if caster:GetAbilityByIndex(2):GetName() == "tamamo_mantra" then
+			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,true) 
+			Timers:CreateTimer(3.0, function()
+				caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,false) 
+			end)
+		end
 	end
 
 	local castFx = ParticleManager:CreateParticle('particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf', PATTACH_CUSTOMORIGIN, target) 
@@ -492,11 +510,39 @@ function OnMantraStart(keys)
 	for i=1, orbAmount do ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_vfx", {}) end
 end
 
-function OnMantraTetherEnd(keys)
-	local caster = keys.caster -- Caster
-	local target = keys.target -- Target of tether
-	caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,false) 
-	caster.IsSeveredFateActive = false
+function OnShackleThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
+	if dist > 2500 then
+		target:RemoveModifierByName("modifier_mystic_shackle")
+	elseif dist > 700 then
+		local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
+		local normal = diff:Normalized()
+		target:SetAbsOrigin(caster:GetAbsOrigin()+normal*700)
+		FindClearSpaceForUnit( target, target:GetAbsOrigin(), true )
+	end
+end
+
+function OnShackleStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	if (caster:GetAbsOrigin() - caster.MantraLocation):Length2D() > 500 then
+		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
+		keys.ability:EndCooldown()
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Too Far From Initial Castpoint" } ) 
+		return
+	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_mystic_shackle_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	ability:ApplyDataDrivenModifier(caster, caster.MantraTarget, "modifier_mystic_shackle", {})
+	giveUnitDataDrivenModifier(caster, caster, "locked", 3.0)
+end
+
+function OnShackleEnd(keys)
+	local caster = keys.caster
+	local ability = keys.ability
 end
 
 function OnMantraTakeDamage(keys)
@@ -552,69 +598,6 @@ function OnMantraTakeDamage(keys)
 	end
 end
 
-function OnMantraTetherTick(keys)
-	local caster = keys.caster
-	local target = keys.target
-	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
-	if dist > 1250 then
-		target:RemoveModifierByName("modifier_mantra_tether")
-	end
-end
-
-function OnFatesCallCast(keys)
-	local caster = keys.caster
-	local ability = keys.ability
-	caster.IsInMarbleAtStart = false
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_fates_call_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
-	if caster:GetAbsOrigin().y <  -2000 then
-		caster.IsInMarbleAtStart = true
-	end
-end
-
-function OnFatesCallStart(keys)
-	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-	local dist = (caster.TetheredTarget:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
-	local delay = dist*0.002
-	caster.IsStunnedDuringFatesCall = false
-	caster.IsInMarbleAtEnd = false
-
-
-	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
-	ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
-	caster.TetheredTarget:EmitSound("Hero_Wisp.Relocate")
-
-	-- Check if Caster got stunned 
-	local count = 0
-	Timers:CreateTimer(function()
-		if count > delay then return end
-		if caster:HasModifier("modifier_stunned") then
-			caster.IsStunnedDuringFatesCall = true
-			print("caster stunned during fate's call, canceling it...")
-			return
-		end
-		count = count + 0.033
-		return 0.033
-	end)
-
-	Timers:CreateTimer(delay, function()
-		if caster:GetAbsOrigin().y <  -2000 then
-			caster.IsInMarbleAtEnd = true
-		end
-		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") and not caster.IsStunnedDuringFatesCall and 
-			(caster.IsInMarbleAtStart == caster.IsInMarbleAtEnd) then
-
-			caster.TetheredTarget:SetAbsOrigin(targetPoint)
-			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")
-			Timers:CreateTimer(0.033, function()
-				local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
-				ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
-				caster.TetheredTarget:EmitSound("Hero_Wisp.Return")
-			end)
-		end
-	end)
-end
-
 --[[
 Apply the aura modifier to caster
 ]]
@@ -628,6 +611,7 @@ function OnAmaterasuStart(keys)
 	else
 	end
 
+	EmitGlobalSound("Hero_KeeperOfTheLight.ManaLeak.Cast")
 	caster.AmaterasuCastLoc = caster:GetAbsOrigin()
 	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
 	caster.CurrentAmaterasuDummy = dummy
@@ -636,6 +620,7 @@ function OnAmaterasuStart(keys)
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=keys.Duration+0.5})
 	ability:ApplyDataDrivenModifier(caster, dummy, "modifier_amaterasu_aura", {})
 	dummy.TempleDoors = CreateTempleDoorInCircle(caster, caster:GetAbsOrigin(), keys.Radius)
+	EmitSoundOnLocationWithCaster(caster:GetAbsOrigin(), "Hero_Dazzle.Shallow_Grave", caster)
 
 	if caster.IsWitchcraftAcquired then 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster.AmaterasuCastLoc, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
@@ -836,7 +821,7 @@ function OnPCFAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 
-	if hero:GetStrength() < 19.5 or hero:GetAgility() < 19.5 or hero:GetIntellect() < 19.5 then
+	if hero:GetStrength() < 19.1 or hero:GetAgility() < 19.1 or hero:GetIntellect() < 19.1 then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Acquire 20 Stats" } )
 		keys.ability:EndCooldown()
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
@@ -868,7 +853,7 @@ function OnWitchcraftAcquired(keys)
 end
 
 function TamamoCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 and not caster.IsEscapeAcquired then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and not caster.IsEscapeAcquired then
 		if ability == caster:FindAbilityByName("tamamo_subterranean_grasp") and caster:FindAbilityByName("tamamo_polygamist_castration_fist"):IsCooldownReady()  then
 			caster:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist", false, true) 
 			Timers:CreateTimer({
@@ -880,3 +865,75 @@ function TamamoCheckCombo(caster, ability)
 		end
 	end
 end
+
+--[[
+function OnMantraTetherEnd(keys)
+	local caster = keys.caster -- Caster
+	local target = keys.target -- Target of tether
+	caster:SwapAbilities("tamamo_mantra", "tamamo_fates_call", true,false) 
+	caster.IsSeveredFateActive = false
+end
+
+
+function OnMantraTetherTick(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
+	if dist > 1250 then
+		target:RemoveModifierByName("modifier_mantra_tether")
+	end
+end
+
+function OnFatesCallCast(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	caster.IsInMarbleAtStart = false
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_fates_call_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	if caster:GetAbsOrigin().y <  -2000 then
+		caster.IsInMarbleAtStart = true
+	end
+end
+
+function OnFatesCallStart(keys)
+	local caster = keys.caster
+	local targetPoint = keys.target_points[1]
+	local dist = (caster.TetheredTarget:GetAbsOrigin() - caster:GetAbsOrigin()):Length2D()
+	local delay = dist*0.002
+	caster.IsStunnedDuringFatesCall = false
+	caster.IsInMarbleAtEnd = false
+
+
+	local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
+	ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
+	caster.TetheredTarget:EmitSound("Hero_Wisp.Relocate")
+
+	-- Check if Caster got stunned 
+	local count = 0
+	Timers:CreateTimer(function()
+		if count > delay then return end
+		if caster:HasModifier("modifier_stunned") then
+			caster.IsStunnedDuringFatesCall = true
+			print("caster stunned during fate's call, canceling it...")
+			return
+		end
+		count = count + 0.033
+		return 0.033
+	end)
+
+	Timers:CreateTimer(delay, function()
+		if caster:GetAbsOrigin().y <  -2000 then
+			caster.IsInMarbleAtEnd = true
+		end
+		if caster.TetheredTarget:HasModifier("modifier_mantra_tether") and not caster.IsStunnedDuringFatesCall and 
+			(caster.IsInMarbleAtStart == caster.IsInMarbleAtEnd) then
+
+			caster.TetheredTarget:SetAbsOrigin(targetPoint)
+			caster.TetheredTarget:RemoveModifierByName("modifier_mantra_tether")
+			Timers:CreateTimer(0.033, function()
+				local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster.TetheredTarget )
+				ParticleManager:SetParticleControlEnt( pfx, 0, caster.TetheredTarget, PATTACH_POINT, "attach_origin", caster.TetheredTarget:GetAbsOrigin(), true )
+				caster.TetheredTarget:EmitSound("Hero_Wisp.Return")
+			end)
+		end
+	end)
+end]]

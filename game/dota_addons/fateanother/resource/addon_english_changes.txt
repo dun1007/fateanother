@@ -1,12 +1,89 @@
-		"DOTA_Tooltip_ability_master_shard_of_prosperity_Description"	"Instantly grants 5 level to Servant and 1 maximum Health to Master."
+        "DOTA_Tooltip_Ability_tamamo_mystic_shackle"    "Mystic Shackle"
+        "DOTA_Tooltip_Ability_tamamo_mystic_shackle_Description"    "Sews the target's spirit with Caster's, forcing it to stay within certain distance. Caster is dimensionally locked while Mystic Shackle lasts. Caster must be no further than 500 distance away from where she initially casted Mantra to activate this ability."
+        "DOTA_Tooltip_Ability_tamamo_mystic_shackle_Note0"      "Shackle is removed when the distance between target and Caster becomes further than 2500."
 
-		"DOTA_Tooltip_ability_gawain_suns_embrace_Note0"		"Heal amount is based on target's magic resistance after being modified by ability's effect."
+        "DOTA_Tooltip_Ability_tamamo_attribute_mystic_shackle"      "Mystic Shackle"
+        "DOTA_Tooltip_Ability_tamamo_attribute_mystic_shackle_Description"  "Casting Mantra grants bonus magic resistance to an allied target, or reduces magic resistance of an enemy. In addition, Mystic Shackle can be used within 3 seconds after casting Mantra.\n<font color='#58ACFA'>Mystic Shackle :</font> Sews the target's spirit with Caster's, forcing it to stay within certain distance. Caster is dimensionally <font color='#FF3399'>locked</font> while Mystic Shackle lasts. Caster must be no further than 500 distance away from where she initially casted Mantra to activate this ability."
 
-		"DOTA_Tooltip_ability_nero_attribute_pari_tenu_blauserum_Description"       "<font color='#58ACFA'>Master Mana Required : 10</font>\nGladiusanus Blauserum inflicts bonus magic damage based on AGI, and <font color='#FF3399'>stuns</font> enemies in small radius."  
+        "DOTA_Tooltip_ability_avenger_blood_mark_Description"       "Desolates target's very soul with bloodlust curse, exchanging Avenger's current health with target's. After casting Blood Mark, Vengeance Mark cannot be used for 3 seconds."
 
- 		"DOTA_Tooltip_Ability_avenger_verg_avesta_Note0"      "Verg Avesta strictly returns incoming damage after mitigation."
- 		"DOTA_Tooltip_Ability_avenger_verg_avesta_Note1"      "The return damage cannot be blocked by B scroll."
- 		"DOTA_Tooltip_Ability_avenger_verg_avesta_Note2"	  "Verg Avesta is effective against magic immune and invulnerable units."
- 		"DOTA_Tooltip_Ability_avenger_verg_avesta_Note3"	  "When damaged by summon's ability, damage is returned to the owning Servant instead. However, 'ambient' damage cannot be returned to owner(i.e UBW passive sword hits, AotK soldier, Gigantic Horror base attack, etc)"
+        "DOTA_Tooltip_ability_avenger_attribute_blood_mark_Description" "Replaces Vengeance Mark with Blood Mark.\n<font color='#58ACFA'>Blood Mark : </font>Desolates target's very soul with bloodlust curse, exchanging Avenger's current health with target. After casting Blood Mark, Vengeance Mark cannot be used for 3 seconds."  
 
- 		"DOTA_Tooltip_ability_avenger_true_form_bonus_damage_percentage"	"BONUS DAMAGE:"
+        "DOTA_Tooltip_Ability_lancelot_attribute_eternal_flame"         "Eternal Flame"
+        "DOTA_Tooltip_ability_lancelot_attribute_eternal_flame_Description" "Arondite Causes Berserker's base attack to emit scorching flame in a cone, dealing magic damage to enemies. Each strike costs mana."
+        "DOTA_Tooltip_Ability_lancelot_attribute_eternal_flame_flame_damage"         "FLAME DAMAGE:"
+        "DOTA_Tooltip_Ability_lancelot_attribute_eternal_flame_mana_cost"         "FLAME MANA COST:"
+
+        "DOTA_Tooltip_Ability_lancelot_double_edge"     "Double Edge"
+        "DOTA_Tooltip_ability_lancelot_double_edge_Description" "Berserker disregards defense, gaining bonus movement and attack speed at the cost of taking more damage for duration. Bonus movement speed diminishes over short period. In addition, his attack briefly stops enemy's movement and burns their mana."
+        "DOTA_Tooltip_ability_lancelot_double_edge_Lore"        "The Knight of Rounds knows very well the greater good comes with sacrifice."
+        "DOTA_Tooltip_ability_lancelot_double_edge_bonus_speed"	"%BONUS ATTACK SPEED :"
+        "DOTA_Tooltip_ability_lancelot_double_edge_bonus_ms"	"%BONUS MOVEMENT SPEED :"
+        "DOTA_Tooltip_ability_lancelot_double_edge_mana_burn"	"MANA BURN PER HIT :"
+        "DOTA_Tooltip_ability_lancelot_double_edge_extra_damage_taken"	"%EXTRA INCOMING DAMAGE :"
+        "DOTA_Tooltip_ability_lancelot_double_edge_duration"	"DURATION :"
+
+        "DOTA_Tooltip_Ability_lancelot_arondite"        "Arondite"
+        "DOTA_Tooltip_ability_lancelot_arondite_Description"    "Passively grants bonus movement speed. On activation, Berserker becomes immune to any single target items or abilities, and gains bonus all stats and attack damage.\nKnight of Honor cannot be used for duration.\n\nUpgradable by attribute Total Assault."
+        "DOTA_Tooltip_ability_lancelot_arondite_Lore"   "ARTHUR----------!!!!!!!"
+        "DOTA_Tooltip_ability_lancelot_arondite_bonus_movespeed"	"%BONUS MOVESPEED :"
+        "DOTA_Tooltip_ability_lancelot_arondite_bonus_damage"	"BONUS DAMAGE :"
+        "DOTA_Tooltip_ability_lancelot_arondite_bonus_allstat"	"BONUS ALL STATS :"
+        "DOTA_Tooltip_ability_lancelot_arondite_duration"	"DURATION :"
+
+        "DOTA_Tooltip_Ability_tamamo_soulstream"     "Soulstream"
+        "DOTA_Tooltip_ability_tamamo_soulstream_Description" "Caster materializes 5 spirits and orders them to rush towards target location. Upon colliding with enemy, the spirit explodes, dealing damage.\nEach consecutive cast places movement speed buff on Caster at the cost of additional mana cost."
+
+       	"DOTA_Tooltip_Ability_jeanne_attribute_improve_saint"		"Improve Saint"
+        "DOTA_Tooltip_Ability_jeanne_attribute_improve_saint_Description"	"Causes Unjust enemies to take amplified damage and prevents them from damaging Magic Resistance:EX's stack or Luminous Eternelle's flag. In addition, any Servant who slays Ruler is credited with more kills instead of 1."
+        "DOTA_Tooltip_Ability_jeanne_attribute_improve_saint_bonus_damage"	"%DAMAGE AMPLIFICATION:"	
+        "DOTA_Tooltip_Ability_jeanne_attribute_improve_saint_kill_credit"	"KILL CREDIT:"	
+
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle"	"La Pucelle"
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle_Description"	"<font color='#58ACFA'>Combo Requirement : 20 all stats</font>\n<font color='#58ACFA'>Combo Sequence : None(triggered by death)</font>\nUpon death, Ruler ascends to a spirit form, unable to cast spells and Command Seals but becoming invulnerable and gaining bonus movement and attack speed. While in spirit form, divine flame spreads from her to set nearby enemies ablaze, dealing magic damage based on enemy's current health.\n\nWhen Ruler faces eventual death, she counts as alive at the round timeout when comparing the number of survivors between two teams. La Pucelle does not activate if Ruler is the last standing hero."
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle_delay"		"ASCENSION DELAY:"
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle_duration"		"SPIRIT FORM DURATION:"
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle_bonus_aspd"	"%BONUS ATTACK SPEED:"
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle_bonus_ms"		"%BONUS MOVEMENT SPEED:"
+        "DOTA_Tooltip_Ability_jeanne_combo_la_pucelle_flame_damage_per_sec"	"%FLAME DAMAGE PER SEC:"
+
+		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony"	"Heart of Harmony"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_Description"	"Assassin prepares himself for counterattack, placing shield that reduces incoming damage. Upon taking damage above threshold, he breaks out of shield, teleports to the rear of attacker and strikes it several times. Attacker is <font color='#FF3399'>stunned</font>, while Assassin gains maximum movespeed for 3 seconds.\nUpon executing counterattack, all Assassin's abilities have their cooldown reduced by 15 seconds.\n\nUpgradable by attribute Vitrification"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_Lore"	"With harmony comes the precision."
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_duration"	"COUNTER DURATION:"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_threshold"	"COUNTER THRESHOLD:"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_bonus_mr"	"%DAMAGE REDUCTION:"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_attack_count"	"ATTACK NUMBERS:"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_stun_duration"	"STUN DURATION:"
+		"DOTA_Tooltip_ability_false_assassin_heart_of_harmony_gcd"	"GLOBAL COOLDOWN:"
+		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note0"	"Counterattack has maximum of 3000 range."
+		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note1"	"The threshold is checked after mitigation."
+
+        "DOTA_Tooltip_ability_false_assassin_tsubame_gaeshi_Description"	"Assassin performs his ultimate technique, delivering 3 consecutive slashes that apply on-hit effects. Last strike deals more damage and <font color='#FF3399'>stuns</font> target. Once activated, it cannot be dodged."
+
+		"DOTA_Tooltip_Ability_false_assassin_tsubame_mai"	"Tsubame Mai-The Swallow Dance"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Description"	"<font color='#58ACFA'>Combo Requirement : 25 AGI and STR</font>\n<font color='#58ACFA'>Combo Sequence : Q-W in 2 seconds</font>\nAssassin prepares for the secret technique, which activates on next base attack or upon executing counter. Upon activation, Assassin teleports to the rear of attacker, <font color='#FF3399'>knocking it into air</font> and strikes it 5 times, followed by Tsubame Gaeshi of current level. Assassin is invulnerable in mid-air."
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_Lore"	"The swordplay ultimatum unravels."
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_duration"	"COUNTER DURATION:"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_threshold"	"COUNTER THRESHOLD:"
+		"DOTA_Tooltip_Ability_false_assassin_tsubame_mai_slash_amount"	"SLASH AMOUNT:"
+		"DOTA_Tooltip_ability_false_assassin_tsubame_mai_slash_damage_percentage"	"%SLASH DAMAGE:"
+
+		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye"				"Improve Mind's Eye"
+		"DOTA_Tooltip_ability_false_assassin_attribute_improve_minds_eye_Description"	"Increases AGI ratio of Mind's Eye."
+		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye_agi_ratio"	"AGI RATIO:"
+		"DOTA_Tooltip_Ability_false_assassin_attribute_improve_minds_eye_agi_ratio_revoked"		"AGI RATIO AGAINST REVOKED ENEMY:"
+
+        "DOTA_Tooltip_Ability_diarmuid_double_spearsmanship"     "Double Spearsmanship"
+        "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_Description" "Lancer's mastery in double spear allows him to attack relentlessly with duel wielding, granting a chance to do one additional attack."
+        "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_proc_chance"    "DOUBLE ATTACK CHANCE:"
+        "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_Lore"     ""
+        
+		"DOTA_Tooltip_Ability_diarmuid_attribute_minds_eye"                           "Mind's Eye"
+        "DOTA_Tooltip_ability_diarmuid_attribute_minds_eye_Description"       "<font color='#58ACFA'>Master Mana Required : 12</font>\nIncreases Lancer's vision range, and grants vision over obstacles."
+        
+		//====================================
+		// Shard on the ground
+		//===================================
+		"DOTA_Tooltip_ability_item_shard_drop"	"Immaterialized Shard"
+		"DOTA_Tooltip_ability_item_shard_drop_Description"	"Pick this item up to uncover one of Shards as reward."

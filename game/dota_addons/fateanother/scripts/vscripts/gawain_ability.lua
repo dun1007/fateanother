@@ -29,7 +29,8 @@ function OnIRTickAlly(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
-	target:SetHealth(target:GetHealth() + keys.Damage/5)
+	target:Heal(keys.Damage/5, caster)
+	--target:SetHealth(target:GetHealth() + keys.Damage/5)
 	if caster.IsSunlightAcquired then
 		target:SetMana(target:GetMana() + keys.Damage/5)
 	end
@@ -189,12 +190,12 @@ function OnGalatineStart(keys)
 			-- Explosion on allies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-				v:SetHealth(v:GetHealth() + keys.Damage * 33/100)
+				v:Heal(v:GetHealth() + keys.Damage * 33/100, caster)
 				if caster.IsSunlightAcquired then
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
 						if healTimer > 3 then return end
-						v:SetHealth(v:GetHealth() + keys.Damage*11/100)
+						v:Heal(v:GetHealth() + keys.Damage * 11/100, caster)
 						healTimer = healTimer + 1
 						return 1.0
 					end)
@@ -389,6 +390,9 @@ function OnSupernovaStart(keys)
 		end
 	end) 
 	target:EmitSound("Hero_Enigma.Black_Hole")
+	Timers:CreateTimer(8.0, function()
+		StopSoundEvent("Hero_Enigma.Black_Hole", target)
+	end)
 	target:EmitSound("DOTA_Item.BlackKingBar.Activate")
 end
 
@@ -462,11 +466,11 @@ function GenerateArtificialSun(caster, location)
 		artSun.IsAttached = true
 
 		local targets = FindUnitsInRadius(caster:GetTeam(), location, nil, 666, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false) 
-		print("finding targets")
+		--print("finding targets")
 		if #targets == 0 then
 			artSun.IsAttached = false
 		else
-			print("found target " .. targets[1]:GetUnitName())
+			--print("found target " .. targets[1]:GetUnitName())
 			artSun.AttachTarget = targets[1]
 		end
 	end
@@ -524,7 +528,7 @@ function OnMeltdownStart(keys)
 				end
 				StopSoundOn("Hero_DoomBringer.ScorchedEarthAura", v)
 			end)
-			print("found sun")
+			--print("found sun")
 		end
 	end
 end
@@ -533,9 +537,9 @@ function OnMeltdownThink(keys)
 	local caster = keys.caster
 	local target = keys.target
 	if target.MeltdownCounter == nil then 
-		target.MeltdownCounter = 9
+		target.MeltdownCounter = 15
 	else
-		target.MeltdownCounter = target.MeltdownCounter - 1
+		target.MeltdownCounter = target.MeltdownCounter - 2
 	end
 	print(target.MeltdownCounter)
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
@@ -556,7 +560,7 @@ function OnSunCleanup(keys)
 end
 
 function GawainCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gawain_invigorating_ray") and caster:FindAbilityByName("gawain_suns_embrace"):IsCooldownReady() and caster:FindAbilityByName("gawain_supernova"):IsCooldownReady() then
 			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
 			Timers:CreateTimer({

@@ -1,0 +1,5 @@
+		"DOTA_Tooltip_modifier_fiery_heaven_indicator"                                    "咒相炎天计数器"
+		"DOTA_Tooltip_modifier_frigid_heaven_indicator"                                   "咒相冰天计数器"
+		"DOTA_Tooltip_modifier_gust_heaven_indicator"                                     "咒相密天计数器"
+		"DOTA_Tooltip_modifier_void_cleft_indicator"                                      "咒相裂天计数器"
+        "DOTA_Tooltip_Ability_tamamo_amaterasu"     "水天日光天照八野镇石"

@@ -76,6 +76,21 @@ function OnDSStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 end
 
+function OnDSLanded(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	if not caster.bIsDoubleAttackOnCD then
+		Timers:CreateTimer(0.033, function()
+			caster:PerformAttack(target, true, true, true, true, false)
+			caster.bIsDoubleAttackOnCD = true
+			Timers:CreateTimer(0.066, function()
+				caster.bIsDoubleAttackOnCD = false
+			end)
+		end)
+	end
+end
+
 function OnRampantWarriorStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -168,7 +183,7 @@ function OnBuidheStart(keys)
 	end)
 
 	if caster.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_dearg"):IsCooldownReady() and caster:GetMana() >= 550 then
-		print("Double spear activated")
+		--print("Double spear activated")
 		local dearg = caster:FindAbilityByName("diarmuid_gae_dearg")
 		local minDamage = dearg:GetLevelSpecialValueFor("min_damage", dearg:GetLevel()-1)
 		local maxDamage = dearg:GetLevelSpecialValueFor("max_damage", dearg:GetLevel()-1)
@@ -197,8 +212,9 @@ function OnBuidheOwnerDeath(keys)
 end
 
 function OnBuidheBearerDeath(keys)
-	local caster = keys.caster
-	print(caster:GetName())
+	--PrintTable(keys)
+	local unit = keys.unit
+	unit:RemoveModifierByName("modifier_gae_buidhe")
 end
 
 function OnDeargStart(keys)
@@ -334,6 +350,8 @@ function OnMindEyeAcquired(keys)
     hero.IsMindEyeAcquired = true
     hero:AddAbility("diarmuid_minds_eye") 
     hero:FindAbilityByName("diarmuid_minds_eye"):SetLevel(1)
+    hero:SetDayTimeVisionRange(1100)
+    hero:SetNightTimeVisionRange(1100)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -363,7 +381,7 @@ function OnDoubleSpearAcquired(keys)
 end
 
 function DiarmuidCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("diarmuid_love_spot") and caster:FindAbilityByName("diarmuid_double_spearsmanship"):IsCooldownReady() and caster:FindAbilityByName("diarmuid_rampant_warrior"):IsCooldownReady()  then
 			caster:SwapAbilities("diarmuid_double_spearsmanship", "diarmuid_rampant_warrior", false, true) 
 			Timers:CreateTimer({

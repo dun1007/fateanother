@@ -572,7 +572,7 @@ function OnAOTKStart(keys)
 	for i=1, #aotkTargets do
 		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(aotkTargets[i]) -- Disjoint particles
-			if aotkTargets[i]:HasModifier("jump_pause") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
+			if aotkTargets[i]:HasModifier("jump_pause") or aotkTargets[i]:HasModifier("spawn_invulnerable") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
 				print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(aotkTargets, i)
 			end
@@ -603,14 +603,14 @@ function OnAOTKStart(keys)
 	local unseen = truesightdummy:FindAbilityByName("dummy_unit_passive")
 	unseen:SetLevel(1)
 	-- spawn sight dummy for enemies
-	local enemyTeamNumber = 0
+	--[[local enemyTeamNumber = 0
 	if caster:GetTeamNumber() == 0 then enemyTeamNumber = 1 end
 	local truesightdummy2 = CreateUnitByName("sight_dummy_unit", aotkCenter, false, keys.caster, keys.caster, enemyTeamNumber)
 	truesightdummy2:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
 	truesightdummy2:SetDayTimeVisionRange(2500)
 	truesightdummy2:SetNightTimeVisionRange(2500)
 	local unseen2 = truesightdummy2:FindAbilityByName("dummy_unit_passive")
-	unseen2:SetLevel(1)
+	unseen2:SetLevel(1)]]
 
 	-- Summon soldiers
 	local marbleCenter = 0
@@ -1047,7 +1047,7 @@ function OnAnnihilateStart(keys)
 end
 
 function IskanderCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("iskander_army_of_the_king") then
 			armyUsed = true
 			armyTime = GameRules:GetGameTime()

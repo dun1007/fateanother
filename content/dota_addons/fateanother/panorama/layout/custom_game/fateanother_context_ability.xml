@@ -1,0 +1,25 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_fatepedia.css" />
+    </styles>
+    <script>
+        function SkillShowTooltip() {
+            var ability_name = $.GetContextPanel().GetAttributeString("ability_name", "");
+            $.Msg(ability_name);
+            $.DispatchEvent("DOTAShowAbilityTooltip", $.GetContextPanel(), ability_name);
+        }
+        function SkillHideTooltip() {
+            $.DispatchEvent("DOTAHideAbilityTooltip");
+        }
+        (function () {
+            var aid = $.GetContextPanel().GetAttributeString("ability_name", "");
+            $("#Icon").abilityname = aid;
+        })();
+    </script>
+    <Panel class="HeroSelectSkill">
+        <Button hittest="true" onmouseover="SkillShowTooltip()" onmouseout="SkillHideTooltip()" >
+            <DOTAAbilityImage hittest="true" id="Icon" abilityname="saber_invisible_air"/>
+        </Button>
+    </Panel>
+</root>

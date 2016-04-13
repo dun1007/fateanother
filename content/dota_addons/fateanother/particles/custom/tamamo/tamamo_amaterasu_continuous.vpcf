@@ -132,4 +132,10 @@
 			m_flEmitRate = 50.000000
 		},
 	]
+	m_Children =
+	[
+		{
+			m_ChildRef = resource:"particles/custom/tamamo/tamamo_amaterasu_border.vpcf"
+		},
+	]
 }

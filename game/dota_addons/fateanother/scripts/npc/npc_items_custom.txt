@@ -889,6 +889,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"Model"							"models/props_gameplay/observer_ward_bundle.mdl"
 		"AbilityTextureName" "item_observer_ward"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -897,7 +898,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"1000"
+		"ItemCost"						"800"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"0"
 		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
@@ -1244,6 +1245,7 @@
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+	    "AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 	    "AbilityCooldown"				"30"
 	    "AbilityCastRange"				"20000"
 		"precache"
@@ -1385,7 +1387,8 @@
 	    "AbilityCooldown"				"30"
 	    "precache"
 	    {
-			"particle"			"particles/custom/generic/fate_green_shield.vpcf"
+			"particle"			"particles/custom/item/item_b_scroll_shield.vpcf"
+			"particle"			"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
 	    }
 	    "AbilitySpecial"
 		{
@@ -1415,8 +1418,17 @@
 	    {
 	    	"modifier_b_scroll"
 	    	{
-				"EffectName"	"particles/custom/generic/fate_green_shield.vpcf"
+				"EffectName"	"particles/custom/item/item_b_scroll_shield.vpcf"
 				"EffectAttachType"	"follow_origin"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
 	    		"Duration" "20.0"
 	    	}
 	    }
@@ -1466,6 +1478,7 @@
 	    "precache"
 	    {
 	    	"particle"		"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+	    	"particle"		"particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf"
 	    	"soundfile"				"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 	    }
 	    "AbilitySpecial"
@@ -1502,6 +1515,15 @@
 	    	{
 	    		"Duration"		"10.0"
 				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
 	    		"Properties"
 	    		{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
@@ -2197,7 +2219,7 @@
 	    "ID"           "1129"
 	    "BaseClass"    "item_datadriven"
 	    "AbilityTextureName" "shard_of_anti_magic"
-	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Model"        "models/props_gameplay/gem01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
 
@@ -2269,7 +2291,7 @@
 	    "ID"           "1130"
 	    "BaseClass"    "item_datadriven"
 	    "AbilityTextureName" "shard_of_replenishment"
-	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Model"        "models/props_gameplay/gem01.vmdl" 
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
 
@@ -2440,7 +2462,7 @@
 				"var_type"			"FIELD_INTEGER"
 				"movespeed"			"150"
 			}	
-			"01"
+			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"attackspeed"			"50"
@@ -2541,6 +2563,11 @@
 
 		"AbilitySpecial"
 		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"delay"			"2.0"
+			}	
 		}
 
 	    "OnSpellStart"
@@ -2550,8 +2577,40 @@
 				"ScriptFile"	"gille_ability"
 				"Function"		"OnHorrorTeleport"
 				"Target"		"POINT"
+				"Delay"			"%delay"
 			}
 	    }
 
+	}
+
+	"item_shard_drop" 
+	{
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1134"
+		"AbilityName"					"item_treasure_chest"
+		"BaseClass"						"item_bag_of_gold"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_ITEM"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"Model"							"models/props_gameplay/treasure_chest001.vmdl"
+		"ItemKillable"					"0"
+		
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"100"
+		"AbilityCastPoint"				"0.0"
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"99999"
+		"ItemPurchasable"				"0"
+		"ItemShopTags"					"consumable"
+		"ItemQuality"					"consumable"
+		"ItemStackable"					"1"
+		"ItemShareability"				"ITEM_FULLY_SHAREABLE"
+		"ItemPermanent"					"0"
+		"ItemInitialCharges"			"0"
+		"ItemKillable"					"0"
+		"ItemCastOnPickup"				"1"
 	}
 }

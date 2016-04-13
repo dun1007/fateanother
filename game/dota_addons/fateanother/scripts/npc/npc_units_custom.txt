@@ -752,6 +752,63 @@
 		"VisionNighttimeRange"		"350"		// Range of vision at night time.
 	}
 
+	"jeanne_spirit_form"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/jeanne/jeanne.vmdl"
+		"ModelScale"				"3.0"
+		"Level"						"1"
+		"HealthBarOffset"			"140"
+		"SoundSet"					"Hero_mirana"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					"jeanne_gods_resolution"	 
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"5"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"125"
+		"AttackDamageMin"				"57"
+		"AttackDamageMax"				"63"
+		"AttackRate"					"1.25"
+		"AttackAcquisitionRange"		"3000"
+		"AttackRange"					"150"
+		
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"CollisionSize"				"32"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"320"
+		"MovementTurnRate"			"0.8"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"9999999"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1500"
+		"VisionNighttimeRange"		"1500"
+	}
+
 	"fa_clone"
 	{
 		// General
@@ -1431,9 +1488,9 @@
 		"Ability1"					"gille_tentacle_hook"	 
 		"Ability2"					"gille_tentacle_wrap"
 		"Ability3"					"gille_subterranean_skewer"
-		"Ability4"					"gille_tentacle_of_destruction"
+		"Ability4"					"fate_empty1"
 		"Ability5"					"gille_gigantic_horror_passive"
-		"Ability6"					""
+		"Ability6"					"gille_tentacle_of_destruction"
 		
 		// Armor
 		//----------------------------------------------------------------
@@ -1654,6 +1711,43 @@
 
 	}
 
+	"jeanne_banner"
+	{
+		"Model"				"models/props_teams/banner_tintable.vmdl"
+		"BaseClass"			"npc_dota_creature"
+		"ModelScale"			"1.0"
+		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+
+		"Ability1"					""			// Ability 1
+		"Ability2"					""			// Ability 2
+		"Ability3"					""			// Ability 3
+		"Ability4"					""			// Ability 4
+
+		"ArmorPhysical"				"-5"			// Physical protection.
+
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
+		"MovementSpeed"				"0"		// Speed.
+		"MovementTurnRate"			"100"		// Turning rate.
+
+		"AttackCapabilities"			"DOTA_UNIT_CAP_NO_ATTACK"	
+		"AttackRange"					"0"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
+		"AttackRate"					"0"
+
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"500"		// Base health.
+		"StatusHealthRegen"			"0"		// Health regeneration rate.
+		"StatusMana"				"0"			// Base mana.
+		"StatusManaRegen"			"0"			// Mana regeneration rate.	
+
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"0"		// Range of vision during day light.
+		"VisionNighttimeRange"		"0"		// Range of vision at night time.
+
+	}
 
 	"gawain_galatine_dummy"
 	{
@@ -1888,19 +1982,18 @@
 
 		// Abilities
 		//----------------------------------------------------------------
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"cmd_seal_1"			// Ability 1.
 		"Ability2"					"cmd_seal_2"			// Ability 2.
 		"Ability3"					"cmd_seal_3"			// Ability 3.	
-		"Ability4"					"cmd_seal_4"			
-		"Ability5"					"master_passive"			
-		"Ability6"					""
-		"Ability7"					""
-		"Ability8"					""
-		"Ability9"					"master_shard_of_avarice"
-		"Ability10"					"master_shard_of_anti_magic"
-		"Ability11"					"master_shard_of_replenishment"
-		"Ability12"					"master_shard_of_prosperity"
+		"Ability4"					"fate_empty7"			
+		"Ability5"					"fate_empty8"			
+		"Ability6"					"cmd_seal_4"
+		"Ability7"					"master_shard_of_avarice"
+		"Ability8"					"master_shard_of_anti_magic"
+		"Ability9"					"master_shard_of_replenishment"
+		"Ability10"					"master_shard_of_prosperity"
+		"Ability11"					"master_passive"
 
 		// Armor
 		//----------------------------------------------------------------

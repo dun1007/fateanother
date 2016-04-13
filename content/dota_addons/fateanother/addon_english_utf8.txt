@@ -2881,8 +2881,10 @@
 		"Fate_Timer_30_Alert"	"30 seconds remaining!"
 		"Fate_Timer_10_Alert"	"10 seconds remaining!"
 		"Fate_Timer_Timeout"	"Timeout!"
-		"Fate_Timer_10minute"	"<font color='#58ACFA'>10 minutes passed.</font> The Holy Grail's blessing <font color='#58ACFA'>restore all Master to full health and grant 10 mana to them.</font>"
+		"Fate_Timer_Shard_Drop_Alert"	"<font color='#58ACFA'>Shard of Holy Grail </font> inbound! It will drop onto random location within center area."
+		"Fate_Timer_10minute"	"<font color='#58ACFA'>10 minutes passed.</font> The Holy Grail's blessing <font color='#58ACFA'>restore all Master to full health and grant 15 mana to them.</font>"
 		"Fate_Timer_10minute_quest"	"Time Remaining until Next Holy Grail's Blessing"
+
 
 		"Fate_Round_Winner_1"	"The Radiant has won the round!"
 		"Fate_Round_Winner_2"	"The Dire has won the round!"

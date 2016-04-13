@@ -216,41 +216,19 @@ end
 
 function OnGOBStart(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 	local duration = keys.Duration
 	local frontward = caster:GetForwardVector()
 	local casterloc = caster:GetAbsOrigin()
-	caster.GOBLocation = casterloc
-	caster.IsGOBUp = true
-	GilgaCheckCombo(caster, keys.ability)
-	EmitSoundOnClient("Saber_Alter.Derange", caster:GetPlayerOwner())
-	EmitSoundOnClient("Gilgamesh.GOB", caster:GetPlayerOwner())
-	EmitSoundOnClient("Archer.UBWAmbient", caster:GetPlayerOwner())
-	
-	-- Create particle
-	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() - 250 * frontward, false, caster, caster, caster:GetTeamNumber())
-	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
-	dummy:SetForwardVector( caster:GetForwardVector() )
-	
-	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
-	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 400, 400, 400 ) )
-	
-	Timers:CreateTimer( duration, function()
-			ParticleManager:DestroyParticle( portalFxIndex, false )
-			ParticleManager:ReleaseParticleIndex( portalFxIndex )
-			dummy:RemoveSelf()
-			return nil
-		end
-	)
-	
+
 	local gobWeapon = 
 	{
-		Ability = keys.ability,
+		Ability = ability,
         EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
-        iMoveSpeed = 1300,
-        vSpawnOrigin = casterloc - 150 * frontward,
-        fDistance = 1300,
+        iMoveSpeed = 1000,
+        vSpawnOrigin = Vector(0,0,0),
+        fDistance = 1000,
         fStartRadius = 100,
         fEndRadius = 100,
         Source = caster,
@@ -259,49 +237,97 @@ function OnGOBStart(keys)
         iUnitTargetTeam = DOTA_UNIT_TARGET_TEAM_ENEMY,
         iUnitTargetFlags = DOTA_UNIT_TARGET_FLAG_NONE,
         iUnitTargetType = DOTA_UNIT_TARGET_HERO + DOTA_UNIT_TARGET_BASIC,
-        fExpireTime = GameRules:GetGameTime() + 15.0,
+        fExpireTime = GameRules:GetGameTime() + duration + 1.0,
 		bDeleteOnHit = true,
-		vVelocity = frontward * 1300
+		vVelocity = nil
 	}
 
-
-	local leftvec = Vector(-frontward.y, frontward.x, 0)
-	local rightvec = Vector(frontward.y, -frontward.x, 0)
-	local projectile = nil
-	local gobCount = 0
-
-    Timers:CreateTimer(function()
-    	if gobCount > duration then caster.IsGOBUp = false return end
-
-    	local random1 = RandomInt(0, 400) -- position of weapon spawn
-		local random2 = RandomInt(0,1) -- whether weapon will spawn on left or right side of hero
-
-    	if random2 == 0 then 
-    		gobWeapon.vSpawnOrigin = casterloc + leftvec*random1
-    	else 
-    		gobWeapon.vSpawnOrigin = casterloc + rightvec*random1
-    	end
-    	projectile = ProjectileManager:CreateLinearProjectile(gobWeapon)
-    	gobCount = gobCount + 0.15
-      	return 0.15
-    end
-    )
-
+	--if caster:HasModifier("modifier_gob_thinker") then caster:RemoveModifierByName("modifier_gob_thinker") end
+	GilgaCheckCombo(caster, keys.ability)
+	CreateGOB(keys, gobWeapon)
+	
+	EmitSoundOnClient("Saber_Alter.Derange", caster:GetPlayerOwner())
+	EmitSoundOnClient("Gilgamesh.GOB", caster:GetPlayerOwner())
+	EmitSoundOnClient("Archer.UBWAmbient", caster:GetPlayerOwner())
 end
 
+function CreateGOB(keys, proj)
+	local caster = keys.caster
+	local ability = keys.ability
+	local targetPoint = keys.target_points[1]
+	local duration = keys.Duration
+	local frontward = caster:GetForwardVector()
+	local casterloc = caster:GetAbsOrigin()
+
+
+
+	local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() - 250 * frontward, false, caster, caster, caster:GetTeamNumber())
+	dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1) 
+	dummy:SetForwardVector(caster:GetForwardVector())
+	
+	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
+	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 400, 400, 400 ) )
+
+	dummy.GOBProjectile = proj
+	dummy.GOBParticle = portalFxIndex
+	caster.LatestGOB = dummy
+	ability:ApplyDataDrivenModifier(caster, dummy, "modifier_gob_thinker", {})
+end
+
+function OnGOBEnd(keys)
+	local caster = keys.caster
+	local unit = keys.target
+	local ability = keys.ability
+	ParticleManager:DestroyParticle( unit.GOBParticle, false )
+	ParticleManager:ReleaseParticleIndex( unit.GOBParticle )
+	unit:RemoveSelf()
+end
+
+function OnGOBThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local unit = keys.target
+	local origin = unit:GetAbsOrigin()
+	local frontward = unit:GetForwardVector()
+	local toggleAbil = caster:FindAbilityByName("gilgamesh_gate_of_babylon_toggle")
+	if caster.IsSumerAcquired and unit == caster.LatestGOB then
+		origin = caster:GetAbsOrigin()
+		frontward = caster:GetForwardVector()
+		caster.LatestGOB:SetAbsOrigin(caster:GetAbsOrigin() - caster:GetForwardVector() * 150)
+		caster.LatestGOB:SetForwardVector( caster:GetForwardVector() )
+	end
+
+	if not caster.IsSumerAcquired or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
+		local projectile = unit.GOBProjectile
+		local leftvec = Vector(-frontward.y, frontward.x, 0)
+		local rightvec = Vector(frontward.y, -frontward.x, 0)
+		local gobCount = 0
+
+		local random1 = RandomInt(0, 400) -- position of weapon spawn
+		local random2 = RandomInt(0,1) -- whether weapon will spawn on left or right side of hero
+
+		if random2 == 0 then 
+			projectile.vSpawnOrigin = origin + leftvec*random1
+		else 
+			projectile.vSpawnOrigin = origin + rightvec*random1
+		end
+		projectile.vVelocity = frontward * 1000
+		ProjectileManager:CreateLinearProjectile(projectile)
+	end
+end
 
 function OnGOBHit(keys)
 	local target = keys.target
 	local caster = keys.caster
+	local damage = keys.Damage
+	if caster.IsSumerAcquired then
+		damage = damage + caster:GetAttackDamage()*0.5
+	end
 	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*2.5 end
-	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, keys.target)
 	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin())
-	-- Destroy particle after delay
-	Timers:CreateTimer( 1.0, function()
-		ParticleManager:DestroyParticle( particle, false )
-		ParticleManager:ReleaseParticleIndex( particle )
-	end)
 	keys.target:EmitSound("Hero_Juggernaut.OmniSlash.Damage")
 end
 
@@ -522,7 +548,7 @@ function OnMaxEnumaHit(keys)
 end
 
 function GilgaCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") and caster:FindAbilityByName("gilgamesh_enuma_elish"):IsCooldownReady() and caster:FindAbilityByName("gilgamesh_max_enuma_elish"):IsCooldownReady() then
 			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
 			Timers:CreateTimer({
@@ -552,6 +578,8 @@ function OnPowerOfSumerAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsSumerAcquired = true
 
+	hero:SwapAbilities("gilgamesh_gate_of_babylon_toggle", "gilgamesh_golden_rule", true, true)
+	hero:FindAbilityByName("gilgamesh_gate_of_babylon_toggle"):ToggleAbility()
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

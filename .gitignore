@@ -223,7 +223,7 @@ pip-log.txt
 *.vsnd_c
 *.vsndevts_c
 *.vmat_c
-*.vtex_c
+//*.vtex_c
 *.vmesh_c
 *.vmdl_c
 *.vanim_c
@@ -235,5 +235,5 @@ pip-log.txt
 content/dota_addons/fateanother/particles/*
 !content/dota_addons/fateanother/particles/custom/
 content/dota_addons/fateanother/materials/*
-content/dota_addons/fateanother/maps/fate_raw.vmap
 settings.kv
+game/dota_addons/fateanother/patch draft.txt

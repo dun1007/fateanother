@@ -152,13 +152,14 @@ end
 function OnTerritoryPingThink(keys)
 	local caster = keys.caster
 	local enemyTeamNumber = 0
-    LoopOverPlayers(function(ply, plyID)
-        if ply:GetAssignedHero():GetTeamNumber() ~= caster:GetTeamNumber() then
-        	enemyTeamNumber = ply:GetAssignedHero():GetTeamNumber()
+	--[[
+    LoopOverPlayers(function(ply, plyID, playerHero)
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        	enemyTeamNumber = playerHero:GetTeamNumber()
         	return
         end
     end)
-	MinimapEvent( enemyTeamNumber, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+	MinimapEvent( enemyTeamNumber, caster, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )]]
 end
 
 --[[
@@ -861,7 +862,6 @@ function OnAncientStart(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-
 	caster:SwapAbilities("caster_5th_wall_of_flame", a1:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) 
@@ -1164,6 +1164,9 @@ function OnHGStart(keys)
 	--EmitGlobalSound("Caster.Hecatic") 
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", descendTime)
+	Timers:CreateTimer(descendTime, function()
+		giveUnitDataDrivenModifier(caster, caster, "jump_pause_postdelay", 0.15)
+	end)
 	local fly = Physics:Unit(caster)
 	caster:PreventDI()
 	caster:SetPhysicsFriction(0)
@@ -1349,7 +1352,7 @@ function OnHGPStart(keys)
 end
 
 function CasterCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("caster_5th_rule_breaker") and caster:FindAbilityByName("caster_5th_hecatic_graea"):IsCooldownReady() and caster:FindAbilityByName("caster_5th_hecatic_graea_powered"):IsCooldownReady() then
 			caster:SwapAbilities("caster_5th_hecatic_graea", "caster_5th_hecatic_graea_powered", false, true) 
 			caster.IsHGComboEnabled = true

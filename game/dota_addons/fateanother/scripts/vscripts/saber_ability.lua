@@ -152,6 +152,7 @@ function OnCaliburnHit(keys)
 	end
 	local aoedmg = keys.Damage * keys.AoEDamage
 	DoDamage(caster, target , keys.Damage - aoedmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+	giveUnitDataDrivenModifier(caster, target, "modifier_stunned", 0.2)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), target:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -217,7 +218,7 @@ function OnExcaliburStart(keys)
 	end)
 
 	-- Create linear projectile
-	Timers:CreateTimer(2.5, function()
+	Timers:CreateTimer(keys.Delay - 0.3, function()
 		if caster:IsAlive() then
 			excal.vSpawnOrigin = caster:GetAbsOrigin() 
 			excal.vVelocity = caster:GetForwardVector() * keys.Speed
@@ -228,7 +229,7 @@ function OnExcaliburStart(keys)
 	
 	local casterFacing = caster:GetForwardVector()
 	-- for i=0,1 do
-		Timers:CreateTimer(2.5, function() -- Adjust 2.5 to 3.2 to match the sound
+		Timers:CreateTimer(keys.Delay - 0.3, function() -- Adjust 2.5 to 3.2 to match the sound
 			if caster:IsAlive() then
 				-- Create Particle for projectile
 				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
@@ -424,7 +425,7 @@ function AvalonOnTakeDamage(keys)
 
 	if caster.IsAvalonPenetrated then return end
 
-	if not caster:HasModifier("saber_pause") and not caster:HasModifier("modifier_max_excalibur") and caster.IsAvalonProc == true and caster.IsAvalonOnCooldown ~= true and (caster:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D() < 3000 then 
+	if not caster:HasModifier("pause_sealdisabled") and not caster:HasModifier("modifier_max_excalibur") and caster.IsAvalonProc == true and caster.IsAvalonOnCooldown ~= true and (caster:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D() < 3000 then 
 		if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
 		AvalonDash(caster, attacker, keys.Damage, keys.ability)
 		caster.IsAvalonOnCooldown = true
@@ -463,7 +464,7 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 	local casterDash = Physics:Unit(caster)
 	local distance = targetPoint - caster:GetAbsOrigin()
 
-	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.5)
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.6)
     caster:PreventDI()
     caster:SetPhysicsFriction(0)
     caster:SetPhysicsVelocity(distance:Normalized() * distance:Length2D()*2)
@@ -474,19 +475,13 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 	Timers:CreateTimer({
 		endTime = 0.5,
 		callback = function()
-		
-		-- Particles
-		--local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_impact.vpcf", PATTACH_ABSORIGIN, caster )
-		local explosionFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_explosion.vpcf", PATTACH_ABSORIGIN, caster )
-		ParticleManager:SetParticleControl( explosionFxIndex, 3, caster:GetAbsOrigin() )
-		EmitSoundOn( "Hero_EarthShaker.Fissure", caster )
-		
-		Timers:CreateTimer( 3.0, function()
-				--ParticleManager:DestroyParticle( impactFxIndex, false )
-				ParticleManager:DestroyParticle( explosionFxIndex, false )
-			end
-		)
-		
+
+	    --stop the dash
+	    caster:PreventDI(false)
+		caster:SetPhysicsVelocity(Vector(0,0,0))
+		caster:OnPhysicsFrame(nil)
+        FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
 		-- Original function
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 300
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -495,11 +490,20 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 	        v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.5})
 	    end
 
-	    --stop the dash
-	    caster:PreventDI(false)
-		caster:SetPhysicsVelocity(Vector(0,0,0))
-		caster:OnPhysicsFrame(nil)
-        FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
+		-- Particles
+		--local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_impact.vpcf", PATTACH_ABSORIGIN, caster )
+		local explosionFxIndex = ParticleManager:CreateParticle( "particles/custom/saber_avalon_explosion.vpcf", PATTACH_ABSORIGIN, caster )
+		ParticleManager:SetParticleControl( explosionFxIndex, 3, caster:GetAbsOrigin() )
+		EmitSoundOn( "Hero_EarthShaker.Fissure", caster )
+
+		
+		Timers:CreateTimer( 3.0, function()
+				--ParticleManager:DestroyParticle( impactFxIndex, false )
+				ParticleManager:DestroyParticle( explosionFxIndex, false )
+			end
+		)
+		
 	end
 	})
 end
@@ -595,7 +599,7 @@ function StrikeAirPush(keys)
 end
 
 function SaberCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("saber_avalon") and caster:FindAbilityByName("saber_excalibur"):IsCooldownReady() and caster:FindAbilityByName("saber_max_excalibur"):IsCooldownReady() then
 			caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true) 
 			Timers:CreateTimer({

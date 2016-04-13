@@ -1,0 +1,21 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_config.css" />
+    </styles>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/fateanother_config.js" /> 
+    </scripts>
+    <Panel class="FateConfigRoot" hittest="false">
+        <Panel id="FateConfigBoard" hittest="false" >
+            <Panel id="FatepediaHeroesPanel" hittest="false">
+            </Panel>
+            <Panel id="FatepediaHeroesInfoPanel" hittest="false">
+            </Panel>
+        </Panel>
+        <Button id="FateConfigButton" onactivate="OnFateConfigButtonPressed()" hittest="true">
+            <Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <Label id="FateConfigButtonImageText" class="FateConfigOpenText" text="Configuration" hittest="false"/>
+        </Button>
+    </Panel>
+</root>

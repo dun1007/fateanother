@@ -96,7 +96,7 @@ LancelotAttribute = {
 	"lancelot_attribute_blessing_of_fairy",
 	"lancelot_attribute_improve_eternal",
 	"lancelot_attribute_improve_knight_of_honor",
-	"lancelot_attribute_total_assault",
+	"lancelot_attribute_eternal_flame",
 	"lancelot_nuke",
 	attrCount = 4
 }
@@ -159,7 +159,7 @@ GawainAttribute = {
 
 TamamoAttribute = {
 	"tamamo_attribute_spirit_theft",
-	"tamamo_attribute_severed_fate",
+	"tamamo_attribute_mystic_shackle",
 	"tamamo_attribute_tamamo_escape",
 	"tamamo_attribute_witchcraft",
 	"tamamo_polygamist_castration_fist",
@@ -172,6 +172,15 @@ LiAttribute = {
 	"lishuwen_attribute_dual_class",
 	"lishuwen_attribute_furious_chain",
 	"lishuwen_raging_dragon_strike",
+	attrCount = 4
+}
+
+JeanneAttribute = {
+	"jeanne_attribute_identity_discernment",
+	"jeanne_attribute_improve_saint",
+	"jeanne_attribute_punishment",
+	"jeanne_attribute_divine_symbol",
+	"jeanne_combo_la_pucelle",
 	attrCount = 4
 }
 
@@ -458,6 +467,8 @@ function FindAttribute(name)
         attributes = TamamoAttribute
     elseif name == "npc_dota_hero_bloodseeker" then
     	attributes = LiAttribute
+    elseif name == "npc_dota_hero_mirana" then
+    	attributes = JeanneAttribute
     end
     return attributes
 end 
@@ -791,6 +802,7 @@ function OnAvariceAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Avarice shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return 
@@ -821,12 +833,15 @@ function OnAvariceAcquired(keys)
 		print("Distributing " .. goldperperson .. " per person")
 		teamTable[i]:ModifyGold(goldperperson, true, 0)
 	end
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 function OnAMAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("AMP shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
@@ -835,28 +850,31 @@ function OnAMAcquired(keys)
 	end
 
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
-	
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 function OnReplenishmentAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Replenish shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
 	end
-
 	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
-	
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
 function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	print("Prosperity shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
@@ -868,8 +886,10 @@ function OnProsperityAcquired(keys)
 	local master2 = hero.MasterUnit2
 
 	for i=1,5 do
-		if hero:GetLevel() ~= 24 then
-			hero:HeroLevelUp(true)
+		local level = hero:GetLevel()
+		if level ~= 24 then
+			hero:AddExperience(_G.XP_PER_LEVEL_TABLE[level], false, false)
+			--hero:AddExperience(XP_BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()]/realHeroCount, false, false)
 		else
 			master:SetMana(master:GetMana()+3)
 			master2:SetMana(master:GetMana())		
@@ -884,11 +904,10 @@ function OnProsperityAcquired(keys)
 	master:SetHealth(master:GetHealth()+1)
 	master2:SetMaxHealth(master:GetMaxHealth()) 
 	master2:SetHealth(master:GetHealth())
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
 end
 
-function test(keys)
-	print("detection started")
-end
 
 function OnPresenceDetectionThink(keys)
 	local caster = keys.caster
@@ -925,41 +944,43 @@ function OnPresenceDetectionThink(keys)
 	-- Do the ping for everyone with IsPresenceDetected marked as true
 	for i=1, #newEnemyTable do
 		local enemy = newEnemyTable[i]
+		if enemy:IsRealHero() and not enemy:IsIllusion() then
 
-		-- Filter TA from ping if he has improved presence concealment attribute
-		if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy.IsPCImproved  then 
-			if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
-		end
-
-		if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
-			--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
-			MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
-			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
-			local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
-
-
-			ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
-			ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
-			
-			--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
-			EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
-			-- Process Eye of Serenity attribute
-			if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
-				enemy.IsSerenityOnCooldown = true
-				Timers:CreateTimer(10.0, function() 
-					enemy.IsSerenityOnCooldown = false
-				end)					
-				FAEyeAttribute(caster, enemy)
+			-- Filter TA from ping if he has improved presence concealment attribute
+			if enemy:GetName() == "npc_dota_hero_bounty_hunter" and enemy.IsPCImproved  then 
+				if enemy:HasModifier("modifier_ta_invis") or enemy:HasModifier("modifier_ambush") then break end
 			end
-			-- Process Eye for Art attribute
-			if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster.IsEyeForArtAcquired == true then
-				local choice = math.random(1,3)
-				if choice == 1 then
-					Say(caster:GetPlayerOwner(), FindName(enemy:GetName()) .. ", dare to enter the demon's lair on your own?", true) 
-				elseif choice == 2 then
-					Say(caster:GetPlayerOwner(), "This presence...none other than " .. FindName(enemy:GetName()) .. "!", true) 
-				elseif choice == 3 then
-					Say(caster:GetPlayerOwner(), "Come forth, " .. FindName(enemy:GetName()) .. "...The fresh terror awaits you!", true) 
+
+			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
+				--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
+				MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
+				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
+
+
+				ParticleManager:SetParticleControl(dangerping, 0, enemy:GetAbsOrigin())
+				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
+				
+				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
+				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+				-- Process Eye of Serenity attribute
+				if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
+					enemy.IsSerenityOnCooldown = true
+					Timers:CreateTimer(10.0, function() 
+						enemy.IsSerenityOnCooldown = false
+					end)					
+					FAEyeAttribute(caster, enemy)
+				end
+				-- Process Eye for Art attribute
+				if caster:GetName() == "npc_dota_hero_shadow_shaman" and caster.IsEyeForArtAcquired == true then
+					local choice = math.random(1,3)
+					if choice == 1 then
+						Say(caster:GetPlayerOwner(), FindName(enemy:GetName()) .. ", dare to enter the demon's lair on your own?", true) 
+					elseif choice == 2 then
+						Say(caster:GetPlayerOwner(), "This presence...none other than " .. FindName(enemy:GetName()) .. "!", true) 
+					elseif choice == 3 then
+						Say(caster:GetPlayerOwner(), "Come forth, " .. FindName(enemy:GetName()) .. "...The fresh terror awaits you!", true) 
+					end
 				end
 			end
 		end
@@ -997,4 +1018,13 @@ function FAEyeAttribute(caster, enemy)
 		eyeCounter = eyeCounter + 0.2
 		return 0.2
 	end)
+end
+
+function OnHeroRespawn(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
+		caster:ModifyGold(2000, true, 0) 
+		giveUnitDataDrivenModifier(keys.caster, keys.caster, "spawn_invulnerable", 3.0)
+	end
 end

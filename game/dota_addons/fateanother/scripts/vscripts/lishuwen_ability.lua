@@ -1,6 +1,6 @@
-ATTR_NSS_BONUS_DAMAGE = 200
+ATTR_NSS_BONUS_DAMAGE = 150
 ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 5
-ATTR_AGI_RATIO = 3.0
+ATTR_AGI_RATIO = 1.6
 ATTR_MANA_REFUND = 200
 
 function OnMartialStart(keys)
@@ -187,7 +187,7 @@ function OnTigerStrike1Start(keys)
 		end
 	end
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	ability:ApplyDataDrivenModifier(caster, target, "modifier_fierce_tiger_strike_1_slow", {})
+	if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_fierce_tiger_strike_1_slow", {}) end
 	-- switch strike 1 with 2
 	caster:SwapAbilities("lishuwen_fierce_tiger_strike", "lishuwen_fierce_tiger_strike_2", false, true) 
 	caster.bIsCurrentTSCycleFinished = false
@@ -260,7 +260,7 @@ function OnTigerStrike3Start(keys)
 		end
 	end
 	DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
-	ability:ApplyDataDrivenModifier(caster, target, "modifier_fierce_tiger_strike_3_slow", {})
+	if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_fierce_tiger_strike_3_slow", {}) end
 	Timers:RemoveTimer('fierce_tiger_timer')
 	-- switch strike 1 with 2
 	caster:SwapAbilities("lishuwen_fierce_tiger_strike_3", "lishuwen_fierce_tiger_strike", false, true) 
@@ -280,6 +280,9 @@ function OnNSSStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	caster.ProcDamage = keys.ProcDamage
+	caster.ProcStunDuration = keys.ProcStunDuration
+	target.IsNSSProcReady = true
 	if caster:HasModifier("modifier_lishuwen_berserk") then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used(Berserk)" } )
 		keys.ability:EndCooldown()
@@ -321,15 +324,37 @@ function OnNSSStart(keys)
 	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
+function OnNSSTakeDamage(keys)
+	local caster = keys.caster
+	local target = keys.unit
+	local ability = keys.ability
+	local attacker = keys.attacker
+	local damage = caster.ProcDamage
+	local stunDuration = caster.ProcStunDuration
+
+	if attacker:GetName() == "npc_dota_hero_bloodseeker" and target.IsNSSProcReady then
+		target.IsNSSProcReady = false
+		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = stunDuration})
+		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		Timers:CreateTimer(caster.ProcStunDuration + 0.3, function()
+			target.IsNSSProcReady = true
+		end)
+		caster.ProcDamage = caster.ProcDamage /2
+		caster.ProcStunDuration = caster.ProcStunDuration/2
+
+		target:EmitSound("hero_bloodseeker.rupture.cast")
+	end
+end
+
 function OnNSSDelayFinished(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	
-	local damage = target:GetMana() * keys.DelayedDamagePercentage/100
+	local damage = 0
+	--[[local damage = target:GetMana() * keys.DelayedDamagePercentage/100
 	if target:GetName() == "npc_dota_hero_juggernaut" or target:GetName() == "npc_dota_hero_shadow_shaman" then
 		damage = (target:GetMaxHealth() - target:GetHealth()) * keys.DelayedDamagePercentage/100
-	end
+	end]]
 
 
 	if target:HasModifier("modifier_mark_of_fatality") then
@@ -337,10 +362,10 @@ function OnNSSDelayFinished(keys)
 		local currentStack = target:GetModifierStackCount("modifier_mark_of_fatality", abil)
 		damage = damage + (target:GetMaxHealth() - target:GetHealth()) * ATTR_NSS_STACK_DAMAGE_PERCENTAGE * currentStack/100
 	end
-	
-	target:SetMana(target:GetMana() - damage)
+	print("dealt "	.. damage .. " damage")
+	--target:SetMana(target:GetMana() - damage)
 	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.DelayedStunDuration})
+	--target:AddNewModifier(caster, target, "modifier_stunned", {Duration = keys.DelayedStunDuration})
 
 	local manaBurnFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf", PATTACH_ABSORIGIN, target)
 	target:EmitSound("Hero_NyxAssassin.ManaBurn.Target")
@@ -469,6 +494,11 @@ vectors = {
 	Vector(500, 500, 500),
 	Vector(-500,-500,300),
 	Vector(-300, 400, 500),
+	Vector(500, 500, 500),
+	Vector(-500,-500,300),
+	Vector(500,-500,400),
+	Vector(-300, 400, 500),
+	Vector(0,-500, 500),
 	Vector(0,0, 0)
 }
 
@@ -500,22 +530,31 @@ function OnDragonStrike3Start(keys)
 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", keys.KnockupDuration)
 
-	Timers:CreateTimer(0.4, function()
-		if counter == 10 then 
+	Timers:CreateTimer(0.2, function()
+		if counter == 15 then 
 			FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 			return 
 		end
 
 		local target = nil
-		for k,v in pairs(targets) do
-			if v.nDragonStrikeComboCount < 4 then
-				v.nDragonStrikeComboCount = v.nDragonStrikeComboCount + 1
-				target = v
+
+		for i=1, #targets do
+			local curIndex = math.random(#targets)
+			if targets[curIndex].nDragonStrikeComboCount < 8 then
+				targets[curIndex].nDragonStrikeComboCount = targets[curIndex].nDragonStrikeComboCount + 1
+				target = targets[curIndex]
 				break
 			end
 		end
+		--[[for k,v in pairs(targets) do
+			if v.nDragonStrikeComboCount < 8 then
+				v.nDragonStrikeComboCount = v.nDragonStrikeComboCount + 1
+				target = v
+			end
+		end]]
 		
 		if target ~= nil then
+			--print(target:GetName() .. counter)
 			DoCompositeDamage(caster, target, keys.Damage, DAMAGE_TYPE_COMPOSITE, 0, keys.ability, false)
 			ApplyMarkOfFatality(caster, target)
 		end
@@ -537,7 +576,7 @@ function OnDragonStrike3Start(keys)
 		beginpoint = newpoint
 		caster:EmitSound("Hero_Tusk.WalrusPunch.Target")
 		counter = counter + 1
-		return 0.15
+		return 0.08
 	end)
 
 	caster:EmitSound("Hero_Earthshaker.Pick")
@@ -553,7 +592,7 @@ function OnDragonStrike3Start(keys)
 end
 
 function LishuwenCheckCombo(caster, ability)
-    if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+    if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
         if ability == caster:FindAbilityByName("lishuwen_concealment") then
             QUsed = true
             Qtime = GameRules:GetGameTime()

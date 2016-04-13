@@ -325,6 +325,8 @@ function SendVotes( )
 {
 	var bShowSpectatorTeam = false;
 	var bAutoAssignTeams = true;
+	var gameMap = null;
+	var voteOption1, voteOption2, voteOption3, voteOption4, voteOption5 = 0
 
 	// get any custom config
 	if ( GameUI.CustomUIConfig().team_select )
@@ -341,6 +343,38 @@ function SendVotes( )
 	}
 
 	$( "#TeamSelectContainer" ).SetAcceptsFocus( true ); // Prevents the chat window from taking focus by default
+	$( "#RoundButton1" ).checked = true;
+	/*gameMap = Game.GetMapInfo().map_display_name
+	if (gameMap == "fate_elim_6v6") { 
+		voteOption1 = 12
+		voteOption2 = 10
+		voteOption3 = 8
+		voteOption4 = 6
+		voteOption5 = 4
+	} 
+	else if (gameMap == "fate_ffa") {
+		voteOption1 = 35
+		voteOption2 = 30
+		voteOption3 = 25
+		voteOption4 = 20
+		voteOption5 = 15
+	}
+	else if (gameMap == "fate_trio_rumble_3v3v3v3") {
+		voteOption1 = 20
+		voteOption2 = 17
+		voteOption3 = 14
+		voteOption4 = 11
+		voteOption5 = 8
+	}
+	$.Msg($( "#VoteGroupRound" ).checked);
+	$.Msg($( "#RoundButton1" ).checked);
+	$( "#RoundButton1" ).checked = true;
+	$( "#RoundButton1" ).value = voteOption1.toString();
+	$( "#RoundButton2" ).value = voteOption2.toString();
+	$( "#RoundButton3" ).value = voteOption3.toString();
+	$( "#RoundButton4" ).value = voteOption4.toString();
+	$( "#RoundButton5" ).value = voteOption5.toString();*/
+
 	var teamsListRootNode = $( "#TeamsListRoot" );
 
 	// Construct the panels for each team

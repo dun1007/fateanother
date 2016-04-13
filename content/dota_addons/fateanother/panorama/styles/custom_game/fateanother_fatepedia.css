@@ -1,0 +1,195 @@
+.FatepediaRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 26.5%;
+    margin-left: 0%;
+    flow-children: down; 
+}
+
+.AspectRatio16x9 .FatepediaRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 26.5%;
+    margin-left: 0%;
+    flow-children: down; 
+}
+
+.AspectRatio16x10 .FatepediaRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 26.5%;
+    margin-left: 0%;
+    flow-children: down; 
+}
+
+.AspectRatio4x3 .FatepediaRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 25%;
+    margin-left: 0%;
+    flow-children: down; 
+}
+
+#FatepediaOpenButton
+{
+    width: 150px;
+    height: 40px;
+    brightness: 0.7;
+}
+
+#FatepediaBoard
+{
+    width: 850px;
+    height: 600px;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
+    //border-radius: 50px 50px 50px 50px;
+    //border:3px solid #DAA520;
+    flow-children: down;
+    overflow: scroll;
+    opacity: 0.9;
+}
+
+#FatepediaOpenButtonImage
+{
+}
+
+#FatepediaOpenButtonImageText
+{
+    horizontal-align: center;
+    vertical-align: middle;
+}
+
+.FatepediaSkillContextText
+{   
+    font-weight: bold;
+    color: white;
+    font-size: 25px;
+    text-shadow: 2px 2px 2px #000000;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
+}
+
+#FatepediaHeroName
+{   
+    font-weight: bold;
+    color: white;
+    font-size: 40px;
+    text-shadow: 2px 2px 2px #000000;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
+    horizontal-align: center;
+}
+
+#FatepediaHeroIntroPanel
+{
+    width: 800px;
+    height: 72px;
+    flow-children: right;
+}
+#FatepediaHeroesPanel
+{
+    width: 800px;
+    height: 295px;
+    margin-top: 25px;
+    margin-left: 50px;
+    flow-children: right-wrap;
+}
+#FatepediaHeroInfoPanel
+{
+    width: 800px;
+    height: 380px;
+    margin-top: 25px;
+    margin-left: 25px;
+    flow-children: right-wrap;
+}
+
+#FatepediaHeroSkillPanel
+{
+    width: 480px;
+    height: 70px;
+    flow-children: right-wrap;
+}
+
+#InnateText
+{
+    margin-left: 8px;
+    width: 125px;
+}
+
+#QWERText
+{
+    width: 250px;
+}
+
+#ComboText
+{
+    margin-left: 3px;
+    width: 90px;
+}
+
+#FatepediaHeroAttrPanel
+{
+    margin-left: -10px;
+    width: 330px;
+    height: 70px;    
+    flow-children: right-wrap;
+}
+
+#AttrText
+{
+    margin-left: 8px;
+    width: 250px;
+    text-align: center;
+}
+
+#WikiLink
+{
+    horizontal-align: center;
+    brightness: 3.0;
+    contrast: 0.9;
+    font-size: 40px;
+}
+.FatepediaHeroButton
+{
+    margin-top: 9px;
+    margin-bottom: 9px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 2px solid #111111FF;
+    width: 96px;
+    height: 54px;
+    background-image: url("file://{images}/heroes/npc_dota_hero_legion_commander.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#FatepediaHeroIntroImage
+{
+    margin-top: -10px;
+    border: 2px solid #111111FF;
+    width: 128px;
+    height: 72px;
+    background-image: url("file://{images}/heroes/npc_dota_hero_legion_commander.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%; 
+}
+
+.FatepediaOpenText
+{
+    font-weight: bold;
+    color: white;
+    font-size: 26px;
+    text-shadow: 2px 2px 2px #000000;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
+}
+
+.HeroSelectSkill
+{
+    width: 55px;
+    height: 55px;
+    margin: 5px;
+}

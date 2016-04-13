@@ -229,16 +229,16 @@ function _ScoreboardUpdater_UpdateTeamPanel( scoreboardConfig, containerPanel, t
 		teamsInfo.max_team_players = teamPlayers.length;
 	}
 
-	//GameEvents.SendCustomGameEventToServer( "get_round_score", { "team_number" : teamId } );
-	//_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", teamDetails.team_score )
-	//$.Msg(teamId)
-	if (teamId == 2)
-	{
-		_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", g_RadiantScore );
-	} else if (teamId == 3)
-	{
-		_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", g_DireScore );
-	}
+	if (Game.GetMapInfo().map_display_name == "fate_elim_6v6") { 
+		if (teamId == 2)
+		{
+			_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", g_RadiantScore );
+		} else if (teamId == 3)
+		{
+			_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", g_DireScore );
+		}
+	} else _ScoreboardUpdater_SetTextSafe( teamPanel, "TeamScore", teamDetails.team_score );
+
 	_ScoreboardUpdater_SetTextSafe( teamPanel, "TeamName", $.Localize( teamDetails.team_name ) )
 	
 	if ( GameUI.CustomUIConfig().team_colors )

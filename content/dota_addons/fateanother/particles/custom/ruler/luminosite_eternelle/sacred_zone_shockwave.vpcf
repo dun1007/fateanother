@@ -1,0 +1,174 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+	_class = "CParticleSystemDefinition"
+	m_BoundingBoxMin =
+	[
+		-50.000000,
+		-50.000000,
+		-50.000000,
+	]
+	m_BoundingBoxMax =
+	[
+		50.000000,
+		50.000000,
+		50.000000,
+	]
+	m_ConstantColor =
+	[
+		211,
+		211,
+		255,
+		255,
+	]
+	m_flConstantRadius = 150.000000
+	m_nMaxParticles = 24
+	m_Operators =
+	[
+		{
+			_class = "C_OP_BasicMovement"
+		},
+		{
+			_class = "C_OP_InterpolateRadius"
+			m_flStartScale = 0.000000
+			m_flEndScale = 3.000000
+			m_flBias = 0.800000
+		},
+		{
+			_class = "C_OP_Decay"
+		},
+		{
+			_class = "C_OP_FadeIn"
+			m_flFadeInTimeMin = 0.100000
+			m_flFadeInTimeMax = 0.100000
+			m_bProportional = false
+		},
+		{
+			_class = "C_OP_FadeOut"
+			m_flFadeOutTimeMin = 0.400000
+			m_flFadeOutTimeMax = 0.400000
+			m_bProportional = false
+			m_bEaseInAndOut = false
+		},
+		{
+			_class = "C_OP_MovementPlaceOnGround"
+			m_flOffset = 20.000000
+			m_CollisionGroupName = "DEBRIS"
+			m_bDisableOperator = true
+		},
+	]
+	m_Renderers =
+	[
+		{
+			_class = "C_OP_RenderSprites"
+			m_nOrientationType = 2
+			m_flAnimationRate = 1.000000
+			m_nSequenceCombineMode = "2"
+			m_nRefractBlurType = "2"
+			m_flOverbrightFactor = 2.000000
+			m_hTexture = resource:"materials/particle/particle_ring_wavy6.vtex"
+			VisibilityInputs =
+			{
+				m_flInputMax = 0.000000
+			}
+		},
+	]
+	m_Initializers =
+	[
+		{
+			_class = "C_INIT_RandomLifeTime"
+			m_fLifetimeMin = 0.360000
+			m_fLifetimeMax = 0.360000
+		},
+		{
+			_class = "C_INIT_RandomAlpha"
+			m_nAlphaMin = 40
+			m_nAlphaMax = 60
+		},
+		{
+			_class = "C_INIT_CreateWithinBox"
+			m_vecMin =
+			[
+				0.000000,
+				0.000000,
+				100.000000,
+			]
+			m_vecMax =
+			[
+				0.000000,
+				0.000000,
+				100.000000,
+			]
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_INIT_RandomRotation"
+		},
+		{
+			_class = "C_INIT_RandomYawFlip"
+		},
+		{
+			_class = "C_INIT_RandomColor"
+			m_ColorMin =
+			[
+				138,
+				179,
+				255,
+				255,
+			]
+			m_ColorMax =
+			[
+				106,
+				130,
+				255,
+				255,
+			]
+			m_nTintBlendMode = "2"
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_INIT_RandomRadius"
+			m_flRadiusMin = 0.420000
+			m_flRadiusMax = 0.480000
+		},
+		{
+			_class = "C_INIT_RemapCPtoVector"
+			m_nCPInput = 12
+			m_nFieldOutput = 6
+			m_vInputMax =
+			[
+				255.000000,
+				255.000000,
+				255.000000,
+			]
+			m_vOutputMax =
+			[
+				1.000000,
+				1.000000,
+				1.000000,
+			]
+		},
+		{
+			_class = "C_INIT_CreateWithinSphere"
+		},
+		{
+			_class = "C_INIT_RemapCPtoScalar"
+			m_nCPInput = 1
+			m_nField = 2
+			m_flInputMax = 1000.000000
+			m_flOutputMax = 1000.000000
+			m_bScaleInitialRange = true
+		},
+	]
+	m_Emitters =
+	[
+		{
+			_class = "C_OP_InstantaneousEmitter"
+			m_nParticlesToEmit = 3
+			m_bDisableOperator = true
+		},
+		{
+			_class = "C_OP_MaintainEmitter"
+			m_nParticlesToMaintain = 10
+		},
+	]
+}

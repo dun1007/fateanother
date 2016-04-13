@@ -15,14 +15,6 @@ To socialize with fellow players, visit [our official subreddit](https://www.red
 
 **Particle Editor**: kriith(retired), Jeekaroose
 
-**Media Creator**: Delta(retired), Pyrefly(retired)
-
-**Portuguese Translation** (currently outdated): Marcellus
-
-**Simplified Chinese Translation**: MENTAL OUT, Mucya, SasakiSaki
-
-**Russian Translation** (currently outdated): Com, Beato
-
 **Special thanks to** :
 
 l46kok, Squally, Akarung, Greenfruit, Serena_ for great WC3 map that this custom game is inspired by
@@ -31,3 +23,9 @@ Everyone in Dota 2 modding community for being a light to trailblazers of Dota 2
 ChaosRealm and SCV Market for public models
 
 KingSaber(WC3) for bridge and road model
+
+Delta and Pyrefly for awesome cinematic
+
+Filo for porting Japanese voice clips of Servants from other media series
+
+All translation volunteers: MENTAL OUT|食蜂操祈, Marcellus, Mucya, SasakiSaki, Com, Beato

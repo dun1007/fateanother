@@ -264,9 +264,20 @@ end
 function OnVengeanceStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
+	if caster:HasModifier("modifier_blood_mark_restriction") then 
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
+		caster:GiveMana(ability:GetManaCost(1))
+		keys.ability:EndCooldown()
+		return
+	end
 	if IsSpellBlocked(keys.target) then return end
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_vengeance_mark", {})
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+
+	caster:EmitSound("Hero_DoomBringer.Devour")
+	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death_bonus.vpcf", PATTACH_ABSORIGIN, target)
+	ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
 end
 
 function OnVengeanceEnd(keys)
@@ -279,8 +290,8 @@ function OnBloodStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_blood_mark_restriction", {})
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_blood_mark_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
-
 	if IsSpellBlocked(keys.target) then return end
 	local initHealth = caster:GetHealth() 
 	local initTargetHealth = target:GetHealth()
@@ -308,10 +319,9 @@ function OnTFStart(keys)
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
     caster:SetMana(newMana)
     if caster.IsBloodMarkAcquired then 
-    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
-    else
-    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
-   	end
+    	caster:SwapAbilities("fate_empty1", "avenger_blood_mark", true, true) 
+    end
+    caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     caster:SetModel("models/avenger/trueform/trueform.vmdl")
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
@@ -332,11 +342,9 @@ function OnTFEnd(keys)
     caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
     local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
     caster:SwapAbilities("avenger_tawrich_zarich", a2, true, true) 
-    --[[if caster.IsBloodMarkAcquired then 
-    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_blood_mark", true, true) 
-    else
-    	caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
-   	end]]
+    if caster.IsBloodMarkAcquired then 
+    	caster:SwapAbilities("fate_empty1", "avenger_blood_mark", true, true) 
+    end
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
     local demoncore = caster:FindAbilityByName("avenger_demon_core")
     if demoncore:GetToggleState() then
@@ -472,7 +480,7 @@ function OnOverdriveAttack(keys)
 end
 
 function AvengerCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("avenger_true_form") and caster:FindAbilityByName("avenger_verg_avesta"):IsCooldownReady() and caster:FindAbilityByName("avenger_endless_loop"):IsCooldownReady()  then
 			caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", false, true) 
 			Timers:CreateTimer({
@@ -501,7 +509,7 @@ function OnBloodMarkAcquired(keys)
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero.IsBloodMarkAcquired = true
     -- swap vengeance mark with blood mark
-    caster:SwapAbilities("avenger_vengeance_mark", "avenger_blood_mark", false, true) 
+    --caster:SwapAbilities("fate_empty1", "avenger_blood_mark", false, true) 
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

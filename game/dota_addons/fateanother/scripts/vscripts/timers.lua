@@ -1,3 +1,57 @@
+TIMERS_VERSION = "1.03"
+
+--[[
+  -- A timer running every second that starts immediately on the next frame, respects pauses
+  Timers:CreateTimer(function()
+      print ("Hello. I'm running immediately and then every second thereafter.")
+      return 1.0
+    end
+  )
+  -- A timer which calls a function with a table context
+  Timers:CreateTimer(GameMode.someFunction, GameMode)
+  -- A timer running every second that starts 5 seconds in the future, respects pauses
+  Timers:CreateTimer(5, function()
+      print ("Hello. I'm running 5 seconds after you called me and then every second thereafter.")
+      return 1.0
+    end
+  )
+  -- 10 second delayed, run once using gametime (respect pauses)
+  Timers:CreateTimer({
+    endTime = 10, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
+    callback = function()
+      print ("Hello. I'm running 10 seconds after when I was started.")
+    end
+  })
+  -- 10 second delayed, run once regardless of pauses
+  Timers:CreateTimer({
+    useGameTime = false,
+    endTime = 10, -- when this timer should first execute, you can omit this if you want it to run first on the next frame
+    callback = function()
+      print ("Hello. I'm running 10 seconds after I was started even if someone paused the game.")
+    end
+  })
+  -- A timer running every second that starts after 2 minutes regardless of pauses
+  Timers:CreateTimer("uniqueTimerString3", {
+    useGameTime = false,
+    endTime = 120,
+    callback = function()
+      print ("Hello. I'm running after 2 minutes and then every second thereafter.")
+      return 1
+    end
+  })
+  -- A timer using the old style to repeat every second starting 5 seconds ahead
+  Timers:CreateTimer("uniqueTimerString3", {
+    useOldStyle = true,
+    endTime = GameRules:GetGameTime() + 5,
+    callback = function()
+      print ("Hello. I'm running after 5 seconds and then every second thereafter.")
+      return GameRules:GetGameTime() + 1
+    end
+  })
+]]
+
+
+
 TIMERS_THINK = 0.01
 
 if Timers == nil then
@@ -10,6 +64,26 @@ function Timers:new( o )
   o = o or {}
   setmetatable( o, Timers )
   return o
+end
+
+function Timers:_xpcall (f, ...)
+  print(f)
+  print({...})
+  PrintTable({...})
+  local result = xpcall (function () return f(unpack(arg)) end,
+    function (msg)
+      -- build the error message
+      return msg..'\n'..debug.traceback()..'\n'
+    end)
+
+  print(result)
+  PrintTable(result)
+  if not result[1] then
+    -- throw an error
+  end
+  -- remove status code
+  table.remove (result, 1)
+  return unpack (result)
 end
 
 function Timers:start()
@@ -53,7 +127,16 @@ function Timers:Think()
       Timers.timers[k] = nil
       
       -- Run the callback
-      local status, nextCall = pcall(v.callback, GameRules:GetGameModeEntity(), v)
+      local status, nextCall
+      if v.context then
+        status, nextCall = xpcall(function() return v.callback(v.context, v) end, function (msg)
+                                    return msg..'\n'..debug.traceback()..'\n'
+                                  end)
+      else
+        status, nextCall = xpcall(function() return v.callback(v) end, function (msg)
+                                    return msg..'\n'..debug.traceback()..'\n'
+                                  end)
+      end
 
       -- Make sure it worked
       if status then
@@ -78,6 +161,7 @@ function Timers:Think()
       end
     end
   end
+
   return TIMERS_THINK
 end
 
@@ -100,8 +184,11 @@ function Timers:HandleEventError(name, event, err)
   end
 end
 
-function Timers:CreateTimer(name, args)
+function Timers:CreateTimer(name, args, context)
   if type(name) == "function" then
+    if args ~= nil then
+      context = args
+    end
     args = {callback = name}
     name = DoUniqueString("timer")
   elseif type(name) == "table" then
@@ -128,7 +215,11 @@ function Timers:CreateTimer(name, args)
     args.endTime = now + args.endTime
   end
 
-  Timers.timers[name] = args
+  args.context = context
+
+  Timers.timers[name] = args 
+
+  return name
 end
 
 function Timers:RemoveTimer(name)
@@ -149,4 +240,4 @@ function Timers:RemoveTimers(killAll)
   Timers.timers = timers
 end
 
-Timers:start()
+if not Timers.timers then Timers:start() end

@@ -37,15 +37,102 @@ function OnBaseEntered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
-	print("Base entered")
+	--print("Base entered")
 end
 
 function OnBaseLeft(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	
 	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
-	print("Base left")
+	--print("Base left")
+end
+
+function OnTrioBase1Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase1Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnTrioBase2Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_BADGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase2Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_BADGUYS then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnTrioBase3Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_1 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase3Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_1 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnTrioBase4Entered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_2 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
+	end
+end
+
+function OnTrioBase4Left(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	hero:RemoveModifierByName("spawn_invulnerable")
+	if hero:GetTeam() == DOTA_TEAM_CUSTOM_2 then
+		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
+	end
+end
+
+function OnFFABaseEntered(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = true
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+end
+
+function OnFFABaseLeft(trigger)
+	local hero = trigger.activator
+	hero.IsInBase = false
+	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 end
 
 function TransferItem(keys)
@@ -300,10 +387,11 @@ function Blink(keys)
 
 	
 	-- particle
-	local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_start.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	local particle = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_start.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(particle, 0, casterPos)
 	caster:EmitSound("Hero_Antimage.Blink_out")
-	local particle2 = ParticleManager:CreateParticle("particles/units/heroes/hero_antimage/antimage_blink_end.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	local particle2 = ParticleManager:CreateParticle("particles/items_fx/blink_dagger_end.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl(particle2, 0, targetPoint)
 
 	-- blink
 	local diff = targetPoint - caster:GetAbsOrigin()
@@ -311,7 +399,7 @@ function Blink(keys)
 		caster:SetAbsOrigin(targetPoint)
 		ProjectileManager:ProjectileDodge(caster)
 		--ParticleManager:SetParticleControl(particle2, 0, targetPoint)
-
+		EmitSoundOnLocationWithCaster(targetPoint, "Hero_Antimage.Blink_in", caster)
 	else  
 		newTargetPoint = caster:GetAbsOrigin() + diff:Normalized() * 1000
 		local i = 1
@@ -323,10 +411,9 @@ function Blink(keys)
 		caster:SetAbsOrigin(newTargetPoint) 
 		ProjectileManager:ProjectileDodge(caster)
 		ParticleManager:SetParticleControl(particle2, 0, caster:GetAbsOrigin())
+		EmitSoundOnLocationWithCaster(newTargetPoint, "Hero_Antimage.Blink_in", caster)
 	end
-
 	
-	caster:EmitSound("Hero_Antimage.Blink_in")
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 
 	Timers:CreateTimer(2.0, function()

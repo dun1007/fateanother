@@ -78,9 +78,10 @@ function KBStart(keys)
 	end
 
 	if caster:HasModifier("modifier_ubw_death_checker") then
-		print("UBW up")
+		--print("UBW up")
 		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(3.0)
+		caster:GiveMana(ability:GetManaCost(1))
 	end	
 
 	if caster.IsProjectionImproved and caster:HasModifier("modifier_ubw_death_checker") then
@@ -124,7 +125,10 @@ end
 
 function OnBPCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
+	ability:EndCooldown()
+	caster:GiveMana(ability:GetManaCost(1))
 	if keys.target:IsHero() then
 		Say(ply, "Broken Phantasm targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
@@ -133,14 +137,40 @@ end
 function OnBPStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
-	if keys.target:IsHero() then
-		Say(ply, "Broken Phantasm fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 or caster:GetMana() < ability:GetManaCost(1) then 
+		Say(ply, "Broken Phantasm failed.", true)
+		return 
 	end
+	ability:StartCooldown(ability:GetCooldown(1))
+	caster:SetMana(caster:GetMana() - ability:GetManaCost(1))
+	local info = {
+		Target = keys.target,
+		Source = keys.caster, 
+		Ability = keys.ability,
+		EffectName = "particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf",
+		vSpawnOrigin = caster:GetAbsOrigin(),
+		iMoveSpeed = 3000,
+		iSourceAttachment = DOTA_PROJECTILE_ATTACHMENT_ATTACK_1,
+		bDodgeable = true
+	}
+	ProjectileManager:CreateTrackingProjectile(info) 
 	-- give vision for enemy
 	if IsValidEntity(target) then
 		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
 	end
+	
+	if keys.target:IsHero() then
+		Say(ply, "Broken Phantasm fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
+end
+
+function OnBPInterrupted(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Broken Phantasm failed.", true)
 end
 
 function OnBPHit(keys)
@@ -369,8 +399,8 @@ function OnUBWStart(keys)
 	for i=1, #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
-			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
-				print("dummy or a hero with jump state detected. Removing current index")
+			if ubwTargets[i]:HasModifier("jump_pause") or ubwTargets[i]:HasModifier("spawn_invulnerable") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
+				--print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(ubwTargets, i)
 			end
 		end
@@ -426,21 +456,21 @@ function OnUBWStart(keys)
 		ubwdummies[i]:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1000})
 	end
 	-- spawn sight dummy for enemies
-	local enemyTeamNumber = 0
+	--[[local enemyTeamNumber = 0
 	if caster:GetTeamNumber() == 0 then enemyTeamNumber = 1 end
 	local truesightdummy2 = CreateUnitByName("sight_dummy_unit", ubwdummyLoc1, false, keys.caster, keys.caster, enemyTeamNumber)
 	truesightdummy2:AddNewModifier(caster, caster, "modifier_kill", {duration = 12}) 
 	truesightdummy2:SetDayTimeVisionRange(2500)
 	truesightdummy2:SetNightTimeVisionRange(2500)
 	local unseen2 = truesightdummy2:FindAbilityByName("dummy_unit_passive")
-	unseen2:SetLevel(1)
+	unseen2:SetLevel(1)]]
 
 	-- Automated weapon shots
 	if caster.IsProjection2Improved then
 		Timers:CreateTimer(function() 
 			if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
 				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
-	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				local targetIndex = RandomInt(1, #weaponTargets)
 				local swordTarget = weaponTargets[targetIndex]
 				local swordOrigin = caster:GetAbsOrigin() + Vector(0,0,500) + RandomVector(1000)
@@ -1020,11 +1050,12 @@ end
 
 function OnHruntCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
-	 
+	ability:EndCooldown()
 	-- Show hrunting cast
 	if caster.hrunting_particle ~= nil then
 		ParticleManager:DestroyParticle( caster.hrunting_particle, false )
@@ -1048,9 +1079,11 @@ function OnHruntStart(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if keys.target:IsHero() then
-		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 4000 then 
+		Say(ply, "Broken Phantasm failed.", true)
+		return 
 	end
+	ability:StartCooldown(ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_hrunting_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	caster.HruntDamage =  250 + caster:FindAbilityByName("archer_5th_broken_phantasm"):GetLevel() * 100  + caster:GetMana()
 	caster:SetMana(0) 
@@ -1071,8 +1104,18 @@ function OnHruntStart(keys)
 	if IsValidEntity(target) then
 		SpawnVisionDummy(target, caster:GetAbsOrigin(), 500, 3, false)
 	end
-	
 	EmitGlobalSound("Archer.Hrunting_Fireoff")
+	if keys.target:IsHero() then
+		Say(ply, "Hrunting fired at " .. FindName(keys.target:GetName()) .. ".", true)
+	end
+end
+
+function OnHruntInterrupted(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ply = caster:GetPlayerOwner()
+	Say(ply, "Hrunting failed.", true)
+	caster:StopSound("Hero_Invoker.EMP.Charge")
 end
 
 function OnHruntHit(keys)
@@ -1192,7 +1235,7 @@ end
 
 
 function ArcherCheckCombo(caster, ability)
-	if caster:GetStrength() >= 19.5 and caster:GetAgility() >= 19.5 and caster:GetIntellect() >= 19.5 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() and caster:FindAbilityByName("archer_5th_arrow_rain"):IsCooldownReady() then
 			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
 			Timers:CreateTimer({
@@ -1299,7 +1342,7 @@ function OveredgeStackExpired(keys)
 end
 
 function GrantOveredgeStack(hero)
-	print("Adding overedge stack")
+	--print("Adding overedge stack")
 	if hero.OveredgeCount < 4 then
 		hero.OveredgeCount = hero.OveredgeCount + 1
 	end

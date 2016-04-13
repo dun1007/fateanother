@@ -1,0 +1,40 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+        <include src="file://{resources}/styles/custom_game/fateanother_fatepedia.css" />
+    </styles>
+    <scripts>
+        <include src="file://{resources}/scripts/custom_game/fateanother_fatepedia.js" /> 
+    </scripts>
+    <Panel class="FatepediaRoot" hittest="false">
+        <Panel id="FatepediaBoard" hittest="true" >
+            <Panel id="FatepediaHeroesPanel" hittest="false">
+            </Panel>
+            <Panel id="FatepediaHeroInfoPanel" hittest="false">
+                <Panel id="FatepediaHeroIntroPanel" hittest="false">
+                    <Panel id="FatepediaHeroIntroImage" hittest="false">
+                    </Panel>
+                    <Label id="FatepediaHeroName" hittest="false">
+                    </Label>
+                </Panel>
+                <Label id="InnateText" class="FatepediaSkillContextText" contentheight="200px" text="Innates" hittest="true"/>
+                <Label id="QWERText" class="FatepediaSkillContextText" text="Abilities" hittest="true"/>
+                <Label id="ComboText" class="FatepediaSkillContextText" text="Combo" hittest="true"/>
+                <Label id="AttrText" class="FatepediaSkillContextText" text="Attributes" hittest="false"/>
+                // add innate and qwer skills here
+                <Panel id="FatepediaHeroSkillPanel" hittest="false">
+                </Panel>
+                
+                // add innate and qwer skills here
+                <Panel id="FatepediaHeroAttrPanel" hittest="false">
+                </Panel>
+                <Label html="true" class="FatepediaSkillContextText" id="WikiLink" text="&lt;a href=&quot;http://www.example.com&quot;&gt;here&lt;a&gt;"/>
+            </Panel>
+        </Panel>
+
+        <Button id="FatepediaOpenButton" onactivate="OnFatepediaButtonPressed()" hittest="true">
+            <Image id="FatepediaOpenButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <Label id="FatepediaOpenButtonImageText" class="FatepediaOpenText" text="Fatepedia" hittest="false"/>
+        </Button>
+    </Panel>
+</root>

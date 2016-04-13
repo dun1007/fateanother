@@ -1,0 +1,73 @@
+.FateConfigRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 26.5%;
+    margin-left: 7.7%;
+    flow-children: down; 
+}
+
+.AspectRatio16x10 .FateConfigRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 26.5%;
+    margin-left: 8.7%;
+    flow-children: down; 
+}
+
+.AspectRatio16x9 .FateConfigRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 26.5%;
+    margin-left: 7.7%;
+    flow-children: down; 
+}
+
+.AspectRatio4x3 .FateConfigRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 25%;
+    margin-left: 10.4%;
+    flow-children: down; 
+}
+
+#FateConfigButton
+{
+    width: 150px;
+    height: 40px;
+    brightness: 0.7;
+}
+
+#FateConfigBoard
+{
+    width: 400px;
+    height: 600px;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
+    border-radius: 50px 50px 50px 50px;
+    border:3px solid #DAA520;
+    flow-children: right;
+    overflow: scroll;
+    background-image: url("file://{images}/custom_game/pepe.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+#FateConfigButtonImageText
+{
+    horizontal-align: center;
+    vertical-align: middle;
+}
+
+
+.FateConfigOpenText
+{
+    font-weight: bold;
+    color: white;
+    font-size: 22px;
+    text-shadow: 2px 2px 2px #000000;
+    color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
+}

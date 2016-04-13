@@ -7,7 +7,7 @@ var m_bInLevelUp = false;
 function SetAbility( ability, queryUnit, bInLevelUp )
 {
 	var bChanged = ( ability !== m_Ability || queryUnit !== m_QueryUnit );
-	$.Msg(ability);
+	//$.Msg(ability);
 	m_Ability = ability;
 	m_QueryUnit = queryUnit;
 	m_bInLevelUp = bInLevelUp;

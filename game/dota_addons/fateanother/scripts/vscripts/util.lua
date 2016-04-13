@@ -1,26 +1,5 @@
 -- where the misc functios gather
 
-heroes = {
-    "npc_dota_hero_legion_commander",
-    "npc_dota_hero_phantom_lancer",
-    "npc_dota_hero_spectre",
-    "npc_dota_hero_ember_spirit", 
-    "npc_dota_hero_templar_assassin",
-    "npc_dota_hero_doom_bringer",
-    "npc_dota_hero_juggernaut",
-    "npc_dota_hero_bounty_hunter",
-    "npc_dota_hero_crystal_maiden",
-    "npc_dota_hero_skywrath_mage",
-    "npc_dota_hero_sven", 
-    "npc_dota_hero_vengefulspirit",
-    "npc_dota_hero_huskar",
-    "npc_dota_hero_chen",
-    "npc_dota_hero_shadow_shaman",
-    "npc_dota_hero_lina",
-    "npc_dota_hero_omniknight"
-}
-
-
 softdispellable = {
     "modifier_aspd_increase",
     "modifier_derange",
@@ -46,7 +25,11 @@ softdispellable = {
     "modifier_invigorating_ray_armor_buff",
     "modifier_blade_of_the_devoted",
     "modifier_lishuwen_cosmic_orbit",
-    "modifier_lishuwen_concealment"
+    "modifier_lishuwen_concealment",
+    "modifier_jeanne_charisma_str",
+    "modifier_jeanne_charisma_agi",
+    "modifier_jeanne_charisma_int",
+    "modifier_magic_resistance_ex_shield"
 }
 
 strongdispellable = {
@@ -74,6 +57,12 @@ strongdispellable = {
     "modifier_invigorating_ray_ally",
     "modifier_invigorating_ray_armor_buff",
     "modifier_blade_of_the_devoted",
+    "modifier_lishuwen_cosmic_orbit",
+    "modifier_lishuwen_concealment",
+    "modifier_jeanne_charisma_str",
+    "modifier_jeanne_charisma_agi",
+    "modifier_jeanne_charisma_int",
+    "modifier_magic_resistance_ex_shield",
 
     -- Strong Dispelable
     "modifier_b_scroll",
@@ -91,7 +80,11 @@ revokes = {
     "modifier_enkidu_hold",
     "jump_pause",
     "pause_sealdisabled",
-    "rb_sealdisabled"
+    "rb_sealdisabled",
+    "revoked",
+    "modifier_command_seal_2",
+    "modifier_command_seal_3",
+    "modifier_command_seal_4"
 }
 
 
@@ -125,7 +118,8 @@ cleansable = {
     "modifier_raging_dragon_strike_1_slow",
     "modifier_fierce_tiger_strike_1_slow",
     "modifier_fierce_tiger_strike_3_slow",
-
+    "modifier_purge_the_unjust_slow",
+    "modifier_gods_resolution_slow",
     -- Other CCs
     "modifier_stunned",
     "modifier_rule_breaker",
@@ -140,6 +134,10 @@ cleansable = {
     "modifier_tentacle_wrap",
     "modifier_gust_heaven_purge",
     "modifier_subterranean_grasp",
+    "revoked",
+    "locked",
+    "rooted",
+    "stunned",
 
     -- Debuffs
     "modifier_gust_heaven_indicator_enemy"
@@ -162,7 +160,9 @@ slowmodifier = {
     "modifier_gust_heaven_purge_slow_tier2",
     "modifier_raging_dragon_strike_1_slow",
     "modifier_fierce_tiger_strike_1_slow",
-    "modifier_fierce_tiger_strike_3_slow"
+    "modifier_fierce_tiger_strike_3_slow",
+    "modifier_purge_the_unjust_slow",
+    "modifier_gods_resolution_slow"
 }
 
 donotlevel = {
@@ -223,7 +223,10 @@ CannotReset = {
     "lishuwen_raging_dragon_strike",
     "lishuwen_raging_dragon_strike_2",
     "lishuwen_raging_dragon_strike_3",
-    "lishuwen_berserk"
+    "lishuwen_berserk",
+    "jeanne_combo_la_pucelle",
+    "jeanne_identity_discernment",
+    "tamamo_mystic_shackle"
 }
 
 femaleservant = {
@@ -657,7 +660,7 @@ end
 
 function FindName(name)
     local heroName = nil
-    print("Finding name")
+    --print("Finding name")
     if name == "npc_dota_hero_legion_commander" then
         heroName = "Saber"
     elseif name == "npc_dota_hero_phantom_lancer" then
@@ -776,20 +779,13 @@ function IsFacingUnit(source, target, angle)
     end
 end
 
-function AssignRandomHero(player)
-    local heroesTable = heroes
-    for i=0,11 do
-        local ply = PlayerResource:GetPlayer(i)
-        if ply and ply:GetAssignedHero() ~= nil then
-            for i=1, #heroesTable do
-                if heroesTable[i] == ply:GetAssignedHero():GetName() then
-                    table.remove(heroesTable, i)
-                    print("removed " .. ply:GetAssignedHero():GetName() .. " from table")
-                end
-            end
-        elseif ply and ply:GetAssignedHero() == nil then
-            CreateHeroForPlayer(heroesTable[math.random(#heroesTable)], ply)
-        end
+-- 
+function OnExperienceZoneThink(keys)
+    local hero = keys.target
+    print("xp")
+    if hero:IsRealHero() and not hero:IsIllusion() then
+        hero:AddExperience(hero:GetLevel()*2+15, false, false)
+        hero:ModifyGold(20, true, 0)
     end
 end
 
@@ -838,7 +834,7 @@ function DisplayTip()
     local tipchoice = 0
     local tipRef = ""
     while tipchoice == lastTipChoice do
-        print("Rerolling tip choice")
+        --print("Rerolling tip choice")
         tipchoice = RandomInt(1, 10) 
         tipRef = ("#Fate_Tip" .. tipchoice)
     end
@@ -864,7 +860,7 @@ end
 -- Create a particle that is visible by anyone in both teams
 -- example: CreateGlobalParticle("particles/custom/iskandar/iskandar_aotk.vpcf", {[0] = caster:GetAbsOrigin()}, 2)
 function CreateGlobalParticle(particle_name, controlpoints, duration)
-    for i=2,3 do
+    for i=2,13 do
         local particle = ParticleManager:CreateParticleForTeam(particle_name, PATTACH_CUSTOMORIGIN, nil, i)
         for k,v in pairs(controlpoints) do
             ParticleManager:SetParticleControl(particle, k, v)
@@ -874,6 +870,17 @@ function CreateGlobalParticle(particle_name, controlpoints, duration)
             ParticleManager:ReleaseParticleIndex( particle )
         end)
     end
+end
+-- check whether two locations belong in same realm
+-- loc 1 = vector
+-- loc 2 = vector
+function IsInSameRealm(loc1, loc2)
+    if loc1.y < -2000 and loc2.y > -2000 then
+        return false
+    elseif loc1.y > -2000 and loc2.y < -2000 then
+        return false
+    end
+    return true
 end
 
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
@@ -992,12 +999,12 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
             -- Calculate the damage to secondary targets separately, in order to prevent MR from being twice as effective on primary target.
             local damageToAllies =  dmgtable.damage
 
-            if dmg_type == DAMAGE_TYPE_PHYSICAL then
+            --[[if dmg_type == DAMAGE_TYPE_PHYSICAL then
                 local AR = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
                 damageToAllies = dmgtable.damage * (1-AR)
             elseif dmg_type == DAMAGE_TYPE_MAGICAL then
                 damageToAllies = dmgtable.damage * (1-MR)
-            end   
+            end]]
             damageToAllies = damageToAllies/#target.linkTable
             dmgtable.damage = dmgtable.damage/#target.linkTable
             -- Loop through linked heroes
@@ -1023,6 +1030,23 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         
     end
 
+end
+
+-- Check if anyone on this hero's team is still alive. 
+function IsTeamWiped(hero)
+    if not _G.GameMap == "fate_elim_6v6" then return false end
+
+    for i=0, 11 do
+        local player = PlayerResource:GetPlayer(i)
+        local playerHero = PlayerResource:GetSelectedHeroEntity(i)
+        if playerHero ~= nil then 
+            servant = playerHero
+            if servant:GetTeam() == hero:GetTeam() and servant:IsAlive() then 
+                return false
+            end
+        end
+    end
+    return true
 end
 
 function ApplyPurge(target)
@@ -1095,6 +1119,37 @@ function PrintTable(t, indent, done)
     end
 end
 
+function SendKVToFatepedia(player)
+    local abilKV = LoadKeyValues('scripts/npc/npc_abilities_custom.txt')
+    local heroKV = LoadKeyValues('scripts/npc/npc_heroes_custom.txt')
+    local KVData = {abilKV, heroKV}
+    CustomGameEventManager:Send_ServerToPlayer( player, "fatepedia_kv_sent", KVData )
+    print("KV sent")
+end
+
+function CreateTemporaryStatTable(hero)
+    local statTable = {
+        STR = 0,
+        AGI = 0,
+        INT = 0,
+        DMG = 0,
+        ARMOR = 0,
+        HPREG = 0,
+        MPREG = 0,
+        MS = 0,
+        ShardAmount = 0
+    }
+    statTable.STR = hero.STRgained 
+    statTable.AGI = hero.AGIgained
+    statTable.INT = hero.INTgained
+    statTable.DMG = hero.DMGgained
+    statTable.ARMOR = hero.ARMORgained
+    statTable.HPREG = hero.HPREGgained
+    statTable.MPREG = hero.MPREGgained
+    statTable.MS = hero.MSgained
+    statTable.ShardAmount = hero.ShardAmount
+    return statTable
+end
 -- hi i'm here to implement math i don't really understand and hope it works
 function RandomPointInCircle(origin, radius)
     t = 2*math.pi*RandomFloat(0,radius)
@@ -1317,14 +1372,18 @@ end
 
 function LoopOverPlayers(callback)
     for i=0, 11 do
+        local playerID = i
         local player = PlayerResource:GetPlayer(i)
-        if player ~= nil and player:GetAssignedHero() ~= nil then 
-            if callback(player, player:GetPlayerID()) then
+        local playerHero = PlayerResource:GetSelectedHeroEntity(playerID)
+        if playerHero then
+            --print("Looping through hero " .. playerHero:GetName())
+            if callback(player, playerID, playerHero) then
                 break
-            end 
-        end
+            end
+        end 
     end
 end
+
 
 function RemoveHeroFromLinkTables(targethero)
     LoopOverHeroes(function(hero)

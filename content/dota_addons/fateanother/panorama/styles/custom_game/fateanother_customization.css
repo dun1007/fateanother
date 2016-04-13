@@ -2,15 +2,44 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 290px;
-    margin-left: -10px;
+    margin-bottom: 30%;
+    margin-left: 0%;
+    flow-children: down;
+}
+
+.AspectRatio16x10 .CustomizationBoardRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 30%;
+    margin-left: 0%;
+    flow-children: down;
+}
+
+.AspectRatio16x9 .CustomizationBoardRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 30%;
+    margin-left: 0%;
+    flow-children: down;
+}
+
+.AspectRatio4x3 .CustomizationBoardRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 28.5%;
+    margin-left: 0%;
     flow-children: down;
 }
 
 #CustomizationOpenButton
 {
+    margin-left: 0%;
     width: 300px;
     height: 50px;
+    brightness: 1.5;
 }
 
 #CustomizationBoard
@@ -19,14 +48,18 @@
     height: 400px;
     //background-image: url("file://{images}/custom_game/customization_background.png");
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
+    border-radius: 50px 50px 50px 50px;
+    border:3px solid #DAA520;
+    //box-shadow: fill #fffb84 1px 3px 2px 2px; // outer, filled
     overflow: scroll;
+    opacity: 0.9;
 }
 
 .CustomizationText
 {
     font-weight: bold;
     color: white;
-    font-size: 26px;
+    font-size: 25px;
     text-shadow: 2px 2px 2px #000000;
     color: gradient( linear, 0% 0%, 0% 100%, from( #c88423 ), color-stop( 0.25, #c88423 ), color-stop( 0.5, #fffb84 ), color-stop( 0.75, #c88423 ), to( #9a6717 ) );
 }
@@ -96,6 +129,16 @@
 #CustomizationShardPanel
 {
     margin-left: 70px;
+}
+
+#CustomizationShardTextLayout
+{
+    flow-children: right;
+}
+
+#CustomizationShardNumber
+{
+    margin-left: 40px;
 }
 
 #CustomizationShardLayout

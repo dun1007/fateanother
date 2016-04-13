@@ -1,0 +1,8 @@
+fate_trio_rumble
+{
+	material materials/overviews/fate_trio_rumble.vmat
+	pos_x -8192
+	pos_y 8192
+	scale 16.000
+}
+
