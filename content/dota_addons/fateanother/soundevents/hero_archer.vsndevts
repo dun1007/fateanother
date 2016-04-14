@@ -116,58 +116,34 @@
 "Archer.UBW"  
 {
 	"operator_stacks"
+{
+	"update_stack"
 	{
-		"update_stack"
+		"reference_operator"
 		{
-			"reference_operator"
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
 			{
-				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
-				"operator_variables"
+				"vsnd_files"
 				{
-					"vsnd_files"
+					"value"
 					{
-						"value"
-						{
-							"value0"		"sounds/archer/archer_ubw.vsnd"
-						}
+						"value0"		"sounds/archer/archer_ubw.vsnd"
 					}
-					"volume_min"
-					{
-						"value"		"1.000000"
-					}
-					"volume_max"
-					{
-						"value"		"1.000000"
-					}
-					"pitch_min"
-					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
-					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
 				}
 			}
 		}
 	}
+}
 }
 
 "Archer.UBWAmbient"  
