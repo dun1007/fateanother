@@ -80,8 +80,10 @@
         "DOTA_Tooltip_ability_diarmuid_double_spearsmanship_Lore"     ""
         
 		"DOTA_Tooltip_Ability_diarmuid_attribute_minds_eye"                           "Mind's Eye"
-        "DOTA_Tooltip_ability_diarmuid_attribute_minds_eye_Description"       "<font color='#58ACFA'>Master Mana Required : 12</font>\nIncreases Lancer's vision range, and grants vision over obstacles."
+        "DOTA_Tooltip_ability_diarmuid_attribute_minds_eye_Description"       "Increases Lancer's vision range, and grants vision over obstacles."
         
+        "DOTA_Tooltip_Ability_tamamo_amaterasu"     "Eightfold Blessing of Amaterasu"
+        "DOTA_Tooltip_ability_tamamo_amaterasu_Description" "Passively increases Caster's INT. On activation, Caster creates a mythical zone around her. Allies in the zone are blessed with bonus mana regen, movespeed, and attack speed, while opponents suffer the opposite effect. In addition, any spellcast by Caster and her allies refunds flat amount of health and mana."
 		//====================================
 		// Shard on the ground
 		//===================================

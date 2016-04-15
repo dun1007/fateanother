@@ -3,25 +3,31 @@ require("util")
 
 function OnDirkStart(keys)
 	local caster = keys.caster
-	local range = 750
-	if caster.IsWeakeningVenomAcquired then range = 1150 end
+	local target = keys.target
+	local range = caster:GetRangeToUnit(target)
+	if keys.Range > range then
+		range =  keys.Range
+	end
+	range = range + 100 -- buffer
 	local info = {
-		Target = nil,
+		Target = target,
 		Source = caster, 
 		Ability = keys.ability,
 		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 1200
 	}
-
-	local targetCount = 0
+	ProjectileManager:CreateTrackingProjectile(info) 
+	local targetCount = 1
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, range
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
 		--if v:CanEntityBeSeenByMyTeam(caster) then
+		if v ~= target then
 			targetCount = targetCount + 1
 	        info.Target = v
-	        ProjectileManager:CreateTrackingProjectile(info) 
+	        ProjectileManager:CreateTrackingProjectile(info)
+	    end 
 	    --end
         if targetCount == 7 then return end
     end

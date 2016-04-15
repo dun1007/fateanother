@@ -357,13 +357,11 @@ function OnTheatreStart(keys)
 	EmitGlobalSound("Hero_LegionCommander.Duel.Victory")
 	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
 
-	local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	--local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	local theatreFx2 = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_border.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	ParticleManager:SetParticleControl( theatreFx2, 1, Vector(keys.Radius,0,0))
 
 	Timers:CreateTimer( keys.Duration, function()
-		ParticleManager:DestroyParticle( theatreFx, false )
-		ParticleManager:ReleaseParticleIndex( theatreFx )
 		ParticleManager:DestroyParticle( theatreFx2, false )
 		ParticleManager:ReleaseParticleIndex( theatreFx2 )
 	end)	
@@ -528,8 +526,8 @@ function OnNeroComboStart(keys)
 				v:AddNewModifier(caster, caster, "modifier_stunned", {Duration = 0.1})
 			end
 
-			local flameFx = ParticleManager:CreateParticle("particles/units/heroes/hero_batrider/batrider_flamebreak_explosion_e.vpcf", PATTACH_ABSORIGIN, caster )
-			ParticleManager:SetParticleControl( flameFx, 3, targetPoint)
+			local flameFx = ParticleManager:CreateParticle("particles/custom/nero/nero_fiery_finale_eruption.vpcf", PATTACH_ABSORIGIN, caster )
+			ParticleManager:SetParticleControl( flameFx, 0, targetPoint)
 			Timers:CreateTimer( 12.0, function()
 				ParticleManager:DestroyParticle( flameFx, false )
 				ParticleManager:ReleaseParticleIndex( flameFx )
@@ -647,7 +645,7 @@ function NeroTakeDamage(keys)
 			return 1.0
 		end)
 		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
-		giveUnitDataDrivenModifier(keys.caster, keys.caster, "rb_sealdisabled", 6.0)
+		giveUnitDataDrivenModifier(keys.caster, keys.caster, "rb_sealdisabled", 4.5)
 		caster:FindAbilityByName("nero_invictus_spiritus"):ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus_cooldown", {duration = 60})
 	end
 end

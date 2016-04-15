@@ -116,7 +116,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"44"
 		"AttackDamageMax"				"51"
-		"AttackRate"					"0.8"
+		"AttackRate"					"0.95"
 		"AttackRange"					"250"
 		"AttackAcquisitionRange"		"350"
 		
@@ -494,10 +494,10 @@
 		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackRange"					"550"
+		"AttackRange"					"600"
 		"AttackDamageMin"				"46"
 		"AttackDamageMax"				"60"
-		"AttackRate"					"1.0"
+		"AttackRate"					"0.9"
 		"AttackAnimationPoint"			"0.3"
 		"AttackAcquisitionRange"		"800"
 		"ProjectileModel"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
@@ -507,9 +507,9 @@
 		"AttributeBaseStrength"			"0"
 		"AttributeStrengthGain"			"0.5"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.6"
+		"AttributeAgilityGain"			"1.8"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0.9"
+		"AttributeIntelligenceGain"		"0.7"
 		
 		"MovementSpeed"					"420"
 		"MovementTurnRate"				"0.8"
@@ -680,10 +680,10 @@
 		"Attribute4"				"lancelot_attribute_total_assault"
 
 		
-		"StatusHealth"					"1420"
+		"StatusHealth"					"1350"
 		"StatusHealthRegen"				"10"
 		"StatusMana"					"1000"
-		"StatusManaRegen"				"3"
+		"StatusManaRegen"				"7"
 		
 		"ArmorPhysical"					"5"
 		"MagicalResistance"				"10"
@@ -745,7 +745,7 @@
 		"Attribute3"				"avenger_attribute_overdrive"
 		"Attribute4"				"avenger_attribute_demon_incarnate"
 
-		"StatusHealth"					"1150"
+		"StatusHealth"					"1100"
 		"StatusHealthRegen"				"0"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"7"

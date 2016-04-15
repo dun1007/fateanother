@@ -104,7 +104,7 @@ function OnRampantWarriorStart(keys)
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior", {})
 
-	caster:FindAbilityByName("diarmuid_double_spearsmanship"):ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
+	caster:FindAbilityByName("diarmuid_double_spearsmanship"):ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_combo", {})
 	local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(particle, 3, caster:GetAbsOrigin())
 	Timers:CreateTimer( 2.0, function()

@@ -4181,7 +4181,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"16"
 
 		"precache"
 		{
@@ -4192,12 +4192,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"belle_damage"			"200"
+				"belle_damage"			"150"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"belle_2_damage"			"250"
+				"belle_2_damage"			"150"
 			}
 			"03"
 			{
@@ -6765,12 +6765,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"0.3 0.7"
+				"agi_ratio"			"0.3 0.9"
 			}
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio_revoked"			"0.8 2"
+				"agi_ratio_revoked"			"0.8 2.4"
 			}
 		}
 		
@@ -7173,7 +7173,7 @@
 		
 		"AbilitySpecial"
 		{
-			"03"
+			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"duration"				"3.0"
@@ -8040,12 +8040,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"		"0.7"
+				"agi_ratio"		"0.9"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio_revoked"		"2"
+				"agi_ratio_revoked"		"2.4"
 			}
 		}
 		
@@ -8226,6 +8226,11 @@
 				"var_type"				"FIELD_INTEGER"
 				"max_target"			"5"
 			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"range"					"700 1100"
+			}
 		}
 
 		"OnSpellStart"
@@ -8236,6 +8241,7 @@
 				"Function"			"OnDirkStart"
 				"Damage"			"%damage"
 				"MaxTarget"		"%max_target"
+				"Range"			"%range"
 			}
 			"FireSound"
 			{
@@ -15233,6 +15239,11 @@
 				"var_type"			"FIELD_FLOAT"
 				"proc_chance"				"20 30 40 50 60"
 			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"proc_chance_combo"				"20 40 60 80 100"
+			}
 		}
 		
 		"OnSpellStart"
@@ -15288,6 +15299,58 @@
 					"Random"
 					{
 						"Chance"	"%proc_chance"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"		"diarmuid_ability"
+								"Function"			"OnDSLanded"
+							}
+						}
+					}
+				}
+				"Properties"
+				{
+					//"MODIFIER_PROPERTY_BASE_ATTACK_TIME_CONSTANT"		"%bat"
+				}		
+			}
+			"modifier_rampant_warrior_combo"
+			{
+				"EffectName"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"Duration"		"%duration"	
+				"OnCreated"
+				{
+					"AttachEffect"
+					{
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_weapon1"
+						}
+					}
+
+					"AttachEffect"
+					{
+						"Target"	"CASTER"
+						"EffectName"	"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
+						"EffectAttachType"	"start_at_customorigin"
+						"ControlPointEntities"
+						{
+							"CASTER"	"attach_weapon2"
+						}
+					}
+
+
+				}
+
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"%proc_chance_combo"
 						"OnSuccess"
 						{
 							"RunScript"
@@ -18982,7 +19045,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -20125,7 +20188,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"revoke_duration"					"3"
+				"revoke_duration"					"1.5"
 			}
 		}
 		
@@ -22434,7 +22497,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"movespeed_modifier"			"14 18 22 26 30"
+				"movespeed_modifier"			"8 16 24 32 40"
 			}		
 			"05"
 			{
@@ -22459,7 +22522,7 @@
 			"09"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"movespeed_modifier_enemy"			"-14 -18 -22 -26 -30"
+				"movespeed_modifier_enemy"			"-8 -16 -24 -32 -40"
 			}		
 		}
 		
@@ -22517,6 +22580,7 @@
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%mana_regen"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_modifier"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%movespeed_modifier"
 				}
 			}
 			"modifier_amaterasu_enemy"
@@ -22529,6 +22593,7 @@
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"	"%mana_regen_enemy"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%movespeed_modifier_enemy"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%movespeed_modifier_enemy"
 				}
 			}
 			"modifier_amaterasu_witchcraft_slow"
@@ -23779,7 +23844,7 @@
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"150"
-		"AbilityCastRangeBuffer"		"100"
+		"AbilityCastRangeBuffer"		"165"
 		"AbilityCastPoint"				"1.0"
 		"AbilityCooldown"				"40"
 		"AbilityManaCost"				"800"
@@ -24450,7 +24515,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"				"1.6"
+				"agi_ratio"				"2.0"
 			}
 			"02"
 			{
@@ -25160,6 +25225,10 @@
 						"ScriptFile"	"jeanne_ability"
 						"Function"		"OnFlagCleanup"
 					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"modifier_luminosite_eternelle_flag_aura_buff"

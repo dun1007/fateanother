@@ -235,7 +235,7 @@ end
 function OnBelle2Hit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 250 end 
+	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 150 end 
 	DoDamage(keys.caster, keys.target, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
@@ -260,7 +260,7 @@ function OnBelleStart(keys)
 	ParticleManager:SetParticleControlEnt( belleFxIndex, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
 	
-	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 200 end 
+	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 150 end 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.3)
 	Timers:CreateTimer(0.7, function()
 		EmitGlobalSound("Rider.Bellerophon") 

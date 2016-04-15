@@ -767,7 +767,7 @@ function OnManaRegenGain(keys)
 		end
 	end 
 
-	hero:SetBaseManaRegen(hero:GetManaRegen()+1)
+	hero:SetBaseManaRegen(hero:GetManaRegen()+1.5)
 	hero:CalculateStatBonus()
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
