@@ -10,6 +10,7 @@
 	{
 		"override_hero"				"npc_dota_hero_legion_commander"
 		"Model"						"models/saber/saber.vmdl"
+		"DisableWearables" 			"1"
 		//"Model"						"models/development/invisiblebox.vmdl"
 		//"Model"						"models/heroes/legion_commander/legion_commander.vmdl"
 		"ModelScale"				"0.95"
@@ -74,6 +75,7 @@
 	"npc_dota_hero_lancer_5th"
 	{
 		"override_hero"			"npc_dota_hero_phantom_lancer"
+		"DisableWearables" 			"1"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"Model"					"models/lancer/lancer2.vmdl"
 		"ModelScale"			"0.92"
@@ -116,7 +118,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"44"
 		"AttackDamageMax"				"51"
-		"AttackRate"					"0.8"
+		"AttackRate"					"0.95"
 		"AttackRange"					"250"
 		"AttackAcquisitionRange"		"350"
 		
@@ -142,6 +144,7 @@
 	"npc_dota_hero_saber_alter"
 	{
 		"override_hero"			"npc_dota_hero_spectre"
+		"DisableWearables" 			"1"
 		"Model"					"models/saber_alter/sbr_alter.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
@@ -204,6 +207,7 @@
 	"npc_dota_hero_archer_5th"
 	{
 		"override_hero"			"npc_dota_hero_ember_spirit"
+		"DisableWearables" 			"1"
 		"Model"					"models/archer/archertest.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
@@ -270,6 +274,7 @@
 	"npc_dota_hero_rider_5th"
 	{
 		"override_hero"			"npc_dota_hero_templar_assassin"
+		"DisableWearables" 			"1"
 		"Model"					"models/rider/rider.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
@@ -332,6 +337,7 @@
 	"npc_dota_hero_berserker_5th"
 	{
 		"override_hero"			"npc_dota_hero_doom_bringer"
+		"DisableWearables" 			"1"
 		"Model"					"models/berserker/berserker.vmdl"
 		"ModelScale"			"1.00"
 		//"Model"					"models/development/invisiblebox.vmdl"
@@ -394,6 +400,7 @@
 	"npc_dota_hero_false_assassin"
 	{
 		"override_hero"			"npc_dota_hero_juggernaut"
+		"DisableWearables" 			"1"
 		"Model"					"models/assassin/asn.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.0"
@@ -458,6 +465,7 @@
 	"npc_dota_hero_true_assassin"
 	{
 		"override_hero"			"npc_dota_hero_bounty_hunter"
+		"DisableWearables" 			"1"
 		"Model"					"models/true_assassin/ta.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"AbilityLayout"			"6"
@@ -494,10 +502,10 @@
 		"MagicalResistance"				"10"
 		
 		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
-		"AttackRange"					"550"
+		"AttackRange"					"600"
 		"AttackDamageMin"				"46"
 		"AttackDamageMax"				"60"
-		"AttackRate"					"1.0"
+		"AttackRate"					"0.9"
 		"AttackAnimationPoint"			"0.3"
 		"AttackAcquisitionRange"		"800"
 		"ProjectileModel"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf"
@@ -507,9 +515,9 @@
 		"AttributeBaseStrength"			"0"
 		"AttributeStrengthGain"			"0.5"
 		"AttributeBaseAgility"			"0"
-		"AttributeAgilityGain"			"1.6"
+		"AttributeAgilityGain"			"1.8"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0.9"
+		"AttributeIntelligenceGain"		"0.7"
 		
 		"MovementSpeed"					"420"
 		"MovementTurnRate"				"0.8"
@@ -525,6 +533,7 @@
 	"npc_dota_hero_caster_5th"
 	{
 		"override_hero"			"npc_dota_hero_crystal_maiden"
+		"DisableWearables" 			"1"
 		"Model"					"models/caster/caster.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		//"HeroID"					"119"
@@ -590,6 +599,7 @@
 	"npc_dota_hero_gilgamesh"
 	{
 		"override_hero"			"npc_dota_hero_skywrath_mage"
+		"DisableWearables" 			"1"
 		"Model"					"models/gilgamesh/gilgamesh.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
@@ -651,6 +661,7 @@
 	"npc_dota_hero_lancelot"
 	{
 		"override_hero"			"npc_dota_hero_sven"
+		"DisableWearables" 			"1"
 		"Model"					"models/lancelot/lancelot.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.60"
@@ -680,10 +691,10 @@
 		"Attribute4"				"lancelot_attribute_total_assault"
 
 		
-		"StatusHealth"					"1420"
+		"StatusHealth"					"1350"
 		"StatusHealthRegen"				"10"
 		"StatusMana"					"1000"
-		"StatusManaRegen"				"3"
+		"StatusManaRegen"				"7"
 		
 		"ArmorPhysical"					"5"
 		"MagicalResistance"				"10"
@@ -715,6 +726,7 @@
 	"npc_dota_hero_avenger"
 	{
 		"override_hero"			"npc_dota_hero_vengefulspirit"
+		"DisableWearables" 			"1"
 		"Model"					"models/avenger/avenger.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"0.80"
@@ -745,7 +757,7 @@
 		"Attribute3"				"avenger_attribute_overdrive"
 		"Attribute4"				"avenger_attribute_demon_incarnate"
 
-		"StatusHealth"					"1150"
+		"StatusHealth"					"1100"
 		"StatusHealthRegen"				"0"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"7"
@@ -781,6 +793,7 @@
 	"npc_dota_hero_diarmuid"
 	{
 		"override_hero"			"npc_dota_hero_huskar"
+		"DisableWearables" 			"1"
 		"Model"					"models/diarmuid/diarmuid2.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
@@ -842,6 +855,7 @@
 	"npc_dota_hero_gille"
 	{
 		"override_hero"			"npc_dota_hero_shadow_shaman"
+		"DisableWearables" 			"1"
 		"Model"					"models/zc/gille.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.40"
@@ -903,6 +917,7 @@
 	"npc_dota_hero_iskander"
 	{
 		"override_hero"			"npc_dota_hero_chen"
+		"DisableWearables" 			"1"
 		"Model"					"models/iskander/iskander.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
@@ -968,6 +983,7 @@
 	"npc_dota_hero_nero"
 	{
 		"override_hero"			"npc_dota_hero_lina"
+		"DisableWearables" 			"1"
 		"Model"					"models/nero/nero.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
@@ -1034,6 +1050,7 @@
 	"npc_dota_hero_gawain"
 	{
 		"override_hero"			"npc_dota_hero_omniknight"
+		"DisableWearables" 			"1"
 		"Model"					"models/gawain/gawain.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
@@ -1095,6 +1112,7 @@
 	"npc_dota_hero_tamamo"
 	{
 		"override_hero"			"npc_dota_hero_enchantress"
+		"DisableWearables" 			"1"
 		"Model"					"models/tamamo/tamamo.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"0.8"
@@ -1156,6 +1174,7 @@
 	"npc_dota_hero_li"
 	{
 		"override_hero"			"npc_dota_hero_bloodseeker"
+		"DisableWearables" 			"1"
 		"Model"					"models/lishuen/lishuen.vmdl"
 		"ModelScale"			"0.85"
 
@@ -1213,6 +1232,7 @@
 	"npc_dota_hero_jeanne"
 	{
 		"override_hero"				"npc_dota_hero_mirana"
+		"DisableWearables" 			"1"
 		"Model"						"models/jeanne/jeanne.vmdl"
 		"ModelScale"				"1.2"
 		//"HeroID"					"121"
