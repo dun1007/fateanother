@@ -1,0 +1,8 @@
+	"Fateanother_Customize_Button"						"Click to customize your Servant."
+
+	"FA_Fatepedia"						"Fatepedia"
+	"FA_Fatepedia_Button"				"Click to open Fatepedia, where you can learn about Servant skills and gameplay."
+	"FA_Fatepedia_Hero_Button"			"Display Skills and Attributes of "
+
+	"FA_Config"						"Configuration"
+	"FA_Config_Button"				"Click to open Configuration tab."

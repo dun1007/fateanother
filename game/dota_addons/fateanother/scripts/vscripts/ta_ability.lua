@@ -371,6 +371,14 @@ function OnStealStart(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
+function OnZabCastStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local particle = ParticleManager:CreateParticle("particles/custom/ta/zabaniya_shadow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+	--ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
+	print("asdasd")
+end
+
 function OnZabStart(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -382,7 +390,7 @@ function OnZabStart(keys)
 		vSpawnOrigin = caster:GetAbsOrigin(),
 		iMoveSpeed = 950
 	}
-	if caster:HasModifier("modifier_ambush") then caster.IsShadowStrikeActivated = true print("Shadow Strike activated") end
+	if caster:HasModifier("modifier_ambush") then caster.IsShadowStrikeActivated = true end
 
 	ProjectileManager:CreateTrackingProjectile(info) 
 	Timers:CreateTimer({

@@ -81,7 +81,7 @@ IsGameStarted = false
 -- XP and XP Bounty stuffs
 XP_TABLE[0] = 0
 XP_TABLE[1] = 200
-for i=2,MAX_LEVEL do
+for i=2,(MAX_LEVEL-1) do
     XP_TABLE[i] = XP_TABLE[i-1] + i * 100 -- XP required per level formula : Previous level XP requirement + Level * 100
 end
 
@@ -89,9 +89,10 @@ end
 _G.XP_PER_LEVEL_TABLE[0] = 0
 _G.XP_PER_LEVEL_TABLE[1] = 200
 _G.XP_PER_LEVEL_TABLE[24] = 0
-for i=2,MAX_LEVEL-1 do
+for i=2,MAX_LEVEL-2 do
     _G.XP_PER_LEVEL_TABLE[i] = XP_TABLE[i+1] - XP_TABLE[i] -- XP required per level formula : Previous level XP requirement + Level * 100
 end
+_G.XP_PER_LEVEL_TABLE[MAX_LEVEL-1] = _G.XP_PER_LEVEL_TABLE[MAX_LEVEL-2] + 2400
 
 for i=1, MAX_LEVEL do
     BOUNTY_PER_LEVEL_TABLE[i] = 1300 + i * 75 -- Bounty gold formula : 1000 + Level * 100
@@ -814,15 +815,16 @@ function FateGameMode:OnHeroInGame(hero)
             hero:HeroLevelUp(false)
             hero:HeroLevelUp(false)
         end
-        local children = hero:GetChildren()
+        --[[local children = hero:GetChildren()
         for k,child in pairs(children) do
            if child:GetClassname() == "dota_item_wearable" then
                child:AddEffects(EF_NODRAW)
            end
         end
-        print("victory condition set")
+        print("victory condition set")]]
         CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Display victory condition for player
         SendKVToFatepedia(player) -- send KV to fatepedia
+
     end)
 end
 
@@ -1885,6 +1887,7 @@ end
 function FateGameMode:FinishRound(IsTimeOut, winner)
     print("[FATE] Winner decided")
     --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
+    --statCollection:submitRound(false)
     _G.CurrentGameState = "FATE_POST_ROUND"
     CreateUITimer(("Round " .. self.nCurrentRound), 0, "round_timer" .. self.nCurrentRound)
     CreateUITimer("Pre-Round", 0, "pregame_timer")
@@ -1979,6 +1982,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
         Timers:CreateTimer(0.1, function()
+            --statCollection:submitRound(true)
             CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
         end)
         return
@@ -1987,6 +1991,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
         Timers:CreateTimer(0.1, function()
+            --statCollection:submitRound(true)
             CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
         end)
         return
@@ -2096,7 +2101,6 @@ function FateGameMode:CaptureGameMode()
         mode:SetBuybackEnabled( BUYBACK_ENABLED )
         mode:SetTopBarTeamValuesVisible( TOP_BAR_VISIBLE )
         mode:SetUseCustomHeroLevels ( true )
-        mode:SetCustomHeroMaxLevel ( MAX_LEVEL )
         mode:SetCustomXPRequiredToReachNextLevel( XP_TABLE )
         mode:SetFogOfWarDisabled(DISABLE_FOG_OF_WAR_ENTIRELY)
         mode:SetGoldSoundDisabled( true )
@@ -2108,7 +2112,6 @@ function FateGameMode:CaptureGameMode()
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
         mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)
         mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
-        SendToServerConsole("dota_combine_models 0")
         self:OnFirstPlayerLoaded()
 
         if _G.GameMap == "fate_elim_6v6" then

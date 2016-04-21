@@ -46,7 +46,7 @@
 
 	        </Panel>
 	    </Panel>
-        <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" hittest="true">
+        <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" onmouseover="OnCustomizeButtonShowTooltip()" onmouseout="OnCustomizeButtonHideTooltip()" hittest="true">
             <Image id="CustomizationOpenButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
             <Label id="CustomizationOpenButtonText" class="CustomizationText" text="#Fateanother_Customize" hittest="false"/>
         </Button>

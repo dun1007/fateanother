@@ -284,6 +284,11 @@ function OnGOBEnd(keys)
 	unit:RemoveSelf()
 end
 
+function ToggleGOBOn(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ability:ToggleAbility()
+end
 function OnGOBThink(keys)
 	local caster = keys.caster
 	local ability = keys.ability

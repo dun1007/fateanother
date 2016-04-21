@@ -73,6 +73,18 @@ function UpdateStatPanel(data)
 	$("#CustomizationShardNumber").text = data.ShardAmount;
 }
 
+function OnCustomizeButtonShowTooltip()
+{
+	var attrText = $("#CustomizationOpenButton");
+	$.DispatchEvent('DOTAShowTextTooltip', attrText, "#Fateanother_Customize_Button");
+}
+
+function OnCustomizeButtonHideTooltip()
+{
+	var attrText = $("#CustomizationOpenButton"); 
+	$.DispatchEvent( 'DOTAHideTextTooltip', attrText );
+}
+
 
 function AttributeShowTooltip()
 {
