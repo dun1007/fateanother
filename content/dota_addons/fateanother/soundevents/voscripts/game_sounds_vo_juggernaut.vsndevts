@@ -1,4 +1,4 @@
-"lina_lina_spawn_01"{"operator_stacks"
+"juggernaut_jug_spawn_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -12,7 +12,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -28,7 +28,7 @@
 	}
 }
 }
-"lina_lina_spawn_02"{"operator_stacks"
+"juggernaut_jug_spawn_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -42,7 +42,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -58,7 +58,7 @@
 	}
 }
 }
-"lina_lina_spawn_03"{"operator_stacks"
+"juggernaut_jug_spawn_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -72,7 +72,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -88,7 +88,7 @@
 	}
 }
 }
-"lina_lina_spawn_04"{"operator_stacks"
+"juggernaut_jug_spawn_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -102,7 +102,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -118,7 +118,7 @@
 	}
 }
 }
-"lina_lina_spawn_05"{"operator_stacks"
+"juggernaut_jug_spawn_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -132,7 +132,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -148,7 +148,7 @@
 	}
 }
 }
-"lina_lina_spawn_06"{"operator_stacks"
+"juggernaut_jug_spawn_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -162,7 +162,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -178,7 +178,7 @@
 	}
 }
 }
-"lina_lina_spawn_07"{"operator_stacks"
+"juggernaut_jug_spawn_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -192,7 +192,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -208,7 +208,7 @@
 	}
 }
 }
-"lina_lina_spawn_08"{"operator_stacks"
+"juggernaut_jug_spawn_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -222,7 +222,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -238,7 +238,7 @@
 	}
 }
 }
-"lina_lina_spawn_09"{"operator_stacks"
+"juggernaut_jug_move_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -252,7 +252,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -268,7 +268,7 @@
 	}
 }
 }
-"lina_lina_battlebegins_01"{"operator_stacks"
+"juggernaut_jug_move_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -282,7 +282,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_01.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -298,7 +298,7 @@
 	}
 }
 }
-"lina_lina_firstblood_01"{"operator_stacks"
+"juggernaut_jug_move_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -312,7 +312,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -328,7 +328,7 @@
 	}
 }
 }
-"lina_lina_move_01"{"operator_stacks"
+"juggernaut_jug_move_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -342,7 +342,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -358,7 +358,7 @@
 	}
 }
 }
-"lina_lina_move_02"{"operator_stacks"
+"juggernaut_jug_move_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -372,7 +372,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -388,7 +388,7 @@
 	}
 }
 }
-"lina_lina_move_03"{"operator_stacks"
+"juggernaut_jug_move_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -402,7 +402,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -418,7 +418,7 @@
 	}
 }
 }
-"lina_lina_move_04"{"operator_stacks"
+"juggernaut_jug_move_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -432,7 +432,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_move_01.vsnd"
 					}
 				}
 				"volume"
@@ -448,7 +448,7 @@
 	}
 }
 }
-"lina_lina_move_05"{"operator_stacks"
+"juggernaut_jug_move_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -462,7 +462,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_02.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -478,7 +478,7 @@
 	}
 }
 }
-"lina_lina_move_06"{"operator_stacks"
+"juggernaut_jug_move_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -492,7 +492,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_02.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -508,7 +508,7 @@
 	}
 }
 }
-"lina_lina_move_07"{"operator_stacks"
+"juggernaut_jug_move_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -522,7 +522,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_02.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -538,7 +538,7 @@
 	}
 }
 }
-"lina_lina_move_08"{"operator_stacks"
+"juggernaut_jug_move_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -552,7 +552,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_02.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -568,7 +568,7 @@
 	}
 }
 }
-"lina_lina_move_09"{"operator_stacks"
+"juggernaut_jug_move_13"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -582,7 +582,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_03.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -598,7 +598,7 @@
 	}
 }
 }
-"lina_lina_move_10"{"operator_stacks"
+"juggernaut_jug_move_14"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -612,7 +612,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_03.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -628,7 +628,7 @@
 	}
 }
 }
-"lina_lina_move_11"{"operator_stacks"
+"juggernaut_jug_move_15"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -642,7 +642,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_03.vsnd"
+						"value0"		"sounds/fa/fa_move_02.vsnd"
 					}
 				}
 				"volume"
@@ -658,7 +658,7 @@
 	}
 }
 }
-"lina_lina_move_12"{"operator_stacks"
+"juggernaut_jug_move_16"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -672,7 +672,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_03.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -688,7 +688,7 @@
 	}
 }
 }
-"lina_lina_attack_01"{"operator_stacks"
+"juggernaut_jug_move_17"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -702,7 +702,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_01.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -718,7 +718,7 @@
 	}
 }
 }
-"lina_lina_attack_02"{"operator_stacks"
+"juggernaut_jug_move_18"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -732,7 +732,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_01.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -748,7 +748,7 @@
 	}
 }
 }
-"lina_lina_attack_03"{"operator_stacks"
+"juggernaut_jug_move_19"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -762,7 +762,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_01.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -778,7 +778,7 @@
 	}
 }
 }
-"lina_lina_attack_04"{"operator_stacks"
+"juggernaut_jug_attack_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -792,7 +792,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_01.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -808,7 +808,7 @@
 	}
 }
 }
-"lina_lina_attack_05"{"operator_stacks"
+"juggernaut_jug_attack_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -822,7 +822,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_02.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -838,7 +838,7 @@
 	}
 }
 }
-"lina_lina_attack_06"{"operator_stacks"
+"juggernaut_jug_attack_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -852,7 +852,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_02.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -868,7 +868,7 @@
 	}
 }
 }
-"lina_lina_attack_07"{"operator_stacks"
+"juggernaut_jug_attack_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -882,7 +882,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_02.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -898,7 +898,7 @@
 	}
 }
 }
-"lina_lina_attack_08"{"operator_stacks"
+"juggernaut_jug_attack_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -912,7 +912,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_03.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -928,7 +928,7 @@
 	}
 }
 }
-"lina_lina_attack_09"{"operator_stacks"
+"juggernaut_jug_attack_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -942,7 +942,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_03.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -958,7 +958,7 @@
 	}
 }
 }
-"lina_lina_attack_10"{"operator_stacks"
+"juggernaut_jug_attack_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -972,7 +972,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_attack_03.vsnd"
+						"value0"		"sounds/fa/fa_attack_01.vsnd"
 					}
 				}
 				"volume"
@@ -988,7 +988,7 @@
 	}
 }
 }
-"lina_lina_cast_01"{"operator_stacks"
+"juggernaut_jug_attack_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1002,7 +1002,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_attack_02.vsnd"
 					}
 				}
 				"volume"
@@ -1018,7 +1018,7 @@
 	}
 }
 }
-"lina_lina_cast_02"{"operator_stacks"
+"juggernaut_jug_attack_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1032,7 +1032,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_attack_02.vsnd"
 					}
 				}
 				"volume"
@@ -1048,7 +1048,7 @@
 	}
 }
 }
-"lina_lina_cast_03"{"operator_stacks"
+"juggernaut_jug_attack_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1062,7 +1062,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_attack_02.vsnd"
 					}
 				}
 				"volume"
@@ -1078,7 +1078,7 @@
 	}
 }
 }
-"lina_lina_ability_lightstrike_01"{"operator_stacks"
+"juggernaut_jug_attack_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1092,7 +1092,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_attack_02.vsnd"
 					}
 				}
 				"volume"
@@ -1108,7 +1108,7 @@
 	}
 }
 }
-"lina_lina_ability_lightstrike_02"{"operator_stacks"
+"juggernaut_jug_attack_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1122,7 +1122,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_attack_02.vsnd"
 					}
 				}
 				"volume"
@@ -1138,7 +1138,7 @@
 	}
 }
 }
-"lina_lina_ability_lightstrike_03"{"operator_stacks"
+"juggernaut_jug_attack_13"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1152,7 +1152,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_attack_02.vsnd"
 					}
 				}
 				"volume"
@@ -1168,7 +1168,7 @@
 	}
 }
 }
-"lina_lina_ability_lightstrike_04"{"operator_stacks"
+"juggernaut_jug_cast_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1182,7 +1182,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -1198,7 +1198,7 @@
 	}
 }
 }
-"lina_lina_ability_lightstrike_05"{"operator_stacks"
+"juggernaut_jug_cast_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1212,7 +1212,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -1228,7 +1228,7 @@
 	}
 }
 }
-"lina_lina_ability_lightstrike_06"{"operator_stacks"
+"juggernaut_jug_cast_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1242,7 +1242,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -1258,7 +1258,7 @@
 	}
 }
 }
-"lina_lina_level_01"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1272,7 +1272,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_02.vsnd"
 					}
 				}
 				"volume"
@@ -1288,7 +1288,7 @@
 	}
 }
 }
-"lina_lina_level_02"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1302,7 +1302,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_03.vsnd"
 					}
 				}
 				"volume"
@@ -1318,7 +1318,7 @@
 	}
 }
 }
-"lina_lina_level_03"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1332,7 +1332,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_05.vsnd"
 					}
 				}
 				"volume"
@@ -1348,7 +1348,7 @@
 	}
 }
 }
-"lina_lina_level_04"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1362,7 +1362,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_06.vsnd"
 					}
 				}
 				"volume"
@@ -1378,7 +1378,7 @@
 	}
 }
 }
-"lina_lina_level_05"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1392,7 +1392,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_07.vsnd"
 					}
 				}
 				"volume"
@@ -1408,7 +1408,7 @@
 	}
 }
 }
-"lina_lina_level_06"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1422,7 +1422,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_08.vsnd"
 					}
 				}
 				"volume"
@@ -1438,7 +1438,7 @@
 	}
 }
 }
-"lina_lina_level_07"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1452,7 +1452,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_09.vsnd"
 					}
 				}
 				"volume"
@@ -1468,7 +1468,7 @@
 	}
 }
 }
-"lina_lina_kill_01"{"operator_stacks"
+"juggernaut_jug_ability_stunteleport_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1482,7 +1482,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_stunteleport_01.vsnd"
 					}
 				}
 				"volume"
@@ -1498,7 +1498,7 @@
 	}
 }
 }
-"lina_lina_kill_02"{"operator_stacks"
+"juggernaut_jug_ability_stunteleport_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1512,7 +1512,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_stunteleport_02.vsnd"
 					}
 				}
 				"volume"
@@ -1528,7 +1528,7 @@
 	}
 }
 }
-"lina_lina_kill_03"{"operator_stacks"
+"juggernaut_jug_ability_stunteleport_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1542,7 +1542,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_stunteleport_03.vsnd"
 					}
 				}
 				"volume"
@@ -1558,7 +1558,7 @@
 	}
 }
 }
-"lina_lina_kill_04"{"operator_stacks"
+"juggernaut_jug_ability_immunity_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1572,7 +1572,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_immunity_01.vsnd"
 					}
 				}
 				"volume"
@@ -1588,7 +1588,7 @@
 	}
 }
 }
-"lina_lina_kill_05"{"operator_stacks"
+"juggernaut_jug_ability_immunity_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1602,7 +1602,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_immunity_02.vsnd"
 					}
 				}
 				"volume"
@@ -1618,7 +1618,7 @@
 	}
 }
 }
-"lina_lina_kill_06"{"operator_stacks"
+"juggernaut_jug_ability_immunity_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1632,7 +1632,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_immunity_03.vsnd"
 					}
 				}
 				"volume"
@@ -1648,7 +1648,7 @@
 	}
 }
 }
-"lina_lina_kill_07"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1662,7 +1662,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_01.vsnd"
 					}
 				}
 				"volume"
@@ -1678,7 +1678,7 @@
 	}
 }
 }
-"lina_lina_kill_08"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1692,7 +1692,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_02.vsnd"
 					}
 				}
 				"volume"
@@ -1708,7 +1708,7 @@
 	}
 }
 }
-"lina_lina_kill_09"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1722,7 +1722,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_03.vsnd"
 					}
 				}
 				"volume"
@@ -1738,7 +1738,7 @@
 	}
 }
 }
-"lina_lina_kill_10"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1752,7 +1752,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_04.vsnd"
 					}
 				}
 				"volume"
@@ -1768,7 +1768,7 @@
 	}
 }
 }
-"lina_lina_kill_11"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1782,7 +1782,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_05.vsnd"
 					}
 				}
 				"volume"
@@ -1798,7 +1798,7 @@
 	}
 }
 }
-"lina_lina_kill_12"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1812,7 +1812,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_06.vsnd"
 					}
 				}
 				"volume"
@@ -1828,7 +1828,7 @@
 	}
 }
 }
-"lina_lina_kill_13"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1842,7 +1842,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_07.vsnd"
 					}
 				}
 				"volume"
@@ -1858,7 +1858,7 @@
 	}
 }
 }
-"lina_lina_killspecial_01"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1872,7 +1872,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_08.vsnd"
 					}
 				}
 				"volume"
@@ -1888,7 +1888,7 @@
 	}
 }
 }
-"lina_lina_cm_01"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1902,7 +1902,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_09.vsnd"
 					}
 				}
 				"volume"
@@ -1918,7 +1918,7 @@
 	}
 }
 }
-"lina_lina_cm_02"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1932,7 +1932,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_10.vsnd"
 					}
 				}
 				"volume"
@@ -1948,7 +1948,7 @@
 	}
 }
 }
-"lina_lina_cm_03"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1962,7 +1962,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_11.vsnd"
 					}
 				}
 				"volume"
@@ -1978,7 +1978,7 @@
 	}
 }
 }
-"lina_lina_cm_04"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -1992,7 +1992,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_12.vsnd"
 					}
 				}
 				"volume"
@@ -2008,7 +2008,7 @@
 	}
 }
 }
-"lina_lina_cm_05"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_13"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2022,7 +2022,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_13.vsnd"
 					}
 				}
 				"volume"
@@ -2038,7 +2038,7 @@
 	}
 }
 }
-"lina_lina_cm_06"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_14"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2052,7 +2052,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_14.vsnd"
 					}
 				}
 				"volume"
@@ -2068,7 +2068,7 @@
 	}
 }
 }
-"lina_lina_cm_07"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_15"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2082,7 +2082,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_15.vsnd"
 					}
 				}
 				"volume"
@@ -2098,7 +2098,7 @@
 	}
 }
 }
-"lina_lina_cm_08"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_16"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2112,7 +2112,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_16.vsnd"
 					}
 				}
 				"volume"
@@ -2128,7 +2128,7 @@
 	}
 }
 }
-"lina_lina_cm_09"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_17"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2142,7 +2142,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_17.vsnd"
 					}
 				}
 				"volume"
@@ -2158,7 +2158,7 @@
 	}
 }
 }
-"lina_lina_cm_10"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_18"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2172,7 +2172,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_18.vsnd"
 					}
 				}
 				"volume"
@@ -2188,7 +2188,7 @@
 	}
 }
 }
-"lina_lina_cm_11"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_19"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2202,7 +2202,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_19.vsnd"
 					}
 				}
 				"volume"
@@ -2218,7 +2218,7 @@
 	}
 }
 }
-"lina_lina_cm_12"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_20"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2232,7 +2232,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_20.vsnd"
 					}
 				}
 				"volume"
@@ -2248,7 +2248,7 @@
 	}
 }
 }
-"lina_lina_cm_13"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_21"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2262,7 +2262,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_21.vsnd"
 					}
 				}
 				"volume"
@@ -2278,7 +2278,7 @@
 	}
 }
 }
-"lina_lina_cm_14"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_22"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2292,7 +2292,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_22.vsnd"
 					}
 				}
 				"volume"
@@ -2308,7 +2308,7 @@
 	}
 }
 }
-"lina_lina_cm_15"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_23"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2322,7 +2322,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_23.vsnd"
 					}
 				}
 				"volume"
@@ -2338,7 +2338,7 @@
 	}
 }
 }
-"lina_lina_rival_01"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_24"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2352,7 +2352,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_24.vsnd"
 					}
 				}
 				"volume"
@@ -2368,7 +2368,7 @@
 	}
 }
 }
-"lina_lina_rival_02"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_25"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2382,7 +2382,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_25.vsnd"
 					}
 				}
 				"volume"
@@ -2398,7 +2398,7 @@
 	}
 }
 }
-"lina_lina_rival_03"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_26"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2412,7 +2412,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_26.vsnd"
 					}
 				}
 				"volume"
@@ -2428,7 +2428,7 @@
 	}
 }
 }
-"lina_lina_rival_04"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_27"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2442,7 +2442,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_27.vsnd"
 					}
 				}
 				"volume"
@@ -2458,7 +2458,7 @@
 	}
 }
 }
-"lina_lina_rival_05"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_28"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2472,7 +2472,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_28.vsnd"
 					}
 				}
 				"volume"
@@ -2488,7 +2488,7 @@
 	}
 }
 }
-"lina_lina_rival_06"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_29"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2502,7 +2502,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_29.vsnd"
 					}
 				}
 				"volume"
@@ -2518,7 +2518,7 @@
 	}
 }
 }
-"lina_lina_rival_07"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_30"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2532,7 +2532,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_30.vsnd"
 					}
 				}
 				"volume"
@@ -2548,7 +2548,7 @@
 	}
 }
 }
-"lina_lina_rival_08"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_31"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2562,7 +2562,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_31.vsnd"
 					}
 				}
 				"volume"
@@ -2578,7 +2578,7 @@
 	}
 }
 }
-"lina_lina_rival_09"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_32"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2592,7 +2592,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_32.vsnd"
 					}
 				}
 				"volume"
@@ -2608,7 +2608,7 @@
 	}
 }
 }
-"lina_lina_rival_10"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_33"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2622,7 +2622,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_33.vsnd"
 					}
 				}
 				"volume"
@@ -2638,7 +2638,7 @@
 	}
 }
 }
-"lina_lina_rival_11"{"operator_stacks"
+"juggernaut_jug_ability_omnislash_34"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2652,7 +2652,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_omnislash_34.vsnd"
 					}
 				}
 				"volume"
@@ -2668,7 +2668,7 @@
 	}
 }
 }
-"lina_lina_rival_12"{"operator_stacks"
+"juggernaut_jug_ability_waste_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2682,7 +2682,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_waste_01.vsnd"
 					}
 				}
 				"volume"
@@ -2698,7 +2698,7 @@
 	}
 }
 }
-"lina_lina_rival_13"{"operator_stacks"
+"juggernaut_jug_ability_waste_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2712,7 +2712,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_ability_waste_02.vsnd"
 					}
 				}
 				"volume"
@@ -2728,7 +2728,7 @@
 	}
 }
 }
-"lina_lina_rival_14"{"operator_stacks"
+"juggernaut_jug_death_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2742,7 +2742,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -2758,7 +2758,7 @@
 	}
 }
 }
-"lina_lina_rival_15"{"operator_stacks"
+"juggernaut_jug_death_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2772,7 +2772,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_02.vsnd"
 					}
 				}
 				"volume"
@@ -2788,7 +2788,7 @@
 	}
 }
 }
-"lina_lina_rival_16"{"operator_stacks"
+"juggernaut_jug_death_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2802,7 +2802,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -2818,7 +2818,7 @@
 	}
 }
 }
-"lina_lina_rival_17"{"operator_stacks"
+"juggernaut_jug_death_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2832,7 +2832,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_02.vsnd"
 					}
 				}
 				"volume"
@@ -2848,7 +2848,7 @@
 	}
 }
 }
-"lina_lina_rival_18"{"operator_stacks"
+"juggernaut_jug_death_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2862,7 +2862,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -2878,7 +2878,7 @@
 	}
 }
 }
-"lina_lina_rival_19"{"operator_stacks"
+"juggernaut_jug_death_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2892,7 +2892,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_02.vsnd"
 					}
 				}
 				"volume"
@@ -2908,7 +2908,7 @@
 	}
 }
 }
-"lina_lina_rival_20"{"operator_stacks"
+"juggernaut_jug_death_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2922,7 +2922,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_kill.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -2938,7 +2938,7 @@
 	}
 }
 }
-"lina_lina_ally_01"{"operator_stacks"
+"juggernaut_jug_death_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2952,7 +2952,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_death_02.vsnd"
 					}
 				}
 				"volume"
@@ -2968,7 +2968,7 @@
 	}
 }
 }
-"lina_lina_ally_02"{"operator_stacks"
+"juggernaut_jug_death_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -2982,7 +2982,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -2998,7 +2998,7 @@
 	}
 }
 }
-"lina_lina_ally_03"{"operator_stacks"
+"juggernaut_jug_death_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3012,7 +3012,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_death_02.vsnd"
 					}
 				}
 				"volume"
@@ -3028,7 +3028,7 @@
 	}
 }
 }
-"lina_lina_ally_04"{"operator_stacks"
+"juggernaut_jug_death_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3042,7 +3042,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -3058,7 +3058,7 @@
 	}
 }
 }
-"lina_lina_ally_05"{"operator_stacks"
+"juggernaut_jug_kill_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3072,7 +3072,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -3088,7 +3088,7 @@
 	}
 }
 }
-"lina_lina_ally_06"{"operator_stacks"
+"juggernaut_jug_kill_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3102,7 +3102,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -3118,7 +3118,7 @@
 	}
 }
 }
-"lina_lina_ally_07"{"operator_stacks"
+"juggernaut_jug_kill_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3132,7 +3132,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -3148,7 +3148,7 @@
 	}
 }
 }
-"lina_lina_ally_08"{"operator_stacks"
+"juggernaut_jug_kill_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3162,7 +3162,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_other_01.vsnd"
 					}
 				}
 				"volume"
@@ -3178,7 +3178,7 @@
 	}
 }
 }
-"lina_lina_death_01"{"operator_stacks"
+"juggernaut_jug_kill_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3192,7 +3192,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_01.vsnd"
 					}
 				}
 				"volume"
@@ -3208,7 +3208,7 @@
 	}
 }
 }
-"lina_lina_death_02"{"operator_stacks"
+"juggernaut_jug_kill_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3222,7 +3222,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_01.vsnd"
 					}
 				}
 				"volume"
@@ -3238,7 +3238,7 @@
 	}
 }
 }
-"lina_lina_death_03"{"operator_stacks"
+"juggernaut_jug_kill_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3252,7 +3252,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_02.vsnd"
 					}
 				}
 				"volume"
@@ -3268,7 +3268,7 @@
 	}
 }
 }
-"lina_lina_death_04"{"operator_stacks"
+"juggernaut_jug_kill_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3282,7 +3282,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_02.vsnd"
 					}
 				}
 				"volume"
@@ -3298,7 +3298,7 @@
 	}
 }
 }
-"lina_lina_death_05"{"operator_stacks"
+"juggernaut_jug_kill_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3312,7 +3312,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_02.vsnd"
 					}
 				}
 				"volume"
@@ -3328,7 +3328,7 @@
 	}
 }
 }
-"lina_lina_death_06"{"operator_stacks"
+"juggernaut_jug_kill_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3342,7 +3342,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_03.vsnd"
 					}
 				}
 				"volume"
@@ -3358,7 +3358,7 @@
 	}
 }
 }
-"lina_lina_death_07"{"operator_stacks"
+"juggernaut_jug_kill_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3372,7 +3372,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_03.vsnd"
 					}
 				}
 				"volume"
@@ -3388,7 +3388,7 @@
 	}
 }
 }
-"lina_lina_death_08"{"operator_stacks"
+"juggernaut_jug_kill_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3402,7 +3402,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_other_03.vsnd"
 					}
 				}
 				"volume"
@@ -3418,7 +3418,7 @@
 	}
 }
 }
-"lina_lina_death_09"{"operator_stacks"
+"juggernaut_jug_respawn_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3432,7 +3432,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3448,7 +3448,7 @@
 	}
 }
 }
-"lina_lina_death_10"{"operator_stacks"
+"juggernaut_jug_respawn_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3462,7 +3462,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3478,7 +3478,7 @@
 	}
 }
 }
-"lina_lina_death_11"{"operator_stacks"
+"juggernaut_jug_respawn_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3492,7 +3492,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3508,7 +3508,7 @@
 	}
 }
 }
-"lina_lina_death_12"{"operator_stacks"
+"juggernaut_jug_respawn_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3522,7 +3522,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3538,7 +3538,7 @@
 	}
 }
 }
-"lina_lina_fastres_01"{"operator_stacks"
+"juggernaut_jug_respawn_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3552,7 +3552,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3568,7 +3568,7 @@
 	}
 }
 }
-"lina_lina_respawn_01"{"operator_stacks"
+"juggernaut_jug_respawn_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3582,7 +3582,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3598,7 +3598,7 @@
 	}
 }
 }
-"lina_lina_respawn_02"{"operator_stacks"
+"juggernaut_jug_respawn_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3612,7 +3612,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_spawn.vsnd"
 					}
 				}
 				"volume"
@@ -3628,7 +3628,7 @@
 	}
 }
 }
-"lina_lina_respawn_03"{"operator_stacks"
+"juggernaut_jug_rare_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3642,7 +3642,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_07.vsnd"
 					}
 				}
 				"volume"
@@ -3658,7 +3658,7 @@
 	}
 }
 }
-"lina_lina_respawn_04"{"operator_stacks"
+"juggernaut_jug_rare_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3672,7 +3672,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_06.vsnd"
 					}
 				}
 				"volume"
@@ -3688,7 +3688,7 @@
 	}
 }
 }
-"lina_lina_respawn_05"{"operator_stacks"
+"juggernaut_jug_rare_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3702,7 +3702,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_07.vsnd"
 					}
 				}
 				"volume"
@@ -3718,7 +3718,7 @@
 	}
 }
 }
-"lina_lina_respawn_06"{"operator_stacks"
+"juggernaut_jug_rare_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3732,7 +3732,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_06.vsnd"
 					}
 				}
 				"volume"
@@ -3748,7 +3748,7 @@
 	}
 }
 }
-"lina_lina_respawn_07"{"operator_stacks"
+"juggernaut_jug_rare_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3762,7 +3762,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_07.vsnd"
 					}
 				}
 				"volume"
@@ -3778,7 +3778,7 @@
 	}
 }
 }
-"lina_lina_respawn_08"{"operator_stacks"
+"juggernaut_jug_rare_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3792,7 +3792,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_06.vsnd"
 					}
 				}
 				"volume"
@@ -3808,7 +3808,7 @@
 	}
 }
 }
-"lina_lina_respawn_09"{"operator_stacks"
+"juggernaut_jug_rare_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3822,7 +3822,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_07.vsnd"
 					}
 				}
 				"volume"
@@ -3838,7 +3838,7 @@
 	}
 }
 }
-"lina_lina_respawn_10"{"operator_stacks"
+"juggernaut_jug_rare_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3852,7 +3852,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_06.vsnd"
 					}
 				}
 				"volume"
@@ -3868,7 +3868,7 @@
 	}
 }
 }
-"lina_lina_respawn_11"{"operator_stacks"
+"juggernaut_jug_rare_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3882,7 +3882,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_07.vsnd"
 					}
 				}
 				"volume"
@@ -3898,7 +3898,7 @@
 	}
 }
 }
-"lina_lina_respawn_12"{"operator_stacks"
+"juggernaut_jug_rare_17"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3912,7 +3912,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_other_06.vsnd"
 					}
 				}
 				"volume"
@@ -3928,7 +3928,7 @@
 	}
 }
 }
-"lina_lina_lasthit_01"{"operator_stacks"
+"juggernaut_jug_purch_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3942,7 +3942,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_purch_01.vsnd"
 					}
 				}
 				"volume"
@@ -3958,7 +3958,7 @@
 	}
 }
 }
-"lina_lina_lasthit_02"{"operator_stacks"
+"juggernaut_jug_purch_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -3972,7 +3972,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_purch_02.vsnd"
 					}
 				}
 				"volume"
@@ -3988,7 +3988,7 @@
 	}
 }
 }
-"lina_lina_lasthit_03"{"operator_stacks"
+"juggernaut_jug_purch_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4002,7 +4002,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_purch_03.vsnd"
 					}
 				}
 				"volume"
@@ -4018,7 +4018,7 @@
 	}
 }
 }
-"lina_lina_lasthit_04"{"operator_stacks"
+"juggernaut_jug_ability_bladefury_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4032,7 +4032,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_ability_bladefury_10.vsnd"
 					}
 				}
 				"volume"
@@ -4048,7 +4048,7 @@
 	}
 }
 }
-"lina_lina_lasthit_05"{"operator_stacks"
+"juggernaut_jug_immort_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4062,7 +4062,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_immort_01.vsnd"
 					}
 				}
 				"volume"
@@ -4078,7 +4078,7 @@
 	}
 }
 }
-"lina_lina_lasthit_06"{"operator_stacks"
+"juggernaut_jug_immort_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4092,7 +4092,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_immort_02.vsnd"
 					}
 				}
 				"volume"
@@ -4108,7 +4108,7 @@
 	}
 }
 }
-"lina_lina_lasthit_07"{"operator_stacks"
+"juggernaut_jug_immort_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4122,7 +4122,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_immort_03.vsnd"
 					}
 				}
 				"volume"
@@ -4138,7 +4138,7 @@
 	}
 }
 }
-"lina_lina_lasthit_08"{"operator_stacks"
+"juggernaut_jugg_missing_lane_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4152,7 +4152,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fag_missing_lane_01.vsnd"
 					}
 				}
 				"volume"
@@ -4168,7 +4168,7 @@
 	}
 }
 }
-"lina_lina_deny_01"{"operator_stacks"
+"juggernaut_jugg_missing_lane_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4182,7 +4182,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fag_missing_lane_02.vsnd"
 					}
 				}
 				"volume"
@@ -4198,7 +4198,7 @@
 	}
 }
 }
-"lina_lina_deny_02"{"operator_stacks"
+"juggernaut_jugg_missing_lane_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4212,7 +4212,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fag_missing_lane_03.vsnd"
 					}
 				}
 				"volume"
@@ -4228,7 +4228,7 @@
 	}
 }
 }
-"lina_lina_deny_03"{"operator_stacks"
+"juggernaut_jug_deny_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4242,7 +4242,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_01.vsnd"
 					}
 				}
 				"volume"
@@ -4258,7 +4258,7 @@
 	}
 }
 }
-"lina_lina_deny_04"{"operator_stacks"
+"juggernaut_jug_deny_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4272,7 +4272,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_02.vsnd"
 					}
 				}
 				"volume"
@@ -4288,7 +4288,7 @@
 	}
 }
 }
-"lina_lina_deny_05"{"operator_stacks"
+"juggernaut_jug_deny_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4302,7 +4302,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_03.vsnd"
 					}
 				}
 				"volume"
@@ -4318,7 +4318,7 @@
 	}
 }
 }
-"lina_lina_deny_06"{"operator_stacks"
+"juggernaut_jug_deny_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4332,7 +4332,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_04.vsnd"
 					}
 				}
 				"volume"
@@ -4348,7 +4348,7 @@
 	}
 }
 }
-"lina_lina_deny_07"{"operator_stacks"
+"juggernaut_jug_deny_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4362,7 +4362,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_05.vsnd"
 					}
 				}
 				"volume"
@@ -4378,7 +4378,7 @@
 	}
 }
 }
-"lina_lina_deny_08"{"operator_stacks"
+"juggernaut_jug_deny_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4392,7 +4392,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_06.vsnd"
 					}
 				}
 				"volume"
@@ -4408,7 +4408,7 @@
 	}
 }
 }
-"lina_lina_deny_09"{"operator_stacks"
+"juggernaut_jug_deny_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4422,7 +4422,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_deny_07.vsnd"
 					}
 				}
 				"volume"
@@ -4438,7 +4438,7 @@
 	}
 }
 }
-"lina_lina_deny_10"{"operator_stacks"
+"juggernaut_jug_lasthit_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4452,7 +4452,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_01.vsnd"
 					}
 				}
 				"volume"
@@ -4468,7 +4468,7 @@
 	}
 }
 }
-"lina_lina_deny_11"{"operator_stacks"
+"juggernaut_jug_lasthit_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4482,7 +4482,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_02.vsnd"
 					}
 				}
 				"volume"
@@ -4498,7 +4498,7 @@
 	}
 }
 }
-"lina_lina_deny_12"{"operator_stacks"
+"juggernaut_jug_lasthit_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4512,7 +4512,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_03.vsnd"
 					}
 				}
 				"volume"
@@ -4528,7 +4528,7 @@
 	}
 }
 }
-"lina_lina_deny_13"{"operator_stacks"
+"juggernaut_jug_lasthit_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4542,7 +4542,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_04.vsnd"
 					}
 				}
 				"volume"
@@ -4558,7 +4558,7 @@
 	}
 }
 }
-"lina_lina_deny_14"{"operator_stacks"
+"juggernaut_jug_lasthit_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4572,7 +4572,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_05.vsnd"
 					}
 				}
 				"volume"
@@ -4588,7 +4588,7 @@
 	}
 }
 }
-"lina_lina_deny_15"{"operator_stacks"
+"juggernaut_jug_lasthit_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4602,7 +4602,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_06.vsnd"
 					}
 				}
 				"volume"
@@ -4618,7 +4618,7 @@
 	}
 }
 }
-"lina_lina_deny_16"{"operator_stacks"
+"juggernaut_jug_lasthit_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4632,7 +4632,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_07.vsnd"
 					}
 				}
 				"volume"
@@ -4648,7 +4648,7 @@
 	}
 }
 }
-"lina_lina_deny_17"{"operator_stacks"
+"juggernaut_jug_lasthit_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4662,7 +4662,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_08.vsnd"
 					}
 				}
 				"volume"
@@ -4678,7 +4678,7 @@
 	}
 }
 }
-"lina_lina_rare_01"{"operator_stacks"
+"juggernaut_jug_lasthit_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4692,7 +4692,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_09.vsnd"
 					}
 				}
 				"volume"
@@ -4708,7 +4708,7 @@
 	}
 }
 }
-"lina_lina_rare_02"{"operator_stacks"
+"juggernaut_jug_lasthit_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4722,7 +4722,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_01.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_10.vsnd"
 					}
 				}
 				"volume"
@@ -4738,7 +4738,7 @@
 	}
 }
 }
-"lina_lina_rare_03"{"operator_stacks"
+"juggernaut_jug_lasthit_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4752,7 +4752,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_other_02.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_11.vsnd"
 					}
 				}
 				"volume"
@@ -4768,7 +4768,7 @@
 	}
 }
 }
-"lina_lina_rare_04"{"operator_stacks"
+"juggernaut_jug_lasthit_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4782,7 +4782,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_spawn.vsnd"
+						"value0"		"sounds/fa/fa_lasthit_12.vsnd"
 					}
 				}
 				"volume"
@@ -4798,7 +4798,7 @@
 	}
 }
 }
-"lina_lina_purch_01"{"operator_stacks"
+"juggernaut_jug_lose_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4812,7 +4812,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -4828,7 +4828,7 @@
 	}
 }
 }
-"lina_lina_purch_02"{"operator_stacks"
+"juggernaut_jug_lose_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4842,7 +4842,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -4858,7 +4858,7 @@
 	}
 }
 }
-"lina_lina_purch_03"{"operator_stacks"
+"juggernaut_jug_lose_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4872,7 +4872,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -4888,7 +4888,7 @@
 	}
 }
 }
-"lina_lina_purch_04"{"operator_stacks"
+"juggernaut_jug_lose_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4902,7 +4902,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_death_01.vsnd"
 					}
 				}
 				"volume"
@@ -4918,7 +4918,7 @@
 	}
 }
 }
-"lina_lina_purch_05"{"operator_stacks"
+"juggernaut_jug_win_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4932,7 +4932,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -4948,7 +4948,7 @@
 	}
 }
 }
-"lina_lina_scepter_01"{"operator_stacks"
+"juggernaut_jug_win_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4962,7 +4962,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -4978,7 +4978,7 @@
 	}
 }
 }
-"lina_lina_scepter_02"{"operator_stacks"
+"juggernaut_jug_win_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -4992,7 +4992,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -5008,7 +5008,7 @@
 	}
 }
 }
-"lina_lina_blink_01"{"operator_stacks"
+"juggernaut_jug_win_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5022,7 +5022,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_kill.vsnd"
 					}
 				}
 				"volume"
@@ -5038,7 +5038,7 @@
 	}
 }
 }
-"lina_lina_blink_02"{"operator_stacks"
+"juggernaut_jug_bottle_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5052,7 +5052,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_bottle_01.vsnd"
 					}
 				}
 				"volume"
@@ -5068,7 +5068,7 @@
 	}
 }
 }
-"lina_lina_item_01"{"operator_stacks"
+"juggernaut_jug_bottle_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5082,7 +5082,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_bottle_02.vsnd"
 					}
 				}
 				"volume"
@@ -5098,7 +5098,7 @@
 	}
 }
 }
-"lina_lina_item_02"{"operator_stacks"
+"juggernaut_jug_bottle_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5112,7 +5112,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_bottle_03.vsnd"
 					}
 				}
 				"volume"
@@ -5128,7 +5128,7 @@
 	}
 }
 }
-"lina_lina_item_03"{"operator_stacks"
+"juggernaut_jug_bottle_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5142,7 +5142,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_bottle_04.vsnd"
 					}
 				}
 				"volume"
@@ -5158,7 +5158,7 @@
 	}
 }
 }
-"lina_lina_item_04"{"operator_stacks"
+"juggernaut_jug_haste_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5172,7 +5172,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_haste_01.vsnd"
 					}
 				}
 				"volume"
@@ -5188,7 +5188,7 @@
 	}
 }
 }
-"lina_lina_item_05"{"operator_stacks"
+"juggernaut_jug_haste_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5202,7 +5202,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_haste_02.vsnd"
 					}
 				}
 				"volume"
@@ -5218,7 +5218,7 @@
 	}
 }
 }
-"lina_lina_item_06"{"operator_stacks"
+"juggernaut_jug_haste_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5232,7 +5232,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_haste_03.vsnd"
 					}
 				}
 				"volume"
@@ -5248,7 +5248,7 @@
 	}
 }
 }
-"lina_lina_item_07"{"operator_stacks"
+"juggernaut_jug_doubdam_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5262,7 +5262,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_doubdam_01.vsnd"
 					}
 				}
 				"volume"
@@ -5278,7 +5278,7 @@
 	}
 }
 }
-"lina_lina_missing_lane_01"{"operator_stacks"
+"juggernaut_jug_doubdam_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5292,7 +5292,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_doubdam_02.vsnd"
 					}
 				}
 				"volume"
@@ -5308,7 +5308,7 @@
 	}
 }
 }
-"lina_lina_missing_lane_02"{"operator_stacks"
+"juggernaut_jug_regen_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5322,7 +5322,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_regen_01.vsnd"
 					}
 				}
 				"volume"
@@ -5338,7 +5338,7 @@
 	}
 }
 }
-"lina_lina_missing_lane_03"{"operator_stacks"
+"juggernaut_jug_regen_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5352,7 +5352,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_regen_02.vsnd"
 					}
 				}
 				"volume"
@@ -5368,7 +5368,7 @@
 	}
 }
 }
-"lina_lina_bottle_01"{"operator_stacks"
+"juggernaut_jug_illus_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5382,7 +5382,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_illus_01.vsnd"
 					}
 				}
 				"volume"
@@ -5398,7 +5398,7 @@
 	}
 }
 }
-"lina_lina_bottle_02"{"operator_stacks"
+"juggernaut_jug_illus_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5412,7 +5412,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_illus_02.vsnd"
 					}
 				}
 				"volume"
@@ -5428,7 +5428,7 @@
 	}
 }
 }
-"lina_lina_bottle_03"{"operator_stacks"
+"juggernaut_jug_illus_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5442,7 +5442,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_illus_03.vsnd"
 					}
 				}
 				"volume"
@@ -5458,7 +5458,7 @@
 	}
 }
 }
-"lina_lina_drop_common_01"{"operator_stacks"
+"juggernaut_jug_invis_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5472,7 +5472,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_invis_01.vsnd"
 					}
 				}
 				"volume"
@@ -5488,7 +5488,7 @@
 	}
 }
 }
-"lina_lina_drop_medium_01"{"operator_stacks"
+"juggernaut_jug_invis_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5502,7 +5502,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_invis_02.vsnd"
 					}
 				}
 				"volume"
@@ -5518,7 +5518,7 @@
 	}
 }
 }
-"lina_lina_drop_rare_01"{"operator_stacks"
+"juggernaut_jug_level_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5532,7 +5532,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -5548,7 +5548,7 @@
 	}
 }
 }
-"lina_lina_immort_01"{"operator_stacks"
+"juggernaut_jug_level_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5562,7 +5562,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -5578,7 +5578,7 @@
 	}
 }
 }
-"lina_lina_immort_02"{"operator_stacks"
+"juggernaut_jug_level_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5592,7 +5592,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -5608,7 +5608,7 @@
 	}
 }
 }
-"lina_lina_haste_01"{"operator_stacks"
+"juggernaut_jug_level_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5622,7 +5622,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -5638,7 +5638,7 @@
 	}
 }
 }
-"lina_lina_haste_02"{"operator_stacks"
+"juggernaut_jug_level_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5652,7 +5652,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_move_03.vsnd"
 					}
 				}
 				"volume"
@@ -5668,7 +5668,7 @@
 	}
 }
 }
-"lina_lina_doubdam_01"{"operator_stacks"
+"juggernaut_jug_pain_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5682,7 +5682,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_01.vsnd"
 					}
 				}
 				"volume"
@@ -5698,7 +5698,7 @@
 	}
 }
 }
-"lina_lina_doubdam_02"{"operator_stacks"
+"juggernaut_jug_pain_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5712,7 +5712,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_01.vsnd"
 					}
 				}
 				"volume"
@@ -5728,7 +5728,7 @@
 	}
 }
 }
-"lina_lina_regen_01"{"operator_stacks"
+"juggernaut_jug_pain_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5742,7 +5742,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_01.vsnd"
 					}
 				}
 				"volume"
@@ -5758,7 +5758,7 @@
 	}
 }
 }
-"lina_lina_regen_02"{"operator_stacks"
+"juggernaut_jug_pain_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5772,7 +5772,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_01.vsnd"
 					}
 				}
 				"volume"
@@ -5788,7 +5788,7 @@
 	}
 }
 }
-"lina_lina_illus_01"{"operator_stacks"
+"juggernaut_jug_pain_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5802,7 +5802,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_01.vsnd"
 					}
 				}
 				"volume"
@@ -5818,7 +5818,7 @@
 	}
 }
 }
-"lina_lina_illus_02"{"operator_stacks"
+"juggernaut_jug_pain_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5832,7 +5832,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -5848,7 +5848,7 @@
 	}
 }
 }
-"lina_lina_illus_03"{"operator_stacks"
+"juggernaut_jug_pain_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5862,7 +5862,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -5878,7 +5878,7 @@
 	}
 }
 }
-"lina_lina_invis_01"{"operator_stacks"
+"juggernaut_jug_pain_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5892,7 +5892,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -5908,7 +5908,7 @@
 	}
 }
 }
-"lina_lina_invis_02"{"operator_stacks"
+"juggernaut_jug_pain_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5922,7 +5922,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -5938,7 +5938,7 @@
 	}
 }
 }
-"lina_lina_thanks_01"{"operator_stacks"
+"juggernaut_jug_pain_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5952,7 +5952,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -5968,7 +5968,7 @@
 	}
 }
 }
-"lina_lina_thanks_02"{"operator_stacks"
+"juggernaut_jug_notyet_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -5982,7 +5982,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -5998,7 +5998,7 @@
 	}
 }
 }
-"lina_lina_thanks_03"{"operator_stacks"
+"juggernaut_jug_notyet_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6012,7 +6012,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6028,7 +6028,7 @@
 	}
 }
 }
-"lina_lina_underattack_01"{"operator_stacks"
+"juggernaut_jug_notyet_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6042,7 +6042,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6058,7 +6058,7 @@
 	}
 }
 }
-"lina_lina_inthebag_01"{"operator_stacks"
+"juggernaut_jug_notyet_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6072,7 +6072,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6088,7 +6088,7 @@
 	}
 }
 }
-"lina_lina_shitwiz_01"{"operator_stacks"
+"juggernaut_jug_notyet_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6102,7 +6102,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6118,7 +6118,7 @@
 	}
 }
 }
-"lina_lina_crumwiz_01"{"operator_stacks"
+"juggernaut_jug_notyet_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6132,7 +6132,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6148,7 +6148,7 @@
 	}
 }
 }
-"lina_lina_notyet_01"{"operator_stacks"
+"juggernaut_jug_notyet_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6162,7 +6162,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6178,7 +6178,7 @@
 	}
 }
 }
-"lina_lina_notyet_02"{"operator_stacks"
+"juggernaut_jug_notyet_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6192,7 +6192,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6208,7 +6208,7 @@
 	}
 }
 }
-"lina_lina_notyet_03"{"operator_stacks"
+"juggernaut_jug_notyet_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6222,7 +6222,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6238,7 +6238,7 @@
 	}
 }
 }
-"lina_lina_notyet_04"{"operator_stacks"
+"juggernaut_jug_nomana_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6252,7 +6252,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6268,7 +6268,7 @@
 	}
 }
 }
-"lina_lina_notyet_05"{"operator_stacks"
+"juggernaut_jug_nomana_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6282,7 +6282,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6298,7 +6298,7 @@
 	}
 }
 }
-"lina_lina_notyet_06"{"operator_stacks"
+"juggernaut_jug_nomana_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6312,7 +6312,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6328,7 +6328,7 @@
 	}
 }
 }
-"lina_lina_notyet_07"{"operator_stacks"
+"juggernaut_jug_nomana_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6342,7 +6342,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6358,7 +6358,7 @@
 	}
 }
 }
-"lina_lina_notyet_08"{"operator_stacks"
+"juggernaut_jug_nomana_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6372,7 +6372,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6388,7 +6388,7 @@
 	}
 }
 }
-"lina_lina_notyet_09"{"operator_stacks"
+"juggernaut_jug_nomana_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6402,7 +6402,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6418,7 +6418,7 @@
 	}
 }
 }
-"lina_lina_nomana_01"{"operator_stacks"
+"juggernaut_jug_nomana_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6432,7 +6432,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6448,7 +6448,7 @@
 	}
 }
 }
-"lina_lina_nomana_02"{"operator_stacks"
+"juggernaut_jug_nomana_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6462,7 +6462,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6478,7 +6478,7 @@
 	}
 }
 }
-"lina_lina_nomana_03"{"operator_stacks"
+"juggernaut_jug_nomana_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6492,7 +6492,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
 					}
 				}
 				"volume"
@@ -6508,7 +6508,7 @@
 	}
 }
 }
-"lina_lina_nomana_04"{"operator_stacks"
+"juggernaut_jug_anger_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6522,7 +6522,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6538,7 +6538,7 @@
 	}
 }
 }
-"lina_lina_nomana_05"{"operator_stacks"
+"juggernaut_jug_anger_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6552,7 +6552,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6568,7 +6568,7 @@
 	}
 }
 }
-"lina_lina_nomana_06"{"operator_stacks"
+"juggernaut_jug_anger_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6582,7 +6582,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6598,7 +6598,7 @@
 	}
 }
 }
-"lina_lina_nomana_07"{"operator_stacks"
+"juggernaut_jug_anger_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6612,7 +6612,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6628,7 +6628,7 @@
 	}
 }
 }
-"lina_lina_nomana_08"{"operator_stacks"
+"juggernaut_jug_anger_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6642,7 +6642,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6658,7 +6658,7 @@
 	}
 }
 }
-"lina_lina_nomana_09"{"operator_stacks"
+"juggernaut_jug_anger_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6672,7 +6672,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6688,7 +6688,7 @@
 	}
 }
 }
-"lina_lina_lose_01"{"operator_stacks"
+"juggernaut_jug_anger_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6702,7 +6702,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6718,7 +6718,7 @@
 	}
 }
 }
-"lina_lina_lose_02"{"operator_stacks"
+"juggernaut_jug_happy_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6732,7 +6732,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6748,7 +6748,7 @@
 	}
 }
 }
-"lina_lina_lose_03"{"operator_stacks"
+"juggernaut_jug_happy_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6762,7 +6762,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6778,7 +6778,7 @@
 	}
 }
 }
-"lina_lina_lose_04"{"operator_stacks"
+"juggernaut_jug_happy_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6792,7 +6792,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6808,7 +6808,7 @@
 	}
 }
 }
-"lina_lina_win_01"{"operator_stacks"
+"juggernaut_jug_laugh_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6822,7 +6822,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6838,7 +6838,7 @@
 	}
 }
 }
-"lina_lina_win_02"{"operator_stacks"
+"juggernaut_jug_laugh_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6852,7 +6852,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6868,7 +6868,7 @@
 	}
 }
 }
-"lina_lina_win_03"{"operator_stacks"
+"juggernaut_jug_laugh_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6882,7 +6882,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6898,7 +6898,7 @@
 	}
 }
 }
-"lina_lina_win_04"{"operator_stacks"
+"juggernaut_jug_laugh_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6912,7 +6912,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/null.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6928,7 +6928,7 @@
 	}
 }
 }
-"lina_lina_pain_01"{"operator_stacks"
+"juggernaut_jug_laugh_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6942,7 +6942,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6958,7 +6958,7 @@
 	}
 }
 }
-"lina_lina_pain_02"{"operator_stacks"
+"juggernaut_jug_laugh_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -6972,7 +6972,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -6988,7 +6988,7 @@
 	}
 }
 }
-"lina_lina_pain_03"{"operator_stacks"
+"juggernaut_jug_laugh_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7002,7 +7002,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7018,7 +7018,7 @@
 	}
 }
 }
-"lina_lina_pain_04"{"operator_stacks"
+"juggernaut_jug_laugh_08"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7032,7 +7032,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7048,7 +7048,7 @@
 	}
 }
 }
-"lina_lina_pain_05"{"operator_stacks"
+"juggernaut_jug_acknow_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7062,7 +7062,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7078,7 +7078,7 @@
 	}
 }
 }
-"lina_lina_pain_06"{"operator_stacks"
+"juggernaut_jug_acknow_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7092,7 +7092,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7108,7 +7108,7 @@
 	}
 }
 }
-"lina_lina_pain_07"{"operator_stacks"
+"juggernaut_jug_acknow_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7122,7 +7122,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7138,7 +7138,7 @@
 	}
 }
 }
-"lina_lina_pain_08"{"operator_stacks"
+"juggernaut_jug_acknow_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7152,7 +7152,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7168,7 +7168,7 @@
 	}
 }
 }
-"lina_lina_anger_01"{"operator_stacks"
+"juggernaut_jug_acknow_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7182,7 +7182,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7198,7 +7198,7 @@
 	}
 }
 }
-"lina_lina_anger_02"{"operator_stacks"
+"juggernaut_jug_inthebag_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7212,7 +7212,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7228,7 +7228,7 @@
 	}
 }
 }
-"lina_lina_anger_03"{"operator_stacks"
+"juggernaut_jug_inthebag_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7242,7 +7242,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/null.vsnd"
 					}
 				}
 				"volume"
@@ -7258,7 +7258,7 @@
 	}
 }
 }
-"lina_lina_anger_04"{"operator_stacks"
+"juggernaut_jug_inthebag_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7272,7 +7272,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_inthebag_03.vsnd"
 					}
 				}
 				"volume"
@@ -7288,7 +7288,7 @@
 	}
 }
 }
-"lina_lina_anger_05"{"operator_stacks"
+"juggernaut_jug_shitwiz_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7302,7 +7302,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_shitwiz_01.vsnd"
 					}
 				}
 				"volume"
@@ -7318,7 +7318,7 @@
 	}
 }
 }
-"lina_lina_anger_06"{"operator_stacks"
+"juggernaut_jug_crumwiz_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7332,7 +7332,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_hurt.vsnd"
+						"value0"		"sounds/fa/fa_crumwiz_01.vsnd"
 					}
 				}
 				"volume"
@@ -7348,7 +7348,7 @@
 	}
 }
 }
-"lina_lina_happy_01"{"operator_stacks"
+"juggernaut_jugg_rival_01"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7362,7 +7362,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_01.vsnd"
 					}
 				}
 				"volume"
@@ -7378,7 +7378,7 @@
 	}
 }
 }
-"lina_lina_happy_02"{"operator_stacks"
+"juggernaut_jugg_rival_02"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7392,7 +7392,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_02.vsnd"
 					}
 				}
 				"volume"
@@ -7408,7 +7408,7 @@
 	}
 }
 }
-"lina_lina_happy_03"{"operator_stacks"
+"juggernaut_jugg_rival_03"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7422,7 +7422,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_03.vsnd"
 					}
 				}
 				"volume"
@@ -7438,7 +7438,7 @@
 	}
 }
 }
-"lina_lina_laugh_01"{"operator_stacks"
+"juggernaut_jugg_rival_04"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7452,7 +7452,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_04.vsnd"
 					}
 				}
 				"volume"
@@ -7468,7 +7468,7 @@
 	}
 }
 }
-"lina_lina_laugh_02"{"operator_stacks"
+"juggernaut_jugg_rival_05"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7482,7 +7482,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_05.vsnd"
 					}
 				}
 				"volume"
@@ -7498,7 +7498,7 @@
 	}
 }
 }
-"lina_lina_laugh_03"{"operator_stacks"
+"juggernaut_jugg_rival_06"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7512,7 +7512,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_06.vsnd"
 					}
 				}
 				"volume"
@@ -7528,7 +7528,7 @@
 	}
 }
 }
-"lina_lina_laugh_04"{"operator_stacks"
+"juggernaut_jugg_rival_07"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7542,7 +7542,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_07.vsnd"
 					}
 				}
 				"volume"
@@ -7558,7 +7558,7 @@
 	}
 }
 }
-"lina_lina_laugh_05"{"operator_stacks"
+"juggernaut_jugg_rival_09"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7572,7 +7572,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_09.vsnd"
 					}
 				}
 				"volume"
@@ -7588,7 +7588,7 @@
 	}
 }
 }
-"lina_lina_laugh_06"{"operator_stacks"
+"juggernaut_jugg_rival_10"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7602,7 +7602,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_10.vsnd"
 					}
 				}
 				"volume"
@@ -7618,7 +7618,7 @@
 	}
 }
 }
-"lina_lina_laugh_07"{"operator_stacks"
+"juggernaut_jugg_rival_11"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7632,7 +7632,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_11.vsnd"
 					}
 				}
 				"volume"
@@ -7648,7 +7648,7 @@
 	}
 }
 }
-"lina_lina_laugh_08"{"operator_stacks"
+"juggernaut_jugg_rival_12"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7662,7 +7662,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_12.vsnd"
 					}
 				}
 				"volume"
@@ -7678,7 +7678,7 @@
 	}
 }
 }
-"lina_lina_laugh_09"{"operator_stacks"
+"juggernaut_jugg_rival_13"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7692,7 +7692,7 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_13.vsnd"
 					}
 				}
 				"volume"
@@ -7708,7 +7708,7 @@
 	}
 }
 }
-"lina_lina_laugh_10"{"operator_stacks"
+"juggernaut_jugg_rival_14"{"operator_stacks"
 {
 	"update_stack"
 	{
@@ -7722,7 +7722,1627 @@
 				{
 					"value"
 					{
-						"value0"		"sounds/nero/nero_move_01.vsnd"
+						"value0"		"sounds/fa/fag_rival_14.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_rival_15"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_rival_15.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_item_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_item_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_item_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_item_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_item_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_item_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_item_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_item_04.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_firstblood_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fa_kill.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_fastres_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_fastres_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_blink_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_blink_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_blink_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_blink_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_battlebegins_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_battlebegins_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_10.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_11.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_12.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_13"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_13.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_14"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_14.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_15"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_15.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_16"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_16.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_17"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_17.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_ability_bladefury_18"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_ability_bladefury_18.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_underattack_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fa_hurt_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_thanks_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_thanks_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_thanks_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_thanks_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_scepter_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_scepter_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_scepter_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_scepter_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_scepter_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_scepter_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_04.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_05.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_06.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_07.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_taunt_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_taunt_08.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_drop_common"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_drop_common.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_drop_medium"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_drop_medium.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_drop_rare"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_drop_rare.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_view_victory_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_view_victory_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_view_victory_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_view_victory_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_view_victory_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_view_victory_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_view_defeat_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_view_defeat_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_view_defeat_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_view_defeat_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_view_defeat_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_view_defeat_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_set_complete_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_set_complete_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_set_complete_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_set_complete_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_set_complete_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_set_complete_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_set_complete_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_set_complete_04.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_set_complete_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_set_complete_05.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_set_complete_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_set_complete_06.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_equipping_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_equipping_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_equipping_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_equipping_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_equipping_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_equipping_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_equipping_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_equipping_04.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_equipping_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_equipping_05.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"6.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"juggernaut_jugg_equipping_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/fa/fag_equipping_06.vsnd"
 					}
 				}
 				"volume"
