@@ -450,9 +450,6 @@ function OnTheatreStart(keys)
 					keys.ability:ApplyDataDrivenModifier(keys.caster, v, "modifier_aestus_domus_aurea_ally_buff",{})
 				end
 			end]]
-
-			-- Attach theatre particle along
-			ParticleManager:SetParticleControl( theatreFx, 7, caster:GetAbsOrigin())
 			return 0.1
 		else 
 			return

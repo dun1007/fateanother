@@ -46,14 +46,15 @@
     width: 400px;
     height: 600px;
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
-    border-radius: 50px 50px 50px 50px;
-    border:3px solid #DAA520;
-    flow-children: right;
+    //border-radius: 50px 50px 50px 50px;
+    //border:3px solid #DAA520;
+    //flow-children: right;
+    horizontal-align: center;
     overflow: scroll;
-    background-image: url("file://{images}/custom_game/pepe.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    //background-image: url("file://{images}/custom_game/pepe.jpg");
+    //background-position: center;
+    //background-repeat: no-repeat;
+    //background-size: 100% 100%;
 }
 
 #FateConfigButtonImageText
@@ -62,6 +63,70 @@
     vertical-align: middle;
 }
 
+#FateConfigMainPanel
+{
+    width: 100%;
+    height: 100%;
+    flow-children: down;
+}
+#FateConfigCameraPanel
+{
+    width: 90%;
+    height: 6%;
+    margin-left: 5%;
+    margin-top: 2.5%;
+    flow-children: right;
+}
+#FateConfigCameraText
+{
+    margin-top: 3%;
+}
+#FateConfigCameraValue
+{
+    width: 25%;
+    height: 30px;
+    margin-left: 20%;
+    flow-children: right;
+}
+#FateConfigBGMPanel
+{
+    width: 90%;
+    height: 13%;
+    margin-left: 5%;
+    margin-top: 2%;
+    flow-children: right-wrap;
+}
+
+#FateConfigBGMToggle
+{
+    margin-left: 50%;
+}
+#FateConfigBGMList
+{
+}
+
+#FateConfigTogglePannel
+{
+    width: 90%;
+    height: 30%;
+    margin-left: 5%;
+    margin-top: 2%;
+    flow-children: down;
+}
+
+#FateConfigCmdPanel
+{
+    width: 90%;
+    height: 40%;
+    margin-left: 5%;
+    margin-top: 2%;
+    flow-children: down-wrap;
+}
+
+.bordertest
+{
+    border:3px solid #DAA520;
+}
 
 .FateConfigOpenText
 {

@@ -18318,41 +18318,6 @@
 
 			}
 
-			"modifier_gille_combo"
-			{
-		        "EffectName"    "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
-		        "EffectAttachType"  "follow_origin"
-				"Duration"		"20"
-				"IsDebuff"		"1"
-				"ThinkInterval"		"1.0"
-				"OnIntervalThink"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"gille_ability"
-						"Function"		"OnGilleComboThink"
-					}
-				}
-			}
-			"modifier_gigantic_horror_freeze"
-			{
-				"EffectName"				"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"	
-				"EffectAttachType"			"follow_overhead"
-				"Duration"		"1.5"
-				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_3"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
-					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
 		}
 	}
 
@@ -18542,7 +18507,7 @@
 		  	}
 		  	"modifier_gigantic_horror_penalty_timer"
 		  	{
-		  		"Duration"	"10"
+		  		"Duration"	"3"
 		  		"IsDebuff"	"1"
 		  	}
 		}
@@ -18739,7 +18704,7 @@
 			    "EndRadius"     "150"
 			    "FixedDistance" "%range"
 			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-			    "TargetTypes"   "DOTA_UNIT_TARGET_BASIC | DOTA_UNIT_TARGET_HERO"
+			    "TargetTypes"   "DOTA_UNIT_TARGET_HERO"
 			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
 			    "HasFrontalCone"  "0"
 			    "ProvidesVision" "0"
@@ -18954,22 +18919,71 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"blood_duration"			"20.0"
-			}		
+				"initial_damage"			"50"
+			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage_per_sec"			"7.5"
+				"blood_duration"			"20.0"
+			}		
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_per_sec"			"5"
 			}
 		}
 		
 		"OnSpellStart"
 		{
+			"RunScript"
+			{
+				"ScriptFile"	"gille_ability"
+				"Function"		"OnGilleComboStart"
+			}
 		}
 		
 		"Modifiers"
 		{
-
+			"modifier_larret_de_mort_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_gille_combo"
+			{
+		        "EffectName"    "particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"
+		        "EffectAttachType"  "follow_origin"
+				"Duration"		"20"
+				"IsDebuff"		"1"
+				"ThinkInterval"		"1.0"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"gille_ability"
+						"Function"		"OnGilleComboThink"
+					}
+				}
+			}
+			"modifier_gigantic_horror_freeze"
+			{
+				"EffectName"				"particles/units/heroes/hero_pugna/pugna_decrepify.vpcf"	
+				"EffectAttachType"			"follow_overhead"
+				"Duration"		"1.5"
+				"OverrideAnimation"		"ACT_DOTA_CAST_ABILITY_3"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+				}
+				"States"
+				{
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED" "MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
@@ -19442,12 +19456,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_damage"				"320"
+				"max_damage"				"280 300 320 340 360"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_stack"		"90"
+				"damage_per_stack"		"70 75 80 85 90"
 			}
 		}
 

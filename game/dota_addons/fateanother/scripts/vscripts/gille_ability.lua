@@ -197,14 +197,15 @@ function OnECStart(keys)
 	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 
+	--[[
 	-- check if combo can be cast
 	local combotargets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 800, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(combotargets) do
-		if v:GetUnitName() == "gille_gigantic_horror" and caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+		if v:GetUnitName() == "gille_gigantic_horror" and caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 and caster:FindAbilityByName("gille_larret_de_mort"):IsCooldownReady() then
 			OnGilleComboStart(keys)
 			return
 		end
-	end
+	end]]
 
 	-- store the madness cost
 	local madnessCost = math.floor(caster.MadnessStackCount / 2)
@@ -401,6 +402,7 @@ function OnContractStart(keys)
 				tentacle:SetControllableByPlayer(caster:GetPlayerID(), true)
 				tentacle:SetOwner(caster)
 				caster.GiganticHorror = tentacle
+				tentacle.Gille = caster
 				FindClearSpaceForUnit(tentacle, tentacle:GetAbsOrigin(), true)
 
 				local skillLevel = 1 + (caster:GetLevel() - 1)/3
@@ -409,6 +411,8 @@ function OnContractStart(keys)
 				tentacle:FindAbilityByName("gille_tentacle_of_destruction"):SetLevel(skillLevel)
 				tentacle:FindAbilityByName("gille_subterranean_skewer"):SetLevel(skillLevel) 
 				tentacle:FindAbilityByName("gille_gigantic_horror_passive"):SetLevel(skillLevel)  
+				tentacle:FindAbilityByName("gille_larret_de_mort"):SetHidden(false) 
+				tentacle:FindAbilityByName("gille_larret_de_mort"):SetLevel(1) 
 
 				tentacle:SetMaxHealth(keys.Health)
 				tentacle:SetBaseMaxHealth(keys.Health)
@@ -478,11 +482,8 @@ function OnHorrorDeath(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_gigantic_horror_penalty_timer", {}) 
-	PrintTable(keys)
-	print(keys.target:GetName())
-	print(keys.caster:GetName())
-	Notifications:Top(player, "<font color='#58ACFA'>Gigantic Horror</font> has been eliminated! All opposing Servants have acquired 20%% XP.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
 end
+
 
 function OnTentacleSummon(keys)
 	local caster = keys.caster
@@ -770,10 +771,12 @@ function OnHorrorTeleport(keys)
 end
 
 function OnGilleComboStart(keys)
-	local caster = keys.caster
+	local tentacle = keys.caster
 	local ability = keys.ability
-	local tentacle = caster.GiganticHorror
+	local caster = tentacle.Gille
 	local radius = 1000
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and caster:FindAbilityByName("gille_larret_de_mort"):IsCooldownReady() then
+	else return end
 
 	caster:FindAbilityByName("gille_larret_de_mort"):StartCooldown(150)
 	-- Set master's combo cooldown
@@ -783,12 +786,6 @@ function OnGilleComboStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_larret_de_mort_cooldown", {duration = 150})
 
 	keys.ability:ApplyDataDrivenModifier(caster, tentacle, "modifier_gigantic_horror_freeze", {})
-	-- Damage enemies
-	local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	for k,v in pairs(targets) do
-		DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-		ApplyAirborne(tentacle, v, 0.5)
-	end
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 300)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 650)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 1000)
