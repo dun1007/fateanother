@@ -22,6 +22,18 @@ var heroes = [
 
 ]
 
+function OnFatepediaButtonShowTooltip()
+{
+	var attrText = $("#FatepediaOpenButton");
+	$.DispatchEvent('DOTAShowTextTooltip', attrText, "#FA_Fatepedia_Button");
+}
+
+function OnFatepediaButtonHideTooltip()
+{
+	var attrText = $("#FatepediaOpenButton"); 
+	$.DispatchEvent( 'DOTAHideTextTooltip', attrText );
+}
+
 function OnFatepediaButtonPressed()
 {
     var fatepediaPanel = $("#FatepediaBoard");

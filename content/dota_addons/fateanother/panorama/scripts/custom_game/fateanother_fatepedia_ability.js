@@ -144,6 +144,20 @@ function CreateContextAbilityPanel(panel, abilityname)
 	abilityPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_context_ability.xml", false, false );
 }
 
+function OnHeroButtonShowTooltip()
+{
+    var panel = $.GetContextPanel();
+    var name = panel.GetAttributeString("heroname", "");
+    $.DispatchEvent('DOTAShowTextTooltip', panel, name);
+}
+
+function OnHeroButtonHideTooltip()
+{
+    var panel = $.GetContextPanel();
+    $.DispatchEvent( 'DOTAHideTextTooltip', panel );
+}
+
+
 function GetIndex(array, object)
 {
 	for (i=0; i<array.length; i++)

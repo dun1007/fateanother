@@ -318,7 +318,7 @@ function OnSeal3Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or IsRevoked(hero) then
+	if not hero:IsAlive() or IsRevoked(hero) or hero:GetHealth() == hero:GetMaxHealth() then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
@@ -361,7 +361,7 @@ function OnSeal4Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or IsRevoked(hero) then
+	if not hero:IsAlive() or IsRevoked(hero) and hero:GetMana() == hero:GetMaxMana() then
 		print("Cannot use seals")
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 

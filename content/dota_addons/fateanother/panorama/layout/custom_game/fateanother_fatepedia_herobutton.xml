@@ -6,6 +6,6 @@
     <scripts>
         <include src="file://{resources}/scripts/custom_game/fateanother_fatepedia_ability.js" /> 
     </scripts>
-    <Button class="FatepediaHeroButton" hittest="true" onactivate="OnHeroButtonPressed()">
+    <Button class="FatepediaHeroButton" hittest="true" onactivate="OnHeroButtonPressed()" onmouseover="OnHeroButtonShowTooltip()" onmouseout="OnHeroButtonHideTooltip()">
     </Button>
 </root>

@@ -276,6 +276,20 @@ function OnTigerStrike3Start(keys)
 	ParticleManager:SetParticleControl( firstStrikeFx, 0, target:GetAbsOrigin())
 end
 
+function OnNSSCastStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+    local windupFx = ParticleManager:CreateParticle( "particles/custom/lishuwen/lishuwen_no_second_strike_windup.vpcf", PATTACH_ABSORIGIN, caster )
+    ParticleManager:SetParticleControl( windupFx, 0, caster:GetAbsOrigin())
+    ParticleManager:SetParticleControl( windupFx, 3, caster:GetAbsOrigin())
+
+    Timers:CreateTimer(keys.CastDelay, function()
+		ParticleManager:DestroyParticle( windupFx, false )
+		ParticleManager:ReleaseParticleIndex( windupFx )
+    end)
+end
+
 function OnNSSStart(keys)
 	local caster = keys.caster
 	local target = keys.target

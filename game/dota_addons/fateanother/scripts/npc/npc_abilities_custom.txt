@@ -8965,6 +8965,7 @@
 			"particle"		"particles/units/heroes/hero_nevermore/nevermore_base_attack.vpcf"
 			"particle"		"particles/units/heroes/hero_chaos_knight/chaos_knight_reality_rift.vpcf"
 			"particle"		"particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf"
+			"particle"		"particles/custom/ta/zabaniya_shadow.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_nightstalker.vsndevts"
 		}
 		
@@ -8990,6 +8991,15 @@
 			{
 				"var_type"				"FIELD_INTEGER"
 				"damage"				"700 900 1100 1300 1500"
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"		"ta_ability"
+				"Function"			"OnZabCastStart"
 			}
 		}
 
@@ -9791,6 +9801,22 @@
 		}
 		"OnUpgrade"
 		{		
+		}
+		"Modifiers"
+		{
+			"modifier_gob_toggle_respawn_check"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnRespawn"
+				{
+					 "RunScript"
+					 {
+					 	"ScriptFile"	"gilg_ability"
+					 	"Function"		"ToggleGOBOn"
+					 }
+				}
+			}
 		}
 	}
 
@@ -23837,6 +23863,7 @@
 		{
 			"particle"			"particles/units/heroes/hero_bloodseeker/bloodseeker_rupture.vpcf"		
 			"particle"			"particles/units/heroes/hero_nyx_assassin/nyx_assassin_mana_burn.vpcf"
+			"particle"			"particles/custom/lishuwen/lishuwen_no_second_strike_windup.vpcf"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_nyx_assassin.vsndevts"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_bloodseeker.vsndevts"
 		}
@@ -23882,6 +23909,16 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"open_wound_stun_duration"		"0.3 0.4 0.5 0.6 0.7"	
+			}
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"			"lishuwen_ability"
+				"Function"				"OnNSSCastStart"
+				"CastDelay"				"%cast_delay"
 			}
 		}
 		

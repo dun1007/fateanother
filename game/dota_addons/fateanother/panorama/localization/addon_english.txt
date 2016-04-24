@@ -69,6 +69,14 @@
 	"Fateanother_Customize_Special_Cooldowns_Tooltip"	"A defining special move. Your Servant must fulfill Stat requirement, and cast abilities in certain order to activate the Combo."
 	"Fateanother_Customize_Special_Shards"	"Shards of Holy Grail"
 	"Fateanother_Customize_Special_Shards_Tooltip"		"The legendary artifact. Your Servant must face a death, not caused by friendly-fire or suicide, 7 times in order to activate the shard."
+	"Fateanother_Customize_Button"						"Click to customize your Servant."
+
+	"FA_Fatepedia"						"Fatepedia"
+	"FA_Fatepedia_Button"				"Click to open Fatepedia, where you can learn about Servant skills and gameplay."
+	"FA_Fatepedia_Hero_Button"			"Display Skills and Attributes of "
+
+	"FA_Config"						"Configuration"
+	"FA_Config_Button"				"Click to open Configuration tab."
 
 	"Fateanother_Portrait_Tooltip"					"Click to select your Servant."
 	"Fateanother_Master_Tooltip"					"Click to select Master, who can aid your Servant with powerful Command Seals."
