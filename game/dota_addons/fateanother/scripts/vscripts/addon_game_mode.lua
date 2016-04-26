@@ -2095,7 +2095,7 @@ function FateGameMode:CaptureGameMode()
         mode = GameRules:GetGameModeEntity() 
 
 
-        mode:SetCameraDistanceOverride(1600)
+        --mode:SetCameraDistanceOverride(1600)
         mode:SetCustomBuybackCostEnabled( CUSTOM_BUYBACK_COST_ENABLED )
         mode:SetCustomBuybackCooldownEnabled( CUSTOM_BUYBACK_COOLDOWN_ENABLED )
         mode:SetBuybackEnabled( BUYBACK_ENABLED )

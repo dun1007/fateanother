@@ -8,10 +8,43 @@
     </scripts>
     <Panel class="FateConfigRoot" hittest="false">
         <Panel id="FateConfigBoard" hittest="false" >
-            <Panel id="FatepediaHeroesPanel" hittest="false">
+            <Panel id="FateConfigMainPanel" class="bordertest" hittest="false">
+                <Panel id="FateConfigCameraPanel" class="bordertest" hittest="false">
+                    <Label id="FateConfigCameraText" class="FateConfigOpenText" text="Camera Distance" hittest="false"/>
+                    <TextEntry id="FateConfigCameraValue" maxchars="4" text="1600" placeholder="" oninputsubmit="OnCameraDistSubmitted()" />
+                </Panel>
+                <Panel id="FateConfigBGMPanel" class="bordertest" hittest="false">
+                    <Label id="FateConfigBGMText" class="FateConfigOpenText" text="BGM" hittest="false"/>
+                    <ToggleButton id="FateConfigBGMToggle" checked="false" class="FateConfigOpenText" text="Repeat" />
+                    <DropDown id="FateConfigBGMList" oninputsubmit="OnDropDownChanged()">
+                        <Label text="1" id="entry1"/>
+                        <Label text="2" id="entry2"/>
+                        <Label text="3" id="entry3"/>
+                        <Label text="4" id="entry4"/>
+                        <Label text="5" id="entry5"/>
+                        <Label text="6" id="entry6"/>
+                        <Label text="7" id="entry7"/>
+                        <Label text="8" id="entry8"/>
+                    </DropDown>
+                </Panel>
+                <Panel id="FateConfigTogglePannel" class="bordertest" hittest="false">
+                    <Label id="FateConfigToggleText" class="FateConfigOpenText" text="Gameplay" hittest="false"/>
+                    <ToggleButton id="option1" checked="false" class="FateConfigOpenText" text="Ask for gold when having less than 200g" onmouseover="Config1ShowTooltip()" onmouseout="Config1HideTooltip()"/>
+                    <ToggleButton id="option2" checked="false" class="FateConfigOpenText" text="Disable damge output popup" />
+                    <ToggleButton id="option3" checked="false" class="FateConfigOpenText" text="Disable mount reselection" onmouseover="Config3ShowTooltip()" onmouseout="Config3HideTooltip()"/>
+                    <ToggleButton id="option4" checked="false" class="FateConfigOpenText" text="Disable alert sound upon presence detection" />
+                </Panel>
+                <Panel id="FateConfigCmdPanel" class="bordertest" hittest="false">
+                    <Label id="FateConfigCmdText" class="FateConfigOpenText" text="Commands" hittest="false"/>
+                    <Label id="FateConfigCmd1" text="-goldpls" hittest="false"/>
+                    <Label id="FateConfigCmd1Text" text="Pops a message that asks for gold to your team." hittest="false"/>
+                    <Label id="FateConfigCmd2" text="-bgmon/-bgmoff" hittest="false"/>
+                    <Label id="FateConfigCmd2Text" text="Turns BGM on/off." hittest="false"/>         
+                    <Label id="FateConfigCmd3" text="-testsetup (cheat mode only)" hittest="false"/>
+                    <Label id="FateConfigCmd3Text" text="Increases Master mana/health to 100/1000, \nand sets up Combo requirement stats." hittest="false"/>               
+                </Panel>
             </Panel>
-            <Panel id="FatepediaHeroesInfoPanel" hittest="false">
-            </Panel>
+
         </Panel>
         <Button id="FateConfigButton" onactivate="OnFateConfigButtonPressed()" onmouseover="OnFateConfigButtonShowTooltip()" onmouseout="OnFateConfigButtonHideTooltip()" hittest="true">
             <Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>

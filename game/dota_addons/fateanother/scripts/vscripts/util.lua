@@ -782,7 +782,6 @@ end
 -- 
 function OnExperienceZoneThink(keys)
     local hero = keys.target
-    print("xp")
     if hero:IsRealHero() and not hero:IsIllusion() then
         hero:AddExperience(hero:GetLevel()*2+15, false, false)
         hero:ModifyGold(20, true, 0)

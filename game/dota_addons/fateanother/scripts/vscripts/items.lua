@@ -369,7 +369,7 @@ function Blink(keys)
 				break
 			end
 		end
-		if not IsFacingUnit(caster, target, 180) then
+		if not IsFacingUnit(caster, target, 90) then
 			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 			keys.ability:EndCooldown()
 			return

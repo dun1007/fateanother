@@ -1488,7 +1488,7 @@
 		"Ability1"					"gille_tentacle_hook"	 
 		"Ability2"					"gille_tentacle_wrap"
 		"Ability3"					"gille_subterranean_skewer"
-		"Ability4"					"fate_empty1"
+		"Ability4"					"gille_larret_de_mort"
 		"Ability5"					"gille_gigantic_horror_passive"
 		"Ability6"					"gille_tentacle_of_destruction"
 		
