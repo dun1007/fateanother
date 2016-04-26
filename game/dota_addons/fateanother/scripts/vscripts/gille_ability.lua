@@ -169,7 +169,7 @@ end
 function OnGilleComboThink(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local damage = target:GetMaxHealth()*7.5/100
+	local damage = target:GetMaxHealth()*keys.DPS/100
 	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	--print("dealing damage")
 end
@@ -772,11 +772,14 @@ end
 
 function OnGilleComboStart(keys)
 	local tentacle = keys.caster
-	local ability = keys.ability
 	local caster = tentacle.Gille
+	local ability = caster:FindAbilityByName("gille_larret_de_mort")
 	local radius = 1000
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and caster:FindAbilityByName("gille_larret_de_mort"):IsCooldownReady() then
-	else return end
+	else 
+		tentacle:FindAbilityByName("gille_larret_de_mort"):EndCooldown()
+		return 
+	end
 
 	caster:FindAbilityByName("gille_larret_de_mort"):StartCooldown(150)
 	-- Set master's combo cooldown
@@ -785,7 +788,13 @@ function OnGilleComboStart(keys)
 	masterCombo:StartCooldown(150)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_larret_de_mort_cooldown", {duration = 150})
 
-	keys.ability:ApplyDataDrivenModifier(caster, tentacle, "modifier_gigantic_horror_freeze", {})
+	-- knockup enemies
+local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+		ApplyAirborne(caster, v, keys.KnockupDuration)
+	end
+
+	ability:ApplyDataDrivenModifier(caster, tentacle, "modifier_gigantic_horror_freeze", {})
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 300)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 650)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 1000)
@@ -803,7 +812,8 @@ function OnGilleComboStart(keys)
 	Timers:CreateTimer(1.5, function()
 		local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
-			keys.ability:ApplyDataDrivenModifier(caster, v, "modifier_gille_combo", {})
+			DoDamage(caster, v, v:GetMaxHealth() * keys.Damage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_gille_combo", {})
 			v:EmitSound("hero_bloodseeker.rupture")
 		end
 		Timers:CreateTimer(0.5, function()

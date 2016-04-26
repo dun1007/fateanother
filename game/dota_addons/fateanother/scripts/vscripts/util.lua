@@ -405,6 +405,29 @@ function StartQuestTimer(questname, questtitle, questendtime)
   return entQuest
 end
 
+choice = 0 --
+function PlayBGM(player)
+    local delayInBetween = 2.0
+    
+    Timers:CreateTimer("BGMTimer" .. player:GetPlayerID(), {
+        endTime = 0,
+        callback = function()
+            choice = RandomInt(1,8)
+            if choice == lastChoice then return 0.1 end
+            print("Playing BGM No. " .. choice)
+            local songName = "BGM." .. choice
+            player.CurrentBGM = songName
+            if choice == 1 then EmitSoundOnClient(songName, player) lastChoice = 1 return 186+delayInBetween
+            elseif choice == 2 then EmitSoundOnClient(songName, player) lastChoice = 2 return 327+delayInBetween
+            elseif choice == 3 then EmitSoundOnClient(songName, player) lastChoice = 3 return 138+delayInBetween
+            elseif choice == 4 then EmitSoundOnClient(songName, player) lastChoice = 4 return 149+delayInBetween
+            elseif choice == 5 then EmitSoundOnClient(songName, player) lastChoice = 5 return 183+delayInBetween
+            elseif choice == 6 then EmitSoundOnClient(songName, player) lastChoice = 6 return 143+delayInBetween
+            elseif choice == 7 then EmitSoundOnClient(songName, player) lastChoice = 7 return 184+delayInBetween
+        else EmitSoundOnClient(songName, player) lastChoice = 8 return 181+delayInBetween end
+    end})
+end
+
 function LevelAllAbility(hero)
     for i=0, 14 do
         local ability = hero:GetAbilityByIndex(i)

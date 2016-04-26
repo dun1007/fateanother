@@ -64,3 +64,18 @@ end
 function Notifications:BottomToTeam(team, text, duration, class, style)
   CustomGameEventManager:Send_ServerToTeam(team, "bottom_notification", {text=text, duration=duration, class=class, style=style} )
 end
+
+function Notifications:Right(player, text, duration, class, style)
+  if type(player) == "number" then
+    player = PlayerResource:GetPlayer(player)
+  end
+  CustomGameEventManager:Send_ServerToPlayer(player, "right_notification", {text=text, duration=duration, class=class, style=style} )
+end
+
+function Notifications:RightToAll(text, duration, class, style)
+    CustomGameEventManager:Send_ServerToAllClients( "right_notification", {text=text, duration=duration, class=class, style=style} )
+end
+
+function Notifications:RightToTeam(team, text, duration, class, style)
+  CustomGameEventManager:Send_ServerToTeam(team, "right_notification", {text=text, duration=duration, class=class, style=style} )
+end

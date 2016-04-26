@@ -1,4 +1,22 @@
 "use strict";
+// Set up global variables
+var g_GameConfig = GameUI.CustomUIConfig();
+g_GameConfig.curBGMentindex = 0;
+g_GameConfig.curBGMIndex = 1;
+g_GameConfig.nextBGMIndex = 1;
+g_GameConfig.BGMSchedule = 0;
+g_GameConfig.duration = [186,327,138,149,183,143,184,181];
+//g_GameConfig.duration = [5,5,5,5,5,5,5,5];
+g_GameConfig.bRepeat = false;
+g_GameConfig.bIsBGMOn = true;
+g_GameConfig.bIsAutoChange = false;
+
+g_GameConfig.bIsConfig1On = false;
+g_GameConfig.bIsConfig2On = false;
+g_GameConfig.bIsConfig3On = false;
+g_GameConfig.bIsConfig4On = false;
+
+
 
 // Global list of panels representing each of the teams
 var g_TeamPanels = [];		
@@ -407,6 +425,9 @@ function SendVotes( )
 
 	// Start updating the timer, this function will schedule itself to be called periodically
 	UpdateTimer();
+
+	// Turn on BGM
+	$.Schedule(0.033, function(){PlayBGM();});
 
 	// Register a listener for the event which is brodcast when the team assignment of a player is actually assigned
 	$.RegisterForUnhandledEvent( "DOTAGame_TeamPlayerListChanged", OnTeamPlayerListChanged );

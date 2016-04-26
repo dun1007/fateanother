@@ -1,3 +1,5 @@
+var g_GameConfig = GameUI.CustomUIConfig();
+
 function OnFateConfigButtonPressed()
 {
     var configPanel = $("#FateConfigBoard");
@@ -6,42 +8,6 @@ function OnFateConfigButtonPressed()
     configPanel.visible = !configPanel.visible;
 }
 
-function OnFateConfigButtonShowTooltip()
-{
-    var attrText = $("#FateConfigButton");
-    $.DispatchEvent('DOTAShowTextTooltip', attrText, "#FA_Config_Button");
-}
-
-function OnFateConfigButtonHideTooltip()
-{
-    var attrText = $("#FateConfigButton"); 
-    $.DispatchEvent( 'DOTAHideTextTooltip', attrText );
-}
-
-function Config1ShowTooltip()
-{
-    var attrText = $("#option1"); 
-    $.DispatchEvent('DOTAShowTextTooltip', attrText, "If checked, any purchase that puts your gold below 200g will automatically trigger -goldpls event.");
-}
-
-function Config1HideTooltip()
-{
-    var attrText = $("#option1"); 
-    $.DispatchEvent( 'DOTAHideTextTooltip', attrText );
-}
-
-function Config3ShowTooltip()
-{
-    var attrText = $("#option3"); 
-    $.DispatchEvent('DOTAShowTextTooltip', attrText, "When placed on mount(e.g Caster(5th)'s Ancient Dragon, Caster(4th)'s Gigantic Horror), selecting hero automatically reselects his/her mount instead. Check this option if you want to disable reselection.");
-}
-
-
-function Config3HideTooltip()
-{
-    var attrText = $("#option3"); 
-    $.DispatchEvent( 'DOTAHideTextTooltip', attrText );
-}
 
 function OnCameraDistSubmitted()
 {
@@ -55,9 +21,44 @@ function OnCameraDistSubmitted()
     panel.text = number.toString();
 }
 
+function OnConfig1Toggle()
+{
+    g_GameConfig.bIsConfig1On = !g_GameConfig.bIsConfig1On;
+}
 
+function OnConfig2Toggle()
+{
+    g_GameConfig.bIsConfig2On = !g_GameConfig.bIsConfig2On;
+}
+
+
+function OnConfig3Toggle()
+{
+    g_GameConfig.bIsConfig3On = !g_GameConfig.bIsConfig3On;
+}
+
+
+function OnConfig4Toggle()
+{
+    g_GameConfig.bIsConfig4On = !g_GameConfig.bIsConfig4On;
+}
+
+function PlayerChat(event)
+{
+    var txt = event.text;
+    if (txt == "-bgmoff" && g_GameConfig.bIsBGMOn) {
+        StopBGM();
+        g_GameConfig.bIsBGMOn = false;
+    }
+    if (txt == "-bgmon" && !g_GameConfig.bIsBGMOn) {
+        PlayBGM();
+        g_GameConfig.bIsBGMOn = true;
+    }
+}
 
 (function()
 {
     $("#FateConfigBoard").visible = false;
+    $("#FateConfigBGMList").SetSelected(1);
+    GameEvents.Subscribe( "player_chat", PlayerChat);
 })();

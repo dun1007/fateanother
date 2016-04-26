@@ -8,7 +8,6 @@ require('master_ability')
 require('gille_ability')
 require('notifications')
 require('items')
-require('utilities/sounds')
 require('utilities/popups')
 require('event')
 
@@ -378,7 +377,7 @@ function FateGameMode:OnAllPlayersLoaded()
     GameRules:SendCustomMessage("<font color='#FF3399'>Vote Result:</font> Players have decided for victory score: <font color='#FF3399'>" .. VICTORY_CONDITION .. ".</font>", 0, 0)
 
 
-
+    --[[
     -- Turn on music
     for i=0, 11 do
         local player = PlayerResource:GetPlayer(i)
@@ -386,7 +385,7 @@ function FateGameMode:OnAllPlayersLoaded()
             SendToConsole("stopsound")
             PlayBGM(player)
         end
-    end
+    end]]
 
     Timers:CreateTimer('30secondalert', {
         endTime = 30,
@@ -503,31 +502,6 @@ function FateGameMode:OnGameInProgress()
 
 end
 
-choice = 0 --
-function PlayBGM(player)
-    local delayInBetween = 2.0
-    
-    Timers:CreateTimer("BGMTimer" .. player:GetPlayerID(), {
-        endTime = 0,
-        callback = function()
-            choice = RandomInt(1,8)
-            if choice == lastChoice then return 0.1 end
-            print("Playing BGM No. " .. choice)
-            local songName = "BGM." .. choice
-            player.CurrentBGM = songName
-            if choice == 1 then EmitSoundOnClient(songName, player) lastChoice = 1 return 186+delayInBetween
-            elseif choice == 2 then EmitSoundOnClient(songName, player) lastChoice = 2 return 327+delayInBetween
-            elseif choice == 3 then EmitSoundOnClient(songName, player) lastChoice = 3 return 138+delayInBetween
-            elseif choice == 4 then EmitSoundOnClient(songName, player) lastChoice = 4 return 149+delayInBetween
-            elseif choice == 5 then EmitSoundOnClient(songName, player) lastChoice = 5 return 183+delayInBetween
-            elseif choice == 6 then EmitSoundOnClient(songName, player) lastChoice = 6 return 143+delayInBetween
-            elseif choice == 7 then EmitSoundOnClient(songName, player) lastChoice = 7 return 184+delayInBetween
-        else EmitSoundOnClient(songName, player) lastChoice = 8 return 181+delayInBetween end
-    end})
-end
-
-
-
 -- Cleanup a player when they leave
 function FateGameMode:OnDisconnect(keys)
     print('[BAREBONES] Player Disconnected ' .. tostring(keys.userid))
@@ -638,16 +612,6 @@ function FateGameMode:PlayerSay(keys)
             CreateShardDrop(hero:GetAbsOrigin())
         end
     end
-
-    -- Turns BGM on and off
-    if text == "-bgmoff" then
-        Timers:RemoveTimer("BGMTimer" .. ply:GetPlayerID())
-        ply:StopSound(ply.CurrentBGM)
-    end
-    
-    if text == "-bgmon" then
-        PlayBGM(ply)
-    end
     
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
@@ -657,13 +621,14 @@ function FateGameMode:PlayerSay(keys)
             hero:ModifyGold(-tonumber(goldAmt), true , 0) 
             targetHero:ModifyGold(tonumber(goldAmt), true, 0)
             
-            GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
+            --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
         end
     end
     
     -- Asks team for gold
     if text == "-goldpls" then
-        GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
+        --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
+        Notifications:RightToTeam(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
     end
 end
 -- The overall game state has changed
@@ -938,13 +903,14 @@ function FateGameMode:OnItemPurchased( keys )
     
     
     if hero.IsInBase == false then
-        if PlayerResource:GetReliableGold(plyID) + itemCost < itemCost * 1.5 then
+        if PlayerResource:GetGold(plyID) + itemCost < itemCost * 1.5 then
             -- This will take care of non-component items
             for i = 1, #oldStash do
                 if oldStash[i]:GetName() == itemName then
                     FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
-                    hero:RemoveItem(oldStash[i])
+                    --hero:RemoveItem(oldStash[i])
                     hero:ModifyGold(itemCost, true, 0)
+                    oldStash[i]:RemoveSelf()
                     break
                 end
             end
@@ -958,17 +924,23 @@ function FateGameMode:OnItemPurchased( keys )
         if itemName == "item_c_scroll" then
             if hero.CStock > 0 then 
                 hero.CStock = hero.CStock - 1
+
             else 
                 for i = 1, #oldStash do
                     if oldStash[i]:GetName() == "item_c_scroll" then
                         FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Out Of Stock" } )
-                        hero:RemoveItem(oldStash[i])
+                        --hero:RemoveItem(oldStash[i])
                         hero:ModifyGold(itemCost, true, 0)
+                        oldStash[i]:RemoveSelf()
                         break
                     end
                 end
             end
         end
+    end
+
+    if PlayerResource:GetGold(plyID) < 200 then
+        Notifications:RightToTeam(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 7, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
     end
 end
 
@@ -1981,19 +1953,11 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         Say(nil, "Radiant Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
-        Timers:CreateTimer(0.1, function()
-            --statCollection:submitRound(true)
-            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
-        end)
         return
     elseif self.nDireScore == VICTORY_CONDITION then
         Say(nil, "Dire Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
-        Timers:CreateTimer(0.1, function()
-            --statCollection:submitRound(true)
-            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
-        end)
         return
     end
     

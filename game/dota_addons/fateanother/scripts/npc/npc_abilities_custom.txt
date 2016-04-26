@@ -5172,10 +5172,10 @@
 			{
 				"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_RUN"
-				"Duration"				"3.0"
+				"Duration"				"1.0"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
 				}
 			}
 
@@ -12889,7 +12889,7 @@
 
 			"modifier_dash_anim"
 			{
-				//"IsHidden"				"1"
+				"IsHidden"				"1"
 				"OverrideAnimation"     "ACT_DOTA_RUN"
 				"Duration"				"1.0"
 				"Properties"
@@ -12897,7 +12897,6 @@
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
 				}
 			}
-
 			"modifier_nine_anim"
 			{
 				//"IsHidden"			"1"
@@ -15147,12 +15146,12 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"diarmuid_warriors_charge"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AOERadius"						"%radius"
-		"AnimationPlaybackRate" 		"1.0"
+		"AnimationPlaybackRate" 		"1.7"
 		
 		"precache"
 		{
@@ -18404,7 +18403,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"summon_disable_duration"	"15"
+				"summon_disable_duration"	"3"
 			}
 		}
 		
@@ -18904,7 +18903,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"300"
+				"radius"			"1000"
 			}			
 			"02"
 			{
@@ -18939,6 +18938,8 @@
 			{
 				"ScriptFile"	"gille_ability"
 				"Function"		"OnGilleComboStart"
+				"Damage"		"%initial_damage"
+				"KnockupDuration"	"%knockup_duration"
 			}
 		}
 		
@@ -18962,6 +18963,7 @@
 					{
 						"ScriptFile"	"gille_ability"
 						"Function"		"OnGilleComboThink"
+						"DPS"			"%damage_per_sec"
 					}
 				}
 			}

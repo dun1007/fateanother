@@ -6,9 +6,13 @@ function BottomNotification(msg) {
   AddNotification(msg, $('#BottomNotifications'));
 }
 
+function RightNotification(msg) {
+  AddNotification(msg, $('#RightNotifications'));
+}
+
 function AddNotification(msg, panel) {
 
-  $.Msg(msg)
+  //$.Msg(msg)
   var notification = $.CreatePanel('Label', panel, '');
 
   if (typeof(msg.duration) != "number"){
@@ -43,6 +47,7 @@ function AddNotification(msg, panel) {
 (function () {
     GameEvents.Subscribe( "top_notification", TopNotification );
     GameEvents.Subscribe( "bottom_notification", BottomNotification );
+    GameEvents.Subscribe( "right_notification", RightNotification );
 })();
 
 

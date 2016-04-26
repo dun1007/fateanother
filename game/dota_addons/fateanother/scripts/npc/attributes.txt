@@ -14,6 +14,6 @@
     "DMG_PER_STAT"			"3"
     "ARMOR_PER_STAT"		"1.5"
     "HPREG_PER_STAT"		"2"
-    "MPREG_PER_STAT"		"1"
+    "MPREG_PER_STAT"		"1.5"
     "MS_PER_STAT"			"5"
 }

@@ -15,7 +15,10 @@
             <Panel hittest="false" id="BottomNotifications">
             </Panel>
         </Panel>
-
+        <Panel hittest="false" class="BarebonesBottomNotifications">
+            <Panel hittest="false" id="RightNotifications">
+            </Panel>
+        </Panel>
 
         <!--Portrait
         <Panel hittest="true" id="Portraits" class="PortraitDisplayRoot">

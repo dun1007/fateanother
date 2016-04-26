@@ -43,6 +43,18 @@
     border: 0px solid blue;
 }
 
+#RightNotifications
+{
+    flow-children: down;
+    horizontal-align:right;
+    vertical-align: bottom;
+    width: 18%;
+    opacity: 1;
+    margin-bottom: 28%;
+    visibility: visible;
+    border: 0px solid blue;
+}
+
 .NotificationMessage
 {
     margin-top: 15px;

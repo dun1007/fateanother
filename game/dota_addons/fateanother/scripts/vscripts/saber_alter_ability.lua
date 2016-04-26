@@ -84,7 +84,7 @@ function OnUFStart(keys)
 	end
 	DSCheckCombo(caster, keys.ability)
 	Timers:CreateTimer(function()
-		if UFCount == 5 then return end
+		if UFCount == 5 or not caster:IsAlive() then return end
 		caster:EmitSound("Saber_Alter.Unleashed") 
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)

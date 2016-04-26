@@ -78,6 +78,30 @@
 	"FA_Config"						"Configuration"
 	"FA_Config_Button"				"Click to open Configuration tab."
 
+	"FA_Config_Camdist"				"Camera Distance"
+
+	"FA_Config_BGM_Repeat"			"Repeat"
+    "BGM1"	"1. Mighty Wind -Fate/Realta Nua"
+    "BGM2"	"2. Ryougi Shiki -Kara no Kyoukai"
+   	"BGM3"	"3. Emiya -Fate/Unlimited Codes"
+    "BGM4"	"4. Tenchi Hou Take -Fate/Stay Night(DEEN)"
+    "BGM5"	"5. Finality -Mahou Tsukai no Yoru"
+    "BGM6"	"6. Gunyuu Shissou -Fate/Stay Night(DEEN)"
+    "BGM7"	"7. Emiya -Fate/Stay Night"
+    "BGM8"	"8. Excalibur -Remix"
+
+	"FA_Config_Gameplay"			"Gameplay"
+	"FA_Config_Option1"				"Ask for gold when having less than 200g"
+	"FA_Config_Option1_Context"		"If checked, any purchase that puts your gold below 200g will automatically trigger -goldpls event."
+	"FA_Config_Option2"				"Disable damge output popup(not available)"
+	"FA_Config_Option3"				"Disable mount reselection(not available)"
+	"FA_Config_Option3_Context"		"When placed on mount(e.g Ancient Dragon, Gigantic Horror), selecting hero automatically reselects mount instead. Check this option if you want to disable this function."
+	"FA_Config_Option4"				"Disable alert sound upon presence detection(not available)"
+
+	"FA_Config_Cmd1"	"Pops a message that asks for gold to your team."
+	"FA_Config_Cmd2"	"Turns BGM on/off."
+	"FA_Config_Cmd3"	"Increases Master mana/health to 100/1000, \nand sets up Combo requirement stats."
+
 	"Fateanother_Portrait_Tooltip"					"Click to select your Servant."
 	"Fateanother_Master_Tooltip"					"Click to select Master, who can aid your Servant with powerful Command Seals."
 	"Fateanother_Master_Health"						"Master Health "
