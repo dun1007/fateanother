@@ -18,19 +18,8 @@
     "4"
     {
         "File"      "CustomUI_Timer"
-        "Depth"     "40"
+        "Depth"     "5"
     }
-    //"5"
-    //{
-    //	"File"		"Fatepedia"
-    //	"Depth"		"50"
-    //}
-    //pip currently disabled
-   	//"6"
-	//{
-	//	"File"		"PipNumbers"
-	//	"Depth"		"18"
-	//}
 }
 // =============================================
 // Depths of base Dota UI elements

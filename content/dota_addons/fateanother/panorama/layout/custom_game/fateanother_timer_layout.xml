@@ -6,7 +6,7 @@
     <scripts>
         <include src="file://{resources}/scripts/custom_game/fateanother_timer_layout.js" /> 
     </scripts>
-    <Panel class="TimerPanel" hittest="true">
+    <Panel class="TimerPanel" hittest="false">
         <Panel id="RoundTimerPanel" hittest="false">
         </Panel>
         <Panel id="MarbleTimerPanel" hittest="false">

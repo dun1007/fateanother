@@ -1,3 +1,5 @@
+var g_GameConfig = GameUI.CustomUIConfig();
+
 function TopNotification( msg ) {
   AddNotification(msg, $('#TopNotifications'));
 }
@@ -7,11 +9,15 @@ function BottomNotification(msg) {
 }
 
 function RightNotification(msg) {
-  AddNotification(msg, $('#RightNotifications'));
+
+  if (msg.bIsAuto && !g_GameConfig.bIsConfig1On)
+  {} else
+  {
+    AddNotification(msg, $('#RightNotifications'));
+  }
 }
 
 function AddNotification(msg, panel) {
-
   //$.Msg(msg)
   var notification = $.CreatePanel('Label', panel, '');
 

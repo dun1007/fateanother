@@ -79,3 +79,7 @@ end
 function Notifications:RightToTeam(team, text, duration, class, style)
   CustomGameEventManager:Send_ServerToTeam(team, "right_notification", {text=text, duration=duration, class=class, style=style} )
 end
+
+function Notifications:RightToTeamGold(team, text, duration, class, style, bIsAuto)
+  CustomGameEventManager:Send_ServerToTeam(team, "right_notification", {text=text, duration=duration, class=class, style=style, bIsAuto=bIsAuto}  )
+end

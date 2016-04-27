@@ -48,10 +48,10 @@ function PlayBGM()
 
 function StopBGM()
 {
-    if (curBGMentindex != 0) {
+    if (g_GameConfig.curBGMentindex != 0) {
         Game.StopSound(g_GameConfig.curBGMentindex);
     }
-    if (BGMSchedule != 0) {
+    if (g_GameConfig.BGMSchedule != 0) {
         $.CancelScheduled(g_GameConfig.BGMSchedule, {});
     }
 }

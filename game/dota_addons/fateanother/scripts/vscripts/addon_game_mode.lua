@@ -628,7 +628,7 @@ function FateGameMode:PlayerSay(keys)
     -- Asks team for gold
     if text == "-goldpls" then
         --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
-        Notifications:RightToTeam(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
+        Notifications:RightToTeamGold(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"}, false)
     end
 end
 -- The overall game state has changed
@@ -681,7 +681,9 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetAbilityPoints(0)
     hero:SetGold(0, false)
     LevelAllAbility(hero)
-    hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
+    Timers:CreateTimer(0.85, function()
+        hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
+    end)
     hero.CStock = 10
     hero.ShardAmount = 0
 
@@ -940,7 +942,7 @@ function FateGameMode:OnItemPurchased( keys )
     end
 
     if PlayerResource:GetGold(plyID) < 200 then
-        Notifications:RightToTeam(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 7, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
+        Notifications:RightToTeamGold(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 7, nil, {color="rgb(255,255,255)", ["font-size"]="20px"}, true)
     end
 end
 
