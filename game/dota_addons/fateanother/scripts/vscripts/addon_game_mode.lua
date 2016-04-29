@@ -865,7 +865,7 @@ end
 -- state as necessary
 function FateGameMode:OnPlayerReconnect(keys)
     print ( '[BAREBONES] OnPlayerReconnect' )
-    PrintTable(keys) 
+    --PrintTable(keys) 
     Timers:CreateTimer(3.0, function()
         print("reinitiating the UI")
         local userid = keys.PlayerID
@@ -1548,7 +1548,6 @@ function FateGameMode:TakeDamageFilter(filterTable)
     end
     local victim = EntIndexToHScript(filterTable.entindex_victim_const)
     --if inflictor then print(inflictor:GetName() .. damage) end
-
     -- if target is affected by Verg and damage is not lethalrr
     if (victim:HasModifier("modifier_verg_avesta") or victim:HasModifier("modifier_endless_loop")) and (victim:GetHealth() - damage) > 0 then
         -- check if the damage source is not eligible for return
@@ -1613,6 +1612,10 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
     -- What do we do when handling the move between inventory and stash?
     if orderType == 11 then
         PrintTable(filterTable)
+    end
+
+    if orderType == DOTA_UNIT_ORDER_RADAR then
+        return false
     end
     if orderType == 19 then
         local currentItemIndex, itemName = nil

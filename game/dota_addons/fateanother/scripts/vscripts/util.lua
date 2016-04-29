@@ -910,7 +910,9 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsAbsorbed = false
     local IsBScrollIgnored = false
     local MR = target:GetMagicalArmorValue() 
-
+    if source and source:IsHero() then
+        dmg = dmg/(1+((source:GetIntellect()/16)/100))
+    end
     if dmg_type == DAMAGE_TYPE_MAGICAL then
         -- if target has Sun's Embrace modifier, reduce damage by MR before calculation
         if target:HasModifier("modifier_suns_embrace_ally") then
