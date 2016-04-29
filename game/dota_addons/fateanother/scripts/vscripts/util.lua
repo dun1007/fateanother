@@ -910,7 +910,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsAbsorbed = false
     local IsBScrollIgnored = false
     local MR = target:GetMagicalArmorValue() 
-    if source and source:IsHero() then
+    if source and source:IsHero() and not isLoop then
         dmg = dmg/(1+((source:GetIntellect()/16)/100))
     end
     if dmg_type == DAMAGE_TYPE_MAGICAL then
