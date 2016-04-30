@@ -1,3 +1,13 @@
+	"Fateanother_Gameplay1"							"Team Elimination(Standard): Round-based clash between two teams. Eliminating all enemies wins your team a round, and first team to win certain amount of rounds(12 by default) stands victorious.\nRecommended for: Seasoned/returning players\nAverage game duration: 30-50 min\n\nTrio Rumble, FFA: Kill-based bloodbath with more than 2 sides battling for highest kill score.\nRecommended for: People with short time commitment\nAverage game duration: 15-25 min\nMake sure to choose fate_trio_rumble or fate_ffa map when creating lobby."
+
+	"Fateanother_Servant_1"	"As of April 29th, 20 Servants from various Fate series are available. All Servants possess deadly Noble Phantasms that are far more powerful than your regular Dota 2 abilities, meaning that getting out of position without countermeasure means certain death. Think about the pace of combat in CS:GO and you will have brief idea of how team fight is like in Fate/Another."
+	
+	"Fateanother_Tip01"							"1. As mentioned above, everything in the game is way more deadly than your regular Dota 2 abilities. Fast reflexes and well-timed use of defensive items are vital to survival. ALWAYS CARRY A SCROLL AND B SCROLL!"
+
+	"Fateanother_Servant"		"Servants"
+	"Fateanother_Servant_1"	"As of April 29th, 20 Servants from various Fate series are available. All Servants possess deadly Noble Phantasms that are far more powerful than your regular Dota 2 abilities, meaning that getting out of position without countermeasure means certain death. Think about the pace of combat in CS:GO and you will have brief idea of how team fight is like in Fate/Another."
+	"Fateanother_Servant_2"	"Fortunately, you can avoid or withstand most sticky situations with fast reflexes. The items are extrmely versatile from defense to utility, but they are all comsumables. In other words, there is no item difference that broadens the gap between the 'feed' and 'fed'; the only thing matters is your skill."
+
 	"Fateanother_Customize_Button"						"Click to customize your Servant."
 
 	"FA_Fatepedia"						"Fatepedia"
@@ -16,6 +26,8 @@
 	"FA_Config_Option3"				"Disable mount reselection"
 	"FA_Config_Option3_Context"		"When placed on mount(e.g Ancient Dragon, Gigantic Horror), selecting hero automatically reselects mount instead. Check this option if you want to disable this function."
 	"FA_Config_Option4"				"Disable alert sound upon presence detection"
+	"FA_Config_Option5"				"Disable direct item transfer to inventory"
+	"FA_Config_Option5_Context"		"When checked, purchased items will move to your stash instead of your Servant's inventory."
 
 	"FA_Config_Cmd1"	"Pops a message that asks for gold to your team."
 	"FA_Config_Cmd2"	"Turns BGM on/off."
