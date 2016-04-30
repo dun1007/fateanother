@@ -94,7 +94,7 @@ end
 _G.XP_PER_LEVEL_TABLE[MAX_LEVEL-1] = _G.XP_PER_LEVEL_TABLE[MAX_LEVEL-2] + 2400
 
 for i=1, MAX_LEVEL do
-    BOUNTY_PER_LEVEL_TABLE[i] = 1300 + i * 75 -- Bounty gold formula : 1000 + Level * 100
+    BOUNTY_PER_LEVEL_TABLE[i] = 1025 + i * 75 
 end
 
 XP_BOUNTY_PER_LEVEL_TABLE[1] = 120
@@ -678,6 +678,8 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetCustomDeathXP(0)
     hero.bFirstSpawned = true
     hero.PresenceTable = {}
+    hero.bIsDmgPopupDisabled = false
+    hero.bIsAlertSoundDisabled = false 
     hero:SetAbilityPoints(0)
     hero:SetGold(0, false)
     LevelAllAbility(hero)
@@ -1210,6 +1212,27 @@ function FateGameMode:OnEntityKilled( keys )
             if killerEntity:FindAbilityByName("gilgamesh_golden_rule") and killerEntity:FindAbilityByName("gilgamesh_golden_rule"):GetLevel() == 2 then 
                 killerEntity:ModifyGold(BOUNTY_PER_LEVEL_TABLE[killedUnit:GetLevel()] / 2, true, 0) 
             end 
+            --Granting XP to all heroes who assisted
+            local assistTable = {}
+            local allHeroes = HeroList:GetAllHeroes()
+            for _,atker in pairs( allHeroes ) do
+                for i = 0, killedUnit:GetNumAttackers() - 1 do
+                    local attackerID = killedUnit:GetAttacker( i )
+                    if atker:GetPlayerID() == attackerID then
+                        local assister = PlayerResource:GetSelectedHeroEntity(attackerID)
+                        if atker:GetTeam() == assister:GetTeam() and assister ~= killerEntity then
+                            table.insert(assistTable, assister)
+                            assister:ModifyGold(300 , true, 0)
+                            local goldPopupFx = ParticleManager:CreateParticleForPlayer("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, assister:GetPlayerOwner())
+                            --local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, killerEntity:GetTeamNumber())
+                            ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
+                            ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,300,0))
+                            ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
+                            ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))                            
+                        end
+                    end
+                end
+            end
             --print("Player collected bounty : " .. bounty - killedUnit:GetGoldBounty())
             -- Create gold popup
             if killerEntity:GetPlayerOwner() ~= nil then
@@ -1220,8 +1243,25 @@ function FateGameMode:OnEntityKilled( keys )
                 ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
                 ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
             end
+
             -- Display gold message
-            GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold!", 0, 0)
+            local assistString = "plus <font color='#FFFF66'>" .. #assistTable * 300 .. "</font> gold split between contributors!"
+            GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold, " .. assistString, 0, 0)
+
+            --[[-- Give assist bounty
+            for k, _ in pairs(killedUnit.assistTable) do
+                if k:GetTeam() == killerEntity:GetTeam() then
+                    k:ModifyGold(300 , true, 0)
+                    local goldPopupFx = ParticleManager:CreateParticleForPlayer("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, k:GetPlayerOwner())
+                    --local goldPopupFx = ParticleManager:CreateParticleForTeam("particles/custom/system/gold_popup.vpcf", PATTACH_CUSTOMORIGIN, nil, killerEntity:GetTeamNumber())
+                    ParticleManager:SetParticleControl( goldPopupFx, 0, killedUnit:GetAbsOrigin())
+                    ParticleManager:SetParticleControl( goldPopupFx, 1, Vector(10,300,0))
+                    ParticleManager:SetParticleControl( goldPopupFx, 2, Vector(3,#tostring(bounty)+1, 0))
+                    ParticleManager:SetParticleControl( goldPopupFx, 3, Vector(255, 200, 33))
+                end
+            end]]
+
+
         end
         
         -- Need condition check for GH
@@ -1331,6 +1371,17 @@ function OnServantCustomizeActivated(Index, keys)
     --caster:SetMana(caster:GetMana() - ability:GetManaCost(1))
 end
 
+function OnConfig2Checked(index, keys)
+    local playerID = EntIndexToHScript(keys.player)
+    local hero = PlayerResource:GetPlayer(keys.player):GetAssignedHero()
+    if keys.bOption == 1 then hero.bIsDmgPopupDisabled = true else hero.bIsDmgPopupDisabled = false end
+end
+
+function OnConfig4Checked(index, keys)
+    local playerID = EntIndexToHScript(keys.player)
+    local hero = PlayerResource:GetPlayer(keys.player):GetAssignedHero()
+    if keys.bOption == 1 then hero.bIsAlertSoundDisabled = true else hero.bIsAlertSoundDisabled = false end
+end
 
 function OnHeroClicked(Index, keys)
     local playerID = EntIndexToHScript(keys.player)
@@ -1444,6 +1495,8 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "direct_transfer_changed", OnDirectTransferChanged )
     CustomGameEventManager:RegisterListener( "servant_customize", OnServantCustomizeActivated )
     CustomGameEventManager:RegisterListener( "check_hero_in_transport", OnHeroClicked )
+    CustomGameEventManager:RegisterListener( "config_option_2_checked", OnConfig2Checked )
+    CustomGameEventManager:RegisterListener( "config_option_4_checked", OnConfig4Checked )
     -- LUA modifiers
     LinkLuaModifier("modifier_ms_cap", "modifiers/modifier_ms_cap", LUA_MODIFIER_MOTION_NONE)
 
@@ -1547,6 +1600,11 @@ function FateGameMode:TakeDamageFilter(filterTable)
         inflictor = EntIndexToHScript(filterTable.entindex_inflictor_const) -- the skill name
     end
     local victim = EntIndexToHScript(filterTable.entindex_victim_const)
+
+    --[[if victim:IsHero() and victim.assistTable then
+        local attackerHero = PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerID())
+        victim.assistTable[attackerHero] = 0
+    end]]
     --if inflictor then print(inflictor:GetName() .. damage) end
     -- if target is affected by Verg and damage is not lethalrr
     if (victim:HasModifier("modifier_verg_avesta") or victim:HasModifier("modifier_endless_loop")) and (victim:GetHealth() - damage) > 0 then
@@ -1574,10 +1632,10 @@ function FateGameMode:TakeDamageFilter(filterTable)
         local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_CUSTOMORIGIN, nil)
         ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
     end
-
-
-    if damageType == 1 or damageType == 2 or damageType == 4 then
-        PopupDamage(victim, math.floor(damage), Vector(255,255,255), damageType)
+    if not attacker.bIsDmgPopupDisabled then
+        if damageType == 1 or damageType == 2 or damageType == 4 then
+            PopupDamage(victim, math.floor(damage), Vector(255,255,255), damageType)
+        end
     end
     return true
 end

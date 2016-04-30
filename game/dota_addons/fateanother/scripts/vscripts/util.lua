@@ -905,6 +905,20 @@ function IsInSameRealm(loc1, loc2)
     return true
 end
 
+function SendMountStatus(hero)
+    local bMounted = false
+    if hero:GetName() == "npc_dota_hero_shadow_shaman" then 
+        bMounted = hero.IsIntegrated
+    elseif hero:GetName() == "npc_dota_hero_crystal_maiden" then 
+        bMounted = hero.IsMounted
+    end
+
+    local playerData = {
+        bIsMounted = bMounted
+    }
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_mount_status_changed", playerData )
+end
+
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 
     local IsAbsorbed = false

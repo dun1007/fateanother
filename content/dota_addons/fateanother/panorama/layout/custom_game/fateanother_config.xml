@@ -45,7 +45,9 @@
                     <Label id="FateConfigCmd2" text="-bgmon/-bgmoff" hittest="false"/>
                     <Label id="FateConfigCmd2Text" text="#FA_Config_Cmd2" hittest="false"/>         
                     <Label id="FateConfigCmd3" text="-testsetup (cheat mode only)" hittest="false"/>
-                    <Label id="FateConfigCmd3Text" text="#FA_Config_Cmd3" hittest="false"/>               
+                    <Label id="FateConfigCmd3Text" text="#FA_Config_Cmd3" hittest="false"/>     
+                    <Label id="FateConfigCmd4" text="-unpause (cheat mode only)" hittest="false"/>
+                    <Label id="FateConfigCmd4Text" text="#FA_Config_Cmd4" hittest="false"/>               
                 </Panel>
             </Panel>
 

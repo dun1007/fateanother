@@ -1,4 +1,6 @@
 var g_GameConfig = GameUI.CustomUIConfig();
+var transport = null;
+var bIsMounted = false;
 
 function OnFateConfigButtonPressed()
 {
@@ -29,6 +31,7 @@ function OnConfig1Toggle()
 function OnConfig2Toggle()
 {
     g_GameConfig.bIsConfig2On = !g_GameConfig.bIsConfig2On;
+    GameEvents.SendCustomGameEventToServer("config_option_2_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig2On})
 }
 
 
@@ -41,6 +44,7 @@ function OnConfig3Toggle()
 function OnConfig4Toggle()
 {
     g_GameConfig.bIsConfig4On = !g_GameConfig.bIsConfig4On;
+    GameEvents.SendCustomGameEventToServer("config_option_4_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig4On})
 }
 
 function PlayerChat(event)
@@ -58,17 +62,31 @@ function PlayerChat(event)
 
 function CheckTransportSelection(data)
 {
+    if (g_GameConfig.bIsConfig3On) { return 0; }
     var playerID = Players.GetLocalPlayer();
     var mainSelected = Players.GetLocalPlayerPortraitUnit();
     var hero = Players.GetPlayerHeroEntityIndex( playerID )
 
-    if (mainSelected == hero)
+    if (mainSelected == hero && transport && bIsMounted)
     {
         // check if transport is currently carrying Caster inside
-        GameEvents.SendCustomGameEventToServer("check_hero_in_transport", {player: Players.GetLocalPlayer()})
+        if (Entities.IsAlive( transport ))
+        {
+            GameUI.SelectUnit(transport, false);
+        }
     }
 
 }
+function RegisterTransport(data)
+{
+    transport = data.transport;
+}
+function UpdateMountStatus(data)
+{
+    bIsMounted = data.bIsMounted;
+    $.Msg(bIsMounted);
+}
+
 
 (function()
 {
@@ -76,5 +94,6 @@ function CheckTransportSelection(data)
     $("#FateConfigBGMList").SetSelected(1);
     GameEvents.Subscribe( "player_chat", PlayerChat);
     GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
-    GameEvents.Subscribe( "player_selected_hero_in_transport", SelectTransport);
+    GameEvents.Subscribe( "player_summoned_transport", RegisterTransport);
+    GameEvents.Subscribe( "player_mount_status_changed", UpdateMountStatus);
 })();

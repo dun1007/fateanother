@@ -92,10 +92,6 @@ function SetupPortrait(data)
 	UpdateHealthAndMana();
 }
 
-function SelectTransport(data)
-{
-	GameUI.SelectUnit(data.transport, false);
-}
 (function()
 {
 	GameEvents.Subscribe( "player_selected_hero", SetupPortrait);

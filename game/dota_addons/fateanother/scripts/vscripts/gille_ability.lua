@@ -420,6 +420,10 @@ function OnContractStart(keys)
 				tentacle:SetBaseDamageMax(50 + keys.ability:GetLevel() * 50) 
 				tentacle:SetBaseDamageMin(50 + keys.ability:GetLevel() * 50) 
 				tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 90.0})
+			    local playerData = {
+                    transport = tentacle:entindex()
+                }
+                CustomGameEventManager:Send_ServerToPlayer( caster:GetPlayerOwner(), "player_summoned_transport", playerData )
 			end
 			-- Damage enemies
 			local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
@@ -673,6 +677,7 @@ function OnIntegrateStart(keys)
 					caster:RemoveModifierByName("modifier_integrate")
 					hero.IsIntegrated = false
 					caster.AttemptingIntegrate = false
+					SendMountStatus(hero)
 				end
 			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
 				hero.IsIntegrated = true
@@ -680,6 +685,7 @@ function OnIntegrateStart(keys)
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
 				caster:EmitSound("ZC.Tentacle1")
 				caster:EmitSound("ZC.Laugh")
+				SendMountStatus(hero)
 				return 
 			end
 			--[[
@@ -722,6 +728,7 @@ function OnIntegrateDeath(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsIntegrated = false
 	hero:RemoveModifierByName("modifier_integrate_gille")
+	SendMountStatus(hero)
 end
 
 function OnIntegrateCanceled(keys)
@@ -729,7 +736,6 @@ function OnIntegrateCanceled(keys)
 	if caster.AttemptingIntegrate then 
 		caster.AttemptingIntegrate = false
 		Timers:RemoveTimer("integrate_checker")
-		print("integrate canceled")
 	end
 end
 

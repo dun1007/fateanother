@@ -94,14 +94,15 @@
 	"FA_Config_Gameplay"			"Gameplay"
 	"FA_Config_Option1"				"Ask for gold when having less than 200g"
 	"FA_Config_Option1_Context"		"If checked, any purchase that puts your gold below 200g will automatically trigger -goldpls event."
-	"FA_Config_Option2"				"Disable damge output popup(not available)"
-	"FA_Config_Option3"				"Disable mount reselection(not available)"
+	"FA_Config_Option2"				"Disable damge output popup"
+	"FA_Config_Option3"				"Disable mount reselection"
 	"FA_Config_Option3_Context"		"When placed on mount(e.g Ancient Dragon, Gigantic Horror), selecting hero automatically reselects mount instead. Check this option if you want to disable this function."
-	"FA_Config_Option4"				"Disable alert sound upon presence detection(not available)"
+	"FA_Config_Option4"				"Disable alert sound upon presence detection"
 
 	"FA_Config_Cmd1"	"Pops a message that asks for gold to your team."
 	"FA_Config_Cmd2"	"Turns BGM on/off."
 	"FA_Config_Cmd3"	"Increases Master mana/health to 100/1000, \nand sets up Combo requirement stats."
+	"FA_Config_Cmd4"	"Removes pre-round pause status from all Servants."
 
 	"Fateanother_Portrait_Tooltip"					"Click to select your Servant."
 	"Fateanother_Master_Tooltip"					"Click to select Master, who can aid your Servant with powerful Command Seals."
