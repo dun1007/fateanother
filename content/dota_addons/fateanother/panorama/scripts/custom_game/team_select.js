@@ -1,6 +1,6 @@
 "use strict";
 // Set up global variables
-var g_GameConfig = GameUI.CustomUIConfig();
+var g_GameConfig = FindCustomUIRoot($.GetContextPanel());
 g_GameConfig.curBGMentindex = 0;
 g_GameConfig.curBGMIndex = 1;
 g_GameConfig.nextBGMIndex = 1;

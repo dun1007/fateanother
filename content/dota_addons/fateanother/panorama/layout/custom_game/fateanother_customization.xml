@@ -4,6 +4,7 @@
         <include src="file://{resources}/styles/custom_game/fateanother_customization.css" />
     </styles>
     <scripts>
+        <include src="file://{resources}/scripts/custom_game/fateanother_util.js" /> 
         <include src="file://{resources}/scripts/custom_game/fateanother_customization.js" /> 
         <include src="file://{resources}/scripts/sounds.js" />
     </scripts>

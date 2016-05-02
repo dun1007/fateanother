@@ -1,4 +1,4 @@
-var g_GameConfig = GameUI.CustomUIConfig();
+var g_GameConfig = FindCustomUIRoot($.GetContextPanel());
 
 function TopNotification( msg ) {
   AddNotification(msg, $('#TopNotifications'));
