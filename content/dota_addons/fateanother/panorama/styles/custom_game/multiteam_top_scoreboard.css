@@ -229,6 +229,35 @@
     border-bottom: 1px solid #000000;
 }
 
+#PlayerIDBar
+{
+    width: 64px;
+    height: 17px;
+    border-bottom:1px solid #000000;
+    flow-children: right;
+    background-color: #0d1c22ff, gradient( radial, 100% -0%, 100px -40px, 320% 270%, from( #3a464bff ), color-stop( 0.23, #0d1c22ff ), to( #0d1c22ff ) );
+
+}
+
+#PlayerID
+{
+    color: #EE9A00;
+    text-shadow: 0px 0px 6px 8 #000000;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#PlayerGold
+{
+	margin-left: 5px;
+    color: 	#FFD700;
+    text-shadow: 0px 0px 6px 8 #000000;
+    font-size: 15px;
+    font-weight: bold;
+    horizontal-align: center;
+}
+
+
 #HeroIcon
 {
     width: 64px;
@@ -270,7 +299,7 @@
 
 #RespawnIndicator
 {
-	margin-top: 26px;
+	margin-top: 38px;
 	width: 42px;
 	height: 49px;
     background-size: 100%;

@@ -428,6 +428,10 @@ function OnSummonDragon(keys)
 
 	drag:FindAbilityByName("caster_5th_dragon_frostbite"):SetLevel(skillLevel)
 	drag:FindAbilityByName("caster_5th_dragon_arcane_wrath"):SetLevel(skillLevel)
+    local playerData = {
+        transport = drag:entindex()
+    }
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_summoned_transport", playerData )
 end
 
 --[[
@@ -696,17 +700,22 @@ function OnMountStart(keys)
 					hero:RemoveModifierByName("modifier_mount_caster")
 					caster:RemoveModifierByName("modifier_mount")
 					hero.IsMounted = false
+					SendMountStatus(hero)
 				end
 			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
 				hero.IsMounted = true
 				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
+				SendMountStatus(hero)
+
 				return
 			end 
 		end
 	end)
 end
+
+
 
 function RemoveSacrificeModifier(keys)
 	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo")
@@ -737,6 +746,7 @@ function OnMountDeath(keys)
 	hero:RemoveModifierByName("modifier_mount_caster")
 	caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 	hero.IsMounted = false
+	SendMountStatus(hero)
 end
 
 function OnItemStart(keys)

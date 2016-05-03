@@ -92,8 +92,12 @@ function Attributes:ModifyBonuses(hero)
                 Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_bonus", {})
             end
 
-            local health_stacks = math.abs(strength * Attributes.hp_adjustment)
-            hero:SetModifierStackCount("modifier_health_bonus", Attributes.applier, health_stacks)
+            local health_stacks = strength * Attributes.hp_adjustment
+            if health_stacks < 0 then
+                hero:SetModifierStackCount("modifier_health_negative_bonus", Attributes.applier, -health_stacks) 
+            else
+                hero:SetModifierStackCount("modifier_health_bonus", Attributes.applier, health_stacks)
+            end
 
             -- HP Regen Bonus
             if not hero:HasModifier("modifier_health_regen_constant") then

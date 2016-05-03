@@ -1,3 +1,7 @@
+var g_GameConfig = FindCustomUIRoot($.GetContextPanel());
+var transport = null;
+var bIsMounted = false;
+
 function OnFateConfigButtonPressed()
 {
     var configPanel = $("#FateConfigBoard");
@@ -6,42 +10,6 @@ function OnFateConfigButtonPressed()
     configPanel.visible = !configPanel.visible;
 }
 
-function OnFateConfigButtonShowTooltip()
-{
-    var attrText = $("#FateConfigButton");
-    $.DispatchEvent('DOTAShowTextTooltip', attrText, "#FA_Config_Button");
-}
-
-function OnFateConfigButtonHideTooltip()
-{
-    var attrText = $("#FateConfigButton"); 
-    $.DispatchEvent( 'DOTAHideTextTooltip', attrText );
-}
-
-function Config1ShowTooltip()
-{
-    var attrText = $("#option1"); 
-    $.DispatchEvent('DOTAShowTextTooltip', attrText, "If checked, any purchase that puts your gold below 200g will automatically trigger -goldpls event.");
-}
-
-function Config1HideTooltip()
-{
-    var attrText = $("#option1"); 
-    $.DispatchEvent( 'DOTAHideTextTooltip', attrText );
-}
-
-function Config3ShowTooltip()
-{
-    var attrText = $("#option3"); 
-    $.DispatchEvent('DOTAShowTextTooltip', attrText, "When placed on mount(e.g Caster(5th)'s Ancient Dragon, Caster(4th)'s Gigantic Horror), selecting hero automatically reselects his/her mount instead. Check this option if you want to disable reselection.");
-}
-
-
-function Config3HideTooltip()
-{
-    var attrText = $("#option3"); 
-    $.DispatchEvent( 'DOTAHideTextTooltip', attrText );
-}
 
 function OnCameraDistSubmitted()
 {
@@ -55,9 +23,77 @@ function OnCameraDistSubmitted()
     panel.text = number.toString();
 }
 
+function OnConfig1Toggle()
+{
+    g_GameConfig.bIsConfig1On = !g_GameConfig.bIsConfig1On;
+}
+
+function OnConfig2Toggle()
+{
+    g_GameConfig.bIsConfig2On = !g_GameConfig.bIsConfig2On;
+    GameEvents.SendCustomGameEventToServer("config_option_2_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig2On})
+}
+
+
+function OnConfig3Toggle()
+{
+    g_GameConfig.bIsConfig3On = !g_GameConfig.bIsConfig3On;
+}
+
+
+function OnConfig4Toggle()
+{
+    g_GameConfig.bIsConfig4On = !g_GameConfig.bIsConfig4On;
+    GameEvents.SendCustomGameEventToServer("config_option_4_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig4On})
+}
+
+function PlayerChat(event)
+{
+    var txt = event.text;
+    if (txt == "-bgmoff" && g_GameConfig.bIsBGMOn) {
+        StopBGM();
+        g_GameConfig.bIsBGMOn = false;
+    }
+    if (txt == "-bgmon" && !g_GameConfig.bIsBGMOn) {
+        PlayBGM();
+        g_GameConfig.bIsBGMOn = true;
+    }
+}
+
+function CheckTransportSelection(data)
+{
+    if (g_GameConfig.bIsConfig3On) { return 0; }
+    var playerID = Players.GetLocalPlayer();
+    var mainSelected = Players.GetLocalPlayerPortraitUnit();
+    var hero = Players.GetPlayerHeroEntityIndex( playerID )
+
+    if (mainSelected == hero && transport && bIsMounted)
+    {
+        // check if transport is currently carrying Caster inside
+        if (Entities.IsAlive( transport ))
+        {
+            GameUI.SelectUnit(transport, false);
+        }
+    }
+
+}
+function RegisterTransport(data)
+{
+    transport = data.transport;
+}
+function UpdateMountStatus(data)
+{
+    bIsMounted = data.bIsMounted;
+    $.Msg(bIsMounted);
+}
 
 
 (function()
 {
     $("#FateConfigBoard").visible = false;
+    $("#FateConfigBGMList").SetSelected(1);
+    GameEvents.Subscribe( "player_chat", PlayerChat);
+    GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
+    GameEvents.Subscribe( "player_summoned_transport", RegisterTransport);
+    GameEvents.Subscribe( "player_mount_status_changed", UpdateMountStatus);
 })();

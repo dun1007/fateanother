@@ -51,6 +51,7 @@
     //flow-children: right;
     horizontal-align: center;
     overflow: scroll;
+    opacity: 0.9;
     //background-image: url("file://{images}/custom_game/pepe.jpg");
     //background-position: center;
     //background-repeat: no-repeat;
@@ -117,17 +118,11 @@
 #FateConfigCmdPanel
 {
     width: 90%;
-    height: 40%;
+    height: 50%;
     margin-left: 5%;
     margin-top: 2%;
     flow-children: down-wrap;
 }
-
-.bordertest
-{
-    border:3px solid #DAA520;
-}
-
 .FateConfigOpenText
 {
     font-weight: bold;

@@ -36,6 +36,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 	var playerInfo = Game.GetPlayerInfo( playerId );
 	if ( playerInfo )
 	{
+		//$.Msg(playerInfo);
 		isTeammate = ( playerInfo.player_team_id == localPlayerTeamId );
 		if ( isTeammate )
 		{
@@ -115,6 +116,29 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			{
 				var playerColor = "#000000";
 				playerColorBar.style.backgroundColor = playerColor;
+			}
+		}
+
+		var playerIDPanel = playerPanel.FindChildInLayoutFile( "PlayerID" );
+		var playerGoldPanel = playerPanel.FindChildInLayoutFile( "PlayerGold" );
+		var playerID = playerInfo.player_id;
+		var playerTeam = playerInfo.player_team_id;
+		if ( playerIDPanel !== null)
+		{
+			playerIDPanel.text = playerID;
+			playerGoldPanel.text = Players.GetGold(playerID) + "G";
+		}
+
+		if (playerGoldPanel !== null)
+		{
+			if (playerTeam == Players.GetTeam(Players.GetLocalPlayer()))
+			{
+				var gold = Players.GetGold(playerID);
+				playerGoldPanel.text = gold + "G";
+			} 
+			else
+			{
+				playerGoldPanel.text = "????";
 			}
 		}
 	}

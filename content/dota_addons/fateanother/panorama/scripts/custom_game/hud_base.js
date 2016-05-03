@@ -1,3 +1,5 @@
+var g_GameConfig = FindCustomUIRoot($.GetContextPanel());
+
 function TopNotification( msg ) {
   AddNotification(msg, $('#TopNotifications'));
 }
@@ -6,9 +8,17 @@ function BottomNotification(msg) {
   AddNotification(msg, $('#BottomNotifications'));
 }
 
-function AddNotification(msg, panel) {
+function RightNotification(msg) {
 
-  $.Msg(msg)
+  if (msg.bIsAuto && !g_GameConfig.bIsConfig1On)
+  {} else
+  {
+    AddNotification(msg, $('#RightNotifications'));
+  }
+}
+
+function AddNotification(msg, panel) {
+  //$.Msg(msg)
   var notification = $.CreatePanel('Label', panel, '');
 
   if (typeof(msg.duration) != "number"){
@@ -43,6 +53,7 @@ function AddNotification(msg, panel) {
 (function () {
     GameEvents.Subscribe( "top_notification", TopNotification );
     GameEvents.Subscribe( "bottom_notification", BottomNotification );
+    GameEvents.Subscribe( "right_notification", RightNotification );
 })();
 
 

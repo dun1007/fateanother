@@ -148,10 +148,10 @@ function CloseCharmList(keys)
 
 	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
-	if caster:FindAbilityByName("tamamo_mystic_shackle"):IsHidden() then
-		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
-	else
+	if caster.bIsShackleAvailable then
 		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, true) 
+	else
+		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
 	end
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
 	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
@@ -494,8 +494,10 @@ function OnMantraStart(keys)
 		--ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
 		if caster:GetAbilityByIndex(2):GetName() == "tamamo_mantra" then
 			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,true) 
+			caster.bIsShackleAvailable = true
 			Timers:CreateTimer(3.0, function()
 				caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,false) 
+				caster.bIsShackleAvailable = false
 			end)
 		end
 	end

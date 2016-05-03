@@ -19,6 +19,10 @@
 			<Button class="PlayerPortraitWrapper" onmouseactivate="PortraitClicked();">
 				<Panel hittest="false" id="PlayerColorBar" />
 				<Image hittest="false" id="HeroIcon" />
+				<Panel hittest="false" id="PlayerIDBar">
+					<Label hittest="false" id="PlayerID" text="111"/>
+					<Label hittest="false" id="PlayerGold" text="111"/>
+				</Panel>
 			</Button>
 			<Image hittest="false" id="DisconnectionIndicator" src="file://{images}/custom_game/icon_disconnect.png" />
 		</Panel>

@@ -4,7 +4,8 @@
         <include src="file://{resources}/styles/custom_game/hud_base.css" />
     </styles>
     <scripts>
-        <include src="file://{resources}/scripts/custom_game/hud_base.js" /> 
+        <include src="file://{resources}/scripts/custom_game/fateanother_util.js" />  
+        <include src="file://{resources}/scripts/custom_game/hud_base.js" />
     </scripts>
     <Panel hittest="false" class="BarebonesBaseHud">
         <Panel hittest="false" class="BarebonesTopNotifications">
@@ -15,7 +16,10 @@
             <Panel hittest="false" id="BottomNotifications">
             </Panel>
         </Panel>
-
+        <Panel hittest="false" class="BarebonesBottomNotifications">
+            <Panel hittest="false" id="RightNotifications">
+            </Panel>
+        </Panel>
 
         <!--Portrait
         <Panel hittest="true" id="Portraits" class="PortraitDisplayRoot">

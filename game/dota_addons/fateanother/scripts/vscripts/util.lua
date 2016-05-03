@@ -405,6 +405,29 @@ function StartQuestTimer(questname, questtitle, questendtime)
   return entQuest
 end
 
+choice = 0 --
+function PlayBGM(player)
+    local delayInBetween = 2.0
+    
+    Timers:CreateTimer("BGMTimer" .. player:GetPlayerID(), {
+        endTime = 0,
+        callback = function()
+            choice = RandomInt(1,8)
+            if choice == lastChoice then return 0.1 end
+            print("Playing BGM No. " .. choice)
+            local songName = "BGM." .. choice
+            player.CurrentBGM = songName
+            if choice == 1 then EmitSoundOnClient(songName, player) lastChoice = 1 return 186+delayInBetween
+            elseif choice == 2 then EmitSoundOnClient(songName, player) lastChoice = 2 return 327+delayInBetween
+            elseif choice == 3 then EmitSoundOnClient(songName, player) lastChoice = 3 return 138+delayInBetween
+            elseif choice == 4 then EmitSoundOnClient(songName, player) lastChoice = 4 return 149+delayInBetween
+            elseif choice == 5 then EmitSoundOnClient(songName, player) lastChoice = 5 return 183+delayInBetween
+            elseif choice == 6 then EmitSoundOnClient(songName, player) lastChoice = 6 return 143+delayInBetween
+            elseif choice == 7 then EmitSoundOnClient(songName, player) lastChoice = 7 return 184+delayInBetween
+        else EmitSoundOnClient(songName, player) lastChoice = 8 return 181+delayInBetween end
+    end})
+end
+
 function LevelAllAbility(hero)
     for i=0, 14 do
         local ability = hero:GetAbilityByIndex(i)
@@ -882,12 +905,28 @@ function IsInSameRealm(loc1, loc2)
     return true
 end
 
+function SendMountStatus(hero)
+    local bMounted = false
+    if hero:GetName() == "npc_dota_hero_shadow_shaman" then 
+        bMounted = hero.IsIntegrated
+    elseif hero:GetName() == "npc_dota_hero_crystal_maiden" then 
+        bMounted = hero.IsMounted
+    end
+
+    local playerData = {
+        bIsMounted = bMounted
+    }
+    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_mount_status_changed", playerData )
+end
+
 function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
    -- if target == nil then return end 
     local IsAbsorbed = false
     local IsBScrollIgnored = false
     local MR = target:GetMagicalArmorValue() 
-
+    if source and source:IsHero() and not isLoop then
+        dmg = dmg/(1+((source:GetIntellect()/16)/100))
+    end
     if dmg_type == DAMAGE_TYPE_MAGICAL then
         -- if target has Sun's Embrace modifier, reduce damage by MR before calculation
         if target:HasModifier("modifier_suns_embrace_ally") then

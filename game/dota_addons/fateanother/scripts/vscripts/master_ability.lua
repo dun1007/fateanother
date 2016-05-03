@@ -962,7 +962,9 @@ function OnPresenceDetectionThink(keys)
 				ParticleManager:SetParticleControl(dangerping, 1, enemy:GetAbsOrigin())
 				
 				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
-				EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+				if not caster.bIsAlertSoundDisabled then
+					EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+				end
 				-- Process Eye of Serenity attribute
 				if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
 					enemy.IsSerenityOnCooldown = true

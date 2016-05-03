@@ -386,7 +386,16 @@
 					"MODIFIER_PROPERTY_HEALTH_BONUS"	"1"
 				}
 			}
-
+			"modifier_health_negative_bonus"
+			{
+				"IsHidden"			"1"  
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT"
+				"Properties"
+				{
+					
+					"MODIFIER_PROPERTY_HEALTH_BONUS"	"-1"
+				}
+			}
 			"modifier_health_regen_constant"
 			{
 				"IsHidden"			"1"  
@@ -635,7 +644,7 @@
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 	    "AbilityCooldown"				"90"
 	    "AbilityChannelTime"			"1.0"		
-	    //"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+	    "AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 	    "AbilitySpecial"
 	    {
 	   		"01"
@@ -980,6 +989,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 	    "AbilityCooldown"				"45.0"
 	    "AbilityCastRange"				"1000"
+	    "AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 
 	    "ItemDeclarations" "DECLARE_PURCHASES_TO_TEAMMATES"
 	    "precache"
@@ -1578,7 +1588,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastRange"				"1000"
-		//"AbilityCastAnimation" 			"ACT_DOTA_DISABLED"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 
 		"precache"
 		{
@@ -1718,7 +1728,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastRange"				"1000"
-		//"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf"
