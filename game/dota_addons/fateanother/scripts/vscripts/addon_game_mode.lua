@@ -1273,6 +1273,9 @@ function FateGameMode:OnEntityKilled( keys )
             if PlayerResource:GetTeamKills(killerEntity:GetTeam()) >= VICTORY_CONDITION then
                 GameRules:SetSafeToLeave( true )
                 GameRules:SetGameWinner( killerEntity:GetTeam() )
+                Timers:CreateTimer(0.1, function()
+                    CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
+                end)
             end
         elseif _G.GameMap == "fate_elim_6v6" then
             if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
@@ -2016,11 +2019,17 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         Say(nil, "Radiant Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
+        Timers:CreateTimer(0.1, function()
+            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
+        end)
         return
     elseif self.nDireScore == VICTORY_CONDITION then
         Say(nil, "Dire Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
+        Timers:CreateTimer(0.1, function()
+            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
+        end)
         return
     end
     
