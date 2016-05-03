@@ -54,3 +54,102 @@
 		}
 	}
 }
+
+"Avenger.BergShout"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/avenger/avenger_berg_avesta_shout.vsnd"
+						}
+					}
+				"volume"
+				{
+					"value"		"4.500000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+				}
+			}
+		}
+	}
+}
+
+"Avenger.TransformLong"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/avenger/avenger_transform_a.vsnd"
+						}
+					}
+				"volume"
+				{
+					"value"		"4.500000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+				}
+			}
+		}
+	}
+}
+
+"Avenger.TransformShort"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"src1_2d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/avenger/avenger_transform_b.vsnd"
+						}
+					}
+				"volume"
+				{
+					"value"		"4.500000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+				}
+			}
+		}
+	}
+}
