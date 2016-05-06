@@ -327,7 +327,7 @@ function OnTFStart(keys)
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
     caster:SetModelScale(1.1)
 
-    caster:EmitSound("Hero_Terrorblade.Metamorphosis")
+    caster:EmitSound("Avenger.TransformShort")
 end
 
 function OnTFLevelUp(keys)
@@ -393,6 +393,7 @@ function OnVergStart(keys)
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_verg_avesta", {})
 	EmitGlobalSound("Avenger.Berg")
+	EmitGlobalSound("Avenger.BergShout")
 
 end
 
