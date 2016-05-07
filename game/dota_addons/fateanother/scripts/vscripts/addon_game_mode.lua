@@ -1273,9 +1273,6 @@ function FateGameMode:OnEntityKilled( keys )
             if PlayerResource:GetTeamKills(killerEntity:GetTeam()) >= VICTORY_CONDITION then
                 GameRules:SetSafeToLeave( true )
                 GameRules:SetGameWinner( killerEntity:GetTeam() )
-                Timers:CreateTimer(0.1, function()
-                    CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
-                end)
             end
         elseif _G.GameMap == "fate_elim_6v6" then
             if killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS and killedUnit:IsRealHero() then 
@@ -1925,7 +1922,7 @@ end
 function FateGameMode:FinishRound(IsTimeOut, winner)
     print("[FATE] Winner decided")
     --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
-    --statCollection:submitRound(false)
+
     _G.CurrentGameState = "FATE_POST_ROUND"
     CreateUITimer(("Round " .. self.nCurrentRound), 0, "round_timer" .. self.nCurrentRound)
     CreateUITimer("Pre-Round", 0, "pregame_timer")
@@ -1978,10 +1975,14 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         GameRules:SendCustomMessage("#Fate_Round_Winner_1", 0, 0)
         self.nRadiantScore = self.nRadiantScore + 1 
         winnerEventData.winnerTeam = 0
+        GameRules.Winner = 2
+        statCollection:submitRound(false)
     elseif winner == 1 then
         GameRules:SendCustomMessage("#Fate_Round_Winner_2", 0, 0)
         self.nDireScore = self.nDireScore + 1
         winnerEventData.winnerTeam = 1
+        GameRules.Winner = 3
+        statCollection:submitRound(false)
     elseif winner == 2 then
         GameRules:SendCustomMessage("#Fate_Round_Draw", 0, 0)
         winnerEventData.winnerTeam = 2
@@ -1989,11 +1990,16 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         GameRules:SendCustomMessage("#Fate_Round_Winner_1_By_Default", 0, 0)
         self.nRadiantScore = self.nRadiantScore + 1
         winnerEventData.winnerTeam = 0
+        GameRules.Winner = 2
+        statCollection:submitRound(false)
     elseif winner == 4 then
         GameRules:SendCustomMessage("#Fate_Round_Winner_2_By_Default", 0, 0)
         self.nDireScore = self.nDireScore + 1
         winnerEventData.winnerTeam = 1
+        GameRules.Winner = 3
+        statCollection:submitRound(false)
     end
+
     winnerEventData.radiantScore = self.nRadiantScore
     winnerEventData.direScore = self.nDireScore
     CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
@@ -2019,17 +2025,11 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         Say(nil, "Radiant Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_GOODGUYS )
-        Timers:CreateTimer(0.1, function()
-            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
-        end)
         return
     elseif self.nDireScore == VICTORY_CONDITION then
         Say(nil, "Dire Victory!", false)
         GameRules:SetSafeToLeave( true )
         GameRules:SetGameWinner( DOTA_TEAM_BADGUYS )
-        Timers:CreateTimer(0.1, function()
-            CustomGameEventManager:Send_ServerToAllClients( "winner_decided", winnerEventData ) -- Send the winner to Javascript
-        end)
         return
     end
     
