@@ -66,14 +66,10 @@ function BuildPlayersArray()
 
                 table.insert(players, {
                     -- steamID32 required in here
-                    steamID32 = PlayerResource:GetSteamAccountID(playerID),
+                    steamID32 = PlayerResource:GetSteamAccountID(playerID)
 
                     -- Example functions for generic stats are defined in statcollection/lib/utilities.lua
-                    -- Add player values here as someValue = GetSomePlayerValue(),
-					
-					heroname = FindName(hero:GetUnitName()),
-					kills = hero:GetKills(),
-					deaths = hero:GetDeaths()
+                    -- Add player values here as someValue = GetSomePlayerValue()
 					
                 })
 				
