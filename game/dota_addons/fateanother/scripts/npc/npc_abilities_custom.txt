@@ -7968,7 +7968,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"16"
+				"agi_ratio"			"13"
 			}
 		}
 		
