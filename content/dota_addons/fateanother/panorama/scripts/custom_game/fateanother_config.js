@@ -50,13 +50,21 @@ function OnConfig4Toggle()
 function PlayerChat(event)
 {
     var txt = event.text;
-    if (txt == "-bgmoff" && g_GameConfig.bIsBGMOn) {
-        StopBGM();
-        g_GameConfig.bIsBGMOn = false;
-    }
-    if (txt == "-bgmon" && !g_GameConfig.bIsBGMOn) {
-        PlayBGM();
-        g_GameConfig.bIsBGMOn = true;
+    var id = event.playerid;
+    var playerID = Players.GetLocalPlayer();
+
+    if (playerID == id)
+    {
+        if (txt == "-bgmoff" && g_GameConfig.bIsBGMOn) {
+            StopBGM();
+            g_GameConfig.bIsBGMOn = false;
+            $.Msg("BGM off by " + playerID)
+        }
+        if (txt == "-bgmon" && !g_GameConfig.bIsBGMOn) {
+            PlayBGM();
+            g_GameConfig.bIsBGMOn = true;
+            $.Msg("BGM on by " + playerID)
+        }
     }
 }
 
