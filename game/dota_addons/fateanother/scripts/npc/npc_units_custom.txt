@@ -79,7 +79,6 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		
 		// Vision
@@ -169,7 +168,6 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		
 		// Vision
@@ -332,7 +330,6 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		
 		// Vision
@@ -517,7 +514,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"400"		// Speed.
+		"MovementSpeed"				"425"		// Speed.
 		"MovementTurnRate"			"0.5"		// Turning rate.
 
 		// Status
@@ -527,8 +524,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"500"		// Range of vision during day light.
-		"VisionNighttimeRange"		"500"		// Range of vision at night time.
+		"VisionDaytimeRange"		"650"		// Range of vision during day light.
+		"VisionNighttimeRange"		"650"		// Range of vision at night time.
 
 		// Team
 		//----------------------------------------------------------------
@@ -633,7 +630,7 @@
 		"ArmorPhysical"				"-5"			// Physical protection.
 
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
-		"MovementSpeed"				"200"		// Speed.
+		"MovementSpeed"				"240"		// Speed.
 		"MovementTurnRate"			"0.5"		// Turning rate.
 
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
@@ -1537,8 +1534,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1000"
-		"VisionNighttimeRange"		"1000"
+		"VisionDaytimeRange"		"800"
+		"VisionNighttimeRange"		"800"
 		
 		// Team
 		//----------------------------------------------------------------

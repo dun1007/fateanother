@@ -30,28 +30,20 @@ function UpdateAttributeList(data)
 	var queryUnit2 = data.shardUnit;
 
 	for(i=0; i<5; i++) {
-		CreateAbilityPanel(attributePanel, queryUnit, i);
+		CreateAbilityPanel(attributePanel, queryUnit, i, true);
 	}
-	CreateAbilityPanel(cooldownPanel, queryUnit, 5);
+	CreateAbilityPanel(cooldownPanel, queryUnit, 5, true);
 	for(i=6; i<14; i++) {
-		CreateAbilityPanel(statPanel, queryUnit, i);
+		CreateAbilityPanel(statPanel, queryUnit, i, true);
 	}
 
 	for(i=6; i<10; i++) {
-		CreateAbilityPanel(shardPanel, queryUnit2, i);
+		CreateAbilityPanel(shardPanel, queryUnit2, i, true);
 	}
 
 	$.Msg("done!")
 }
 
-// create an ability button
-function CreateAbilityPanel(panel, unit, abilityIndex)
-{
-	var ability = Entities.GetAbility(unit, abilityIndex); 
-	var abilityPanel = $.CreatePanel("Panel", panel, "");
-	abilityPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_ability.xml", false, false );
-	abilityPanel.SetAbility(ability, unit, Game.IsInAbilityLearnMode());
-}
 
 // create an ability context button, which does not reference existing ability of unit
 function CreateContextAbilityPanel(panel)
@@ -132,7 +124,6 @@ function ShardHideTooltip()
 	var shardText = $("#CustomizationShardText"); 
 	$.DispatchEvent( 'DOTAHideTextTooltip', shardText );
 }
-
 
 (function()
 {

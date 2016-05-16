@@ -266,7 +266,6 @@ function OnNineStart(keys)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		if caster:IsAlive() and not caster.NineLanded then
-			caster:RemoveModifierByName("modifier_dash_anim")
 			OnNineLanded(caster, keys.ability)
 			return 
 		end
@@ -281,7 +280,6 @@ function OnNineStart(keys)
 		unit:SetPhysicsVelocity(Vector(0,0,0))
 		FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 		if caster:IsAlive() and not caster.NineLanded then
-			caster:RemoveModifierByName("modifier_dash_anim")
 			OnNineLanded(caster, keys.ability)
 		end
 	end)
@@ -324,8 +322,8 @@ function OnNineLanded(caster, ability)
 	caster.NineLanded = true
 
 	-- swap animation
+	caster:RemoveModifierByName("modifier_dash_anim")
 	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
-		caster:RemoveModifierByName("modifier_dash_anim")
 		-- needs buffer so the existing animation ends
 		Timers:CreateTimer(0.1, function()
 			if caster:IsAlive() then

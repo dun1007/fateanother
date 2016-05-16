@@ -1153,13 +1153,13 @@ function OnHGStart(keys)
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
-	local maxBolt = 13
+	local maxBolt = keys.BoltAmount
 	local travelTime = 0.7
 	local ascendTime = travelTime+2.0
 	local descendTime = ascendTime+1.0
 	local diff = (targetPoint - caster:GetAbsOrigin()) * 1/travelTime
 	if caster.IsHGImproved then
-		maxBolt = 16
+		maxBolt = maxBolt + 3
 	end 
 	if caster.IsHGImproved then keys.Damage = keys.Damage + caster:GetIntellect()*ATTRIBUTE_HG_INT_MULTIPLIER end
 
@@ -1209,6 +1209,7 @@ function OnHGStart(keys)
 			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(initTargets) do
 				DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, v:GetAbsOrigin(), "particles/custom/caster/hecatic_graea/ray.vpcf")
+				print(boltCount)
 			end
 			maxBolt = maxBolt - #initTargets
 		else
@@ -1220,7 +1221,7 @@ function OnHGStart(keys)
 			rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
 		end
 		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea/ray.vpcf")
-
+		print(boltCount)
 	    boltCount = boltCount + 1
 		return 0.1
     end

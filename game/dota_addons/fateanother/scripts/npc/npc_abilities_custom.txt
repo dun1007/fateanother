@@ -9063,7 +9063,7 @@
 			"modifier_weakening_venom_passive"
 			{
 				"passive"		"1"
-				"IsHidden"		"0"
+				"IsHidden"		"1"
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -10597,7 +10597,7 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_mobilize"
-		"AbilityCastPoint"				"1.5"
+		"AbilityCastPoint"				"1.2"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
 
@@ -10639,7 +10639,7 @@
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"caster_immobilize"
-		"AbilityCastPoint"				"1.5"
+		"AbilityCastPoint"				"1.2"
 		"AbilityCooldown"				"0"
 		"AbilityManaCost"				"0"
 
@@ -11024,7 +11024,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"stun_duration"				"1.0"
+				"stun_duration"				"2.25"
 			}
 		}
 		
@@ -11096,12 +11096,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"shield_amount"			"100 150 200 250 300"
+				"shield_amount"			"80 160 240 320 400"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"max_shield"			"200 300 400 500 600"
+				"max_shield"			"160 320 480 640 800"
 			}
 		}
 		
@@ -11674,7 +11674,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"caster_5th_rule_breaker"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"1.5"
+		"AnimationPlaybackRate" 		"1.8"
 		"AbilityCastPoint"				"0.7"
 		"AbilityCastRange"				"150"
 		"AbilityCastRangeBuffer"		"115"
@@ -11694,7 +11694,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"delay"					"0.8"
+				"delay"					"0.7"
 			}
 			"02"
 			{
@@ -11832,7 +11832,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bolt_amount"		"13"
+				"bolt_amount"		"10"
 			}
 		}
 
@@ -11846,6 +11846,7 @@
 			 	"Damage"		"%damage"
 			 	"RadiusBolt"	"%radius_bolt"
 			 	"Radius"		"%radius"
+			 	"BoltAmount"	"%bolt_amount"
 			}
 		}
 
@@ -12279,6 +12280,8 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"lancelot_smg_barrage"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1" // Change the animation from "ACT_DOTA_CAST_ABILITY_1" to match the timing of the ability
+		"AnimationPlaybackRate" 		"1.5"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
@@ -25346,7 +25349,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityCooldown"				"180"
+		"AbilityCooldown"				"150"
 		"precache"
 		{
 			"particle"				"particles/custom/ruler/la_pucelle/ruler_la_pucelle.vpcf"
@@ -25426,7 +25429,7 @@
 					//"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
-				"ThinkInterval"				"0.2"
+				"ThinkInterval"				"0.275"
 				"OnIntervalThink"
 				{
 					"RunScript"
