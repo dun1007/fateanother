@@ -10678,6 +10678,55 @@
 	}
 
 	//=====================================
+	// Caster : Dimensional Jump
+	//=====================================
+	"caster_5th_dimensional_jump"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityTextureName"			"phantom_assassin_phantom_strike"
+		"MaxLevel"						"1"
+
+		"precache"
+		{
+		}
+
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"9999"
+		"AbilityCastPoint"				"0.15"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"5"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"150"
+		
+	    "AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"blink_distance"				"1000"
+			}
+		}
+	    "OnSpellStart"
+	    {
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"Blink"
+				"Target"		"POINT"
+			}
+		}
+	}
+
+
+	//=====================================
 	// Caster : Recall
 	//=====================================
 	"caster_5th_recall"
@@ -11751,7 +11800,7 @@
 			}
 			"modifier_dagger_of_treachery"
 			{
-				"Duration"	"3.0"
+				"Duration"	"7.5"
 				"IsDebuff"			"1"
 				"EffectName"		"particles/units/heroes/hero_doom_bringer/doom_bringer_doom.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -12149,7 +12198,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"revoke_duration"		"3.0"
+				"revoke_duration"		"7.5"
 			}
 			"03"
 			{

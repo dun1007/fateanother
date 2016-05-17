@@ -1,5 +1,6 @@
 var bIsBookOpen = false;
 var bIsQuickCast = true;
+var bIsHeroSelected = false;
 
 var heroes = [
 	"npc_dota_hero_crystal_maiden"
@@ -33,113 +34,150 @@ function OnAbilButtonPressed(event)
 	var playerID = Players.GetLocalPlayer();
 	var hero = Players.GetPlayerHeroEntityIndex( playerID );
 	var abil = null;
+	var bLearnMode = Game.IsInAbilityLearnMode();
+	var mainSelected = Players.GetLocalPlayerPortraitUnit();
 
-	if (event == "+CustomGameExecuteAbility1")
+	// if selected unit is hero and you are not in learning mode
+	if (!bLearnMode)
 	{
-		if (bIsBookOpen)
+		if (event == "+CustomGameExecuteAbility1")
 		{
-			abil = Entities.GetAbility(hero, 6);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+			if (bIsBookOpen)
+			{
+				abil = Entities.GetAbility(hero, 6);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+				}
+			}
+			else
+			{
+				abil = Entities.GetAbility(mainSelected, 0);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+				}
 			}
 		}
-		else
+		else if (event == "+CustomGameExecuteAbility2")
 		{
-			abil = Entities.GetAbility(hero, 0);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+			if (bIsBookOpen)
+			{
+				abil = Entities.GetAbility(mainSelected, 7);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+				}
+			}
+			else
+			{
+				if (mainSelected == hero)
+				{
+					$.Msg("opening spellbook");
+					bIsBookOpen = true
+					$("#SpellbookBoard").visible = true
+				}
+				else
+				{
+					abil = Entities.GetAbility(mainSelected, 1);
+					if (abil) {
+						Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+					}					
+				}
 			}
 		}
-	}
-	else if (event == "+CustomGameExecuteAbility2")
-	{
-		if (bIsBookOpen)
+		else if (event == "+CustomGameExecuteAbility3")
 		{
-			abil = Entities.GetAbility(hero, 7);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+			if (bIsBookOpen)
+			{
+				abil = Entities.GetAbility(hero, 8);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+				}
+			}
+			else
+			{
+				abil = Entities.GetAbility(mainSelected, 2);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+				}
 			}
 		}
-		else
+		else if (event == "+CustomGameExecuteAbility4") //mana transfer
 		{
-			$.Msg("opening spellbook");
-			bIsBookOpen = true
-			$("#SpellbookBoard").visible = true
-		}
-	}
-	else if (event == "+CustomGameExecuteAbility3")
-	{
-		if (bIsBookOpen)
-		{
-			abil = Entities.GetAbility(hero, 8);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+			if (bIsBookOpen)
+			{
+				abil = Entities.GetAbility(hero, 9);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+				}
+			}
+			else
+			{
+				abil = Entities.GetAbility(mainSelected, 3);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+				}
 			}
 		}
-		else
+		else if (event == "+CustomGameExecuteAbility5")
 		{
-			abil = Entities.GetAbility(hero, 2);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+			if (bIsBookOpen)
+			{
+				$.Msg("closing spellbook");
+				bIsBookOpen = false
+				$("#SpellbookBoard").visible = false
+			}
+			else
+			{
+				abil = Entities.GetAbility(mainSelected, 4);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+				}
 			}
 		}
-	}
-	else if (event == "+CustomGameExecuteAbility4") //mana transfer
-	{
-		if (bIsBookOpen)
+		else if (event == "+CustomGameExecuteAbility6")
 		{
-			abil = Entities.GetAbility(hero, 9);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+			if (bIsBookOpen)
+			{
+				abil = Entities.GetAbility(hero, 11);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
+				}
+			}
+			else
+			{
+				abil = Entities.GetAbility(mainSelected, 5);
+				if (abil) {
+					Abilities.ExecuteAbility( abil, mainSelected, bIsQuickCast );
+				}
 			}
 		}
-		else
-		{
-			abil = Entities.GetAbility(hero, 3);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
-			}
-		}
-	}
-	else if (event == "+CustomGameExecuteAbility5")
-	{
-		if (bIsBookOpen)
-		{
-			$.Msg("closing spellbook");
-			bIsBookOpen = false
-			$("#SpellbookBoard").visible = false
-		}
-		else
-		{
-			abil = Entities.GetAbility(hero, 4);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
-			}
-		}
-	}
-	else if (event == "+CustomGameExecuteAbility6")
-	{
-		if (bIsBookOpen)
-		{
-			abil = Entities.GetAbility(hero, 11);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
-			}
-		}
-		else
-		{
-			abil = Entities.GetAbility(hero, 5);
-			if (abil) {
-				Abilities.ExecuteAbility( abil, hero, bIsQuickCast );
-			}
-		}
+		
 	}
 }
+
+function CheckSpellbookSelection(data)
+{
+    var playerID = Players.GetLocalPlayer();
+    var mainSelected = Players.GetLocalPlayerPortraitUnit();
+    var hero = Players.GetPlayerHeroEntityIndex( playerID )
+
+    if (mainSelected == hero)
+    {
+    	bIsHeroSelected = true
+    } 
+    else
+    {
+    	bIsBookOpen = false
+    	bIsHeroSelected = false
+    	$("#SpellbookBoard").visible = false
+    }
+
+}
+
 (function()
 {
 	$("#SpellbookBoard").visible = false
 	GameEvents.Subscribe( "player_selected_hero", CreateSpellbookPanel);
-
+	GameEvents.Subscribe( "dota_player_update_selected_unit", CheckSpellbookSelection );
 	Game.AddCommand( "+CustomGameExecuteAbility1", OnAbilButtonPressed, "", 0 );
 	Game.AddCommand( "+CustomGameExecuteAbility2", OnAbilButtonPressed, "", 0 );
 	Game.AddCommand( "+CustomGameExecuteAbility3", OnAbilButtonPressed, "", 0 );

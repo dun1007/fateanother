@@ -544,13 +544,13 @@
 		"ModelScale"			"2.0"
 		"BoundsHullName"		"DOTA_HULL_SIZE_HUGE"
 
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"caster_5th_mana_drain"			// Ability 1
 		"Ability2"					"caster_5th_territory_explosion"			// Ability 2
 		"Ability3"					"caster_5th_mobilize"			// Ability 4
 		"Ability4"					"caster_5th_recall"
 		"Ability5"					"caster_5th_immobilize"
-		"Ability6"					"fate_empty1"
+		"Ability6"					"caster_5th_dimensional_jump"
 		"Ability7"					"fate_empty2"
 		"Ability8"					"fate_empty3"
 		"Ability9"					"fate_empty4"
