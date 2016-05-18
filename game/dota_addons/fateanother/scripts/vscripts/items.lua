@@ -270,7 +270,7 @@ end
 
 function OnWardDeath(keys)
 	local caster = keys.caster
-	--caster.ward:ForceKill(true)
+
 end
 
 function ScoutFam(keys)

@@ -1,46 +1,39 @@
 function OnLoveSpotStart(keys)
 	local caster = keys.caster
-	local ply = caster:GetPlayerOwner()
-	local lovespotCount = 0
+	local ability = keys.ability
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_love_spot", {})
+	DiarmuidCheckCombo(caster, keys.ability)
+
+	caster:EmitSound("Hero_Warlock.ShadowWord")
+	Timers:CreateTimer(keys.Duration, function()
+		caster:StopSound("Hero_Warlock.ShadowWord")
+	end)
+
+end
+
+function OnLovespotThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
 	local forcemove = {
 		UnitIndex = nil,
 		OrderType = DOTA_UNIT_ORDER_MOVE_TO_POSITION ,
 		Position = nil
 	}
-	if caster.IsLoveSpotImproved then keys.Duration = keys.Duration + 2 end
-	DiarmuidCheckCombo(caster, keys.ability)
 
-	caster:EmitSound("Hero_Warlock.ShadowWord")
-
-	Timers:CreateTimer(function()
-		if lovespotCount == keys.Duration then caster:StopSound("Hero_Warlock.ShadowWord") return end
-		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
-		for k,v in pairs(targets) do
-			if IsFemaleServant(v) then
-				forcemove.UnitIndex = v:entindex()
-				forcemove.Position = caster:GetAbsOrigin() 
-				ExecuteOrderFromTable(forcemove) 
-				giveUnitDataDrivenModifier(caster, v, "pause_sealenabled", 0.5)
-			    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, v)
-			    ParticleManager:SetParticleControl(particle, 0, v:GetAbsOrigin())
-				Timers:CreateTimer( 2.0, function()
-					ParticleManager:DestroyParticle( particle, false )
-					ParticleManager:ReleaseParticleIndex( particle )
-				end)
-			end
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+		if IsFemaleServant(v) then
+			forcemove.UnitIndex = v:entindex()
+			forcemove.Position = caster:GetAbsOrigin() 
+			v:Stop()
+			ExecuteOrderFromTable(forcemove) 
+			--giveUnitDataDrivenModifier(caster, v, "pause_sealenabled", 0.5)
+		    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, v)
+		    ParticleManager:SetParticleControl(particle, 0, v:GetAbsOrigin())
 		end
-	    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	    ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
-		Timers:CreateTimer( 2.0, function()
-			ParticleManager:DestroyParticle( particle, false )
-			ParticleManager:ReleaseParticleIndex( particle )
-		end)
-		lovespotCount = lovespotCount + 1
-		return 1.0
-	end)
-	
-
+	end
+    local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_doom_bringer/doom_bringer_lvl_death.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+    ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
 end
 
 function OnChargeStart(keys)
@@ -338,6 +331,7 @@ function OnLoveSpotImproved(keys)
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero.IsLoveSpotImproved = true
+    hero:FindAbilityByName("diarmuid_love_spot"):SetLevel(2)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

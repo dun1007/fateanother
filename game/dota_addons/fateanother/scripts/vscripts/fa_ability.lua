@@ -122,6 +122,7 @@ function OnHeartDamageTaken(keys)
 		caster:RemoveModifierByName("modifier_heart_of_harmony")
 		caster:RemoveModifierByName("modifier_heart_of_harmony_invisible")
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_heart_of_harmony_movespeed_bonus", {})
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_heart_of_harmony_resistance_linger", {})
 		caster:AddNewModifier(caster, caster, "modifier_camera_follow", {duration = 1.0})
 		-- cooldown
 		ReduceCooldown(caster:FindAbilityByName("false_assassin_gate_keeper"), 15)

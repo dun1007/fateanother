@@ -73,7 +73,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "Beta Version"
+FATE_VERSION = "v1.12"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -1610,7 +1610,14 @@ function FateGameMode:TakeDamageFilter(filterTable)
         victim.assistTable[attackerHero] = 0
     end]]
     --if inflictor then print(inflictor:GetName() .. damage) end
-    -- if target is affected by Verg and damage is not lethalrr
+
+    if (victim:HasModifier("modifier_love_spot") and IsFemaleServant(attacker)) then
+        filterTable.damage = filterTable.damage/2
+        damage = damage/2
+    end
+
+
+    -- if target is affected by Verg and damage is not lethal
     if (victim:HasModifier("modifier_verg_avesta") or victim:HasModifier("modifier_endless_loop")) and (victim:GetHealth() - damage) > 0 then
         -- check if the damage source is not eligible for return
         if not attacker:IsRealHero() and inflictor then

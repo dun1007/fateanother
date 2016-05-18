@@ -115,9 +115,8 @@ function OnTerritoryCreated(keys)
 		caster.Territory:AddItem(dragItem)
 		caster.Territory:AddItem(CreateItem("item_all_seeing_orb" , nil, nil))
 	end
-	giveUnitDataDrivenModifier(caster, territory, "pause_sealdisabled", 5.0)
+	giveUnitDataDrivenModifier(caster, caster.Territory, "pause_sealdisabled", 5.0)
 	keys.ability:ApplyDataDrivenModifier(caster, caster.Territory, "modifier_territory_root", {}) 
-	
 
 
 	-- Constrcut territory over time
@@ -140,7 +139,10 @@ end
 	Called when Caster(5th) is killed in order to clean up existing Workshop.
 ]]
 function OnTerritoryOwnerDeath(keys)
-	keys.caster.Territory:Kill(keys.ability, keys.caster.Territory)
+	local caster = keys.caster
+	if not caster.Territory:IsNull() and caster.Territory:IsAlive() then
+		caster.Territory:Kill(keys.ability, keys.caster.Territory)
+	end
 end
 
 --[[
@@ -501,9 +503,10 @@ function OnTerritoryMobilize(keys)
 	caster.IsMobilized = true
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", false, true) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty1", false, true)
-	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty2", false, true)
-	caster:SwapAbilities("caster_5th_recall", "fate_empty3", false, true)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty5", false, true)
+	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", false, true)
+	caster:SwapAbilities("caster_5th_recall", "fate_empty4", false, true)
+	caster:SwapAbilities("fate_empty_nothidden", "caster_5th_dimensional_jump", false, true)
 end
 
 function OnTerritoryImmobilize(keys)
@@ -516,11 +519,12 @@ function OnTerritoryImmobilize(keys)
 	end
 	caster:RemoveModifierByName("modifier_mobilize")
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_territory_root", {}) 
-	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, false) 	
+	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, false) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty1", true, false)
-	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty2", true, false)
-	caster:SwapAbilities("caster_5th_recall", "fate_empty3", true, false)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty5", true, false)
+	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, false)
+	caster:SwapAbilities("caster_5th_recall", "fate_empty4", true, false)
+	caster:SwapAbilities("fate_empty_nothidden", "caster_5th_dimensional_jump", true, false)
 end
 
 function OnTerritoryRecall(keys)
@@ -567,7 +571,7 @@ end
 function StopAttack(keys)
 	local caster = keys.caster
 	local target = keys.target
-	if target:GetUnitName() == "ward_familiar" then caster:Stop() end
+	--if target:GetUnitName() == "ward_familiar" then caster:Stop() end
 end 
 
 --[[
@@ -600,7 +604,7 @@ function OnFrostbiteStart(keys)
         EffectName = "",
         iMoveSpeed = 1000,
         vSpawnOrigin = caster:GetAbsOrigin(),
-        fDistance = 700 - keys.EndRadius, -- We need this to take end radius of projectile into account
+        fDistance = 900 - keys.EndRadius, -- We need this to take end radius of projectile into account
         fStartRadius = 100,
         fEndRadius = keys.EndRadius,
         Source = caster,
@@ -1271,7 +1275,7 @@ function OnHGPStart(keys)
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
 	local boltCount  = 0
-	local maxBolt = 13
+	local maxBolt = 10
 	local barrageRadius = keys.Radius
 	local travelTime = 0.7
 	local ascendTime = travelTime+4.0
@@ -1286,7 +1290,7 @@ function OnHGPStart(keys)
 	
 	if caster.IsHGImproved then
 		barrageRadius = barrageRadius + 300
-		maxBolt = 16
+		maxBolt = 13
 	end 
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then

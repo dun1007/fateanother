@@ -563,7 +563,7 @@
 		"Attribute3"				"caster_5th_attribute_improve_hecatic_graea"
 		"Attribute4"				"caster_5th_attribute_dagger_of_treachery"
 		
-		"StatusHealth"					"900"
+		"StatusHealth"					"850"
 		"StatusHealthRegen"				"3"
 		"StatusMana"					"1000"
 		"StatusManaRegen"				"9"
@@ -585,7 +585,7 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"1.4"
 		
-		"MovementSpeed"					"310"
+		"MovementSpeed"					"320"
 		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"800"
@@ -1259,7 +1259,7 @@
 		
 		"StatusHealth"					"1250"
 		"StatusHealthRegen"				"7"
-		"StatusMana"					"1050"
+		"StatusMana"					"1175"
 		"StatusManaRegen"				"5.5"
 		
 		"ArmorPhysical"					"4"

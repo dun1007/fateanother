@@ -1518,7 +1518,7 @@
 
 		"Modifiers"
 		{
-			"modifier_lancer_revive"
+			"modifier_lancer_protection_from_arrows"
 			{
 				"passive"		"1"
 				"IsHidden"		"0"
@@ -6859,7 +6859,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"false_assassin_gate_keeper"
-		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 		"AnimationPlaybackRate" 		"1.0"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
@@ -7266,8 +7266,19 @@
 				{
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%bonus_mr"
 				}
+			}
+
+			"modifier_heart_of_harmony_resistance_linger"
+			{
+				"Duration"		"0.5"	
+				"IsHidden"		"1"		
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"%bonus_mr"
+				}
 
 			}
+
 			"modifier_heart_of_harmony_movespeed_bonus"
 			{
 				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
@@ -10452,6 +10463,17 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+			"modifier_territory_under_construction"
+			{
+				"IsHidden"		"0"
+				"Duration"		"5.0"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_COMMAND_RESTRICTED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
@@ -10941,7 +10963,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.5"
 
 		// Time		
@@ -10963,7 +10985,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"500"
+				"radius"			"750"
 			}
 			"03"
 			{
@@ -11028,7 +11050,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"crystal_maiden_crystal_nova"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
-		"AnimationPlaybackRate" 		"0.6"
+		"AnimationPlaybackRate" 		"0.55"
 		"AOERadius"						"%radius"
 		"precache"
 		{
@@ -11041,8 +11063,8 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1300"
-		"AbilityCastPoint"				"2.0"
+		"AbilityCastRange"				"1350"
+		"AbilityCastPoint"				"2.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -11068,7 +11090,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"350"
+				"radius"			"450"
 			}
 			"04"
 			{
@@ -15160,9 +15182,14 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"2.0"
+				"duration"			"2 4"
 			}
 			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage_reduction"			"25 50"
+			}
+			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"radius"			"500"
@@ -15176,12 +15203,26 @@
 				"ScriptFile"		"diarmuid_ability"
 				"Function"			"OnLoveSpotStart"
 				"Duration"			"%duration"
-				"Radius"			"%radius"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_love_spot"
+			{
+				"IsHidden"		"0"
+				"Duration"		"%duration"
+	            "ThinkInterval"		"0.1"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"		"diarmuid_ability"
+						"Function"			"OnLovespotThink"
+						"Radius"			"%radius"
+					}
+				}				
+			}
 		}
 	}
 
@@ -15757,7 +15798,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"min_damage"			"500 625 750 875 1000"
+				"min_damage"			"500 600 700 800 900"
 			}
 			"03"
 			{
@@ -20687,15 +20728,11 @@
 					{
 						"ModifierName"		"modifier_blade_of_the_devoted_anim"
 						"Target"			"CASTER"
+						"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 					}
 				}
 				"OnAttackLanded"
 				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_blade_of_the_devoted"
-						"Target"			"CASTER"
-					}
 					"RunScript"
 					{
 						"ScriptFile"		"gawain_ability"
@@ -24994,7 +25031,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"15.0"
+		"AbilityCooldown"				"13.0"
 
 		
 		"AbilitySpecial"
@@ -25012,12 +25049,12 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"		"300 375 450 525 600"
+				"damage"		"400 450 500 550 600"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"bonus_damage_perkill"		"50"
+				"bonus_damage_perkill"		"35"
 			}
 			"04"
 			{
@@ -25478,7 +25515,7 @@
 					//"MODIFIER_STATE_UNSELECTABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
-				"ThinkInterval"				"0.275"
+				"ThinkInterval"				"0.25"
 				"OnIntervalThink"
 				{
 					"RunScript"
@@ -25612,7 +25649,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -25623,7 +25660,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"60"
+				"bonus_damage"			"45"
 			}
 			"02"
 			{
@@ -26987,6 +27024,13 @@
 
 
 	"fate_empty1"
+	{
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
+		"MaxLevel"						"0"
+		"BaseClass" 					"ability_datadriven"
+		"AbilityTextureName"            "rubick_empty1"
+	}
+	"fate_empty_nothidden"
 	{
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
 		"MaxLevel"						"0"

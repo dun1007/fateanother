@@ -47,6 +47,18 @@ function OnConfig4Toggle()
     GameEvents.SendCustomGameEventToServer("config_option_4_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig4On})
 }
 
+function OnConfig5Toggle()
+{
+    var rootUI = $.GetContextPanel().GetParent();
+    $.Msg(rootUI);
+    var portraitUI_1 = rootUI.FindChildTraverse("HeroPortraitPanel");
+    var portraitUI_2 = rootUI.FindChildTraverse("MasterPortraitPanel");
+    var portraitUI_3 = rootUI.FindChildTraverse("MasterStatusPanel");
+    portraitUI_1.visible = !portraitUI_1.visible;
+    portraitUI_2.visible = !portraitUI_2.visible;
+    portraitUI_3.visible = !portraitUI_3.visible;
+}
+
 function PlayerChat(event)
 {
     var txt = event.text;

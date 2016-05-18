@@ -352,11 +352,11 @@ function OnContractStart(keys)
     visiondummy:SetDayTimeVisionRange(1000)
     visiondummy:SetNightTimeVisionRange(1000)
     visiondummy:AddNewModifier(caster, nil, "modifier_kill", {duration = 3.1})
-   local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
-    unseen:SetLevel(1)
     visiondummy:EmitSound("Hero_Warlock.Upheaval")
+    local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
+    unseen:SetLevel(1)
 
-	local contractFx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_upheaval.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
+	local contractFx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_upheaval.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(contractFx, 0, targetPoint)
 	ParticleManager:SetParticleControl(contractFx, 1, Vector(keys.Radius + 200,0,0))
 	Timers:CreateTimer( 5.0, function()
@@ -364,7 +364,7 @@ function OnContractStart(keys)
 		ParticleManager:ReleaseParticleIndex( contractFx )
 	end)
 
-	local contractFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
+	local contractFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(contractFx2, 0, targetPoint)
 	Timers:CreateTimer( 5.0, function()
 		ParticleManager:DestroyParticle( contractFx2, false )
@@ -373,7 +373,7 @@ function OnContractStart(keys)
 
 	contractFx4 = 0
 	Timers:CreateTimer(1.0, function()
-		contractFx4 = ParticleManager:CreateParticle("particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
+		contractFx4 = ParticleManager:CreateParticle("particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(contractFx4, 0, targetPoint)
 		ParticleManager:SetParticleControl(contractFx4, 1, Vector(keys.Radius + 200, 0, 0))
 	end)
@@ -383,6 +383,7 @@ function OnContractStart(keys)
 		if caster:IsAlive() then
 			if IsValidEntity(caster.GiganticHorror) and caster.GiganticHorror:IsAlive() then
 				caster.GiganticHorror:SetAbsOrigin(targetPoint) 
+				caster.GiganticHorror:EmitSound("Ability.Ravage")
 			else
 				-- Summon Gigantic Horror
 				local tentacle = CreateUnitByName("gille_gigantic_horror", targetPoint, true, nil, nil, caster:GetTeamNumber())
@@ -420,6 +421,7 @@ function OnContractStart(keys)
 				tentacle:SetBaseDamageMax(50 + keys.ability:GetLevel() * 50) 
 				tentacle:SetBaseDamageMin(50 + keys.ability:GetLevel() * 50) 
 				tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 90.0})
+				tentacle:EmitSound("Ability.Ravage")
 			    local playerData = {
                     transport = tentacle:entindex()
                 }
@@ -440,14 +442,14 @@ function OnContractStart(keys)
 				ParticleManager:DestroyParticle( contractFx3, false )
 				ParticleManager:ReleaseParticleIndex( contractFx3 )
 			end)
-			EmitGlobalSound("Hero_Warlock.RainOfChaos_buildup")
+			
+			EmitGlobalSound("Hero_Warlock.Pick")
 			StopSoundEvent("Hero_Warlock.Upheaval", visiondummy)
 
 
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 300)
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 650)
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 1000)
-			visiondummy:EmitSound("Ability.Ravage")
 			-- Remove particle
 			ParticleManager:DestroyParticle(contractFx, false)
 			ParticleManager:ReleaseParticleIndex(contractFx)

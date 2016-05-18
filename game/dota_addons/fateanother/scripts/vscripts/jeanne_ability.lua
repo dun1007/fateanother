@@ -129,7 +129,7 @@ function OnCharismaBuffEnd(keys)
 	keys.target.jeanne_charisma_particle = nil
 end
 
-ATTRIBUTE_PUNISHMENT_BONUS_DAMAGE = 60
+ATTRIBUTE_PUNISHMENT_BONUS_DAMAGE = 45
 function OnPurgeStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
