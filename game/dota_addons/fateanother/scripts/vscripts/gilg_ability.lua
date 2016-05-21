@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 enkiduTarget = nil
 
 function OnBarrageStart(keys)

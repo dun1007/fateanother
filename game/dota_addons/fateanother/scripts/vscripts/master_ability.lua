@@ -1,5 +1,3 @@
-require('util')
-
 SaberAttribute = {
 	"saber_attribute_improve_excalibur",
 	"saber_attribute_improve_instinct",
@@ -692,11 +690,14 @@ function OnDamageGain(keys)
 		primaryStat = hero:GetIntellect()
 	end
 
-	hero:SetBaseDamageMax(hero:GetBaseDamageMax() - primaryStat + 3)
-	hero:SetBaseDamageMin(hero:GetBaseDamageMin() - primaryStat + 3)
+	hero:SetBaseDamageMax(hero:GetBaseDamageMax() - math.floor(primaryStat) + 3)
+	hero:SetBaseDamageMin(hero:GetBaseDamageMin() - math.floor(primaryStat) + 3)
 	hero:CalculateStatBonus()
 
-	print("Current base damage : " .. hero:GetBaseDamageMin()  .. " to " .. hero:GetBaseDamageMax())
+	--[[local minDmg = hero:GetBaseDamageMin() - primaryStat
+	local maxDmg = hero:GetBaseDamageMax() - primaryStat
+
+	print("Current base damage : " .. minDmg  .. " to " .. maxDmg)]]
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

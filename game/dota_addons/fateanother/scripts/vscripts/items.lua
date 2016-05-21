@@ -1,5 +1,3 @@
-require("physics")
-require("util")
 cdummy = nil
 itemKV = LoadKeyValues("scripts/npc/npc_items_custom.txt") 
 
@@ -354,7 +352,8 @@ function Blink(keys)
 	local targetPoint = keys.target_points[1]
 	local newTargetPoint = nil
 
-	if caster:HasModifier("modifier_purge") or caster:HasModifier("locked") then 
+
+	if IsLocked(caster) then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 		keys.ability:EndCooldown()
 		return

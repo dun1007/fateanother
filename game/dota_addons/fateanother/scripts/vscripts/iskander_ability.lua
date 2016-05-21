@@ -1,5 +1,4 @@
-require("physics")
-require("util")
+
 
 function OnIskanderCharismaStart(keys)
 	local caster = keys.caster

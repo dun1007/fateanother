@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 avalonCooldown = true -- UP if true, 
 vectorA = Vector(0,0,0)
 combo_available = false

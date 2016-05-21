@@ -87,6 +87,11 @@ revokes = {
     "modifier_command_seal_4"
 }
 
+locks = {
+    "modifier_purge",
+    "locked",
+    "dragged"
+}
 
 
 goesthruB = {"saber_avalon",
@@ -772,6 +777,10 @@ function IsRevoked(target)
 end
 
 function IsLocked(target)
+    for i=1, #locks do
+        if target:HasModifier(locks[i]) then return true end
+    end
+    return false
 end
 
 function IsFemaleServant(target)

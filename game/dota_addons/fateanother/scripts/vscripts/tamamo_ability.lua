@@ -1,7 +1,3 @@
-require("Physics")
-require("util")
-require("projectiles")
-
 CharmModifierList = {
 	"modifier_fiery_heaven_indicator",
 	"modifier_frigid_heaven_indicator",

@@ -485,6 +485,7 @@ end
 
 function OnTGStart(keys)
 	local caster = keys.caster
+	local casterName = caster:GetName()
 	local target = keys.target
 	local ability = keys.ability
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
@@ -499,12 +500,22 @@ function OnTGStart(keys)
 	elseif caster:GetName() == "npc_dota_hero_sven" then
 		Timers:CreateTimer(0.15, function() 
 			EmitGlobalSound("Lancelot.Roar2")
+			StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK2, rate=2})
+			Timers:CreateTimer(0.3, function()
+				StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK, rate=2})
+				Timers:CreateTimer(0.3, function()
+					StartAnimation(caster, {duration=0.2, activity=ACT_DOTA_ATTACK2, rate=2})
+				end)
+			end)
 			return
 		end)
 	end
 
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
-	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
+	giveUnitDataDrivenModifier(caster, caster, "dragged", 1.0)
+	giveUnitDataDrivenModifier(caster, caster, "revoked", 1.0)
+
+
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tg_baseattack_reduction", {})
 
 	local particle = ParticleManager:CreateParticle("particles/custom/false_assassin/tsubame_gaeshi/slashes.vpcf", PATTACH_ABSORIGIN, caster)
@@ -524,6 +535,7 @@ function OnTGStart(keys)
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				caster:PerformAttack(target, true, true, true, true, false)
 			end
+
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		else
 			ParticleManager:DestroyParticle(particle, true)
@@ -567,7 +579,6 @@ function OnTGStart(keys)
 				caster:PerformAttack(target, true, true, true, true, false)
 				target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 			end
-			
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 		else
 			ParticleManager:DestroyParticle(particle, true)

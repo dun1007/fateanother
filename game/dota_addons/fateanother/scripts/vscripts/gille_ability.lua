@@ -421,7 +421,7 @@ function OnContractStart(keys)
 				tentacle:SetBaseDamageMax(50 + keys.ability:GetLevel() * 50) 
 				tentacle:SetBaseDamageMin(50 + keys.ability:GetLevel() * 50) 
 				tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 90.0})
-				tentacle:EmitSound("Ability.Ravage")
+				EmitGlobalSound("Ability.Ravage")
 			    local playerData = {
                     transport = tentacle:entindex()
                 }
@@ -686,7 +686,7 @@ function OnIntegrateStart(keys)
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  
 				caster:EmitSound("ZC.Tentacle1")
-				caster:EmitSound("ZC.Laugh")
+				--caster:EmitSound("ZC.Laugh")
 				SendMountStatus(hero)
 				return 
 			end

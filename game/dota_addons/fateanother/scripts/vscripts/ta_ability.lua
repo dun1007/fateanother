@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 function OnDirkStart(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -41,7 +38,7 @@ function OnDirkHit(keys)
 		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
 	end
 	if caster.IsWeakeningVenomAcquired then
-		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility(), DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility() * 2.25, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	else
 		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	end
@@ -50,7 +47,8 @@ end
 function OnDirkPoisonTick(keys)
 	local caster = keys.caster
 	local target = keys.target
-	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	local dmg = target:GetHealth() / 100 * keys.Damage
+	DoDamage(keys.caster, keys.target, dmg, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnVenomHit(keys)

@@ -1,5 +1,3 @@
-require('util')
-
 function OnIPStart(keys)
 	local caster = keys.caster
 
@@ -359,8 +357,7 @@ function OnTheatreStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 
-	EmitGlobalSound("Hero_LegionCommander.Duel.Victory")
-	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
+	caster:EmitSound("Hero_LegionCommander.Duel.Victory")
 
 	--local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	local theatreFx2 = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_border.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )

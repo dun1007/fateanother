@@ -1,15 +1,17 @@
 require("statcollection/init")
-require('modifiers/attributes')
 require('lishuwen_ability')
-require("timers")
-require('util' )
 require('archer_ability')
 require('master_ability')
 require('gille_ability')
 require('notifications')
 require('items')
-require('utilities/popups')
-require('event')
+require('modifiers/attributes')
+require('libraries/util' )
+require('libraries/timers')
+require('libraries/popups')
+require('libraries/animations')
+require('libraries/crowdcontrol')
+require('libraries/physics')
 
 _G.IsPickPhase = true
 _G.IsPreRound = true
@@ -605,7 +607,7 @@ function FateGameMode:PlayerSay(keys)
         end
     end
         
-    
+
     if text == "-tt" then
         if Convars:GetBool("sv_cheats") then 
             hero.ShardAmount = 10
@@ -1611,9 +1613,12 @@ function FateGameMode:TakeDamageFilter(filterTable)
     end]]
     --if inflictor then print(inflictor:GetName() .. damage) end
 
-    if (victim:HasModifier("modifier_love_spot") and IsFemaleServant(attacker)) then
-        filterTable.damage = filterTable.damage/2
-        damage = damage/2
+    if attacker:HasModifier("modifier_love_spot_charmed") then
+        local loveSpotAbil = victim:FindAbilityByName("diarmuid_love_spot")
+        local reduction = loveSpotAbil:GetLevelSpecialValueFor("damage_reduction", loveSpotAbil:GetLevel() - 1)
+        filterTable.damage = filterTable.damage/100 * reduction
+        damage = damage/100 * reduction
+        print(reduction )
     end
 
 

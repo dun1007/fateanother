@@ -1,6 +1,3 @@
-require("physics")
-require("util")
-
 chainTargetsTable = nil
 ubwTargets = nil
 ubwTargetLoc = nil

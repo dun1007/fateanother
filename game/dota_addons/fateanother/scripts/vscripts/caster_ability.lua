@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 territoryAbilHandle = nil -- Ability handle for Create Workshop
 ATTRIBUTE_HG_INT_MULTIPLIER = 0
 
@@ -1102,7 +1099,7 @@ function OnAncientClosed(keys)
 	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", true, true) 
 	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
-	caster:SwapAbilities(a6:GetName(), "caster_5th_hecatic_graea", true, true )
+	caster:SwapAbilities(a6:GetName(), ultiName, true, true )
 	local spellbook = caster:FindAbilityByName("caster_5th_ancient_magic")
 	if spellbook:GetToggleState() then
 		spellbook:ToggleAbility()

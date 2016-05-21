@@ -1,6 +1,3 @@
-require("physics")
-require("util")
-
 function OnBattleContinuationStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -234,16 +231,19 @@ function OnGBTargetHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
 	local caster = keys.caster
+	local casterName = caster:GetName()
 	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	if caster.IsHeartSeekerAcquired == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
 
 	-- Check if caster is lancer(not lancelot)
-	if caster:GetName() == "npc_dota_hero_phantom_lancer" then
+	if casterName == "npc_dota_hero_phantom_lancer" then
 		local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
 		local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
 		keys.Damage = keys.Damage + target:GetHealth()*healthDamagePct/100
+	else
+		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_CAST_ABILITY_1, rate=3})
 	end
 
 
@@ -282,7 +282,7 @@ function OnGBTargetHit(keys)
 		end)
 	end]]
 	if ability:GetAbilityName() == "lancer_5th_gae_bolg" then
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gae_bolg_pierce_anim", {}) 
+		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK, rate=3})
 	end
 	-- Add dagon particle
 	local dagon_particle = ParticleManager:CreateParticle("particles/items_fx/dagon.vpcf",  PATTACH_ABSORIGIN_FOLLOW, keys.caster)
@@ -353,7 +353,10 @@ function OnGBComboHit(keys)
 	if caster.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + caster:GetAttackDamage()*1.5 + target:GetStrength() end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_anim", {}) 
+	StartAnimation(caster, {duration=1.2, activity=ACT_DOTA_CAST_ABILITY_1, rate=0.5})
+	Timers:CreateTimer(1.6, function()
+		StartAnimation(caster, {duration=5, activity=ACT_DOTA_RUN, rate=3})
+	end)
 	caster:EmitSound("Lancer.Heartbreak")
 	target:EmitSound("Lancer.Heartbreak")
 	caster:FindAbilityByName("lancer_5th_gae_bolg"):StartCooldown(27.0)
@@ -390,7 +393,7 @@ function OnGBComboHit(keys)
 							ParticleManager:DestroyParticle( RedScreenFx, false )
 						end)
 			        	target:EmitSound("Hero_Lion.Impale")
-
+			        	StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK2, rate=2})
 						local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
 						local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
 				    	DoDamage(caster, target, keys.Damage + target:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

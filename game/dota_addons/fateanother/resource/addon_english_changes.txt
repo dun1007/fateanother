@@ -3,3 +3,13 @@
         "DOTA_Tooltip_ability_diarmuid_love_spot_duration"      "DURATION:"
         "DOTA_Tooltip_ability_diarmuid_love_spot_damage_reduction"  "%DAMAGE REDUCTION:"
         "DOTA_Tooltip_ability_diarmuid_love_spot_radius"            "RADIUS:"
+
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom"				"Weakening Venom"
+		"DOTA_Tooltip_ability_true_assassin_attribute_weakening_venom_Description"	"Dagger Throw deals bonus damage based on AGI and gains bonus range and cooldown reduction. In addition, its poison effect reduces target's STR and lasts longer.\nAlso, Assassin's base attack applies stackable poison effect that slows and reduces target's STR."	
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_agi_ratio"				"DAGGER THROW AGI RATIO:"
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_bonus_range"				"DAGGER THROW BONUS RANGE:"
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_cdr"						"%DAGGER THROW COOLDOWN REDUCTION:"
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_str_reduction_dirk"				"DAGGER THROW POISON STR DEBUFF:"
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_duration"				"DAGGER THROW POISON DURATION:"
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_baseattack_slow"				"%AUTOATTACK SLOW AMOUNT:"
+		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_baseattack_str_reduction"				"AUTOATTACK STR REDUCTION:"

@@ -5093,8 +5093,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"archer_5th_nine_lives"
-		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
-		"AnimationPlaybackRate" 		"1.0"		
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 		"AOERadius"						"%radius"
 		
 		
@@ -5155,7 +5154,15 @@
 				"range"				"700"
 			}
 		}
+		"OnAbilityPhaseStart"
+		{
 		
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnNineCast"
+			}
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -5168,27 +5175,6 @@
 		
 		"Modifiers"
 		{
-			"modifier_dash_anim"
-			{
-				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_RUN"
-				"Duration"				"1.0"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
-				}
-			}
-
-			"modifier_nine_anim"
-			{
-				"IsHidden"			"1"
-				"Duration"			"0.2"
-				"OverrideAnimation"		"ACT_DOTA_ATTACK"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"3.0"
-				}
-			}
 		}
 	}
 
@@ -6308,8 +6294,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"berserker_5th_nine_lives"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_5"
-		"AnimationPlaybackRate" 		"0.5"		
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 		"AOERadius"						"%radius"
 		
 		"precache"
@@ -6366,7 +6351,16 @@
 				"range"				"700"
 			}
 		}
+
+		"OnAbilityPhaseStart"
+		{
 		
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnNineCast"
+			}
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -6374,11 +6368,6 @@
 				"ScriptFile"		"berserker_ability"
 				"Function"			"OnNineStart"
 				"Target"			"POINT"
-			}
-			"FireSound"
-			{
-				"EffectName"		"Hero_OgreMagi.Ignite.Cast"
-				"Target"			"CASTER"
 			}
 		}
 		
@@ -8220,7 +8209,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"poison_dot"			"15 30"
+				"poison_dot"			"2.5"
 			}
 			"03"
 			{
@@ -9230,7 +9219,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"1.0"
+				"agi_ratio"			"2.25"
 			}
 			"02"
 			{
@@ -9240,14 +9229,24 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"str_reduction_dirk"			"12"
+				"cdr"			"50"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"baseattack_slow"			"5.0"
+				"str_reduction_dirk"			"12"
 			}
 			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"			"10"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"baseattack_slow"			"5.0"
+			}
+			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"baseattack_str_reduction"			"1"
@@ -12352,7 +12351,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
 		"AbilityTextureName"			"lancelot_smg_barrage"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1" // Change the animation from "ACT_DOTA_CAST_ABILITY_1" to match the timing of the ability
-		"AnimationPlaybackRate" 		"1.5"
+		"AnimationPlaybackRate" 		"2.0"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
@@ -12874,8 +12873,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"lancelot_nine_lives"
-		"AbilityCastAnimation" 			"ACT_DOTA_RUN"
-		"AnimationPlaybackRate" 		"0.5"		
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
 		"AOERadius"						"%radius"
 		
 		"precache"
@@ -12937,7 +12935,15 @@
 				"range"				"700"
 			}
 		}
+		"OnAbilityPhaseStart"
+		{
 		
+			"RunScript"
+			{
+				"ScriptFile"	"berserker_ability"
+				"Function"		"OnNineCast"
+			}
+		}
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -12950,11 +12956,6 @@
 			{
 				"ScriptFile"		"lancelot_ability"
 				"Function"			"OnKnightUsed"
-			}
-			"FireSound"
-			{
-				"EffectName"		"Hero_OgreMagi.Ignite.Cast"
-				"Target"			"CASTER"
 			}
 		}
 		
@@ -15187,7 +15188,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage_reduction"			"25 50"
+				"damage_reduction"			"50 90"
 			}
 			"03"
 			{
@@ -15212,7 +15213,7 @@
 			{
 				"IsHidden"		"0"
 				"Duration"		"%duration"
-	            "ThinkInterval"		"0.1"
+	            "ThinkInterval"		"0.25"
 	            "OnIntervalThink"
 	         	{
 					"RunScript"
@@ -15222,6 +15223,12 @@
 						"Radius"			"%radius"
 					}
 				}				
+			}
+			"modifier_love_spot_charmed"
+			{
+				"IsHidden"		"1"
+				"Duration"		"0.25"		
+				"IsDebuff"		"1"		
 			}
 		}
 	}
@@ -19524,7 +19531,7 @@
 
 
 		"AbilityChannelTime"			"2.0"		
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.05"
 		"AbilityCooldown"				"15 12.5 10 7.5 5"
 		"AbilityManaCost"				"100"
 		
@@ -19729,13 +19736,13 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"nero_tres_fontaine_ardent"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
 
 		"AbilityCastPoint"				"0.3"
-		"AbilityCooldown"				"21"
+		"AbilityCooldown"				"13"
 		"AbilityManaCost"				"200"
 
 		"precache"
@@ -26176,6 +26183,14 @@
 					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+			"dragged"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}			
+			}
 			"out_of_game"
 			{
 				"States"
@@ -27013,7 +27028,7 @@
 				{
 					"RunScript"
 					{
-						"ScriptFile"	"util"
+						"ScriptFile"	"libraries/util"
 						"Function"		"OnExperienceZoneThink"
 					}
 				}

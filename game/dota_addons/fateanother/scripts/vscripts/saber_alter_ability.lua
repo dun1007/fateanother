@@ -1,6 +1,3 @@
-require("physics")
-require("util")
-
 --vortigernCount = 0
 --isLeftside = nil
 
