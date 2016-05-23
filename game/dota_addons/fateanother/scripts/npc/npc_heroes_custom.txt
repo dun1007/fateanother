@@ -367,7 +367,7 @@
 
 		"StatusHealth"					"1600"
 		"StatusHealthRegen"				"15"
-		"StatusMana"					"1000"
+		"StatusMana"					"1100"
 		"StatusManaRegen"				"4"
 		
 		"ArmorPhysical"					"1"

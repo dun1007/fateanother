@@ -298,7 +298,7 @@ function OnLEStart(keys)
 		Ability = keys.ability,
         -- EffectName = "particles/custom/reference/luminosite_eternelle/luminosite_eternelle.vpcf",
         vSpawnOrigin = caster:GetAbsOrigin(),
-        fDistance = projectileRange - 300,
+        fDistance = projectileRange - 375,
         fStartRadius = 300,
         fEndRadius = 300,
         Source = caster,
@@ -424,7 +424,7 @@ function OnLaPucelleTakeDamage(keys)
 	local delay = keys.Delay
 	local originalScale = caster:GetModelScale()
 
-	if caster:GetHealth() == 0 and caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() then
+	if caster:GetHealth() == 0 and caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() and IsRevivePossible(caster) then
 		if _G.GameMap == "fate_elim_6v6" and IsTeamWiped(caster) then
 			return
 		else

@@ -1,5 +1,5 @@
 ATTR_NSS_BONUS_DAMAGE = 150
-ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 5
+ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 10
 ATTR_AGI_RATIO = 2.0
 ATTR_MANA_REFUND = 200
 
@@ -374,7 +374,7 @@ function OnNSSDelayFinished(keys)
 	if target:HasModifier("modifier_mark_of_fatality") then
 		local abil = caster:FindAbilityByName("lishuwen_martial_arts")
 		local currentStack = target:GetModifierStackCount("modifier_mark_of_fatality", abil)
-		damage = damage + (target:GetMaxHealth() - target:GetHealth()) * ATTR_NSS_STACK_DAMAGE_PERCENTAGE * currentStack/100
+		damage = (target:GetMaxHealth() - target:GetHealth()) * ATTR_NSS_STACK_DAMAGE_PERCENTAGE * currentStack/100
 	end
 	print("dealt "	.. damage .. " damage")
 	--target:SetMana(target:GetMana() - damage)
@@ -607,7 +607,7 @@ end
 
 function LishuwenCheckCombo(caster, ability)
     if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
-        if ability == caster:FindAbilityByName("lishuwen_concealment") then
+        --[[if ability == caster:FindAbilityByName("lishuwen_concealment") then
             QUsed = true
             Qtime = GameRules:GetGameTime()
             Timers:CreateTimer({
@@ -616,27 +616,26 @@ function LishuwenCheckCombo(caster, ability)
                 QUsed = false
             end
             })
-        elseif ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
-            if QUsed == true then 
-                caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
-                Timers:CreateTimer('raging_dragon_timer',{
-                    endTime = 4,
-                    callback = function()
-                    if not caster.bIsCurrentDSCycleFinished then
-                    	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
-                    	ReduceCooldown(abil, abil:GetCooldown(1)/2)
-                    	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
-                    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/2})
-						local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
-						masterabil:EndCooldown()
-						masterabil:StartCooldown(masterabil:GetCooldown(1)/2)            	
-                    end	
-					local currentAbil = caster:GetAbilityByIndex(2)	
-					caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false) 
-                    QUsed = false
-                end
-                })
+        else]]
+
+    	if ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
+            caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
+            Timers:CreateTimer('raging_dragon_timer',{
+                endTime = 4,
+                callback = function()
+                if not caster.bIsCurrentDSCycleFinished then
+                	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
+                	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+                	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
+                	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+					local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
+					masterabil:EndCooldown()
+					masterabil:StartCooldown(masterabil:GetCooldown(1)/4)            	
+                end	
+				local currentAbil = caster:GetAbilityByIndex(2)	
+				caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false)
             end
+            })
         end
     end
 end

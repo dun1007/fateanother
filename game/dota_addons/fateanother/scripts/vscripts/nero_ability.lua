@@ -632,8 +632,7 @@ function NeroTakeDamage(keys)
 	local healCounter = 0
 
 
-	if caster:GetHealth() == 0 and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) and not 
-		caster:HasModifier("modifier_command_seal_2") and not caster:HasModifier("modifier_command_seal_3") and not caster:HasModifier("modifier_command_seal_4") then
+	if caster:GetHealth() == 0 and IsRevivePossible(caster) and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) then
 		
 		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
 		caster:SetHealth(1)

@@ -24,6 +24,7 @@ function OnLovespotThink(keys)
 	for k,v in pairs(targets) do
 		if IsFemaleServant(v) then
 			ability:ApplyDataDrivenModifier(caster, v, "modifier_love_spot_charmed", {})
+			giveUnitDataDrivenModifier(caster, v, "silenced", 0.25)
 			forcemove.UnitIndex = v:entindex()
 			forcemove.Position = caster:GetAbsOrigin() 
 			v:Stop()

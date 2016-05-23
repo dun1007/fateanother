@@ -5887,7 +5887,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"16 14 12 10 8"
+		"AbilityCooldown"				"10 9 8 7 6"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5931,7 +5931,7 @@
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"str_debuff"			"-10"
+				"str_debuff"			"-5"
 			}
 			"07"
 			{
@@ -8178,7 +8178,7 @@
 		"MaxLevel"						"2"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_OPTIONAL_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"
@@ -8859,7 +8859,6 @@
 		"AbilityCastRange"				"150"
 		"AbilityCooldown"				"25"
 		"AbilityManaCost"				"400"
-		"AbilityDamage"					"400 475 550 625 700"
 		
 		"precache"
 		{
@@ -8872,13 +8871,13 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"400 475 550 625 700"
+				"damage"				"35"
 			}
 
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_steal"				"-3 -6 -9 -12 -15"
+				"str_steal"				"-0 -7 -14 -21 -28"
 			}
 			"03"
 			{
@@ -8888,7 +8887,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"str_gain"				"3 6 9 12 15"
+				"str_gain"				"0 7 14 21 28"
 			}
 		}
 
@@ -8906,16 +8905,6 @@
 				"Damage"			"%damage"
 				"StealPercentage"	"%str_steal"
 				"Duration"			"%duration"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_steal_str_reduction"
-				"Target"			"TARGET"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_steal_str_increase"
-				"Target"			"CASTER"
 			}
 		}
 		"Modifiers"
@@ -13187,6 +13176,18 @@
 				"LastDamage"		"%lasthit_damage"
 				"StunDuration"		"%stun_duration"
 				"GCD"				"%global_cooldown"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_tg_baseattack_reduction"
+			{
+				"Duration"	"1.0"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"-100"
+				}
 			}
 		}
 	}
@@ -23519,17 +23520,17 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"resist_duration"				"0.25"
+				"resist_duration"				"0.1 0.2 0.3 0.4 0.5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"mr_bonus"		"20 25 30 35 40"
+				"mr_bonus"		"50"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"armor_bonus"		"10 15 20 25 30"
+				"armor_bonus"		"30"
 			}
 			"04"
 			{
@@ -23681,7 +23682,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_damage"				"25"
+				"third_strike_damage"				"35"
 			}
 			"09"
 			{
@@ -23775,7 +23776,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"first_strike_slow"		"30"
+				"first_strike_slow"		"-30"
 			}
 			"04"
 			{
@@ -23800,12 +23801,12 @@
 			"08"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_damage"				"25"
+				"third_strike_damage"				"35"
 			}
 			"09"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_slow"				"60"
+				"third_strike_slow"				"-60"
 			}
 			"10"
 			{
@@ -23907,7 +23908,7 @@
 			"08"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_damage"				"25"
+				"third_strike_damage"				"35"
 			}
 			"09"
 			{
@@ -24186,6 +24187,11 @@
 			{
 				"var_type"			"FIELD_FLOAT"
 				"third_strike_knockup_duration"				"1.7"
+			}
+			"13"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"third_strike_failure_cdr"			"75"
 			}
 		}
 		
@@ -24532,7 +24538,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage_per_stack_percentage"			"5"
+				"damage_per_stack_percentage"			"10"
 			}
 		}
 		
@@ -24560,7 +24566,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -24653,7 +24659,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -24801,7 +24807,7 @@
 			"modifier_saint"
 			{
 				"Passive"		"1"
-				"IsHidden"		"0"
+				"IsHidden"		"1"
 				"ThinkInterval"				"2.0"
 				"OnIntervalThink"
 				{
@@ -25192,7 +25198,7 @@
 			"modifier_gods_resolution"
 			{		
 				"Passive"		"1"
-				"IsHidden"	"0"
+				"IsHidden"	"1"
 				"Passive"	"1"
 				"OnAttackLanded"
 				{
@@ -25264,7 +25270,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"1000"
+		"AbilityCastRange"				"1000 1075 1150 1225 1300"
 		"AbilityCastPoint"				"0.9"
 
 		// Time		
@@ -25285,7 +25291,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"1000"
+				"range"				"1000 1075 1150 1225 1300"
 			}
 			
 			"03"
@@ -26192,6 +26198,14 @@
 					"MODIFIER_STATE_SILENCED"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}			
+			}
+			"can_be_executed"
+			{
+				"IsDebuff"		"1"
+				"States"
+				{
+					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 			"out_of_game"
 			{

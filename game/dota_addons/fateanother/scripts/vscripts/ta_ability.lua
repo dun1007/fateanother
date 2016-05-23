@@ -1,6 +1,7 @@
 function OnDirkStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
 	local range = caster:GetRangeToUnit(target)
 	if keys.Range > range then
 		range =  keys.Range
@@ -360,13 +361,19 @@ function OnStealStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner() 
 	local target = keys.target
+	local ability = keys.ability
+	local damage = keys.Damage
+	damage = damage * target:GetMaxHealth() / 100
+
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_steal_str_reduction", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_steal_str_increase", {})
+
 
 	if caster:HasModifier("modifier_ambush") and caster.IsShadowStrikeAcquired then
-		print("Shadow Strike activated")
-		keys.Damage = keys.Damage + 300
+		--print("Shadow Strike activated")
+		damage = damage + 300
 	end
-
-	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 end
 
 function OnZabCastStart(keys)

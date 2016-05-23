@@ -19,7 +19,7 @@ function LancerOnTakeDamage(keys)
 		cd = 30
 		health = 500
 	end
-	if currentHealth == 0 and keys.ability:IsCooldownReady() and keys.DamageTaken <= highend and keys.DamageTaken >= lowend  then
+	if currentHealth == 0 and keys.ability:IsCooldownReady() and keys.DamageTaken <= highend and keys.DamageTaken >= lowend and IsRevivePossible(caster) then
 		caster:SetHealth(health)
 		keys.ability:StartCooldown(cd) 
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_continuation_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
@@ -246,7 +246,7 @@ function OnGBTargetHit(keys)
 		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_CAST_ABILITY_1, rate=3})
 	end
 
-
+	giveUnitDataDrivenModifier(caster, target, "can_be_executed", 0.033)
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 	if target:GetHealth() < keys.HBThreshold then 
@@ -396,6 +396,8 @@ function OnGBComboHit(keys)
 			        	StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK2, rate=2})
 						local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
 						local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
+
+						giveUnitDataDrivenModifier(caster, target, "can_be_executed", 0.033)
 				    	DoDamage(caster, target, keys.Damage + target:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 						target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 

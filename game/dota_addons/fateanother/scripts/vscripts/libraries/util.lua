@@ -240,7 +240,8 @@ femaleservant = {
     "npc_dota_hero_templar_assassin",
     "npc_dota_hero_crystal_maiden",
     "npc_dota_hero_lina",
-    "npc_dota_hero_enchantress"
+    "npc_dota_hero_enchantress",
+    "npc_dota_hero_mirana"
 }
 
 itemComp = {
@@ -752,15 +753,17 @@ end
 
 function IsSpellBlocked(target)
     if target:HasModifier("modifier_instinct_active") then  --This abililty is blocked by the active/targeted Linken's effect.
-        target:EmitSound("DOTA_Item.LinkensSphere.Activate")
+        EmitSoundWithCooldown("DOTA_Item.LinkensSphere.Activate", target, 1)
+        ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
         return true
     elseif target:HasModifier("modifier_arondite") then
-        target:EmitSound("DOTA_Item.LinkensSphere.Activate")
+        EmitSoundWithCooldown("DOTA_Item.LinkensSphere.Activate", target, 1)
+        ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
         return true
     elseif target:HasModifier("modifier_wind_protection_passive") then
         if math.random(100) < 15 then
-            target:EmitSound("DOTA_Item.LinkensSphere.Activate") 
-            local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_brewmaster/brewmaster_windwalk.vpcf", PATTACH_ABSORIGIN, target)
+            EmitSoundWithCooldown("DOTA_Item.LinkensSphere.Activate", target, 1)
+            ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
             ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
             return true 
         end
@@ -769,6 +772,15 @@ function IsSpellBlocked(target)
     end
 end 
 
+function EmitSoundWithCooldown(soundname, target, cooldown)
+    if not target.bIsSoundOnCooldown then
+        target:EmitSound(soundname)
+        target.bIsSoundOnCooldown = true
+        Timers:CreateTimer(cooldown, function()
+            target.bIsSoundOnCooldown = false
+        end)
+    end
+end
 function IsRevoked(target)
     for i=1, #revokes do
         if target:HasModifier(revokes[i]) then return true end
@@ -783,6 +795,14 @@ function IsLocked(target)
     return false
 end
 
+function IsRevivePossible(target)
+    if target:HasModifier("can_be_executed") then
+        print("cannot revive")
+        return false
+    end
+    return true
+end
+
 function IsFemaleServant(target)
     for i=1, #femaleservant do
         if target:GetName() == femaleservant[i] then
@@ -795,7 +815,8 @@ end
 
 function IsImmuneToSlow(target)
     if target:GetName() == "npc_dota_hero_sven" then
-        target:EmitSound("DOTA_Item.LinkensSphere.Activate")
+        EmitSoundWithCooldown("DOTA_Item.LinkensSphere.Activate", target, 1)
+        ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
         return true 
     else 
         return false

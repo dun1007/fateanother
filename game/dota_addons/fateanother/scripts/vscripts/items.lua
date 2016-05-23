@@ -329,7 +329,7 @@ function OnLinkDamageTaken(keys)
     LoopOverHeroes(function(hero)
         if hero:HasModifier("modifier_share_damage") and hero:GetHealth() == 0 then
             print("Spirit Link broken on " .. hero:GetName())
-            hero:SetHealth(1)
+            if IsRevivePossible(hero) then hero:SetHealth(1) end
             hero:RemoveModifierByName("modifier_share_damage")
             RemoveHeroFromLinkTables(hero)
         end    
@@ -525,6 +525,7 @@ end
 function EXScroll(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
 	local lightning = {
 		attacker = caster,
 		victim = target,

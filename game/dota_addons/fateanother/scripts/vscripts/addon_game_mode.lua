@@ -231,7 +231,9 @@ function Precache( context )
     PrecacheResource("soundfile", "soundevents/hero_tamamo.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_lishuwen.vsndevts", context)
     PrecacheResource("soundfile", "soundevents/hero_ruler.vsndevts", context)
+    PrecacheResource("soundfile", "soundevents/sounds_test.vsndevts", context)
     PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
+    PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts", context)
 
     -- Items
     PrecacheItemByNameSync("item_apply_modifiers", context)
@@ -612,6 +614,12 @@ function FateGameMode:PlayerSay(keys)
         if Convars:GetBool("sv_cheats") then 
             hero.ShardAmount = 10
             CreateShardDrop(hero:GetAbsOrigin())
+        end
+    end
+    
+    if text == "-silence" then
+        if Convars:GetBool("sv_cheats") then 
+            EmitGlobalSound("Silence_Test")
         end
     end
     
@@ -1613,7 +1621,7 @@ function FateGameMode:TakeDamageFilter(filterTable)
     end]]
     --if inflictor then print(inflictor:GetName() .. damage) end
 
-    if attacker:HasModifier("modifier_love_spot_charmed") then
+    if attacker:HasModifier("modifier_love_spot_charmed") and victim:GetName() == "npc_dota_hero_huskar" then
         local loveSpotAbil = victim:FindAbilityByName("diarmuid_love_spot")
         local reduction = loveSpotAbil:GetLevelSpecialValueFor("damage_reduction", loveSpotAbil:GetLevel() - 1)
         filterTable.damage = filterTable.damage/100 * reduction

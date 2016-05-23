@@ -495,7 +495,7 @@ function OnFairyDamageTaken(keys)
 	local ability = keys.ability
 	local currentHealth = caster:GetHealth()
 
-	if currentHealth == 0 and keys.ability:IsCooldownReady() then
+	if currentHealth == 0 and keys.ability:IsCooldownReady() and IsRevivePossible(caster) then
 		caster:SetHealth(500)
 		keys.ability:StartCooldown(60) 
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gawain_blessing_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})

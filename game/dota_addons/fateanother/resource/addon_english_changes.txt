@@ -13,3 +13,16 @@
 		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_duration"				"DAGGER THROW POISON DURATION:"
 		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_baseattack_slow"				"%AUTOATTACK SLOW AMOUNT:"
 		"DOTA_Tooltip_Ability_true_assassin_attribute_weakening_venom_baseattack_str_reduction"				"AUTOATTACK STR REDUCTION:"
+
+		"DOTA_Tooltip_Ability_true_assassin_snatch_strike"	"Snatch Strike"
+		"DOTA_Tooltip_ability_true_assassin_snatch_strike_Description"	"Swipes at target enemy, inflicting damage based on target's max health and stealing some of target's STR for duration."
+		"DOTA_Tooltip_ability_true_assassin_snatch_strike_Lore"	""
+		"DOTA_Tooltip_ability_true_assassin_snatch_strike_damage"	"%DAMAGE:"
+		"DOTA_Tooltip_ability_true_assassin_snatch_strike_str_gain"	"STR STEAL AMOUNT:"
+		"DOTA_Tooltip_ability_true_assassin_snatch_strike_duration"	"STEAL DURATION:"
+		"DOTA_Tooltip_ability_true_assassin_snatch_strike_Note0"	"STR reduction kicks in first before damage happens."
+		
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike"	"Raging Dragon Strike"
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Description"	"<font color='#58ACFA'>Combo Requirement : 20 all stats</font>\n<font color='#58ACFA'>Combo Sequence : Q-W-E in 3 seconds</font>\nAssassin chains together 3 fearful moves.\n<font color='#58ACFA'>1st:</font> Dashes to target, striking all enemies in his path for magic damage and <font color='#FF3399'>slowing</font> them.\n<font color='#58ACFA'>2nd:</font> Stomps the ground, dealing physical damage to nearby enemies and stunning them if they are affected by Mark of Fatality.\n<font color='#58ACFA'>3rd:</font> Ascends into the sky with a powerful roundhouse, <font color='#FF3399'>launching enemies into the air</font>. Assassin then rapidly teleports around airborne enemies, delivering multiple hits each dealing composite damage and applying Mark of Fatality.\nIf Assassin fails to activate the 3rd strike, cooldown is significantly reduced."
+
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_third_strike_third_strike_failure_cdr"	"%COOLDOWN REDUCTION ON 3RD STRIKE FAIL:"
