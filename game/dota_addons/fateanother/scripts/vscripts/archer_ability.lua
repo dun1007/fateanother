@@ -297,6 +297,7 @@ end
 
 function OnUBWLevelUp(keys)
 	local caster = keys.caster
+	caster:FindAbilityByName("archer_5th_sword_barrage_retreat_shot"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_sword_barrage"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_sword_barrage_confine"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_nine_lives"):SetLevel(keys.ability:GetLevel())
