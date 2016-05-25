@@ -359,9 +359,9 @@ function OnContractStart(keys)
 	local contractFx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_upheaval.vpcf", PATTACH_CUSTOMORIGIN, nil)
 	ParticleManager:SetParticleControl(contractFx, 0, targetPoint)
 	ParticleManager:SetParticleControl(contractFx, 1, Vector(keys.Radius + 200,0,0))
-	Timers:CreateTimer( 5.0, function()
-		ParticleManager:DestroyParticle( contractFx, false )
-		ParticleManager:ReleaseParticleIndex( contractFx )
+	Timers:CreateTimer(2.0, function()
+		ParticleManager:DestroyParticle(contractFx, false)
+		ParticleManager:ReleaseParticleIndex(contractFx)
 	end)
 
 	local contractFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_death_glyph.vpcf", PATTACH_CUSTOMORIGIN, nil)
@@ -376,6 +376,10 @@ function OnContractStart(keys)
 		contractFx4 = ParticleManager:CreateParticle("particles/units/heroes/hero_enigma/enigma_midnight_pulse.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl(contractFx4, 0, targetPoint)
 		ParticleManager:SetParticleControl(contractFx4, 1, Vector(keys.Radius + 200, 0, 0))
+		Timers:CreateTimer(2.0, function()
+			ParticleManager:DestroyParticle(contractFx4, false)
+			ParticleManager:ReleaseParticleIndex(contractFx4)
+		end)
 	end)
 	
 
@@ -451,10 +455,6 @@ function OnContractStart(keys)
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 650)
 			CreateRavageParticle(visiondummy, visiondummy:GetAbsOrigin(), 1000)
 			-- Remove particle
-			ParticleManager:DestroyParticle(contractFx, false)
-			ParticleManager:ReleaseParticleIndex(contractFx)
-			ParticleManager:DestroyParticle(contractFx4, false)
-			ParticleManager:ReleaseParticleIndex(contractFx4)
 		end
 	end)
 end
@@ -544,6 +544,7 @@ function OnTentacleHookHit(keys)
 	target:SetPhysicsVelocity(Vector(pullVector.x, pullVector.y, 2000))
 	target:SetNavCollisionType(PHYSICS_NAV_NOTHING)
 	target:FollowNavMesh(false)
+	target:SetAutoUnstuck(false)
 
 	Timers:CreateTimer({
 		endTime = 0.25,
@@ -556,6 +557,7 @@ function OnTentacleHookHit(keys)
 		target:PreventDI(false)
 		target:SetPhysicsVelocity(Vector(0,0,0))
 		target:OnPhysicsFrame(nil)
+		target:SetAutoUnstuck(true)
 
 	end)
   	Timers:CreateTimer(1.0, function()

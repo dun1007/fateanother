@@ -141,6 +141,10 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				playerGoldPanel.text = "????";
 			}
 		}
+
+		//var bIsRevoked = ScoreboardUpdater_IsRevoked(Players.GetLocalPlayerPortraitUnit());
+		//$.Msg(bIsRevoked);
+
 	}
 	
 	var playerItemsContainer = playerPanel.FindChildInLayoutFile( "PlayerItemsContainer" );
@@ -487,3 +491,33 @@ function ScoreboardUpdater_GetSortedTeamInfoList( scoreboardHandle )
 	return teamsList;
 }
 
+var revokes = [
+    "modifier_subterranean_grasp_revoke",
+    "modifier_enkidu_hold",
+    "jump_pause",
+    "pause_sealdisabled",
+    "rb_sealdisabled",
+    "revoked",
+    "modifier_command_seal_2",
+    "modifier_command_seal_3",
+    "modifier_command_seal_4"
+]
+
+function ScoreboardUpdater_IsRevoked(hero)
+{
+	var buffCount = Entities.GetNumBuffs(hero) + 1;
+	$.Msg(buffCount);
+	for (var i=0;i<buffCount + 1; i++)
+	{
+		var buffName = Buffs.GetName(hero,i);
+		$.Msg(buffName);
+		for (var j=0; j<revokes.length; j++)
+		{
+			if (buffName == revokes[j])
+			{
+				return true
+			}
+		}
+	}
+	return false
+}

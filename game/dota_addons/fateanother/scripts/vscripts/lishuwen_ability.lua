@@ -451,6 +451,7 @@ function OnDragonStrike1Start(keys)
 
 	caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_raging_dragon_strike_2", false, true) 
 	caster.bIsCurrentDSCycleFinished = false
+	caster.bIsCurrentDSCycleStarted = true
 
 
 	-- start a timer to revert layout back after set time(4 sec)
@@ -623,7 +624,7 @@ function LishuwenCheckCombo(caster, ability)
             Timers:CreateTimer('raging_dragon_timer',{
                 endTime = 4,
                 callback = function()
-                if not caster.bIsCurrentDSCycleFinished then
+                if not caster.bIsCurrentDSCycleFinished and caster.bIsCurrentDSCycleStarted then
                 	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
                 	ReduceCooldown(abil, abil:GetCooldown(1)/4)
                 	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
@@ -634,6 +635,7 @@ function LishuwenCheckCombo(caster, ability)
                 end	
 				local currentAbil = caster:GetAbilityByIndex(2)	
 				caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false)
+				caster.bIsCurrentDSCycleStarted = false
             end
             })
         end

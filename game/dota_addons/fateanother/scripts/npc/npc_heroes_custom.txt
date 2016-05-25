@@ -226,8 +226,9 @@
 		"Ability9"				"archer_5th_sword_barrage_confine"
 		"Ability10"				"archer_5th_nine_lives"
 		"Ability11"				"archer_5th_hrunting"
-		"Ability12"				"presence_detection_passive"
-		"Ability13"				"attribute_bonus"
+		"Ability12"				"archer_5th_sword_barrage_retreat_shot"
+		"Ability13"				"presence_detection_passive"
+		"Ability14"				"attribute_bonus"
 
 		"Combo"						"archer_5th_arrow_rain"
 		"AttributeNumber"			"5"
@@ -238,9 +239,9 @@
 		"Attribute5"				"archer_5th_attribute_overedge"
 
 
-		"StatusHealth"					"1100"
+		"StatusHealth"					"1200"
 		"StatusHealthRegen"				"8"
-		"StatusMana"					"1000"
+		"StatusMana"					"1100"
 		"StatusManaRegen"				"4"
 		
 		"ArmorPhysical"					"6"
@@ -252,13 +253,13 @@
 		"AttackDamageMax"				"52"
 		"AttackRate"					"1.1"
 		
-		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"
 		"AttributeBaseStrength"			"0"
-		"AttributeStrengthGain"			"1.4"
+		"AttributeStrengthGain"			"1.1"
 		"AttributeBaseAgility"			"0"
 		"AttributeAgilityGain"			"0.8"
 		"AttributeBaseIntelligence"		"0"
-		"AttributeIntelligenceGain"		"0.8"
+		"AttributeIntelligenceGain"		"1.1"
 		
 		"MovementSpeed"					"360"
 		"MovementTurnRate"				"0.8"

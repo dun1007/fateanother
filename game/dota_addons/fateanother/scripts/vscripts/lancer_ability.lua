@@ -1,3 +1,6 @@
+ATTR_HEARTSEEKER_AD_RATIO = 2
+ATTR_HEARTSEEKER_COMBO_AD_RATIO = 3
+
 function OnBattleContinuationStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -235,7 +238,7 @@ function OnGBTargetHit(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
-	if caster.IsHeartSeekerAcquired == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*3 end
+	if caster.IsHeartSeekerAcquired == true then keys.HBThreshold = keys.HBThreshold + caster:GetAttackDamage()*ATTR_HEARTSEEKER_AD_RATIO end
 
 	-- Check if caster is lancer(not lancelot)
 	if casterName == "npc_dota_hero_phantom_lancer" then
@@ -342,6 +345,7 @@ function OnGBComboHit(keys)
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	local HBThreshold = target:GetMaxHealth() * keys.HBThreshold / 100
+	local silenceDuration = keys.SilenceDuration
 
 
 	-- Set master's combo cooldown
@@ -350,12 +354,13 @@ function OnGBComboHit(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
-	if caster.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + caster:GetAttackDamage()*1.5 + target:GetStrength() end
+	if caster.IsHeartSeekerAcquired == true then HBThreshold = HBThreshold + caster:GetAttackDamage()*ATTR_HEARTSEEKER_COMBO_AD_RATIO end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 3.0)
+	giveUnitDataDrivenModifier(caster, target, "silenced", silenceDuration)
 	StartAnimation(caster, {duration=1.2, activity=ACT_DOTA_CAST_ABILITY_1, rate=0.5})
 	Timers:CreateTimer(1.6, function()
-		StartAnimation(caster, {duration=5, activity=ACT_DOTA_RUN, rate=3})
+		StartAnimation(caster, {duration=3, activity=ACT_DOTA_RUN, rate=3})
 	end)
 	caster:EmitSound("Lancer.Heartbreak")
 	target:EmitSound("Lancer.Heartbreak")

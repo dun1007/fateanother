@@ -360,7 +360,12 @@ function OnSoulstreamProjectileTick(keys)
 						v:AddNewModifier(caster, v, "modifier_silence", {Duration = 0.1})
 					end 
 				end	
-				DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+				if v:GetUnitName() == "gille_gigantic_horror" then  
+					DoDamage(caster, v, damage*1.75, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				else 
+					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				end
 				if caster.IsSpiritTheftAcquired then 
 					v:SetMana(v:GetMana()-25)
 					caster:SetMana(caster:GetMana()+25)

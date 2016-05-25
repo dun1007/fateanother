@@ -14,9 +14,9 @@ function OnMindsEyeAttacked(keys)
 	local revokedRatio = keys.RatioRevoked
 
 	if IsRevoked(target) then
-		DoDamage(caster, target, caster:GetAgility() * revokedRatio , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		DoDamage(caster, target, caster:GetAgility() * revokedRatio , DAMAGE_TYPE_PURE, 0, keys.ability, false)
 	else
-		DoDamage(caster, target, caster:GetAgility() * ratio , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		DoDamage(caster, target, caster:GetAgility() * ratio , DAMAGE_TYPE_PURE, 0, keys.ability, false)
 	end
 end
 
@@ -529,7 +529,7 @@ function OnTGStart(keys)
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-					caster:PerformAttack(target, true, true, true, true, false)
+					caster:PerformAttack(targets[i], true, true, true, true, false)
 				end
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
@@ -550,7 +550,7 @@ function OnTGStart(keys)
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-					caster:PerformAttack(target, true, true, true, true, false)
+					caster:PerformAttack(targets[i], true, true, true, true, false)
 				end
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
@@ -571,7 +571,7 @@ function OnTGStart(keys)
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-					caster:PerformAttack(target, true, true, true, true, false)
+					caster:PerformAttack(targets[i], true, true, true, true, false)
 					targets[i]:AddNewModifier(caster, targets[i], "modifier_stunned", {Duration = 1.5})
 				end
 			else

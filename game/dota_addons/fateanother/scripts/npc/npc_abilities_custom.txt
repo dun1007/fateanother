@@ -1810,12 +1810,12 @@
 			"01"
 			{
 				"var_type" 		"FIELD_INTEGER"
-				"extra_damage"		"3 4 5 6 7"
+				"extra_damage"		"1 2 3 4 5"
 			}
 			"02"
 			{
 				"var_type"		"FIELD_FLOAT"
-				"ability_bonus_damage"	"0 2.5 5.0 7.5 10.0"
+				"ability_bonus_damage"	"0 1 2 3 4"
 			}
 		}
 
@@ -2095,9 +2095,14 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"1500"
+				"silence_duration"	"2"
 			}
 			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"1500"
+			}
+			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
 				"heartbreak_threshold_percentage"	"25"
@@ -2121,6 +2126,7 @@
 			 	"Function"		"OnGBComboHit"
 			 	"Damage"		"%damage"
 			 	"HBThreshold"	"%heartbreak_threshold_percentage"
+			 	"SilenceDuration"	"%silence_duration"
 			 }
 		}
 		"Modifiers"
@@ -2406,12 +2412,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"gae_bolg_ad_ratio"			"3.0"
+				"gae_bolg_ad_ratio"			"2.0"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"wesen_gae_bolg_ad_ratio"			"1.5"
+				"wesen_gae_bolg_ad_ratio"			"3.0"
 			}
 		}
 		
@@ -3853,7 +3859,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"rider_5th_bloodfort_andromeda"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
-		"AnimationPlaybackRate" 		"0.4"
+		"AnimationPlaybackRate" 		"0.5"
 		"AOERadius"						"%radius"
 		
 		"precache"
@@ -3862,7 +3868,7 @@
 			"particle"					"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
 		}
 		
-		"AbilityCastPoint"				"2.5"
+		"AbilityCastPoint"				"2.0"
 		"AbilityCooldown"				"20"
 		"AbilityManaCost"				"400"
 		
@@ -4832,7 +4838,93 @@
 
 
 	//=====================================
-	// Archer : Sword Barrage
+	// Archer : Sword Barrage - Retreat Shot
+	//=====================================
+	"archer_5th_sword_barrage_retreat_shot"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityTextureName"			"archer_5th_sword_barrage_retreat_shot"
+		"AbilityCastAnimation" 			"ACT_DOTA_ITEM_PICKUP"
+		"AnimationPlaybackRate" 		"1.0"
+
+		"precache"
+		{
+			"particle"		"particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf"
+			"particle"		"particles/custom/archer/archer_sword_barrage_impact_circle.vpcf"
+			"particle"		"particles/custom/archer/archer_sword_barrage_model.vpcf"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.1"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"13.0"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200 225 250 275 300"
+			}
+			
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"retreat_distance"			"350"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"			"600"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"archer_ability"
+			 	"Function"		"OnUBWBarrageRetreatStart"
+			 	"RetreatDist"		"%retreat_distance"
+			 	"Damage"		"%damage"
+			 	"Range"		"%range"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_barrage_retreat_shot_slow"
+			{
+				"IsDebuff"	"1"
+				"Duration"	"2"
+			    "Properties"
+			    {
+			    	"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-30"
+			    }
+			}
+		}
+	}
+
+
+
+	//=====================================
+	// Archer : Sword Barrage - Bombard
 	//=====================================
 	"archer_5th_sword_barrage"
 	{
@@ -4862,21 +4954,21 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"1500"
 		"AbilityCastPoint"				"0.3"
-		"AbilityChannelTime"			"5.0"		
+		"AbilityChannelTime"			"3.5"		
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5.0"
+		"AbilityCooldown"				"3.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"0"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200 250 300 350 400"
+				"damage"			"200 225 250 275 300"
 			}
 			
 			"02"
@@ -5029,7 +5121,7 @@
 		"AbilityCastRange"				"1500"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCooldown"				"9.0"
-		"AbilityManaCost"				"200"
+		"AbilityManaCost"				"100"
 		
 		"precache"
 		{
@@ -5117,7 +5209,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"300"
+		"AbilityManaCost"				"100"
 		
 		"AbilitySpecial"
 		{
@@ -5220,10 +5312,15 @@
 				"var_type"		"FIELD_INTEGER"
 				"arrow_damage"		"500"
 			}
-			"02"
+			"03"
 			{
 				"var_type"		"FIELD_INTEGER"
 				"bp_shot_amount"		"5"
+			}
+			"04"
+			{
+				"var_type"		"FIELD_INTEGER"
+				"bp_shot_damage"		"66"
 			}
 		}
 		
@@ -5292,7 +5389,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -5459,7 +5556,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"12"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -5601,7 +5698,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"13"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -6741,6 +6838,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"false_assassin_minds_eye"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"MaxLevel"						"2"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
@@ -6754,12 +6852,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"0.3 0.9"
+				"agi_ratio"			"0.15 0.45"
 			}
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio_revoked"			"0.8 2.4"
+				"agi_ratio_revoked"			"0.4 1.2"
 			}
 		}
 		
@@ -7521,7 +7619,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slash_damage_percentage"				"20"
+				"slash_damage_percentage"				"50"
 			}
 		}
 		
@@ -8040,12 +8138,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"		"0.9"
+				"agi_ratio"		"0.4"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio_revoked"		"2.4"
+				"agi_ratio_revoked"		"1.2"
 			}
 		}
 		
@@ -8871,7 +8969,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"35"
+				"damage"				"30"
 			}
 
 			"02"
@@ -13247,24 +13345,19 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_movespeed"		"0 5 10 15 20"
+				"damage"			"400 525 650 775 900"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"			"400 525 650 775 900"
+				"bonus_damage"			"20 25 30 35 40"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"			"20 25 30 35 40"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
 				"bonus_allstat"			"4 8 12 16 20"
 			}
-			"05"
+			"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"duration"				"10"
@@ -13299,15 +13392,6 @@
 		}
 		"Modifiers"
 		{
-			"modifier_arondite_passive"
-			{
-				"Passive"		"1"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_movespeed"
-				}				
-
-			}
 			"modifier_arondite"
 			{
 				"Duration"	"%duration"
@@ -18210,7 +18294,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.65"
+		"AbilityCastPoint"				"0.4"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -18357,7 +18441,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"750"
-		"AbilityCastPoint"				"0.35"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -18798,12 +18882,12 @@
 			{
 				"Target"      	"POINT"
 			    "EffectName"  	""
-			    "MoveSpeed"   	"1500"
+			    "MoveSpeed"   	"1800"
 			    "StartRadius"   "150"
 			    "StartPosition" "attach_origin"
 			    "EndRadius"     "150"
 			    "FixedDistance" "%range"
-			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY | DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+			    "TargetTeams"   "DOTA_UNIT_TARGET_TEAM_ENEMY"
 			    "TargetTypes"   "DOTA_UNIT_TARGET_HERO"
 			    "TargetFlags"   "DOTA_UNIT_TARGET_FLAG_NONE"
 			    "HasFrontalCone"  "0"

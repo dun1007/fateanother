@@ -100,7 +100,7 @@
 					}
 					"soundlevel_min"
 					{
-						"value"		"100.00000"
+						"value"		"150.00000"
 					}
 					"soundlevel_max"
 					{
@@ -305,11 +305,11 @@
 					}
 					"soundlevel_min"
 					{
-						"value"		"100.00000"
+						"value"		"150.00000"
 					}
 					"soundlevel_max"
 					{
-						"value"		"100.00000"
+						"value"		"150.00000"
 					}
 				}
 			}

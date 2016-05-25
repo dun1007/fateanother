@@ -21,8 +21,38 @@
 		"DOTA_Tooltip_ability_true_assassin_snatch_strike_str_gain"	"STR STEAL AMOUNT:"
 		"DOTA_Tooltip_ability_true_assassin_snatch_strike_duration"	"STEAL DURATION:"
 		"DOTA_Tooltip_ability_true_assassin_snatch_strike_Note0"	"STR reduction kicks in first before damage happens."
-		
+
         "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike"	"Raging Dragon Strike"
-        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Description"	"<font color='#58ACFA'>Combo Requirement : 20 all stats</font>\n<font color='#58ACFA'>Combo Sequence : Q-W-E in 3 seconds</font>\nAssassin chains together 3 fearful moves.\n<font color='#58ACFA'>1st:</font> Dashes to target, striking all enemies in his path for magic damage and <font color='#FF3399'>slowing</font> them.\n<font color='#58ACFA'>2nd:</font> Stomps the ground, dealing physical damage to nearby enemies and stunning them if they are affected by Mark of Fatality.\n<font color='#58ACFA'>3rd:</font> Ascends into the sky with a powerful roundhouse, <font color='#FF3399'>launching enemies into the air</font>. Assassin then rapidly teleports around airborne enemies, delivering multiple hits each dealing composite damage and applying Mark of Fatality.\nIf Assassin fails to activate the 3rd strike, cooldown is significantly reduced."
+        "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_Description"	"<font color='#58ACFA'>Combo Requirement : 20 all stats</font>\n<font color='#58ACFA'>Combo Sequence : W-E in 3 seconds</font>\nAssassin chains together 3 fearful moves.\n<font color='#58ACFA'>1st:</font> Dashes to target, striking all enemies in his path for magic damage and <font color='#FF3399'>slowing</font> them.\n<font color='#58ACFA'>2nd:</font> Stomps the ground, dealing physical damage to nearby enemies and stunning them if they are affected by Mark of Fatality.\n<font color='#58ACFA'>3rd:</font> Ascends into the sky with a powerful roundhouse, <font color='#FF3399'>launching enemies into the air</font>. Assassin then rapidly teleports around airborne enemies, delivering multiple hits each dealing composite damage and applying Mark of Fatality.\nIf Assassin fails to activate the 3rd strike, cooldown is significantly reduced."
 
         "DOTA_Tooltip_Ability_lishuwen_raging_dragon_strike_third_strike_third_strike_failure_cdr"	"%COOLDOWN REDUCTION ON 3RD STRIKE FAIL:"
+
+		"DOTA_Tooltip_Ability_lancer_5th_wesen_gae_bolg"				"Wesen Gae Bolg"
+		"DOTA_Tooltip_ability_lancer_5th_wesen_gae_bolg_Description"		"<font color='#58ACFA'>Combo Requirement : 20 all stats</font>\n<font color='#58ACFA'>Combo Sequence : W-E in 3 seconds</font>\nLancer marks the target with curse of Gae Bolg, <font color='#FF3399'>silencing</font> it. After delay, he rushes towards target to land the undodgeable blow, dealing damage and executing target if it would reduce target's health below threshold based on maximum health of target. Once activated, Lancer will follow the target no matter how far they run.\n\nUpgradable by attribute The Heartseeker."
+		"DOTA_Tooltip_ability_lancer_5th_wesen_gae_bolg_silence_duration"		"SILENCE DURATION:"
+
+		"DOTA_Tooltip_Ability_lancer_attribute_the_heartseeker"				"The Heartseeker"
+		"DOTA_Tooltip_ability_lancer_attribute_the_heartseeker_Description"	"Spear of Impaling Barbed Death and Combo:Wesen Gae Bolg gain bonus execution threshold based on attack damage."
+		"DOTA_Tooltip_ability_lancer_attribute_the_heartseeker_gae_bolg_ad_ratio"	"GAE BOLG AD RATIO:"
+		"DOTA_Tooltip_ability_lancer_attribute_the_heartseeker_wesen_gae_bolg_ad_ratio"	"WESEN GAE BOLG AD RATIO:"
+
+        "DOTA_Tooltip_Ability_lancelot_arondite"        "Arondite"
+        "DOTA_Tooltip_ability_lancelot_arondite_Description"    "Berserker becomes immune to any single target items or abilities, and gains bonus all stats and attack damage.\nKnight of Honor cannot be used for duration.\n\nUpgradable by attribute Eternal Flame."
+
+		"DOTA_Tooltip_Ability_archer_5th_kanshou_bakuya"	"Kanshou Bakuya"
+		"DOTA_Tooltip_ability_archer_5th_kanshou_bakuya_Description"	"Hurls projected blades at target, dealing damage multiple times."
+		"DOTA_Tooltip_ability_archer_5th_kanshou_bakuya_Lore"	"The trusted twin swords of Archer attract each other like Yin and Yang, allowing for multiple chain strikes to unsuspecting enemy."
+		"DOTA_Tooltip_Ability_archer_5th_kanshou_bakuya_bounce_number"		"MULTI-HIT AMOUNT:"
+		"DOTA_Tooltip_ability_archer_5th_kanshou_bakuya_damage_per_tick"	"DAMAGE PER BOUNCE:"
+
+		"DOTA_Tooltip_Ability_archer_5th_sword_barrage_retreat_shot"		"Sword Barrage - Retreat"
+		"DOTA_Tooltip_ability_archer_5th_sword_barrage_retreat_shot_Description"		"Archer immediately retreats backward and strikes area in a line with several swords, each <font color='#FF3399'>ministunning</font> and dealing damage."
+		"DOTA_Tooltip_ability_archer_5th_sword_barrage_retreat_shot_damage"	"DAMAGE PER WEAPON:"
+		"DOTA_Tooltip_ability_archer_5th_sword_barrage_retreat_shot_retreat_distance"	"RETREAT DISTANCE:"
+		"DOTA_Tooltip_ability_archer_5th_sword_barrage_retreat_shot_range"	"RANGE:"
+		"DOTA_Tooltip_ability_archer_5th_sword_barrage_retreat_shot_Lore"	""	
+
+		"DOTA_Tooltip_ability_archer_5th_arrow_rain_bp_shot_damage"	"%BROKEN PHANTASM SHOT DAMAGE:"
+
+		"DOTA_Tooltip_Ability_false_assassin_minds_eye"	"Mind's Eye"
+		"DOTA_Tooltip_ability_false_assassin_minds_eye_Description"	"Assassin analyzes his foe's weakness with 6th sense, causing his base attack to deal additional pure damage based on AGI. If enemy is Revoked, damage is significantly amplified."
