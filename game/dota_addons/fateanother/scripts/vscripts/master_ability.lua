@@ -843,12 +843,12 @@ function OnAMAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	print("AMP shard acquired")
-	--[[if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
+	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
-	end]]
+	end
 
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
     local statTable = CreateTemporaryStatTable(hero)

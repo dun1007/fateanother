@@ -733,6 +733,10 @@ function FindName(name)
         heroName = "Assassin(Extra)"
     elseif name == "npc_dota_hero_mirana" then
         heroName = "Ruler(Apocrypha)"
+    elseif name == "npc_dota_hero_queenofpain" then
+        heroName = "Black Rider(Apocrypha)"
+    else
+        heroName = "Undefined"
     end
     return heroName
 end

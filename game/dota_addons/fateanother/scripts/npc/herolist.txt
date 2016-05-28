@@ -26,4 +26,5 @@
 	"npc_dota_hero_bloodseeker"			"1"		//Assassin(Extra)
 	"npc_dota_hero_mirana"				"1"		//Ruler(Apocrypha)
 	"npc_dota_hero_sniper"				"0"		//Green Archer(Extra)
+	"npc_dota_hero_queenofpain"			"1"		//Black Rider(Apoc.)
 }

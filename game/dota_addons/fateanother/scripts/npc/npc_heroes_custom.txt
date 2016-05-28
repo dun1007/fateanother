@@ -1290,4 +1290,66 @@
 		"VisionDaytimeRange"			"800"
 		"VisionNighttimeRange"			"800"
 	}
+	//=================================================================================================================
+	//	Black Rider(Apoc.) - Astolfo
+	//=================================================================================================================
+	"npc_dota_hero_astolfo"
+	{
+		"override_hero"				"npc_dota_hero_queenofpain"
+		"DisableWearables" 			"1"
+		"Model"						"models/astolfo/astolfo.vmdl"
+		"ModelScale"				"1.1"
+		"Enabled"					"1"
+
+		"AbilityLayout"				"6"
+		"Ability1"					""
+		"Ability2"					""
+		"Ability3"					""
+		"Ability4"					""
+		"Ability5"					""
+		"Ability6"					""
+		"Ability7"					""
+		"Ability8"					""
+		"Ability15"					"presence_detection_passive"
+		"Ability16"					"attribute_bonus"
+
+		"Combo"						""
+		"AttributeNumber"			"4"
+		"Attribute1"				""
+		"Attribute2"				""
+		"Attribute3"				""
+		"Attribute4"				""
+		
+		"StatusHealth"					"1250"
+		"StatusHealthRegen"				"5"
+		"StatusMana"					"1050"
+		"StatusManaRegen"				"5"
+		
+		"ArmorPhysical"					"4"
+		"MagicalResistance"				"0"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackDamageMin"				"38"
+		"AttackDamageMax"				"42"
+		"AttackRate"					"1.3"
+		"AttackAcquisitionRange"		"800"
+		"AttackRange"					"125"
+
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1.2"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"0.8"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.8"
+		
+		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"					"340"
+		"MovementTurnRate"				"0.8"
+		
+		"VisionDaytimeRange"			"750"
+		"VisionNighttimeRange"			"750"
+	}
 }
