@@ -182,7 +182,7 @@
 		"AttackAcquisitionRange"		"200"
 		"AttackDamageMin"				"1"
 		"AttackDamageMax"				"100"
-		"AttackRate"					"1.5"
+		"AttackRate"					"1.25"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
 		"AttributeBaseStrength"			"0"
@@ -242,7 +242,7 @@
 		"StatusHealth"					"1200"
 		"StatusHealthRegen"				"8"
 		"StatusMana"					"1100"
-		"StatusManaRegen"				"4"
+		"StatusManaRegen"				"6"
 		
 		"ArmorPhysical"					"6"
 		"MagicalResistance"				"5"
@@ -1091,7 +1091,7 @@
 		"AttackRange"					"185"
 		"AttackDamageMin"				"52"
 		"AttackDamageMax"				"52"
-		"AttackRate"					"1.0"
+		"AttackRate"					"0.9"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
 		"AttributeBaseStrength"			"0"

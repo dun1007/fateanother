@@ -843,12 +843,12 @@ function OnAMAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 	print("AMP shard acquired")
-	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
+	--[[if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
-	end
+	end]]
 
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
     local statTable = CreateTemporaryStatTable(hero)
@@ -875,7 +875,7 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	print("Prosperity shard acquired")
+	--print("Prosperity shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
 		return
@@ -886,7 +886,7 @@ function OnProsperityAcquired(keys)
 	local master = hero.MasterUnit 
 	local master2 = hero.MasterUnit2
 
-	for i=1,5 do
+	for i=1,6 do
 		local level = hero:GetLevel()
 		if level ~= 24 then
 			hero:AddExperience(_G.XP_PER_LEVEL_TABLE[level], false, false)
@@ -901,8 +901,8 @@ function OnProsperityAcquired(keys)
 	--[[
 	master:SetMana(master:GetMana()+20)
 	master2:SetMana(master:GetMana())]]
-	master:SetMaxHealth(master:GetMaxHealth()+1) 
-	master:SetHealth(master:GetHealth()+1)
+	master:SetMaxHealth(master:GetMaxHealth()+2) 
+	master:SetHealth(master:GetHealth()+2)
 	master2:SetMaxHealth(master:GetMaxHealth()) 
 	master2:SetHealth(master:GetHealth())
     local statTable = CreateTemporaryStatTable(hero)

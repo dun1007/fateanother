@@ -613,7 +613,7 @@ function FateGameMode:PlayerSay(keys)
     if text == "-tt" then
         if Convars:GetBool("sv_cheats") then 
             hero.ShardAmount = 10
-            CreateShardDrop(hero:GetAbsOrigin())
+            print("10 shards")
         end
     end
     

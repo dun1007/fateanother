@@ -282,15 +282,15 @@ function OnRhoDamaged(keys)
 	rhoTarget.rhoShieldAmount = rhoTarget.rhoShieldAmount - keys.DamageTaken
 	if rhoTarget.rhoShieldAmount <= 0 then
 		if currentHealth + rhoTarget.rhoShieldAmount <= 0 then
-			print("lethal")
+			--print("lethal")
 		else
-			print("rho broken, but not lethal")
+			--print("rho broken, but not lethal")
 			rhoTarget:RemoveModifierByName("modifier_rho_aias_shield")
 			rhoTarget:SetHealth(currentHealth + keys.DamageTaken + rhoTarget.rhoShieldAmount)
 			rhoTarget.rhoShieldAmount = 0
 		end
 	else
-		print("rho not broken, remaining shield : " .. rhoTarget.rhoShieldAmount)
+		--print("rho not broken, remaining shield : " .. rhoTarget.rhoShieldAmount)
 		rhoTarget:SetHealth(currentHealth + keys.DamageTaken)
 	end
 end

@@ -2657,7 +2657,7 @@
 				"IsHidden"		"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "250"
+					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "300"
 				}
 				"OnAttackLanded"
 				{
@@ -3591,7 +3591,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"crit_damage"		"250"
+				"crit_damage"		"300"
 			}
 			"04"
 			{
@@ -3773,7 +3773,7 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE "
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_AOE "
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY" 
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -3868,7 +3868,7 @@
 			"particle"					"particles/units/heroes/hero_warlock/warlock_upheaval.vpcf"
 		}
 		
-		"AbilityCastPoint"				"2.0"
+		"AbilityCastPoint"				"2.3"
 		"AbilityCooldown"				"20"
 		"AbilityManaCost"				"400"
 		
@@ -3877,7 +3877,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"delay"					"2.5"
+				"delay"					"2.3"
 			}
 			"02"
 			{
@@ -4874,20 +4874,20 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"40 55 70 85 100"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200 225 250 275 300"
+				"damage"			"160 195 230 265 300"
 			}
 			
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"retreat_distance"			"350"
+				"retreat_distance"			"600"
 			}
 			"03"
 			{
@@ -4961,14 +4961,14 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"40 55 70 85 100"
 		
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"200 225 250 275 300"
+				"damage"			"150 175 200 225 250"
 			}
 			
 			"02"
@@ -4978,13 +4978,13 @@
 			}
 			"03"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"tooltip_weapon_drop_delay"	"0.06"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"tooltip_channeling"	"5.0"
+				"tooltip_channeling"	"3.5"
 			}
 		}
 		
@@ -5121,7 +5121,7 @@
 		"AbilityCastRange"				"1500"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCooldown"				"9.0"
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"40 55 70 85 100"
 		
 		"precache"
 		{
@@ -5209,7 +5209,7 @@
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
+		"AbilityManaCost"				"250"
 		
 		"AbilitySpecial"
 		{
@@ -19772,11 +19772,11 @@
 			"modifier_gladiusanus_blauserum_anim"
 			{
 				"OverrideAnimation"     "ACT_DOTA_ATTACK_EVENT"	
-				"Duration"			"1.0"
+				"Duration"			"0.5"
 				"IsHidden"			"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
 				}
 			}
 			"modifier_invictus_spiritus"
@@ -20306,7 +20306,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"13"
+		"AbilityManaCost"				"8"
 
 		"precache"
 		{
@@ -20394,7 +20394,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"12"
+		"AbilityManaCost"				"8"
 
 		"precache"
 		{
@@ -20792,7 +20792,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"370 425 480 535 590"
+				"heal_amount"			"400 500 600 700 800"
 			}
 		}
 
@@ -20858,11 +20858,11 @@
 			"modifier_blade_of_the_devoted_anim"
 			{
 				"OverrideAnimation"     "ACT_DOTA_ATTACK_EVENT"	
-				"Duration"			"1.0"
+				"Duration"			"0.5"
 				"IsHidden"			"1"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.0"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
 				}
 			}
 		}
@@ -21662,12 +21662,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"			"3"
+				"damage"			"5"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"stack_damage"			"10"
+				"stack_damage"			"15"
 			}
 		}
 
@@ -21745,7 +21745,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow"				"-30"
+				"slow"				"-50"
 			}
 			"03"
 			{
@@ -21840,7 +21840,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mr_reduction"			"-3"
+				"mr_reduction"			"-4"
 			}
 			"02"
 			{
@@ -23751,7 +23751,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"second_strike_cast_delay"				"0.45"
+				"second_strike_cast_delay"				"0.4"
 			}
 			"06"
 			{
@@ -23761,7 +23761,7 @@
 			"07"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_cast_delay"				"0.6"
+				"third_strike_cast_delay"				"0.5"
 			}
 			"08"
 			{
@@ -23839,7 +23839,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"250"
 		"AbilityCastRangeBuffer"		"150"
-		"AbilityCastPoint"				"0.45"
+		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"5"
 		"AbilityManaCost"				"300"
 		
@@ -23946,7 +23946,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"250"
 		"AbilityCastRangeBuffer"		"150"
-		"AbilityCastPoint"				"0.6"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"5"
 		"AbilityManaCost"				"400"
 		
@@ -24095,17 +24095,17 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"open_wound_duration"		"5"	
+				"open_wound_duration"		"3.5"	
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"open_wound_damage"		"50 125 200 275 350"	
+				"open_wound_damage"		"25 50 75 100 125"	
 			}
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"open_wound_stun_duration"		"0.3 0.4 0.5 0.6 0.7"	
+				"open_wound_stun_duration"		"0.6"	
 			}
 		}
 
@@ -24149,6 +24149,8 @@
 						"ScriptFile"	"lishuwen_ability"
 						"Function"		"OnNSSTakeDamage"
 						"DamageTaken"	"%attack_damage"	
+						"ProcDamage"			"%open_wound_damage"
+						"ProcStunDuration"		"%open_wound_stun_duration"
 					}
 				}
 				"OnDestroy"
@@ -24235,7 +24237,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"second_strike_cast_delay"				"0.45"
+				"second_strike_cast_delay"				"0.35"
 			}
 			"06"
 			{
@@ -24255,7 +24257,7 @@
 			"09"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_cast_delay"				"0.6"
+				"third_strike_cast_delay"				"0.45"
 			}
 			"10"
 			{
@@ -24348,7 +24350,7 @@
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.45"
+		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"5"
 		"AbilityManaCost"				"300"
 		
@@ -24477,7 +24479,7 @@
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"500"
-		"AbilityCastPoint"				"0.6"
+		"AbilityCastPoint"				"0.5"
 		"AbilityCooldown"				"5"
 		"AbilityManaCost"				"400"
 		

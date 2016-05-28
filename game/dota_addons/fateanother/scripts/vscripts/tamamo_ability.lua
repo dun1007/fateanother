@@ -162,7 +162,7 @@ function OnCharmAttacked(keys)
 	-- 6 stacks
 	if loadedCharmName == "tamamo_fiery_heaven" then
 		DeduceCharmStack(caster, "modifier_fiery_heaven_indicator")
-		if IncrementCharmStack(caster, target, ability, "modifier_fiery_heaven_indicator_enemy") == 6 then
+		if IncrementCharmStack(caster, target, ability, "modifier_fiery_heaven_indicator_enemy") == 5 then
 			target:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
 			DoDamage(caster, target, (target:GetMaxHealth()-target:GetHealth())*keys.StackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
@@ -180,7 +180,7 @@ function OnCharmAttacked(keys)
 		local StackStunDuration = keys.StackStunDuration
 		DeduceCharmStack(caster, "modifier_frigid_heaven_indicator")
 		-- 6 stacks
-		if IncrementCharmStack(caster, target, ability, "modifier_frigid_heaven_indicator_enemy") == 6 then
+		if IncrementCharmStack(caster, target, ability, "modifier_frigid_heaven_indicator_enemy") == 5 then
 			target:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
 			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = StackStunDuration})
 
@@ -194,9 +194,10 @@ function OnCharmAttacked(keys)
 		end
 	elseif loadedCharmName == "tamamo_gust_heaven" then
 		DeduceCharmStack(caster, "modifier_gust_heaven_indicator")
-		if IncrementCharmStack(caster, target, ability, "modifier_gust_heaven_indicator_enemy") == 6 then
+		if IncrementCharmStack(caster, target, ability, "modifier_gust_heaven_indicator_enemy") == 5 then
 			target:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
 			ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge", {}) 
+			ApplyStrongDispel(target)
 			if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge_slow_tier1", {}) end
 			if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge_slow_tier2", {}) end
 			target:EmitSound("DOTA_Item.DiffusalBlade.Activate")
@@ -325,7 +326,7 @@ function OnSoulstreamProjectileTick(keys)
 			for k,v in pairs(targets) do
 				if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
 					-- 6 stacks
-					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 5 then
 						v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
 						DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
@@ -337,7 +338,7 @@ function OnSoulstreamProjectileTick(keys)
 					end
 				elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
 					-- 6 stacks
-					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 5 then
 						v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
 						v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
 
@@ -345,13 +346,15 @@ function OnSoulstreamProjectileTick(keys)
 						v:EmitSound("Ability.FrostBlast")
 					else
 						v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
-						ability:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
+						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
 					end
 				elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
 					-- 6 stacks
-					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 5 then
 						v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
 						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
+						ApplyStrongDispel(v)
+						print("applied dispel")
 						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
 						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
 						v:EmitSound("DOTA_Item.DiffusalBlade.Activate")

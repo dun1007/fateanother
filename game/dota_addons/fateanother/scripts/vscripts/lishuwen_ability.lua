@@ -343,18 +343,16 @@ function OnNSSTakeDamage(keys)
 	local target = keys.unit
 	local ability = keys.ability
 	local attacker = keys.attacker
-	local damage = caster.ProcDamage
-	local stunDuration = caster.ProcStunDuration
+	local damage = keys.ProcDamage
+	local stunDuration = keys.ProcStunDuration
 
 	if attacker:GetName() == "npc_dota_hero_bloodseeker" and target.IsNSSProcReady then
 		target.IsNSSProcReady = false
 		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = stunDuration})
-		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 		Timers:CreateTimer(caster.ProcStunDuration + 0.3, function()
 			target.IsNSSProcReady = true
 		end)
-		caster.ProcDamage = caster.ProcDamage /2
-		caster.ProcStunDuration = caster.ProcStunDuration/2
 
 		target:EmitSound("hero_bloodseeker.rupture.cast")
 	end

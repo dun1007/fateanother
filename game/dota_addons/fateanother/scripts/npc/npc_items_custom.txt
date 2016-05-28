@@ -2246,7 +2246,7 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
-	    "ItemInitialCharges" "2"
+	    "ItemInitialCharges" "3"
 	    "ItemStackable" "1"
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
@@ -2261,8 +2261,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"					"10"
+				"var_type"				"FIELD_FLOAT"
+				"duration"					"7.5"
 			}
 		}
 	    "OnSpellStart"
@@ -2279,7 +2279,7 @@
 	    {
 	    	"modifier_magic_immunity"
 	    	{
-	    		"Duration"		"10.0"
+	    		"Duration"		"%duration"
 	    		"OnCreated"
 	    		{
 					"AttachEffect"

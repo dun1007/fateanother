@@ -56,3 +56,19 @@
 
 		"DOTA_Tooltip_Ability_false_assassin_minds_eye"	"Mind's Eye"
 		"DOTA_Tooltip_ability_false_assassin_minds_eye_Description"	"Assassin analyzes his foe's weakness with 6th sense, causing his base attack to deal additional pure damage based on AGI. If enemy is Revoked, damage is significantly amplified."
+
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike"		"No Second Strike"
+        "DOTA_Tooltip_Ability_lishuwen_no_second_strike_Description"	"Assassin decimates target with a devastating body blow to a vital spot, <font color='#FF3399'>stunning</font>, inflicting pure damage, and leaving <font color='#00FFFF'>Open Wound</font> for several seconds.\nWhile Open Wound lasts, further damage done by Assassin will <font color='#FF3399'>stun</font> and deal pure damage again."
+
+        "DOTA_Tooltip_Ability_tamamo_armed_up"     "Armed Up"
+        "DOTA_Tooltip_ability_tamamo_armed_up_Description" "SPELLBOOK : Caster loads several element-infused talismans for use, granting stackable effect on her base attack and Soulstream. 5th hit consumes all stacks to apply bonus effect on target."
+
+		"DOTA_Tooltip_Ability_tamamo_fiery_heaven_stack_damage"     "%5 STACK DAMAGE:"
+		"DOTA_Tooltip_Ability_tamamo_frigid_heaven_stack_stun_duration"     "5 STACK STUN DURATION:"
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_stack_lock_duration"     "5 STACK LOCK DURATION:"
+        "DOTA_Tooltip_Ability_tamamo_gust_heaven_stack_slow_duration"     "5 STACK SLOW DURATION:"
+        
+		"DOTA_Tooltip_Ability_tamamo_gust_heaven_Note0"		"5 stack dispel effect is a strong dispel, and will remove shield effects as well(i.e Rho Aias, B Scroll)"
+
+		"DOTA_Tooltip_Ability_master_shard_of_prosperity"				"Shard of Prosperity"
+		"DOTA_Tooltip_ability_master_shard_of_prosperity_Description"	"Instantly grants 5 level to Servant and 2 maximum Health to Master."
