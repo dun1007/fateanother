@@ -3,7 +3,7 @@ require('lishuwen_ability')
 require('archer_ability')
 require('master_ability')
 require('gille_ability')
-require('notifications')
+require('libraries/notifications')
 require('items')
 require('modifiers/attributes')
 require('libraries/util' )
@@ -12,6 +12,7 @@ require('libraries/popups')
 require('libraries/animations')
 require('libraries/crowdcontrol')
 require('libraries/physics')
+require('libraries/attachments')
 
 _G.IsPickPhase = true
 _G.IsPreRound = true
@@ -445,7 +446,9 @@ function FateGameMode:OnAllPlayersLoaded()
                         hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+BLESSING_MANA_REWARD)
                         MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
                     end)
-                    Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                    --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                    Notifications:TopToAll({text="#Fate_Timer_10minute", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="25px"}})
+
                     
                     return BLESSING_PERIOD
             end})
@@ -453,7 +456,7 @@ function FateGameMode:OnAllPlayersLoaded()
                 Timers:CreateTimer('shard_drop_alert', {
                     endTime = SHARD_DROP_PERIOD - 5,
                     callback = function()
-                    Notifications:TopToAll("<font color='#58ACFA'>Shard of Holy Grail </font> inbound! It will drop onto random location within center area.", 5, nil, {color="rgb(255,255,255)", ["font-size"]="35px"})
+                    Notifications:TopToAll({text="<font color='#58ACFA'>Shard of Holy Grail </font> inbound! It will drop onto random location within center area.", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="35px"}})
                     EmitGlobalSound( "powerup_03" )
                     return SHARD_DROP_PERIOD
                 end})
@@ -698,6 +701,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero.CStock = 10
     hero.ShardAmount = 0
 
+
     Timers:CreateTimer(1.0, function()
         if hero:GetTeam() == 2 then 
             if self.nCurrentRound == 0 or self.nCurrentRound == 1 then
@@ -807,6 +811,8 @@ function FateGameMode:OnHeroInGame(hero)
             for i=6, 11 do
                 hero:GetAbilityByIndex(i):SetHidden(false)
             end
+        elseif hero:GetName() == "npc_dota_hero_queenofpain" then
+            Attachments:AttachProp(hero, "attach_sword", "models/astolfo/astolfo_sword.vmdl")
         end
     end)
 end
@@ -873,7 +879,7 @@ function AddRandomShard(hero)
     local choice = math.random(#shardDropTable)
     local ability = masterUnit:FindAbilityByName(shardDropTable[choice])
     masterUnit:CastAbilityImmediately(ability, hero:GetPlayerOwnerID())
-    Notifications:TopToAll(FindName(hero:GetName()) .. " has acquired <font color='#FF6600'>" .. shardRealNameTable[choice] .. "</font>!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="35px"})
+    Notifications:TopToAll({text=FindName(hero:GetName()) .. " has acquired <font color='#FF6600'>" .. shardRealNameTable[choice] .. "</font>!", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="25px"}})
 
 end
 
@@ -1100,7 +1106,9 @@ function FateGameMode:OnPlayerLevelUp(keys)
     local level = keys.level
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 3)
     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 3)
-    Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
+    --Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
+    
+    Notifications:Top(player, {text= "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", duration=5, style={color="rgb(255,255,255)", ["font-size"]="20px"}, continue=true})
     MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
 end
 

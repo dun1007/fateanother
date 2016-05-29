@@ -1,0 +1,19 @@
+"Attachments"
+{
+	"models/astolfo/astolfo.vmdl"
+	{
+		"attach_sword"
+		{
+			"models/astolfo/astolfo_sword.vmdl"
+			{
+				"scale"		"100"
+				"pitch"		"120"
+				"roll"		"100"
+				"yaw"		"92"
+				"YPos"		"-0.050000000745058"
+				"ZPos"		"-0.10000000149012"
+				"XPos"		"0"
+			}
+		}
+	}
+}

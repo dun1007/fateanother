@@ -25826,6 +25826,123 @@
 			}
 		}
 	}
+
+
+	//=======================================
+	// Astolfo Passive: Casa Di Logistilla
+	//=======================================
+	"astolfo_casa_di_logistilla"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"astolfo/astolfo_casa_di_logistilla.lua"
+		"MaxLevel"						"2"
+		"AbilityTextureName"			"astolfo_casa_di_logistilla"
+
+		"AbilityCooldown"				"60"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+	}
+
+	//=======================================
+	// Astolfo: Hipogriff: Vanish
+	//=======================================
+	"astolfo_hippogriff_vanish"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"astolfo/astolfo_hippogriff_vanish.lua"
+		"MaxLevel"						"5"
+		"AbilityTextureName"			"astolfo_hippogriff_vanish"
+
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"100"
+
+		"precache"
+		{
+		}
+	}
+
+	//=======================================
+	// Astolfo: Down with a Touch!
+	//=======================================
+	"astolfo_down_with_a_touch"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"astolfo/astolfo_down_with_a_touch.lua"
+		"MaxLevel"						"5"
+		"AbilityTextureName"			"astolfo_down_with_a_touch"
+
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"200"
+
+		"precache"
+		{
+		}
+	}
+
+	//=======================================
+	// Astolfo: La Braque Luna
+	//=======================================
+	"astolfo_la_braque_luna"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"astolfo/astolfo_la_braque_luna.lua"
+		"MaxLevel"						"5"
+		"AbilityTextureName"			"astolfo_la_braque_luna"
+
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"0"
+
+		"precache"
+		{
+		}
+	}
+
+	//=======================================
+	// Astolfo: Hipogriff: Raid
+	//=======================================
+	"astolfo_hippogriff_raid"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"astolfo/astolfo_hippogriff_raid.lua"
+		"MaxLevel"						"5"
+		"AbilityTextureName"			"astolfo_hippogriff_raid"
+
+		"AbilityCooldown"				"15"
+		"AbilityManaCost"				"800"
+
+		"precache"
+		{
+		}
+	}
+
+	//=======================================
+	// Astolfo: Hipogriff: Ride
+	//=======================================
+	"astolfo_hippogriff_ride"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"					"astolfo/astolfo_hippogriff_ride.lua"
+		"MaxLevel"						"1"
+		"AbilityTextureName"			"astolfo_hippogriff_raid"
+
+		"AbilityCooldown"				"150"
+		"AbilityManaCost"				"800"
+
+		"precache"
+		{
+		}
+	}
+
+
 	//================================================
 	// dummy unit passve (collection of global modifiers)
 	//================================================

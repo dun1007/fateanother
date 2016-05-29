@@ -6,8 +6,8 @@
 		m_meshList =
 		[
 			{
-				m_meshName = "astolfo_sword"
-				m_meshFile = "models/astolfo/astolfo_sword.fbx"
+				m_meshName = "astolfo_horn"
+				m_meshFile = "models/astolfo/astolfo_horn.fbx"
 				m_materialSearchPath = ""
 				m_bSkinParentedObjects = true
 				m_bLegacySkinParentedTransforms = false
@@ -109,7 +109,7 @@
 		m_vMaterialRemapList =
 		[
 			{
-				m_sSearchMaterial = "*"
+				m_sSearchMaterial = "02_-_default.vmat"
 				m_sReplaceMaterial = "materials/astolfo/astolfo.vmat"
 			},
 		]
