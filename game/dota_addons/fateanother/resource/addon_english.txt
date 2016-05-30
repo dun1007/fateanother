@@ -2954,9 +2954,9 @@
         "DOTA_Tooltip_Ability_astolfo_down_with_a_touch_slow"		"%SLOW AMOUNT:"
         "DOTA_Tooltip_Ability_astolfo_down_with_a_touch_slow_duration"		"SLOW DURATION:"
         "DOTA_Tooltip_Ability_astolfo_down_with_a_touch_lock_duration"		"LOCK DURATION:"
- 
+ 		
         "DOTA_Tooltip_Ability_astolfo_la_black_luna"       "La Black Luna"
-        "DOTA_Tooltip_Ability_astolfo_la_black_luna_Description"   "CHANNELLED: Rider blows his blaring horn, deafening enemy heroes to most sounds and slowing their movespeed. In addition, enemies in closer range are silenced and/or dealt damage based on their current health.\nUpkeep cost increases linearly every 0.5 seconds." 
+        "DOTA_Tooltip_Ability_astolfo_la_black_luna_Description"   "CHANNELLED: Rider blows his blaring horn, deafening enemy heroes to most sounds and slowing their movespeed. In addition, enemies in closer range are silenced and or dealt damage based on their current health.\nUpkeep cost increases linearly every 0.5 seconds." 
         "DOTA_Tooltip_Ability_astolfo_la_black_luna_radius"	"DEAFEN AND SLOW RADIUS:"
         "DOTA_Tooltip_Ability_astolfo_la_black_luna_slow_amount"		"%SLOW AMOUNT:"  
         "DOTA_Tooltip_Ability_astolfo_la_black_luna_damage_radius"		"DAMAGE RADIUS:"
