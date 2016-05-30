@@ -18,7 +18,8 @@ var heroes = [
 	"npc_dota_hero_omniknight",
 	"npc_dota_hero_enchantress",
 	"npc_dota_hero_bloodseeker",
-	"npc_dota_hero_mirana"
+	"npc_dota_hero_mirana",
+	"npc_dota_hero_queenofpain"
 ]
 
 var names = [
@@ -41,7 +42,8 @@ var names = [
 	"White Saber(Extra)",
 	"Caster(Extra)",
 	"Assassin(Extra)",
-	"Ruler(Apocrypha)"
+	"Ruler(Apocrypha)",
+	"Rider of Black(Apocrypha)"
 ]
 
 
@@ -65,7 +67,8 @@ var abilities = [
 	["gawain_invigorating_ray", "gawain_blade_of_the_devoted", "gawain_excalibur_galatine", "gawain_solar_embodiment", "fate_empty1", "gawain_suns_embrace"],
 	["tamamo_soulstream", "tamamo_subterranean_grasp", "tamamo_mantra", "fate_empty1", "tamamo_armed_up", "tamamo_amaterasu"],
 	["lishuwen_concealment", "lishuwen_cosmic_orbit", "lishuwen_fierce_tiger_strike", "lishuwen_martial_arts", "fate_empty1", "lishuwen_no_second_strike"],
-	["jeanne_charisma", "jeanne_purge_the_unjust", "jeanne_gods_resolution", "jeanne_magic_resistance_ex", "jeanne_saint", "jeanne_luminosite_eternelle"]
+	["jeanne_charisma", "jeanne_purge_the_unjust", "jeanne_gods_resolution", "jeanne_magic_resistance_ex", "jeanne_saint", "jeanne_luminosite_eternelle"],
+	["astolfo_hippogriff_vanish", "astolfo_down_with_a_touch", "astolfo_la_black_luna", "fate_empty1", "astolfo_casa_di_logistilla", "astolfo_hippogriff_raid"]
 ]
 
 var attributes = [
@@ -88,7 +91,8 @@ var attributes = [
 	["gawain_attribute_dawnbringer", "gawain_attribute_blessing_of_fairy", "gawain_attribute_divine_meltdown", "gawain_attribute_sunlight", "gawain_attribute_eclipse"],
 	["tamamo_attribute_spirit_theft", "tamamo_attribute_mystic_shackle", "tamamo_attribute_tamamo_escape", "tamamo_attribute_witchcraft"],
 	["lishuwen_attribute_circulatory_shock", "lishuwen_attribute_improve_martial_arts", "lishuwen_attribute_dual_class", "lishuwen_attribute_furious_chain"],
-	["jeanne_attribute_identity_discernment", "jeanne_attribute_improve_saint", "jeanne_attribute_punishment", "jeanne_attribute_divine_symbol"]
+	["jeanne_attribute_identity_discernment", "jeanne_attribute_improve_saint", "jeanne_attribute_punishment", "jeanne_attribute_divine_symbol"],
+	["astolfo_attribute_riding", "astolfo_attribute_monstrous_strength", "astolfo_attribute_independent_action", "astolfo_attribute_sanity"]
 ]
 
 var comboes = [
@@ -111,7 +115,8 @@ var comboes = [
 	"gawain_supernova",
 	"tamamo_polygamist_castration_fist",
 	"lishuwen_raging_dragon_strike",
-	"jeanne_combo_la_pucelle"
+	"jeanne_combo_la_pucelle",
+	"astolfo_hippogriff_ride"
 ]
 
 var guidelinks = [

@@ -25845,6 +25845,25 @@
 		"precache"
 		{
 		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"passive_mr"		"20"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_mr"		"100"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"active_duration"		"1.5"
+			}		
+		}
 	}
 
 	//=======================================
@@ -25864,6 +25883,19 @@
 		"precache"
 		{
 		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"banish_duration"		"1.5"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"		"250 325 400 475 550"
+			}	
+		}
 	}
 
 	//=======================================
@@ -25877,30 +25909,88 @@
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_down_with_a_touch"
 
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"				"24 22 20 18 16"
 		"AbilityManaCost"				"200"
 
 		"precache"
 		{
 		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"attack_amount"		"4"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"		"50 70 90 110 130"
+			}	
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow"		"70"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_duration"		"1.0"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"lock_duration"		"0.8 1.2 1.6 2.0 2.4"
+			}		
+		}
 	}
 
 	//=======================================
-	// Astolfo: La Braque Luna
+	// Astolfo: La black Luna
 	//=======================================
-	"astolfo_la_braque_luna"
+	"astolfo_la_black_luna"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_la_braque_luna.lua"
+		"ScriptFile"					"astolfo/astolfo_la_black_luna.lua"
 		"MaxLevel"						"5"
-		"AbilityTextureName"			"astolfo_la_braque_luna"
+		"AbilityTextureName"			"astolfo_la_black_luna"
 
 		"AbilityCooldown"				"15"
 		"AbilityManaCost"				"0"
 
 		"precache"
 		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"		"2500"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_amount"		"10 15 20 25 30"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_radius"		"900 1050 1200 1350 1500"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"		"5 6 7 8 9"
+			}		
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"silence_radius"		"350 450 550 650 750"
+			}	
 		}
 	}
 
@@ -25921,6 +26011,39 @@
 		"precache"
 		{
 		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cast_delay"		"0.5"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"total_delay"		"4.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"radius"		"600"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"first_impact_damage"		"30"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"first_impact_stun_duration"		"2"
+			}
+			"06"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"second_impact_damage"		"500 675 850 1025 1200"
+			}
+		}
 	}
 
 	//=======================================
@@ -25932,7 +26055,7 @@
 		"BaseClass"						"ability_lua"
 		"ScriptFile"					"astolfo/astolfo_hippogriff_ride.lua"
 		"MaxLevel"						"1"
-		"AbilityTextureName"			"astolfo_hippogriff_raid"
+		"AbilityTextureName"			"astolfo_hippogriff_ride"
 
 		"AbilityCooldown"				"150"
 		"AbilityManaCost"				"800"
@@ -25943,6 +26066,197 @@
 	}
 
 
+	//=======================================
+	// Astolfo Attribute: Riding
+	//=======================================
+	"astolfo_attribute_riding"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"astolfo_attribute_riding"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"vanish_stun_duration"		"0.5"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"raid_first_impact_damage"		"10"
+			}	
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"raid_second_imact_radius"		"100"
+			}	
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"Function"		"OnRidingAcquired"
+			}
+		}
+	}
+
+
+	//=======================================
+	// Astolfo Attribute: Monstrous Strength
+	//=======================================
+	"astolfo_attribute_monstrous_strength"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"astolfo_attribute_monstrous_strength"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"11"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"strength_bonus"		"10"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_pct"		"4"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"Function"		"OnMStrengthAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Astolfo Attribute: Independent Action
+	//=======================================
+	"astolfo_attribute_independent_action"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"astolfo_attribute_independent_action"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"12"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health_regen"		"1"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_regen"		"3"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"health_regen_boosted"		"2.5"
+			}	
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_regen_boosted"		"10"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"Function"		"OnIActionAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Astolfo Attribute: Sanity
+	//=======================================
+	"astolfo_attribute_sanity"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"astolfo_attribute_sanity"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"casa_radius"		"300"
+			}	
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"root_duration"		"0.5"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"Function"		"OnSanityAcquired"
+			}
+		}
+	}
 	//================================================
 	// dummy unit passve (collection of global modifiers)
 	//================================================

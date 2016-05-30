@@ -182,6 +182,15 @@ JeanneAttribute = {
 	attrCount = 4
 }
 
+AstolfoAttribute = {
+	"astolfo_attribute_riding",
+	"astolfo_attribute_monstrous_strength",
+	"astolfo_attribute_independent_action",
+	"astolfo_attribute_sanity",
+	"astolfo_hippogriff_ride",
+	attrCount = 4
+}
+
 --[[LiAttribute = {
 	attrCount = 4
 }]]
@@ -467,6 +476,8 @@ function FindAttribute(name)
     	attributes = LiAttribute
     elseif name == "npc_dota_hero_mirana" then
     	attributes = JeanneAttribute
+    elseif name == "npc_dota_hero_queenofpain" then
+    	attributes = AstolfoAttribute
     end
     return attributes
 end 
