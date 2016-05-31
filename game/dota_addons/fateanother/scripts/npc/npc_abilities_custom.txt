@@ -25834,16 +25834,25 @@
 	"astolfo_casa_di_logistilla"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_casa_di_logistilla.lua"
-		"MaxLevel"						"2"
+		"BaseClass"						"ability_datadriven"
 		"AbilityTextureName"			"astolfo_casa_di_logistilla"
-
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"25"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityCooldown"				"60"
 		"AbilityManaCost"				"0"
 
 		"precache"
 		{
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnCasaStart"
+			}
 		}
 
 		"AbilitySpecial"
@@ -25864,6 +25873,44 @@
 				"active_duration"		"1.5"
 			}		
 		}
+
+		"Modifiers"
+		{
+			"modifier_casa_passive"
+			{
+				"Passive"	"1"
+				"IsHidden"	"1"
+				"ThinkInterval"				"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnCasaThink"
+					}
+				}
+
+			}
+			"modifier_casa_passive_mr"
+			{
+				"Duration"		"0.533"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%passive_mr"
+				}
+			}
+
+
+			"modifier_casa_active_mr"
+			{
+				"Duration"		"1.5"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%active_mr"
+				}				
+			}
+		}
 	}
 
 	//=======================================
@@ -25872,29 +25919,104 @@
 	"astolfo_hippogriff_vanish"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_hippogriff_vanish.lua"
+		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 		"AbilityTextureName"			"astolfo_hippogriff_vanish"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 
-		"AbilityCooldown"				"15"
+		"AbilityCooldown"				"25 22 19 16 13"
 		"AbilityManaCost"				"100"
+		"AbilityCastRange"				"1000"
+		"AbilityCastRangeBuffer"		"100"
+		"AbilityCastPoint"				"0.6"
+
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"0.8"
 
 		"precache"
 		{
+			"particles"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+			"particles"		"particles/units/heroes/hero_shadow_demon/shadow_demon_disruption.vpcf"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
+			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"
 		}
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"banish_duration"		"1.5"
-			}	
+				"cast_delay"			"0.6"
+			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage"		"250 325 400 475 550"
 			}	
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"banish_duration"		"1.5"
+			}	
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnVanishStart"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "astolfo_ability"
+				"Function"      "OnVanishHit"
+				"Damage"		"%damage"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_hippogriff_vanish_banish"
+			{
+	    		"EffectName"		"particles/units/heroes/hero_shadow_demon/shadow_demon_disruption.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"Duration"		"%banish_duration"
+				"IsDebuff"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "astolfo_ability"
+						"Function"      "OnVanishDebuffStart"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "astolfo_ability"
+						"Function"      "OnVanishDebuffEnd"						
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_SILENCED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
@@ -25904,16 +26026,28 @@
 	"astolfo_down_with_a_touch"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_down_with_a_touch.lua"
+		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_down_with_a_touch"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"1"
 
-		"AbilityCooldown"				"24 22 20 18 16"
+		"AbilityCooldown"				"30 26 22 18 14"
 		"AbilityManaCost"				"200"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.3"
+
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
+		"AnimationPlaybackRate" 		"1.0"
 
 		"precache"
 		{
+			"particles"		"particles/custom/false_assassin/fa_quickdraw.vpcf"	
 		}
 
 		"AbilitySpecial"
@@ -25926,23 +26060,43 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"		"50 70 90 110 130"
+				"damage"		"80 100 120 140"
 			}	
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow"		"70"
+				"slow"		"30 40 50 60 70"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_duration"		"1.0"
+				"slow_duration"		"3"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"lock_duration"		"0.8 1.2 1.6 2.0 2.4"
 			}		
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnDownStart"
+				"Target"		"POINT"
+			}
+		}
+
+		"OnProjectileHitUnit"
+		{
+			"RunScript"
+			{
+				"ScriptFile"    "astolfo_ability"
+				"Function"      "OnDownHit"
+				"Damage"		"%damage"
+			}
 		}
 	}
 
@@ -25952,8 +26106,7 @@
 	"astolfo_la_black_luna"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_la_black_luna.lua"
+		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_la_black_luna"
 
@@ -26000,8 +26153,7 @@
 	"astolfo_hippogriff_raid"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_hippogriff_raid.lua"
+		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_hippogriff_raid"
 
@@ -26016,29 +26168,34 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
+				"max_range"				"2250"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
 				"cast_delay"		"0.5"
 			}	
-			"02"
+			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"total_delay"		"4.0"
 			}
-			"03"
+			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"radius"		"600"
 			}
-			"04"
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"first_impact_damage"		"30"
 			}
-			"05"
+			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"first_impact_stun_duration"		"2"
 			}
-			"06"
+			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"second_impact_damage"		"500 675 850 1025 1200"
@@ -26052,8 +26209,7 @@
 	"astolfo_hippogriff_ride"
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
-		"BaseClass"						"ability_lua"
-		"ScriptFile"					"astolfo/astolfo_hippogriff_ride.lua"
+		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityTextureName"			"astolfo_hippogriff_ride"
 

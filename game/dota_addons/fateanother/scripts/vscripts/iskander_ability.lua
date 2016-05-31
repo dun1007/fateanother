@@ -211,6 +211,7 @@ function OnChariotStart(keys)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 	caster:AddNewModifier(caster, nil, "modifier_ms_cap", {duration = keys.Duration+1})
 	--caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
+	caster.OriginalModel = "models/iskander/iskander_chariot.vmdl"
 	caster:SetModel("models/iskander/iskander_chariot.vmdl")
     caster:SetOriginalModel("models/iskander/iskander_chariot.vmdl")
     caster:SetModelScale(1.0)
@@ -337,6 +338,7 @@ function OnChariotEnd(keys)
 		caster:SwapAbilities("iskander_army_of_the_king", caster:GetAbilityByIndex(5):GetName(), true, true) 
 	end
 
+	caster.OriginalModel = "models/iskander/iskander.vmdl"
     caster:SetModel("models/iskander/iskander.vmdl")
     caster:SetOriginalModel("models/iskander/iskander.vmdl")
     caster:SetModelScale(1.0)

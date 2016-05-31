@@ -338,8 +338,10 @@ function OnTFStart(keys)
     end
     caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
+    caster.OriginalModel = "models/avenger/trueform/trueform.vmdl"
     caster:SetModel("models/avenger/trueform/trueform.vmdl")
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
+
     caster:SetModelScale(1.1)
 
     caster:EmitSound("Avenger.TransformShort")
@@ -365,6 +367,7 @@ function OnTFEnd(keys)
     if demoncore:GetToggleState() then
     	demoncore:ToggleAbility()
     end
+    caster.OriginalModel = "models/avenger/avenger.vmdl"
     caster:SetModel("models/avenger/avenger.vmdl")
     caster:SetOriginalModel("models/avenger/avenger.vmdl")
 

@@ -694,6 +694,7 @@ function FateGameMode:OnHeroInGame(hero)
     hero.bIsAlertSoundDisabled = false 
     hero:SetAbilityPoints(0)
     hero:SetGold(0, false)
+    hero.OriginalModel = hero:GetModelName()
     LevelAllAbility(hero)
     Timers:CreateTimer(0.85, function()
         hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll

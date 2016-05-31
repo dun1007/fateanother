@@ -187,7 +187,7 @@ donotlevel = {
     "true_assassin_protection_from_wind",
     "avenger_overdrive",
     "berserker_5th_reincarnation",
-    "archer_5th_overedge",
+    "archer_5th_overedge"
 }
 
 CannotReset = {
@@ -234,7 +234,9 @@ CannotReset = {
     "lishuwen_berserk",
     "jeanne_combo_la_pucelle",
     "jeanne_identity_discernment",
-    "tamamo_mystic_shackle"
+    "tamamo_mystic_shackle",
+    "astolfo_casa_di_logistilla",
+    "astolfo_hippogriff_ride"
 }
 
 femaleservant = {
