@@ -26229,16 +26229,29 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"archer_ability"
-				"Function"		"OnBPInterrupted"
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnHornInterrupted"
 			}
 		}
-		"OnChannelSucceeded"
+		"OnChannelFinish"
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"archer_ability"
-				"Function"		"OnBPStart"
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnHornInterrupted"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_la_black_luna"
+			{
+				//thinker for applying abnormal status 
+			}
+			"modifier_la_black_luna_slow"
+			{
+				"IsDebuff"		"1
+				"Duration"		"0.53"
 			}
 		}
 	}
@@ -26295,6 +26308,19 @@
 			{
 				"var_type"				"FIELD_FLOAT"
 				"second_impact_damage"		"500 675 850 1025 1200"
+			}
+		}
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnRaidStart"
+				"Delay"				"%total_delay"
+				"Radius"			"%radius"
+				"FirstDamagePct"		"%first_impact_damage"
+				"StunDuration"			"%first_impact_stun_duration"
+				"SecondDamage"		"%second_impact_damage"
 			}
 		}
 	}

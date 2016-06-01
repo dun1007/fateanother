@@ -145,23 +145,77 @@ function OnHornStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-	
+	caster.currentHornManaCost = ability:GetManaCost(ability:GetLevel())
 
 
-	--[[
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	--print("looping through " .. playerHero:GetName())
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        	-- apply legion horn + silencer vsnd on their client
+        else
+        	-- apply legion horn vsnd on their client
+        end
+    end)
 
-	if not enough mana, return 
-		
-	for all enemy heroes
-		apply silencer vsnd on their client 
-	end 
-	for all allied heroes 
-		apply legion horn vsnd on their client
+
+
+end
+
+function OnHornThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	caster.currentHornManaCost = caster.currentHornManaCOst + ability:GetManaCost(ability:GetLevel())
+	if caster.currentHornManaCost > caster:GetMana() then 
+		caster:Stop() -- stop channeling
 	end
-	for enemies in slow/damage/silence radius 
-		apply CC/damage respectively
-	end
-	]]
+
+    local slowTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, slowRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(slowTargets) do
+		-- apply slow
+    end
+
+    local damageTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, damageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(damageTargets) do
+		-- apply damageend
+    
+
+    local silenceTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, silenceRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(silenceTargets) do
+		-- apply silence
+    end
+end
+
+function OnHornInterrupted(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	caster:RemoveModifierByName("modifier_la_black_luna")
+
+	-- loop through players
+		-- stop sound on client
+end
 
 
+function OnRaidStart(keys)
+	local caster = keys.caster
+	local targetPoint = keys.target_points[1]
+	local ability = keys.ability
+	local firstDmgPct = keys.FirstDamagePct
+	local radius = keys.Radius
+	local stunDuration = keys.StunDuration
+	local secondDmg = keys.SecondDamage
+
+	--[[ 
+	2 seconds timer
+		create beacon at location
+	4 seconds timer
+		for enemies in radius at target location
+			do damage
+			apply stun
+
+	5.5 seconds timer
+		for enemies in radius at target loc
+			do damage
+	--]]
 end
