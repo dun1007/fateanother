@@ -110,7 +110,7 @@
 		[
 			{
 				m_sSearchMaterial = "02_-_default.vmat"
-				m_sReplaceMaterial = "materials/astolfo/astolfo.vmat"
+				m_sReplaceMaterial = "materials/astolfo/astolfo_horn.vmat"
 			},
 		]
 	}

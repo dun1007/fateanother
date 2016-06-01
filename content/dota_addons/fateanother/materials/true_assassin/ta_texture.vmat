@@ -10,6 +10,9 @@ Layer0
 	//---- Normal Maps ----
 	F_NORMAL_MAP 1
 
+	//---- Translucent ----
+	F_ALPHA_TEST 1
+
 	//---- Color ----
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
 	g_vTexCoordOffset "[0.000 0.000]"
@@ -17,6 +20,10 @@ Layer0
 	TextureColor "materials/true_assassin/ta_texture.tga"
 
 	//---- Normal Map ----
-	g_flBumpStrength "1.000"
-	TextureNormal "materials/true_assassin/ta_texture.tga"
+	g_flBumpStrength "0.000"
+	TextureNormal "materials/true_assassin/ta_texture_mask.tga"
+
+	//---- Translucent ----
+	g_flAlphaTestReference "0.700"
+	TextureTranslucency "materials/true_assassin/ta_texture_mask.tga"
 }

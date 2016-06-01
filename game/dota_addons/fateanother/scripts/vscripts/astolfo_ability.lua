@@ -78,7 +78,6 @@ function OnDownStart(keys)
 	local damage = keys.Damage
 	local range = keys.Range
 	local attackCount = keys.AttackCount
-	local lockDuration = keys.LockDuration
 	local counter = 1
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.5)
@@ -107,7 +106,7 @@ function OnDownStart(keys)
 		}
 		local projectile = ProjectileManager:CreateLinearProjectile(spearProjectile)
 		StartAnimation(caster, {duration=0.2, activity=ACT_DOTA_ATTACK, rate=4.0})
-		caster:EmitSound("Hero_PhantomLancer.Attack")
+		caster:EmitSound("Hero_Sniper.AssassinateDamage")
 		counter = counter + 1
 		return 0.12
 	end)
@@ -119,9 +118,11 @@ function OnDownHit(keys)
 	local target = keys.target
 	local damage = keys.Damage
 	local ability = keys.ability
+	local lockDuration = keys.LockDuration
 
 	DoDamage(caster, target, damage , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow", {})
+	giveUnitDataDrivenModifier(caster, target, "locked", lockDuration)
 end
 
 function OnDownSlowTier1End(keys)
@@ -138,4 +139,29 @@ function OnDownSlowTier2End(keys)
 	local ability = keys.ability
 
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow_3", {})
+end
+
+function OnHornStart(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	
+
+
+	--[[
+
+	if not enough mana, return 
+		
+	for all enemy heroes
+		apply silencer vsnd on their client 
+	end 
+	for all allied heroes 
+		apply legion horn vsnd on their client
+	end
+	for enemies in slow/damage/silence radius 
+		apply CC/damage respectively
+	end
+	]]
+
+
 end
