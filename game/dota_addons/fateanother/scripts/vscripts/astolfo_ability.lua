@@ -141,24 +141,28 @@ function OnDownSlowTier2End(keys)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow_3", {})
 end
 
+function OnHornCast(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+end
+
 function OnHornStart(keys)
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
 	caster.currentHornManaCost = ability:GetManaCost(ability:GetLevel())
-
+	StartAnimation(caster, {duration=1.0, activity=ACT_DOTA_CAST_ABILITY_3_END, rate=1.0})
+	Attachments:AttachProp(caster, "attach_horn", "models/astolfo/astolfo_horn.vmdl")
 
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
         	-- apply legion horn + silencer vsnd on their client
+        	EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", player)
         else
         	-- apply legion horn vsnd on their client
+        	EmitSoundOnClient("Hero_LegionCommander.PressTheAttack", player)
         end
     end)
-
-
-
 end
 
 function OnHornThink(keys)
@@ -178,7 +182,7 @@ function OnHornThink(keys)
     local damageTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, damageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(damageTargets) do
 		-- apply damageend
-    
+    end
 
     local silenceTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, silenceRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(silenceTargets) do
@@ -191,7 +195,8 @@ function OnHornInterrupted(keys)
 	local ability = keys.ability
 
 	caster:RemoveModifierByName("modifier_la_black_luna")
-
+	local prop = Attachments:GetCurrentAttachment(caster, "attach_horn")
+	if not prop:IsNull() then prop:RemoveSelf() end
 	-- loop through players
 		-- stop sound on client
 end

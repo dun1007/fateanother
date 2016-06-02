@@ -26037,7 +26037,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 
-		"AbilityCooldown"				"30 26 22 18 14"
+		"AbilityCooldown"				"20 19 18 17 16"
 		"AbilityManaCost"				"200"
 		"AbilityCastRange"				"700"
 		"AbilityCastPoint"				"0.5"
@@ -26176,12 +26176,24 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_la_black_luna"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_CHANNELED | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"3.0"
+		
+		"AbilityCastPoint"				"0.3"
+		"AbilityChannelTime"			"10.0"		
+		"AbilityCastRange"				"2500"
+		"AbilityCooldown"				"38"
+		"AbilityManaCost"				"20"
 
-		"AbilityCooldown"				"15"
-		"AbilityManaCost"				"0"
 
 		"precache"
 		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
 		}
 
 		"AbilitySpecial"
@@ -26211,6 +26223,15 @@
 				"var_type"				"FIELD_FLOAT"
 				"silence_radius"		"350 450 550 650 750"
 			}	
+		}
+
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnHornCast"
+			}		
 		}
 		"OnSpellStart"
 		{
@@ -26250,7 +26271,7 @@
 			}
 			"modifier_la_black_luna_slow"
 			{
-				"IsDebuff"		"1
+				"IsDebuff"		"1"
 				"Duration"		"0.53"
 			}
 		}
@@ -26265,9 +26286,21 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_hippogriff_raid"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
 
-		"AbilityCooldown"				"15"
-		"AbilityManaCost"				"800"
+		"AbilityCooldown"				"20 19 18 17 16"
+		"AbilityManaCost"				"200"
+		"AbilityCastRange"				"700"
+		"AbilityCastPoint"				"0.5"
+
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AnimationPlaybackRate" 		"2.0"
 
 		"precache"
 		{

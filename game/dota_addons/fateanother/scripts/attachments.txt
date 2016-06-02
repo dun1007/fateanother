@@ -9,10 +9,23 @@
 				"scale"		"100"
 				"pitch"		"120"
 				"roll"		"100"
-				"yaw"		"92"
-				"YPos"		"-0.050000000745058"
 				"ZPos"		"-0.10000000149012"
+				"YPos"		"-0.050000000745058"
+				"yaw"		"92"
 				"XPos"		"0"
+			}
+		}
+		"attach_horn"
+		{
+			"models/astolfo/astolfo_horn.vmdl"
+			{
+				"scale"		"1.7999999523163"
+				"pitch"		"30"
+				"roll"		"-60"
+				"ZPos"		"0"
+				"YPos"		"-10"
+				"yaw"		"-100"
+				"XPos"		"-10"
 			}
 		}
 	}
