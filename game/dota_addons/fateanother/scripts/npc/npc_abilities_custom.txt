@@ -26267,7 +26267,15 @@
 		{
 			"modifier_la_black_luna"
 			{
-				//thinker for applying abnormal status 
+				"ThinkInterval"					"0.5"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnHornThink"
+					}
+				}
 			}
 			"modifier_la_black_luna_slow"
 			{

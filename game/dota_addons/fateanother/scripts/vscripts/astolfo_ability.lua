@@ -152,15 +152,16 @@ function OnHornStart(keys)
 	caster.currentHornManaCost = ability:GetManaCost(ability:GetLevel())
 	StartAnimation(caster, {duration=1.0, activity=ACT_DOTA_CAST_ABILITY_3_END, rate=1.0})
 	Attachments:AttachProp(caster, "attach_horn", "models/astolfo/astolfo_horn.vmdl")
-
+	--caster:EmitSound("Hero_LegionCommander.PressTheAttack")
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
-        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        if playerHero:GetTeamNumber() == caster:GetTeamNumber() then
+        	-- apply legion horn vsnd on their client
+        	EmitSoundOnClient("Astolfo.PressTheAttack", player)
+        	--caster:EmitSound("Hero_LegionCommander.PressTheAttack")
+        else
         	-- apply legion horn + silencer vsnd on their client
         	EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", player)
-        else
-        	-- apply legion horn vsnd on their client
-        	EmitSoundOnClient("Hero_LegionCommander.PressTheAttack", player)
         end
     end)
 end
@@ -172,6 +173,8 @@ function OnHornThink(keys)
 	caster.currentHornManaCost = caster.currentHornManaCOst + ability:GetManaCost(ability:GetLevel())
 	if caster.currentHornManaCost > caster:GetMana() then 
 		caster:Stop() -- stop channeling
+	else
+		caster:SetMana(caster:GetMana() - caster.currentHornManaCost)
 	end
 
     local slowTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, slowRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)

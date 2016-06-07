@@ -387,7 +387,6 @@ function OnContractStart(keys)
 		if caster:IsAlive() then
 			if IsValidEntity(caster.GiganticHorror) and caster.GiganticHorror:IsAlive() then
 				caster.GiganticHorror:SetAbsOrigin(targetPoint) 
-				caster.GiganticHorror:EmitSound("Ability.Ravage")
 			else
 				-- Summon Gigantic Horror
 				local tentacle = CreateUnitByName("gille_gigantic_horror", targetPoint, true, nil, nil, caster:GetTeamNumber())
@@ -425,7 +424,7 @@ function OnContractStart(keys)
 				tentacle:SetBaseDamageMax(50 + keys.ability:GetLevel() * 50) 
 				tentacle:SetBaseDamageMin(50 + keys.ability:GetLevel() * 50) 
 				tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 90.0})
-				EmitGlobalSound("Ability.Ravage")
+				EmitGlobalSound("ZC.Ravage")
 			    local playerData = {
                     transport = tentacle:entindex()
                 }
