@@ -25939,7 +25939,7 @@
 
 		"precache"
 		{
-			"particle"		"particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf"
+			"particle"		"particles/custom/astolfo/astolfo_hippogriff_vanish.vpcf"
 			"particle"		"particles/units/heroes/hero_shadow_demon/shadow_demon_disruption.vpcf"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_mirana.vsndevts"
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_oracle.vsndevts"

@@ -23,9 +23,9 @@ function OnVanishStart(keys)
 		Target = target, -- chainTarget
 		Source = caster, -- chainSource
 		Ability = ability,
-		EffectName = "particles/units/heroes/hero_queenofpain/queen_shadow_strike.vpcf",
+		EffectName = "particles/custom/astolfo/astolfo_hippogriff_vanish.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 1000
+		iMoveSpeed = 1800
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 
