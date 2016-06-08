@@ -446,7 +446,7 @@ function OnContractStart(keys)
 				ParticleManager:ReleaseParticleIndex( contractFx3 )
 			end)
 			
-			EmitGlobalSound("Hero_Warlock.Pick")
+			EmitGlobalSound("ZC.Ravage")
 			StopSoundEvent("Hero_Warlock.Upheaval", visiondummy)
 
 
@@ -807,7 +807,7 @@ local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 300)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 650)
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 1000)
-	tentacle:EmitSound("Ability.Ravage")
+	EmitGlobalSound("ZC.Ravage")
 	EmitGlobalSound("ZC.Laugh")
 
 	local contractFx = ParticleManager:CreateParticle("particles/units/heroes/hero_warlock/warlock_upheaval.vpcf", PATTACH_CUSTOMORIGIN, visiondummy)
