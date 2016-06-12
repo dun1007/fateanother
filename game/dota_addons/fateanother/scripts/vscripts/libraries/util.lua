@@ -169,7 +169,11 @@ slowmodifier = {
     "modifier_fierce_tiger_strike_1_slow",
     "modifier_fierce_tiger_strike_3_slow",
     "modifier_purge_the_unjust_slow",
-    "modifier_gods_resolution_slow"
+    "modifier_gods_resolution_slow",
+    "modifier_down_with_a_touch_slow",
+    "modifier_down_with_a_touch_slow_2",
+    "modifier_down_with_a_touch_slow_3",
+    "modifier_la_black_luna_slow"
 }
 
 donotlevel = {

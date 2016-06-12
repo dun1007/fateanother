@@ -18,7 +18,7 @@ function OnVanishStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local info = {
 		Target = target, -- chainTarget
 		Source = caster, -- chainSource
@@ -121,35 +121,43 @@ function OnDownHit(keys)
 	local lockDuration = keys.LockDuration
 
 	DoDamage(caster, target, damage , DAMAGE_TYPE_MAGICAL, 0, ability, false)
-	ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow", {})
 	giveUnitDataDrivenModifier(caster, target, "locked", lockDuration)
+	if not IsImmuneToSlow(target) then
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow", {})
+	end
 end
 
 function OnDownSlowTier1End(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-
-	ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow_2", {})
+	if not IsImmuneToSlow(target) then
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow_2", {})
+	end
 end
 
 function OnDownSlowTier2End(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
-
-	ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow_3", {})
+	if not IsImmuneToSlow(target) then
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow_3", {})
+	end
 end
 
 function OnHornCast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	caster:EmitSound("Ability.Powershot.Alt")
 end
 
 function OnHornStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local radius = keys.Radius
 	caster.currentHornManaCost = ability:GetManaCost(ability:GetLevel())
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_black_luna", {})
+
 	StartAnimation(caster, {duration=1.0, activity=ACT_DOTA_CAST_ABILITY_3_END, rate=1.0})
 	Attachments:AttachProp(caster, "attach_horn", "models/astolfo/astolfo_horn.vmdl")
 	--caster:EmitSound("Hero_LegionCommander.PressTheAttack")
@@ -161,42 +169,65 @@ function OnHornStart(keys)
         	--caster:EmitSound("Hero_LegionCommander.PressTheAttack")
         else
         	-- apply legion horn + silencer vsnd on their client
-        	EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", player)
+        	CustomGameEventManager:Send_ServerToPlayer(player, "emit_horn_sound", {sound="Hero_Silencer.GlobalSilence.Effect"})
         end
     end)
+
+    local shockwaveIndex = ParticleManager:CreateParticle("particles/custom/astolfo/la_black_luna/la_black_luna_shockwave.vpcf", PATTACH_CUSTOMORIGIN, nil)
+    ParticleManager:SetParticleControl( shockwaveIndex, 0, caster:GetAbsOrigin())
+    ParticleManager:SetParticleControl( shockwaveIndex, 1, Vector(500,0,0))
+    ParticleManager:SetParticleControl( shockwaveIndex, 2, Vector(radius,0,0))
 end
 
 function OnHornThink(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local slowRadius = keys.Radius
+	local damageRadius = keys.DamageRadius
+	local silenceRadius = keys.SilenceRadius
+	local damage = keys.Damage
 
-	caster.currentHornManaCost = caster.currentHornManaCOst + ability:GetManaCost(ability:GetLevel())
+	caster.currentHornManaCost = caster.currentHornManaCost + ability:GetManaCost(ability:GetLevel())
 	if caster.currentHornManaCost > caster:GetMana() then 
 		caster:Stop() -- stop channeling
 	else
 		caster:SetMana(caster:GetMana() - caster.currentHornManaCost)
 	end
 
+    local deafTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(deafTargets) do
+		ability:ApplyDataDrivenModifier(caster, v, "modifier_la_black_luna_deaf", {})
+		if v:GetPlayerOwner() then
+			--EmitSoundOnClient("Hero_Silencer.GlobalSilence.Effect", v:GetPlayerOwner())
+		end
+    end
+
     local slowTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, slowRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(slowTargets) do
-		-- apply slow
+		if not IsImmuneToSlow(v) then
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_la_black_luna_slow", {})
+		end
     end
 
     local damageTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, damageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(damageTargets) do
-		-- apply damageend
+		-- apply damage
+		DoDamage(caster, v, v:GetHealth() * damage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
     end
 
     local silenceTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, silenceRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(silenceTargets) do
 		-- apply silence
+		giveUnitDataDrivenModifier(caster, v, "silenced", 0.53)
     end
+
 end
 
 function OnHornInterrupted(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-
+	
+	CustomGameEventManager:Send_ServerToAllClients("stop_horn_sound", {})
 	caster:RemoveModifierByName("modifier_la_black_luna")
 	local prop = Attachments:GetCurrentAttachment(caster, "attach_horn")
 	if not prop:IsNull() then prop:RemoveSelf() end
@@ -204,7 +235,40 @@ function OnHornInterrupted(keys)
 		-- stop sound on client
 end
 
+function CreateGroundMark(caster, team, location, duration)
+	local counter = 0
+	Timers:CreateTimer(function()
+		if counter >= duration then return end
 
+		counter = counter + 0.25
+		return 0.25
+	end)
+
+end
+
+function OnRaidCast(keys)
+	local caster = keys.caster
+	caster:EmitSound("Astolfo.Hippogriff_Raid_Cast")
+end
+
+function CreateBeaconForEnemies(caster, targetPoint)
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	--print("looping through " .. playerHero:GetName())
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and player and playerHero then
+        	local beaconIndex = ParticleManager:CreateParticleForPlayer("particles/custom/astolfo/astolfo_ground_mark_flex.vpcf", PATTACH_CUSTOMORIGIN, nil, player)
+			ParticleManager:SetParticleControl( beaconIndex, 0, targetPoint)
+        	-- set a timer to check whether affected enemies retain buff
+        	Timers:CreateTimer(function()
+        		if playerHero:HasModifier("modifier_la_black_luna_deaf") then
+        			ParticleManager:SetParticleControl( beaconIndex, 0, Vector(20000,20000,1000))
+        		else
+        			ParticleManager:SetParticleControl( beaconIndex, 0, targetPoint)
+        		end
+        		return 0.1
+        	end)
+        end
+    end)
+end
 function OnRaidStart(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
@@ -213,7 +277,58 @@ function OnRaidStart(keys)
 	local radius = keys.Radius
 	local stunDuration = keys.StunDuration
 	local secondDmg = keys.SecondDamage
+	caster:EmitSound("Astolfo.Hippogriff_Raid_Cast_Success")
+	caster:EmitSound("Hero_Phoenix.IcarusDive.Cast")
+	-- create beacon for team
+	local teamBeacon = ParticleManager:CreateParticleForTeam("particles/custom/astolfo/astolfo_ground_mark_flex.vpcf", PATTACH_CUSTOMORIGIN, nil, caster:GetTeam())
+	ParticleManager:SetParticleControl( teamBeacon, 0, targetPoint)
 
+	AddFOWViewer(caster:GetTeamNumber(), targetPoint, radius, 6, false)
+	Timers:CreateTimer(2.0, function()
+		CreateBeaconForEnemies(caster, targetPoint)
+		EmitGlobalSound("Astolfo.Hippogriff_Raid_Shout")
+		Timers:CreateTimer(3.0, function()
+			EmitGlobalSound("Astolfo.Leap")
+
+			local birdOrigin = caster:GetAbsOrigin() + Vector(0,0,2000) + (caster:GetAbsOrigin() - targetPoint):Normalized()*1000
+			local dist = (targetPoint  - birdOrigin):Length2D()
+			local birdVector = (targetPoint  - birdOrigin):Normalized() * dist * 3
+			local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/astolfo/astolfo_hippogriff_raid_flyer.vpcf", PATTACH_CUSTOMORIGIN, nil )
+			ParticleManager:SetParticleControl( swordFxIndex, 0, birdOrigin)
+			ParticleManager:SetParticleControl( swordFxIndex, 1,  birdVector)
+		end)
+
+		Timers:CreateTimer(2.0, function()
+			local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, radius
+		            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			for k,v in pairs(targets) do
+		        DoDamage(caster, v, v:GetMaxHealth() * firstDmgPct/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+		        giveUnitDataDrivenModifier(caster, v, "stunned", stunDuration)
+		    end
+
+			EmitGlobalSound("Astolfo.SolarForge")
+			local firstImpactIndex = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_first_impact.vpcf", PATTACH_CUSTOMORIGIN, nil )
+		    ParticleManager:SetParticleControl(firstImpactIndex, 0, Vector(1,0,0))
+		    ParticleManager:SetParticleControl(firstImpactIndex, 1, Vector(radius-50,0,0))
+		    ParticleManager:SetParticleControl(firstImpactIndex, 2, Vector(1.5,0,0))
+		    ParticleManager:SetParticleControl(firstImpactIndex, 3, targetPoint)
+		    ParticleManager:SetParticleControl(firstImpactIndex, 4, Vector(0,0,0))
+
+			Timers:CreateTimer(1.5, function()
+				local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, radius
+			            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+				for k,v in pairs(targets) do
+			        DoDamage(caster, v, secondDmg, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			    end
+
+				EmitSoundOnLocationWithCaster(targetPoint, "Misc.Crash", caster)
+				local secondImpactIndex = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_second_impact.vpcf", PATTACH_CUSTOMORIGIN, nil )
+			    ParticleManager:SetParticleControl(secondImpactIndex, 0, targetPoint)
+			    ParticleManager:SetParticleControl(secondImpactIndex, 1, Vector(radius,1,1))
+			end)
+
+		end)
+	end)
 	--[[ 
 	2 seconds timer
 		create beacon at location
@@ -226,4 +341,10 @@ function OnRaidStart(keys)
 		for enemies in radius at target loc
 			do damage
 	--]]
+end
+
+
+function OnRideStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
 end

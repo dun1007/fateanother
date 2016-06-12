@@ -234,5 +234,7 @@ pip-log.txt
 *.bin
 content/dota_addons/fateanother/particles/*
 !content/dota_addons/fateanother/particles/custom/
+!content/dota_addons/fateanother/particles/custom/astolfo
 content/dota_addons/fateanother/materials/*
 settings.kv
+patch draft.txt

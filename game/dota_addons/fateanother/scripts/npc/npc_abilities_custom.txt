@@ -26187,13 +26187,15 @@
 		"AbilityChannelTime"			"10.0"		
 		"AbilityCastRange"				"2500"
 		"AbilityCooldown"				"38"
-		"AbilityManaCost"				"20"
+		"AbilityManaCost"				"20 19 18 17 16"
 
 
 		"precache"
 		{
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_legion_commander.vsndevts"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_windrunner.vsndevts"
+			"particle"			"particles/custom/astolfo/la_black_luna/la_black_luna_shockwave.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -26206,7 +26208,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_amount"		"10 15 20 25 30"
+				"slow_amount"		"-10 -15 -20 -25 -30"
 			}
 			"03"
 			{
@@ -26274,13 +26276,26 @@
 					{
 						"ScriptFile"	"astolfo_ability"
 						"Function"		"OnHornThink"
+						"Radius"			"%radius"
+						"DamageRadius"		"%damage_radius"
+						"Damage"			"%damage"
+						"SilenceRadius"		"%silence_radius"
 					}
 				}
+			}
+			"modifier_la_black_luna_deaf"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"0.53"
 			}
 			"modifier_la_black_luna_slow"
 			{
 				"IsDebuff"		"1"
 				"Duration"		"0.53"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%slow_amount"
+				}
 			}
 		}
 	}
@@ -26302,9 +26317,9 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 
-		"AbilityCooldown"				"20 19 18 17 16"
-		"AbilityManaCost"				"200"
-		"AbilityCastRange"				"700"
+		"AbilityCooldown"				"45"
+		"AbilityManaCost"				"800"
+		"AbilityCastRange"				"2500"
 		"AbilityCastPoint"				"0.5"
 
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
@@ -26312,13 +26327,18 @@
 
 		"precache"
 		{
+			"particle"			"particles/custom/astolfo/astolfo_hippogriff_raid_flyer.vpcf"
+			"particle"			"particles/custom/astolfo/astolfo_ground_mark_flex.vpcf"
+			"particle"			"particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_first_impact.vpcf"
+			"particle"			"particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_second_impact.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
 		}
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_range"				"2250"
+				"max_range"				"2500"
 			}
 			"02"
 			{
@@ -26328,28 +26348,41 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"total_delay"		"4.0"
+				"reveal_delay"		"2.0"
 			}
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"radius"		"600"
+				"total_delay"		"4.0"
 			}
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"first_impact_damage"		"30"
+				"radius"		"600"
 			}
 			"06"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"first_impact_stun_duration"		"2"
+				"first_impact_damage"		"30"
 			}
 			"07"
 			{
 				"var_type"				"FIELD_FLOAT"
+				"first_impact_stun_duration"		"2"
+			}
+			"08"
+			{
+				"var_type"				"FIELD_FLOAT"
 				"second_impact_damage"		"500 675 850 1025 1200"
 			}
+		}
+		"OnAbilityPhaseStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnRaidCast"
+			}			
 		}
 		"OnSpellStart"
 		{
@@ -26359,6 +26392,7 @@
 				"Function"		"OnRaidStart"
 				"Delay"				"%total_delay"
 				"Radius"			"%radius"
+				"Target"			"POINT"
 				"FirstDamagePct"		"%first_impact_damage"
 				"StunDuration"			"%first_impact_stun_duration"
 				"SecondDamage"		"%second_impact_damage"
@@ -26373,15 +26407,62 @@
 	{
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
 		"AbilityTextureName"			"astolfo_hippogriff_ride"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"24"
+		"LevelsBetweenUpgrades"			"1"
+
 
 		"AbilityCooldown"				"150"
-		"AbilityManaCost"				"800"
+		"AbilityManaCost"				"600"
+		"AbilityCastRange"				"5000"
 
 		"precache"
 		{
 		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ascend_delay"				"2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_range"				"5000"
+			}	
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linear_range"			"1000"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"900"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnRideStart"
+				"Delay"				"%total_delay"
+				"Radius"			"%radius"
+				"Target"			"POINT"
+				"FirstDamagePct"		"%first_impact_damage"
+				"StunDuration"			"%first_impact_stun_duration"
+				"SecondDamage"		"%second_impact_damage"
+			}
+		}
+
 	}
 
 
@@ -26399,7 +26480,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"13"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -26420,7 +26501,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"raid_second_imact_radius"		"100"
+				"raid_second_impact_radius"		"100"
 			}	
 		}
 		
@@ -26449,7 +26530,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"11"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -26493,7 +26574,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"12"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -26504,22 +26585,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"health_regen"		"1"
+				"health_regen"		"0.5"
 			}	
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"		"3"
+				"mana_regen"		"1.5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"health_regen_boosted"		"2.5"
+				"health_regen_boosted"		"1.5"
 			}	
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_boosted"		"10"
+				"mana_regen_boosted"		"6"
 			}
 		}
 		
@@ -26547,7 +26628,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -26558,12 +26639,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"casa_radius"		"300"
+				"casa_radius"		"350"
 			}	
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"root_duration"		"0.5"
+				"root_duration"		"0.4"
 			}
 		}
 		
