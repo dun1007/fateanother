@@ -26331,6 +26331,7 @@
 			"particle"			"particles/custom/astolfo/astolfo_ground_mark_flex.vpcf"
 			"particle"			"particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_first_impact.vpcf"
 			"particle"			"particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_second_impact.vpcf"
+			"particle"			"particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_ascend.vpcf"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
 		}
 		"AbilitySpecial"
@@ -26408,7 +26409,7 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"AbilityTextureName"			"astolfo_hippogriff_ride"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -26419,7 +26420,105 @@
 
 		"AbilityCooldown"				"150"
 		"AbilityManaCost"				"600"
-		"AbilityCastRange"				"5000"
+		"AbilityCastRange"				"3500"
+
+		"precache"
+		{
+			"particle"				"particles/custom/astolfo/astolfo_ground_mark_smile.vpcf"
+			"particle"				"particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_thunder.vpcf"
+			"particle"				"particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_aoe_indicator.vpcf"
+		}
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ascend_delay"				"2.0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"duration"				"10.0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_range"				"3500"
+			}	
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"linear_range"			"1000"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage"				"900"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"astolfo_ability"
+				"Function"		"OnRideStart"
+				"Delay"				"%ascend_delay"
+				"Radius"			"%max_range"
+				"Duration"			"%duration"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_hippogriff_ride_ascended"
+			{
+				"Duration"		"%duration"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnRideAscend"
+						"Duration"		"%duration"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnRideAscendEnd"
+					}
+				}				
+			}
+
+		}
+
+	}
+
+	//=======================================
+	// Astolfo: Hipogriff: Rush
+	//=======================================
+	"astolfo_hippogriff_rush"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_lua"
+		"ScriptFile"                    "astolfo/astolfo_hippogriff_ride.lua"
+		"AbilityTextureName"			"astolfo_hippogriff_ride"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING | DOTA_ABILITY_BEHAVIOR_UNRESTRICTED | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"24"
+		"LevelsBetweenUpgrades"			"1"
+
+
+		"AbilityCooldown"				"2.0"
+		"AbilityManaCost"				"0"
+		"AbilityCastRange"				"3500"
+		"VectorTarget"                  "1"
 
 		"precache"
 		{
@@ -26434,18 +26533,24 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"max_range"				"5000"
-			}	
+				"duration"				"10.0"
+			}
 			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"max_range"				"3500"
+			}	
+			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"linear_range"			"1000"
 			}
-			"04"
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"damage"				"900"
 			}
+
 		}
 
 		"OnSpellStart"
@@ -26454,16 +26559,14 @@
 			{
 				"ScriptFile"	"astolfo_ability"
 				"Function"		"OnRideStart"
-				"Delay"				"%total_delay"
-				"Radius"			"%radius"
-				"Target"			"POINT"
-				"FirstDamagePct"		"%first_impact_damage"
-				"StunDuration"			"%first_impact_stun_duration"
-				"SecondDamage"		"%second_impact_damage"
+				"Delay"				"%ascend_delay"
+				"Radius"			"%max_range"
+				"Duration"			"%duration"
 			}
 		}
 
 	}
+
 
 
 	//=======================================
@@ -27140,6 +27243,16 @@
 					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_STUNNED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"jump_pause_nosilence"
+			{
+				"States"
+				{
+					"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"jump_pause_postdelay"

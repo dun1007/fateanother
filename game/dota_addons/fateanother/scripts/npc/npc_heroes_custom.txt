@@ -1309,7 +1309,7 @@
 		"Ability5"					"astolfo_casa_di_logistilla"
 		"Ability6"					"astolfo_hippogriff_raid"
 		"Ability7"					"astolfo_hippogriff_ride"
-		"Ability8"					""
+		"Ability8"					"astolfo_hippogriff_rush"
 		"Ability15"					"presence_detection_passive"
 		"Ability16"					"attribute_bonus"
 

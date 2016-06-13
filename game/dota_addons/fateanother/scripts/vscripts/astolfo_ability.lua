@@ -10,6 +10,11 @@ end
 function OnCasaStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then 
+		ability:EndCooldown()
+		caster:GiveMana(ability:GetManaCost(1)) 
+		return 
+	end 
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_casa_active_mr", {})
 end
@@ -18,6 +23,11 @@ function OnVanishStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ability = keys.ability
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then 
+		ability:EndCooldown()
+		caster:GiveMana(ability:GetManaCost(1)) 
+		return 
+	end 
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local info = {
 		Target = target, -- chainTarget
@@ -79,7 +89,11 @@ function OnDownStart(keys)
 	local range = keys.Range
 	local attackCount = keys.AttackCount
 	local counter = 1
-
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then 
+		ability:EndCooldown()
+		caster:GiveMana(ability:GetManaCost(1)) 
+		return 
+	end 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.5)
 
 	Timers:CreateTimer(function()
@@ -148,6 +162,10 @@ end
 function OnHornCast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then 
+		caster:Stop()
+		return 
+	end 
 	caster:EmitSound("Ability.Powershot.Alt")
 end
 
@@ -155,6 +173,13 @@ function OnHornStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local radius = keys.Radius
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then 
+		ability:EndCooldown()
+		caster:GiveMana(ability:GetManaCost(1)) 
+		caster:Stop()
+		return 
+	end 
+	AstolfoCheckCombo(caster, ability)
 	caster.currentHornManaCost = ability:GetManaCost(ability:GetLevel())
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_black_luna", {})
 
@@ -248,6 +273,13 @@ end
 
 function OnRaidCast(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then 
+		ability:EndCooldown()
+		caster:GiveMana(ability:GetManaCost(1)) 
+		caster:Stop()
+		return 
+	end 
 	caster:EmitSound("Astolfo.Hippogriff_Raid_Cast")
 end
 
@@ -277,8 +309,12 @@ function OnRaidStart(keys)
 	local radius = keys.Radius
 	local stunDuration = keys.StunDuration
 	local secondDmg = keys.SecondDamage
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then return end 
 	caster:EmitSound("Astolfo.Hippogriff_Raid_Cast_Success")
 	caster:EmitSound("Hero_Phoenix.IcarusDive.Cast")
+
+	local ascendFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_ascend.vpcf", PATTACH_CUSTOMORIGIN, nil )
+	ParticleManager:SetParticleControl( ascendFx, 0, caster:GetAbsOrigin())
 	-- create beacon for team
 	local teamBeacon = ParticleManager:CreateParticleForTeam("particles/custom/astolfo/astolfo_ground_mark_flex.vpcf", PATTACH_CUSTOMORIGIN, nil, caster:GetTeam())
 	ParticleManager:SetParticleControl( teamBeacon, 0, targetPoint)
@@ -347,4 +383,55 @@ end
 function OnRideStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local ascendDelay = keys.Delay
+	local radius = keys.Radius
+	local duration = keys.Duration
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") then return end 
+	EmitGlobalSound("Astolfo.Hippogriff_Ride_Cast")
+	-- pause for ascend delay
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", ascendDelay)
+
+	Timers:CreateTimer(ascendDelay, function()
+		if caster:IsAlive() then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_hippogriff_ride_ascended", {})
+		end
+	end)
+	-- swap ability layout
+end
+
+function OnRideAscend(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local duration = keys.Duration
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause_nosilence", duration)
+	caster:AddEffects(EF_NODRAW)
+	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", true, true)
+	local ascendFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_ascend.vpcf", PATTACH_CUSTOMORIGIN, nil )
+	ParticleManager:SetParticleControl( ascendFx, 0, caster:GetAbsOrigin())
+	--local aoeIndicatorFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_aoe_indicator.vpcf", PATTACH_CUSTOMORIGIN, nil )
+    --ParticleManager:SetParticleControl(aoeIndicatorFx, 0, caster:GetAbsOrigin())
+    --print("ascended")
+	
+end
+
+function OnRideAscendEnd(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	caster:RemoveEffects(EF_NODRAW)
+	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", true, false)
+end
+
+function AstolfoCheckCombo(caster, ability)
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
+		if ability == caster:FindAbilityByName("astolfo_la_black_luna") then
+			caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_ride", false, true)
+			Timers:CreateTimer({
+				endTime = 2,
+				callback = function()
+				caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_ride", true, false)
+			end
+			})
+		end
+	end
 end

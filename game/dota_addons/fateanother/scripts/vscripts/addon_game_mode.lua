@@ -13,6 +13,8 @@ require('libraries/animations')
 require('libraries/crowdcontrol')
 require('libraries/physics')
 require('libraries/attachments')
+require('libraries/vector_target')
+
 
 _G.IsPickPhase = true
 _G.IsPreRound = true
@@ -310,6 +312,9 @@ function Precache( context )
     PrecacheResource("model_folder", "models/items/silencer", context)
     PrecacheResource("model_folder", "models/heroes/windrunner", context)
     PrecacheResource("model_folder", "models/items/windrunner", context)
+
+    -- Vector target
+    VectorTarget:Precache( context )
     
     print("precache complete")
 end
@@ -355,6 +360,8 @@ function FateGameMode:OnAllPlayersLoaded()
     GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     
+    -- initialize vector targeting
+    VectorTarget:Init()
     -- Send KV to fatepedia
     -- Announce the goal of game
     -- Reveal the vote winner
