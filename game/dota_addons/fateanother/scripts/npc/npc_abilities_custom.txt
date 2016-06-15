@@ -26208,7 +26208,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"slow_amount"		"-10 -15 -20 -25 -30"
+				"slow_amount"		"-0 -10 -20 -30 -40"
 			}
 			"03"
 			{
@@ -26569,6 +26569,38 @@
 
 
 
+	//=================================================================================================================
+	// Saber Alter : Darklight attribute passive
+	//=================================================================================================================
+	"astolfo_monstrous_strength"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			""
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_astolfo_monstrous_strength"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnMStrengthHit"
+					}
+				}
+			}
+		}
+	}
+
 	//=======================================
 	// Astolfo Attribute: Riding
 	//=======================================
@@ -26612,7 +26644,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"ScriptFile"	"astolfo_ability"
 				"Function"		"OnRidingAcquired"
 			}
 		}
@@ -26657,7 +26689,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"ScriptFile"	"astolfo_ability"
 				"Function"		"OnMStrengthAcquired"
 			}
 		}
@@ -26711,7 +26743,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"ScriptFile"	"astolfo_ability"
 				"Function"		"OnIActionAcquired"
 			}
 		}
@@ -26755,7 +26787,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"astolfo/astolfo_attributes.lua"
+				"ScriptFile"	"astolfo_ability"
 				"Function"		"OnSanityAcquired"
 			}
 		}

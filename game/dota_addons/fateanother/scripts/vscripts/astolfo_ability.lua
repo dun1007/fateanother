@@ -75,6 +75,9 @@ function OnVanishDebuffEnd(keys)
 	target:RemoveEffects(EF_NODRAW)
 	--target:SetModel(target.OriginalModel)
 	--target:SetOriginalModel(target.OriginalModel)
+	if caster.bIsRidingAcquired then 
+		giveUnitDataDrivenModifier(caster, target, "stunned", 0.5)
+	end
 
 	if target:GetName() == "npc_dota_hero_queenofpain" then
 		Attachments:AttachProp(target, "attach_sword", "models/astolfo/astolfo_sword.vmdl")
@@ -306,6 +309,7 @@ function OnRaidStart(keys)
 	local targetPoint = keys.target_points[1]
 	local ability = keys.ability
 	local firstDmgPct = keys.FirstDamagePct
+	if caster.bIsRidingAcquired then firstDmgPct = firstDmgPct + 10 end
 	local radius = keys.Radius
 	local stunDuration = keys.StunDuration
 	local secondDmg = keys.SecondDamage
@@ -351,6 +355,7 @@ function OnRaidStart(keys)
 		    ParticleManager:SetParticleControl(firstImpactIndex, 4, Vector(0,0,0))
 
 			Timers:CreateTimer(1.5, function()
+				if caster.bIsRidingAcquired then radius = radius + 100 end
 				local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, radius
 			            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 				for k,v in pairs(targets) do
@@ -422,6 +427,12 @@ function OnRideAscendEnd(keys)
 	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", true, false)
 end
 
+function OnMStrengthHit(keys)
+	local caster = keys.caster
+	local target = keys.target
+
+end
+
 function AstolfoCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("astolfo_la_black_luna") then
@@ -434,4 +445,44 @@ function AstolfoCheckCombo(caster, ability)
 			})
 		end
 	end
+end
+
+function OnRidingAcquired(keys)
+    local caster = keys.caster
+    local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
+    hero.bIsRidingAcquired = true
+    -- Set master 1's mana
+    local master = hero.MasterUnit
+    local master2 = hero.MasterUnit2
+    master:SetMana(master2:GetMana())
+end
+
+function OnMStrengthAcquired(keys)
+    local caster = keys.caster
+    local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
+    hero.bIsMStrengthAcquired = true
+    -- Set master 1's mana
+    local master = hero.MasterUnit
+    local master2 = hero.MasterUnit2
+    master:SetMana(master2:GetMana())
+end
+
+function OnIActionAcquired(keys)
+    local caster = keys.caster
+    local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
+    hero.bIsRidingAcquired = true
+    -- Set master 1's mana
+    local master = hero.MasterUnit
+    local master2 = hero.MasterUnit2
+    master:SetMana(master2:GetMana())
+end
+
+function OnSanityAcquired(keys)
+    local caster = keys.caster
+    local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
+    hero.bIsRidingAcquired = true
+    -- Set master 1's mana
+    local master = hero.MasterUnit
+    local master2 = hero.MasterUnit2
+    master:SetMana(master2:GetMana())
 end
