@@ -168,6 +168,7 @@ end
 
 function PotInstantHeal(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	caster:Heal(500, caster)
 	caster:GiveMana(300) 
 
@@ -182,6 +183,7 @@ end
 
 function TPScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local targetPoint = keys.target_points[1]
 	print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
 	if caster:GetAbsOrigin().y < -2000 or targetPoint.y < -2000 then 
@@ -257,6 +259,7 @@ end
 
 function WardFam(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local targetPoint = keys.target_points[1]
 	caster.ward = CreateUnitByName("ward_familiar", targetPoint, true, caster, caster, caster:GetTeamNumber())
 	caster.ward:AddNewModifier(caster, caster, "modifier_invisible", {}) 
@@ -273,6 +276,7 @@ end
 
 function ScoutFam(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local pid = caster:GetPlayerID()
 	local scout = CreateUnitByName("scout_familiar", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
 	scout:SetControllableByPlayer(pid, true)
@@ -301,6 +305,7 @@ end
 function SpiritLink(keys)
 	print("Spirit Link Used")
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local targets = keys.target_entities
 	--local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_CLOSEST, false)
 	local linkTargets = {}
@@ -348,12 +353,12 @@ end
 
 function Blink(keys)
 	local caster = keys.caster
+
 	local casterPos = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
 	local newTargetPoint = nil
 
-
-	if IsLocked(caster) then 
+	if IsLocked(caster) or caster:HasModifier("jump_pause_nosilence") then 
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 		keys.ability:EndCooldown()
 		return
@@ -442,6 +447,7 @@ end
 
 function CScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local pid = caster:GetPlayerID()
 	cdummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
 	cdummy:AddNewModifier(caster, caster, "modifier_kill", {duration = 10})
@@ -485,6 +491,7 @@ end
 
 function BScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_b_scroll", {})
 	caster.BShieldAmount = keys.ShieldAmount
@@ -494,6 +501,7 @@ end
 
 function AScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_a_scroll", {})
 	caster:EmitSound("Hero_Oracle.FatesEdict.Cast")
@@ -502,6 +510,7 @@ end
 
 function SScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local target = keys.target
 	if IsSpellBlocked(keys.target) then return end
 
@@ -524,6 +533,7 @@ end
 
 function EXScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local target = keys.target
 	if IsSpellBlocked(keys.target) then return end
 	local lightning = {
@@ -572,6 +582,7 @@ end
 
 function HealingScroll(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local ability = keys.ability
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_healing_scroll", {})
@@ -592,6 +603,7 @@ end
 
 function AntiMagic(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local ability = keys.ability
 	caster:EmitSound("DOTA_Item.BlackKingBar.Activate")
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_immunity", {})
@@ -600,6 +612,7 @@ end
 
 function FullHeal(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	caster:SetHealth(caster:GetMaxHealth()) 
 	caster:SetMana(caster:GetMaxMana())
 

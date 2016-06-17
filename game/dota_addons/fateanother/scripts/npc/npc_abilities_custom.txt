@@ -25844,7 +25844,8 @@
 		"AbilityManaCost"				"0"
 
 		"precache"
-		{
+		{	
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
 		}
 		"OnSpellStart"
 		{
@@ -25891,6 +25892,17 @@
 				}
 
 			}
+			"modifier_casa_passive_mr_aura"
+			{
+				"Duration"		"0.533"
+				"IsHidden"		"1"
+				"Aura"					"modifier_casa_passive_mr"
+				"Aura_Radius"			"350"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP "
+			}
+
+
 			"modifier_casa_passive_mr"
 			{
 				"Duration"		"0.533"
@@ -25904,6 +25916,8 @@
 
 			"modifier_casa_active_mr"
 			{
+				"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+				"EffectAttachType"	"follow_origin"
 				"Duration"		"1.5"
 				"Properties"
 				{
@@ -26037,9 +26051,9 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
 
-		"AbilityCooldown"				"20 19 18 17 16"
+		"AbilityCooldown"				"24 22 20 18 16"
 		"AbilityManaCost"				"200"
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"350"
 		"AbilityCastPoint"				"0.5"
 
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
@@ -26056,7 +26070,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"range"				"650"
+				"range"				"350"
 			}	
 			"02"
 			{
@@ -26066,7 +26080,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"		"80 100 120 140"
+				"damage"		"60 75 90 105 120"
 			}	
 			"04"
 			{
@@ -26309,7 +26323,8 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"AbilityTextureName"			"astolfo_hippogriff_raid"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
+		"AOERadius"						"%radius"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
@@ -26491,6 +26506,10 @@
 						"Function"		"OnRideAscendEnd"
 					}
 				}				
+				"States"
+				{
+
+				}
 			}
 
 		}
@@ -26570,7 +26589,41 @@
 
 
 	//=================================================================================================================
-	// Saber Alter : Darklight attribute passive
+	// Astolfo : Down with a Touch Passive
+	//=================================================================================================================
+	"astolfo_down_with_a_touch_passive"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			""
+		"MaxLevel"						"1"
+		
+		"AbilitySpecial"
+		{
+		}
+		
+		"Modifiers"
+		{
+			"modifier_astolfo_down_with_a_touch_passive"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnDownAttackHit"
+					}
+				}
+			}
+		}
+	}
+
+
+
+	//=================================================================================================================
+	// Astolfo : Monstrous Strength Passive
 	//=================================================================================================================
 	"astolfo_monstrous_strength"
 	{
@@ -26596,6 +26649,57 @@
 						"ScriptFile"	"astolfo_ability"
 						"Function"		"OnMStrengthHit"
 					}
+				}
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Astolfo : Independent Action Passive
+	//=================================================================================================================
+	"astolfo_independent_action"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			""
+		"MaxLevel"						"1"
+		
+		
+		"Modifiers"
+		{
+			"modifier_astolfo_independent_action"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"ThinkInterval"				"1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnIAThink"
+					}
+				}
+			}
+
+			"modifier_astolfo_indepedent_action_regen"
+			{
+				"IsHidden"		"1"
+				"Duration"		"1.033"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"0.5"
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"0.8"
+				}
+			}
+			"modifier_astolfo_indepedent_action_conditional_regen"
+			{
+				"IsHidden"		"1"
+				"Duration"		"1.033"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"1.5"
+					"MODIFIER_PROPERTY_MANA_REGEN_TOTAL_PERCENTAGE"		"3"
 				}
 			}
 		}
@@ -26709,7 +26813,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"13"
+		"AbilityManaCost"				"14"
 
 		"precache"
 		{
@@ -26725,7 +26829,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen"		"1.5"
+				"mana_regen"		"0.8"
 			}
 			"03"
 			{
@@ -26735,7 +26839,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_regen_boosted"		"6"
+				"mana_regen_boosted"		"3"
 			}
 		}
 		
@@ -27259,6 +27363,15 @@
 					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+			"zero_attack_damage"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"-100"
+				}
+			}
 			"out_of_game"
 			{
 				"States"
@@ -27267,6 +27380,10 @@
 					"MODIFIER_STATE_OUT_OF_GAME"	"MODIFIER_STATE_VALUE_ENABLED"
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
+			}
+			"modifier_astolfo_disable_mstrength"
+			{
+				"IsHidden"	"1"
 			}
 			"jump_pause"
 			{

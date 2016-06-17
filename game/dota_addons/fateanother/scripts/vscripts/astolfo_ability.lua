@@ -3,7 +3,11 @@ function OnCasaThink(keys)
 	local ability = keys.ability
 
 	if ability:IsCooldownReady() then
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_casa_passive_mr", {})
+		if caster.bIsSanityAcquired then
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_casa_passive_mr_aura", {})
+		else
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_casa_passive_mr", {})
+		end
 	end
 end
 
@@ -15,8 +19,16 @@ function OnCasaStart(keys)
 		caster:GiveMana(ability:GetManaCost(1)) 
 		return 
 	end 
-
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_casa_active_mr", {})
+	if caster.bIsSanityAcquired then
+	    local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 350, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+		for k,v in pairs(targets) do
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_casa_active_mr", {})
+			v:EmitSound("Hero_Oracle.FortunesEnd.Target")
+	    end
+	else
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_casa_active_mr", {})
+		caster:EmitSound("Hero_Oracle.FortunesEnd.Target")
+	end
 end
 
 function OnVanishStart(keys)
@@ -97,7 +109,10 @@ function OnDownStart(keys)
 		caster:GiveMana(ability:GetManaCost(1)) 
 		return 
 	end 
+	range = 350
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.5)
+	giveUnitDataDrivenModifier(caster, caster, "zero_attack_damage", 0.5)
+	giveUnitDataDrivenModifier(caster, caster, "modifier_astolfo_disable_mstrength", 0.5)
 
 	Timers:CreateTimer(function()
 		if counter > 4 then return end
@@ -122,6 +137,9 @@ function OnDownStart(keys)
 			vVelocity = forwardVec * range * 5
 		}
 		local projectile = ProjectileManager:CreateLinearProjectile(spearProjectile)
+		if caster:HasModifier("modifier_astolfo_monstrous_strength") and caster.bIsSanityAcquired then
+			DoDamage(caster, caster, 4*caster:GetHealth()/100 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+		end
 		StartAnimation(caster, {duration=0.2, activity=ACT_DOTA_ATTACK, rate=4.0})
 		caster:EmitSound("Hero_Sniper.AssassinateDamage")
 		counter = counter + 1
@@ -136,11 +154,14 @@ function OnDownHit(keys)
 	local damage = keys.Damage
 	local ability = keys.ability
 	local lockDuration = keys.LockDuration
-
 	DoDamage(caster, target, damage , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 	giveUnitDataDrivenModifier(caster, target, "locked", lockDuration)
 	if not IsImmuneToSlow(target) then
 		ability:ApplyDataDrivenModifier(caster, target, "modifier_down_with_a_touch_slow", {})
+	end
+
+	if caster.bIsSanityAcquired then
+		caster:PerformAttack(target, true, true, true, true, false)
 	end
 end
 
@@ -193,7 +214,7 @@ function OnHornStart(keys)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() == caster:GetTeamNumber() then
         	-- apply legion horn vsnd on their client
-        	EmitSoundOnClient("Astolfo.PressTheAttack", player)
+        	CustomGameEventManager:Send_ServerToPlayer(player, "emit_horn_sound", {sound="Astolfo.Horn"})
         	--caster:EmitSound("Hero_LegionCommander.PressTheAttack")
         else
         	-- apply legion horn + silencer vsnd on their client
@@ -211,6 +232,7 @@ function OnHornThink(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local slowRadius = keys.Radius
+	if caster.bIsSanityAcquired then slowRadius = 20000 end
 	local damageRadius = keys.DamageRadius
 	local silenceRadius = keys.SilenceRadius
 	local damage = keys.Damage
@@ -222,7 +244,7 @@ function OnHornThink(keys)
 		caster:SetMana(caster:GetMana() - caster.currentHornManaCost)
 	end
 
-    local deafTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+    local deafTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 20000, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for k,v in pairs(deafTargets) do
 		ability:ApplyDataDrivenModifier(caster, v, "modifier_la_black_luna_deaf", {})
 		if v:GetPlayerOwner() then
@@ -399,6 +421,7 @@ function OnRideStart(keys)
 	Timers:CreateTimer(ascendDelay, function()
 		if caster:IsAlive() then
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_hippogriff_ride_ascended", {})
+			giveUnitDataDrivenModifier(caster, caster, "zero_attack_damage", 10.0)
 		end
 	end)
 	-- swap ability layout
@@ -430,6 +453,39 @@ end
 function OnMStrengthHit(keys)
 	local caster = keys.caster
 	local target = keys.target
+	local ability = keys.ability
+	DoDamage(caster, target, 4*caster:GetMaxHealth()/100 , DAMAGE_TYPE_PURE, 0, ability, false)
+	if not caster:HasModifier("modifier_astolfo_disable_mstrength") then
+		DoDamage(caster, caster, 4*caster:GetHealth()/100 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+	end
+end
+
+function OnDownAttackHit(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	giveUnitDataDrivenModifier(caster, target, "rooted", 0.4)
+end
+
+function OnIAThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local bIsVisibleToEnemy = false
+	LoopOverPlayers(function(player, playerID, playerHero)
+		-- if enemy hero can see astolfo, set visibility to true
+		if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+			if playerHero:CanEntityBeSeenByMyTeam(caster) then
+				bIsVisibleToEnemy = true
+				return
+			end
+		end
+	end)
+	if IsRevoked(caster) or not bIsVisibleToEnemy then
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_astolfo_indepedent_action_conditional_regen", {})
+	else
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_astolfo_indepedent_action_regen", {})
+	end
+
 
 end
 
@@ -465,24 +521,34 @@ function OnMStrengthAcquired(keys)
     local master = hero.MasterUnit
     local master2 = hero.MasterUnit2
     master:SetMana(master2:GetMana())
+
+    hero:AddAbility("astolfo_monstrous_strength")
+    hero:FindAbilityByName("astolfo_monstrous_strength"):SetLevel(1)
 end
 
 function OnIActionAcquired(keys)
     local caster = keys.caster
     local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
-    hero.bIsRidingAcquired = true
+    hero.bIsIAAcquired = true
     -- Set master 1's mana
     local master = hero.MasterUnit
     local master2 = hero.MasterUnit2
     master:SetMana(master2:GetMana())
+
+    hero:AddAbility("astolfo_independent_action")
+    hero:FindAbilityByName("astolfo_independent_action"):SetLevel(1)
 end
 
 function OnSanityAcquired(keys)
     local caster = keys.caster
     local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
-    hero.bIsRidingAcquired = true
+    hero.bIsSanityAcquired = true
     -- Set master 1's mana
     local master = hero.MasterUnit
     local master2 = hero.MasterUnit2
     master:SetMana(master2:GetMana())
+
+    hero:AddAbility("astolfo_down_with_a_touch_passive")
+    hero:FindAbilityByName("astolfo_down_with_a_touch_passive"):SetLevel(1)
+
 end
