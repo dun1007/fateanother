@@ -26061,7 +26061,7 @@
 
 		"precache"
 		{
-			"particle"		"particles/custom/false_assassin/fa_quickdraw.vpcf"	
+			"particle"		"particles/custom/astolfo/astolfo_down_with_a_touch_projectile.vpcf"	
 			"soundfile"		"soundevents/game_sounds_heroes/game_sounds_sniper.vsndevts"
 		}
 
@@ -26080,7 +26080,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"		"60 75 90 105 120"
+				"damage"		"80 90 100 110 120"
 			}	
 			"04"
 			{
@@ -26197,10 +26197,10 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"3.0"
 		
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.15"
 		"AbilityChannelTime"			"10.0"		
 		"AbilityCastRange"				"2500"
-		"AbilityCooldown"				"38"
+		"AbilityCooldown"				"26"
 		"AbilityManaCost"				"20 19 18 17 16"
 
 
@@ -26389,7 +26389,7 @@
 			"08"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"second_impact_damage"		"500 675 850 1025 1200"
+				"second_impact_damage"		"600 775 950 1125 1300"
 			}
 		}
 		"OnAbilityPhaseStart"
@@ -26412,6 +26412,22 @@
 				"FirstDamagePct"		"%first_impact_damage"
 				"StunDuration"			"%first_impact_stun_duration"
 				"SecondDamage"		"%second_impact_damage"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_hippogriff_raid_respawn_checker"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"astolfo_ability"
+						"Function"		"OnRaidCountReset"
+					}
+				}
 			}
 		}
 	}
@@ -26442,6 +26458,9 @@
 			"particle"				"particles/custom/astolfo/astolfo_ground_mark_smile.vpcf"
 			"particle"				"particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_thunder.vpcf"
 			"particle"				"particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_aoe_indicator.vpcf"
+			"particle"				"particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_rush_portal.vpcf"
+			"particle"				"particles/custom/astolfo/astolfo_ground_mark_flex_10sec.vpcf"
+			"particle"				"particles/econ/items/kunkka/divine_anchor/hero_kunkka_dafx_skills/kunkka_spell_torrent_bubbles_swirl_fxset.vpcf"
 		}
 		"AbilitySpecial"
 		{
@@ -26534,7 +26553,7 @@
 		"LevelsBetweenUpgrades"			"1"
 
 
-		"AbilityCooldown"				"2.0"
+		"AbilityCooldown"				"1.75"
 		"AbilityManaCost"				"0"
 		"AbilityCastRange"				"3500"
 		"VectorTarget"                  "1"

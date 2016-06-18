@@ -120,7 +120,7 @@ function OnDownStart(keys)
 		local spearProjectile = 
 		{
 			Ability = ability,
-	        EffectName = "particles/custom/false_assassin/fa_quickdraw.vpcf",
+	        EffectName = "particles/custom/astolfo/astolfo_down_with_a_touch_projectile.vpcf",
 	        iMoveSpeed = range * 5,
 	        vSpawnOrigin = caster:GetOrigin(),
 	        fDistance = range - 100,
@@ -335,7 +335,26 @@ function OnRaidStart(keys)
 	local radius = keys.Radius
 	local stunDuration = keys.StunDuration
 	local secondDmg = keys.SecondDamage
-	if caster:HasModifier("modifier_hippogriff_ride_ascended") then return end 
+	if caster:HasModifier("modifier_hippogriff_ride_ascended") or not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot be cast" } )
+		caster:GiveMana(caster:GetMana()+ability:GetManaCost(1))
+		ability:EndCooldown() 
+		return
+	end
+
+	if caster.nCurrentRaidAmount then
+		if caster.nCurrentRaidAmount >= 2 then
+			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Cast Now" } )
+			caster:GiveMana(caster:GetMana()+ability:GetManaCost(1))
+			ability:EndCooldown() 
+			return
+		else
+			caster.nCurrentRaidAmount = caster.nCurrentRaidAmount+1
+		end
+	else
+		caster.nCurrentRaidAmount = 1
+	end
+
 	caster:EmitSound("Astolfo.Hippogriff_Raid_Cast_Success")
 	caster:EmitSound("Hero_Phoenix.IcarusDive.Cast")
 
@@ -384,6 +403,10 @@ function OnRaidStart(keys)
 			        DoDamage(caster, v, secondDmg, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			    end
 
+			    if caster.nCurrentRaidAmount >= 1 then
+					caster.nCurrentRaidAmount = caster.nCurrentRaidAmount-1
+				end
+
 				EmitSoundOnLocationWithCaster(targetPoint, "Misc.Crash", caster)
 				local secondImpactIndex = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_second_impact.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(secondImpactIndex, 0, targetPoint)
@@ -406,7 +429,11 @@ function OnRaidStart(keys)
 	--]]
 end
 
-
+function OnRaidCountReset(keys)
+	local caster = keys.caster
+	caster.nCurrentRaidAmount = 0
+	
+end
 function OnRideStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -415,13 +442,27 @@ function OnRideStart(keys)
 	local duration = keys.Duration
 	if caster:HasModifier("modifier_hippogriff_ride_ascended") then return end 
 	EmitGlobalSound("Astolfo.Hippogriff_Ride_Cast")
+	EmitGlobalSound("Astolfo.SolarForge")
 	-- pause for ascend delay
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", ascendDelay)
+	StartAnimation(caster, {duration=1.0, activity=ACT_DOTA_CAST_ABILITY_3, rate=0.5})
+	local ascendIndex = ParticleManager:CreateParticle("particles/econ/items/kunkka/divine_anchor/hero_kunkka_dafx_skills/kunkka_spell_torrent_bubbles_swirl_fxset.vpcf", PATTACH_CUSTOMORIGIN, nil)
+	ParticleManager:SetParticleControl( ascendIndex, 0, caster:GetAbsOrigin())
 
 	Timers:CreateTimer(ascendDelay, function()
 		if caster:IsAlive() then
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_hippogriff_ride_ascended", {})
 			giveUnitDataDrivenModifier(caster, caster, "zero_attack_damage", 10.0)
+			for i=2, 13 do
+				if caster:GetTeamNumber() ~= i then
+					AddFOWViewer(i, caster:GetAbsOrigin(), 500, 10, false)
+				end
+			end
+
+			local aoeFx = ParticleManager:CreateParticle("particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_aoe_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+			ParticleManager:SetParticleControl( aoeFx, 1, Vector(radius,0,0))
+			local beaconIndex = ParticleManager:CreateParticle("particles/custom/astolfo/astolfo_ground_mark_flex_10sec.vpcf", PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleControl( beaconIndex, 0, caster:GetAbsOrigin())
 		end
 	end)
 	-- swap ability layout
@@ -522,6 +563,7 @@ function OnMStrengthAcquired(keys)
     local master2 = hero.MasterUnit2
     master:SetMana(master2:GetMana())
 
+    hero:SetBaseStrength(hero:GetBaseStrength()+10) 
     hero:AddAbility("astolfo_monstrous_strength")
     hero:FindAbilityByName("astolfo_monstrous_strength"):SetLevel(1)
 end

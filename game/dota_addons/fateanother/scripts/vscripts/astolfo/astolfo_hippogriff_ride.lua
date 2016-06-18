@@ -7,8 +7,12 @@ function astolfo_hippogriff_rush:OnSpellStart()
 	local damage = rideHandle:GetSpecialValueFor("damage")
 	local startPos = self:GetInitialPosition()
 	local endPos = startPos + self:GetDirectionVector() * range
-
 	local markerCounter = 0
+	if (startPos - caster:GetAbsOrigin()):Length2D() > 3500 or not IsInSameRealm(caster:GetAbsOrigin(), startPos) then
+		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Out of Range" } )
+		self:EndCooldown() 
+		return
+	end
 	Timers:CreateTimer(function()
 		if markerCounter >= 5 then return end
 		local diff = startPos + self:GetDirectionVector() * (range/5 * markerCounter + 100)
@@ -18,7 +22,7 @@ function astolfo_hippogriff_rush:OnSpellStart()
 		AddFOWViewer(caster:GetTeamNumber(), diff, 500, 3, false)
 
 		Timers:CreateTimer(0.8, function()
-			local targets = FindUnitsInRadius(caster:GetTeam(), diff, nil, 500
+			local targets = FindUnitsInRadius(caster:GetTeam(), diff, nil, 300
 		            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 			for k,v in pairs(targets) do
 				if not v.bIsDamagedByHippoRush then 
@@ -46,14 +50,21 @@ function astolfo_hippogriff_rush:OnSpellStart()
 		else
 			EmitSoundOnLocationWithCaster(self:GetMidpointPosition(), "Astolfo.Hippo_Shout2", caster)
 		end
+		local forwardVec = (endPos  - startPos):Normalized()
+		local hippoVector = forwardVec * range * 3
+		local portalFx = ParticleManager:CreateParticle("particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_rush_portal.vpcf", PATTACH_CUSTOMORIGIN, nil)
+		ParticleManager:SetParticleControl( portalFx, 0, startPos)
+		ParticleManager:SetParticleControlForward(portalFx, 0, forwardVec)
 
-		local hippoVector = (endPos  - startPos):Normalized() * range * 3
 		local hippoFx = ParticleManager:CreateParticle( "particles/custom/astolfo/astolfo_hippogriff_raid_flyer.vpcf", PATTACH_CUSTOMORIGIN, nil )
 		ParticleManager:SetParticleControl( hippoFx, 0, startPos + Vector(0,0,200))
 		ParticleManager:SetParticleControl( hippoFx, 1,  hippoVector)
 		Timers:CreateTimer(0.35, function()
 			ParticleManager:DestroyParticle( hippoFx, true )
 			ParticleManager:ReleaseParticleIndex( hippoFx )
+			local portalFx = ParticleManager:CreateParticle("particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_rush_portal.vpcf", PATTACH_CUSTOMORIGIN, nil)
+			ParticleManager:SetParticleControl( portalFx, 0, endPos)
+			ParticleManager:SetParticleControlForward(portalFx, 0, forwardVec)
 		end)
 	end)
 end

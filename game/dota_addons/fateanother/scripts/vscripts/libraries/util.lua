@@ -240,7 +240,8 @@ CannotReset = {
     "jeanne_identity_discernment",
     "tamamo_mystic_shackle",
     "astolfo_casa_di_logistilla",
-    "astolfo_hippogriff_ride"
+    "astolfo_hippogriff_ride",
+    "astolfo_hippogriff_rush"
 }
 
 femaleservant = {

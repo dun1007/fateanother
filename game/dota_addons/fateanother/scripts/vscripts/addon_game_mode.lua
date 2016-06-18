@@ -13,7 +13,7 @@ require('libraries/animations')
 require('libraries/crowdcontrol')
 require('libraries/physics')
 require('libraries/attachments')
-require('libraries/vector_target')
+--require('libraries/vector_target')
 
 
 _G.IsPickPhase = true
@@ -300,6 +300,10 @@ function Precache( context )
     PrecacheResource("model", "models/tamamo/tamamo.vmdl", context)
     PrecacheResource("model", "models/lishuen/lishuen.vmdl", context)
     PrecacheResource("model", "models/jeanne/jeanne.vmdl", context)
+    PrecacheResource("model", "models/astolfo/astolfo.vmdl", context)
+    PrecacheResource("model", "models/astolfo/astolfo_hippogriff.vmdl", context)
+    PrecacheResource("model", "models/astolfo/astolfo_horn.vmdl", context)
+    PrecacheResource("model", "models/astolfo/astolfo_sword.vmdl", context)
     
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)
@@ -314,7 +318,7 @@ function Precache( context )
     PrecacheResource("model_folder", "models/items/windrunner", context)
 
     -- Vector target
-    VectorTarget:Precache( context )
+    --VectorTarget:Precache( context )
     
     print("precache complete")
 end
@@ -361,7 +365,7 @@ function FateGameMode:OnAllPlayersLoaded()
     FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
     
     -- initialize vector targeting
-    VectorTarget:Init()
+    --VectorTarget:Init({noOrderFilter = true })
     -- Send KV to fatepedia
     -- Announce the goal of game
     -- Reveal the vote winner
@@ -1693,7 +1697,6 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
     local xPos = tonumber(filterTable.position_x)
     local yPos = tonumber(filterTable.position_y)
     local zPos = tonumber(filterTable.position_z)
-
     local caster = nil
     if units["0"] then
         caster = EntIndexToHScript(units["0"])
