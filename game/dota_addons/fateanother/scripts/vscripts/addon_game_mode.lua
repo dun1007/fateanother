@@ -78,7 +78,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "v1.12"
+FATE_VERSION = "v1.13b"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -139,6 +139,7 @@ model_lookup["npc_dota_hero_omniknight"] = "models/gawain/gawain.vmdl"
 model_lookup["npc_dota_hero_enchantress"] = "models/tamamo/tamamo.vmdl"
 model_lookup["npc_dota_hero_bloodseeker"] = "models/lishuen/lishuen.vmdl"
 model_lookup["npc_dota_hero_mirana"] = "models/jeanne/jeanne.vmdl"
+model_lookup["npc_dota_hero_queenofpain"] = "models/astolfo/astolfo.vmdl"
 
 
 DoNotKillAtTheEndOfRound = {
@@ -827,7 +828,7 @@ function FateGameMode:OnHeroInGame(hero)
                 hero:GetAbilityByIndex(i):SetHidden(false)
             end
         elseif hero:GetName() == "npc_dota_hero_queenofpain" then
-            Attachments:AttachProp(hero, "attach_sword", "models/astolfo/astolfo_sword.vmdl")
+            --Attachments:AttachProp(hero, "attach_sword", "models/astolfo/astolfo_sword.vmdl")
         end
     end)
 end

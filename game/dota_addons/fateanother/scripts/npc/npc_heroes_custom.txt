@@ -1299,7 +1299,6 @@
 		"DisableWearables" 			"1"
 		"Model"						"models/astolfo/astolfo.vmdl"
 		"ModelScale"				"1.1"
-		"Enabled"					"1"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"astolfo_hippogriff_vanish"
@@ -1331,7 +1330,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"38"
 		"AttackDamageMax"				"42"
-		"AttackRate"					"1.6"
+		"AttackRate"					"1.35"
 		"AttackAcquisitionRange"		"800"
 		"AttackRange"					"100"
 

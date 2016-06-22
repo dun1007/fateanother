@@ -397,13 +397,12 @@ function OnUBWStart(keys)
 	-- Remove any dummy or hero in jump
 	for i=1, #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
-			if ubwTargets[i]:HasModifier("jump_pause") or ubwTargets[i]:HasModifier("jump_pause_nosilence") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
-				if ubwTargets[i] ~= caster then
+			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
+			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
+				if ubwTargets[i] ~= caster and ubwTargets[i]:HasModifier("spawn_invulnerable") then
 					table.remove(ubwTargets, i)
 				end 
-
 			end
-			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
 		end
 	end
 	

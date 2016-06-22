@@ -5,26 +5,25 @@
 
 "CustomHeroList"
 {
-	"npc_dota_hero_legion_commander"	"1"		//saber
-	"npc_dota_hero_spectre"				"1"		//saber alter
-	"npc_dota_hero_phantom_lancer"		"1"		//lancer(5th)
-	"npc_dota_hero_ember_spirit"		"1"		//archer(5th)
-	"npc_dota_hero_templar_assassin"	"1"		//rider(5th)
-	"npc_dota_hero_crystal_maiden"		"1"		//caster(5th)
-	"npc_dota_hero_juggernaut"			"1"		//false assassin(5th)
-	"npc_dota_hero_bounty_hunter"		"1"		//true assassin(5th)
-	"npc_dota_hero_doom_bringer"		"1"		//berserker(5th)	
-	"npc_dota_hero_skywrath_mage"		"1"		//archer(4th)
-	"npc_dota_hero_vengefulspirit"		"1"		//avenger
-	"npc_dota_hero_huskar"				"1"		//Lancer(4th)
-	"npc_dota_hero_sven"				"1"		//berserker(4th)
-	"npc_dota_hero_shadow_shaman"		"1"		//caster(4th)
-	"npc_dota_hero_chen"				"1"		//rider(4th)
-	"npc_dota_hero_lina"				"1"		//Red Saber(Extra)
-	"npc_dota_hero_omniknight"			"1"		//White Saber(Extra)
-	"npc_dota_hero_enchantress"			"1"		//Caster(Extra)
-	"npc_dota_hero_bloodseeker"			"1"		//Assassin(Extra)
-	"npc_dota_hero_mirana"				"1"		//Ruler(Apocrypha)
-	"npc_dota_hero_sniper"				"0"		//Green Archer(Extra)
-	"npc_dota_hero_queenofpain"			"1"		//Black Rider(Apoc.)
+	"npc_dota_hero_legion_commander"	"1"		
+	"npc_dota_hero_spectre"				"1"		
+	"npc_dota_hero_phantom_lancer"		"1"		
+	"npc_dota_hero_ember_spirit"		"1"		
+	"npc_dota_hero_templar_assassin"	"1"		
+	"npc_dota_hero_crystal_maiden"		"1"		
+	"npc_dota_hero_juggernaut"			"1"		
+	"npc_dota_hero_bounty_hunter"		"1"		
+	"npc_dota_hero_doom_bringer"		"1"		
+	"npc_dota_hero_skywrath_mage"		"1"		
+	"npc_dota_hero_vengefulspirit"		"1"		
+	"npc_dota_hero_huskar"				"1"		
+	"npc_dota_hero_sven"				"1"		
+	"npc_dota_hero_shadow_shaman"		"1"		
+	"npc_dota_hero_chen"				"1"		
+	"npc_dota_hero_lina"				"1"		
+	"npc_dota_hero_omniknight"			"1"		
+	"npc_dota_hero_enchantress"			"1"		
+	"npc_dota_hero_bloodseeker"			"1"		
+	"npc_dota_hero_mirana"				"1"		
+	"npc_dota_hero_queenofpain"			"0"	
 }

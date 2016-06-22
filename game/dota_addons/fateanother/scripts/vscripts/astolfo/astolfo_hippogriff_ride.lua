@@ -5,8 +5,12 @@ function astolfo_hippogriff_rush:OnSpellStart()
 	local rideHandle = caster:FindAbilityByName("astolfo_hippogriff_ride")
 	local range = rideHandle:GetSpecialValueFor("linear_range")
 	local damage = rideHandle:GetSpecialValueFor("damage")
-	local startPos = self:GetInitialPosition()
-	local endPos = startPos + self:GetDirectionVector() * range
+	local midPos = self:GetCursorPosition()
+	local randomVec = RandomVector(1):Normalized()
+	local startPos = midPos - randomVec * range/2
+	local endPos = midPos + randomVec * range/2
+	--local startPos = self:GetInitialPosition()
+	--local endPos = startPos + self:GetDirectionVector() * range
 	local markerCounter = 0
 	if (startPos - caster:GetAbsOrigin()):Length2D() > 3500 or not IsInSameRealm(caster:GetAbsOrigin(), startPos) then
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Out of Range" } )
@@ -15,7 +19,7 @@ function astolfo_hippogriff_rush:OnSpellStart()
 	end
 	Timers:CreateTimer(function()
 		if markerCounter >= 5 then return end
-		local diff = startPos + self:GetDirectionVector() * (range/5 * markerCounter + 100)
+		local diff = startPos + randomVec * (range/5 * markerCounter + 100)
 		local beaconIndex = ParticleManager:CreateParticle("particles/custom/astolfo/astolfo_ground_mark_smile.vpcf", PATTACH_CUSTOMORIGIN, nil)
 		ParticleManager:SetParticleControl( beaconIndex, 0, diff)
 		EmitSoundOnLocationWithCaster(diff, "Astolfo.Dash_Alert", caster)
@@ -46,9 +50,9 @@ function astolfo_hippogriff_rush:OnSpellStart()
 
 	Timers:CreateTimer(0.8, function()
 		if RandomInt(1, 2) == 1 then 
-			EmitSoundOnLocationWithCaster(self:GetMidpointPosition(), "Astolfo.Hippo_Shout1", caster)
+			EmitSoundOnLocationWithCaster(midPos, "Astolfo.Hippo_Shout1", caster)
 		else
-			EmitSoundOnLocationWithCaster(self:GetMidpointPosition(), "Astolfo.Hippo_Shout2", caster)
+			EmitSoundOnLocationWithCaster(midPos, "Astolfo.Hippo_Shout2", caster)
 		end
 		local forwardVec = (endPos  - startPos):Normalized()
 		local hippoVector = forwardVec * range * 3

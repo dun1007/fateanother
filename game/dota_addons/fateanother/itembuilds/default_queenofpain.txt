@@ -29,12 +29,13 @@
       "#DOTA_Item_Build_Core_Items"
       {
         "item"    "item_ward_familiar" 
+        "item"    "item_scout_familiar" 
         "item"   "item_s_scroll"
-        "item"   "item_berserk_scroll"
       }
 
       "#DOTA_Item_Build_Luxury"
       {
+        "item"   "item_ex_scroll"
         "item"  "item_healing_scroll" 
         "item"  "item_condensed_mana_essence" 
       }

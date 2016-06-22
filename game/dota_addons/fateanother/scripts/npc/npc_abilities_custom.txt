@@ -791,6 +791,7 @@
 		"AbilityTextureName"			"saber_avalon"
 		"MaxLevel"						"5"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1"
 		"precache"
 		{
@@ -2172,6 +2173,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"lancer_5th_gae_bolg_jump"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"0.5"
 		"AOERadius"						"%radius"
 		"precache"
@@ -3154,6 +3156,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
 		"AbilityTextureName"			"saber_alter_excalibur"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"0.9"
 		"precache"
@@ -4063,6 +4066,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"rider_5th_bellerophon"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"2.0"
 		"AOERadius"						"%radius"
 		
@@ -4701,6 +4705,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"archer_5th_ubw"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
@@ -7812,6 +7817,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"false_assassin_tsubame_gaeshi"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
@@ -9045,6 +9051,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"true_assassin_zabaniya"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 
 		"precache"
@@ -9981,6 +9988,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 
 		"AbilityTextureName"			"gilgamesh_enuma_elish"
@@ -11942,6 +11950,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"caster_5th_hecatic_graea"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"0.4"
 		"AOERadius"						"%radius"
 		"precache"
@@ -13318,6 +13327,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 		"AbilityTextureName"			"lancelot_arondite"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
@@ -14698,6 +14708,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE | DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
 		"precache"
 		{
@@ -15856,6 +15867,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_PURE"
 		"AbilityTextureName"			"diarmuid_gae_dearg"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
@@ -16681,6 +16693,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"precache"
 		{
 			"particle"			"particles/custom/iskandar/iskandar_aotk.vpcf"
@@ -18520,6 +18533,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE"
 		"AbilityTextureName"			"gille_abyssal_contract"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 		"AOERadius"						"%radius"		
 		
@@ -20017,6 +20031,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"nero_aestus_domus_aurea"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 		
 		"precache"
@@ -21018,6 +21033,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"gawain_suns_embrace"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		
 		// Ability stats
@@ -22675,6 +22691,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"tamamo_amaterasu"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
@@ -24053,6 +24070,7 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitTargetFlags"		"DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AbilityTextureName"			"lishuwen_no_second_strike"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_4"
 		"AnimationPlaybackRate" 		"0.5"
@@ -25344,6 +25362,7 @@
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 		"AbilityTextureName"			"jeanne_luminosite_eternelle"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_6"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
@@ -26232,12 +26251,12 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage"		"5 6 7 8 9"
+				"damage"		"5 7 9 11 13"
 			}		
 			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"silence_radius"		"350 450 550 650 750"
+				"silence_radius"		"250 350 450 550 650"
 			}	
 		}
 
@@ -26328,11 +26347,12 @@
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
+		"AbilityType"					"DOTA_ABILITY_TYPE_ULTIMATE"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
 
-		"AbilityCooldown"				"45"
+		"AbilityCooldown"				"38"
 		"AbilityManaCost"				"800"
 		"AbilityCastRange"				"2500"
 		"AbilityCastPoint"				"0.5"
@@ -26556,7 +26576,7 @@
 		"AbilityCooldown"				"1.75"
 		"AbilityManaCost"				"0"
 		"AbilityCastRange"				"3500"
-		"VectorTarget"                  "1"
+		//"VectorTarget"                  "1"
 
 		"precache"
 		{
@@ -26593,14 +26613,6 @@
 
 		"OnSpellStart"
 		{
-			"RunScript"
-			{
-				"ScriptFile"	"astolfo_ability"
-				"Function"		"OnRideStart"
-				"Delay"				"%ascend_delay"
-				"Radius"			"%max_range"
-				"Duration"			"%duration"
-			}
 		}
 
 	}
