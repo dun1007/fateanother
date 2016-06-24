@@ -25,5 +25,5 @@
 	"npc_dota_hero_enchantress"			"1"		
 	"npc_dota_hero_bloodseeker"			"1"		
 	"npc_dota_hero_mirana"				"1"		
-	"npc_dota_hero_queenofpain"			"0"	
+	"npc_dota_hero_queenofpain"			"1"	
 }

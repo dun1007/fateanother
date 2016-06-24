@@ -539,24 +539,21 @@ function FateGameMode:OnDisconnect(keys)
     --table.remove(self.vPlayerList, userid) -- remove player from list
 end
 
-function FateGameMode:PlayerSay(keys)
+function FateGameMode:OnPlayerChat(keys)
     --print ('[BAREBONES] PlayerSay')
     if keys == nil then print("empty keys") end
     --PrintTable(keys)
     
     -- Get the player entity for the user speaking
-    local ply = keys.ply
-    local hero = ply:GetAssignedHero()
-    -- Get the player ID for the user speaking
-    local plyID = ply:GetPlayerID()
-    if not PlayerResource:IsValidPlayer(plyID) then
-        return
-    end
-    
-    -- Should have a valid, in-game player saying something at this point
-    -- The text the person said
     local text = keys.text
+    local userID = keys.userid
+    local plyID = self.vPlayerList[userID]
+    if not plyID then return end
+    local ply = PlayerResource:GetPlayer(plyID)
+    if not ply then return end
+    local hero = ply:GetAssignedHero()
     
+    print(text .. " by " .. hero:GetName())
     -- Match the text against something
     local matchA, matchB = string.match(text, "^-swap%s+(%d)%s+(%d)")
     if matchA ~= nil and matchB ~= nil then
@@ -1516,7 +1513,7 @@ function FateGameMode:InitGameMode()
     ListenToGameEvent('dota_player_pick_hero', Dynamic_Wrap(FateGameMode, 'OnPlayerPickHero'), self)
     ListenToGameEvent('dota_team_kill_credit', Dynamic_Wrap(FateGameMode, 'OnTeamKillCredit'), self)
     ListenToGameEvent("player_reconnected", Dynamic_Wrap(FateGameMode, 'OnPlayerReconnect'), self)
-    ListenToGameEvent('player_say', Dynamic_Wrap(FateGameMode, 'PlayerSay'), self)
+    ListenToGameEvent('player_chat', Dynamic_Wrap(FateGameMode, 'OnPlayerChat'), self)
     --ListenToGameEvent('player_spawn', Dynamic_Wrap(FateGameMode, 'OnPlayerSpawn'), self)
     --ListenToGameEvent('dota_unit_event', Dynamic_Wrap(FateGameMode, 'OnDotaUnitEvent'), self)
     --ListenToGameEvent('nommed_tree', Dynamic_Wrap(FateGameMode, 'OnPlayerAteTree'), self)
@@ -1544,7 +1541,7 @@ function FateGameMode:InitGameMode()
     function FateGameMode:ExampleConsoleCommand()
     end
     
-    -- Convars:RegisterCommand( "player_say", Dynamic_Wrap(FateGameMode, 'PlayerSay'), "Reads player chat", 0) 
+    --[[-- Convars:RegisterCommand( "player_say", Dynamic_Wrap(FateGameMode, 'PlayerSay'), "Reads player chat", 0) 
     Convars:RegisterCommand('player_say', function(...)
         local arg = {...}
         table.remove(arg,1)
@@ -1553,7 +1550,7 @@ function FateGameMode:InitGameMode()
         keys.ply = cmdPlayer
         keys.text = table.concat(arg, " ")
         self:PlayerSay(keys) 
-    end, "Player said something", 0)
+    end, "Player said something", 0)]]
     
     -- Initialized tables for tracking state
     self.nRadiantScore = 0

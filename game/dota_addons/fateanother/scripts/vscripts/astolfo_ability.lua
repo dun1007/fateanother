@@ -312,6 +312,7 @@ function CreateBeaconForEnemies(caster, targetPoint)
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and player and playerHero then
+        	AddFOWViewer(playerHero:GetTeamNumber(), targetPoint, 150, 2.5, false)
         	local beaconIndex = ParticleManager:CreateParticleForPlayer("particles/custom/astolfo/astolfo_ground_mark_flex.vpcf", PATTACH_CUSTOMORIGIN, nil, player)
 			ParticleManager:SetParticleControl( beaconIndex, 0, targetPoint)
         	-- set a timer to check whether affected enemies retain buff
