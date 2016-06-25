@@ -243,9 +243,9 @@ function OnGOBStart(keys)
 	GilgaCheckCombo(caster, keys.ability)
 	CreateGOB(keys, gobWeapon)
 	
-	EmitSoundOnClient("Saber_Alter.Derange", caster:GetPlayerOwner())
-	EmitSoundOnClient("Gilgamesh.GOB", caster:GetPlayerOwner())
-	EmitSoundOnClient("Archer.UBWAmbient", caster:GetPlayerOwner())
+	caster:EmitSound("Gilgamesh.GOB")
+	caster:EmitSound("Saber_Alter.Derange")
+	caster:EmitSound("Archer.UBWAmbient")
 end
 
 function CreateGOB(keys, proj)

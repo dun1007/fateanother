@@ -10,12 +10,12 @@
 	{
 		"override_hero"				"npc_dota_hero_legion_commander"
 		"Model"						"models/saber/saber.vmdl"
+		"DrawParticlesWhileHidden" "1"
 		"DisableWearables" 			"1"
 		//"Model"						"models/development/invisiblebox.vmdl"
 		//"Model"						"models/heroes/legion_commander/legion_commander.vmdl"
 		"ModelScale"				"0.95"
 		//"HeroID"					"121"
-		"Enabled"					"1"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"saber_invisible_air"
@@ -80,7 +80,7 @@
 		"Model"					"models/lancer/lancer2.vmdl"
 		"ModelScale"			"0.92"
 		//"HeroID"					"24"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"lancer_5th_rune_magic"
@@ -149,7 +149,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		//"HeroID"					"113"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"saber_alter_derange"
@@ -212,7 +212,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
 		//"HeroID"					"114"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"archer_5th_kanshou_bakuya"
@@ -280,7 +280,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		//"HeroID"					"115"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"rider_5th_nail_swing"
@@ -343,7 +343,7 @@
 		"ModelScale"			"1.00"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		//"HeroID"					"116"
-		"Enabled"					"1"	
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"berserker_5th_fissure_strike"
@@ -406,7 +406,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.0"
 		//"HeroID"					"117"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		
@@ -471,7 +471,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"AbilityLayout"			"6"
 		//"HeroID"					"118"
-		"Enabled"					"1"	
+		"DrawParticlesWhileHidden" "1"
 
 		"Ability1"				"true_assassin_ambush"
 		"Ability2"				"true_assassin_self_modification"
@@ -538,7 +538,7 @@
 		"Model"					"models/caster/caster.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		//"HeroID"					"119"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"caster_5th_argos"
@@ -605,7 +605,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		//"HeroID"					"120"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"gilgamesh_enkidu"
@@ -666,6 +666,7 @@
 		"Model"					"models/lancelot/lancelot.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.60"
+		"DrawParticlesWhileHidden" "1"
 		
 		"AbilityLayout"			"6"
 		"Ability1"				"lancelot_smg_barrage"
@@ -732,7 +733,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"0.80"
 		//"HeroID"					"122"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 				
 		"AbilityLayout"			"6"
 		"Ability1"				"avenger_murderous_instinct"
@@ -799,7 +800,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.20"
 		//"HeroID"					"123"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"diarmuid_warriors_charge"
@@ -861,7 +862,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.40"
 		//"HeroID"					"124"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"gille_summon_demon"
@@ -923,7 +924,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		//"HeroID"					"125"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"iskander_forward"
@@ -989,7 +990,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		//"HeroID"					"126"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"nero_gladiusanus_blauserum"
@@ -1056,7 +1057,7 @@
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"1.00"
 		//"HeroID"					"127"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"gawain_invigorating_ray"
@@ -1117,6 +1118,7 @@
 		"Model"					"models/tamamo/tamamo.vmdl"
 		//"Model"					"models/development/invisiblebox.vmdl"
 		"ModelScale"			"0.8"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"tamamo_soulstream"
@@ -1178,6 +1180,7 @@
 		"DisableWearables" 			"1"
 		"Model"					"models/lishuen/lishuen.vmdl"
 		"ModelScale"			"0.85"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"			"6"
 		"Ability1"				"lishuwen_concealment"
@@ -1237,7 +1240,7 @@
 		"Model"						"models/jeanne/jeanne.vmdl"
 		"ModelScale"				"1.2"
 		//"HeroID"					"121"
-		"Enabled"					"1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"jeanne_charisma"
@@ -1299,6 +1302,7 @@
 		"DisableWearables" 			"1"
 		"Model"						"models/astolfo/astolfo.vmdl"
 		"ModelScale"				"1.1"
+		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"astolfo_hippogriff_vanish"

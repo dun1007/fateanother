@@ -245,8 +245,8 @@ function OnLECastStart(keys)
 	local ability = keys.ability
 	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 	if #enemies == 0 then 
-		EmitSoundOnClient("Hero_Chen.HandOfGodHealHero", caster:GetPlayerOwner())
-		EmitSoundOnClient("Ruler.Luminosite", caster:GetPlayerOwner())		
+		caster:EmitSound("Hero_Chen.HandOfGodHealHero")
+		caster:EmitSound("Ruler.Luminosite")	
 	else
 		EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
 		EmitGlobalSound("Ruler.Luminosite")

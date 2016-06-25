@@ -403,6 +403,7 @@ function OnRaidStart(keys)
 				for k,v in pairs(targets) do
 			        DoDamage(caster, v, secondDmg, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			    end
+			    ScreenShake(targetPoint, 15, 1.0, 2, 2000, 0, true)
 
 			    if caster.nCurrentRaidAmount >= 1 then
 					caster.nCurrentRaidAmount = caster.nCurrentRaidAmount-1
