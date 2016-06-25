@@ -448,6 +448,7 @@ function OnSGStart(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	TamamoCheckCombo(caster, keys.ability)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_subterranean_grasp_delay", {})
+	SpawnAttachedVisionDummy(caster, target, 300, 3, false)
 	target:EmitSound("Hero_Visage.GraveChill.Cast")
 end
 

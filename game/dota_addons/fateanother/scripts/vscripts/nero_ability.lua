@@ -269,7 +269,7 @@ function OnRIStart(keys)
 		return
 	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rosa_ichthys_anim", {})
-	EmitGlobalSound("Nero.Rosa")
+	caster:EmitSound("Nero.Rosa")
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.25)
 	local slash = 
 	{

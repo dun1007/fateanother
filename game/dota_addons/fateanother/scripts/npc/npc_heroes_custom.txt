@@ -182,7 +182,7 @@
 		"AttackAcquisitionRange"		"200"
 		"AttackDamageMin"				"1"
 		"AttackDamageMax"				"100"
-		"AttackRate"					"1.25"
+		"AttackRate"					"1.4"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
 		"AttributeBaseStrength"			"0"
@@ -952,7 +952,7 @@
 
 		"StatusHealth"					"1250"
 		"StatusHealthRegen"				"10"
-		"StatusMana"					"1000"
+		"StatusMana"					"1100"
 		"StatusManaRegen"				"3"
 		
 		"ArmorPhysical"					"2"
