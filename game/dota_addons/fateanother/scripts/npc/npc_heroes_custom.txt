@@ -182,7 +182,7 @@
 		"AttackAcquisitionRange"		"200"
 		"AttackDamageMin"				"1"
 		"AttackDamageMax"				"100"
-		"AttackRate"					"1.4"
+		"AttackRate"					"1.35"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_STRENGTH"
 		"AttributeBaseStrength"			"0"
@@ -834,7 +834,7 @@
 		"AttackRange"					"250"
 		"AttackDamageMin"				"40"
 		"AttackDamageMax"				"46"
-		"AttackRate"					"0.8"
+		"AttackRate"					"0.7"
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
 		"AttributeBaseStrength"			"0"

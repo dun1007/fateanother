@@ -4875,7 +4875,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"13.0"
+		"AbilityCooldown"				"7 6 5 4 3"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -4973,7 +4973,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"150 175 200 225 250"
+				"damage"			"200 225 250 275 300"
 			}
 			
 			"02"
@@ -5484,7 +5484,7 @@
 		"AbilityChannelTime"			"3.5"
 		"AbilityCastRange"				"4000"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCooldown"				"100"
+		"AbilityCooldown"				"60"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
@@ -19471,6 +19471,25 @@
 			}
 		}
 	}
+
+	"nero_acquire_casa_di_logistilla"
+	{
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"astolfo_casa_di_logistilla"
+		
+		"AbilityCastPoint"				"0.0"
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nero_ability"
+				"Function"		"OnCasaAcquired"
+			}
+		}
+	}
 	//=================================================================================================================
 	// Nero : Golden Rule
 	//=================================================================================================================
@@ -19956,7 +19975,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"1 1.25 1.5 1.75 2"
+				"stun_duration"		"0.75 1 1.25 1.5 1.75"
 			}
 		}
 		

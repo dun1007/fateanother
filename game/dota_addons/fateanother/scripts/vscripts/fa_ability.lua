@@ -138,6 +138,14 @@ function OnHeartDamageTaken(keys)
 			return 0.1
 		end)
 
+		local cleanseCounter = 0
+		Timers:CreateTimer(function()
+			if cleanseCounter >= 5 then return end
+			HardCleanse(caster)
+			cleanseCounter = cleanseCounter + 1
+			return 0.1
+		end)
+
 
 		target:EmitSound("FA.Omigoto")
 		EmitGlobalSound("FA.Quickdraw")

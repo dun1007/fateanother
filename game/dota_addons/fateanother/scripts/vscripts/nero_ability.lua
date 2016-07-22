@@ -45,6 +45,9 @@ function OnDivinityAcquired(keys)
 	OnIPClose(keys)
 end
 
+function OnCasaAcquired(keys)
+end
+
 function OnGoldenRuleAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
