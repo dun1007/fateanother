@@ -78,7 +78,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "v1.13b"
+FATE_VERSION = "v1.14"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -546,14 +546,13 @@ function FateGameMode:OnPlayerChat(keys)
     
     -- Get the player entity for the user speaking
     local text = keys.text
-    local userID = keys.userid
-    local plyID = self.vPlayerList[userID]
+    local plyID = keys.userid -1
+    --local plyID = self.vPlayerList[userID]
     if not plyID then return end
+    print(text .. " by player " .. plyID)
     local ply = PlayerResource:GetPlayer(plyID)
-    if not ply then return end
     local hero = ply:GetAssignedHero()
     
-    print(text .. " by " .. hero:GetName())
     -- Match the text against something
     local matchA, matchB = string.match(text, "^-swap%s+(%d)%s+(%d)")
     if matchA ~= nil and matchB ~= nil then
@@ -1532,6 +1531,7 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "check_hero_in_transport", OnHeroClicked )
     CustomGameEventManager:RegisterListener( "config_option_2_checked", OnConfig2Checked )
     CustomGameEventManager:RegisterListener( "config_option_4_checked", OnConfig4Checked )
+    CustomGameEventManager:RegisterListener( "player_chat_panorama", OnPlayerChat )
     -- LUA modifiers
     LinkLuaModifier("modifier_ms_cap", "modifiers/modifier_ms_cap", LUA_MODIFIER_MOTION_NONE)
 

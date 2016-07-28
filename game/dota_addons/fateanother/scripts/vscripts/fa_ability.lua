@@ -140,10 +140,10 @@ function OnHeartDamageTaken(keys)
 
 		local cleanseCounter = 0
 		Timers:CreateTimer(function()
-			if cleanseCounter >= 5 then return end
+			if cleanseCounter >= 10 then return end
 			HardCleanse(caster)
 			cleanseCounter = cleanseCounter + 1
-			return 0.1
+			return 0.05
 		end)
 
 
