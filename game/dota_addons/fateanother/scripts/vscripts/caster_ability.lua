@@ -1338,13 +1338,13 @@ function OnHGPStart(keys)
 
 	
 	Timers:CreateTimer(travelTime+2.5, function()
-		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, barrageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		local targets = FindUnitsInRadius(caster:GetTeam(), GetGroundPosition(caster:GetAbsOrigin(), caster), nil, barrageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
         	DoDamage(caster, v, 1500, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
         	--v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 		end
   	  	local particle = ParticleManager:CreateParticle("particles/custom/caster/hecatic_graea_powered/area.vpcf", PATTACH_CUSTOMORIGIN, caster)
-  	  	ParticleManager:SetParticleControl(particle, 0, targetPoint) 
+  	  	ParticleManager:SetParticleControl(particle, 0, GetGroundPosition(caster:GetAbsOrigin(), caster)) 
   	  	-- print(radius)
 	    ParticleManager:SetParticleControl(particle, 1, Vector(barrageRadius * 2.5, 1, 1))
 	    ParticleManager:SetParticleControl(particle, 2, Vector(barrageRadius * 75, 1, 1))
