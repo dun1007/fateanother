@@ -18,37 +18,17 @@
 							"value0"		"sounds/crack.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -64,7 +44,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -74,37 +54,17 @@
 							"value0"		"sounds/archer/archer_rho.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"150.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -116,34 +76,34 @@
 "Archer.UBW"  
 {
 	"operator_stacks"
-{
-	"update_stack"
 	{
-		"reference_operator"
+		"update_stack"
 		{
-			"operator"		"sos_reference_stack"
-			"reference_stack"		"dota_update_vo_switch"
-			"operator_variables"
+			"reference_operator"
 			{
-				"vsnd_files"
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_src1_3d"
+				"operator_variables"
 				{
-					"value"
+					"vsnd_files"
 					{
-						"value0"		"sounds/archer/archer_ubw.vsnd"
+						"value"
+						{
+							"value0"		"sounds/archer/archer_ubw.vsnd"
+						}
 					}
-				}
-				"volume"
-				{
-					"value"		"3.000000"
-				}
-				"pitch"
-				{
-					"value"		"1.000000"
+					"volume"
+					{
+						"value"		"1.000000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
 				}
 			}
 		}
 	}
-}
 }
 
 "Archer.UBWAmbient"  
@@ -155,7 +115,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -165,37 +125,17 @@
 							"value0"		"sounds/archer/archer_ubw_ambient.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -212,7 +152,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -222,37 +162,17 @@
 							"value0"		"sounds/archer/archer_ninelives.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -279,37 +199,17 @@
 							"value0"		"sounds/archer/archer_nine_finish.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"150.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"150.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -336,37 +236,17 @@
 							"value0"		"sounds/archer/archer_bladeoff.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -393,37 +273,17 @@
 							"value0"		"sounds/archer/archer_yuke.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -440,7 +300,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -450,37 +310,17 @@
 							"value0"		"sounds/weapons/hero/mirana/arrow.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -509,37 +349,17 @@
 							"value0"		"sounds/archer/archer_combo.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}

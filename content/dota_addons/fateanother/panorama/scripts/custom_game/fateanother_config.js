@@ -64,7 +64,6 @@ function PlayerChat(event)
     var txt = event.text;
     var id = event.playerid;
     var playerID = Players.GetLocalPlayer();
-
     if (playerID == id)
     {
         if (txt == "-bgmoff" && g_GameConfig.bIsBGMOn) {
@@ -78,6 +77,19 @@ function PlayerChat(event)
             $.Msg("BGM on by " + playerID)
         }
     }
+    //GameEvents.SendCustomGameEventToServer("player_chat_panorama", {pID: playerID, text: txt})
+}
+
+function TurnBGMOff(event)
+{
+    StopBGM();
+    g_GameConfig.bIsBGMOn = false;
+}
+
+function TurnBGMOn(event)
+{
+    PlayBGM();
+    g_GameConfig.bIsBGMOn = true;
 }
 
 function CheckTransportSelection(data)
@@ -112,7 +124,9 @@ function UpdateMountStatus(data)
 {
     $("#FateConfigBoard").visible = false;
     $("#FateConfigBGMList").SetSelected(1);
-    GameEvents.Subscribe( "player_chat", PlayerChat);
+    //GameEvents.Subscribe( "player_chat", PlayerChat);
+    GameEvents.Subscribe( "player_bgm_on", TurnBGMOn);
+    GameEvents.Subscribe( "player_bgm_off", TurnBGMOff);
     GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
     GameEvents.Subscribe( "player_summoned_transport", RegisterTransport);
     GameEvents.Subscribe( "player_mount_status_changed", UpdateMountStatus);

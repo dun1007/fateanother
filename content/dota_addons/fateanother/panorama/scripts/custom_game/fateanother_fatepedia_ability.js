@@ -139,7 +139,9 @@ var guidelinks = [
 	"http://fa-d2.wikia.com/wiki/Saber_(Gawain)#Gameplay",
 	"http://fa-d2.wikia.com/wiki/Tamamo_no_Mae#Gameplay",
 	"http://fa-d2.wikia.com/wiki/Assassin_%28Li_Shu_Wen%29#Gameplay",
-	"http://fa-d2.wikia.com/wiki/Jeanne_d%27Arc#Gameplay"
+	"http://fa-d2.wikia.com/wiki/Jeanne_d%27Arc#Gameplay",
+	"http://fa-d2.wikia.com/wiki/Jeanne_d%27Arc#Gameplay",
+	"http://fa-d2.wikia.com/wiki/Rider_of_Black#Gameplay"
 ]
 
 function CreateContextAbilityPanel(panel, abilityname)

@@ -7,7 +7,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -17,13 +17,18 @@
 							"value0"		"sounds/ruler/ruler_split_luminosite.mp3"
 						}
 					}
-                    "volume"            {   "value"     "3.00000"  }
-                    "pitch_rand_min"    {   "value"     "0.00000"  }
-                    "pitch_rand_max"    {   "value"     "0.000000"  }
-                    "pitch"             {   "value"     "1.000000"  }
-                    "soundlevel"        {   "value"     "100.00000" }
-                    "distance_max"      {   "value"     "1600.000"  }
-                    "event_type"        {   "value"     "1.000000"  }
+					"volume"
+					{
+						"value"		"5.000000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
 				}
 			}
 		}
@@ -39,7 +44,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -49,13 +54,18 @@
 							"value0"		"sounds/ruler/ruler_split_eternelle.mp3"
 						}
 					}
-                    "volume"            {   "value"     "3.00000"  }
-                    "pitch_rand_min"    {   "value"     "0.00000"  }
-                    "pitch_rand_max"    {   "value"     "0.000000"  }
-                    "pitch"             {   "value"     "1.000000"  }
-                    "soundlevel"        {   "value"     "100.00000" }
-                    "distance_max"      {   "value"     "1600.000"  }
-                    "event_type"        {   "value"     "1.000000"  }
+					"volume"
+					{
+						"value"		"3.000000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
 				}
 			}
 		}
@@ -71,7 +81,7 @@
 		"reference_operator"
 		{
 			"operator"		"sos_reference_stack"
-			"reference_stack"		"src1_2d"
+			"reference_stack"		"dota_src1_3d"
 			"operator_variables"
 			{
 				"vsnd_files"

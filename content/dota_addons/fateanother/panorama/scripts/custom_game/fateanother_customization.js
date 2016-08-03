@@ -124,6 +124,11 @@ function ShardHideTooltip()
 	var shardText = $("#CustomizationShardText"); 
 	$.DispatchEvent( 'DOTAHideTextTooltip', shardText );
 }
+function PrintToClient(data)
+{
+	$.Msg(data.text);
+}
+
 
 (function()
 {
@@ -137,5 +142,7 @@ function ShardHideTooltip()
 	GameUI.SetCameraDistance(1600);
 	GameEvents.Subscribe( "player_selected_hero", UpdateAttributeList);
 	GameEvents.Subscribe( "servant_stats_updated", UpdateStatPanel );
+	GameEvents.Subscribe( "player_chat_lua", PrintToClient );
+
 	OnCustomizeButtonPressed();
 })();

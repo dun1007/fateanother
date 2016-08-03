@@ -86,7 +86,6 @@ function SetupPortrait(data)
 	var playerID = Players.GetLocalPlayer();
 	var hero = Players.GetPlayerHeroEntityIndex( playerID );
 	var imageDir = "file://{images}/heroes/" + Entities.GetUnitName( hero ) + ".png";
-	$.Msg(imageDir)
 	heroPortrait.SetImage(imageDir) ;
 	masterUnit = data.shardUnit;
 	UpdateHealthAndMana();

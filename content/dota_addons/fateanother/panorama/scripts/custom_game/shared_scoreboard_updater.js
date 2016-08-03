@@ -121,6 +121,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 
 		var playerIDPanel = playerPanel.FindChildInLayoutFile( "PlayerID" );
 		var playerGoldPanel = playerPanel.FindChildInLayoutFile( "PlayerGold" );
+		var playerSealPanel = playerPanel.FindChildInLayoutFile( "SealIndicator" );
 		var playerID = playerInfo.player_id;
 		var playerTeam = playerInfo.player_team_id;
 		if ( playerIDPanel !== null)
@@ -138,12 +139,28 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			} 
 			else
 			{
-				playerGoldPanel.text = "????";
+				playerGoldPanel.text = "";
 			}
 		}
+		if ( playerSealPanel !== null)
+		{
+			/*if (playerTeam == Players.GetTeam(Players.GetLocalPlayer()))
+			{
+				var bIsRevoked = ScoreboardUpdater_IsRevoked(Players.GetPlayerHeroEntityIndex(playerID));
+				if (bIsRevoked)
+				{
+					playerSealPanel.SetImage("file://{images}/spellicons/cmd_seal_4_disabled.png") ;
+				}
+				else
+				{
+					playerSealPanel.SetImage("file://{images}/spellicons/cmd_seal_4.png") ;
+				}
 
-		//var bIsRevoked = ScoreboardUpdater_IsRevoked(Players.GetLocalPlayerPortraitUnit());
-		//$.Msg(bIsRevoked);
+			}*/
+			//playerSealPanel = 0;
+		}
+
+
 
 	}
 	
@@ -505,7 +522,7 @@ var revokes = [
 
 function ScoreboardUpdater_IsRevoked(hero)
 {
-	var buffCount = Entities.GetNumBuffs(hero) + 1;
+	/* var buffCount = Entities.GetNumBuffs(hero) + 1;
 	$.Msg(buffCount);
 	for (var i=0;i<buffCount + 1; i++)
 	{
@@ -519,5 +536,22 @@ function ScoreboardUpdater_IsRevoked(hero)
 			}
 		}
 	}
+	return false */
+	for (var j=0; j<revokes.length; j++)
+	{
+		if (Entities.HasModifier(hero, revokes[j]))
+		{
+			return true
+		}
+	}
 	return false
 }
+
+Entities.HasModifier = function(entIndex, modifierName){
+	var nBuffs = Entities.GetNumBuffs(entIndex)
+	for (var i = 0; i < nBuffs; i++) {
+		if (Buffs.GetName(entIndex, Entities.GetBuff(entIndex, i)) == modifierName)
+			return true
+	};
+	return false
+};

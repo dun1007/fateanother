@@ -1,0 +1,55 @@
+"Hero_QueenOfPain.Attack"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_dota_src1_3d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"wave0"		"sounds/weapons/hero/shared/impacts/sword_impact1.vsnd"
+							"wave1"		"sounds/weapons/hero/shared/impacts/sword_impact1.vsnd"
+							"wave2"		"sounds/weapons/hero/shared/impacts/sword_impact1.vsnd"
+							"wave3"		"sounds/weapons/hero/shared/impacts/sword_impact1.vsnd"
+						}
+					}
+					"volume"
+					{
+						"value"		"1.000000"
+					}
+					"pitch_rand_min"
+					{
+						"value"		"-0.050000"
+					}
+					"pitch_rand_max"
+					{
+						"value"		"0.050000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"75.000000"
+					}
+					"distance_max"
+					{
+						"value"		"2500.000000"
+					}
+					"event_type"
+					{
+						"value"		"1.000000"
+					}
+				}
+			}
+		}
+	}
+}
