@@ -78,7 +78,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "v1.14"
+FATE_VERSION = "v1.14b"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -662,9 +662,9 @@ function FateGameMode:OnPlayerChat(keys)
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
-        if GameRules:IsCheatMode() then
+        --if GameRules:IsCheatMode() then
             SendChatToPanorama("player " .. plyID .. " is trying to send " .. goldAmt .. " gold to player " .. pID)
-        end
+        --end
         if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
             local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
             hero:ModifyGold(-tonumber(goldAmt), true , 0) 

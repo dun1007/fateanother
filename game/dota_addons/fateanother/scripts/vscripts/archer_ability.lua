@@ -23,12 +23,14 @@ function FarSightVision(keys)
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 	
-	EmitSoundOnLocationWithCaster(targetLoc, "Hero_KeeperOfTheLight.BlindingLight", caster)
+	--EmitGlobalSound("Hero_KeeperOfTheLight.BlindingLight")
+	--EmitSoundOnLocationWithCaster(targetLoc, "Hero_KeeperOfTheLight.BlindingLight", visiondummy)
 	
 	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
 	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
+	ParticleManager:SetParticleControl( circleFxIndex, 3, Vector( 100, 255, 255 ) )
 	
 	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
@@ -52,12 +54,14 @@ function FarSightVision(keys)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and player and playerHero then
         	AddFOWViewer(playerHero:GetTeamNumber(), targetLoc, 50, 0.5, false)
+        	
         end
     end)
-
 	-- Particles
 	--visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
-
+	Timers:CreateTimer(0.033, function()
+		EmitSoundOnLocationWithCaster(targetLoc, "Hero_KeeperOfTheLight.BlindingLight", visiondummy)
+	end)
 		
 end
 
