@@ -717,11 +717,6 @@ function OnMountStart(keys)
 end
 
 
-
-function RemoveSacrificeModifier(keys)
-	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo")
-	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo_channeling")
-end
 --[[
 	Author: Dun1007
 	Date: 8.25.2015.
@@ -1013,23 +1008,21 @@ function OnDWStart(keys)
     )
 end
 
-sac = false
 function OnSacrificeStart(keys)
 	local caster = keys.caster
-	sac = true
-	Timers:CreateTimer(function()
-		if sac then 
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-		    for k,v in pairs(targets) do
-		    	if v ~= caster then
-		    		v:AddNewModifier(caster, nil, "modifier_invulnerable", {duration = 1.00})
-		    	end
-			end
-		else return end
-		caster:RemoveModifierByName("modifier_invulnerable")
-	    return 0.03
-    end
-    )
+	caster.SacFx = ParticleManager:CreateParticle("particles/custom/caster/sacrifice/caster_sacrifice_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControl( caster.SacFx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl( caster.SacFx, 1, Vector(keys.Radius,0,0))
+end
+
+function RemoveSacrificeModifier(keys)
+	local caster = keys.caster
+	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo")
+	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo_channeling")
+
+	ParticleManager:DestroyParticle( caster.SacFx, false )
+	ParticleManager:ReleaseParticleIndex( caster.SacFx )
+	caster.SacFx = nil
 end
 
 function MaledictStop( event )

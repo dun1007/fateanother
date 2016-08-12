@@ -536,7 +536,7 @@ function OnShackleStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 
-	if (caster:GetAbsOrigin() - caster.MantraLocation):Length2D() > 500 then
+	if (caster:GetAbsOrigin() - caster.MantraLocation):Length2D() > 500 or not caster.MantraTarget:IsAlive() then
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
 		keys.ability:EndCooldown()
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Too Far From Initial Castpoint" } ) 
@@ -578,7 +578,7 @@ function OnMantraTakeDamage(keys)
 		if target.IsMantraProcOnCooldown then 
 			return
 		else
-			print(attacker:GetName() .. " attacked " .. target:GetName())
+			--print(attacker:GetName() .. " attacked " .. target:GetName())
 			target.IsMantraProcOnCooldown = true
 			DoDamage(caster, target, orbDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			Timers:CreateTimer(0.299, function()

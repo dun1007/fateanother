@@ -550,16 +550,14 @@ end
 function FateGameMode:OnPlayerChat(keys)
     --print ('[BAREBONES] PlayerSay')
     if keys == nil then print("empty keys") end
-    --PrintTable(keys)
-    
-    PrintTable(self.vPlayerList)
     -- Get the player entity for the user speaking
     local text = keys.text
     SendChatToPanorama(text)
-    local userID = keys.userid
-    local plyID = self.vPlayerList[userID]
-    if not plyID then return end
-    if IsDedicatedServer() then plyID = plyID - 1 end -- the index is off by 1 on dedi
+    --local userID = keys.userid
+    --local plyID = self.vPlayerList[userID]
+    --if not plyID then return end
+    local plyID = keys.userid - 1
+    --if IsDedicatedServer() then plyID = plyID - 1 end -- the index is off by 1 on dedi
     if GameRules:IsCheatMode() then
         SendChatToPanorama(text .. " by player " .. plyID)
     end
@@ -658,14 +656,14 @@ function FateGameMode:OnPlayerChat(keys)
     if text == "-bgmoff" then
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_bgm_off", {} )
     end
-    
+
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
         --if GameRules:IsCheatMode() then
             SendChatToPanorama("player " .. plyID .. " is trying to send " .. goldAmt .. " gold to player " .. pID)
         --end
-        if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) then 
+        if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) and PlayerResource:GetTeam(plyID) == PlayerResource:GetTeam(tonumber(pID)) then 
             local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
             hero:ModifyGold(-tonumber(goldAmt), true , 0) 
             targetHero:ModifyGold(tonumber(goldAmt), true, 0)

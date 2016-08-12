@@ -1879,7 +1879,9 @@
 		
 		"precache"
 		{
-			"particle"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+			"particle"	"particles/econ/items/morphling/morphling_crown_of_tears/morphling_crown_ambient_trail.vpcf"
+			"particle"	"particles/custom/lancer/lancer_relentless_spear/lancer_relentless_spear.vpcf"
+			"particle"	"particles/custom/lancelot/lancelot_arondite.vpcf"
 		}
 		
 		"AbilityCastPoint"				"0.0"
@@ -1925,7 +1927,7 @@
 					"AttachEffect"
 					{
 						"Target"	"CASTER"
-						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
+						"EffectName"	"particles/custom/lancer/lancer_relentless_spear/lancer_relentless_spear.vpcf"
 						"EffectAttachType"	"start_at_customorigin"
 						"ControlPointEntities"
 						{
@@ -1933,6 +1935,7 @@
 						}
 					}
 				}
+
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%aspd_modifier"
@@ -4875,7 +4878,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7 6 5 4 3"
+		"AbilityCooldown"				"5.5"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -6539,7 +6542,7 @@
 			}			
 			"modifier_god_hand_debuff"
 			{
-				"Duration"		"10"
+				"Duration"		"7"
 				"IsDebuff"		"1"
 				"Properties"
 				{
@@ -6725,7 +6728,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"23"
+		"AbilityManaCost"				"20"
 
 		"precache"
 		{
@@ -6741,7 +6744,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"10"	
+				"duration"			"6"	
 			}
 			"03"
 			{
@@ -11582,10 +11585,10 @@
 
 		"precache"
 		{
-			"particle" 	"particles/units/heroes/hero_shadowshaman/unused_field_4.vpcf"
 			"particle"	"particles/units/heroes/hero_warlock/warlock_shadow_word_buff.vpcf"
 			"particle"  "particles/status_fx/status_effect_guardian_angel.vpcf"
 			"particle"	"particles/units/heroes/hero_omniknight/omniknight_guardian_angel_buff_j.vpcf"
+			"particle"	"particles/custom/caster/sacrifice/caster_sacrifice_indicator.vpcf"
 			"soundfile" "soundevents/game_sounds_heroes/game_sounds_shadowshaman.vsndevts"
 			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_witchdoctor.vsndevts"
 		}
@@ -11611,12 +11614,20 @@
 				"ModifierName"	"modifier_big_bad_voodoo"
 				"Target" 		"CASTER"
 				"Duration"		"%duration"
+				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 
 			"ApplyModifier"
 			{
 				"ModifierName"	"modifier_big_bad_voodoo_channeling"
 				"Target" 		"CASTER"
+				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+			}
+			"RunScript"
+			{
+				"ScriptFile"	"caster_ability"
+				"Function"		"OnSacrificeStart"
+				"Radius"		"%radius"
 			}
 		}
 
@@ -11624,7 +11635,7 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	"caster_ability.lua"
+				"ScriptFile"	"caster_ability"
 				"Function"		"RemoveSacrificeModifier"
 			}
 		}
@@ -11649,7 +11660,7 @@
 			"modifier_channeling"
 			{
 				"IsHidden"				"1"
-				"OverrideAnimation"     "ACT_DOTA_CAST_ABILITY_4"
+				"OverrideAnimation"     "ACT_DOTA_ATTACK"
 			}
 
 			"modifier_big_bad_voodoo"
@@ -11659,31 +11670,6 @@
 		
 				"OnCreated"
 				{
-					"AttachEffect"
-					{
-						"EffectName"        "particles/custom/witchdoctor_voodoo_restoration_aura.vpcf"
-						"EffectAttachType"  "follow_origin"
-						"Target"            "CASTER"
-					}
-
-					"AttachEffect"
-					{
-						"EffectName"		"particles/custom/warlock_shadow_word_buff_copy.vpcf"
-						"EffectAttachType"	"follow_origin"
-						"Target"            "CASTER"
-					}
-
-					"AttachEffect"
-					{
-						"EffectName"        "particles/custom/witchdoctor_voodoo_restoration.vpcf"
-						"EffectAttachType"  "start_at_customorigin"
-						"Target"            "CASTER"
-						"ControlPoints"
-						{
-							"01"	"%radius 0 0"
-						}				
-					}
-
 					"FireSound"
 					{
 						"EffectName"	"Hero_WitchDoctor.Maledict_Loop"
@@ -15492,32 +15478,6 @@
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_alacrity_buff.vpcf"
 				"EffectAttachType"	"follow_overhead"
 				"Duration"		"%duration"	
-				"OnCreated"
-				{
-					"AttachEffect"
-					{
-						"Target"	"CASTER"
-						"EffectName"	"particles/custom/diarmuid/diarmuid_red_trail.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"	"attach_weapon1"
-						}
-					}
-
-					"AttachEffect"
-					{
-						"Target"	"CASTER"
-						"EffectName"	"particles/custom/diarmuid/diarmuid_yellow_trail.vpcf"
-						"EffectAttachType"	"start_at_customorigin"
-						"ControlPointEntities"
-						{
-							"CASTER"	"attach_weapon2"
-						}
-					}
-
-
-				}
 
 				"OnAttackLanded"
 				{
@@ -22553,11 +22513,6 @@
 		
 		"OnAbilityPhaseStart"
 		{
-			"RunScript"
-			{
-				"ScriptFile"			"tamamo_ability"
-				"Function"				"On"
-			}			
 		}
 		"OnSpellStart"
 		{

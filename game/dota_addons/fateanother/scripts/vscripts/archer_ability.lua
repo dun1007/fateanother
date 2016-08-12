@@ -530,6 +530,7 @@ function OnUBWStart(keys)
 	        ubwTargetLoc[i] = ubwTargetPos
 	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
 	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
+	        ubwTargets[i]:Stop()
 			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
 			Timers:CreateTimer(0.1, function() 
 				if caster:IsAlive() and IsValidEntity(ubwTargets[i]) then
@@ -604,6 +605,7 @@ function EndUBW(caster)
 			    		if units[i] == ubwTargets[j] then
 			    			if ubwTargetLoc[j] ~= nil then
 				    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+				    			units[i]:Stop()
 				    		end
 			    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
 			    			Timers:CreateTimer(0.1, function() 
@@ -619,6 +621,7 @@ function EndUBW(caster)
 	    		diff = ubwCenter - units[i]:GetAbsOrigin()
 	    		if ubwCasterPos ~= nil then
 	    			units[i]:SetAbsOrigin(ubwCasterPos - diff)
+	    			units[i]:Stop()
 	    		end
 	    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
 				Timers:CreateTimer(0.1, function() 

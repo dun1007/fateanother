@@ -20,7 +20,7 @@
 				<Panel hittest="false" id="PlayerColorBar" />
 				<Image hittest="false" id="HeroIcon" />
 				<Panel hittest="false" id="PlayerIDBar">
-					<!-- <DOTAAbilityImage hittest="false" id="SealIndicator" src="file://{images}/spellicons/cmd_seal_4_disabled.png" /> -->
+					<DOTAAbilityImage hittest="false" id="SealIndicator" src="file://{images}/spellicons/cmd_seal_4_disabled.png" />
 					<Label hittest="false" id="PlayerGold" text="111"/>
 				</Panel>
 			</Button>

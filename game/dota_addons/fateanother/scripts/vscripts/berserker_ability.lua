@@ -478,12 +478,15 @@ function OnGodHandDeath(keys)
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=1.1})
 
+
 	--print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()
-
-		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 then
+		print(caster.bIsGHReady)
+		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 and caster.bIsGHReady then
+			caster.bIsGHReady = false
+			Timers:CreateTimer(7.0, function() caster.bIsGHReady = true end)
 			EmitGlobalSound("Berserker.Roar") 
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			caster.GodHandStock = caster.GodHandStock - 1
@@ -534,7 +537,6 @@ function OnReincarnationDamageTaken(keys)
 	else
 		caster.ReincarnationDamageTaken = caster.ReincarnationDamageTaken+damageTaken
 	end
-
 	if caster.ReincarnationDamageTaken > 20000 and caster.IsGodHandAcquired then
 		caster.ReincarnationDamageTaken = 0
 		caster.GodHandStock = caster.GodHandStock + 1
@@ -545,7 +547,9 @@ end
 
 function GainReincarnationRegenStack(caster, ability)
 	local modifier = ability:ApplyDataDrivenModifier(caster, caster, "modifier_reincarnation_stack", {})
-	if modifier:GetStackCount() < 5 then modifier:IncrementStackCount() end
+	if modifier:GetStackCount() < 5 then 
+		modifier:IncrementStackCount() 
+	end
 
 	if not caster.reincarnation_particle then caster.reincarnation_particle = ParticleManager:CreateParticle("particles/custom/berserker/reincarnation/regen_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster) end
 	ParticleManager:SetParticleControl(caster.reincarnation_particle, 1, Vector(modifier:GetStackCount(),0,0))
@@ -589,7 +593,7 @@ function OnGodHandAcquired(keys)
 	hero.GodHandStock = 11
 	ability:ApplyDataDrivenModifier(hero, hero, "modifier_god_hand_stock", {}) 
 	hero:SetModifierStackCount("modifier_god_hand_stock", hero, 11)
-
+	hero.bIsGHReady = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

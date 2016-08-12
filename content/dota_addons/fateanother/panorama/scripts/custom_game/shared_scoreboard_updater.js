@@ -144,7 +144,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		}
 		if ( playerSealPanel !== null)
 		{
-			/*if (playerTeam == Players.GetTeam(Players.GetLocalPlayer()))
+			if (playerTeam == Players.GetTeam(Players.GetLocalPlayer()))
 			{
 				var bIsRevoked = ScoreboardUpdater_IsRevoked(Players.GetPlayerHeroEntityIndex(playerID));
 				if (bIsRevoked)
@@ -156,7 +156,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 					playerSealPanel.SetImage("file://{images}/spellicons/cmd_seal_4.png") ;
 				}
 
-			}*/
+			}
 			//playerSealPanel = 0;
 		}
 
