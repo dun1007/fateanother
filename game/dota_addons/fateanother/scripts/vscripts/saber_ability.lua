@@ -598,11 +598,11 @@ end
 function SaberCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("saber_avalon") and caster:FindAbilityByName("saber_excalibur"):IsCooldownReady() and caster:FindAbilityByName("saber_max_excalibur"):IsCooldownReady() then
-			caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true) 
+			caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", false, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, true)
+				caster:SwapAbilities("saber_excalibur", "saber_max_excalibur", true, false)
 			end
 			})			
 		end

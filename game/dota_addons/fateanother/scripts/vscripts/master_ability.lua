@@ -402,6 +402,36 @@ function OnSeal4Start(keys)
 	end
 end
 
+function OnPRStart(keys)
+    local caster = keys.caster
+    local ability = keys.ability
+    local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
+    local heroTable = {}
+    local target = nil
+
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	--print("looping through " .. playerHero:GetName())
+        if playerHero:GetTeamNumber() ~= hero:GetTeamNumber() then
+        	if not playerHero:IsInvisible() and not playerHero:IsInvulnerable() then
+        		table.insert(heroTable, playerHero)
+
+        	end
+        end
+     end)
+
+    if #heroTable > 0 then
+    	target = heroTable[math.random(#heroTable)]
+    	MinimapEvent( hero:GetTeamNumber(), hero, target:GetAbsOrigin().x, target:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 2)
+    end
+
+    GameRules:SendCustomMessage("<font color='#58ACFA'>" .. FindName(hero:GetName()) .."</font>" ..  "<font color='#ff9900'>'s Master just used Presence Resonator!", 0, 0)
+
+    if hero:GetName() == "npc_dota_hero_mirana" and hero.bIsIDAcquired then
+    	ability:EndCooldown()
+    	ability:StartCooldown(ability:GetCooldown(1)/2)
+    end
+end
+
 function AddMasterAbility(master, name)
     --local ply = master:GetPlayerOwner()
     local attributeTable = FindAttribute(name)

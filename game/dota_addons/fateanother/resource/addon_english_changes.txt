@@ -1,3 +1,12 @@
 		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note2"	"For 0.5 seconds after counterattack, Assassin cleanses any negative effects on himself and benefits from damage reduction."
 		
 		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_Note1"				"God Hand cannot be activated while its debuff effect lasts."
+
+    "DOTA_Tooltip_Ability_master_presence_resonator"		"Presence Resonator"
+   	"DOTA_Tooltip_Ability_master_presence_resonator_Description"	"Activates a magical device that spots a random enemy Servant's location on the map." 
+   	"DOTA_Tooltip_Ability_master_presence_resonator_Note0"		"Cannot detect invisible or invulnerable hero."
+
+    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment"		"Identity Discernment"
+    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment_Description"		"Enables Identity Discernment, and reduces Presence Resonator's cooldown.\n<font color='#58ACFA'>Identity Discernment:</font> Ruler pings all enemy Servants' locations.\n<font color='#ff9900'>UNJUST BONUS:</font> Also grants vision briefly."
+    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment_vision_duration"	"UNJUST VISION DURATION:"
+    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment_pr_cooldown_reduction"	"%PRESENCE RESONATOR COOLDOWN REDUCTION:"
