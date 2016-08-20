@@ -3,14 +3,14 @@ function OnEternalStart(keys)
     local ability = keys.ability
     local ply = caster:GetPlayerOwner()
     if caster.IsEternalImproved ~= true then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Attribute_Not_Earned")
         return
     end
 
     if IsRevoked(caster) then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Revoked from Master" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
         return
     end
 
@@ -143,8 +143,8 @@ function OnKnightStart(keys)
         local ability = keys.ability
         caster.IsKnightOpen = true
         if caster:HasModifier("modifier_arondite") then
-                FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
-                return 
+            return 
+            SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
         end
 
 
@@ -382,7 +382,7 @@ function OnNukeStart(keys)
     if not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then 
         caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
         keys.ability:EndCooldown()
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Target Location" } ) 
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
         return
     end
 

@@ -3,7 +3,9 @@
 softdispellable = {
     "modifier_aspd_increase",
     "modifier_derange",
-    "modifier_courage_self_buff",
+    "modifier_courage_attack_damage_debuff",
+    "modifier_courage_damage_stack_indicator",
+    "modifier_courage_stackable_buff",
     "modifier_berserk_self_buff",
     "modifier_ta_self_mod",
     "modifier_berserk_scroll",
@@ -36,7 +38,9 @@ strongdispellable = {
     -- softdispellable
     "modifier_aspd_increase",
     "modifier_derange",
-    "modifier_courage_self_buff",
+    "modifier_courage_attack_damage_debuff",
+    "modifier_courage_damage_stack_indicator",
+    "modifier_courage_stackable_buff",
     "modifier_berserk_self_buff",
     "modifier_ta_self_mod",
     "modifier_berserk_scroll",
@@ -947,6 +951,10 @@ function IsInSameRealm(loc1, loc2)
         return false
     end
     return true
+end
+
+function SendErrorMessage(playerID, string)
+   CustomGameEventManager:Send_ServerToPlayer(PlayerResource:GetPlayer(playerID), "error_message_fired", {message=string}) 
 end
 
 function SendMountStatus(hero)

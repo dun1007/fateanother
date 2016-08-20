@@ -216,9 +216,12 @@ function OnDIZabStart(keys)
 	local smokeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
 	local smokeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(smokeFx, 0, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(smokeFx2, 0, target:GetAbsOrigin())
+	local smokeFx3 = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl(smokeFx3, 0, caster:GetAbsOrigin())
+	
 	EmitGlobalSound("TA.Zabaniya") 
-	caster:EmitSound("Hero_Nightstalker.Darkness") 
+	caster:EmitSound("TA.Darkness") 
 
 	-- Destroy particle after delay
 	Timers:CreateTimer( 2.0, function()
@@ -411,6 +414,8 @@ function OnZabStart(keys)
 		ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
 		local smokeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControl(smokeFx2, 0, target:GetAbsOrigin())
+		local smokeFx3 = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(smokeFx3, 0, target:GetAbsOrigin())
 
 		ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
 		ParticleManager:SetParticleControl(particle, 2, keys.target:GetAbsOrigin()) -- circle effect location
@@ -427,7 +432,7 @@ function OnZabStart(keys)
 		end)
 
 		EmitGlobalSound("TA.Zabaniya") 
-		caster:EmitSound("Hero_Nightstalker.Darkness") 
+		target:EmitSound("TA.Darkness") 
 	end
 	})
 end
@@ -445,6 +450,8 @@ function OnZabHit(keys)
 
 	local shadowFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(shadowFx, 0, target:GetAbsOrigin())
+	local smokeFx3 = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl(smokeFx3, 0, target:GetAbsOrigin())
 
 	-- Destroy particle after delay
 	Timers:CreateTimer( 2.0, function()

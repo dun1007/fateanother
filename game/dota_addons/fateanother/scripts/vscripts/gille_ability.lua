@@ -61,8 +61,8 @@ function OnThrowCorpseStart(keys)
 	local frontward = caster:GetForwardVector()
 
 	if caster.MadnessStackCount == 0 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Madness" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Not_Enough_Madness")
 		return
 	end
 	
@@ -157,6 +157,8 @@ function OnTormentStart(keys)
 		ParticleManager:DestroyParticle( particle, false )
 		ParticleManager:ReleaseParticleIndex( particle )
 	end)
+
+	EmitSoundOnLocationWithCaster(targetPoint, "ZC.Torment", caster)	
 end
 
 function OnTormentThink(keys)
@@ -332,8 +334,8 @@ function OnContractStart(keys)
 	end
 
 	if caster:HasModifier("modifier_gigantic_horror_penalty_timer") or caster.IsAbyssalContractInProgress then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Summon Yet" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Summon")
 		return
 	end
 	caster.IsAbyssalContractInProgress = true
@@ -495,10 +497,9 @@ function OnTentacleSummon(keys)
 	local ply = caster:GetPlayerOwner() 
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local targetPoint = keys.target_points[1]
-	if caster.IsAbyssalConnection2Acquired then
+	if hero.IsAbyssalConnection2Acquired then
 		keys.Health = keys.Health * 1.3
 	end
-
 	for i=0,2 do
 		local tentacle = CreateUnitByName("gille_tentacle_of_destruction", targetPoint, true, nil, nil, caster:GetTeamNumber())
 		if hero.IsAbyssalConnection2Acquired then
@@ -514,6 +515,12 @@ function OnTentacleSummon(keys)
 		tentacle:FindAbilityByName("gille_tentacle_of_destruction_passive"):SetLevel(keys.ability:GetLevel())
 		tentacle:AddNewModifier(caster, nil, "modifier_kill", {duration = 60.0})
 		FindClearSpaceForUnit(tentacle, tentacle:GetAbsOrigin(), true)
+
+		if i==1 then
+			tentacle:EmitSound("Hero_Nevermore.Shadowraze")
+			local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_CUSTOMORIGIN, tentacle)
+			ParticleManager:SetParticleControl(particle, 0, tentacle:GetAbsOrigin()) 
+		end
 	end
 end
 
@@ -672,8 +679,8 @@ function OnIntegrateStart(keys)
 		if caster:IsAlive() then
 			if hero.IsIntegrated then
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
-					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
 					keys.ability:EndCooldown()
+					SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Unmount")
 					return			
 				else
 					hero:RemoveModifierByName("modifier_integrate_gille")
@@ -756,12 +763,12 @@ function OnHorrorTeleport(keys)
 	local targetPoint = keys.target_points[1]
 	local delay = keys.Delay
 	if (targetPoint - hero:GetAbsOrigin()):Length2D() > 500 then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Locate Within 500 Range from Caster" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Tentacle_Out_Of_Radius")
 		return
 	elseif hero.IsIntegrated then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Use While Integrated" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Use_While_Integrated")
 		return		
 	else
 		EmitSoundOnLocationWithCaster(targetPoint, "Hero_Enigma.Demonic_Conversion", caster)
@@ -798,10 +805,20 @@ function OnGilleComboStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_larret_de_mort_cooldown", {duration = 150})
 
 	-- knockup enemies
-local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	local targets = FindUnitsInRadius(caster:GetTeam(), tentacle:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		ApplyAirborne(caster, v, keys.KnockupDuration)
 	end
+
+	-- remove integrate status
+	if caster.IsIntegrated then
+		caster:RemoveModifierByName("modifier_integrate_gille")
+		tentacle:RemoveModifierByName("modifier_integrate")
+		caster.IsIntegrated = false
+		tentacle.AttemptingIntegrate = false
+		SendMountStatus(caster)
+	end
+
 
 	ability:ApplyDataDrivenModifier(caster, tentacle, "modifier_gigantic_horror_freeze", {})
 	CreateRavageParticle(tentacle, tentacle:GetAbsOrigin(), 300)

@@ -11,8 +11,8 @@ function OnDPStart(keys)
     end
 
 	if IsLocked(caster) then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
 		return
 	end
 
@@ -26,7 +26,7 @@ function OnDPStart(keys)
 			end
 		end
 		if not IsFacingUnit(caster, target, 90) then
-			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
 			keys.ability:EndCooldown()
 			return
 		end
@@ -34,7 +34,7 @@ function OnDPStart(keys)
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown()  
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	local currentStack = caster:GetModifierStackCount("modifier_dark_passage", keys.ability)
@@ -281,7 +281,7 @@ function OnVengeanceStart(keys)
 	local target = keys.target
 	local ability = keys.ability
 	if caster:HasModifier("modifier_blood_mark_restriction") then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 		caster:GiveMana(ability:GetManaCost(1))
 		keys.ability:EndCooldown()
 		return
@@ -448,8 +448,8 @@ function OnEndlessStart(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_endless_loop_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
+	EmitGlobalSound("Avenger.Darkness")
 	EmitGlobalSound("Avenger.Berg")
-	EmitGlobalSound("Hero_Nightstalker.Darkness")
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_endless_loop", {})
 	Timers:CreateTimer(3.0, function() 
 		if resetCounter == 4 or not caster:IsAlive() then return end
@@ -462,7 +462,7 @@ function OnEndlessStart(keys)
 			ParticleManager:DestroyParticle( particle, false )
 			ParticleManager:ReleaseParticleIndex( particle )
 		end)
-		caster:EmitSound("Hero_LifeStealer.Consume")
+		caster:EmitSound("Avenger.Consume")
 		resetCounter = resetCounter + 1
 		return 3.0
 	end)

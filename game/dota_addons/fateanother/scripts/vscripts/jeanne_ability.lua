@@ -509,6 +509,7 @@ function OnIDAcquired(keys)
 	local caster = keys.caster
 	local pid = caster:GetPlayerOwnerID()
 	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+	hero.bIsIDAcquired = true
 
 	hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
 	-- Set master 1's mana 

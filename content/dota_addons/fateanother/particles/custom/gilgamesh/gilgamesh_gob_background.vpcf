@@ -1,23 +1,17 @@
 <!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
 {
 	_class = "CParticleSystemDefinition"
-	m_ConstantColor =
-	[
-		255,
-		255,
-		0,
-		255,
-	]
+	m_ConstantColor = [ 255, 255, 0, 255 ]
 	m_nMaxParticles = 300
-	m_Operators =
+	m_Operators = 
 	[
 		{
 			_class = "C_OP_Decay"
 		},
 		{
 			_class = "C_OP_InterpolateRadius"
-			m_flStartScale = 0.000000
-			m_flEndScale = 6.000000
+			m_flStartScale = 0.0
+			m_flEndScale = 6.0
 		},
 		{
 			_class = "C_OP_BasicMovement"
@@ -27,84 +21,72 @@
 		},
 		{
 			_class = "C_OP_FadeOutSimple"
-			m_flFadeOutTime = 1.000000
+			m_flFadeOutTime = 1.0
 		},
 		{
 			_class = "C_OP_ColorInterpolate"
-			m_ColorFade =
-			[
-				255,
-				170,
-				0,
-				255,
-			]
+			m_ColorFade = [ 255, 170, 0, 255 ]
 		},
 	]
-	m_Renderers =
+	m_Renderers = 
 	[
 		{
 			_class = "C_OP_RenderSprites"
-			VisibilityInputs =
+			VisibilityInputs = 
 			{
-				m_flInputMax = 0.000000
+				m_flInputMax = 0.0
 			}
 		},
 	]
-	m_Initializers =
+	m_Initializers = 
 	[
 		{
 			_class = "C_INIT_RingWave"
 			m_nOverrideCP = 1
-			m_flParticlesPerOrbit = 40.000000
-			m_flInitialRadius = 1.000000
-			m_flInitialSpeedMin = -0.500000
-			m_flInitialSpeedMax = -0.500000
-			m_flRoll = 90.000000
-			m_flYaw = 90.000000
+			m_flParticlesPerOrbit = 40.0
+			m_flInitialRadius = 1.0
+			m_flInitialSpeedMin = -0.5
+			m_flInitialSpeedMax = -0.5
+			m_flRoll = 90.0
+			m_flYaw = 90.0
 			m_bEvenDistribution = true
 			m_bXYVelocityOnly = false
 		},
 		{
 			_class = "C_INIT_RandomRadius"
-			m_flRadiusMin = 1.682000
-			m_flRadiusMax = 155.682000
+			m_flRadiusMin = 1.682
+			m_flRadiusMax = 155.682
 		},
 		{
 			_class = "C_INIT_RandomLifeTime"
-			m_fLifetimeMin = 1.200000
-			m_fLifetimeMax = 1.200000
+			m_fLifetimeMin = 1.2
+			m_fLifetimeMax = 1.2
 		},
 		{
 			_class = "C_INIT_RandomTrailLength"
-			m_flMinLength = 1.000000
-			m_flMaxLength = 1.000000
+			m_flMinLength = 1.0
+			m_flMaxLength = 1.0
 		},
 		{
 			_class = "C_INIT_PositionOffset"
-			m_OffsetMin =
-			[
-				0.000000,
-				0.000000,
-				150.000000,
-			]
-			m_OffsetMax =
-			[
-				0.000000,
-				0.000000,
-				150.000000,
-			]
+			m_OffsetMin = [ 0.0, 0.0, 150.0 ]
+			m_OffsetMax = [ 0.0, 0.0, 150.0 ]
 		},
 		{
 			_class = "C_INIT_RandomAlpha"
 			m_nAlphaMin = 50
 			m_nAlphaMax = 100
 		},
+		{
+			_class = "C_INIT_Orient2DRelToCP"
+			m_flRotOffset = 50.0
+		},
 	]
-	m_Emitters =
+	m_Emitters = 
 	[
 		{
 			_class = "C_OP_ContinuousEmitter"
-			m_flEmitRate = 150.000000
+			m_flEmitRate = 150.0
 		},
 	]
 }

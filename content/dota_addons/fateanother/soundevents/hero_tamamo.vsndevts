@@ -34,6 +34,44 @@
 		}
 	}
 }
+
+"Tamamo.Mantra"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/items/lotus_cast.vsnd"
+						}
+					}
+					"volume"
+					{
+						"value"		"1.200000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
+				}
+			}
+		}
+	}
+}
+
 "Tamamo.Kick"  
 {
 	"operator_stacks"

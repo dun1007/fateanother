@@ -324,7 +324,7 @@ function OnUBWCastStart(keys)
 	local casterLocation = caster:GetAbsOrigin()
 	local castDelay = 2
 	if caster:GetAbsOrigin().y < -3500 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Already Within Reality Marble" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Already_In_Marble")
 		caster:SetMana(caster:GetMana() + 800)
 		keys.ability:EndCooldown()
 		return
@@ -1258,7 +1258,7 @@ function OnOveredgeStart(keys)
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(600) 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	--caster.OveredgeCount = -1

@@ -13,8 +13,8 @@ function astolfo_hippogriff_rush:OnSpellStart()
 	--local endPos = startPos + self:GetDirectionVector() * range
 	local markerCounter = 0
 	if (startPos - caster:GetAbsOrigin()):Length2D() > 3500 or not IsInSameRealm(caster:GetAbsOrigin(), startPos) then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Out of Range" } )
 		self:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Out_Of_Range")
 		return
 	end
 	Timers:CreateTimer(function()

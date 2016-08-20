@@ -509,7 +509,7 @@ function OnMantraStart(keys)
 
 	local castFx = ParticleManager:CreateParticle('particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf', PATTACH_CUSTOMORIGIN, target) 
     ParticleManager:SetParticleControl(castFx, 0, target:GetOrigin())
-    target:EmitSound("Item.LotusOrb.Target")
+    target:EmitSound("Tamamo.Mantra")
 
 	-- Set stack amount1
 	ability:ApplyDataDrivenModifier(caster, target, modifierName, {}) 

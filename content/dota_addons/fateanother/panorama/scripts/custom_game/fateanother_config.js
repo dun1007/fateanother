@@ -23,9 +23,11 @@ function OnCameraDistSubmitted()
     panel.text = number.toString();
 }
 
+
 function OnConfig1Toggle()
 {
     g_GameConfig.bIsConfig1On = !g_GameConfig.bIsConfig1On;
+    GameEvents.SendCustomGameEventToServer("config_option_1_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig1On})
 }
 
 function OnConfig2Toggle()
@@ -64,6 +66,7 @@ function PlayerChat(event)
     var txt = event.text;
     var id = event.playerid;
     var playerID = Players.GetLocalPlayer();
+    $.Msg(txt);
     if (playerID == id)
     {
         if (txt == "-bgmoff" && g_GameConfig.bIsBGMOn) {
@@ -118,7 +121,6 @@ function UpdateMountStatus(data)
     bIsMounted = data.bIsMounted;
     $.Msg(bIsMounted);
 }
-
 
 (function()
 {

@@ -19,7 +19,8 @@ function OnTerritoryCreated(keys)
 
 	-- Check if Workshop already exists 
 	if caster.IsTerritoryPresent then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Workshop Already Exists" } )
+		ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Workshop_Exists")
 		return 
 	else
 		caster.IsTerritoryPresent = true
@@ -253,8 +254,8 @@ function OnManaDrainStart(keys)
 	caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
 	caster.ManaDrainTarget = target
 	if target == caster then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Target Self" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Target_Self")
 		return
 	end
 	keys.ManaPerSec = keys.ManaPerSec + hero:GetIntellect() * 0.8
@@ -451,9 +452,9 @@ function CasterFarSight(keys)
 	if caster.IsMobilized then return end 
 
 	if dist > 500 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Caster must be within 500 radius of Territory" } )
 		keys.ability:EndCooldown() 
 		caster:GiveMana(100)
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Caster_Out_Of_Radius")
 		return
 	end
 
@@ -693,8 +694,8 @@ function OnMountStart(keys)
 			if hero.IsMounted then
 				-- If Caster is attempting to unmount on not traversable terrain
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
-					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
 					keys.ability:EndCooldown()
+					SendErrorMessage(hero:GetPlayerOwnerID(), "#Cannot_Unmount")
 					return								
 				else
 					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
@@ -1047,8 +1048,8 @@ function OnMTStart(keys)
 	local duration = keys.Duration
 	local durCount = 0
 	if target == caster then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Target Self" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Target_Self")
 		return
 	end
 	caster.IsManaTransferActive = true
@@ -1161,7 +1162,7 @@ function OnHGStart(keys)
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(800) 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
@@ -1286,7 +1287,7 @@ function OnHGPStart(keys)
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(800) 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 

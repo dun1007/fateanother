@@ -71,14 +71,14 @@ end
 function OnBerserkStart(keys)
     local caster = keys.caster
     if caster.bIsDualClassAcquired ~= true then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Attribute_Not_Earned")
         return
     end
 
     if IsRevoked(caster) then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Revoked from Master" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
         return
     end
     GrantCosmicOrbitResist(caster)
@@ -298,9 +298,9 @@ function OnNSSStart(keys)
 	caster.ProcStunDuration = keys.ProcStunDuration
 	target.IsNSSProcReady = true
 	if caster:HasModifier("modifier_lishuwen_berserk") then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used(Berserk)" } )
 		keys.ability:EndCooldown()
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 		return			
 	end
 	if IsSpellBlocked(keys.target) then return end
@@ -524,7 +524,17 @@ function OnDragonStrike3Start(keys)
 	caster:SwapAbilities("lishuwen_fierce_tiger_strike","lishuwen_raging_dragon_strike_3", true, true) 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	if #targets == 0 then return end
+	if #targets == 0 then 
+
+    	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
+    	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+    	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
+    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+		local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
+		masterabil:EndCooldown()
+		masterabil:StartCooldown(masterabil:GetCooldown(1)/4)    
+		return 
+	end
 
 	local startpoint = caster:GetAbsOrigin()
 	local beginpoint = startpoint

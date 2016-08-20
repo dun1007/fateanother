@@ -28,109 +28,107 @@ end
 
 
 function OnManaEssenceAcquired(keys)
-	print("Mana Essence Purchased")
 end 
 
 function OnBaseEntered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Entered_Base")
 	--print("Base entered")
 end
 
 function OnBaseLeft(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
-	--print("Base left")
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Left_Base")
 end
 
 function OnTrioBase1Entered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
 	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Entered_Base")
 end
 
 function OnTrioBase1Left(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 	hero:RemoveModifierByName("spawn_invulnerable")
 	if hero:GetTeam() == DOTA_TEAM_GOODGUYS then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Left_Base")
 end
 
 function OnTrioBase2Entered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
 	if hero:GetTeam() == DOTA_TEAM_BADGUYS then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Entered_Base")
 end
 
 function OnTrioBase2Left(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 	hero:RemoveModifierByName("spawn_invulnerable")
 	if hero:GetTeam() == DOTA_TEAM_BADGUYS then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Left_Base")
 end
 
 function OnTrioBase3Entered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
 	if hero:GetTeam() == DOTA_TEAM_CUSTOM_1 then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Entered_Base")
 end
 
 function OnTrioBase3Left(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 	hero:RemoveModifierByName("spawn_invulnerable")
 	if hero:GetTeam() == DOTA_TEAM_CUSTOM_1 then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Left_Base")
 end
 
 function OnTrioBase4Entered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
 	if hero:GetTeam() == DOTA_TEAM_CUSTOM_2 then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 999)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Entered_Base")
 end
 
 function OnTrioBase4Left(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
 	hero:RemoveModifierByName("spawn_invulnerable")
 	if hero:GetTeam() == DOTA_TEAM_CUSTOM_2 then
 		giveUnitDataDrivenModifier(hero, hero, "spawn_invulnerable", 3)
 	end
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Left_Base")
 end
 
 function OnFFABaseEntered(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = true
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Entered Base(Regular Item Cost)"} )
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Entered_Base")
 end
 
 function OnFFABaseLeft(trigger)
 	local hero = trigger.activator
 	hero.IsInBase = false
-	FireGameEvent( 'custom_error_show', { player_ID = hero:GetPlayerOwnerID(), _error = "Left Base(50% Additiona Item Cost)" } )
+	SendErrorMessage(hero:GetPlayerOwnerID(), "#Left_Base")
 end
 
 function TransferItem(keys)
@@ -161,7 +159,7 @@ function TransferItem(keys)
 		hero:AddItem(newItem) 
 		CheckItemCombination(hero)
 	else
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "No Items Found in Chosen Slot of Stash" } )
+		SendErrorMessage(hero:GetPlayerOwnerID(), "#No_Items_Found")
 	end
 
 end
@@ -185,9 +183,9 @@ function TPScroll(keys)
 	local caster = keys.caster
 	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local targetPoint = keys.target_points[1]
-	print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
+	--print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
 	if caster:GetAbsOrigin().y < -2000 or targetPoint.y < -2000 then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
 		--caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))		
 		return
 	end
@@ -223,13 +221,13 @@ end
 
 function TPSuccess(keys)
 	local caster = keys.caster
-	print(caster:GetAbsOrigin().y)
+	--print(caster:GetAbsOrigin().y)
 	if caster:GetAbsOrigin().y < -2000 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Location" } )
 		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
 	elseif caster.TPLoc == nil then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Have Ward Nearby Targeted Location" } )
 		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
 	else
 		caster:EmitSound("Hero_Wisp.Return")
 		caster:SetAbsOrigin(caster.TPLoc)
@@ -254,7 +252,6 @@ function MassTPSuccess(keys)
 end
 
 function TPFail(keys)
-	print("TP failed")
 end
 
 function WardFam(keys)
@@ -359,8 +356,8 @@ function Blink(keys)
 	local newTargetPoint = nil
 
 	if IsLocked(caster) or caster:HasModifier("jump_pause_nosilence") then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
 		return
 	end
 
@@ -374,8 +371,8 @@ function Blink(keys)
 			end
 		end
 		if not IsFacingUnit(caster, target, 90) then
-			FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Blink" } )
 			keys.ability:EndCooldown()
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
 			return
 		end
 	end 
@@ -385,7 +382,7 @@ function Blink(keys)
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown()  
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 
@@ -553,8 +550,8 @@ function EXScroll(keys)
 
 	local forkCount = 0
 	local dist = target:GetAbsOrigin() - caster:GetAbsOrigin()
-	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin() + dist:Normalized() * dist:Length2D() + 350 , nil, 700
-            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_CLOSEST, false)
+	local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin() + dist:Normalized() * 150, nil, 600
+            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_FOW_VISIBLE, FIND_CLOSEST, false)
 	for k,v in pairs(targets) do
 		if forkCount == 4 then return end
 		if v ~= target then 

@@ -1209,10 +1209,10 @@
 
 
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
-		"AttackRange"					"100"
+		"AttackRange"					"150"
 		"AttackDamageMin"				"56"
 		"AttackDamageMax"				"60"
-		"AttackRate"					"1.05"
+		"AttackRate"					"0.85"
 		"AttackAcquisitionRange"		"1000"
 		
 		
@@ -1224,7 +1224,7 @@
 		"AttributeBaseIntelligence"		"0"
 		"AttributeIntelligenceGain"		"0.7"
 		
-		"MovementSpeed"					"320"
+		"MovementSpeed"					"370"
 		"MovementTurnRate"				"0.8"
 
 		"VisionDaytimeRange"			"800"

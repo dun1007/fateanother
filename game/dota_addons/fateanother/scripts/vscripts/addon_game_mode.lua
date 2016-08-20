@@ -66,7 +66,8 @@ BOUNTY_PER_LEVEL_TABLE = {}
 XP_BOUNTY_PER_LEVEL_TABLE = {}
 PRE_ROUND_DURATION = 6
 PRESENCE_ALERT_DURATION = 60
-ROUND_DURATION = 150
+ROUND_DURATION = 120
+FIRST_BLESSING_PERIOD = 300
 BLESSING_PERIOD = 600
 BLESSING_MANA_REWARD = 15
 SPAWN_POSITION_RADIANT_DM = Vector(-7650, 2200, 900)
@@ -78,7 +79,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "v1.14b"
+FATE_VERSION = "v1.15"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -240,7 +241,6 @@ function Precache( context )
     PrecacheResource( "soundfile", "soundevents/soundevents_conquest.vsndevts", context )
 
     PrecacheResource("soundfile", "soundevents/game_sounds_heroes/game_sounds_silencer.vsndevts", context)
-
 
     -- Items
     PrecacheItemByNameSync("item_apply_modifiers", context)
@@ -411,9 +411,9 @@ function FateGameMode:OnAllPlayersLoaded()
         endTime = 30,
         callback = function()
             
-            GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_1", 0, 0)
-            GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_2", 0, 0)
-            DisplayTip()
+        GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_1", 0, 0)
+        GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_2", 0, 0)
+        DisplayTip()
         end
     })
 
@@ -445,12 +445,12 @@ function FateGameMode:OnAllPlayersLoaded()
             IsPickPhase = false
             IsGameStarted = true
             GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
-            CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
+            CreateUITimer("Next Holy Grail's Blessing", FIRST_BLESSING_PERIOD, "ten_min_timer")
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 playerHero:RemoveModifierByName("round_pause") 
             end)
             Timers:CreateTimer('round_10min_bonus', {
-                endTime = BLESSING_PERIOD,
+                endTime = FIRST_BLESSING_PERIOD,
                 callback = function()
                     CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
                     self:LoopOverPlayers(function(player, playerID, playerHero)
@@ -533,8 +533,8 @@ function FateGameMode:OnDisconnect(keys)
     local networkid = keys.networkid
     local reason = keys.reason
     local userid = keys.userid
-    local playerID = self.vPlayerList[userid]
-    print(name .. " just got disconnected from game! Player ID: " .. playerID)
+    --local playerID = self.vPlayerList[userid]
+    --print(name .. " just got disconnected from game! Player ID: " .. playerID)
     --PlayerResource:GetSelectedHeroEntity(playerID):ForceKill(false)
     --table.remove(self.vPlayerList, userid) -- remove player from list
 end
@@ -552,11 +552,14 @@ function FateGameMode:OnPlayerChat(keys)
     if keys == nil then print("empty keys") end
     -- Get the player entity for the user speaking
     local text = keys.text
-    SendChatToPanorama(text)
-    --local userID = keys.userid
+    --SendChatToPanorama(text)
+    local userID = keys.userid
+    local localUserID = self.vUserIds[userID]
+    if not localUserID then return end
+    local plyID = localUserID:GetPlayerID()
+
     --local plyID = self.vPlayerList[userID]
     --if not plyID then return end
-    local plyID = keys.userid - 1
     --if IsDedicatedServer() then plyID = plyID - 1 end -- the index is off by 1 on dedi
     if GameRules:IsCheatMode() then
         SendChatToPanorama(text .. " by player " .. plyID)
@@ -604,6 +607,15 @@ function FateGameMode:OnPlayerChat(keys)
                 hr:RemoveModifierByName("round_pause")
                 --print("Looping through player" .. ply)
             end)
+        end
+    end
+    if text == "-errortest" then
+        --[[for _,plyr in pairs(self.vPlayerList) do
+        local hr = plyr:GetAssignedHero()
+        hr:RemoveModifierByName("round_pause")
+    end]]
+        if GameRules:IsCheatMode() then 
+            SendErrorMessage(plyID, "#test_msg")
         end
     end
 
@@ -966,7 +978,7 @@ function FateGameMode:OnItemPurchased( keys )
             -- This will take care of non-component items
             for i = 1, #oldStash do
                 if oldStash[i]:GetName() == itemName then
-                    FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Gold(Items cost 50% more)" } )
+                    SendErrorMessage(plyID, "#Not_Enough_Gold_Item")
                     --hero:RemoveItem(oldStash[i])
                     hero:ModifyGold(itemCost, true, 0)
                     oldStash[i]:RemoveSelf()
@@ -987,7 +999,7 @@ function FateGameMode:OnItemPurchased( keys )
             else 
                 for i = 1, #oldStash do
                     if oldStash[i]:GetName() == "item_c_scroll" then
-                        FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Out Of Stock" } )
+                        SendErrorMessage(plyID, "#Out_Of_Stock_C_Scroll")
                         --hero:RemoveItem(oldStash[i])
                         hero:ModifyGold(itemCost, true, 0)
                         oldStash[i]:RemoveSelf()
@@ -998,11 +1010,10 @@ function FateGameMode:OnItemPurchased( keys )
         end
     end
 
-    if PlayerResource:GetGold(plyID) < 200 then
+    if PlayerResource:GetGold(plyID) < 200 and hero.bIsAutoGoldRequestOn then
         Notifications:RightToTeamGold(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 7, nil, {color="rgb(255,255,255)", ["font-size"]="20px"}, true)
     end
 end
-
 
 function GetStashItems(hero)
     local stashTable = {}
@@ -1408,7 +1419,7 @@ function OnServantCustomizeActivated(Index, keys)
         return 
     end
     if ability:GetManaCost(1) > caster:GetMana() then
-        FireGameEvent( 'custom_error_show', { player_ID = plyID, _error = "Not Enough Master Mana" } )
+        SendErrorMessage(hero:GetPlayerOwnerID(), "#Not_Enough_Master_Mana")
         return
     end
     if ability:IsCooldownReady() == false then
@@ -1426,6 +1437,12 @@ function OnServantCustomizeActivated(Index, keys)
 
     --ability:StartCooldown(ability:GetCooldown(1))
     --caster:SetMana(caster:GetMana() - ability:GetManaCost(1))
+end
+
+function OnConfig1Checked(index, keys)
+    local playerID = EntIndexToHScript(keys.player)
+    local hero = PlayerResource:GetPlayer(keys.player):GetAssignedHero()
+    if keys.bOption == 1 then hero.bIsAutoGoldRequestOn = true else hero.bIsAutoGoldRequestOn = false end
 end
 
 function OnConfig2Checked(index, keys)
@@ -1552,6 +1569,7 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "direct_transfer_changed", OnDirectTransferChanged )
     CustomGameEventManager:RegisterListener( "servant_customize", OnServantCustomizeActivated )
     CustomGameEventManager:RegisterListener( "check_hero_in_transport", OnHeroClicked )
+    CustomGameEventManager:RegisterListener( "config_option_1_checked", OnConfig1Checked )
     CustomGameEventManager:RegisterListener( "config_option_2_checked", OnConfig2Checked )
     CustomGameEventManager:RegisterListener( "config_option_4_checked", OnConfig4Checked )
     CustomGameEventManager:RegisterListener( "player_chat_panorama", OnPlayerChat )
@@ -2246,7 +2264,11 @@ function FateGameMode:OnConnectFull(keys)
     local entIndex = keys.index+1
     -- The Player entity of the joining user
     local ply = EntIndexToHScript(entIndex)
-    local playerID = ply:GetPlayerID()
+    local userID = keys.userid
+    self.vUserIds = self.vUserIds or {}
+    self.vUserIds[userID] = ply
+
+    --[[local playerID = ply:GetPlayerID()
     if GameRules:State_Get() == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD then
         playerID = keys.index
         print("teams not assigned yet, using index as player ID = " .. playerID)
@@ -2254,13 +2276,5 @@ function FateGameMode:OnConnectFull(keys)
     self.vPlayerList = self.vPlayerList or {}
     self.vPlayerList[keys.userid] = playerID 
     SendChatToPanorama("player " .. playerID .. " got assigned to " .. keys.userid .. "index in player list")
-    --print(self.vPlayerList[keys.userid])
-    -- If the player is a broadcaster flag it in the Broadcasters table
-    if PlayerResource:IsBroadcaster(playerID) then
-        self.vBroadcasters[keys.userid] = 1
-        return
-    end
-    -- Update the Steam ID table
-    self.vSteamIds[PlayerResource:GetSteamAccountID(playerID)] = ply
-    
+    --print(self.vPlayerList[keys.userid])]]
 end

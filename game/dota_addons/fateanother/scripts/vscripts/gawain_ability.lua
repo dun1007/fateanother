@@ -147,9 +147,9 @@ function OnGalatineStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local casterLoc = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
-	local orbLoc = caster:GetAbsOrigin()
 	local dist = (targetPoint - casterLoc):Length2D()
-	local diff = (targetPoint - caster:GetAbsOrigin()):Normalized()
+	local orbLoc = caster:GetAbsOrigin()
+	local diff = caster:GetForwardVector()
 	local timeElapsed = 0
 	local flyingDist = 0
 	local InFirstLoop = true
@@ -174,6 +174,9 @@ function OnGalatineStart(keys)
 	Timers:CreateTimer(1.5, function()
 		if caster:IsAlive() and timeElapsed < 1.5 and flyingDist < dist and caster.IsGalatineActive then
 			if InFirstLoop then
+				casterLoc = caster:GetAbsOrigin()
+				orbLoc = caster:GetAbsOrigin()
+				diff = caster:GetForwardVector()
 				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
 				InFirstLoop = false
 			end
@@ -206,10 +209,18 @@ function OnGalatineStart(keys)
 			-- Explosion on enemies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-				DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-				if caster.IsEclipseAcquired then
-					local multiplier = (keys.Radius - (galatineDummy:GetAbsOrigin() - v:GetAbsOrigin()):Length2D())/keys.Radius
-					DoDamage(caster, v, keys.Damage/2 * multiplier , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				if not caster.IsEclipseAcquired then
+					DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				else
+					-- calculate the distance from center to enemy
+					local distFromCenter = (galatineDummy:GetAbsOrigin() - v:GetAbsOrigin()):Length2D()
+					local multiplier = 0
+					if distFromCenter < 100 then 
+						multiplier = 1.5
+					else
+						multiplier = 1.5 - (distFromCenter-100)/400 * 50/100
+					end
+					DoDamage(caster, v, keys.Damage * multiplier , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				end
 			end
 

@@ -224,7 +224,7 @@ function GBAttachEffect(keys)
 	if keys.ability == caster:FindAbilityByName("lancer_5th_gae_bolg") then
 		caster:EmitSound("Lancer.GaeBolg")
 	elseif keys.ability == caster:FindAbilityByName("lancelot_gae_bolg") then 
-		caster:EmitSound("Lancelot.Growl" )
+		caster:EmitSound("Lancelot.Growl_Local" )
 	end
 
 end

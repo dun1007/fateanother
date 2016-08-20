@@ -114,5 +114,6 @@
 		"Fateanother_Master_Mana"						"Master Mana "
 		"Fateanother_Master_Health_Tooltip"				"Master's current health, the limit on how many times you can use Command Seal. Casting Command Seal costs 1 health, and may be negated if it would reduce the health to zero.\nHealth is replenished to full every 10 minutes."
 		"Fateanother_Master_Mana_Tooltip"				"Master's current mana, the resource used for customizing Servant or casting Command Seal.\nMana is replenished by 4 on Servant level up, and 10 every 10 minutes."
+
 	}
 }
