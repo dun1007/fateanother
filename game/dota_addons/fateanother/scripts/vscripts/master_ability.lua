@@ -410,7 +410,7 @@ function OnPRStart(keys)
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
         if playerHero:GetTeamNumber() ~= hero:GetTeamNumber() then
-        	if not playerHero:IsInvisible() and not playerHero:IsInvulnerable() then
+        	if not playerHero:IsInvisible() and not playerHero:IsInvulnerable() and playerHero:IsAlive() then
         		table.insert(heroTable, playerHero)
 
         	end
