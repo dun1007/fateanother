@@ -79,7 +79,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "v1.15"
+FATE_VERSION = "v1.16"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -145,9 +145,6 @@ model_lookup["npc_dota_hero_queenofpain"] = "models/astolfo/astolfo.vmdl"
 
 DoNotKillAtTheEndOfRound = {
     "tamamo_charm",
-    "master_1",
-    "master_2",
-    "master_3",
     "jeanne_banner"
 }
 voteResultTable = {
@@ -673,7 +670,7 @@ function FateGameMode:OnPlayerChat(keys)
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
         --if GameRules:IsCheatMode() then
-            SendChatToPanorama("player " .. plyID .. " is trying to send " .. goldAmt .. " gold to player " .. pID)
+        --SendChatToPanorama("player " .. plyID .. " is trying to send " .. goldAmt .. " gold to player " .. pID)
         --end
         if PlayerResource:GetReliableGold(plyID) > tonumber(goldAmt) and plyID ~= tonumber(pID) and PlayerResource:GetTeam(plyID) == PlayerResource:GetTeam(tonumber(pID)) then 
             local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
@@ -683,6 +680,36 @@ function FateGameMode:OnPlayerChat(keys)
             --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
         end
     end
+
+    -- handles -all commands
+    local limit = string.match(text, "^-all (%d+)")
+    -- distribute excess gold above 5K
+    if text == "-all" then
+        if PlayerResource:GetReliableGold(plyID) > 5000 then
+            DistributeGold(hero, 5000)
+        end
+    end
+    -- distribute excess gold above specified amount
+    if limit then
+        DistributeGold(hero, tonumber(limit))
+    end
+
+    local goldamountinchat = string.match(text, "^-getgold (%d+)")
+
+    if goldamountinchat then
+        if Convars:GetBool("sv_cheats") then
+            PlayerResource:SetGold(plyID, tonumber(goldamountinchat), true)
+        end
+    end
+
+    if text == "-resetgold" then
+        if Convars:GetBool("sv_cheats") then
+            LoopOverPlayers(function(ply, plyID, playerHero)
+                PlayerResource:SetGold(plyID, 0, true)
+                PlayerResource:SetGold(plyID, 0, false)
+            end)
+        end
+    end
     
     -- Asks team for gold
     if text == "-goldpls" then
@@ -690,6 +717,48 @@ function FateGameMode:OnPlayerChat(keys)
         Notifications:RightToTeamGold(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"}, false)
     end
 end
+
+function DistributeGold(hero, cutoff)
+    -- get gold amount of teammates 
+    -- exclude from table if more than stated amount
+    -- sort them by amount of current gold
+    local playerTable = {}
+    local playerID = hero:GetPlayerID()
+    if PlayerResource:GetReliableGold(playerID) < cutoff then return end
+    LoopOverPlayers(function(ply, plyID, playerHero)
+        if playerHero:GetTeamNumber() == hero:GetTeamNumber() and plyID ~= playerID then 
+            local pGold = PlayerResource:GetReliableGold(plyID)
+            if pGold < 5000 then
+                playerTable[plyID] = pGold
+                print(playerHero:GetName())
+            end
+        end
+    end)
+
+    -- local sortedTable = spairs(playerTable, function(t,a,b) return t[b] < t[a] end)
+    local residue = 0
+    local goldPerPerson =  (PlayerResource:GetReliableGold(playerID)-cutoff)/#playerTable
+
+    -- eligible players 
+    for pID,curGold in spairs(playerTable, function(t,a,b) return t[b] < t[a] end) do
+        local eligibleGoldAmt = 5000 - PlayerResource:GetReliableGold(pID)
+        -- only grant eligible amount of gold and save the rest on residue
+        if goldPerPerson > eligibleGoldAmt then
+            residue = residue + goldPerPerson - eligibleGoldAmt
+            GiveGold(playerID, pID, eligibleGoldAmt)
+        -- add residue up
+        else
+            if goldPerPerson + residue > eligibleGoldAmt then
+                residue = goldPerPerson + residue - eligibleGoldAmt
+                GiveGold(playerID, pID, eligibleGoldAmt)
+            else
+                GiveGold(playerID, pID, goldPerPerson+residue)
+            end
+        end
+    end
+end
+
+
 -- The overall game state has changed
 function FateGameMode:OnGameRulesStateChange(keys)
     print("[BAREBONES] GameRules State Changed")
@@ -772,7 +841,7 @@ function FateGameMode:OnHeroInGame(hero)
     player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 100000)
     
     -- Create Command Seal master for hero
-    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*350,-7150,0), true, hero, hero, hero:GetTeamNumber())
+    master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*320,-7050,0), true, hero, hero, hero:GetTeamNumber())
     master:SetControllableByPlayer(hero:GetPlayerID(), true) 
     master:SetMana(0)
     hero.MasterUnit = master
@@ -786,7 +855,7 @@ function FateGameMode:OnHeroInGame(hero)
     MinimapEvent( hero:GetTeamNumber(), hero, master:GetAbsOrigin().x, master:GetAbsOrigin().y + 500, DOTA_MINIMAP_EVENT_HINT_LOCATION, 5 )
     
     -- Create attribute/stat master for hero
-    master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*350,-7350,0), true, hero, hero, hero:GetTeamNumber())
+    master2 = CreateUnitByName("master_2", Vector(4500 + hero:GetPlayerID()*320,-7400,0), true, hero, hero, hero:GetTeamNumber())
     master2:SetControllableByPlayer(hero:GetPlayerID(), true) 
     master2:SetMana(0)
     hero.MasterUnit2 = master2
@@ -803,7 +872,29 @@ function FateGameMode:OnHeroInGame(hero)
     masterStash:SetAcquisitionRange(200)
     hero.MasterStash = masterStash
     LevelAllAbility(masterStash)]]
-    
+    -- Create item transfer master for hero
+    master3 = CreateUnitByName("npc_dota_courier", Vector(4500 + hero:GetPlayerID()*320,-7225,0), true, hero, hero, hero:GetTeamNumber())
+    master3:SetControllableByPlayer(hero:GetPlayerID(), true)
+
+    master3:RemoveAbility("courier_return_to_base")
+    master3:RemoveAbility("courier_go_to_secretshop")
+    master3:RemoveAbility("courier_return_stash_items")
+    master3:RemoveAbility("courier_take_stash_items")
+    master3:RemoveAbility("courier_transfer_items")
+    master3:RemoveAbility("courier_burst")
+    master3:RemoveAbility("courier_morph")
+    master3:RemoveAbility("courier_take_stash_and_transfer_items")
+
+    master3:AddAbility("master_item_transfer_1")
+    master3:AddAbility("master_item_transfer_2")
+    master3:AddAbility("master_item_transfer_3")
+    master3:AddAbility("master_item_transfer_4")
+    master3:AddAbility("master_item_transfer_5")
+    master3:AddAbility("master_item_transfer_6")
+    master3:AddAbility("master_passive")
+    LevelAllAbility(master3)  
+
+
     -- Ping master location on minimap
     local pingsign = CreateUnitByName("ping_sign", Vector(0,0,0), true, hero, hero, hero:GetTeamNumber())
     pingsign:FindAbilityByName("ping_sign_passive"):SetLevel(1)
@@ -813,7 +904,6 @@ function FateGameMode:OnHeroInGame(hero)
     hero.name = heroName
     GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
 
-    --HideWearables(hero)
     if _G.GameMap == "fate_elim_6v6" then
         if self.nCurrentRound == 0 then
             giveUnitDataDrivenModifier(hero, hero, "round_pause", 60)
@@ -829,6 +919,7 @@ function FateGameMode:OnHeroInGame(hero)
     end
 
     if Convars:GetBool("sv_cheats") then 
+        hero:RemoveModifierByName("round_pause")
         hero.MasterUnit:SetMana(hero.MasterUnit:GetMaxMana()) 
         hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMaxMana())
 
@@ -844,13 +935,6 @@ function FateGameMode:OnHeroInGame(hero)
             hero:HeroLevelUp(false)
             hero:HeroLevelUp(false)
         end
-        --[[local children = hero:GetChildren()
-        for k,child in pairs(children) do
-           if child:GetClassname() == "dota_item_wearable" then
-               child:AddEffects(EF_NODRAW)
-           end
-        end
-        print("victory condition set")]]
         CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Display victory condition for player
         --SendKVToFatepedia(player) -- send KV to fatepedia
 
@@ -1659,11 +1743,23 @@ end
 
 function FateGameMode:ModifyGoldFilter(filterTable)
     -- Disable gold gain from hero kills
+    --local hero = PlayerResource:GetSelectedHeroEntity(filterTable.player_id_const)
+    --local leaverCount = HasLeaversInTeam(hero)
+
     if filterTable["reason_const"] == DOTA_ModifyGold_HeroKill then
         filterTable["gold"] = 0
         return false
     end
 
+    -- filterTable["gold"] = filterTable["gold"] + filterTable["gold"] * (0.15 * leaverCount)
+    return true
+end
+
+function FateGameMode:ModifyExperienceFilter(filterTable)
+    --[[local hero = PlayerResource:GetSelectedHeroEntity(filterTable.player_id_const)
+    local leaverCount = HasLeaversInTeam(hero)
+
+    filterTable["experience"] = filterTable["experience"] + filterTable["experience"] * (0.15 * leaverCount)]]
     return true
 end
 
@@ -2039,7 +2135,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     for k,v in pairs(units) do
         if not v:IsNull() and IsValidEntity(v) and not v:IsRealHero() then
             for i=1, #DoNotKillAtTheEndOfRound do
-                if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+                if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] and v:GetAbsOrigin().y > -7000 then
                     v:ForceKill(true)
                 end
             end
@@ -2048,7 +2144,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
     for k,v in pairs(units2) do
         if not v:IsNull() and IsValidEntity(v) and not v:IsRealHero() then
             for i=1, #DoNotKillAtTheEndOfRound do
-                if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+                if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] and v:GetAbsOrigin().y > -7000 then
                     v:ForceKill(true)
                 end
             end
@@ -2128,7 +2224,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
                 if not v:IsNull() and IsValidEntity(v) and not v:IsRealHero() then
                     for i=1, #DoNotKillAtTheEndOfRound do
                         --print(v:GetUnitName())
-                        if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+                        if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] and v:GetAbsOrigin().y > -7000 then
                             v:ForceKill(true)
                         end
                     end
@@ -2138,7 +2234,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
                 if not v:IsNull() and IsValidEntity(v) and not v:IsRealHero() then
                     for i=1, #DoNotKillAtTheEndOfRound do
                         --print(v:GetUnitName())
-                        if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] then
+                        if not v:IsNull() and IsValidEntity(v) and v:GetUnitName() ~= DoNotKillAtTheEndOfRound[i] and v:GetAbsOrigin().y > -7000 then
                             v:ForceKill(true)
                         end
                     end
@@ -2232,6 +2328,7 @@ function FateGameMode:CaptureGameMode()
         mode:SetExecuteOrderFilter( Dynamic_Wrap( FateGameMode, "ExecuteOrderFilter" ), FateGameMode )
         mode:SetModifyGoldFilter(Dynamic_Wrap(FateGameMode, "ModifyGoldFilter"), FateGameMode)
         mode:SetDamageFilter(Dynamic_Wrap(FateGameMode, "TakeDamageFilter"), FateGameMode)
+        mode:SetModifyExperienceFilter(Dynamic_Wrap(FateGameMode, "ModifyExperienceFilter"), FateGameMode)
         mode:SetTopBarTeamValuesOverride ( USE_CUSTOM_TOP_BAR_VALUES )
         self:OnFirstPlayerLoaded()
 

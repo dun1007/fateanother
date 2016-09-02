@@ -135,7 +135,6 @@ function TransferItem(keys)
 	local item = keys.ability
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-
 	local stash_item = hero:GetItemInSlot(keys.Slot+5) -- This looks for slot 6/7/8/9/10/11(Stash)
 	--PrintTable(stash_item)
 	-- If item is found, remove it from stash and add it to hero
@@ -610,6 +609,9 @@ end
 function FullHeal(keys)
 	local caster = keys.caster
 	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
+
+	if caster:GetHealth() == caster:GetMaxHealth() and caster:GetMana() == caster:GetMaxMana() then keys.ability:EndCooldown() return end
+	
 	caster:SetHealth(caster:GetMaxHealth()) 
 	caster:SetMana(caster:GetMaxMana())
 

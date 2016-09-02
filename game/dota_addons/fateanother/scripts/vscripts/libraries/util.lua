@@ -393,6 +393,54 @@ function DummyEnd(dummy)
     return nil
 end
 
+function GiveGold(senderID, receiverID, amount)
+    if PlayerResource:GetReliableGold(senderID) > amount and senderID ~= receiverID then
+        local senderHero = PlayerResource:GetSelectedHeroEntity(senderID)
+        local receiverHero = PlayerResource:GetSelectedHeroEntity(receiverID)
+        senderHero:ModifyGold(-amount, true , 0) 
+        receiverHero:ModifyGold(amount, true, 0)
+
+        return true
+    else 
+        return false
+    end
+end
+
+function spairs(t, order)
+    -- collect the keys
+    local keys = {}
+    for k in pairs(t) do keys[#keys+1] = k end
+
+    -- if order function given, sort by it by passing the table and keys a, b,
+    -- otherwise just sort the keys 
+    if order then
+        table.sort(keys, function(a,b) return order(t, a, b) end)
+    else
+        table.sort(keys)
+    end
+
+    -- return the iterator function
+    local i = 0
+    return function()
+        i = i + 1
+        if keys[i] then
+            return keys[i], t[keys[i]]
+        end
+    end
+end
+
+function HasLeaversInTeam(hero)
+    local leaverCount = 0
+    LoopOverPlayers(function(ply, plyID, playerHero)
+        if playerHero:GetTeamNumber() == hero:GetTeamNumber() then 
+            if playerHero:HasOwnerAbandoned() then
+                leaverCount = leaverCount + 1
+            end
+        end
+    end)
+    return leaverCount
+end
+
 function StartQuestTimer(questname, questtitle, questendtime)
   local entQuest = SpawnEntityFromTableSynchronous( "quest", { name = questname, title = questtitle } )
   --add   "QuestTimer"  "Survive for %quest_current_value% seconds"   in addon_english
@@ -1037,9 +1085,17 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     -- Check if target has Avalon up
     if target:GetName() == "npc_dota_hero_legion_commander" and target:HasModifier("modifier_avalon") then
         local incomingDmg = dmg
+        local reduction = 0
+
         if dmg_type == DAMAGE_TYPE_MAGICAL then
             incomingDmg = incomingDmg * (1-MR)
         end 
+        if dmg_type == DAMAGE_TYPE_PHYSICAL then
+            reduction = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
+            incomingDmg = incomingDmg * (1-reduction) 
+            print(incomingDmg)
+        end
+
         if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" or abil:GetAbilityName() == "false_assassin_tsubame_mai" or abil:GetAbilityName() == "lancelot_tsubame_gaeshi" then
             target.IsAvalonPenetrated = true
         else

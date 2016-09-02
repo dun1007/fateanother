@@ -295,16 +295,20 @@ end
 function OnMindEyeStart(keys)
 	local caster = keys.caster
 	local sightdummy = CreateUnitByName("sight_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-	sightdummy:SetDayTimeVisionRange(caster:GetDayTimeVisionRange())
-	sightdummy:SetNightTimeVisionRange(caster:GetNightTimeVisionRange())
-
-	caster.MindsEyeDummy = sightdummy
+	sightdummy:SetDayTimeVisionRange(caster:GetDayTimeVisionRange() + 150)
+	sightdummy:SetNightTimeVisionRange(caster:GetNightTimeVisionRange() + 150)
 	local sightdummypassive = sightdummy:FindAbilityByName("dummy_unit_passive")
 	sightdummypassive:SetLevel(1)
 
+	caster.MindsEyeDummy = sightdummy
+
 	Timers:CreateTimer(function() 
 		if not IsValidEntity(sightdummy) then return end
-		sightdummy:SetAbsOrigin(caster:GetAbsOrigin())
+		if caster:IsAlive() then
+			sightdummy:SetAbsOrigin(caster:GetAbsOrigin())
+		else
+			sightdummy:SetAbsOrigin(caster.MasterUnit:GetAbsOrigin())
+		end
 		return 0.2
 	end)
 end

@@ -184,6 +184,10 @@ function PCStopOrder(keys)
 end
 
 function OnTMStart(keys)
+	if not keys.caster:IsRealHero() then
+		keys.ability:EndCooldown()
+		return
+	end
 	local caster = keys.caster
 	local ability = keys.ability
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai", {})

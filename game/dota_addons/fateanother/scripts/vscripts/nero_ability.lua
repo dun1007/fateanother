@@ -314,6 +314,8 @@ function OnRIStart(keys)
 			CreateSlashFx(caster, caster:GetAbsOrigin(), caster:GetAbsOrigin() + diff:Normalized() * dist)
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + diff:Normalized() * (dist - 100))
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
+			caster:MoveToTargetToAttack(target)
 		end
 	end)
 	

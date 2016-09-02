@@ -1,6 +1,6 @@
-		"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note2"	"For 0.5 seconds after counterattack, Assassin cleanses any negative effects on himself and benefits from damage reduction."
-		
-		"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_Note1"				"God Hand cannot be activated while its debuff effect lasts."
+	"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note2"	"For 0.5 seconds after counterattack, Assassin cleanses any negative effects on himself and benefits from damage reduction."
+	
+	"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_Note1"				"God Hand cannot be activated while its debuff effect lasts."
 
     "DOTA_Tooltip_Ability_master_presence_resonator"		"Presence Resonator"
    	"DOTA_Tooltip_Ability_master_presence_resonator_Description"	"Activates a magical device that spots a random enemy Servant's location on the map." 
@@ -41,3 +41,13 @@
     "Cannot_Get_Over_50_Stats"    "Cannot Acquire Over 50 Stat"
     "Cannot_Acquire_Shard"      "Have Not Died 7 Times Yet"
     "Presence_Detected"     "Enemy Servant's presence has been detected"
+
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted"  "Blade of the Devoted"
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_Description"  "Saber enchants his blade, gaining bonus movespeed and granting special effect on his next base attack.\n<font color='#58ACFA'>On Ally</font> : Heals target.\n<font color='#58ACFA'>On Enemy</font> : Deals physical damage instead, and ministuns"
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_Lore"     ""
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_bonus_speed"      "%BONUS MOVESPEED:"

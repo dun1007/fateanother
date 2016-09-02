@@ -787,6 +787,11 @@ function OnHorrorTeleport(keys)
 end
 
 function OnGilleComboStart(keys)
+	if not keys.caster:IsRealHero() then
+		keys.ability:EndCooldown()
+		return
+	end
+
 	local tentacle = keys.caster
 	local caster = tentacle.Gille
 	local ability = caster:FindAbilityByName("gille_larret_de_mort")

@@ -74,7 +74,7 @@ function OnIDPing(keys)
 	GameRules:SendCustomMessage("#identity_discernment_alert", 0, 0)
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
-        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and playerHero:IsAlive() then
         	--print("looping through " .. playerHero:GetName())
         	delay = delay + 0.15
         	Timers:CreateTimer(delay, function()

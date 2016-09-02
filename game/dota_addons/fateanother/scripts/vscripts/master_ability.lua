@@ -462,6 +462,9 @@ function LoopThroughAttr(hero, attrTable)
     --hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(4):GetName(), true, true)
     --hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
     hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
+    if attrTable.attrCount == 5 then
+    	hero:SwapAbilities(hero.ComboName, hero:GetAbilityByIndex(5):GetAbilityName(), true, true)
+    end
 end
 
 function FindAttribute(name)

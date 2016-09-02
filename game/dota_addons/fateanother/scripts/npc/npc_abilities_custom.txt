@@ -7098,7 +7098,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"80"
+		"AbilityCooldown"				"60"
 
 		"AbilitySpecial"
 		{
@@ -16026,22 +16026,22 @@
 						"Function"		"OnMindEyeStart"
 					}
 				}
-				"OnRespawn"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"diarmuid_ability"
-						"Function"		"OnMindEyeStart"
-					}
-				}	
-				"OnDeath"
-				{
-					"RunScript"
-					{
-						"ScriptFile"	"diarmuid_ability"
-						"Function"		"OnMindEyeEnd"
-					}					
-				}
+				//"OnRespawn"
+				//{
+				//	"RunScript"
+				//	{
+				//		"ScriptFile"	"diarmuid_ability"
+				//		"Function"		"OnMindEyeStart"
+				//	}
+				//}	
+				//"OnDeath"
+				//{
+				//	"RunScript"
+				//	{
+				//		"ScriptFile"	"diarmuid_ability"
+				//		"Function"		"OnMindEyeEnd"
+				//	}					
+				//}
 		  	}
 		}
 	}
@@ -19801,7 +19801,8 @@
 				}
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.7"
+					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-100"
 				}
 				"States"
 				{
@@ -20785,7 +20786,7 @@
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 		
-		"AbilityCooldown"				"15 13.5 12 10.5 9"
+		"AbilityCooldown"				"15 13 11 9 7"
 		"AbilityManaCost"				"200"
 		
 		"AbilitySpecial"
@@ -20793,7 +20794,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"heal_amount"			"400 500 600 700 800"
+				"heal_amount"			"350 425 500 575 650"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_speed"			"10 15 20 25 30"
 			}
 		}
 
@@ -20814,7 +20820,7 @@
 		{
 			"modifier_blade_of_the_devoted"
 			{
-				"Duration"		"10.0"
+				"Duration"		"5"
 				"OnAttackStart"
 				{
 					"ApplyModifier"
@@ -20832,7 +20838,11 @@
 						"Function"			"OnDevoteHit"
 						"Damage"			"%heal_amount"
 					}
-				}				
+				}			
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%bonus_speed"
+				}	
 			}
 			"modifier_blade_of_the_devoted_eclispe"
 			{
@@ -22033,7 +22043,7 @@
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"
 		"AbilityTextureName"			"tamamo_soulstream"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_2"
-		"AnimationPlaybackRate" 		"1.0"
+		"AnimationPlaybackRate" 		"1.5"
 		"AOERadius"						"%radius"
 
 		
@@ -25388,7 +25398,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage_reduction"			"-10 -15 -20 -25 -30"
+				"damage_reduction"			"-35"
 			}
 			"05"
 			{
@@ -27675,7 +27685,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityTextureName"			"arc_warden_magnetic_field"
 		"MaxLevel"						"1"
-		"AbilityCooldown"				"300"		
+		"AbilityCooldown"				"200"		
 		
 		"OnSpellStart"
 		{
@@ -27690,6 +27700,183 @@
 		}	
 	}
 
+	//=================================================================================================================
+	// Item Transfer
+	//=================================================================================================================
+	"master_item_transfer_1"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"master_item_transfer_1"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"1"
+			}
+		}
+		"Modifiers"
+		{
+		}		
+	}
+
+	//=================================================================================================================
+	// Item Transfer
+	//=================================================================================================================
+	"master_item_transfer_2"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"master_item_transfer_2"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"2"
+			}
+		}
+		"Modifiers"
+		{
+		}		
+	}
+
+	//=================================================================================================================
+	// Item Transfer
+	//=================================================================================================================
+	"master_item_transfer_3"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"master_item_transfer_3"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"3"
+			}
+		}
+		"Modifiers"
+		{
+		}		
+	}
+
+	//=================================================================================================================
+	// Item Transfer
+	//=================================================================================================================
+	"master_item_transfer_4"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"master_item_transfer_4"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"4"
+			}
+		}
+		"Modifiers"
+		{
+		}		
+	}
+	//=================================================================================================================
+	// Item Transfer
+	//=================================================================================================================
+	"master_item_transfer_5"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"master_item_transfer_5"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"5"
+			}
+		}
+		"Modifiers"
+		{
+		}		
+	}
+	//=================================================================================================================
+	// Item Transfer
+	//=================================================================================================================
+	"master_item_transfer_6"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"master_item_transfer_6"
+		"MaxLevel"						"1"
+		"AbilityCooldown"				"0"
+		"AbilityManaCost"				"0"
+		
+		"precache"
+		{
+		}
+		
+		"OnSpellStart"
+		{
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"TransferItem"
+				"Slot"			"6"
+			}
+		}
+		"Modifiers"
+		{
+		}		
+	}
 	//=================================================================================================================
 	// Attribute List
 	//=================================================================================================================
