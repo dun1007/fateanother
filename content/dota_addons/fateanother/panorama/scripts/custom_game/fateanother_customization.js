@@ -129,11 +129,16 @@ function PrintToClient(data)
 	$.Msg(data.text);
 }
 
-
-function PlayerChat(data)
-{
-	$.Msg(data.text);
+function CreateErrorMessage(msg){
+    var reason = msg.reason || 80;
+    if (msg.message){
+        GameEvents.SendEventClientSide("dota_hud_error_message", {"splitscreenplayer":0,"reason":reason ,"message":msg.message} );
+    }
+    else{
+        GameEvents.SendEventClientSide("dota_hud_error_message", {"splitscreenplayer":0,"reason":reason} );
+    }
 }
+
 (function()
 {
     //$.RegisterForUnhandledEvent( "DOTAAbility_LearnModeToggled", OnAbilityLearnModeToggled);
@@ -146,7 +151,7 @@ function PlayerChat(data)
 	GameUI.SetCameraDistance(1600);
 	GameEvents.Subscribe( "player_selected_hero", UpdateAttributeList);
 	GameEvents.Subscribe( "servant_stats_updated", UpdateStatPanel );
+	GameEvents.Subscribe( "error_message_fired", CreateErrorMessage)
 	GameEvents.Subscribe( "player_chat_lua", PrintToClient );
-	GameEvents.Subscribe( "player_chat", PlayerChat);
 	OnCustomizeButtonPressed();
 })();

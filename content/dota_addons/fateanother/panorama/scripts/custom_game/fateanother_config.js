@@ -23,9 +23,11 @@ function OnCameraDistSubmitted()
     panel.text = number.toString();
 }
 
+
 function OnConfig1Toggle()
 {
     g_GameConfig.bIsConfig1On = !g_GameConfig.bIsConfig1On;
+    GameEvents.SendCustomGameEventToServer("config_option_1_checked", {player: Players.GetLocalPlayer(), bOption: g_GameConfig.bIsConfig1On})
 }
 
 function OnConfig2Toggle()
@@ -119,7 +121,6 @@ function UpdateMountStatus(data)
     bIsMounted = data.bIsMounted;
     $.Msg(bIsMounted);
 }
-
 
 (function()
 {

@@ -9,12 +9,11 @@ function BottomNotification(msg) {
 }
 
 function RightNotification(msg) {
-
-  if (msg.bIsAuto && !g_GameConfig.bIsConfig1On)
-  {} else
-  {
     AddNotification(msg, $('#RightNotifications'));
-  }
+}
+
+function RightTransferNotification(msg) {
+    AddNotification(msg, $('#RightNotifications'));
 }
 
 function AddNotification(msg, panel) {
