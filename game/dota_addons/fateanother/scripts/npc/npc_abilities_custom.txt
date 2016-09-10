@@ -23759,7 +23759,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"second_strike_cast_delay"				"0.4"
+				"second_strike_cast_delay"				"0.35"
 			}
 			"06"
 			{
@@ -23769,7 +23769,7 @@
 			"07"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"third_strike_cast_delay"				"0.5"
+				"third_strike_cast_delay"				"0.4"
 			}
 			"08"
 			{
