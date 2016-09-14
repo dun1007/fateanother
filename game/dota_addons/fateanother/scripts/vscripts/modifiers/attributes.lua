@@ -6,9 +6,9 @@ function Attributes:Init()
     local v = LoadKeyValues("scripts/npc/attributes.txt")
 
     -- Default Dota Values
-    local DEFAULT_HP_PER_STR = 19
+    local DEFAULT_HP_PER_STR = 20
     local DEFAULT_HP_REGEN_PER_STR = 0.03
-    local DEFAULT_MANA_PER_INT = 13
+    local DEFAULT_MANA_PER_INT = 12
     local DEFAULT_MANA_REGEN_PER_INT = 0.04
     local DEFAULT_ARMOR_PER_AGI = 0.14
     local DEFAULT_ATKSPD_PER_AGI = 1
@@ -90,6 +90,7 @@ function Attributes:ModifyBonuses(hero)
             -- HP Bonus
             if not hero:HasModifier("modifier_health_bonus") then
                 Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_bonus", {})
+                Attributes.applier:ApplyDataDrivenModifier(hero, hero, "modifier_health_negative_bonus", {})
             end
 
             local health_stacks = strength * Attributes.hp_adjustment
@@ -146,7 +147,7 @@ function Attributes:ModifyBonuses(hero)
 
         hero:CalculateStatBonus()
 
-        return 0.25
+        return 0.1
     end)
 end
 

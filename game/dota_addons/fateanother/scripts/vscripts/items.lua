@@ -220,6 +220,7 @@ end
 
 function TPSuccess(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	--print(caster:GetAbsOrigin().y)
 	if caster:GetAbsOrigin().y < -2000 then
 		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
@@ -236,6 +237,7 @@ end
 
 function MassTPSuccess(keys)
 	local caster = keys.caster
+	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1000
             , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)	
 	if caster.TPLoc == nil then
@@ -581,15 +583,14 @@ function HealingScroll(keys)
 	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
 	local ability = keys.ability
 
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_healing_scroll", {})
 	local healFx = ParticleManager:CreateParticle("particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 600
             , DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
-		print("heal")
 		ParticleManager:SetParticleControl(healFx, 1, v:GetAbsOrigin()) -- target effect location
-         v:Heal(500, caster) 
+        v:Heal(500, caster) 
+       	ability :ApplyDataDrivenModifier(caster, v, "modifier_healing_scroll", {})
     end
 
    	Timers:CreateTimer(2.0, function()

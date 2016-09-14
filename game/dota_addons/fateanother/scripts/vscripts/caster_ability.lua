@@ -1184,12 +1184,21 @@ function OnHGStart(keys)
 	Timers:CreateTimer(travelTime, function()  
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		caster:SetAutoUnstuck(true)
+		--caster:SetAbsOrigin(caster:GetGroundPosition(caster:GetAbsOrigin(), caster)+Vector(0,0,1000))
 	return end) 
 	Timers:CreateTimer(ascendTime, function()  
-		local dummy = CreateUnitByName( "sight_dummy_unit", caster:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber() );
-		caster:SetPhysicsVelocity( Vector( 0, 0, dummy:GetAbsOrigin().z - caster:GetAbsOrigin().z ) )
-		dummy:RemoveSelf()
+		caster:SetPhysicsVelocity( Vector( 0, 0, -650) )
 	return end) 
+
+	--[[local floatCounter = 0
+	Timers:CreateTimer(ascendTime, function()  
+		if floatCounter > (descendTime - ascendTime) then return end
+		local curLoc = caster:GetAbsOrigin()
+		caster:SetAbsOrigin(Vector(curLoc.x, curLoc.y, curLoc.z + 1000))
+		floatCounter = floatCounter + 0.033
+		return 0.033
+	end)]]
+
 	Timers:CreateTimer(descendTime, function()
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
@@ -1204,7 +1213,6 @@ function OnHGStart(keys)
 			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(initTargets) do
 				DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, v:GetAbsOrigin(), "particles/custom/caster/hecatic_graea/ray.vpcf")
-				print(boltCount)
 			end
 			maxBolt = maxBolt - #initTargets
 		else
@@ -1216,7 +1224,6 @@ function OnHGStart(keys)
 			rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
 		end
 		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea/ray.vpcf")
-		print(boltCount)
 	    boltCount = boltCount + 1
 		return 0.1
     end

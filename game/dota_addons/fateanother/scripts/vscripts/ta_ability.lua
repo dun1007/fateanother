@@ -388,9 +388,8 @@ end
 function OnZabCastStart(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local particle = ParticleManager:CreateParticle("particles/custom/ta/zabaniya_shadow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	--ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
-	print("asdasd")
+	local smokeFx = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
 end
 
 function OnZabStart(keys)

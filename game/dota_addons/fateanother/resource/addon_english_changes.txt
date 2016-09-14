@@ -51,3 +51,11 @@
     "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_Description"  "Saber enchants his blade, gaining bonus movespeed and granting special effect on his next base attack.\n<font color='#58ACFA'>On Ally</font> : Heals target.\n<font color='#58ACFA'>On Enemy</font> : Deals physical damage instead, and ministuns"
     "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_Lore"     ""
     "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_bonus_speed"      "%BONUS MOVESPEED:"
+
+    "DOTA_Tooltip_ability_item_healing_scroll"  "Mass Heal Scroll"
+    "DOTA_Tooltip_ability_item_healing_scroll_Lore" ""
+    "DOTA_Tooltip_ability_item_healing_scroll_Description"  "Instantly restores health and grants bonus armor for yourself and all allies nearby.\n<font color='#FF0000'>\nItem costs 50%% more once you leave your base.</font>"
+    "DOTA_Tooltip_ability_item_healing_scroll_heal_amount"  "HEAL AMOUNT:"
+    "DOTA_Tooltip_ability_item_healing_scroll_armor_amount" "BONUS ARMOR AMOUNT:"
+    "DOTA_Tooltip_ability_item_healing_scroll_armor_duration"   "BONUS ARMOR DURATION:"
+    "DOTA_Tooltip_ability_item_healing_scroll_radius"   "RADIUS:"

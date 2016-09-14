@@ -443,6 +443,13 @@ function OnRideStart(keys)
 	local radius = keys.Radius
 	local duration = keys.Duration
 	if caster:HasModifier("modifier_hippogriff_ride_ascended") then return end 
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_hippogriff_ride_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	
 	EmitGlobalSound("Astolfo.Hippogriff_Ride_Cast")
 	EmitGlobalSound("Astolfo.SolarForge")
 	-- pause for ascend delay

@@ -3214,7 +3214,7 @@
 			"05"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"damage"				"900 1250 1600 1950 2300"
+				"damage"				"850 1175 1500 1825 2150"
 			}
 			// Extra variables
 			"06"
@@ -7840,6 +7840,7 @@
 			"particle"		"particles/units/heroes/hero_wisp/wisp_overcharge.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_illusory_wanderer_sword_glow.vpcf"
 			"particle"		"particles/custom/false_assassin/tsubame_gaeshi/slashes.vpcf"
+			"particle"		"particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -7898,11 +7899,6 @@
 				"LastDamage"		"%lasthit_damage"
 				"StunDuration"		"%stun_duration"
 				"GCD"				"%global_cooldown"
-			}
-			"ApplyModifier"
-			{
-				"ModifierName"		"modifier_tg_overcharge_effect"
-				"Target"			"TARGET"
 			}
 			"ApplyModifier"
 			{
@@ -10023,7 +10019,7 @@
 
 		// Damage.
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"					"1000 1400 1800 2200 2600"
+		"AbilityDamage"					"900 1300 1700 2100 2500"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -10039,7 +10035,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"1000 1400 1800 2200 2600"
+				"damage"			"900 1300 1700 2100 2500"
 			}
 			
 			"03"
@@ -13208,7 +13204,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.5"
 		
-		"AbilityCastPoint"				"1.0"
+		"AbilityCastPoint"				"0.9"
 		"AbilityCastRange"				"150"
 		"AbilityCastRangeBuffer"		"100"
 		"AbilityCooldown"				"50"
@@ -13220,6 +13216,7 @@
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_first_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_second_slash.vpcf"
 			"particle"		"particles/custom/false_assassin/fa_tsubame_gaeshi_third_slash.vpcf"
+			"particle"		"particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -15358,7 +15355,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"650"
 		"AbilityCastRangeBuffer"		"800"
-		"AbilityCastPoint"				"0.5"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -19043,7 +19040,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"25"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"gille_larret_de_mort"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_3"
 		"AnimationPlaybackRate" 		"1.0"
@@ -26546,7 +26543,11 @@
 
 				}
 			}
-
+			"modifier_hippogriff_ride_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 
 	}
