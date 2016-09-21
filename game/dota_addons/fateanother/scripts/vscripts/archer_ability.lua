@@ -139,9 +139,15 @@ end
 function OnBPCast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	ability:EndCooldown()
 	caster:GiveMana(ability:GetManaCost(1))
+
+	caster.BPparticle = ParticleManager:CreateParticleForTeam("particles/custom/archer/archer_broken_phantasm/archer_broken_phantasm_crosshead.vpcf", PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeamNumber())
+
+	ParticleManager:SetParticleControl( caster.BPparticle, 0, target:GetAbsOrigin() + Vector(0,0,100)) 
+	ParticleManager:SetParticleControl( caster.BPparticle, 1, target:GetAbsOrigin() + Vector(0,0,100)) 
 	if keys.target:IsHero() then
 		Say(ply, "Broken Phantasm targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
@@ -152,6 +158,7 @@ function OnBPStart(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
+	ParticleManager:DestroyParticle(caster.BPparticle, true)
 	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 or caster:GetMana() < ability:GetManaCost(1) or not IsInSameRealm(caster:GetAbsOrigin(), target:GetAbsOrigin()) then 
 		Say(ply, "Broken Phantasm failed.", true)
 		return 
@@ -183,6 +190,7 @@ function OnBPInterrupted(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+	ParticleManager:DestroyParticle(caster.BPparticle, true)
 	Say(ply, "Broken Phantasm failed.", true)
 end
 
@@ -1143,6 +1151,7 @@ end
 function OnHruntCast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting targets " .. FindName(keys.target:GetName()) .. ".", true)
@@ -1164,6 +1173,8 @@ function OnHruntCast(keys)
 	ParticleManager:SetParticleControl( caster.hrunting_particle, 2, Vector( 255, 0, 0 ) )
 	ParticleManager:SetParticleControlEnt(caster.hrunting_particle, 1, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(caster.hrunting_particle, 3, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true)
+	caster.hruntingCrosshead = ParticleManager:CreateParticleForTeam("particles/custom/archer/archer_broken_phantasm/archer_broken_phantasm_crosshead.vpcf", PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeamNumber())
+
 end
 
 function OnHruntStart(keys)
@@ -1171,6 +1182,7 @@ function OnHruntStart(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+	ParticleManager:DestroyParticle(caster.hruntingCrosshead, true)
 	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 4000 or not IsInSameRealm(caster:GetAbsOrigin(), target:GetAbsOrigin()) then 
 		Say(ply, "Hrunting failed.", true)
 		return 
@@ -1206,8 +1218,11 @@ function OnHruntInterrupted(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	Say(ply, "Hrunting failed.", true)
+	ParticleManager:DestroyParticle( caster.hrunting_particle, false )
+	ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
+	ParticleManager:DestroyParticle(caster.hruntingCrosshead, true)
 	caster:StopSound("Hero_Invoker.EMP.Charge")
+	Say(ply, "Hrunting failed.", true)
 end
 
 function OnHruntHit(keys)

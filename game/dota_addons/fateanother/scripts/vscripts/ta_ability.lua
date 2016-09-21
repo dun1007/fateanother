@@ -13,7 +13,7 @@ function OnDirkStart(keys)
 		Ability = keys.ability,
 		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 1200
+		iMoveSpeed = 1800
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 	local targetCount = 1
@@ -388,7 +388,7 @@ end
 function OnZabCastStart(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local smokeFx = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target)
+	local smokeFx = ParticleManager:CreateParticleForTeam("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target, caster:GetTeamNumber())
 	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
 end
 

@@ -1,3 +1,20 @@
+// Set up global variables
+var g_GameConfig = FindCustomUIRoot($.GetContextPanel());
+g_GameConfig.curBGMentindex = 0;
+g_GameConfig.curBGMIndex = 1;
+g_GameConfig.nextBGMIndex = 1;
+g_GameConfig.BGMSchedule = 0;
+g_GameConfig.duration = [186,327,138,149,183,143,184,181];
+//g_GameConfig.duration = [5,5,5,5,5,5,5,5];
+g_GameConfig.bRepeat = false;
+g_GameConfig.bIsBGMOn = true;
+g_GameConfig.bIsAutoChange = false;
+
+g_GameConfig.bIsConfig1On = false;
+g_GameConfig.bIsConfig2On = false;
+g_GameConfig.bIsConfig3On = false;
+g_GameConfig.bIsConfig4On = false;
+
 function OnCustomizeButtonPressed()
 {
     var customizePanel = $("#CustomizationBoard");
@@ -40,8 +57,6 @@ function UpdateAttributeList(data)
 	for(i=6; i<10; i++) {
 		CreateAbilityPanel(shardPanel, queryUnit2, i, true);
 	}
-
-	$.Msg("done!")
 }
 
 

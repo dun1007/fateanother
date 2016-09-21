@@ -387,6 +387,7 @@ function OnQuickdrawStart(keys)
 		vVelocity = caster:GetForwardVector() * 1500
 	}
 
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_quickdraw_baseattack_reduction", {})
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_quickdraw_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	local projectile = ProjectileManager:CreateLinearProjectile(qdProjectile)
@@ -427,6 +428,7 @@ function OnQuickdrawHit(keys)
 
 	local damage = 500 + keys.caster:GetAgility() * 13
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	caster:PerformAttack(target, true, true, true, true, false)
 
 	local firstImpactIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
     ParticleManager:SetParticleControl(firstImpactIndex, 0, target:GetAbsOrigin())
@@ -439,8 +441,12 @@ function OnWBStart(keys)
 	EmitGlobalSound("FA.Windblade" )
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
+	local ability = keys.ability
 	local radius = keys.Radius
 	local casterInitOrigin = caster:GetAbsOrigin() 
+
+	-- make FA's damage zero 
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_wb_baseattack_reduction", {})
 
 	if not caster.IsGanryuAcquired then
 		caster:FindAbilityByName("false_assassin_gate_keeper"):StartCooldown(keys.GCD) 
@@ -470,6 +476,7 @@ function OnWBStart(keys)
 		else
 			giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
 			DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			caster:PerformAttack(v, true, true, true, true, false)
 			local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 		    ParticleManager:SetParticleControl(slashIndex, 0, v:GetAbsOrigin())
 		    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))

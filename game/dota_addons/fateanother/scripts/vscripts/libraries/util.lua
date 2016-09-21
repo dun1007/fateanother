@@ -103,7 +103,6 @@ goesthruB = {"saber_avalon",
             "avenger_berg_avesta",
             "gilgamesh_gate_of_babylon",
             "false_assassin_quickdraw",
-            "saber_alter_max_mana_burst",
             "archer_5th_overedge",
             "avenger_verg_avesta"
 }

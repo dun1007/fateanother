@@ -474,7 +474,7 @@ function OnLaPucelleDeath(keys)
 	caster:StopSound("Hero_Phoenix.SunRay.Loop")
 
 	if _G.CurrentGameState == "FATE_ROUND_ONGOING" or _G.CurrentGameState == "FATE_PRE_GAME" then
-		caster:Kill(ability, caster.LaPucelleKiller)
+		caster:Kill(ability, PlayerResource:GetSelectedHeroEntity(caster.LaPucelleKiller:GetPlayerID()) )
 		if _G.GameMap == "fate_elim_6v6" and not IsTeamWiped(caster) then
 			GameRules:SendCustomMessage("#la_pucelle_alert_2", 0, 0)
 		end

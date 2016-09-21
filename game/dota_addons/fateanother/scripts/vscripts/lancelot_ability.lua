@@ -323,8 +323,8 @@ function OnAronditeAttackLanded(keys)
     local target = keys.target
     local ability = keys.ability
 
-    if caster.IsEFAcquired and caster:GetMana() > 50 then
-        caster:SetMana(caster:GetMana() - 50)
+    if caster.IsEFAcquired and caster:GetMana() > 30 then
+        caster:SetMana(caster:GetMana() - 30)
         local flame = 
         {
                 Ability = ability,

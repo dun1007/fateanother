@@ -79,7 +79,7 @@ SPAWN_POSITION_T4_TRIO = Vector(-888,1748,512)
 TRIO_RUMBLE_CENTER = Vector(2436,4132,1000)
 FFA_CENTER = Vector(368,3868,1000)
 mode = nil
-FATE_VERSION = "v1.16b"
+FATE_VERSION = "v1.16d"
 roundQuest = nil 
 IsGameStarted = false
 
@@ -1782,9 +1782,8 @@ function FateGameMode:TakeDamageFilter(filterTable)
     if attacker:HasModifier("modifier_love_spot_charmed") and victim:GetName() == "npc_dota_hero_huskar" then
         local loveSpotAbil = victim:FindAbilityByName("diarmuid_love_spot")
         local reduction = loveSpotAbil:GetLevelSpecialValueFor("damage_reduction", loveSpotAbil:GetLevel() - 1)
-        filterTable.damage = filterTable.damage/100 * reduction
-        damage = damage/100 * reduction
-        print(reduction )
+        filterTable.damage = filterTable.damage/100 * (100-reduction)
+        damage = damage/100 * (100-reduction)
     end
 
 

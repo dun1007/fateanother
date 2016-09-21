@@ -31,9 +31,6 @@ function OnIRTickAlly(keys)
 	local target = keys.target
 	target:Heal(keys.Damage/5, caster)
 	--target:SetHealth(target:GetHealth() + keys.Damage/5)
-	if caster.IsSunlightAcquired then
-		target:SetMana(target:GetMana() + keys.Damage/5)
-	end
 end
 
 function OnIRTickEnemy(keys)
@@ -84,7 +81,7 @@ function OnDevoteHit(keys)
 		-- process team effect
 		target:SetHealth(target:GetHealth() + keys.Damage + caster:GetAttackDamage())
 		if caster.IsSunlightAcquired then
-			HardCleanse(target)
+			target:SetMana(target:GetMana() + keys.Damage)
 			for i=0, 15 do 
 				local ability = target:GetAbilityByIndex(i)
 				if ability ~= nil then
@@ -216,9 +213,9 @@ function OnGalatineStart(keys)
 					local distFromCenter = (galatineDummy:GetAbsOrigin() - v:GetAbsOrigin()):Length2D()
 					local multiplier = 0
 					if distFromCenter < 100 then 
-						multiplier = 1.5
+						multiplier = 1.3
 					else
-						multiplier = 1.5 - (distFromCenter-100)/400 * 50/100
+						multiplier = 1.3 - (distFromCenter-100)/400 * 30/100
 					end
 					DoDamage(caster, v, keys.Damage * multiplier , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				end

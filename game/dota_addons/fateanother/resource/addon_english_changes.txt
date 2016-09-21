@@ -1,16 +1,3 @@
-	"DOTA_Tooltip_Ability_false_assassin_heart_of_harmony_Note2"	"For 0.5 seconds after counterattack, Assassin cleanses any negative effects on himself and benefits from damage reduction."
-	
-	"DOTA_Tooltip_Ability_berserker_5th_attribute_god_hand_Note1"				"God Hand cannot be activated while its debuff effect lasts."
-
-    "DOTA_Tooltip_Ability_master_presence_resonator"		"Presence Resonator"
-   	"DOTA_Tooltip_Ability_master_presence_resonator_Description"	"Activates a magical device that spots a random enemy Servant's location on the map." 
-   	"DOTA_Tooltip_Ability_master_presence_resonator_Note0"		"Cannot detect invisible or invulnerable hero."
-
-    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment"		"Identity Discernment"
-    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment_Description"		"Enables Identity Discernment, and reduces Presence Resonator's cooldown.\n<font color='#58ACFA'>Identity Discernment:</font> Ruler pings all enemy Servants' locations.\n<font color='#ff9900'>UNJUST BONUS:</font> Also grants vision briefly."
-    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment_vision_duration"	"UNJUST VISION DURATION:"
-    "DOTA_Tooltip_Ability_jeanne_attribute_identity_discernment_pr_cooldown_reduction"	"%PRESENCE RESONATOR COOLDOWN REDUCTION:"
-
     //==================================
     //  ERROR MESSAGES
     //==================================
@@ -59,3 +46,17 @@
     "DOTA_Tooltip_ability_item_healing_scroll_armor_amount" "BONUS ARMOR AMOUNT:"
     "DOTA_Tooltip_ability_item_healing_scroll_armor_duration"   "BONUS ARMOR DURATION:"
     "DOTA_Tooltip_ability_item_healing_scroll_radius"   "RADIUS:"
+
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_gawain_attribute_sunlight"         "Sunlight"
+    "DOTA_Tooltip_ability_gawain_attribute_sunlight_Description"       "Enchances supportive nature of Saber, improving ability effects on ally.\n<font color='#58ACFA'>Invigorating Ray </font>: Also grants 30%% bonus magic resistance and 20 armor.\n<font color='#58ACFA'>Blade of the Devoted </font>: Also replenishes mana and reduces cooldown of all abilities by 15 seconds.\n<font color='#58ACFA'>Excalibur Galatine </font>: 50%% additional heal is done over next 3 seconds\n<font color='#58ACFA'>Sun's Embrace</font> : Grants 30%% bonus magic resistance\n\n<font color='#FF0000'>Saber may not obtain both Sunlight and Eclipse attribute.</font>"  
+
+    
+    "DOTA_Tooltip_Ability_false_assassin_attribute_quickdraw"               "Quickdraw"
+    "DOTA_Tooltip_ability_false_assassin_attribute_quickdraw_Description"   "Enables Quickdraw for 5 seconds after using Gate Keeper.\n<font color='#58ACFA'>Quickdraw : </font>Assassin rapidly draws blade and rushes forward to cut through all enemies in path, inflicting damage based on AGI and applying on-hit effect."
+
+    "DOTA_Tooltip_Ability_false_assassin_windblade" "Windblade"
+    "DOTA_Tooltip_ability_false_assassin_windblade_Description" "Assassin swirls his blade to create slicing wind around him, dealing damage to nearby enemies, applying on-hit effects, and briefly pushing them back."

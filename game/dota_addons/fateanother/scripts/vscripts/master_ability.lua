@@ -1071,4 +1071,5 @@ function OnHeroRespawn(keys)
 		caster:ModifyGold(2000, true, 0) 
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "spawn_invulnerable", 3.0)
 	end
+	FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 end

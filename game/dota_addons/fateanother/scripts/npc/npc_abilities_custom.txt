@@ -4506,6 +4506,7 @@
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_sven.vsndevts"
 			"particle"				"particles/units/heroes/hero_sven/sven_storm_bolt_projectile_explosion.vpcf"
 			"particle"				"particles/units/heroes/hero_clinkz/clinkz_searing_arrow.vpcf"
+			"particle"				"particles/custom/archer/archer_broken_phantasm/archer_broken_phantasm_crosshead.vpcf"
 		}
 
 		"AbilitySpecial"
@@ -6860,12 +6861,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"			"0.15 0.45"
+				"agi_ratio"			"0.3 0.6"
 			}
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio_revoked"			"0.4 1.2"
+				"agi_ratio_revoked"			"0.8 1.6"
 			}
 		}
 		
@@ -7140,7 +7141,14 @@
 				"IsDebuff"	"1"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
-
+			"modifier_quickdraw_baseattack_reduction"
+			{
+				"Duration"	"0.5"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"-100"
+				}
+			}
 		}
 	}
 
@@ -7803,6 +7811,19 @@
 				"GCD"				"%global_cooldown"
 			}
 		}
+
+		"Modifiers"
+		{
+			"modifier_wb_baseattack_reduction"
+			{
+				"Duration"	"0.033"
+				"IsHidden"	"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"	"-100"
+				}
+			}
+		}
 	}
 
 	//=====================================
@@ -8143,12 +8164,12 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio"		"0.4"
+				"agi_ratio"		"0.6"
 			}
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"agi_ratio_revoked"		"1.2"
+				"agi_ratio_revoked"		"1.6"
 			}
 		}
 		
@@ -13660,7 +13681,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_cost"				"50"
+				"mana_cost"				"30"
 			}
 		}
 		
@@ -20667,6 +20688,7 @@
 			"particle"		"particles/units/heroes/hero_phoenix/phoenix_supernova_radiance.vpcf"
 			"particle"		"particles/items2_fx/radiance.vpcf"
 			"particle"		"particles/items2_fx/radiance_owner.vpcf"
+			"particle"		"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_omniknight.vsndevts"
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_chen.vsndevts"
 		}
@@ -20748,14 +20770,17 @@
 			}
 			"modifier_invigorating_ray_armor_buff"
 			{
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
+				"EffectAttachType"	"follow_overhead"
 				"Duration"	"%duration"
 				"IsHidden"	"1"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"     		"20"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"30"
 				}
 			}
-			
+
 		}
 	}
 
@@ -23502,7 +23527,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_percentage"				"2 3 4 5 6"
+				"heal_percentage"				"4 6 8 10 12"
 			}
 			"03"
 			{
@@ -24074,9 +24099,9 @@
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"150"
-		"AbilityCastRangeBuffer"		"165"
+		"AbilityCastRangeBuffer"		"225"
 		"AbilityCastPoint"				"0.9"
-		"AbilityCooldown"				"40"
+		"AbilityCooldown"				"30"
 		"AbilityManaCost"				"800"
 		
 		// Ability special
@@ -24091,12 +24116,12 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"initial_damage"	"550 600 650 700 750"
+				"initial_damage"	"650 700 750 800 850"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"		"0.5"
+				"stun_duration"		"0.7"
 			}
 			"04"
 			{
@@ -25857,7 +25882,7 @@
 
 		"precache"
 		{	
-			"particle"		"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+			"particle"		"particles/units/heroes/hero_dazzle/dazzle_weave_circle_ray.vpcf"
 		}
 		"OnSpellStart"
 		{
@@ -25928,7 +25953,7 @@
 
 			"modifier_casa_active_mr"
 			{
-				"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_shallow_grave.vpcf"
+				"EffectName"		"particles/units/heroes/hero_dazzle/dazzle_weave_circle_ray.vpcf"
 				"EffectAttachType"	"follow_origin"
 				"Duration"		"1.5"
 				"Properties"
