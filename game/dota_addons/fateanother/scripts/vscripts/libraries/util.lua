@@ -366,7 +366,7 @@ function ApplyAirborne(source, target, duration)
         descendCounter = descendCounter + 0.033
         return 0.033
     end)]]
-    local knockupSpeed = 1000
+    local knockupSpeed = 1500
     local knockupAcc = knockupSpeed/duration * 2
 
     Physics:Unit(target)
@@ -1092,20 +1092,14 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
         if dmg_type == DAMAGE_TYPE_PHYSICAL then
             reduction = GetPhysicalDamageReduction(target:GetPhysicalArmorValue())
             incomingDmg = incomingDmg * (1-reduction) 
-            print(incomingDmg)
         end
 
-        if abil:GetAbilityName() == "false_assassin_tsubame_gaeshi" or abil:GetAbilityName() == "false_assassin_tsubame_mai" or abil:GetAbilityName() == "lancelot_tsubame_gaeshi" then
-            target.IsAvalonPenetrated = true
-        else
-            if incomingDmg > 300 then 
-                target.IsAvalonProc = true
-            else 
-                target.IsAvalonProc = false
-            end
-            dmg = 0
-            target.IsAvalonPenetrated = false
+        if incomingDmg > 300 then 
+            target.IsAvalonProc = true
+        else 
+            target.IsAvalonProc = false
         end
+        dmg = 0
     end 
     -- check if target has Argos
     if not IsAbsorbed and target:HasModifier("modifier_argos_shield") then

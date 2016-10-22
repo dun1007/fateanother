@@ -1,8 +1,8 @@
 SaberAttribute = {
 	"saber_attribute_improve_excalibur",
 	"saber_attribute_improve_instinct",
-	"saber_attribute_chivalry",
 	"saber_attribute_strike_air",
+	"saber_attribute_strike_air_upstream",
 	"saber_max_excalibur",
 	attrCount = 4
 }
@@ -267,27 +267,34 @@ function OnSeal2Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	local currentMana = caster:GetMana()
 
 	if caster:GetHealth() == 1 then
-		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Master_Not_Enough_Health")
 		return 
 	end
 
+	if caster:GetMana() <= 1 then
+		if caster.IsFirstSeal and caster:GetMana() == 1 then
+		else
+			keys.ability:EndCooldown() 
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Not_Enough_Master_Mana")
+			return 
+		end
+	end
+
 	if not hero:IsAlive() or IsRevoked(hero) then
-		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
 		return
 	end
 
-	print(caster:GetMana()-1)
-	caster:SetMana(caster:GetMana()-1)
-	-- Set master 2's mana 
+	-- pay mana cost
+	caster:SetMana(caster:GetMana()-2)
 	local master2 = hero.MasterUnit2
 	master2:SetMana(caster:GetMana())
-	-- Set master's health
+	-- pay health cost
 	caster:SetHealth(caster:GetHealth()-1) 
 
 	ResetAbilities(hero)
@@ -302,8 +309,10 @@ function OnSeal2Start(keys)
 	-- Set cooldown
 	if caster.IsFirstSeal == true then
 		keys.ability:EndCooldown()
-		caster:SetMana(caster:GetMana()+1)  --refund 1 mana
-		master2:SetMana(master2:GetMana() +1)
+		if currentMana ~= 1 then
+			caster:SetMana(caster:GetMana()+1)  --refund 1 mana
+			master2:SetMana(caster:GetMana())
+		end
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)

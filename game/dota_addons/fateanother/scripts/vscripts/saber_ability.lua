@@ -72,9 +72,12 @@ function InvisibleAirPull(keys)
 	target:RemoveModifierByName("modifier_invisible_air_target")
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_invisible_air_target", {})
 
-	if caster.IsChivalryAcquired == true then keys.Damage = keys.Damage + 200 end
 	DoDamage(caster, target , keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	if caster.bIsUpstreamAcquired then
+		caster:FindAbilityByName("saber_strike_air_upstream"):ApplyDataDrivenModifier(caster, caster, "modifier_strike_air_upstream_ready", {})
+	end
 
+	-- physics stuffs
     local pullTarget = Physics:Unit(keys.target)
     local dist = (keys.caster:GetAbsOrigin() - keys.target:GetAbsOrigin()):Length2D() 
     target:PreventDI()
@@ -143,10 +146,7 @@ function OnCaliburnHit(keys)
 
 
 
-	if caster.IsChivalryAcquired == true then 
-		keys.Damage = keys.Damage + 200 
-		if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_caliburn_slow", {}) end
-	end
+	if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_caliburn_slow", {}) end
 	local aoedmg = keys.Damage * keys.AoEDamage
 	DoDamage(caster, target , keys.Damage - aoedmg , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 	giveUnitDataDrivenModifier(caster, target, "modifier_stunned", 0.2)
@@ -420,7 +420,6 @@ function AvalonOnTakeDamage(keys)
 	local newCurrentHealth = caster:GetHealth()
 	local emitwhichsound = RandomInt(1, 2)
 
-	if caster.IsAvalonPenetrated then return end
 
 	if not caster:HasModifier("pause_sealdisabled") and not caster:HasModifier("modifier_max_excalibur") and caster.IsAvalonProc == true and caster.IsAvalonOnCooldown ~= true and (caster:GetAbsOrigin() - attacker:GetAbsOrigin()):Length2D() < 3000 then 
 		if emitwhichsound == 1 then attacker:EmitSound("Saber.Avalon_Counter1") else attacker:EmitSound("Saber.Avalon_Counter2") end
@@ -460,6 +459,10 @@ function AvalonDash(caster, attacker, counterdamage, ability)
 	local targetPoint = attacker:GetAbsOrigin()
 	local casterDash = Physics:Unit(caster)
 	local distance = targetPoint - caster:GetAbsOrigin()
+
+	if caster.bIsUpstreamAcquired then
+		caster:FindAbilityByName("saber_strike_air_upstream"):ApplyDataDrivenModifier(caster, caster, "modifier_strike_air_upstream_ready", {})
+	end
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.6)
     caster:PreventDI()
@@ -595,6 +598,40 @@ function StrikeAirPush(keys)
 	end)
 end
 
+function OnUpstreamProc(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	if not caster.bIsUpstreamReady then return end
+	caster.bIsUpstreamReady = false
+	Timers:CreateTimer(4.0, function()
+		caster.bIsUpstreamReady = true
+	end)
+	-- particle
+
+	-- apply knockup
+	DoDamage(caster, target, caster:GetAttackDamage() * 2.5, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+	ApplyAirborne(caster, target, 1.25)
+	local sound = RandomInt(1,2)
+	if sound == 1 then caster:EmitSound("Saber.StrikeAir_Release1") else caster:EmitSound("Saber.StrikeAir_Release2") end
+	local upstreamFx = ParticleManager:CreateParticle( "particles/custom/saber/strike_air_upstream/strike_air_upstream.vpcf", PATTACH_CUSTOMORIGIN, nil )
+	ParticleManager:SetParticleControl( upstreamFx, 0, target:GetAbsOrigin() )
+end
+
+function OnUpstreamHit(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+	-- particle
+	DoDamage(caster, target, caster:GetAttackDamage() * 2.5, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+	ApplyAirborne(caster, target, 1.25)
+	caster:RemoveModifierByName("modifier_strike_air_upstream_ready")
+	local sound = RandomInt(1,2)
+	if sound == 1 then caster:EmitSound("Saber.StrikeAir_Release1") else caster:EmitSound("Saber.StrikeAir_Release2") end
+	local upstreamFx = ParticleManager:CreateParticle( "particles/custom/saber/strike_air_upstream/strike_air_upstream.vpcf", PATTACH_CUSTOMORIGIN, nil )
+	ParticleManager:SetParticleControl( upstreamFx, 0, target:GetAbsOrigin() )
+end
+
 function SaberCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("saber_avalon") and caster:FindAbilityByName("saber_excalibur"):IsCooldownReady() and caster:FindAbilityByName("saber_max_excalibur"):IsCooldownReady() then
@@ -653,6 +690,20 @@ function OnStrikeAirAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:SwapAbilities("saber_charisma","saber_strike_air", true, true)
 
+	-- Set master 1's mana 
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnSAUpstreamAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	hero.bIsUpstreamAcquired = true
+	hero.bIsUpstreamReady = true
+	hero:AddAbility("saber_strike_air_upstream")
+	hero:FindAbilityByName("saber_strike_air_upstream"):SetLevel(1)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

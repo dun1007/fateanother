@@ -1,3 +1,6 @@
+    //=====================================
+    //  NEW VERSION
+    //====================================
     //==================================
     //  ERROR MESSAGES
     //==================================
@@ -60,3 +63,21 @@
 
     "DOTA_Tooltip_Ability_false_assassin_windblade" "Windblade"
     "DOTA_Tooltip_ability_false_assassin_windblade_Description" "Assassin swirls his blade to create slicing wind around him, dealing damage to nearby enemies, applying on-hit effects, and briefly pushing them back."
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_saber_caliburn"                   "Caliburn"
+    "DOTA_Tooltip_ability_saber_caliburn_description"       "Strikes enemy with Caliburn, dealing damage and slowing it. Nearby enemies also take a portion of damage."
+    "DOTA_Tooltip_ability_saber_caliburn_Lore"      ""
+    "DOTA_Tooltip_ability_saber_caliburn_damage"        "TARGET DAMAGE:"
+    "DOTA_Tooltip_ability_saber_caliburn_aoe_damage_percent_tooltip"    "%AOE DAMAGE:"
+    "DOTA_Tooltip_ability_saber_caliburn_slow_amount"   "%SLOW AMOUNT:"
+
+
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream"              "Strike Air - Upstream"
+    "DOTA_Tooltip_ability_saber_attribute_strike_air_upstream_Description"  "Enables Strike Air-Upstream.\n<font color='#58ACFA'>Strike Air-Upstream : </font>Gives a chance to deal bonus magic damage based on attack damage and launch enemy into the air.\nStrike Air-Upstream will be always triggered by the first base attack after landing Invisible Air or Avalon counterattack."
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_proc_chance"      "%PROC CHANCE:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_ad_ratio"         "ATTACK DAMAGE RATIO:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_knockup_duration"         "KNOCKUP DURATION:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_Note0"            "Passive proc has 4 second built-in cooldown, but proc by Invisible Air or Avalon does not."

@@ -410,7 +410,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"200"
 		"AbilityCastRangeBuffer"		"200"
-		"AbilityCastPoint"				"0.8"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -428,12 +428,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage"			"300 380 460 540 620"
+				"damage"			"300 400 500 600 700"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"aoe_damage_percent"	"0.2 0.3 0.4 0.5 0.6"
+				"aoe_damage_percent"	"0.5"
 			}
 			"03"
 			{
@@ -453,7 +453,17 @@
 			"06"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"aoe_damage_percent_tooltip"	"20 30 40 50 60"
+				"aoe_damage_percent_tooltip"	"50"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_amount"	"-20 -25 -30 -35 -40"
+			}
+			"08"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"slow_duration"	"3"
 			}
 		}
 		
@@ -510,7 +520,7 @@
 				
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-50"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
 				}
 			}
 		}
@@ -803,7 +813,7 @@
 		
 		// Cast
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.3"
+		"AbilityCastPoint"				"0.2"
 		"AbilityCooldown"				"60"
 		"AbilityManaCost"				"800"
 		
@@ -1042,7 +1052,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"14"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -1190,6 +1200,129 @@
 				"Duration"			"0.5"
 				"EffectName"		"particles/units/heroes/hero_invoker/invoker_deafening_blast_knockback_debuff.vpcf"
 				"EffectAttachType"	"follow_origin"
+			}
+		}
+	}
+
+	//=======================================
+	// Saber Attribute : Strike Air - Upstream
+	//=======================================
+	"saber_attribute_strike_air_upstream"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"saber_strike_air"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"10"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_chance"				"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ad_ratio"				"2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockup_duration"				"1.25"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"saber_ability"
+				"Function"		"OnSAUpstreamAcquired"
+			}
+		}
+	}
+
+	//=================================================================================================================
+	// Saber : Strike Air-Upstream
+	//=================================================================================================================
+	"saber_strike_air_upstream"
+	{
+		"BaseClass"						"ability_datadriven"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+		"AbilityTextureName"			"saber_strike_air"
+		"MaxLevel"						"1"
+		"precache"
+		{
+			"particle"				"particles/custom/saber/strike_air_upstream/strike_air_upstream.vpcf"
+		}
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"proc_chance"				"10"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"ad_ratio"				"2.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"knockup_duration"				"1.25"
+			}
+		}
+		
+		"Modifiers"
+		{
+			"modifier_strike_air_upstream"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"OnAttackLanded"
+				{
+					"Random"
+					{
+						"Chance"	"10"
+						"OnSuccess"
+						{
+							"RunScript"
+							{
+								"ScriptFile"			"saber_ability"
+								"Function"				"OnUpstreamProc"
+								"Damage"				"%ad_ratio"
+								"KnockupDuration"		"%knockup_duration"
+							}
+						}
+					}
+				}
+			}
+			"modifier_strike_air_upstream_ready"
+			{
+				"Duration"			"3.0"
+				"OnAttackLanded"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"saber_ability"
+						"Function"				"OnUpstreamHit"
+						"Damage"				"%ad_ratio"
+						"KnockupDuration"		"%knockup_duration"
+					}
+				}
 			}
 		}
 	}
@@ -5488,7 +5621,7 @@
 		"AbilityChannelTime"			"3.5"
 		"AbilityCastRange"				"4000"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCooldown"				"60"
+		"AbilityCooldown"				"80"
 		"AbilityManaCost"				"0"
 		
 		"AbilitySpecial"
@@ -20808,7 +20941,7 @@
 			"soundfile"				"soundevents/game_sounds_heroes/game_sounds_ember_spirit.vsndevts"
 		}
 		
-		"AbilityCooldown"				"15 13 11 9 7"
+		"AbilityCooldown"				"13 12 11 10 9"
 		"AbilityManaCost"				"200"
 		
 		"AbilitySpecial"
@@ -22711,7 +22844,7 @@
 
 		// Ability stats
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800 850 900 950 1000"
+		"AbilityCastRange"				"700 750 800 850 900"
 		"AbilityCastRangeBuffer"		"0"
 		"AbilityCastPoint"				"0.4"
 		"AbilityCooldown"				"49"
@@ -22740,7 +22873,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius"			"800 850 900 950 1000"
+				"radius"			"700 750 800 850 900"
 			}	
 			"03"
 			{
@@ -27610,7 +27743,7 @@
 		"AbilityTextureName"			"cmd_seal_2"
 		"MaxLevel"						"1"
 		"AbilityCooldown"				"30"
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"0"
 		
 		"precache"
 		{

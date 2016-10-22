@@ -50,7 +50,6 @@
 		"AttackRate"					"1.2"
 		"AttackAcquisitionRange"		"250"
 		"AttackRange"					"150"
-
 		
 		
 		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"

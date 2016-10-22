@@ -72,7 +72,7 @@ var abilities = [
 ]
 
 var attributes = [
-	["saber_attribute_improve_excalibur", "saber_attribute_improve_instinct", "saber_attribute_chivalry", "saber_attribute_strike_air"],
+	["saber_attribute_improve_excalibur", "saber_attribute_improve_instinct", "saber_attribute_strike_air", "saber_attribute_strike_air_upstream"],
 	["saber_alter_attribute_mana_shroud", "saber_alter_attribute_mana_blast","saber_alter_attribute_improve_ferocity","saber_alter_attribute_ultimate_darklight"],
 	["lancer_attribute_improve_battle_continuation", "lancer_attribute_improve_gae_bolg", "lancer_attribute_protection_from_arrows", "lancer_attribute_the_heartseeker"],
 	["archer_5th_attribute_eagle_eye","archer_5th_attribute_hrunting","archer_5th_attribute_shroud_of_martin","archer_5th_attribute_improve_projection","archer_5th_attribute_overedge"],

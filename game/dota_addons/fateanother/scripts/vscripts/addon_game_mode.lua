@@ -616,21 +616,6 @@ function FateGameMode:OnPlayerChat(keys)
         end
     end
 
-    if text == "-unstuck" then
-        local bIsMarbleActive = true
-        self:LoopOverPlayers(function(player, playerID, playerHero)
-            local hr = playerHero
-            if hr:GetUnitName() == "npc_dota_hero_ember_spirit" or hr:GetUnitName() == "npc_dota_hero_chen" then
-                if not hr.IsUBWActive and not hr.IsAOTKActive then
-                    bIsMarbleActive = false
-                end
-            end
-
-            if PlayerResource:GetSelectedHeroEntity(plyID) == hr then
-                hr:SetAbsOrigin(hr.RespawnPos)
-            end
-        end)
-    end
 
     if text == "-declarewinner" then
         if Convars:GetBool("sv_cheats") then 
@@ -710,7 +695,14 @@ function FateGameMode:OnPlayerChat(keys)
             end)
         end
     end
-    
+   
+    if text == "-sealtest" then
+        if Convars:GetBool("sv_cheats") then
+            hero.MasterUnit:SetMana(10)
+            hero.MasterUnit2:SetMana(10)
+        end
+    end
+
     -- Asks team for gold
     if text == "-goldpls" then
         --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
@@ -1343,7 +1335,7 @@ function FateGameMode:OnEntityKilled( keys )
                 CustomGameEventManager:Send_ServerToPlayer( killedUnit:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
             end
             -- Distribute XP to allies
-            local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), Vector(0,0,0), nil, 25000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
+            local alliedHeroes = FindUnitsInRadius(killerEntity:GetTeamNumber(), killedUnit:GetAbsOrigin(), nil, 5000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_HERO, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_CLOSEST, false)
             local realHeroCount = 0
             for i=1, #alliedHeroes do
                 if alliedHeroes[i]:IsHero() then
