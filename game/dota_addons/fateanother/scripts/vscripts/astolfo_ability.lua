@@ -316,12 +316,15 @@ function CreateBeaconForEnemies(caster, targetPoint)
         	local beaconIndex = ParticleManager:CreateParticleForPlayer("particles/custom/astolfo/astolfo_ground_mark_flex.vpcf", PATTACH_CUSTOMORIGIN, nil, player)
 			ParticleManager:SetParticleControl( beaconIndex, 0, targetPoint)
         	-- set a timer to check whether affected enemies retain buff
-        	Timers:CreateTimer(function()
+        	local beaconCounter = 0
+        	Timers:CreateTimer(function() 
+        		if beaconCounter > 40 then return end
         		if playerHero:HasModifier("modifier_la_black_luna_deaf") then
         			ParticleManager:SetParticleControl( beaconIndex, 0, Vector(20000,20000,1000))
         		else
         			ParticleManager:SetParticleControl( beaconIndex, 0, targetPoint)
         		end
+        		beaconCounter = beaconCounter + 1
         		return 0.1
         	end)
         end

@@ -185,29 +185,34 @@ function TPScroll(keys)
 	--print(caster:GetAbsOrigin().y .. " and " .. caster:GetAbsOrigin().x)
 	if caster:GetAbsOrigin().y < -2000 or targetPoint.y < -2000 then 
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
+		local newTP = CreateItem("item_teleport_scroll" , caster, nil)
+		caster:AddItem(newTP)
+		newTP:EndCooldown()
+		caster:Stop()
 		--caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))		
 		return
 	end
 
-
-	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 2000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, 0, FIND_CLOSEST, false) 
+	caster.TPLoc = nil
+	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 10000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, 0, FIND_CLOSEST, false) 
 	if targets[1] == nil then
-		caster.TPLoc = nil
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
+		local newTP = CreateItem("item_teleport_scroll" , caster, nil)
+		caster:AddItem(newTP)
+		newTP:EndCooldown()
+		caster:Stop()
+		return
 	else 
 		caster.TPLoc = targets[1]:GetAbsOrigin()
-		local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, caster )
-		ParticleManager:SetParticleControlEnt( pfx, 0, caster, PATTACH_POINT, "attach_hitloc", caster:GetAbsOrigin(), true )
+		local pfx = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, nil )
+		ParticleManager:SetParticleControl(pfx, 0, caster:GetAbsOrigin()) 
 
-	    local particledummy = CreateUnitByName("sight_dummy_unit", targets[1]:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
-	    particledummy:SetDayTimeVisionRange(0)
-	    particledummy:SetNightTimeVisionRange(0)
-	    particledummy:AddNewModifier(caster, nil, "modifier_kill", {duration = 1.0})
 
-		local pfx2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_POINT, particledummy )
-		ParticleManager:SetParticleControlEnt( pfx2, 0, particledummy, PATTACH_POINT, "attach_hitloc", particledummy:GetAbsOrigin(), true )
+		local pfx2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_wisp/wisp_relocate_teleport.vpcf", PATTACH_CUSTOMORIGIN, nil )
+		ParticleManager:SetParticleControl(pfx2, 0, caster.TPLoc) 
 
 		caster:EmitSound("Hero_Wisp.Relocate")
-		particledummy:EmitSound("Hero_Wisp.Relocate")
+		EmitSoundOnLocationWithCaster(caster.TPLoc, "Hero_Wisp.Relocate", targets[1])
 
 		-- Destroy particle
 		Timers:CreateTimer(2.0, function()
@@ -221,18 +226,9 @@ end
 function TPSuccess(keys)
 	local caster = keys.caster
 	if caster:HasModifier("jump_pause_nosilence") then keys.ability:EndCooldown() return end
-	--print(caster:GetAbsOrigin().y)
-	if caster:GetAbsOrigin().y < -2000 then
-		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
-		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
-	elseif caster.TPLoc == nil then
-		caster:AddItem(CreateItem("item_teleport_scroll" , caster, nil))
-		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
-	else
-		caster:EmitSound("Hero_Wisp.Return")
-		caster:SetAbsOrigin(caster.TPLoc)
-		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
-	end
+	caster:EmitSound("Hero_Wisp.Return")
+	caster:SetAbsOrigin(caster.TPLoc)
+	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 end
 
 function MassTPSuccess(keys)
