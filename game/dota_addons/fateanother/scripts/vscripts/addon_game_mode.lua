@@ -670,13 +670,13 @@ function FateGameMode:OnPlayerChat(keys)
     local limit = string.match(text, "^-all (%d+)")
     -- distribute excess gold above 5K
     if text == "-all" then
-        if PlayerResource:GetReliableGold(plyID) > 5000 then
-            DistributeGold(hero, 5000)
+        if PlayerResource:GetReliableGold(plyID) >= 5000 then
+            DistributeGoldV2(hero, 4950)
         end
     end
     -- distribute excess gold above specified amount
     if limit then
-        DistributeGold(hero, tonumber(limit))
+        DistributeGoldV2(hero, tonumber(limit))
     end
 
     local goldamountinchat = string.match(text, "^-getgold (%d+)")
@@ -746,6 +746,44 @@ function DistributeGold(hero, cutoff)
             else
                 GiveGold(playerID, pID, goldPerPerson+residue)
             end
+        end
+    end
+end
+
+function DistributeGoldV2(hero, cutoff)
+    -- get gold amount of teammates 
+    -- exclude from table if more than stated amount
+    -- sort them by amount of current gold
+    local goldTable = {}
+    local plyIDTable = {}
+    local playerID = hero:GetPlayerID()
+    if PlayerResource:GetReliableGold(playerID) < cutoff then return end
+    LoopOverPlayers(function(ply, plyID, playerHero)
+        if playerHero:GetTeamNumber() == hero:GetTeamNumber() and plyID ~= playerID then 
+            local pGold = PlayerResource:GetReliableGold(plyID)
+            if pGold < 4950 then
+                table.insert(goldTable, pGold)
+                table.insert(plyIDTable, plyID)
+                print(plyID)
+                print(pGold)
+            end
+        end
+    end)
+
+    -- local sortedTable = spairs(playerTable, function(t,a,b) return t[b] < t[a] end)
+    local residue = 0
+    local goldPerPerson =  math.floor((PlayerResource:GetReliableGold(playerID)-cutoff)/#plyIDTable)
+
+    -- eligible players 
+    for k,curGold in spairs(goldTable, function(t,a,b) return t[b] < t[a] end) do
+        local eligibleGoldAmt = 4950 - PlayerResource:GetReliableGold(plyIDTable[k])
+        -- only grant eligible amount of gold and save the rest on residue
+        if goldPerPerson + residue> eligibleGoldAmt then
+            residue = residue + goldPerPerson - eligibleGoldAmt
+            GiveGold(playerID, plyIDTable[k], eligibleGoldAmt)
+        -- add residue up
+        else
+            GiveGold(playerID, plyIDTable[k], goldPerPerson+residue)
         end
     end
 end
