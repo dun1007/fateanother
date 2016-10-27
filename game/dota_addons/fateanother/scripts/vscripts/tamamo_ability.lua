@@ -49,11 +49,23 @@ function OnFireCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_fiery_heaven_indicator"
+	local fieryHeaven = caster:FindAbilityByName("tamamo_fiery_heaven")
+	local frigidHeaven = caster:FindAbilityByName("tamamo_frigid_heaven")
+	local gustHeaven = caster:FindAbilityByName("tamamo_gust_heaven")
+	fieryHeaven:StartCooldown(45)
+	frigidHeaven:StartCooldown(45)
+	gustHeaven:StartCooldown(45)
 	CloseCharmList(keys)
 	if caster.IsWitchcraftAcquired then
 		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
 		armedUp:EndCooldown()
 		armedUp:StartCooldown(15)
+		fieryHeaven:EndCooldown()
+		fieryHeaven:StartCooldown(15)
+		frigidHeaven:EndCooldown()
+		frigidHeaven:StartCooldown(15)
+		gustHeaven:EndCooldown()
+		gustHeaven:StartCooldown(15)
 	end
 	-- Clear up other charm modifiers
 	for i=1, #CharmModifierList do
@@ -72,11 +84,23 @@ function OnFreezeCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_frigid_heaven_indicator"
+	local fieryHeaven = caster:FindAbilityByName("tamamo_fiery_heaven")
+	local frigidHeaven = caster:FindAbilityByName("tamamo_frigid_heaven")
+	local gustHeaven = caster:FindAbilityByName("tamamo_gust_heaven")
+	fieryHeaven:StartCooldown(45)
+	frigidHeaven:StartCooldown(45)
+	gustHeaven:StartCooldown(45)
 	CloseCharmList(keys)
 	if caster.IsWitchcraftAcquired then
 		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
 		armedUp:EndCooldown()
 		armedUp:StartCooldown(15)
+		fieryHeaven:EndCooldown()
+		fieryHeaven:StartCooldown(15)
+		frigidHeaven:EndCooldown()
+		frigidHeaven:StartCooldown(15)
+		gustHeaven:EndCooldown()
+		gustHeaven:StartCooldown(15)
 	end
 
 	for i=1, #CharmModifierList do
@@ -94,11 +118,23 @@ function OnGustCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_gust_heaven_indicator"
+	local fieryHeaven = caster:FindAbilityByName("tamamo_fiery_heaven")
+	local frigidHeaven = caster:FindAbilityByName("tamamo_frigid_heaven")
+	local gustHeaven = caster:FindAbilityByName("tamamo_gust_heaven")
+	fieryHeaven:StartCooldown(45)
+	frigidHeaven:StartCooldown(45)
+	gustHeaven:StartCooldown(45)
 	CloseCharmList(keys)
 	if caster.IsWitchcraftAcquired then
 		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
 		armedUp:EndCooldown()
 		armedUp:StartCooldown(15)
+		fieryHeaven:EndCooldown()
+		fieryHeaven:StartCooldown(15)
+		frigidHeaven:EndCooldown()
+		frigidHeaven:StartCooldown(15)
+		gustHeaven:EndCooldown()
+		gustHeaven:StartCooldown(15)
 	end
 
 	for i=1, #CharmModifierList do
