@@ -769,7 +769,11 @@ function OnHorrorTeleport(keys)
 	elseif hero.IsIntegrated then
 		keys.ability:EndCooldown()
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Use_While_Integrated")
-		return		
+		return
+	elseif IsInSameRealm(caster:GetAbsOrigin(),hero:GetAbsOrigin()) == false then
+		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Teleport_Across_Realms")
+		return			
 	else
 		EmitSoundOnLocationWithCaster(targetPoint, "Hero_Enigma.Demonic_Conversion", caster)
 		local darkZoneFx = ParticleManager:CreateParticle("particles/units/heroes/hero_dark_seer/dark_seer_vacuum.vpcf", PATTACH_CUSTOMORIGIN, nil)
