@@ -1354,4 +1354,67 @@
 		"VisionDaytimeRange"			"750"
 		"VisionNighttimeRange"			"750"
 	}
+
+	//=================================================================================================================
+	//	Caster(Extra) - Nursery Rhyme
+	//=================================================================================================================
+	"npc_dota_hero_nursery_rhyme"
+	{
+		"override_hero"				"npc_dota_hero_windrunner"
+		"DisableWearables" 			"1"
+		//"Model"						"models/astolfo/astolfo.vmdl"
+		"ModelScale"				"1.0"
+		"DrawParticlesWhileHidden" "1"
+
+		"AbilityLayout"				"6"
+		"Ability1"					"fate_empty1"
+		"Ability2"					"fate_empty2"
+		"Ability3"					"fate_empty3"
+		"Ability4"					"fate_empty4"
+		"Ability5"					"fate_empty5"
+		"Ability6"					"fate_empty6"
+		"Ability15"					"presence_detection_passive"
+		"Ability16"					"attribute_bonus"
+
+		"Combo"						"fate_empty_nothidden"
+		"AttributeNumber"			"5"
+		"Attribute1"				"fate_empty1"
+		"Attribute2"				"fate_empty2"
+		"Attribute3"				"fate_empty3"
+		"Attribute4"				"fate_empty4"
+		"Attribute4"				"fate_empty5"
+		
+		"StatusHealth"					"900"
+		"StatusHealthRegen"				"5"
+		"StatusMana"					"1200"
+		"StatusManaRegen"				"4"
+		
+		"ArmorPhysical"					"1"
+		"MagicalResistance"				"15"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackRange"					"600"
+		"AttackDamageMin"				"48"
+		"AttackDamageMax"				"60"
+		"AttackRate"					"1.4"
+		"AttackAcquisitionRange"		"1000"
+		"ProjectileModel"	"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack.vpcf"
+		"ProjectileSpeed"	"1000"
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_INTELLECT"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"1"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"1"
+		
+		"MovementCapabilities"			"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"					"300"
+		"MovementTurnRate"				"0.8"
+		
+		"VisionDaytimeRange"			"800"
+		"VisionNighttimeRange"			"800"
+	}
 }

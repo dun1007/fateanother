@@ -26,4 +26,5 @@
 	"npc_dota_hero_bloodseeker"			"1"		
 	"npc_dota_hero_mirana"				"1"		
 	"npc_dota_hero_queenofpain"			"1"	
+	"npc_dota_hero_windrunner"			"1"	
 }

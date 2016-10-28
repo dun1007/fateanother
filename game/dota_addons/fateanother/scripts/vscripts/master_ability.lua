@@ -191,6 +191,19 @@ AstolfoAttribute = {
 	attrCount = 4
 }
 
+NRAttribute = {
+	"fate_empty1",
+	"fate_empty2",
+	"fate_empty3",
+	"fate_empty4",
+	"fate_empty5",
+	--[["nursery_rhyme_attribute_jabberwocky",
+	"nursery_rhyme_attribute_improve_queens_glass_game",
+	"nursery_rhyme_attribute_improve_nameless_forest",
+	"nursery_rhyme_attribute_unending_rhymes",
+	"nursery_rhyme_attribute_dragon_skillet",]]
+	attrCount = 5
+}
 --[[LiAttribute = {
 	attrCount = 4
 }]]
@@ -520,6 +533,8 @@ function FindAttribute(name)
     	attributes = JeanneAttribute
     elseif name == "npc_dota_hero_queenofpain" then
     	attributes = AstolfoAttribute
+    elseif name == "npc_dota_hero_windrunner" then
+    	attributes = NRAttribute
     end
     return attributes
 end 

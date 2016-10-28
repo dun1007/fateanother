@@ -1234,7 +1234,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"ad_ratio"				"150"
+				"base_damage"				"150"
 			}
 			"03"
 			{

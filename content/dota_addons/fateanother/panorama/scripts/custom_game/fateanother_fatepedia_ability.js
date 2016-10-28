@@ -68,7 +68,8 @@ var abilities = [
 	["tamamo_soulstream", "tamamo_subterranean_grasp", "tamamo_mantra", "fate_empty1", "tamamo_armed_up", "tamamo_amaterasu"],
 	["lishuwen_concealment", "lishuwen_cosmic_orbit", "lishuwen_fierce_tiger_strike", "lishuwen_martial_arts", "fate_empty1", "lishuwen_no_second_strike"],
 	["jeanne_charisma", "jeanne_purge_the_unjust", "jeanne_gods_resolution", "jeanne_magic_resistance_ex", "jeanne_saint", "jeanne_luminosite_eternelle"],
-	["astolfo_hippogriff_vanish", "astolfo_down_with_a_touch", "astolfo_la_black_luna", "fate_empty1", "astolfo_casa_di_logistilla", "astolfo_hippogriff_raid"]
+	["astolfo_hippogriff_vanish", "astolfo_down_with_a_touch", "astolfo_la_black_luna", "fate_empty1", "astolfo_casa_di_logistilla", "astolfo_hippogriff_raid"],
+	["fate_empty1", "fate_empty2", "fate_empty3", "fate_empty4", "fate_empty5", "fate_empty6"]
 ]
 
 var attributes = [
@@ -92,7 +93,8 @@ var attributes = [
 	["tamamo_attribute_spirit_theft", "tamamo_attribute_mystic_shackle", "tamamo_attribute_tamamo_escape", "tamamo_attribute_witchcraft"],
 	["lishuwen_attribute_circulatory_shock", "lishuwen_attribute_improve_martial_arts", "lishuwen_attribute_dual_class", "lishuwen_attribute_furious_chain"],
 	["jeanne_attribute_identity_discernment", "jeanne_attribute_improve_saint", "jeanne_attribute_punishment", "jeanne_attribute_divine_symbol"],
-	["astolfo_attribute_riding", "astolfo_attribute_monstrous_strength", "astolfo_attribute_independent_action", "astolfo_attribute_sanity"]
+	["astolfo_attribute_riding", "astolfo_attribute_monstrous_strength", "astolfo_attribute_independent_action", "astolfo_attribute_sanity"],
+	["fate_empty1","fate_empty2","fate_empty3","fate_empty4","fate_empty5"]
 ]
 
 var comboes = [
