@@ -589,7 +589,7 @@ function EndUBW(caster)
     print("a12",caster:GetAbilityByIndex(12):GetName())
     print("a13",caster:GetAbilityByIndex(13):GetName())
     
-    if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(4):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
+    if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(7):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
     	print("fix for start hrunt start ubw end ubw end hrunt")
     	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true)
     	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, true)
