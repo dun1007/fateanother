@@ -574,28 +574,6 @@ function EndUBW(caster)
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, false) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, false) 
 
-    print("a0",caster:GetAbilityByIndex(0):GetName()) 
-    print("a1",caster:GetAbilityByIndex(1):GetName()) 
-    print("a2",caster:GetAbilityByIndex(2):GetName()) 
-    print("a3",caster:GetAbilityByIndex(3):GetName()) 
-    print("a4",caster:GetAbilityByIndex(4):GetName()) 
-    print("a5",caster:GetAbilityByIndex(5):GetName()) 
-    print("a6",caster:GetAbilityByIndex(6):GetName()) 
-    print("a7",caster:GetAbilityByIndex(7):GetName()) 
-    print("a8",caster:GetAbilityByIndex(8):GetName()) 
-    print("a9",caster:GetAbilityByIndex(9):GetName()) 
-    print("a10",caster:GetAbilityByIndex(10):GetName()) 
-    print("a11",caster:GetAbilityByIndex(11):GetName())
-    print("a12",caster:GetAbilityByIndex(12):GetName())
-    print("a13",caster:GetAbilityByIndex(13):GetName())
-    
-    if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(4):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
-    	print("fix for start hrunt start ubw end ubw end hrunt")
-    	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true)
-    	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, true)
-    end
-
-
 	CreateUITimer("Unlimited Blade Works", 0, "ubw_timer")
 	caster.IsUBWActive = false
 	if not caster.UBWLocator:IsNull() and IsValidEntity(caster.UBWLocator) then
