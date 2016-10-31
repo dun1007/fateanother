@@ -573,6 +573,7 @@ function OnTGStart(keys)
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if caster.IsGanryuAcquired then 
 				giveUnitDataDrivenModifier(caster, target, "silenced", 0.31)
+				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				--[[local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
@@ -603,6 +604,7 @@ function OnTGStart(keys)
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if caster.IsGanryuAcquired then 
 				giveUnitDataDrivenModifier(caster, target, "silenced", 0.31)
+				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				--[[local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
@@ -633,7 +635,8 @@ function OnTGStart(keys)
 			if IsSpellBlocked(keys.target) and target:GetName() == "npc_dota_hero_legion_commander" then return end -- if target has instinct up, block the last hit
 			if caster.IsGanryuAcquired then
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
-				for i=1, #targets do 
+				DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
+				--[[for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 					caster:PerformAttack(targets[i], true, true, true, true, false)
 					targets[i]:AddNewModifier(caster, targets[i], "modifier_stunned", {Duration = 1.5})
@@ -641,7 +644,7 @@ function OnTGStart(keys)
 				    ParticleManager:SetParticleControl(slashIndex, 0, targets[i]:GetAbsOrigin())
 				    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
 				    ParticleManager:SetParticleControl(slashIndex, 2, Vector(0.2,0,0))
-				end
+				end]]
 			else
 				DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				caster:PerformAttack(target, true, true, true, true, false)
