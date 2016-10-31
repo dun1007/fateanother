@@ -185,6 +185,9 @@ function OnGBStart(keys)
 	Timers:CreateTimer(0.5,function()
 		if keys.ability:IsChanneling() then
 			caster:SetModifierStackCount("modifier_gladiusanus_blauserum", caster, caster:GetModifierStackCount("modifier_gladiusanus_blauserum", caster)+1)
+			if caster:GetModifierStackCount("modifier_gladiusanus_blauserum", caster) > 4 then
+				caster:SetModifierStackCount("modifier_gladiusanus_blauserum", caster, 4)
+			end
 			return 0.49
 		else
 			return

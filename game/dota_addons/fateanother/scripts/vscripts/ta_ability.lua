@@ -317,6 +317,7 @@ function OnFirstHitLanded(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	keys.caster:EmitSound("Hero_TemplarAssassin.Meld.Attack")
 	keys.caster:RemoveModifierByName("modifier_first_hit")
+	keys.caster:RemoveModifierByName("modifier_ambush")
 end
 
 function OnAbilityCast(keys)

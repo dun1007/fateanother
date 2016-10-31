@@ -261,7 +261,7 @@ function OnGBTargetHit(keys)
 		local dotCount = 0
 		Timers:CreateTimer(function() 
 			if dotCount == 3 then return end
-			DoDamage(caster, target, target:GetHealth()/30, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+			DoDamage(caster, target, target:GetMaxHealth()/30, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 			dotCount = dotCount + 1
 			return 1.0 
 		end)
