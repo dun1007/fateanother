@@ -626,6 +626,11 @@
 	    "ItemSellable" "1"
 	    "ItemPurchasable" "1"
 	    "ItemDroppable" "1"
+
+		"ItemStockMax"					"3"
+		"ItemStockInitial"				"3"
+		"ItemStockTime"					"45.0"
+
 	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
 	    "precache"
 	    {

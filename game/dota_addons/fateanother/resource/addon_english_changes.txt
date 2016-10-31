@@ -96,3 +96,13 @@
 
     "DOTA_Tooltip_Ability_true_assassin_attribute_protection_from_wind"             "Protection from Wind"
     "DOTA_Tooltip_ability_true_assassin_attribute_protection_from_wind_Description" "Causes Assassin to be immune to Invisible Air, Strike Air, Strike Air-Upstream, and Windblade. Also, grants a chance to avoid incoming targeting spell."
+
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_false_assassin_attribute_ganryu"              "Ganryu"
+    "DOTA_Tooltip_ability_false_assassin_attribute_ganryu_Description"  "Windblade has its global cooldown removed and teleports Assassin to closest enemy hit.\nIn addition, Tsubame Gaeshi <font color='#FF3399'>silences</font> target."
+
+    "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle"      "Luminosite Eternelle"
+    "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Description"  "Ruler hurls her flag in target direction, <font color='#FF3399'>rooting, disarming</font>, and dimensionally <font color='#FF3399'>locking</font> enemies along its path. The flag is then planted in the ground, creating a sacred zone that reduces incoming damage for allied heroes.\nWhenever allies suffer damage, the flag is damaged as well. Destroying the flag removes root and lock statuses remaining on victims.\n<font color='#ff9900'>UNJUST BONUS:</font>Victim takes 30%% increased damage."

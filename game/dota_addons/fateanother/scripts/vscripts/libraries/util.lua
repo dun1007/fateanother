@@ -1026,7 +1026,7 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     local IsBScrollIgnored = false
     local MR = target:GetMagicalArmorValue() 
     if source and source:IsHero() and not isLoop then
-        dmg = dmg/(1+((source:GetIntellect()/16)/100))
+        dmg = math.ceil(dmg/(1+((source:GetIntellect()/16)/100)))
     end
     if dmg_type == DAMAGE_TYPE_MAGICAL then
         -- if target has Sun's Embrace modifier, reduce damage by MR before calculation

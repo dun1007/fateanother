@@ -558,7 +558,9 @@ function OnTGStart(keys)
 	caster:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	giveUnitDataDrivenModifier(caster, caster, "dragged", 1.0)
 	giveUnitDataDrivenModifier(caster, caster, "revoked", 1.0)
-
+	if caster.IsGanryuAcquired then 
+		giveUnitDataDrivenModifier(caster, target, "silenced", 0.51)
+	end
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tg_baseattack_reduction", {})
 
@@ -570,7 +572,8 @@ function OnTGStart(keys)
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
 			if caster.IsGanryuAcquired then 
-				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+				giveUnitDataDrivenModifier(caster, target, "silenced", 0.31)
+				--[[local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 					caster:PerformAttack(targets[i], true, true, true, true, false)
@@ -578,7 +581,7 @@ function OnTGStart(keys)
 				    ParticleManager:SetParticleControl(slashIndex, 0, targets[i]:GetAbsOrigin())
 				    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
 				    ParticleManager:SetParticleControl(slashIndex, 2, Vector(0.2,0,0))
-				end
+				end]]
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				caster:PerformAttack(target, true, true, true, true, false)
@@ -598,8 +601,9 @@ function OnTGStart(keys)
 		if caster:IsAlive() and target:IsAlive() then
 			local diff = (target:GetAbsOrigin() - caster:GetAbsOrigin() ):Normalized() 
 			caster:SetAbsOrigin(target:GetAbsOrigin() - diff*100) 
-			if caster.IsGanryuAcquired then
-				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+			if caster.IsGanryuAcquired then 
+				giveUnitDataDrivenModifier(caster, target, "silenced", 0.31)
+				--[[local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				for i=1, #targets do 
 					DoDamage(caster, targets[i], keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 					caster:PerformAttack(targets[i], true, true, true, true, false)
@@ -607,7 +611,7 @@ function OnTGStart(keys)
 				    ParticleManager:SetParticleControl(slashIndex, 0, targets[i]:GetAbsOrigin())
 				    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
 				    ParticleManager:SetParticleControl(slashIndex, 2, Vector(0.2,0,0))
-				end
+				end]]
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
 				caster:PerformAttack(target, true, true, true, true, false)

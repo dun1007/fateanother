@@ -698,7 +698,7 @@ function OnMountStart(keys)
 					SendErrorMessage(hero:GetPlayerOwnerID(), "#Cannot_Unmount")
 					return								
 				else
-					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", false, true) 
 					hero:RemoveModifierByName("modifier_mount_caster")
 					caster:RemoveModifierByName("modifier_mount")
 					hero.IsMounted = false
@@ -706,7 +706,7 @@ function OnMountStart(keys)
 				end
 			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
 				hero.IsMounted = true
-				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, false) 
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
 				SendMountStatus(hero)

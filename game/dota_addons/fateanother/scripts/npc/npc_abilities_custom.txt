@@ -27474,6 +27474,7 @@
 			"particle"	"particles/units/heroes/hero_bounty_hunter/bounty_hunter_track_shield_mark.vpcf"
 			"particle"	"particles/units/heroes/hero_oracle/oracle_fortune_purge.vpcf"
 			"particle"	"particles/units/heroes/hero_omniknight/omniknight_repel_buff.vpcf"
+			"particle"	"particles/generic_gameplay/generic_disarm.vpcf"
 		}
 		
 		"AbilitySpecial"
@@ -27576,6 +27577,16 @@
 				"States"
 				{
 					"MODIFIER_STATE_ROOTED" 	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"disarmed"
+			{
+				"IsDebuff"		"1"
+				"EffectName"	"particles/generic_gameplay/generic_disarm.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED" 	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"dragged"

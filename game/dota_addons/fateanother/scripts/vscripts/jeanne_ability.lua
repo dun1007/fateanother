@@ -379,6 +379,7 @@ function OnLEHit(keys)
 	table.insert(caster.LETargetTable, target)
 	giveUnitDataDrivenModifier(caster, target, "locked", duration)
 	giveUnitDataDrivenModifier(caster, target, "rooted", duration)
+	giveUnitDataDrivenModifier(caster, target, "disarmed", duration)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_luminosite_eternelle_unjust_debuff", {}) 
 	target:EmitSound("Hero_ArcWarden.Flux.Cast")
 end

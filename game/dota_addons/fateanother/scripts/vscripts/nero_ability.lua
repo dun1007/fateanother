@@ -657,7 +657,7 @@ function OnISStart(keys)
 end
 
 function NeroCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("nero_aestus_domus_aurea") and caster:FindAbilityByName("nero_tres_fontaine_ardent"):IsCooldownReady() and caster:FindAbilityByName("nero_fiery_finale"):IsCooldownReady() then
 			caster:SwapAbilities("nero_tres_fontaine_ardent", "nero_fiery_finale", true, true) 
 			Timers:CreateTimer({
