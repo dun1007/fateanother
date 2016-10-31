@@ -559,7 +559,9 @@ function OnTGStart(keys)
 	giveUnitDataDrivenModifier(caster, caster, "dragged", 1.0)
 	giveUnitDataDrivenModifier(caster, caster, "revoked", 1.0)
 	if caster.IsGanryuAcquired then 
-		giveUnitDataDrivenModifier(caster, target, "silenced", 0.51)
+		Timers:CreateTimer(0.3, function()
+			giveUnitDataDrivenModifier(caster, target, "silenced", 0.21)
+		end)
 	end
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_tg_baseattack_reduction", {})
