@@ -876,8 +876,11 @@ function OnPCFAcquired(keys)
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2"):SetLevel(1)
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2").IsResetable = false
 	Timers:CreateTimer(0.033, function()
-		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true) 
-
+		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true)
+		-- Checks if Tamamo is on the verge of casting Castration Fist when PCF attribute is acquired to avoid SwapAbilities-ing to oblivion.
+		if hero:GetAbilityByIndex(3):GetName() == "fate_empty1" then
+			 hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true)
+		end
 	end)
 
     -- Set master 1's mana 

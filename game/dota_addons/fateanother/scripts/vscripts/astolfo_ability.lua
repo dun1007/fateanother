@@ -340,7 +340,7 @@ function OnRaidStart(keys)
 	local stunDuration = keys.StunDuration
 	local secondDmg = keys.SecondDamage
 	if caster:HasModifier("modifier_hippogriff_ride_ascended") or not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then
-		caster:GiveMana(caster:GetMana()+ability:GetManaCost(1))
+		caster:GiveMana(ability:GetManaCost(1))
 		ability:EndCooldown() 
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 		return
@@ -348,7 +348,7 @@ function OnRaidStart(keys)
 
 	if caster.nCurrentRaidAmount then
 		if caster.nCurrentRaidAmount >= 2 then
-			caster:GiveMana(caster:GetMana()+ability:GetManaCost(1))
+			caster:GiveMana(ability:GetManaCost(1))
 			ability:EndCooldown() 
 			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 			return

@@ -286,6 +286,7 @@ function OnKnightUsed(keys)
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
         local ability = keys.ability
+
         if caster.KnightLevel == nil then
                 OnKnightClosed(keys)
                 caster:FindAbilityByName("lancelot_knight_of_honor"):StartCooldown(ability:GetCooldown(ability:GetLevel())) 
@@ -309,6 +310,20 @@ function OnAronditeStart(keys)
         ParticleManager:ReleaseParticleIndex( groundcrack )
     end)
     ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite", {})
+
+    --Fix for Arondight-KoH abuse
+    levelKoH = caster:FindAbilityByName("lancelot_knight_of_honor"):GetLevel()
+    listOfSkills={"lancelot_caliburn","lancelot_gae_bolg","lancelot_nine_lives","lancelot_rule_breaker","lancelot_tsubame_gaeshi"}
+    for i = 1,levelKoH do
+        caster:FindAbilityByName(listOfSkills[i]):StartCooldown(10)
+        print(caster:FindAbilityByName(listOfSkills[i]).IsResetable)
+        caster:FindAbilityByName(listOfSkills[i]).IsResetable = false
+        Timers:CreateTimer(10.0, function()
+            caster:FindAbilityByName(listOfSkills[i]).IsResetable = true
+        end)
+    end
+
+
     --[[local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
     for k,v in pairs(targets) do
             DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
