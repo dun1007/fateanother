@@ -416,19 +416,20 @@ function OnUBWStart(keys)
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	caster.IsUBWDominant = true
-
+	
 	-- Remove any dummy or hero in jump
-	for i=1, #ubwTargets do
+	i = 1
+	while i <= #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
-			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
-				if ubwTargets[i] ~= caster and ubwTargets[i]:HasModifier("spawn_invulnerable") then
-					table.remove(ubwTargets, i)
-				end 
+			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") or ubwTargets[i]:HasModifier("spawn_invulnerable") and ubwTargets[i] ~= caster then 
+				table.remove(ubwTargets, i)
+				i = i - 1
 			end
 		end
+		i = i + 1
 	end
-	
+
 	if caster:GetAbsOrigin().x < 3000 and caster:GetAbsOrigin().y < -2000 then
 		ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
 		ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
