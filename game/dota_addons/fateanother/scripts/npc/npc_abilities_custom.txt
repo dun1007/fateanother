@@ -9061,7 +9061,7 @@
 			"RunScript"
 			{
 				"ScriptFile"		"ta_ability"
-				"Function"			"SelfModUpgraded"
+				"Function"			"SelfModRefresh"
 			}
 		}
 		"Modifiers"
@@ -9091,7 +9091,15 @@
 					"RunScript"
 					{
 						"ScriptFile"		"ta_ability"
-						"Function"			"SelfModKilled"
+						"Function"			"SelfModRefresh"
+					}					
+				}
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"SelfModRefresh"
 					}					
 				}
 			}

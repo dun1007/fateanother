@@ -79,7 +79,6 @@ function OnPCAbilityUsed(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	caster.LastActionTime = GameRules:GetGameTime() 
-
 	caster:RemoveModifierByName("modifier_ta_invis")
 	Timers:CreateTimer(keys.CastDelay, function() 
 		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
@@ -348,23 +347,12 @@ function OnModStart(keys)
 	--increase stat
 end
 
-function SelfModUpgraded(keys)
+function SelfModRefresh(keys)
 	local caster = keys.caster
 	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
 	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
 end
-
-function SelfModKilled(keys)
-	local caster = keys.caster
-	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
-	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
-	--[[for i=1, caster:GetKills() do
-		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
-	end]]
-end
-
 
 function OnStealStart(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
@@ -391,6 +379,7 @@ function OnZabCastStart(keys)
 	local target = keys.target
 	local smokeFx = ParticleManager:CreateParticleForTeam("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target, caster:GetTeamNumber())
 	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
+	caster.LastActionTime = GameRules:GetGameTime()  -- Zab cast should be classified as an action that resets 2s timer for Presence Concealment.
 end
 
 function OnZabStart(keys)
