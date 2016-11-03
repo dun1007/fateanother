@@ -1192,12 +1192,18 @@ end
 
 function ApplyPurge(target)
     for k,v in pairs(softdispellable) do
+        if v == "modifier_share_damage" then
+            RemoveHeroFromLinkTables(target)
+        end
         target:RemoveModifierByName(v)
     end
 end
 
 function ApplyStrongDispel(target)
     for k,v in pairs(strongdispellable) do
+        if v == "modifier_share_damage" then
+            RemoveHeroFromLinkTables(target)
+        end
         target:RemoveModifierByName(v)
     end
 end
@@ -1542,10 +1548,18 @@ function RemoveHeroFromLinkTables(targethero)
         if hero.linkTable ~= nil then
             for i=1, #hero.linkTable do
                 if hero.linkTable[i] == targethero then
-                    --print("Removed " .. hero.linkTable[i]:GetName() .. " from table")
+                    --print("Removed " .. hero.linkTable[i]:GetName() .. "from", hero:GetName(), " from table")
                     table.remove(hero.linkTable, i)
                 end
             end
         end
     end)
+    --For debugging
+    --[[LoopOverHeroes(function(hero)
+        if hero.linkTable ~= nil then
+            for i=1, #hero.linkTable do
+                print(hero:GetName(),hero.linkTable[i]:GetName())
+            end
+        end
+    end)]]
 end
