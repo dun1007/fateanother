@@ -170,7 +170,7 @@ function OnDIStart(keys)
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
 			if v.IsDIOnCooldown ~= true then 
-				print("Target " .. v:GetName() .. " detected")
+				--print("Target " .. v:GetName() .. " detected")
 				for ilu = 0, 2 do
 					v.IsDIOnCooldown = true
 
