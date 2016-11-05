@@ -244,20 +244,16 @@ function OnLECastStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
-	local emitSoundDelay = 3
-	if caster.IsLEWindupSoundAvailable ~= false then
-		if #enemies == 0 then 
-			caster:EmitSound("Hero_Chen.HandOfGodHealHero")
-			caster:EmitSound("Ruler.Luminosite")	
-		else
-			EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
-			EmitGlobalSound("Ruler.Luminosite")
-		end
-		caster.IsLEWindupSoundAvailable = false
-		Timers:CreateTimer(emitSoundDelay, function()
-			caster.IsLEWindupSoundAvailable = true
-		end)
+	if #enemies == 0 then 
+		caster:EmitSound("Hero_Chen.HandOfGodHealHero")
+		caster:EmitSound("Ruler.Luminosite")	
+	else
+		EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
+		EmitGlobalSound("Ruler.Luminosite")
 	end
+	Timers:CreateTimer(1.5, function()
+		caster.IsLEWindupSoundAvailable = false
+	end)
 	if caster.LETargetTable then
 		for i=1, #caster.LETargetTable do
 			if IsValidEntity(caster.LETargetTable[i]) and caster.LETargetTable[i]:IsAlive() then
