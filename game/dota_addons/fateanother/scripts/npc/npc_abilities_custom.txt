@@ -6232,6 +6232,7 @@
 			"modifier_courage_attack_damage_buff"
 			{
 				"IsHidden"		"1"
+				"Duration"		"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
