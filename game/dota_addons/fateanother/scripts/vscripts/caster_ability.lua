@@ -1090,10 +1090,10 @@ function OnAncientClosed(keys)
 	end
 	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", true ,true) 
 	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", true, true) 
-	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", true, true) 
+	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", false, true) 
 	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
-	caster:SwapAbilities(a6:GetName(), ultiName, true, true )
+	caster:SwapAbilities(a6:GetName(), ultiName, false, true )
 	local spellbook = caster:FindAbilityByName("caster_5th_ancient_magic")
 	if spellbook:GetToggleState() then
 		spellbook:ToggleAbility()
