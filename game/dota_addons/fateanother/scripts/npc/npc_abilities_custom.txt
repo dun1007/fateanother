@@ -4451,7 +4451,7 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"proc_damage"			"300"
+				"proc_damage"			"400"
 			}
 		}
 		

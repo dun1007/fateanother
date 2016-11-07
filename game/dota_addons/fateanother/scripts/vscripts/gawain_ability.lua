@@ -92,6 +92,14 @@ function OnDevoteHit(keys)
 					break
 				end
 			end
+
+			--Lower the remaining cooldown duration of the Master 2 (Rin)
+			if target:GetStrength() >= 19.1 and target:GetAgility() >= 19.1 and target:GetIntellect() >= 19.1 then 	--Checks if the target can cast combo
+				local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
+				local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
+				masterComboAbility:EndCooldown()	
+				masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)											--Reduce it's cooldowb by 15s
+			end
 		end
 	else
 		-- process enemy effect
@@ -341,6 +349,7 @@ function OnSupernovaStart(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_supernova_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+
 
 	Timers:CreateTimer(4.0, function()
 		if target:IsAlive() then
