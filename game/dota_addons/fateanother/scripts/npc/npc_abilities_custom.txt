@@ -21087,6 +21087,127 @@
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"1.5"
 				}
 			}
+			"modifier_max_mana_burst_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"saber_alter_max_mana_burst"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_delusional_illusion_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"true_assassin_combo"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_max_excalibur_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"saber_max_excalibur"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_wesen_gae_bolg_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lancer_5th_wesen_gae_bolg"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_arrow_rain_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"archer_5th_arrow_rain"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_bellerophon_2_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"rider_5th_bellerophon_2"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_hecatic_graea_powered_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"caster_5th_hecatic_graea_powered"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_tsubame_mai_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"false_assassin_tsubame_mai"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_madmans_roar_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"berserker_5th_madmans_roar"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_max_enuma_elish_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"gilgamesh_max_enuma_elish"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_endless_loop_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"avenger_endless_loop"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_rampant_warrior_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"diarmuid_rampant_warrior"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_nuke_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lancelot_nuke"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_larret_de_mort_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"gille_larret_de_mort"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_annihilate_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"iskander_annihilate"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_fiery_finale_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"nero_fiery_finale"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_polygamist_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"tamamo_kick"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_raging_dragon_strike_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lishuwen_raging_dragon_strike"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_la_pucelle_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"jeanne_la_pucelle"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_hippogriff_ride_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"astolfo_hippogriff_ride"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+
 		}
 	}
 

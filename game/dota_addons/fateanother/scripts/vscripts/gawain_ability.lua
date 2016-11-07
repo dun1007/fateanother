@@ -69,6 +69,14 @@ function OnDevoteStart(keys)
 	end)
 end
 
+--list and related Dota KV file must be updated upon new hero release!!!
+modifierList = {"modifier_max_mana_burst_cooldown","modifier_delusional_illusion_cooldown","modifier_max_excalibur_cooldown",
+"modifier_wesen_gae_bolg_cooldown","modifier_arrow_rain_cooldown","modifier_bellerophon_2_cooldown",
+"modifier_hecatic_graea_powered_cooldown","modifier_tsubame_mai_cooldown","modifier_madmans_roar_cooldown",
+"modifier_max_enuma_elish_cooldown","modifier_endless_loop_cooldown","modifier_rampant_warrior_cooldown","modifier_nuke_cooldown",
+"modifier_larret_de_mort_cooldown","modifier_annihilate_cooldown","modifier_fiery_finale_cooldown",
+"modifier_polygamist_cooldown","modifier_raging_dragon_strike_cooldown","modifier_la_pucelle_cooldown","modifier_hippogriff_ride_cooldown"}
+
 function OnDevoteHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -98,7 +106,13 @@ function OnDevoteHit(keys)
 				local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
 				local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
 				masterComboAbility:EndCooldown()	
-				masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)											--Reduce it's cooldowb by 15s
+				masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)
+				for i = 1, #modifierList do
+					if target:HasModifier(modifierList[i]) then
+						target:RemoveModifierByName(modifierList[i])
+						keys.ability:ApplyDataDrivenModifier(caster, target, modifierList[i], {duration = (masterComboCooldownRemaining-15)})		
+					end
+				end		
 			end
 		end
 	else
