@@ -71,6 +71,39 @@
 		}
 	}
 
+	"models/nurseryrhyme/nurseryrhyme.vmdl"
+	{
+		"PortraitLightPosition"		"76.60 19.35 205.64"
+		"PortraitLightAngles"		"37.01 213.54 0.00"
+		"PortraitLightFOV"		"90"
+		"PortraitLightDistance"		"102"
+		"PortraitLightColor"		"254 221 194"
+		"PortraitShadowColor"		"97 38 63"
+		"PortraitShadowScale"		"1.125000"
+		"PortraitAmbientColor"		"0 104 187"
+		"PortraitAmbientScale"		"1.825000"
+		"PortraitSpecularColor"		"251 74 84"
+		"PortraitParticle"		"particles/units/heroes/hero_winter_wyvern/portrait_winter_wyvern.vpcf"
+		"PortraitBackgroundTexture"		"materials/vgui/hud/heroportraits/portraitbackground_whiteExteriorNight.vmat"
+		"PortraitBackgroundColor1"		".6 .7 1"
+		"PortraitBackgroundColor2"		".6 .5 1"
+		"PortraitBackgroundColor3"		".7 .61 1"
+		"PortraitBackgroundColor4"		"1 .6 .2"
+		"PortraitLightScale"		"1.100000"
+		"PortraitGroundShadowScale"		"1.500000"
+		"PortraitAmbientDirection"		"-50.840 -60.010 -32.950"
+		"PortraitAnimationActivity"		"ACT_DOTA_IDLE"
+		"cameras"
+		{
+			"default"
+			{
+				"PortraitPosition"		"250.17 -60.29 -22.69"
+				"PortraitAngles"		"329.89 166.83 0.00"
+				"PortraitFOV"		"16"
+			}
+		}
+	}
+
 	"models/astolfo/astolfo.vmdl"
 	{
 		"PortraitLightPosition"		"75.79 -21.18 200.33"

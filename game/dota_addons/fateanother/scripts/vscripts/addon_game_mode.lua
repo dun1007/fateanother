@@ -302,6 +302,7 @@ function Precache( context )
     PrecacheResource("model", "models/astolfo/astolfo_hippogriff.vmdl", context)
     PrecacheResource("model", "models/astolfo/astolfo_horn.vmdl", context)
     PrecacheResource("model", "models/astolfo/astolfo_sword.vmdl", context)
+    PrecacheResource("model", "models/nurseryrhyme/nurseryrhyme.vmdl", context)
     
     -- AOTK Soldier assets
     PrecacheResource("model_folder", "models/heroes/chen", context)
