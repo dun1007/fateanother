@@ -1,0 +1,34 @@
+<root>
+	<styles>
+		<include src="s2r://panorama/styles/dotastyles.vcss_c" />
+		<include src="file://{resources}/styles/custom_game/fateanother_ability.css"/>
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/fateanother_ability.js" />
+	</scripts>
+	<Panel class="AbilityPanel" hittest="false">
+		<Panel id="ButtonAndLevel" hittest="false">
+			<Panel id="UpgradeBorder" hittest="false">
+				<Panel id="AbilityStatusBorder" hittest="true">
+					<Button hittest="true" id="AbilityButton"
+							onmouseover="AbilityShowTooltip()"
+							onmouseout="AbilityHideTooltip()"
+							onactivate="ActivateAbility()"
+							oncontextmenu="RightClickAbility()"
+							>
+						<DOTAAbilityImage hittest="false" id="AbilityImage" />
+						<Panel hittest="false" id="Cooldown">
+							<Panel id="CooldownOverlay" />
+							<Label id="CooldownTimer" />
+						</Panel>
+						<Panel hittest="false" id="ActiveAbility" />
+						<Label hittest="false" id="ManaCost" />
+					</Button>
+				</Panel>
+			</Panel>
+		</Panel>
+		<!--<Panel hittest="false" id="Hotkey">
+			<Label hittest="false" id="HotkeyText" />
+		</Panel>-->
+	</Panel>
+</root>

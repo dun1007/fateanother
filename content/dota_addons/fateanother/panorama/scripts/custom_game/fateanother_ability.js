@@ -3,14 +3,16 @@
 var m_Ability = -1;
 var m_QueryUnit = -1;
 var m_bInLevelUp = false;
+var m_bIsAttribute = false;
 
-function SetAbility( ability, queryUnit, bInLevelUp )
+function SetAbility( ability, queryUnit, bInLevelUp, bIsAttribute)
 {
 	var bChanged = ( ability !== m_Ability || queryUnit !== m_QueryUnit );
 	//$.Msg(ability);
 	m_Ability = ability;
 	m_QueryUnit = queryUnit;
 	m_bInLevelUp = bInLevelUp;
+	m_bIsAttribute = bIsAttribute;
 	
 	var canUpgradeRet = Abilities.CanAbilityBeUpgraded( m_Ability );
 	var canUpgrade = ( canUpgradeRet == AbilityLearnResult_t.ABILITY_CAN_BE_UPGRADED );
@@ -93,13 +95,20 @@ function AbilityHideTooltip()
 
 function ActivateAbility()
 {
-	/*if ( m_bInLevelUp )
+	if ( m_bIsAttribute) 
 	{
-		Abilities.AttemptToUpgrade( m_Ability );
-		return;
-	}*/
-	//Abilities.ExecuteAbility( m_Ability, m_QueryUnit, false );
-	GameEvents.SendCustomGameEventToServer( "servant_customize", { unitEntIndex : m_QueryUnit, abilEntIndex : m_Ability } );
+		GameEvents.SendCustomGameEventToServer( "servant_customize", { unitEntIndex : m_QueryUnit, abilEntIndex : m_Ability } );
+	}
+	else
+	{
+		if ( m_bInLevelUp )
+		{
+			Abilities.AttemptToUpgrade( m_Ability );
+			return;
+		}
+		Abilities.ExecuteAbility( m_Ability, m_QueryUnit, false );
+	}
+	
 }
 
 function DoubleClickAbility()

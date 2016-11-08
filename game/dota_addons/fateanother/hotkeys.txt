@@ -1,0 +1,38 @@
+  	"Default_Keys"
+    {
+        "01"
+        {
+            "Key"       "q"
+            "Command"   "+CustomGameExecuteAbility1"
+            "Name"      "Execute Ability 1"
+        }
+        "02"
+        {
+            "Key"       "w"
+            "Command"   "+CustomGameExecuteAbility2"
+            "Name"      "Execute Ability 2"
+        }
+        "03"
+        {
+            "Key"       "e"
+            "Command"   "+CustomGameExecuteAbility3"
+            "Name"      "Execute Ability 3"
+        }
+        "04"
+        {
+            "Key"       "d"
+            "Command"   "+CustomGameExecuteAbility4"
+            "Name"      "Execute Ability 4"
+      	}
+        "05"
+        {
+            "Key"       "f"
+            "Command"   "+CustomGameExecuteAbility5"
+            "Name"      "Execute Ability 5"
+        }
+        "06"
+        {
+            "Key"       "r"
+            "Command"   "+CustomGameExecuteAbility6"
+            "Name"      "Execute Ability 6"
+        }

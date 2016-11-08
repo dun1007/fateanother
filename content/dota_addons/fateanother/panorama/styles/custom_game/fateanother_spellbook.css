@@ -1,0 +1,21 @@
+.SpellbookRoot
+{
+    horizontal-align: left;
+    vertical-align: bottom;
+    margin-bottom: 10%;
+    margin-left: 48.5%;
+    flow-children: down; 
+}
+
+
+#SpellbookBoard
+{
+    width: 400px;
+    height: 65px;
+    background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
+    border-radius: 50px 50px 50px 50px;
+    border:3px solid #2e2eb8;
+    flow-children: right;
+    overflow: scroll;
+    opacity: 0.9;
+}

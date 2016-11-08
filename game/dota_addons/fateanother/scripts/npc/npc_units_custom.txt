@@ -79,7 +79,6 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		
 		// Vision
@@ -169,7 +168,6 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		
 		// Vision
@@ -332,7 +330,6 @@
 		//----------------------------------------------------------------
 		"TeamName"					"DOTA_TEAM_GOODGUYS"			// Team name.
 		"CombatClassAttack"			"DOTA_COMBAT_CLASS_ATTACK_PIERCE"
-		"CombatClassDefend"			"DOTA_COMBAT_CLASS_DEFEND_SOFT"
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
 		
 		// Vision
@@ -466,8 +463,8 @@
 
 		// Bounty
 		//----------------------------------------------------------------
-		"BountyGoldMin"				"0"		// Gold earned min.
-		"BountyGoldMax"				"0"		// Gold earned max.
+		"BountyGoldMin"				"300"		// Gold earned min.
+		"BountyGoldMax"				"300"		// Gold earned max.
 
 		// Team
 		//----------------------------------------------------------------
@@ -517,7 +514,7 @@
 		// Movement
 		//----------------------------------------------------------------
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_FLY"
-		"MovementSpeed"				"400"		// Speed.
+		"MovementSpeed"				"450"		// Speed.
 		"MovementTurnRate"			"0.5"		// Turning rate.
 
 		// Status
@@ -527,8 +524,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"500"		// Range of vision during day light.
-		"VisionNighttimeRange"		"500"		// Range of vision at night time.
+		"VisionDaytimeRange"		"650"		// Range of vision during day light.
+		"VisionNighttimeRange"		"650"		// Range of vision at night time.
 
 		// Team
 		//----------------------------------------------------------------
@@ -545,19 +542,20 @@
 		"BaseClass"				 "npc_dota_creature"
 		"Model"					"models/props_structures/tower_good.vmdl"
 		"ModelScale"			"2.0"
-		"BoundsHullName"		"DOTA_HULL_SIZE_HUGE"
+		"MinimapIcon"				"minimap_racks90"
 
-		"AbilityLayout"				"4"
+		"AbilityLayout"				"6"
 		"Ability1"					"caster_5th_mana_drain"			// Ability 1
 		"Ability2"					"caster_5th_territory_explosion"			// Ability 2
 		"Ability3"					"caster_5th_mobilize"			// Ability 4
 		"Ability4"					"caster_5th_recall"
-		"Ability5"					"caster_5th_immobilize"
-		"Ability6"					"fate_empty1"
-		"Ability7"					"fate_empty2"
-		"Ability8"					"fate_empty3"
-		"Ability9"					"fate_empty4"
-		"Ability10"					"fate_empty5"
+		"Ability5"					"fate_empty1"
+		"Ability6"					"fate_empty_nothidden"
+		"Ability7"					"caster_5th_immobilize"
+		"Ability8"					"caster_5th_dimensional_jump"
+		"Ability9"					"fate_empty3"
+		"Ability10"					"fate_empty4"
+		"Ability11"					"fate_empty5"
 		"ArmorPhysical"				"0"			// Physical protection.
 
 		"BountyXP"					"200"	// Experience earn.
@@ -579,6 +577,9 @@
 		//----------------------------------------------------------------
 		"VisionDaytimeRange"		"700"		// Range of vision during day light.
 		"VisionNighttimeRange"		"700"		// Range of vision at night time.
+
+		"BoundsHullName"		"DOTA_HULL_SIZE_BARRACKS"
+		"RingRadius"				"220"
 	}
 
 	"caster_5th_skeleton_warrior"
@@ -586,6 +587,7 @@
 		"Model"				"models/creeps/neutral_creeps/n_creep_troll_skeleton/n_creep_skeleton_melee.vmdl"
 		"BaseClass"			"npc_dota_creature"
 		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+		"SoundSet"					"Creep_Good_Melee"
 
 		"Ability1"					"caster_5th_skeleton_passive"			// Ability 1
 		"Ability2"					"caster_5th_skeleton_bash"			// Ability 2
@@ -602,7 +604,7 @@
 		"AttackRange"					"100"
 		"AttackDamageMin"				"15"
 		"AttackDamageMax"				"25"
-		"AttackRate"					"1.35"
+		"AttackRate"					"0.6"
 		"AttackAnimationPoint"			"0.3"
 
 		// Status
@@ -624,6 +626,7 @@
 		"ModelScale"		"0.80"
 		"BaseClass"			"npc_dota_creature"
 		"BoundsHullName"	"DOTA_HULL_SIZE_SMALL"	
+		"SoundSet"					"Creep_Good_Range"
 
 		"Ability1"					"caster_5th_skeleton_passive"			// Ability 1
 		"Ability2"					""			// Ability 2
@@ -633,13 +636,13 @@
 		"ArmorPhysical"				"-5"			// Physical protection.
 
 		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND" 
-		"MovementSpeed"				"200"		// Speed.
+		"MovementSpeed"				"240"		// Speed.
 		"MovementTurnRate"			"0.5"		// Turning rate.
 
 		"AttackCapabilities"		"DOTA_UNIT_CAP_RANGED_ATTACK"
 		"AttackDamageMin"			"15"								// Damage range min.
 		"AttackDamageMax"			"15"								// Damage range max.
-		"AttackRate"				"1.8"								// Speed of attack.
+		"AttackRate"				"1.0"								// Speed of attack.
 		"AttackAnimationPoint"		"0.3"								// Normalized time in animation cycle to attack.
 		"AttackAcquisitionRange"	"500"								// Range within a target can be acquired.
 		"AttackRange"				"500"								// Range within a target can be attacked.
@@ -1519,7 +1522,7 @@
 		// Bounds
 		//----------------------------------------------------------------
 		"BoundsHullName"			"DOTA_HULL_SIZE_BARRACKS"
-		"RingRadius"				"220"
+		"RingRadius"				"250"
 		"CollisionSize"				"500"
 		
 		// Movement
@@ -1537,8 +1540,8 @@
 		
 		// Vision
 		//----------------------------------------------------------------
-		"VisionDaytimeRange"		"1000"
-		"VisionNighttimeRange"		"1000"
+		"VisionDaytimeRange"		"775"
+		"VisionNighttimeRange"		"775"
 		
 		// Team
 		//----------------------------------------------------------------

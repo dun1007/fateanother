@@ -250,10 +250,7 @@ function OnGBTargetHit(keys)
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 	if target:GetHealth() < keys.HBThreshold then 
-		if target:GetHealth() ~= 0 then 
-			PlayHeartBreakEffect(target)
-		end 
-		target:Kill(keys.ability, caster)
+		PlayHeartBreakEffect(ability, caster, target)
 	end  -- check for HB
 
 	-- if Gae Bolg is improved, do 3 second dot over time
@@ -303,7 +300,8 @@ function OnGBTargetHit(keys)
 	end)
 end
 
-function PlayHeartBreakEffect(target)
+function PlayHeartBreakEffect(ability, killer, target)
+	if target:HasModifier("modifier_avalon") then return end
 	local culling_kill_particle = ParticleManager:CreateParticle("particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf", PATTACH_CUSTOMORIGIN, target)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 0, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(culling_kill_particle, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetAbsOrigin(), true)
@@ -319,6 +317,8 @@ function PlayHeartBreakEffect(target)
 		ParticleManager:DestroyParticle( culling_kill_particle, false )
 		ParticleManager:DestroyParticle( hb, false )
 	end)
+
+	target:Kill(ability, killer)
 end
 
 function PlayNormalGBEffect(target)
@@ -396,13 +396,9 @@ function OnGBComboHit(keys)
 				    	DoDamage(caster, target, keys.Damage + target:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 						target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
 
+						PlayNormalGBEffect(target)
 						if target:GetHealth() < HBThreshold then 
-							if target:GetHealth() ~= 0 then 
-								PlayHeartBreakEffect(target)
-							end 
-							target:Kill(keys.ability, caster)
-						else
-							PlayNormalGBEffect(target)
+							PlayHeartBreakEffect(ability, caster, target)
 						end
 					end
 				end

@@ -199,6 +199,11 @@ end
 
 function OnGBEnd(keys)
 	local caster = keys.caster
+	local ability = keys.ability
+	caster:RemoveModifierByName("modifier_gladiusanus_blauserum_mitigation")
+	Timers:CreateTimer(0.033, function()
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gladiusanus_blauserum_mitigation", {duration=0.5})
+	end)
 end
 
 function OnGBStrike(keys)

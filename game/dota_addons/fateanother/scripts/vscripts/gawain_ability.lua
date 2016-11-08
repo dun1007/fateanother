@@ -77,6 +77,7 @@ function OnDevoteHit(keys)
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 
+	caster:RemoveModifierByName("modifier_blade_of_the_devoted")
 	GenerateArtificialSun(caster, target:GetAbsOrigin())
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then

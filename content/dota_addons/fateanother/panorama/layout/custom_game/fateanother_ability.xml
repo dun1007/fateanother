@@ -27,8 +27,8 @@
 				</Panel>
 			</Panel>
 		</Panel>
-		<!--<Panel hittest="false" id="Hotkey">
+		<Panel hittest="false" id="Hotkey">
 			<Label hittest="false" id="HotkeyText" />
-		</Panel>-->
+		</Panel>
 	</Panel>
 </root>

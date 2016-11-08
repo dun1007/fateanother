@@ -1165,6 +1165,17 @@ function SendKVToFatepedia(player)
     print("KV sent")
 end
 
+function CreateClientsideSpellbook(hero)
+    --[[local pID = hero:GetPlayerID()
+    local ply = PlayerResource:GetPlayer(pID)
+    local heroName = hero:GetName()
+    local spellbookData = {
+        heroEnt = hero:entindex()
+    }
+    CustomGameEventManager:Send_ServerToPlayer( ply, "spellbook_created", playerData )]]
+
+end
+
 function CreateTemporaryStatTable(hero)
     local statTable = {
         STR = 0,
