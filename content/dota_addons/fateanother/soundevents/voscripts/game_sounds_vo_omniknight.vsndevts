@@ -1,0 +1,8400 @@
+"omniknight_omni_spawn_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_spawn_temp.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_spawn_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_spawn_temp.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_spawn_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_spawn_temp.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_spawn_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_spawn_temp.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_spawn_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_spawn_temp.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_battlebegins_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_firstblood_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_firstblood_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_13"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_14"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_15"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_16"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_17"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_18"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_19"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_20"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_21"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_22"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_move_23"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_attack_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_attack_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_cast_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_cast_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_cast_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_purif_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_repel_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_repel_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_repel_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_repel_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_repel_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_repel_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_degaura_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_guard_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_failure_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_failure_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_failure_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_failure_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_failure_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_ability_failure_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_level_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_move_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_01.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_kill_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_03.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_13"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_14"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_15"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_16"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_17"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_18"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_19"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_20"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_21"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rival_22"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/gawain/gawain_kill_02.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lasthit_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_13"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_death_14"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_fastres_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_respawn_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rare_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_rare_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_purch_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_purch_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_purch_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_blink_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_blink_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_scepter_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_scepter_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_item_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_bottle_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_bottle_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_bottle_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_deny_13"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lose_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lose_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lose_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_lose_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_win_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_win_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_win_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_win_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_immort_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_immort_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_haste_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_haste_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_doubdam_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_doubdam_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_regen_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_regen_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_illus_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_illus_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_illus_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_invis_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_invis_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_notyet_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_nomana_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_thanks_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_thanks_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_underattack_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_inthebag_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_inthebag_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_shitwiz_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_crumwiz_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_pain_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_anger_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_anger_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_anger_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_anger_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_anger_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_anger_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_happy_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_happy_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_happy_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_happy_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_01"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_02"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_03"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_04"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_05"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_06"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_07"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_08"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_09"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_10"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_11"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
+"omniknight_omni_laugh_12"{"operator_stacks"
+{
+	"update_stack"
+	{
+		"reference_operator"
+		{
+			"operator"		"sos_reference_stack"
+			"reference_stack"		"dota_update_vo_switch"
+			"operator_variables"
+			{
+				"vsnd_files"
+				{
+					"value"
+					{
+						"value0"		"sounds/null.vsnd"
+					}
+				}
+				"volume"
+				{
+					"value"		"3.000000"
+				}
+				"pitch"
+				{
+					"value"		"1.000000"
+				}
+			}
+		}
+	}
+}
+}
