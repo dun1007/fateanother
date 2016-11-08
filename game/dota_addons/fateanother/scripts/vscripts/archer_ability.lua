@@ -1,12 +1,10 @@
-require("physics")
-require("util")
-
 chainTargetsTable = nil
 ubwTargets = nil
 ubwTargetLoc = nil
 ubwCasterPos = nil
 ubwCenter = Vector(5600, -4398, 200)
 aotkCenter = Vector(500, -4800, 208)
+ATTR_PROJECTION_PASSIVE_WEAPON_DAMAGE = 50
 
 function FarSightVision(keys)
 	local caster = keys.caster
@@ -25,13 +23,14 @@ function FarSightVision(keys)
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 	
-	-- Particles
-	visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
-		
+	--EmitGlobalSound("Hero_KeeperOfTheLight.BlindingLight")
+	--EmitSoundOnLocationWithCaster(targetLoc, "Hero_KeeperOfTheLight.BlindingLight", visiondummy)
+	
 	local circleFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_circle.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( circleFxIndex, 0, visiondummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( circleFxIndex, 1, Vector( radius, radius, radius ) )
 	ParticleManager:SetParticleControl( circleFxIndex, 2, Vector( 8, 0, 0 ) )
+	ParticleManager:SetParticleControl( circleFxIndex, 3, Vector( 100, 255, 255 ) )
 	
 	local dustFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_clairvoyance_dust.vpcf", PATTACH_CUSTOMORIGIN, visiondummy )
 	ParticleManager:SetParticleControl( dustFxIndex, 0, visiondummy:GetAbsOrigin() )
@@ -50,6 +49,20 @@ function FarSightVision(keys)
 			return nil
 		end
 	)
+
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	--print("looping through " .. playerHero:GetName())
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and player and playerHero then
+        	AddFOWViewer(playerHero:GetTeamNumber(), targetLoc, 50, 0.5, false)
+        	
+        end
+    end)
+	-- Particles
+	--visiondummy:EmitSound("Hero_KeeperOfTheLight.BlindingLight") 
+	Timers:CreateTimer(0.033, function()
+		EmitSoundOnLocationWithCaster(targetLoc, "Hero_KeeperOfTheLight.BlindingLight", visiondummy)
+	end)
+		
 end
 
 function FarSightEnd(dummy)
@@ -73,7 +86,7 @@ function KBStart(keys)
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 	
-	if caster.IsOveredgeAcquired then
+	--[[if caster.IsOveredgeAcquired then
 		GrantOveredgeStack(caster)
 	end
 
@@ -93,7 +106,7 @@ function KBStart(keys)
 		else
 			barrage:EndCooldown()
 		end
-	end
+	end]]
 end
 
 function KBHit(keys)
@@ -126,9 +139,15 @@ end
 function OnBPCast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	ability:EndCooldown()
 	caster:GiveMana(ability:GetManaCost(1))
+
+	caster.BPparticle = ParticleManager:CreateParticleForTeam("particles/custom/archer/archer_broken_phantasm/archer_broken_phantasm_crosshead.vpcf", PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeamNumber())
+
+	ParticleManager:SetParticleControl( caster.BPparticle, 0, target:GetAbsOrigin() + Vector(0,0,100)) 
+	ParticleManager:SetParticleControl( caster.BPparticle, 1, target:GetAbsOrigin() + Vector(0,0,100)) 
 	if keys.target:IsHero() then
 		Say(ply, "Broken Phantasm targets " .. FindName(keys.target:GetName()) .. ".", true)
 	end
@@ -139,7 +158,8 @@ function OnBPStart(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
-	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 or caster:GetMana() < ability:GetManaCost(1) then 
+	ParticleManager:DestroyParticle(caster.BPparticle, true)
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 3000 or caster:GetMana() < ability:GetManaCost(1) or not IsInSameRealm(caster:GetAbsOrigin(), target:GetAbsOrigin()) then 
 		Say(ply, "Broken Phantasm failed.", true)
 		return 
 	end
@@ -170,6 +190,7 @@ function OnBPInterrupted(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+	ParticleManager:DestroyParticle(caster.BPparticle, true)
 	Say(ply, "Broken Phantasm failed.", true)
 end
 
@@ -248,13 +269,13 @@ function OnRhoStart(keys)
 			local rightVec = target:GetRightVector()
 			
 			-- Hard coded value, these values have to be adjusted manually for core and end point of each petal
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 1, Vector( origin.x + 100 * forwardVec.x, origin.y + 100 * forwardVec.y, origin.z + 150 ) ) -- petal_core, center of petals
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 2, Vector( origin.x - 20 * forwardVec.x, origin.y - 20 * forwardVec.y, origin.z + 250 ) ) -- petal_a
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 3, Vector( origin.x + 100 * forwardVec.x, origin.y + 100 * forwardVec.y, origin.z ) ) -- petal_d
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 4, Vector( origin.x + 100 * rightVec.x, origin.y + 100 * rightVec.y, origin.z + 200 ) ) -- petal_b
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 5, Vector( origin.x - 100 * rightVec.x, origin.y - 100 * rightVec.y, origin.z + 200 ) ) -- petal_c
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 6, Vector( origin.x + 100 * rightVec.x + 40 * forwardVec.x, origin.y + 100 * rightVec.y + 40 * forwardVec.y, origin.z + 50 ) ) -- petal_e
-			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 7, Vector( origin.x - 100 * rightVec.x + 40 * forwardVec.x, origin.y - 100 * rightVec.y + 40 * forwardVec.y, origin.z + 50 ) ) -- petal_f
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 1, Vector( origin.x + 150 * forwardVec.x, origin.y + 150 * forwardVec.y, origin.z + 225 ) ) -- petal_core, center of petals
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 2, Vector( origin.x - 30 * forwardVec.x, origin.y - 30 * forwardVec.y, origin.z + 375 ) ) -- petal_a
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 3, Vector( origin.x + 150 * forwardVec.x, origin.y + 150 * forwardVec.y, origin.z ) ) -- petal_d
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 4, Vector( origin.x + 150 * rightVec.x, origin.y + 150 * rightVec.y, origin.z + 300 ) ) -- petal_b
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 5, Vector( origin.x - 150 * rightVec.x, origin.y - 150 * rightVec.y, origin.z + 300 ) ) -- petal_c
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 6, Vector( origin.x + 150 * rightVec.x + 60 * forwardVec.x, origin.y + 150 * rightVec.y + 60 * forwardVec.y, origin.z + 25 ) ) -- petal_e
+			ParticleManager:SetParticleControl( rhoShieldParticleIndex, 7, Vector( origin.x - 150 * rightVec.x + 60 * forwardVec.x, origin.y - 150 * rightVec.y + 60 * forwardVec.y, origin.z + 25 ) ) -- petal_f
 			
 			-- Check if it should be destroyed
 			if target:HasModifier( "modifier_rho_aias_shield" ) then
@@ -284,21 +305,22 @@ function OnRhoDamaged(keys)
 	rhoTarget.rhoShieldAmount = rhoTarget.rhoShieldAmount - keys.DamageTaken
 	if rhoTarget.rhoShieldAmount <= 0 then
 		if currentHealth + rhoTarget.rhoShieldAmount <= 0 then
-			print("lethal")
+			--print("lethal")
 		else
-			print("rho broken, but not lethal")
+			--print("rho broken, but not lethal")
 			rhoTarget:RemoveModifierByName("modifier_rho_aias_shield")
 			rhoTarget:SetHealth(currentHealth + keys.DamageTaken + rhoTarget.rhoShieldAmount)
 			rhoTarget.rhoShieldAmount = 0
 		end
 	else
-		print("rho not broken, remaining shield : " .. rhoTarget.rhoShieldAmount)
+		--print("rho not broken, remaining shield : " .. rhoTarget.rhoShieldAmount)
 		rhoTarget:SetHealth(currentHealth + keys.DamageTaken)
 	end
 end
 
 function OnUBWLevelUp(keys)
 	local caster = keys.caster
+	caster:FindAbilityByName("archer_5th_sword_barrage_retreat_shot"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_sword_barrage"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_sword_barrage_confine"):SetLevel(keys.ability:GetLevel())
 	caster:FindAbilityByName("archer_5th_nine_lives"):SetLevel(keys.ability:GetLevel())
@@ -310,7 +332,7 @@ function OnUBWCastStart(keys)
 	local casterLocation = caster:GetAbsOrigin()
 	local castDelay = 2
 	if caster:GetAbsOrigin().y < -3500 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Already Within Reality Marble" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Already_In_Marble")
 		caster:SetMana(caster:GetMana() + 800)
 		keys.ability:EndCooldown()
 		return
@@ -387,27 +409,27 @@ function OnUBWStart(keys)
 
     -- swap Archer's skillset with UBW ones
     caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
+    caster:SwapAbilities("archer_5th_kanshou_bakuya", "archer_5th_sword_barrage_retreat_shot", true, true) 
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
-
     -- Find eligible UBW targets
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 	caster.IsUBWDominant = true
-
+	
 	-- Remove any dummy or hero in jump
-	for i=1, #ubwTargets do
+	i = 1
+	while i <= #ubwTargets do
 		if IsValidEntity(ubwTargets[i]) and not ubwTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(ubwTargets[i]) -- Disjoint particles
-			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") then 
-				if ubwTargets[i] ~= caster and ubwTargets[i]:HasModifier("spawn_invulnerable") then
-					table.remove(ubwTargets, i)
-				--print("dummy or a hero with jump state detected. Removing current index")
-				end 
+			if ubwTargets[i]:HasModifier("jump_pause") or string.match(ubwTargets[i]:GetUnitName(),"dummy") or ubwTargets[i]:HasModifier("spawn_invulnerable") and ubwTargets[i] ~= caster then 
+				table.remove(ubwTargets, i)
+				i = i - 1
 			end
 		end
+		i = i + 1
 	end
-	
+
 	if caster:GetAbsOrigin().x < 3000 and caster:GetAbsOrigin().y < -2000 then
 		ubwdummyLoc1 = aotkCenter + Vector(600,-600, 1000)
 		ubwdummyLoc2 = aotkCenter + Vector(600,600, 1000)
@@ -471,7 +493,7 @@ function OnUBWStart(keys)
 	if caster.IsProjection2Improved then
 		Timers:CreateTimer(function() 
 			if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
-				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 3000
+				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2000
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				local targetIndex = RandomInt(1, #weaponTargets)
 				local swordTarget = weaponTargets[targetIndex]
@@ -483,7 +505,7 @@ function OnUBWStart(keys)
 				ParticleManager:SetParticleControl( swordFxIndex, 1, swordVector * 5000 )
 				Timers:CreateTimer(0.1, function()
 					if swordTarget:IsAlive() then
-						DoDamage(caster, swordTarget, 75+caster:GetIntellect()*0.3 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+						DoDamage(caster, swordTarget, ATTR_PROJECTION_PASSIVE_WEAPON_DAMAGE+caster:GetIntellect()*0.3 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 					end
 					ParticleManager:DestroyParticle( swordFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( swordFxIndex )
@@ -517,6 +539,7 @@ function OnUBWStart(keys)
 	        ubwTargetLoc[i] = ubwTargetPos
 	        diff = (ubwCasterPos - ubwTargetPos) -- rescale difference to UBW size(1200)
 	        ubwTargets[i]:SetAbsOrigin(ubwCenter - diff)
+	        ubwTargets[i]:Stop()
 			FindClearSpaceForUnit(ubwTargets[i], ubwTargets[i]:GetAbsOrigin(), true)
 			Timers:CreateTimer(0.1, function() 
 				if caster:IsAlive() and IsValidEntity(ubwTargets[i]) then
@@ -548,8 +571,15 @@ function EndUBW(caster)
 	if caster.IsUBWActive == false then return end
 	print("UBW ended")
     caster:SwapAbilities("archer_5th_clairvoyance", caster:GetAbilityByIndex(4):GetName(), true, false) 
+    caster:SwapAbilities("archer_5th_kanshou_bakuya", "archer_5th_sword_barrage_retreat_shot", true, false)
     caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, false) 
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, false) 
+    
+    if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(7):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
+    	print("fix for start hrunt start ubw end ubw end hrunt")
+    	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true)
+    	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, true)
+    end
 
 	CreateUITimer("Unlimited Blade Works", 0, "ubw_timer")
 	caster.IsUBWActive = false
@@ -590,6 +620,7 @@ function EndUBW(caster)
 			    		if units[i] == ubwTargets[j] then
 			    			if ubwTargetLoc[j] ~= nil then
 				    			units[i]:SetAbsOrigin(ubwTargetLoc[j]) 
+				    			units[i]:Stop()
 				    		end
 			    			FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true)
 			    			Timers:CreateTimer(0.1, function() 
@@ -605,6 +636,7 @@ function EndUBW(caster)
 	    		diff = ubwCenter - units[i]:GetAbsOrigin()
 	    		if ubwCasterPos ~= nil then
 	    			units[i]:SetAbsOrigin(ubwCasterPos - diff)
+	    			units[i]:Stop()
 	    		end
 	    		FindClearSpaceForUnit(units[i], units[i]:GetAbsOrigin(), true) 
 				Timers:CreateTimer(0.1, function() 
@@ -630,7 +662,7 @@ function OnRainStart(keys)
 	caster:FindAbilityByName("archer_5th_rho_aias"):StartCooldown(27.0)
 	local ascendCount = 0
 	local descendCount = 0
-	local radius = 1200
+	local radius = 1000
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_arrow_rain_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
@@ -652,7 +684,7 @@ function OnRainStart(keys)
 		ParticleManager:DestroyParticle( BrownSplashFx, false )
 		ParticleManager:ReleaseParticleIndex( BrownSplashFx )
 	end)
-	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.0)
+	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 4.5)
 
 	Timers:CreateTimer('rain_ascend', {
 		endTime = 0,
@@ -700,10 +732,10 @@ function OnRainStart(keys)
 				
 				-- Particles on impact
 				local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
-				ParticleManager:SetParticleControl( explosionFxIndex, 0, groundVector + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( explosionFxIndex, 0, groundVector + arrowVector + Vector(0,0,200))
 				
 				local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
-				ParticleManager:SetParticleControl( impactFxIndex, 0, groundVector + arrowVector + Vector( 0, 0, 150 ) )
+				ParticleManager:SetParticleControl( impactFxIndex, 0, groundVector + arrowVector + Vector(0,0,200))
 				ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(300, 300, 300))
 				
 				-- Destroy Particle
@@ -747,12 +779,14 @@ function OnRainStart(keys)
 	})
 end
 
+ARROWRAIN_BP_DAMAGE_RATE = 0.66
+
 function OnArrowRainBPHit(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local ability = caster:FindAbilityByName("archer_5th_broken_phantasm")
-	local targetdmg = ability:GetLevelSpecialValueFor("target_damage", ability:GetLevel()-1)
-	local splashdmg = ability:GetLevelSpecialValueFor("splash_damage", ability:GetLevel()-1)
+	local targetdmg = ability:GetLevelSpecialValueFor("target_damage", ability:GetLevel()-1) * ARROWRAIN_BP_DAMAGE_RATE
+	local splashdmg = ability:GetLevelSpecialValueFor("splash_damage", ability:GetLevel()-1) * ARROWRAIN_BP_DAMAGE_RATE
 	local radius = ability:GetLevelSpecialValueFor("radius", ability:GetLevel())
 	local stunDuration = ability:GetLevelSpecialValueFor("stun_duration", ability:GetLevel()-1)
 
@@ -864,6 +898,77 @@ end
 
 function OnBarrageCanceled(keys)
 	keys.caster:RemoveModifierByName("modifier_sword_barrage")
+end
+
+function OnUBWBarrageRetreatStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local damage = keys.Damage
+	local radius = keys.Radius
+	local retreatDist = keys.RetreatDist
+	local forwardVec = caster:GetForwardVector()
+	local range = keys.Range
+	local interval = range/6
+	local casterPos = caster:GetAbsOrigin()
+	local counter  = 1
+	local archer = Physics:Unit(caster)
+
+
+	caster:PreventDI()
+	caster:SetPhysicsFriction(0)
+	caster:SetPhysicsVelocity(-forwardVec * retreatDist * 4/2 + Vector(0,0,750))
+	caster:SetPhysicsAcceleration(Vector(0,0,-2000))
+	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+	caster:FollowNavMesh(false)
+
+
+  	Timers:CreateTimer(0.5, function()
+		caster:PreventDI(false)
+		caster:SetPhysicsVelocity(Vector(0,0,0))
+		caster:OnPhysicsFrame(nil)
+		FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+	end)
+
+	giveUnitDataDrivenModifier(caster, caster, "pause_sealenabled", 0.5)
+	caster:EmitSound("Archer.NineFinish")
+	StartAnimation(caster, {duration=0.5, activity=ACT_DOTA_ATTACK, rate=1.0})
+	rotateCounter = 1
+	Timers:CreateTimer(function()
+		if rotateCounter == 9 then return end
+		caster:SetForwardVector(RotatePosition(Vector(0,0,0), QAngle(0,45*rotateCounter,0), forwardVec))
+		rotateCounter = rotateCounter + 1
+		return 0.03
+	end)
+	Timers:CreateTimer(function()
+		if counter > 6 then return end
+		local targetPoint = casterPos + forwardVec * interval * counter
+		local swordOrigin = casterPos - forwardVec * retreatDist + RandomVector(250) + Vector(0,0,500)
+		local swordVector = (targetPoint - swordOrigin):Normalized()
+		
+		local swordFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_model.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		ParticleManager:SetParticleControl( swordFxIndex, 0, swordOrigin )
+		ParticleManager:SetParticleControl( swordFxIndex, 1, swordVector*3000 )
+
+		Timers:CreateTimer(0.25, function()
+			local targets = FindUnitsInRadius(caster:GetTeamNumber(), targetPoint, caster, 200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, 1, false)
+			for k,v in pairs(targets) do
+				DoDamage(caster, v, damage , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				giveUnitDataDrivenModifier(caster, v, "stunned", 0.1)
+				if caster.IsProjectionImproved then 
+					ability:ApplyDataDrivenModifier(caster, v, "modifier_barrage_retreat_shot_slow", {})
+				end
+			end
+			-- Particles on impact
+			local explosionFxIndex = ParticleManager:CreateParticle( "particles/units/heroes/hero_gyrocopter/gyro_guided_missile_explosion.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( explosionFxIndex, 0, targetPoint )
+			
+			local impactFxIndex = ParticleManager:CreateParticle( "particles/custom/archer/archer_sword_barrage_impact_circle.vpcf", PATTACH_CUSTOMORIGIN, caster )
+			ParticleManager:SetParticleControl( impactFxIndex, 0, targetPoint )
+			ParticleManager:SetParticleControl( impactFxIndex, 1, Vector(200,200,200))
+		end)
+		counter = counter+1
+		return 0.1
+	end)
 end
 
 function OnUBWBarrageConfineStart(keys)
@@ -1053,6 +1158,7 @@ end
 function OnHruntCast(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local target = keys.target
 	local ply = caster:GetPlayerOwner()
 	if keys.target:IsHero() then
 		Say(ply, "Hrunting targets " .. FindName(keys.target:GetName()) .. ".", true)
@@ -1074,6 +1180,8 @@ function OnHruntCast(keys)
 	ParticleManager:SetParticleControl( caster.hrunting_particle, 2, Vector( 255, 0, 0 ) )
 	ParticleManager:SetParticleControlEnt(caster.hrunting_particle, 1, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true)
 	ParticleManager:SetParticleControlEnt(caster.hrunting_particle, 3, caster, PATTACH_ABSORIGIN_FOLLOW, "attach_origin", caster:GetAbsOrigin(), true)
+	caster.hruntingCrosshead = ParticleManager:CreateParticleForTeam("particles/custom/archer/archer_broken_phantasm/archer_broken_phantasm_crosshead.vpcf", PATTACH_OVERHEAD_FOLLOW, target, caster:GetTeamNumber())
+
 end
 
 function OnHruntStart(keys)
@@ -1081,8 +1189,9 @@ function OnHruntStart(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 4000 then 
-		Say(ply, "Broken Phantasm failed.", true)
+	ParticleManager:DestroyParticle(caster.hruntingCrosshead, true)
+	if not caster:CanEntityBeSeenByMyTeam(target) or caster:GetRangeToUnit(target) > 4000 or not IsInSameRealm(caster:GetAbsOrigin(), target:GetAbsOrigin()) then 
+		Say(ply, "Hrunting failed.", true)
 		return 
 	end
 	ability:StartCooldown(ability:GetCooldown(1))
@@ -1116,8 +1225,11 @@ function OnHruntInterrupted(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
-	Say(ply, "Hrunting failed.", true)
+	ParticleManager:DestroyParticle( caster.hrunting_particle, false )
+	ParticleManager:ReleaseParticleIndex( caster.hrunting_particle )
+	ParticleManager:DestroyParticle(caster.hruntingCrosshead, true)
 	caster:StopSound("Hero_Invoker.EMP.Charge")
+	Say(ply, "Hrunting failed.", true)
 end
 
 function OnHruntHit(keys)
@@ -1153,15 +1265,28 @@ function OnOveredgeStart(keys)
 	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
 	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() * 10/6
+	local castRange = keys.castRange
+
+	-- When you exit the ubw on the last moment, dist is going to be a pretty high number, since the targetPoint is on ubw but you are outside it
+	-- If it's, then we can't use it like that. Either cancel Overedge, or use a default one.
+	-- 2000 is a fixedNumber, just to check if dist is not valid. Over 2000 is surely wrong. (Max is close to 900)
+	if dist > 2000 then
+		dist = 500 --Default one
+		--[[keys.ability:EndCooldown() --Cancel overedge
+		caster:GiveMana(600) 
+		return--]]
+	end
+
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(600) 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
-	caster.OveredgeCount = -1
-	caster:RemoveModifierByName("modifier_overedge_stack")
-	keys.ability:SetActivated(false)
+	--caster.OveredgeCount = -1
+	--caster:RemoveModifierByName("modifier_overedge_stack")
+	--keys.ability:SetActivated(false)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause", 0.59)
     local archer = Physics:Unit(caster)
@@ -1173,16 +1298,16 @@ function OnOveredgeStart(keys)
     caster:SetAutoUnstuck(false)
     caster:SetPhysicsAcceleration(Vector(0,0,-2666))
 
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_anim", {})
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 	caster:EmitSound("Hero_PhantomLancer.Doppelwalk") 
-	caster:RemoveModifierByName("modifier_overedge_stack") 
+	StartAnimation(caster, {duration=0.6, activity=ACT_DOTA_ATTACK, rate=0.8})
+	--[[ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_anim", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_overedge_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	caster:RemoveModifierByName("modifier_overedge_stack") ]]
 
 
 	Timers:CreateTimer({
 		endTime = 0.6,
 		callback = function()
-		print("descend")
 		caster:EmitSound("Hero_Centaur.DoubleEdge") 
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
@@ -1331,8 +1456,8 @@ function OnOveredgeAcquired(keys)
 	hero.IsOveredgeAcquired = true
 	hero.OveredgeCount = 0
 	hero:FindAbilityByName("archer_5th_overedge"):SetLevel(1)
-	hero:FindAbilityByName("archer_5th_overedge"):SetActivated(false)
-	GrantOveredgeStack(hero)
+	hero:FindAbilityByName("archer_5th_overedge"):SetActivated(true)
+	--GrantOveredgeStack(hero)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

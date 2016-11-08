@@ -7,7 +7,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -17,37 +17,17 @@
 							"value0"		"sounds/fa/fa_windblade.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -64,7 +44,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -74,37 +54,17 @@
 							"value0"		"sounds/fa/fa_tg_ready.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -121,7 +81,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -131,37 +91,17 @@
 							"value0"		"sounds/fa/fa_tg.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -178,7 +118,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -188,37 +128,17 @@
 							"value0"		"sounds/fa/fa_chop_sound.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -235,7 +155,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -245,37 +165,17 @@
 							"value0"		"sounds/fa/fa_quickdraw.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -293,7 +193,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -303,37 +203,17 @@
 							"value0"		"sounds/fa/fa_owarida.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -351,7 +231,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -361,37 +241,17 @@
 							"value0"		"sounds/fa/fa_kiero.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -408,7 +268,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -418,37 +278,17 @@
 							"value0"		"sounds/fa/fa_omigoto.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}

@@ -1,4 +1,0 @@
-"settings"
-{
-	"output_format"		"8_bit_int"
-}

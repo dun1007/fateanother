@@ -7,7 +7,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -17,19 +17,61 @@
 							"value0"		"sounds/tamamo/tamamo_amaterasu.vsnd"
 						}
 					}
-				"volume"
-				{
-					"value"		"3.000000"
-				}
-				"pitch"
-				{
-					"value"		"1.000000"
-				}
+					"volume"
+					{
+						"value"		"1.200000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
 				}
 			}
 		}
 	}
 }
+
+"Tamamo.Mantra"  
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_update_default"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/items/lotus_cast.vsnd"
+						}
+					}
+					"volume"
+					{
+						"value"		"1.200000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
+				}
+			}
+		}
+	}
+}
+
 "Tamamo.Kick"  
 {
 	"operator_stacks"
@@ -39,7 +81,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -49,37 +91,17 @@
 							"value0"		"sounds/tamamo/tamamo_kick.vsnd"
 						}
 					}
-					"volume_min"
-					{
-						"value"		"2.000000"
-					}
-					"volume_max"
-					{
-						"value"		"2.000000"
-					}
-					"pitch_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"chan_type"
+					"soundlevel"
 					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}

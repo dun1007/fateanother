@@ -1,3 +1,40 @@
+"ZC.Torment"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_src1_3d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/weapons/hero/doom_bringer/lvl_death.vsnd"
+						}
+					}
+					"volume"
+					{
+						"value"		"1.000000"
+					}
+					"pitch"
+					{
+						"value"		"1.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
+				}
+			}
+		}
+	}
+}
+
 "ZC.Tentacle1"
 {
 	"operator_stacks"
@@ -7,7 +44,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -17,37 +54,17 @@
 							"value0"		"sounds/zc/zc_tentacle_scream.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -63,7 +80,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -73,37 +90,17 @@
 							"value0"		"sounds/zc/zc_tentacle_wrap.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"pitch_max"
-					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}
@@ -119,7 +116,7 @@
 			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
-				"reference_stack"		"src1_2d"
+				"reference_stack"		"dota_src1_3d"
 				"operator_variables"
 				{
 					"vsnd_files"
@@ -129,37 +126,54 @@
 							"value0"		"sounds/zc/zc_combo.vsnd"
 						}
 					}
-					"volume_min"
+					"volume"
+					{
+						"value"		"1.200000"
+					}
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"volume_max"
+					"soundlevel"
+					{
+						"value"		"81.000000"
+					}
+				}
+			}
+		}
+	}
+}
+
+"ZC.Ravage"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_src1_3d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/weapons/hero/tidehunter/tidehunter_ravage.vsnd"
+						}
+					}
+					"volume"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_min"
+					"pitch"
 					{
 						"value"		"1.000000"
 					}
-					"pitch_max"
+					"soundlevel"
 					{
-						"value"		"1.000000"
-					}
-					"chan_type"
-					{
-						"value"		"0"
-					}
-					"memory_type"
-					{
-						"value"		"0"
-					}
-					"soundlevel_min"
-					{
-						"value"		"100.00000"
-					}
-					"soundlevel_max"
-					{
-						"value"		"100.00000"
+						"value"		"81.000000"
 					}
 				}
 			}

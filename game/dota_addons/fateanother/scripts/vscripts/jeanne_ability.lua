@@ -74,7 +74,7 @@ function OnIDPing(keys)
 	GameRules:SendCustomMessage("#identity_discernment_alert", 0, 0)
     LoopOverPlayers(function(player, playerID, playerHero)
     	--print("looping through " .. playerHero:GetName())
-        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() then
+        if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and playerHero:IsAlive() then
         	--print("looping through " .. playerHero:GetName())
         	delay = delay + 0.15
         	Timers:CreateTimer(delay, function()
@@ -245,8 +245,8 @@ function OnLECastStart(keys)
 	local ability = keys.ability
 	local enemies = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 	if #enemies == 0 then 
-		EmitSoundOnClient("Hero_Chen.HandOfGodHealHero", caster:GetPlayerOwner())
-		EmitSoundOnClient("Ruler.Luminosite", caster:GetPlayerOwner())		
+		caster:EmitSound("Hero_Chen.HandOfGodHealHero")
+		caster:EmitSound("Ruler.Luminosite")	
 	else
 		EmitGlobalSound("Hero_Chen.HandOfGodHealHero")
 		EmitGlobalSound("Ruler.Luminosite")
@@ -298,7 +298,7 @@ function OnLEStart(keys)
 		Ability = keys.ability,
         -- EffectName = "particles/custom/reference/luminosite_eternelle/luminosite_eternelle.vpcf",
         vSpawnOrigin = caster:GetAbsOrigin(),
-        fDistance = projectileRange - 300,
+        fDistance = projectileRange - 375,
         fStartRadius = 300,
         fEndRadius = 300,
         Source = caster,
@@ -379,6 +379,7 @@ function OnLEHit(keys)
 	table.insert(caster.LETargetTable, target)
 	giveUnitDataDrivenModifier(caster, target, "locked", duration)
 	giveUnitDataDrivenModifier(caster, target, "rooted", duration)
+	giveUnitDataDrivenModifier(caster, target, "disarmed", duration)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_luminosite_eternelle_unjust_debuff", {}) 
 	target:EmitSound("Hero_ArcWarden.Flux.Cast")
 end
@@ -424,7 +425,7 @@ function OnLaPucelleTakeDamage(keys)
 	local delay = keys.Delay
 	local originalScale = caster:GetModelScale()
 
-	if caster:GetHealth() == 0 and caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() then
+	if caster:GetHealth() == 0 and caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 and ability:IsCooldownReady() and IsRevivePossible(caster) then
 		if _G.GameMap == "fate_elim_6v6" and IsTeamWiped(caster) then
 			return
 		else
@@ -474,7 +475,7 @@ function OnLaPucelleDeath(keys)
 	caster:StopSound("Hero_Phoenix.SunRay.Loop")
 
 	if _G.CurrentGameState == "FATE_ROUND_ONGOING" or _G.CurrentGameState == "FATE_PRE_GAME" then
-		caster:Kill(ability, caster.LaPucelleKiller)
+		caster:Kill(ability, PlayerResource:GetSelectedHeroEntity(caster.LaPucelleKiller:GetPlayerID()) )
 		if _G.GameMap == "fate_elim_6v6" and not IsTeamWiped(caster) then
 			GameRules:SendCustomMessage("#la_pucelle_alert_2", 0, 0)
 		end
@@ -509,6 +510,7 @@ function OnIDAcquired(keys)
 	local caster = keys.caster
 	local pid = caster:GetPlayerOwnerID()
 	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+	hero.bIsIDAcquired = true
 
 	hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
 	-- Set master 1's mana 

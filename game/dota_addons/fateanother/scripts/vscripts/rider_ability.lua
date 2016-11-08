@@ -1,4 +1,3 @@
-require("physics")
 nailUsed = false
 nailTime = 0
 
@@ -25,7 +24,8 @@ function NailPull(keys)
 	)
 
 	for k,v in pairs(targets) do
-		giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
+		giveUnitDataDrivenModifier(caster, v, "stunned", 0.033)
+		giveUnitDataDrivenModifier(caster, v, "dragged", 0.5)
 		DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 		
 		local pullTarget = Physics:Unit(v)

@@ -23,6 +23,8 @@ function OnLovespotThink(keys)
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_INVULNERABLE + DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		if IsFemaleServant(v) then
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_love_spot_charmed", {})
+			giveUnitDataDrivenModifier(caster, v, "silenced", 0.25)
 			forcemove.UnitIndex = v:entindex()
 			forcemove.Position = caster:GetAbsOrigin() 
 			v:Stop()
@@ -185,10 +187,10 @@ function OnBuidheStart(keys)
 		Timers:CreateTimer(0.033, function()
 			caster:FindAbilityByName("diarmuid_gae_dearg"):StartCooldown(32)
 			local doublestrike = caster:FindAbilityByName("diarmuid_double_spear_strike")
-			doublestrike:StartCooldown(45)
+			doublestrike:StartCooldown(55)
 			doublestrike:ToggleAbility()
 			caster:SetMana(caster:GetMana() - 550)
-			Timers:CreateTimer(45, function()
+			Timers:CreateTimer(55, function()
 				doublestrike:ToggleAbility() 
 			end)
 			OnDeargStart(keys)
@@ -257,17 +259,17 @@ function OnDeargStart(keys)
 	end)
 
 	if caster.IsDoubleSpearAcquired and caster.IsDoubleSpearReady and caster:FindAbilityByName("diarmuid_gae_buidhe"):IsCooldownReady() and caster:GetMana() >= 550 then
-		print("Double spear activated")
+		--print("Double spear activated")
 		local buidhe = caster:FindAbilityByName("diarmuid_gae_buidhe")
 		keys.Damage = buidhe:GetLevelSpecialValueFor("damage", buidhe:GetLevel()-1)
 		keys.ability = buidhe
 		Timers:CreateTimer(0.033, function()
 			caster:FindAbilityByName("diarmuid_gae_buidhe"):StartCooldown(32)
 			local doublestrike = caster:FindAbilityByName("diarmuid_double_spear_strike")
-			doublestrike:StartCooldown(45)
+			doublestrike:StartCooldown(55)
 			doublestrike:ToggleAbility()
 			caster:SetMana(caster:GetMana() - 550)
-			Timers:CreateTimer(45, function()
+			Timers:CreateTimer(55, function()
 				doublestrike:ToggleAbility() 
 			end)
 			OnBuidheStart(keys)
@@ -293,16 +295,20 @@ end
 function OnMindEyeStart(keys)
 	local caster = keys.caster
 	local sightdummy = CreateUnitByName("sight_dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
-	sightdummy:SetDayTimeVisionRange(caster:GetDayTimeVisionRange())
-	sightdummy:SetNightTimeVisionRange(caster:GetNightTimeVisionRange())
-
-	caster.MindsEyeDummy = sightdummy
+	sightdummy:SetDayTimeVisionRange(caster:GetDayTimeVisionRange() + 150)
+	sightdummy:SetNightTimeVisionRange(caster:GetNightTimeVisionRange() + 150)
 	local sightdummypassive = sightdummy:FindAbilityByName("dummy_unit_passive")
 	sightdummypassive:SetLevel(1)
 
+	caster.MindsEyeDummy = sightdummy
+
 	Timers:CreateTimer(function() 
 		if not IsValidEntity(sightdummy) then return end
-		sightdummy:SetAbsOrigin(caster:GetAbsOrigin())
+		if caster:IsAlive() then
+			sightdummy:SetAbsOrigin(caster:GetAbsOrigin())
+		else
+			sightdummy:SetAbsOrigin(caster.MasterUnit:GetAbsOrigin())
+		end
 		return 0.2
 	end)
 end

@@ -1,5 +1,3 @@
-require('util')
-
 function OnIPStart(keys)
 	local caster = keys.caster
 
@@ -45,6 +43,9 @@ function OnDivinityAcquired(keys)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 
 	OnIPClose(keys)
+end
+
+function OnCasaAcquired(keys)
 end
 
 function OnGoldenRuleAcquired(keys)
@@ -184,6 +185,9 @@ function OnGBStart(keys)
 	Timers:CreateTimer(0.5,function()
 		if keys.ability:IsChanneling() then
 			caster:SetModifierStackCount("modifier_gladiusanus_blauserum", caster, caster:GetModifierStackCount("modifier_gladiusanus_blauserum", caster)+1)
+			if caster:GetModifierStackCount("modifier_gladiusanus_blauserum", caster) > 4 then
+				caster:SetModifierStackCount("modifier_gladiusanus_blauserum", caster, 4)
+			end
 			return 0.49
 		else
 			return
@@ -271,7 +275,7 @@ function OnRIStart(keys)
 		return
 	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rosa_ichthys_anim", {})
-	EmitGlobalSound("Nero.Rosa")
+	caster:EmitSound("Nero.Rosa")
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.25)
 	local slash = 
 	{
@@ -313,6 +317,8 @@ function OnRIStart(keys)
 			CreateSlashFx(caster, caster:GetAbsOrigin(), caster:GetAbsOrigin() + diff:Normalized() * dist)
 			caster:SetAbsOrigin(caster:GetAbsOrigin() + diff:Normalized() * (dist - 100))
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+
+			caster:MoveToTargetToAttack(target)
 		end
 	end)
 	
@@ -359,8 +365,7 @@ function OnTheatreStart(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 
-	EmitGlobalSound("Hero_LegionCommander.Duel.Victory")
-	EmitGlobalSound("Hero_LegionCommander.Overwhelming.Location")
+	caster:EmitSound("Hero_LegionCommander.Duel.Victory")
 
 	--local theatreFx = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_energy.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
 	local theatreFx2 = ParticleManager:CreateParticle("particles/custom/nero/nero_domus_ring_border.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
@@ -635,8 +640,7 @@ function NeroTakeDamage(keys)
 	local healCounter = 0
 
 
-	if caster:GetHealth() == 0 and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) and not 
-		caster:HasModifier("modifier_command_seal_2") and not caster:HasModifier("modifier_command_seal_3") and not caster:HasModifier("modifier_command_seal_4") then
+	if caster:GetHealth() == 0 and IsRevivePossible(caster) and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) then
 		
 		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
 		caster:SetHealth(1)
@@ -656,7 +660,7 @@ function OnISStart(keys)
 end
 
 function NeroCheckCombo(caster, ability)
-	if caster:GetStrength() >= 20 and caster:GetAgility() >= 20 and caster:GetIntellect() >= 20 then
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("nero_aestus_domus_aurea") and caster:FindAbilityByName("nero_tres_fontaine_ardent"):IsCooldownReady() and caster:FindAbilityByName("nero_fiery_finale"):IsCooldownReady() then
 			caster:SwapAbilities("nero_tres_fontaine_ardent", "nero_fiery_finale", true, true) 
 			Timers:CreateTimer({

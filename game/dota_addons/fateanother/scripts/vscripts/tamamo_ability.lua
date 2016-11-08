@@ -1,7 +1,3 @@
-require("Physics")
-require("util")
-require("projectiles")
-
 CharmModifierList = {
 	"modifier_fiery_heaven_indicator",
 	"modifier_frigid_heaven_indicator",
@@ -53,11 +49,23 @@ function OnFireCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_fiery_heaven_indicator"
+	local fieryHeaven = caster:FindAbilityByName("tamamo_fiery_heaven")
+	local frigidHeaven = caster:FindAbilityByName("tamamo_frigid_heaven")
+	local gustHeaven = caster:FindAbilityByName("tamamo_gust_heaven")
+	fieryHeaven:StartCooldown(45)
+	frigidHeaven:StartCooldown(45)
+	gustHeaven:StartCooldown(45)
 	CloseCharmList(keys)
 	if caster.IsWitchcraftAcquired then
 		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
 		armedUp:EndCooldown()
 		armedUp:StartCooldown(15)
+		fieryHeaven:EndCooldown()
+		fieryHeaven:StartCooldown(15)
+		frigidHeaven:EndCooldown()
+		frigidHeaven:StartCooldown(15)
+		gustHeaven:EndCooldown()
+		gustHeaven:StartCooldown(15)
 	end
 	-- Clear up other charm modifiers
 	for i=1, #CharmModifierList do
@@ -76,11 +84,23 @@ function OnFreezeCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_frigid_heaven_indicator"
+	local fieryHeaven = caster:FindAbilityByName("tamamo_fiery_heaven")
+	local frigidHeaven = caster:FindAbilityByName("tamamo_frigid_heaven")
+	local gustHeaven = caster:FindAbilityByName("tamamo_gust_heaven")
+	fieryHeaven:StartCooldown(45)
+	frigidHeaven:StartCooldown(45)
+	gustHeaven:StartCooldown(45)
 	CloseCharmList(keys)
 	if caster.IsWitchcraftAcquired then
 		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
 		armedUp:EndCooldown()
 		armedUp:StartCooldown(15)
+		fieryHeaven:EndCooldown()
+		fieryHeaven:StartCooldown(15)
+		frigidHeaven:EndCooldown()
+		frigidHeaven:StartCooldown(15)
+		gustHeaven:EndCooldown()
+		gustHeaven:StartCooldown(15)
 	end
 
 	for i=1, #CharmModifierList do
@@ -98,11 +118,23 @@ function OnGustCharmLoaded(keys)
 	local caster = keys.caster
 	CharmHandle = keys.ability
 	CurrentCharmName = "modifier_gust_heaven_indicator"
+	local fieryHeaven = caster:FindAbilityByName("tamamo_fiery_heaven")
+	local frigidHeaven = caster:FindAbilityByName("tamamo_frigid_heaven")
+	local gustHeaven = caster:FindAbilityByName("tamamo_gust_heaven")
+	fieryHeaven:StartCooldown(45)
+	frigidHeaven:StartCooldown(45)
+	gustHeaven:StartCooldown(45)
 	CloseCharmList(keys)
 	if caster.IsWitchcraftAcquired then
 		local armedUp = caster:FindAbilityByName("tamamo_armed_up")
 		armedUp:EndCooldown()
 		armedUp:StartCooldown(15)
+		fieryHeaven:EndCooldown()
+		fieryHeaven:StartCooldown(15)
+		frigidHeaven:EndCooldown()
+		frigidHeaven:StartCooldown(15)
+		gustHeaven:EndCooldown()
+		gustHeaven:StartCooldown(15)
 	end
 
 	for i=1, #CharmModifierList do
@@ -166,7 +198,7 @@ function OnCharmAttacked(keys)
 	-- 6 stacks
 	if loadedCharmName == "tamamo_fiery_heaven" then
 		DeduceCharmStack(caster, "modifier_fiery_heaven_indicator")
-		if IncrementCharmStack(caster, target, ability, "modifier_fiery_heaven_indicator_enemy") == 6 then
+		if IncrementCharmStack(caster, target, ability, "modifier_fiery_heaven_indicator_enemy") == 5 then
 			target:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
 			DoDamage(caster, target, (target:GetMaxHealth()-target:GetHealth())*keys.StackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
@@ -184,7 +216,7 @@ function OnCharmAttacked(keys)
 		local StackStunDuration = keys.StackStunDuration
 		DeduceCharmStack(caster, "modifier_frigid_heaven_indicator")
 		-- 6 stacks
-		if IncrementCharmStack(caster, target, ability, "modifier_frigid_heaven_indicator_enemy") == 6 then
+		if IncrementCharmStack(caster, target, ability, "modifier_frigid_heaven_indicator_enemy") == 5 then
 			target:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
 			target:AddNewModifier(caster, target, "modifier_stunned", {Duration = StackStunDuration})
 
@@ -198,9 +230,10 @@ function OnCharmAttacked(keys)
 		end
 	elseif loadedCharmName == "tamamo_gust_heaven" then
 		DeduceCharmStack(caster, "modifier_gust_heaven_indicator")
-		if IncrementCharmStack(caster, target, ability, "modifier_gust_heaven_indicator_enemy") == 6 then
+		if IncrementCharmStack(caster, target, ability, "modifier_gust_heaven_indicator_enemy") == 5 then
 			target:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
 			ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge", {}) 
+			ApplyStrongDispel(target)
 			if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge_slow_tier1", {}) end
 			if not IsImmuneToSlow(target) then ability:ApplyDataDrivenModifier(caster, target, "modifier_gust_heaven_purge_slow_tier2", {}) end
 			target:EmitSound("DOTA_Item.DiffusalBlade.Activate")
@@ -329,7 +362,7 @@ function OnSoulstreamProjectileTick(keys)
 			for k,v in pairs(targets) do
 				if target.LoadedCharm == "modifier_fiery_heaven_indicator" then
 					-- 6 stacks
-					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 6 then
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_fiery_heaven_indicator_enemy") == 5 then
 						v:RemoveModifierByName("modifier_fiery_heaven_indicator_enemy")
 						DoDamage(caster, v, (v:GetMaxHealth()-v:GetHealth())*stackDamage/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
@@ -341,7 +374,7 @@ function OnSoulstreamProjectileTick(keys)
 					end
 				elseif target.LoadedCharm == "modifier_frigid_heaven_indicator" then
 					-- 6 stacks
-					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 6 then
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_frigid_heaven_indicator_enemy") == 5 then
 						v:RemoveModifierByName("modifier_frigid_heaven_indicator_enemy")
 						v:AddNewModifier(caster, v, "modifier_stunned", {Duration = StackStunDuration})
 
@@ -349,13 +382,15 @@ function OnSoulstreamProjectileTick(keys)
 						v:EmitSound("Ability.FrostBlast")
 					else
 						v:AddNewModifier(caster, v, "modifier_disarmed", {Duration = ccDuration})
-						ability:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
+						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_frigid_heaven_slow", {})
 					end
 				elseif target.LoadedCharm == "modifier_gust_heaven_indicator" then
 					-- 6 stacks
-					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 6 then
+					if IncrementCharmStack(target, v, target.LoadedCharmHandle, "modifier_gust_heaven_indicator_enemy") == 5 then
 						v:RemoveModifierByName("modifier_gust_heaven_indicator_enemy")
 						target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge", {}) 
+						ApplyStrongDispel(v)
+						print("applied dispel")
 						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier1", {}) end
 						if not IsImmuneToSlow(v) then target.LoadedCharmHandle:ApplyDataDrivenModifier(caster, v, "modifier_gust_heaven_purge_slow_tier2", {}) end
 						v:EmitSound("DOTA_Item.DiffusalBlade.Activate")
@@ -364,7 +399,12 @@ function OnSoulstreamProjectileTick(keys)
 						v:AddNewModifier(caster, v, "modifier_silence", {Duration = 0.1})
 					end 
 				end	
-				DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+				if v:GetUnitName() == "gille_gigantic_horror" then  
+					DoDamage(caster, v, damage*1.75, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				else 
+					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+				end
 				if caster.IsSpiritTheftAcquired then 
 					v:SetMana(v:GetMana()-25)
 					caster:SetMana(caster:GetMana()+25)
@@ -444,6 +484,7 @@ function OnSGStart(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	TamamoCheckCombo(caster, keys.ability)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_subterranean_grasp_delay", {})
+	SpawnAttachedVisionDummy(caster, target, 300, 3, false)
 	target:EmitSound("Hero_Visage.GraveChill.Cast")
 end
 
@@ -504,7 +545,7 @@ function OnMantraStart(keys)
 
 	local castFx = ParticleManager:CreateParticle('particles/units/heroes/hero_oracle/oracle_purifyingflames_halo.vpcf', PATTACH_CUSTOMORIGIN, target) 
     ParticleManager:SetParticleControl(castFx, 0, target:GetOrigin())
-    target:EmitSound("Item.LotusOrb.Target")
+    target:EmitSound("Tamamo.Mantra")
 
 	-- Set stack amount1
 	ability:ApplyDataDrivenModifier(caster, target, modifierName, {}) 
@@ -531,7 +572,7 @@ function OnShackleStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 
-	if (caster:GetAbsOrigin() - caster.MantraLocation):Length2D() > 500 then
+	if (caster:GetAbsOrigin() - caster.MantraLocation):Length2D() > 500 or not caster.MantraTarget:IsAlive() then
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
 		keys.ability:EndCooldown()
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Too Far From Initial Castpoint" } ) 
@@ -573,7 +614,7 @@ function OnMantraTakeDamage(keys)
 		if target.IsMantraProcOnCooldown then 
 			return
 		else
-			print(attacker:GetName() .. " attacked " .. target:GetName())
+			--print(attacker:GetName() .. " attacked " .. target:GetName())
 			target.IsMantraProcOnCooldown = true
 			DoDamage(caster, target, orbDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			Timers:CreateTimer(0.299, function()
@@ -835,8 +876,11 @@ function OnPCFAcquired(keys)
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2"):SetLevel(1)
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2").IsResetable = false
 	Timers:CreateTimer(0.033, function()
-		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true) 
-
+		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true)
+		-- Checks if Tamamo is on the verge of casting Castration Fist when PCF attribute is acquired to avoid SwapAbilities-ing to oblivion.
+		if hero:GetAbilityByIndex(3):GetName() == "fate_empty1" then
+			 hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true)
+		end
 	end)
 
     -- Set master 1's mana 

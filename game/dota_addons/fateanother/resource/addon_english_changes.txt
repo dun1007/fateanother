@@ -1,5 +1,108 @@
-        "DOTA_Tooltip_Ability_diarmuid_love_spot"       "Love Spot"
-        "DOTA_Tooltip_ability_diarmuid_love_spot_Description"   "For duration, Lancer's inhumanly hansome look charms nearby female Servants. Charmed Servants are forced to walk towards Lancer and deal reduced damage to him."
-        "DOTA_Tooltip_ability_diarmuid_love_spot_duration"      "DURATION:"
-        "DOTA_Tooltip_ability_diarmuid_love_spot_damage_reduction"  "%DAMAGE REDUCTION:"
-        "DOTA_Tooltip_ability_diarmuid_love_spot_radius"            "RADIUS:"
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    //==================================
+    //  ERROR MESSAGES
+    //==================================
+    "test_msg"    "TEST BOYS"
+    "Not_Enough_Gold_Item"   "Not Enough Gold(Items cost 50% more out of base)"
+    "Out_Of_Stock_C_Scroll"   "Can buy only up to 10 C Scrolls at base price"
+    "Not_Enough_Master_Mana"  "Not Enough Master Mana"
+    "Already_In_Marble"     "Already Within Reality Marble"
+    "Cannot_Travel"       "Cannot Travel to Targeted Location"
+    "Out_Of_Range"        "Out of Range"
+    "Cannot_Be_Cast_Now"    "Cannot be cast now"
+    "Cannot_Blink"        "Cannot Blink"
+    "Workshop_Exists"     "Workshop Already Exists"
+    "Cannot_Target_Self"    "Cannot Target Self"
+    "Caster_Out_Of_Radius"    "Caster must be within 500 radius of Workshop"
+    "Cannot_Unmount"      "Must Be Used on Traversable Terrain"
+    "Not_Enough_Madness"    "Not Enough Madness"
+    "Cannot_Summon"       "Cannot Summon Now"
+    "Tentacle_Out_Of_Radius"  "Must Target Within 500 Range from Caster"
+    "Cannot_Use_While_Integrated" "Cannot Use While Integrated"
+    "Entered_Base"        "Entered Base(Regular Item Cost)"
+    "Left_Base"       "Left Base(50% Additional Item Cost)"
+    "No_Items_Found"    "No Items Found in Chosen Slot of Stash"
+    "Invalid_Location"    "Invalid Location"
+    "Attribute_Not_Earned"  "Attribute Not Earned"
+    "Revoked_Error"     "Revoked From Master"
+    "Master_Not_Enough_Health"    "Not Enough Health(Wait for Health Reset from Holy Grail's Blessing)"
+    "Cannot_Get_Over_50_Stats"    "Cannot Acquire Over 50 Stat"
+    "Cannot_Acquire_Shard"      "Have Not Died 7 Times Yet"
+    "Presence_Detected"     "Enemy Servant's presence has been detected"
+
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted"  "Blade of the Devoted"
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_Description"  "Saber enchants his blade, gaining bonus movespeed and granting special effect on his next base attack.\n<font color='#58ACFA'>On Ally</font> : Heals target.\n<font color='#58ACFA'>On Enemy</font> : Deals physical damage instead, and ministuns"
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_Lore"     ""
+    "DOTA_Tooltip_ability_gawain_blade_of_the_devoted_bonus_speed"      "%BONUS MOVESPEED:"
+
+    "DOTA_Tooltip_ability_item_healing_scroll"  "Mass Heal Scroll"
+    "DOTA_Tooltip_ability_item_healing_scroll_Lore" ""
+    "DOTA_Tooltip_ability_item_healing_scroll_Description"  "Instantly restores health and grants bonus armor for yourself and all allies nearby.\n<font color='#FF0000'>\nItem costs 50%% more once you leave your base.</font>"
+    "DOTA_Tooltip_ability_item_healing_scroll_heal_amount"  "HEAL AMOUNT:"
+    "DOTA_Tooltip_ability_item_healing_scroll_armor_amount" "BONUS ARMOR AMOUNT:"
+    "DOTA_Tooltip_ability_item_healing_scroll_armor_duration"   "BONUS ARMOR DURATION:"
+    "DOTA_Tooltip_ability_item_healing_scroll_radius"   "RADIUS:"
+
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_gawain_attribute_sunlight"         "Sunlight"
+    "DOTA_Tooltip_ability_gawain_attribute_sunlight_Description"       "Enchances supportive nature of Saber, improving ability effects on ally.\n<font color='#58ACFA'>Invigorating Ray </font>: Also grants 30%% bonus magic resistance and 20 armor.\n<font color='#58ACFA'>Blade of the Devoted </font>: Also replenishes mana and reduces cooldown of all abilities by 15 seconds.\n<font color='#58ACFA'>Excalibur Galatine </font>: 50%% additional heal is done over next 3 seconds\n<font color='#58ACFA'>Sun's Embrace</font> : Grants 30%% bonus magic resistance\n\n<font color='#FF0000'>Saber may not obtain both Sunlight and Eclipse attribute.</font>"  
+
+    
+    "DOTA_Tooltip_Ability_false_assassin_attribute_quickdraw"               "Quickdraw"
+    "DOTA_Tooltip_ability_false_assassin_attribute_quickdraw_Description"   "Enables Quickdraw for 5 seconds after using Gate Keeper.\n<font color='#58ACFA'>Quickdraw : </font>Assassin rapidly draws blade and rushes forward to cut through all enemies in path, inflicting damage based on AGI and applying on-hit effect."
+
+    "DOTA_Tooltip_Ability_false_assassin_windblade" "Windblade"
+    "DOTA_Tooltip_ability_false_assassin_windblade_Description" "Assassin swirls his blade to create slicing wind around him, dealing damage to nearby enemies, applying on-hit effects, and briefly pushing them back."
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_saber_caliburn"                   "Caliburn"
+    "DOTA_Tooltip_ability_saber_caliburn_description"       "Strikes enemy with Caliburn, dealing damage and slowing it. Nearby enemies also take a portion of damage."
+    "DOTA_Tooltip_ability_saber_caliburn_Lore"      ""
+    "DOTA_Tooltip_ability_saber_caliburn_damage"        "TARGET DAMAGE:"
+    "DOTA_Tooltip_ability_saber_caliburn_aoe_damage_percent_tooltip"    "%AOE DAMAGE:"
+    "DOTA_Tooltip_ability_saber_caliburn_slow_amount"   "%SLOW AMOUNT:"
+    "DOTA_Tooltip_ability_lancelot_caliburn_slow_duration"  "SLOW DURATION:"
+
+    "DOTA_Tooltip_Ability_lancelot_caliburn"                    "Caliburn"
+    "DOTA_Tooltip_ability_lancelot_caliburn_description"        "Strikes enemy with Caliburn, dealing damage and slowing it. Nearby enemies also take a portion of damage."
+    "DOTA_Tooltip_ability_lancelot_caliburn_Lore"       ""
+    "DOTA_Tooltip_ability_lancelot_caliburn_damage"     "TARGET DAMAGE:"
+    "DOTA_Tooltip_ability_lancelot_caliburn_aoe_damage_percent_tooltip" "%AOE DAMAGE:"
+    "DOTA_Tooltip_ability_lancelot_caliburn_slow_amount"    "%SLOW AMOUNT:"
+    "DOTA_Tooltip_ability_lancelot_caliburn_slow_duration"      "SLOW DURATION:"
+
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream"              "Strike Air - Upstream"
+    "DOTA_Tooltip_ability_saber_attribute_strike_air_upstream_Description"  "Enables Strike Air-Upstream.\n<font color='#58ACFA'>Strike Air-Upstream : </font>Gives a chance to deal bonus magic damage based on attack damage and launch enemy into the air.\nStrike Air-Upstream will be always triggered by the first base attack after landing Invisible Air or Avalon counterattack."
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_proc_chance"      "%PROC CHANCE:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_base_damage"      "BASE DAMAGE:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_ad_ratio"         "ATTACK DAMAGE RATIO:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_knockup_duration"         "KNOCKUP DURATION:"
+    "DOTA_Tooltip_Ability_saber_attribute_strike_air_upstream_Note0"            "Passive proc has 4 second built-in cooldown, but proc by Invisible Air or Avalon does not."
+
+    "DOTA_Tooltip_Ability_false_assassin_minds_eye" "Mind's Eye"
+    "DOTA_Tooltip_ability_false_assassin_minds_eye_Description" "Assassin analyzes his foe's weakness with 6th sense, causing his base attack to deal additional pure damage based on AGI. If enemy is Revoked, damage is significantly amplified.\nIn addition, prevents any damage from Invisible Air, Strike Air, and Strike Air-Upstream."
+
+    "DOTA_Tooltip_Ability_true_assassin_attribute_protection_from_wind"             "Protection from Wind"
+    "DOTA_Tooltip_ability_true_assassin_attribute_protection_from_wind_Description" "Causes Assassin to be immune to Invisible Air, Strike Air, Strike Air-Upstream, and Windblade. Also, grants a chance to avoid incoming targeting spell."
+
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_false_assassin_attribute_ganryu"              "Ganryu"
+    "DOTA_Tooltip_ability_false_assassin_attribute_ganryu_Description"  "Windblade has its global cooldown removed and teleports Assassin to closest enemy hit.\nIn addition, Tsubame Gaeshi <font color='#FF3399'>silences</font> target."
+
+    "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle"      "Luminosite Eternelle"
+    "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Description"  "Ruler hurls her flag in target direction, <font color='#FF3399'>rooting, disarming</font>, and dimensionally <font color='#FF3399'>locking</font> enemies along its path. The flag is then planted in the ground, creating a sacred zone that reduces incoming damage for allied heroes.\nWhenever allies suffer damage, the flag is damaged as well. Destroying the flag removes root and lock statuses remaining on victims.\n<font color='#ff9900'>UNJUST BONUS:</font>Victim takes 30%% increased damage."

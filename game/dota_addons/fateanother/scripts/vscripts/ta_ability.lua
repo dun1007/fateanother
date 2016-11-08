@@ -1,9 +1,7 @@
-require("Physics")
-require("util")
-
 function OnDirkStart(keys)
 	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(keys.target) then return end
 	local range = caster:GetRangeToUnit(target)
 	if keys.Range > range then
 		range =  keys.Range
@@ -15,7 +13,7 @@ function OnDirkStart(keys)
 		Ability = keys.ability,
 		EffectName = "particles/units/heroes/hero_phantom_assassin/phantom_assassin_stifling_dagger.vpcf",
 		vSpawnOrigin = caster:GetAbsOrigin(),
-		iMoveSpeed = 1200
+		iMoveSpeed = 1800
 	}
 	ProjectileManager:CreateTrackingProjectile(info) 
 	local targetCount = 1
@@ -38,10 +36,14 @@ function OnDirkHit(keys)
 	local ply = caster:GetPlayerOwner()
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	if not IsImmuneToSlow(keys.target) then 
-		keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
+		if not caster.IsWeakeningVenomAcquired then
+			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison", {}) 
+		else
+			keys.ability:ApplyDataDrivenModifier(keys.caster, keys.target, "modifier_dirk_poison_empowered", {}) 
+		end 
 	end
 	if caster.IsWeakeningVenomAcquired then
-		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility(), DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
+		DoDamage(keys.caster, keys.target, keys.Damage + caster:GetAgility() * 2.25, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	else
 		DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	end
@@ -50,7 +52,8 @@ end
 function OnDirkPoisonTick(keys)
 	local caster = keys.caster
 	local target = keys.target
-	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	local dmg = target:GetHealth() / 100 * keys.Damage
+	DoDamage(keys.caster, keys.target, dmg, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end
 
 function OnVenomHit(keys)
@@ -58,13 +61,14 @@ function OnVenomHit(keys)
 	local target = keys.target 
 
 	if IsImmuneToSlow(target) then return end
+	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_weakening_venom_debuff", {}) 
 
-	local currentStack = target:GetModifierStackCount("modifier_weakening_venom_debuff", keys.ability)
+	--[[local currentStack = target:GetModifierStackCount("modifier_weakening_venom_debuff", keys.ability)
 
 	if currentStack == 0 and target:HasModifier("modifier_weakening_venom_debuff") then currentStack = 1 end
 	target:RemoveModifierByName("modifier_weakening_venom_debuff") 
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_weakening_venom_debuff", {}) 
-	target:SetModifierStackCount("modifier_weakening_venom_debuff", keys.ability, currentStack + 1)
+	target:SetModifierStackCount("modifier_weakening_venom_debuff", keys.ability, currentStack + 1)]]
 end
 
 
@@ -75,7 +79,6 @@ function OnPCAbilityUsed(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	caster.LastActionTime = GameRules:GetGameTime() 
-
 	caster:RemoveModifierByName("modifier_ta_invis")
 	Timers:CreateTimer(keys.CastDelay, function() 
 		if GameRules:GetGameTime() >= caster.LastActionTime + keys.CastDelay then
@@ -167,7 +170,7 @@ function OnDIStart(keys)
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
 			if v.IsDIOnCooldown ~= true then 
-				print("Target " .. v:GetName() .. " detected")
+				--print("Target " .. v:GetName() .. " detected")
 				for ilu = 0, 2 do
 					v.IsDIOnCooldown = true
 
@@ -212,9 +215,12 @@ function OnDIZabStart(keys)
 	local smokeFx = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
 	local smokeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
-	ParticleManager:SetParticleControl(smokeFx, 0, target:GetAbsOrigin())
+	ParticleManager:SetParticleControl(smokeFx2, 0, target:GetAbsOrigin())
+	local smokeFx3 = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, caster)
+	ParticleManager:SetParticleControl(smokeFx3, 0, caster:GetAbsOrigin())
+	
 	EmitGlobalSound("TA.Zabaniya") 
-	caster:EmitSound("Hero_Nightstalker.Darkness") 
+	caster:EmitSound("TA.Darkness") 
 
 	-- Destroy particle after delay
 	Timers:CreateTimer( 2.0, function()
@@ -272,8 +278,9 @@ function OnAmbushStart(keys)
 			print(units[i]:GetUnitName())
 			if units[i]:GetUnitName() == "ward_familiar" then
 				local visiondummy = CreateUnitByName("sight_dummy_unit", units[i]:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber())
-				visiondummy:SetDayTimeVisionRange(100)
-				visiondummy:SetNightTimeVisionRange(100)
+				visiondummy:SetDayTimeVisionRange(500)
+				visiondummy:SetNightTimeVisionRange(500)
+				AddFOWViewer(caster:GetTeamNumber(), visiondummy:GetAbsOrigin(), 500, 5.0, false)
 				visiondummy:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 100}) 
 				local unseen = visiondummy:FindAbilityByName("dummy_unit_passive")
 				unseen:SetLevel(1)
@@ -309,6 +316,7 @@ function OnFirstHitLanded(keys)
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	keys.caster:EmitSound("Hero_TemplarAssassin.Meld.Attack")
 	keys.caster:RemoveModifierByName("modifier_first_hit")
+	keys.caster:RemoveModifierByName("modifier_ambush")
 end
 
 function OnAbilityCast(keys)
@@ -339,44 +347,39 @@ function OnModStart(keys)
 	--increase stat
 end
 
-function SelfModUpgraded(keys)
+function SelfModRefresh(keys)
 	local caster = keys.caster
 	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
 	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
 end
-
-function SelfModKilled(keys)
-	local caster = keys.caster
-	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
-	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
-	--[[for i=1, caster:GetKills() do
-		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
-	end]]
-end
-
 
 function OnStealStart(keys)
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner() 
 	local target = keys.target
+	local ability = keys.ability
+	local damage = keys.Damage
+	damage = damage * target:GetMaxHealth() / 100
+
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_steal_str_reduction", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_steal_str_increase", {})
+
 
 	if caster:HasModifier("modifier_ambush") and caster.IsShadowStrikeAcquired then
-		print("Shadow Strike activated")
-		keys.Damage = keys.Damage + 300
+		--print("Shadow Strike activated")
+		damage = damage + 300
 	end
-
-	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 end
 
 function OnZabCastStart(keys)
 	local caster = keys.caster
 	local target = keys.target
-	local particle = ParticleManager:CreateParticle("particles/custom/ta/zabaniya_shadow.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
-	--ParticleManager:SetParticleControl(particle, 0, caster:GetAbsOrigin())
-	print("asdasd")
+	local smokeFx = ParticleManager:CreateParticleForTeam("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target, caster:GetTeamNumber())
+	ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
+	caster.LastActionTime = GameRules:GetGameTime()  -- Zab cast should be classified as an action that resets 2s timer for Presence Concealment.
 end
 
 function OnZabStart(keys)
@@ -401,6 +404,8 @@ function OnZabStart(keys)
 		ParticleManager:SetParticleControl(smokeFx, 0, caster:GetAbsOrigin())
 		local smokeFx2 = ParticleManager:CreateParticle("particles/units/heroes/hero_night_stalker/nightstalker_ulti_smoke.vpcf", PATTACH_ABSORIGIN_FOLLOW, target)
 		ParticleManager:SetParticleControl(smokeFx2, 0, target:GetAbsOrigin())
+		local smokeFx3 = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, caster)
+		ParticleManager:SetParticleControl(smokeFx3, 0, target:GetAbsOrigin())
 
 		ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin()) -- target effect location
 		ParticleManager:SetParticleControl(particle, 2, keys.target:GetAbsOrigin()) -- circle effect location
@@ -417,7 +422,7 @@ function OnZabStart(keys)
 		end)
 
 		EmitGlobalSound("TA.Zabaniya") 
-		caster:EmitSound("Hero_Nightstalker.Darkness") 
+		target:EmitSound("TA.Darkness") 
 	end
 	})
 end
@@ -435,6 +440,8 @@ function OnZabHit(keys)
 
 	local shadowFx = ParticleManager:CreateParticle("particles/units/heroes/hero_nevermore/nevermore_shadowraze.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 	ParticleManager:SetParticleControl(shadowFx, 0, target:GetAbsOrigin())
+	local smokeFx3 = ParticleManager:CreateParticle("particles/econ/items/phantom_assassin/phantom_assassin_arcana_elder_smith/pa_arcana_loadout.vpcf", PATTACH_CUSTOMORIGIN, target)
+	ParticleManager:SetParticleControl(smokeFx3, 0, target:GetAbsOrigin())
 
 	-- Destroy particle after delay
 	Timers:CreateTimer( 2.0, function()

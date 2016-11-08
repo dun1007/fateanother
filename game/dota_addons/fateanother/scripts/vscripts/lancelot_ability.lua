@@ -3,14 +3,14 @@ function OnEternalStart(keys)
     local ability = keys.ability
     local ply = caster:GetPlayerOwner()
     if caster.IsEternalImproved ~= true then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Attribute_Not_Earned")
         return
     end
 
     if IsRevoked(caster) then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Revoked from Master" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
         return
     end
 
@@ -143,8 +143,8 @@ function OnKnightStart(keys)
         local ability = keys.ability
         caster.IsKnightOpen = true
         if caster:HasModifier("modifier_arondite") then
-                FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
-                return 
+            return 
+            SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
         end
 
 
@@ -286,6 +286,7 @@ function OnKnightUsed(keys)
         local caster = keys.caster
         local ply = caster:GetPlayerOwner()
         local ability = keys.ability
+
         if caster.KnightLevel == nil then
                 OnKnightClosed(keys)
                 caster:FindAbilityByName("lancelot_knight_of_honor"):StartCooldown(ability:GetCooldown(ability:GetLevel())) 
@@ -309,6 +310,20 @@ function OnAronditeStart(keys)
         ParticleManager:ReleaseParticleIndex( groundcrack )
     end)
     ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite", {})
+
+    --Fix for Arondight-KoH abuse
+    levelKoH = caster:FindAbilityByName("lancelot_knight_of_honor"):GetLevel()
+    listOfSkills={"lancelot_caliburn","lancelot_gae_bolg","lancelot_nine_lives","lancelot_rule_breaker","lancelot_tsubame_gaeshi"}
+    for i = 1,levelKoH do
+        caster:FindAbilityByName(listOfSkills[i]):StartCooldown(10)
+        print(caster:FindAbilityByName(listOfSkills[i]).IsResetable)
+        caster:FindAbilityByName(listOfSkills[i]).IsResetable = false
+        Timers:CreateTimer(10.0, function()
+            caster:FindAbilityByName(listOfSkills[i]).IsResetable = true
+        end)
+    end
+
+
     --[[local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
     for k,v in pairs(targets) do
             DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
@@ -323,8 +338,8 @@ function OnAronditeAttackLanded(keys)
     local target = keys.target
     local ability = keys.ability
 
-    if caster.IsEFAcquired and caster:GetMana() > 50 then
-        caster:SetMana(caster:GetMana() - 50)
+    if caster.IsEFAcquired and caster:GetMana() > 30 then
+        caster:SetMana(caster:GetMana() - 30)
         local flame = 
         {
                 Ability = ability,
@@ -382,7 +397,7 @@ function OnNukeStart(keys)
     if not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then 
         caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
         keys.ability:EndCooldown()
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Target Location" } ) 
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
         return
     end
 

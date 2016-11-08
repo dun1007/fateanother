@@ -1,0 +1,40 @@
+"Hero_Silencer.GlobalSilence.Effect"
+{
+	"operator_stacks"
+	{
+		"update_stack"
+		{
+			"reference_operator"
+			{
+				"operator"		"sos_reference_stack"
+				"reference_stack"		"dota_src1_3d"
+				"operator_variables"
+				{
+					"vsnd_files"
+					{
+						"value"
+						{
+							"value0"		"sounds/weapons/hero/silencer/global_silence_effect.vsnd"
+						}
+					}
+					"volume"
+					{
+						"value"		"3.000000"
+					}
+					"pitch"
+					{
+						"value"		"1.0000000"
+					}
+					"priority"
+					{
+						"value"		"200.000000"
+					}
+					"soundlevel"
+					{
+						"value"		"125.000000"
+					}
+				}
+			}
+		}
+	}
+}

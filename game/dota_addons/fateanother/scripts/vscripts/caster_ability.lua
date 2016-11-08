@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 territoryAbilHandle = nil -- Ability handle for Create Workshop
 ATTRIBUTE_HG_INT_MULTIPLIER = 0
 
@@ -22,7 +19,8 @@ function OnTerritoryCreated(keys)
 
 	-- Check if Workshop already exists 
 	if caster.IsTerritoryPresent then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Workshop Already Exists" } )
+		ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Workshop_Exists")
 		return 
 	else
 		caster.IsTerritoryPresent = true
@@ -256,8 +254,8 @@ function OnManaDrainStart(keys)
 	caster.ManaDrainParticle = ParticleManager:CreateParticle(particleName, PATTACH_POINT_FOLLOW, caster)
 	caster.ManaDrainTarget = target
 	if target == caster then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Target Self" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Target_Self")
 		return
 	end
 	keys.ManaPerSec = keys.ManaPerSec + hero:GetIntellect() * 0.8
@@ -454,9 +452,9 @@ function CasterFarSight(keys)
 	if caster.IsMobilized then return end 
 
 	if dist > 500 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Caster must be within 500 radius of Territory" } )
 		keys.ability:EndCooldown() 
 		caster:GiveMana(100)
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Caster_Out_Of_Radius")
 		return
 	end
 
@@ -696,11 +694,11 @@ function OnMountStart(keys)
 			if hero.IsMounted then
 				-- If Caster is attempting to unmount on not traversable terrain
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
-					FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Must Be Used on Traversable Terrain" } )
 					keys.ability:EndCooldown()
+					SendErrorMessage(hero:GetPlayerOwnerID(), "#Cannot_Unmount")
 					return								
 				else
-					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", false, true) 
 					hero:RemoveModifierByName("modifier_mount_caster")
 					caster:RemoveModifierByName("modifier_mount")
 					hero.IsMounted = false
@@ -708,7 +706,7 @@ function OnMountStart(keys)
 				end
 			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
 				hero.IsMounted = true
-				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, false) 
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
 				SendMountStatus(hero)
@@ -720,11 +718,6 @@ function OnMountStart(keys)
 end
 
 
-
-function RemoveSacrificeModifier(keys)
-	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo")
-	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo_channeling")
-end
 --[[
 	Author: Dun1007
 	Date: 8.25.2015.
@@ -876,12 +869,12 @@ function OnAncientStart(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-	caster:SwapAbilities("caster_5th_wall_of_flame", a1:GetName(), true, true) 
+	caster:SwapAbilities("caster_5th_wall_of_flame", a1:GetName(), true, false) 
 	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_mana_transfer", a4:GetName(), true, true) 
 	caster:SwapAbilities("caster_5th_close_spellbook", a5:GetName(), true,true) 
-	caster:SwapAbilities("caster_5th_sacrifice", a6:GetName(), true, true) 
+	caster:SwapAbilities("caster_5th_sacrifice", a6:GetName(), true, false) 
 end
 
 function AncientLevelUp(keys)
@@ -1016,23 +1009,21 @@ function OnDWStart(keys)
     )
 end
 
-sac = false
 function OnSacrificeStart(keys)
 	local caster = keys.caster
-	sac = true
-	Timers:CreateTimer(function()
-		if sac then 
-			local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
-		    for k,v in pairs(targets) do
-		    	if v ~= caster then
-		    		v:AddNewModifier(caster, nil, "modifier_invulnerable", {duration = 1.00})
-		    	end
-			end
-		else return end
-		caster:RemoveModifierByName("modifier_invulnerable")
-	    return 0.03
-    end
-    )
+	caster.SacFx = ParticleManager:CreateParticle("particles/custom/caster/sacrifice/caster_sacrifice_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControl( caster.SacFx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl( caster.SacFx, 1, Vector(keys.Radius,0,0))
+end
+
+function RemoveSacrificeModifier(keys)
+	local caster = keys.caster
+	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo")
+	keys.caster:RemoveModifierByName("modifier_big_bad_voodoo_channeling")
+
+	ParticleManager:DestroyParticle( caster.SacFx, false )
+	ParticleManager:ReleaseParticleIndex( caster.SacFx )
+	caster.SacFx = nil
 end
 
 function MaledictStop( event )
@@ -1057,8 +1048,8 @@ function OnMTStart(keys)
 	local duration = keys.Duration
 	local durCount = 0
 	if target == caster then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Target Self" } )
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Target_Self")
 		return
 	end
 	caster.IsManaTransferActive = true
@@ -1099,10 +1090,10 @@ function OnAncientClosed(keys)
 	end
 	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", true ,true) 
 	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", true, true) 
-	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", true, true) 
+	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", false, true) 
 	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
-	caster:SwapAbilities(a6:GetName(), "caster_5th_hecatic_graea", true, true )
+	caster:SwapAbilities(a6:GetName(), ultiName, false, true )
 	local spellbook = caster:FindAbilityByName("caster_5th_ancient_magic")
 	if spellbook:GetToggleState() then
 		spellbook:ToggleAbility()
@@ -1171,7 +1162,7 @@ function OnHGStart(keys)
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(800) 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
@@ -1193,12 +1184,21 @@ function OnHGStart(keys)
 	Timers:CreateTimer(travelTime, function()  
 		caster:SetPhysicsVelocity(Vector(0,0,0))
 		caster:SetAutoUnstuck(true)
+		--caster:SetAbsOrigin(caster:GetGroundPosition(caster:GetAbsOrigin(), caster)+Vector(0,0,1000))
 	return end) 
 	Timers:CreateTimer(ascendTime, function()  
-		local dummy = CreateUnitByName( "sight_dummy_unit", caster:GetAbsOrigin(), false, keys.caster, keys.caster, keys.caster:GetTeamNumber() );
-		caster:SetPhysicsVelocity( Vector( 0, 0, dummy:GetAbsOrigin().z - caster:GetAbsOrigin().z ) )
-		dummy:RemoveSelf()
+		caster:SetPhysicsVelocity( Vector( 0, 0, -650) )
 	return end) 
+
+	--[[local floatCounter = 0
+	Timers:CreateTimer(ascendTime, function()  
+		if floatCounter > (descendTime - ascendTime) then return end
+		local curLoc = caster:GetAbsOrigin()
+		caster:SetAbsOrigin(Vector(curLoc.x, curLoc.y, curLoc.z + 1000))
+		floatCounter = floatCounter + 0.033
+		return 0.033
+	end)]]
+
 	Timers:CreateTimer(descendTime, function()
 		caster:PreventDI(false)
 		caster:SetPhysicsVelocity(Vector(0,0,0))
@@ -1213,7 +1213,6 @@ function OnHGStart(keys)
 			initTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(initTargets) do
 				DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, v:GetAbsOrigin(), "particles/custom/caster/hecatic_graea/ray.vpcf")
-				print(boltCount)
 			end
 			maxBolt = maxBolt - #initTargets
 		else
@@ -1225,7 +1224,6 @@ function OnHGStart(keys)
 			rayTarget = RandomPointInCircle(GetGroundPosition(caster:GetAbsOrigin(), caster), radius)
 		end
 		DropRay(caster, keys.Damage, keys.RadiusBolt, keys.ability, rayTarget, "particles/custom/caster/hecatic_graea/ray.vpcf")
-		print(boltCount)
 	    boltCount = boltCount + 1
 		return 0.1
     end
@@ -1296,7 +1294,7 @@ function OnHGPStart(keys)
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown() 
 		caster:GiveMana(800) 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_hecatic_graea_anim", {}) 
@@ -1341,13 +1339,13 @@ function OnHGPStart(keys)
 
 	
 	Timers:CreateTimer(travelTime+2.5, function()
-		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, barrageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
+		local targets = FindUnitsInRadius(caster:GetTeam(), GetGroundPosition(caster:GetAbsOrigin(), caster), nil, barrageRadius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 		for k,v in pairs(targets) do
         	DoDamage(caster, v, 1500, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
         	--v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 0.1})
 		end
   	  	local particle = ParticleManager:CreateParticle("particles/custom/caster/hecatic_graea_powered/area.vpcf", PATTACH_CUSTOMORIGIN, caster)
-  	  	ParticleManager:SetParticleControl(particle, 0, targetPoint) 
+  	  	ParticleManager:SetParticleControl(particle, 0, GetGroundPosition(caster:GetAbsOrigin(), caster)) 
   	  	-- print(radius)
 	    ParticleManager:SetParticleControl(particle, 1, Vector(barrageRadius * 2.5, 1, 1))
 	    ParticleManager:SetParticleControl(particle, 2, Vector(barrageRadius * 75, 1, 1))

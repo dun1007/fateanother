@@ -1,0 +1,7 @@
+DOTA_COMBAT_CLASS_DEFEND_STRONG
+DOTA_COMBAT_CLASS_DEFEND_SOFT
+
+1609 dota_item_wearable
+1692 npc_dota_creature
+
+wearable

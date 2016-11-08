@@ -1,5 +1,4 @@
-require("physics")
-require("util")
+
 
 function OnIskanderCharismaStart(keys)
 	local caster = keys.caster
@@ -212,6 +211,7 @@ function OnChariotStart(keys)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.0)
 	caster:AddNewModifier(caster, nil, "modifier_ms_cap", {duration = keys.Duration+1})
 	--caster:AddNewModifier(caster, nil, "modifier_bloodseeker_thirst_speed", { duration = keys.Duration+1})
+	caster.OriginalModel = "models/iskander/iskander_chariot.vmdl"
 	caster:SetModel("models/iskander/iskander_chariot.vmdl")
     caster:SetOriginalModel("models/iskander/iskander_chariot.vmdl")
     caster:SetModelScale(1.0)
@@ -338,6 +338,7 @@ function OnChariotEnd(keys)
 		caster:SwapAbilities("iskander_army_of_the_king", caster:GetAbilityByIndex(5):GetName(), true, true) 
 	end
 
+	caster.OriginalModel = "models/iskander/iskander.vmdl"
     caster:SetModel("models/iskander/iskander.vmdl")
     caster:SetOriginalModel("models/iskander/iskander.vmdl")
     caster:SetModelScale(1.0)
@@ -572,7 +573,7 @@ function OnAOTKStart(keys)
 	for i=1, #aotkTargets do
 		if IsValidEntity(aotkTargets[i]) and not aotkTargets[i]:IsNull() then
 			ProjectileManager:ProjectileDodge(aotkTargets[i]) -- Disjoint particles
-			if aotkTargets[i]:HasModifier("jump_pause") or aotkTargets[i]:HasModifier("spawn_invulnerable") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
+			if aotkTargets[i]:HasModifier("jump_pause") or aotkTargets[i]:HasModifier("spawn_invulnerable") or aotkTargets[i]:HasModifier("jump_pause_nosilence") or string.match(aotkTargets[i]:GetUnitName(),"dummy") then 
 				print("dummy or a hero with jump state detected. Removing current index")
 				table.remove(aotkTargets, i)
 			end

@@ -8,6 +8,7 @@
 			<Label id="TitleName" text="#addonname" />
 		</Panel>
 
+
 		<Panel id="KotomineRow" class="QuoteRow">
 			<Image id="KotomineImage" src="file://{images}/custom_game/game_info_kotomine.png" />
 			<Label id="KotomineQuote" html="true" text="#Fateanother_Kotomine_Speech" />
@@ -17,6 +18,7 @@
 		<Panel id="GameplayRow" class="InfoRow">
 			<Label id="GameplayText1" class="TipText" text="#Fateanother_Gameplay1" />
 		</Panel>
+
 
 		<Image id="SaberImage" class="HeaderImage" src="file://{images}/custom_game/game_info_servant_saber.png" />
 		<Label id="ServantHeader" class="Header" html="true" text="#Fateanother_Servant" />

@@ -10,6 +10,7 @@ function OnDropDownChanged()
     if (g_GameConfig.bIsAutoChange) {
         return
     }
+
     var selection = $("#FateConfigBGMList").GetSelected();
     g_GameConfig.nextBGMIndex = parseInt(selection.id);
     //$.Msg("Next BGM Index: " + selection.id);

@@ -626,6 +626,11 @@
 	    "ItemSellable" "1"
 	    "ItemPurchasable" "1"
 	    "ItemDroppable" "1"
+
+		"ItemStockMax"					"3"
+		"ItemStockInitial"				"3"
+		"ItemStockTime"					"45.0"
+
 	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
 	    "precache"
 	    {
@@ -1025,7 +1030,7 @@
 	    {
 	    	"modifier_share_damage"
 	    	{
-	    		"Duration"		"10.0"
+	    		"Duration"		"7.0"
 	    		"EffectName"	"particles/units/heroes/hero_warlock/warlock_fatal_bonds_icon.vpcf"
 	    		"EffectAttachType"		"follow_overhead"
 	    		"OnTakeDamage"
@@ -1163,7 +1168,7 @@
 	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
 	    "ItemQuality"  "consumable"
 
-	    "ItemCost"     "1200"
+	    "ItemCost"     "750"
 	    "ItemKillable" "1" 
 	    "ItemSellable" "1"
 	    "ItemPurchasable" "1"
@@ -1174,15 +1179,16 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
-	    "ItemInitialCharges" "2"
+	    "ItemInitialCharges" "1"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "0"
 
 	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	    "AbilityCooldown"				"20"
+	    "AbilityCooldown"				"60"
 	    "precache"
 	    {
 	    	"particle"			"particles/units/heroes/hero_omniknight/omniknight_purification_g.vpcf"
+	    	"particle"			"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
 	    }
 	    "AbilitySpecial"
 	    {
@@ -1197,6 +1203,11 @@
 				"armor_amount"				"25"
 			}
 	   		"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"armor_duration"				"5"
+			}
+	   		"04"
 			{
 				"var_type"				"FIELD_INTEGER"
 				"radius"				"600"
@@ -1221,6 +1232,8 @@
 	    {
 	    	"modifier_healing_scroll"
 	    	{	
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
+				"EffectAttachType"	"follow_overhead"
 	    		"Duration"		"5.0"
 	    		"Properties"
 	    		{
@@ -2246,7 +2259,7 @@
 	    "SideShop"     "1" 
 	    "SecretShop"   "0"
 
-	    "ItemInitialCharges" "2"
+	    "ItemInitialCharges" "3"
 	    "ItemStackable" "1"
 	    "ItemPermanent" "0"
 	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
@@ -2261,8 +2274,8 @@
 		{
 			"01"
 			{
-				"var_type"				"FIELD_INTEGER"
-				"duration"					"10"
+				"var_type"				"FIELD_FLOAT"
+				"duration"					"7.5"
 			}
 		}
 	    "OnSpellStart"
@@ -2279,7 +2292,7 @@
 	    {
 	    	"modifier_magic_immunity"
 	    	{
-	    		"Duration"		"10.0"
+	    		"Duration"		"%duration"
 	    		"OnCreated"
 	    		{
 					"AttachEffect"

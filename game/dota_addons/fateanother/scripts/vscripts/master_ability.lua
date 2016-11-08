@@ -1,10 +1,8 @@
-require('util')
-
 SaberAttribute = {
 	"saber_attribute_improve_excalibur",
 	"saber_attribute_improve_instinct",
-	"saber_attribute_chivalry",
 	"saber_attribute_strike_air",
+	"saber_attribute_strike_air_upstream",
 	"saber_max_excalibur",
 	attrCount = 4
 }
@@ -184,6 +182,28 @@ JeanneAttribute = {
 	attrCount = 4
 }
 
+AstolfoAttribute = {
+	"astolfo_attribute_riding",
+	"astolfo_attribute_monstrous_strength",
+	"astolfo_attribute_independent_action",
+	"astolfo_attribute_sanity",
+	"astolfo_hippogriff_ride",
+	attrCount = 4
+}
+
+NRAttribute = {
+	"fate_empty1",
+	"fate_empty2",
+	"fate_empty3",
+	"fate_empty4",
+	"fate_empty5",
+	--[["nursery_rhyme_attribute_jabberwocky",
+	"nursery_rhyme_attribute_improve_queens_glass_game",
+	"nursery_rhyme_attribute_improve_nameless_forest",
+	"nursery_rhyme_attribute_unending_rhymes",
+	"nursery_rhyme_attribute_dragon_skillet",]]
+	attrCount = 5
+}
 --[[LiAttribute = {
 	attrCount = 4
 }]]
@@ -194,16 +214,16 @@ function OnSeal1Start(keys)
 	local hero = ply:GetAssignedHero()
 
 	if caster:GetHealth() == 1 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+2) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Master_Not_Enough_Health")
 		return 
 	end
 
 	if not hero:IsAlive() or IsRevoked(hero) then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+2) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
 		return
 	end
 
@@ -260,27 +280,34 @@ function OnSeal2Start(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
+	local currentMana = caster:GetMana()
 
 	if caster:GetHealth() == 1 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
-		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Master_Not_Enough_Health")
 		return 
 	end
 
+	if caster:GetMana() <= 1 then
+		if caster.IsFirstSeal and caster:GetMana() == 1 then
+		else
+			keys.ability:EndCooldown() 
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Not_Enough_Master_Mana")
+			return 
+		end
+	end
+
 	if not hero:IsAlive() or IsRevoked(hero) then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
-		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
 		return
 	end
 
-	print(caster:GetMana()-1)
-	caster:SetMana(caster:GetMana()-1)
-	-- Set master 2's mana 
+	-- pay mana cost
+	caster:SetMana(caster:GetMana()-2)
 	local master2 = hero.MasterUnit2
 	master2:SetMana(caster:GetMana())
-	-- Set master's health
+	-- pay health cost
 	caster:SetHealth(caster:GetHealth()-1) 
 
 	ResetAbilities(hero)
@@ -295,8 +322,10 @@ function OnSeal2Start(keys)
 	-- Set cooldown
 	if caster.IsFirstSeal == true then
 		keys.ability:EndCooldown()
-		caster:SetMana(caster:GetMana()+1)  --refund 1 mana
-		master2:SetMana(master2:GetMana() +1)
+		if currentMana ~= 1 then
+			caster:SetMana(caster:GetMana()+1)  --refund 1 mana
+			master2:SetMana(caster:GetMana())
+		end
 	else
 		caster:FindAbilityByName("cmd_seal_1"):StartCooldown(30)
 		caster:FindAbilityByName("cmd_seal_2"):StartCooldown(30)
@@ -312,17 +341,16 @@ function OnSeal3Start(keys)
 	local hero = ply:GetAssignedHero()
 
 	if caster:GetHealth() == 1 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Master_Not_Enough_Health")
 		return 
 	end
 
 	if not hero:IsAlive() or IsRevoked(hero) or hero:GetHealth() == hero:GetMaxHealth() then
-		print("Cannot use seals")
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
 		return
 	end
 
@@ -355,17 +383,16 @@ function OnSeal4Start(keys)
 	local hero = ply:GetAssignedHero()
 
 	if caster:GetHealth() == 1 then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Not Enough Health(Wait for Health Reset Every 10 Minutes)" } )
 		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Master_Not_Enough_Health")
 		return 
 	end
 
 	if not hero:IsAlive() or IsRevoked(hero) and hero:GetMana() == hero:GetMaxMana() then
-		print("Cannot use seals")
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Command Seal cannot be cast now!" } )
 		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
 		return
 	end
 
@@ -393,6 +420,38 @@ function OnSeal4Start(keys)
 		caster:FindAbilityByName("cmd_seal_4"):StartCooldown(30)
 		keys.ability:ApplyDataDrivenModifier(keys.caster, hero, "modifier_command_seal_4",{})
 	end
+end
+
+function OnPRStart(keys)
+    local caster = keys.caster
+    local ability = keys.ability
+    local hero = PlayerResource:GetSelectedHeroEntity(caster:GetPlayerOwnerID())
+    local heroTable = {}
+    local target = nil
+
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	--print("looping through " .. playerHero:GetName())
+        if playerHero:GetTeamNumber() ~= hero:GetTeamNumber() then
+        	if not playerHero:IsInvisible() and not playerHero:IsInvulnerable() and playerHero:IsAlive() then
+        		table.insert(heroTable, playerHero)
+
+        	end
+        end
+     end)
+
+    if #heroTable > 0 then
+    	target = heroTable[math.random(#heroTable)]
+    	MinimapEvent( hero:GetTeamNumber(), hero, target:GetAbsOrigin().x, target:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 2)
+    end
+
+    GameRules:SendCustomMessage("<font color='#58ACFA'>" .. FindName(hero:GetName()) .."</font>" ..  "<font color='#ff9900'>'s Master just used Presence Resonator!", 0, 0)
+
+    if hero:GetName() == "npc_dota_hero_mirana" and hero.bIsIDAcquired then
+    	ability:EndCooldown()
+    	ability:StartCooldown(ability:GetCooldown(1)/2)
+    end
+
+    EmitGlobalSound("Resonator.Activate")
 end
 
 function AddMasterAbility(master, name)
@@ -425,6 +484,9 @@ function LoopThroughAttr(hero, attrTable)
     --hero:SwapAbilities(attrTable[#attrTable], hero:GetAbilityByIndex(4):GetName(), true, true)
     --hero:SwapAbilities("master_close_list", "fate_empty1", true, true)
     hero:FindAbilityByName(attrTable[#attrTable]):StartCooldown(9999) 
+    if attrTable.attrCount == 5 then
+    	hero:SwapAbilities(hero.ComboName, hero:GetAbilityByIndex(5):GetAbilityName(), true, true)
+    end
 end
 
 function FindAttribute(name)
@@ -469,6 +531,10 @@ function FindAttribute(name)
     	attributes = LiAttribute
     elseif name == "npc_dota_hero_mirana" then
     	attributes = JeanneAttribute
+    elseif name == "npc_dota_hero_queenofpain" then
+    	attributes = AstolfoAttribute
+    elseif name == "npc_dota_hero_windrunner" then
+    	attributes = NRAttribute
     end
     return attributes
 end 
@@ -603,8 +669,8 @@ function OnStrengthGain(keys)
 		if hero.STRgained < 50 then
 			hero.STRgained = hero.STRgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
 			caster:GiveMana(1)
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			return
 		end
 	end 
@@ -627,7 +693,7 @@ function OnAgilityGain(keys)
 		if hero.AGIgained < 50 then
 			hero.AGIgained = hero.AGIgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -652,7 +718,7 @@ function OnIntelligenceGain(keys)
 		if hero.INTgained < 50 then
 			hero.INTgained = hero.INTgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -676,7 +742,7 @@ function OnDamageGain(keys)
 		if hero.DMGgained < 50 then
 			hero.DMGgained = hero.DMGgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -692,11 +758,14 @@ function OnDamageGain(keys)
 		primaryStat = hero:GetIntellect()
 	end
 
-	hero:SetBaseDamageMax(hero:GetBaseDamageMax() - primaryStat + 3)
-	hero:SetBaseDamageMin(hero:GetBaseDamageMin() - primaryStat + 3)
+	hero:SetBaseDamageMax(hero:GetBaseDamageMax() - math.floor(primaryStat) + 3)
+	hero:SetBaseDamageMin(hero:GetBaseDamageMin() - math.floor(primaryStat) + 3)
 	hero:CalculateStatBonus()
 
-	print("Current base damage : " .. hero:GetBaseDamageMin()  .. " to " .. hero:GetBaseDamageMax())
+	--[[local minDmg = hero:GetBaseDamageMin() - primaryStat
+	local maxDmg = hero:GetBaseDamageMax() - primaryStat
+
+	print("Current base damage : " .. minDmg  .. " to " .. maxDmg)]]
 	-- Set master 1's mana 
 	local master1 = hero.MasterUnit
 	master1:SetMana(master1:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -713,7 +782,7 @@ function OnArmorGain(keys)
 		if hero.ARMORgained < 50 then
 			hero.ARMORgained = hero.ARMORgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -737,7 +806,7 @@ function OnHPRegenGain(keys)
 		if hero.HPREGgained < 50 then
 			hero.HPREGgained = hero.HPREGgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -761,7 +830,7 @@ function OnManaRegenGain(keys)
 		if hero.MPREGgained < 50 then
 			hero.MPREGgained = hero.MPREGgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -785,7 +854,7 @@ function OnMovementSpeedGain(keys)
 		if hero.MSgained < 50 then
 			hero.MSgained = hero.MSgained + 1
 		else
-			FireGameEvent( 'custom_error_show', { player_ID = ply:GetPlayerID(), _error = "Cannot Upgrade Base Stats over 50 times" } )
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Get_Over_50_Stats")
 			caster:GiveMana(1)
 			return
 		end
@@ -802,9 +871,8 @@ function OnAvariceAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	print("Avarice shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Acquire_Shard")
 		return 
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
@@ -830,7 +898,7 @@ function OnAvariceAcquired(keys)
 
 	for i=1,#teamTable do
 		local goldperperson = 20000/#teamTable
-		print("Distributing " .. goldperperson .. " per person")
+		--print("Distributing " .. goldperperson .. " per person")
 		teamTable[i]:ModifyGold(goldperperson, true, 0)
 	end
     local statTable = CreateTemporaryStatTable(hero)
@@ -841,9 +909,8 @@ function OnAMAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	print("AMP shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Acquire_Shard")
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
@@ -858,9 +925,8 @@ function OnReplenishmentAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	print("Replenish shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Acquire_Shard")
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
@@ -874,9 +940,9 @@ function OnProsperityAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
-	print("Prosperity shard acquired")
+	--print("Prosperity shard acquired")
 	if hero.ShardAmount == 0 or hero.ShardAmount == nil then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Have Not Died 7 Times Yet" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Acquire_Shard")
 		return
 	else 
 		hero.ShardAmount = hero.ShardAmount - 1
@@ -885,7 +951,7 @@ function OnProsperityAcquired(keys)
 	local master = hero.MasterUnit 
 	local master2 = hero.MasterUnit2
 
-	for i=1,5 do
+	for i=1,6 do
 		local level = hero:GetLevel()
 		if level ~= 24 then
 			hero:AddExperience(_G.XP_PER_LEVEL_TABLE[level], false, false)
@@ -900,8 +966,8 @@ function OnProsperityAcquired(keys)
 	--[[
 	master:SetMana(master:GetMana()+20)
 	master2:SetMana(master:GetMana())]]
-	master:SetMaxHealth(master:GetMaxHealth()+1) 
-	master:SetHealth(master:GetHealth()+1)
+	master:SetMaxHealth(master:GetMaxHealth()+2) 
+	master:SetHealth(master:GetHealth()+2)
 	master2:SetMaxHealth(master:GetMaxHealth()) 
 	master2:SetHealth(master:GetHealth())
     local statTable = CreateTemporaryStatTable(hero)
@@ -954,7 +1020,7 @@ function OnPresenceDetectionThink(keys)
 			if enemy.IsPresenceDetected == true or enemy.IsPresenceDetected == nil then
 				--print("Pinged " .. enemy:GetPlayerOwnerID() .. " by player " .. caster:GetPlayerOwnerID())
 				MinimapEvent( caster:GetTeamNumber(), caster, enemy:GetAbsOrigin().x, enemy:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
-				FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Enemy Servant's presence has been detected" } )
+				SendErrorMessage(caster:GetPlayerOwnerID(), "#Presence_Detected")
 				local dangerping = ParticleManager:CreateParticleForPlayer("particles/ui_mouseactions/ping_world.vpcf", PATTACH_ABSORIGIN, caster, PlayerResource:GetPlayer(caster:GetPlayerID()))
 
 
@@ -963,7 +1029,7 @@ function OnPresenceDetectionThink(keys)
 				
 				--GameRules:AddMinimapDebugPoint(caster:GetPlayerID(), enemy:GetAbsOrigin(), 255, 0, 0, 500, 3.0)
 				if not caster.bIsAlertSoundDisabled then
-					EmitSoundOnClient("Misc.BorrowedTime", PlayerResource:GetPlayer(caster:GetPlayerID())) 
+					CustomGameEventManager:Send_ServerToPlayer(caster:GetPlayerOwner(), "emit_presence_sound", {sound="Misc.BorrowedTime"})
 				end
 				-- Process Eye of Serenity attribute
 				if caster:GetName() == "npc_dota_hero_juggernaut" and caster.IsEyeOfSerenityAcquired == true and enemy.IsSerenityOnCooldown ~= true then
@@ -1029,4 +1095,5 @@ function OnHeroRespawn(keys)
 		caster:ModifyGold(2000, true, 0) 
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "spawn_invulnerable", 3.0)
 	end
+	FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 end

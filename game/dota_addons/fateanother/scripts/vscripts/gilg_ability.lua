@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 enkiduTarget = nil
 
 function OnBarrageStart(keys)
@@ -246,9 +243,9 @@ function OnGOBStart(keys)
 	GilgaCheckCombo(caster, keys.ability)
 	CreateGOB(keys, gobWeapon)
 	
-	EmitSoundOnClient("Saber_Alter.Derange", caster:GetPlayerOwner())
-	EmitSoundOnClient("Gilgamesh.GOB", caster:GetPlayerOwner())
-	EmitSoundOnClient("Archer.UBWAmbient", caster:GetPlayerOwner())
+	caster:EmitSound("Gilgamesh.GOB")
+	caster:EmitSound("Saber_Alter.Derange")
+	caster:EmitSound("Archer.UBWAmbient")
 end
 
 function CreateGOB(keys, proj)
@@ -266,12 +263,14 @@ function CreateGOB(keys, proj)
 	dummy:SetForwardVector(caster:GetForwardVector())
 	
 	local portalFxIndex = ParticleManager:CreateParticle( "particles/custom/gilgamesh/gilgamesh_gob.vpcf", PATTACH_CUSTOMORIGIN, dummy )
-	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_CUSTOMORIGIN, "attach_origin", dummy:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControlEnt( portalFxIndex, 0, dummy, PATTACH_ABSORIGIN, nil, dummy:GetAbsOrigin(), false )
+	--ParticleManager:SetParticleControl( portalFxIndex, 0, dummy:GetAbsOrigin() )
 	ParticleManager:SetParticleControl( portalFxIndex, 1, Vector( 400, 400, 400 ) )
 
 	dummy.GOBProjectile = proj
 	dummy.GOBParticle = portalFxIndex
 	caster.LatestGOB = dummy
+	caster.LatestGOBParticle = portalFxIndex
 	ability:ApplyDataDrivenModifier(caster, dummy, "modifier_gob_thinker", {})
 end
 
@@ -295,12 +294,15 @@ function OnGOBThink(keys)
 	local unit = keys.target
 	local origin = unit:GetAbsOrigin()
 	local frontward = unit:GetForwardVector()
+	local casterFrontWard = caster:GetForwardVector()
 	local toggleAbil = caster:FindAbilityByName("gilgamesh_gate_of_babylon_toggle")
 	if caster.IsSumerAcquired and unit == caster.LatestGOB then
 		origin = caster:GetAbsOrigin()
 		frontward = caster:GetForwardVector()
 		caster.LatestGOB:SetAbsOrigin(caster:GetAbsOrigin() - caster:GetForwardVector() * 150)
 		caster.LatestGOB:SetForwardVector( caster:GetForwardVector() )
+		--ParticleManager:SetParticleControl( caster.LatestGOBParticle, 0, caster.LatestGOB:GetAbsOrigin() )
+		--ParticleManager:SetParticleControlOrientation(caster.LatestGOBParticle, 0, Vector(1,0,0), Vector(0.5,1,0.5), Vector(1,0.5,0.5))
 	end
 
 	if not caster.IsSumerAcquired or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
@@ -319,6 +321,8 @@ function OnGOBThink(keys)
 		end
 		projectile.vVelocity = frontward * 1000
 		ProjectileManager:CreateLinearProjectile(projectile)
+
+		ParticleManager:SetParticleControlEnt( caster.LatestGOBParticle, 0, caster.LatestGOB, PATTACH_ABSORIGIN, nil, caster.LatestGOB:GetAbsOrigin(), false )
 	end
 end
 
@@ -329,7 +333,7 @@ function OnGOBHit(keys)
 	if caster.IsSumerAcquired then
 		damage = damage + caster:GetAttackDamage()*0.5
 	end
-	if target:GetUnitName() == "gille_gigantic_horror" then keys.Damage = keys.Damage*2.5 end
+	if target:GetUnitName() == "gille_gigantic_horror" then damage = damage*2.5 end
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 	local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_ABSORIGIN, keys.target)
 	ParticleManager:SetParticleControl(particle, 1, keys.target:GetAbsOrigin())
@@ -547,7 +551,7 @@ function OnMaxEnumaHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	if caster.IsEnumaImproved then
-		keys.Damage = keys.Damage * 2
+		keys.Damage = 15000
 	end
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 end

@@ -31,9 +31,6 @@ function OnIRTickAlly(keys)
 	local target = keys.target
 	target:Heal(keys.Damage/5, caster)
 	--target:SetHealth(target:GetHealth() + keys.Damage/5)
-	if caster.IsSunlightAcquired then
-		target:SetMana(target:GetMana() + keys.Damage/5)
-	end
 end
 
 function OnIRTickEnemy(keys)
@@ -72,6 +69,14 @@ function OnDevoteStart(keys)
 	end)
 end
 
+--list and related Dota KV file must be updated upon new hero release!!!
+modifierList = {"modifier_max_mana_burst_cooldown","modifier_delusional_illusion_cooldown","modifier_max_excalibur_cooldown",
+"modifier_wesen_gae_bolg_cooldown","modifier_arrow_rain_cooldown","modifier_bellerophon_2_cooldown",
+"modifier_hecatic_graea_powered_cooldown","modifier_tsubame_mai_cooldown","modifier_madmans_roar_cooldown",
+"modifier_max_enuma_elish_cooldown","modifier_endless_loop_cooldown","modifier_rampant_warrior_cooldown","modifier_nuke_cooldown",
+"modifier_larret_de_mort_cooldown","modifier_annihilate_cooldown","modifier_fiery_finale_cooldown",
+"modifier_polygamist_cooldown","modifier_raging_dragon_strike_cooldown","modifier_la_pucelle_cooldown","modifier_hippogriff_ride_cooldown"}
+
 function OnDevoteHit(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
@@ -84,7 +89,7 @@ function OnDevoteHit(keys)
 		-- process team effect
 		target:SetHealth(target:GetHealth() + keys.Damage + caster:GetAttackDamage())
 		if caster.IsSunlightAcquired then
-			HardCleanse(target)
+			target:SetMana(target:GetMana() + keys.Damage)
 			for i=0, 15 do 
 				local ability = target:GetAbilityByIndex(i)
 				if ability ~= nil then
@@ -94,6 +99,20 @@ function OnDevoteHit(keys)
 				else 
 					break
 				end
+			end
+
+			--Lower the remaining cooldown duration of the Master 2 (Rin)
+			if target:GetStrength() >= 19.1 and target:GetAgility() >= 19.1 and target:GetIntellect() >= 19.1 then 	--Checks if the target can cast combo
+				local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
+				local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
+				masterComboAbility:EndCooldown()	
+				masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)
+				for i = 1, #modifierList do
+					if target:HasModifier(modifierList[i]) then
+						target:RemoveModifierByName(modifierList[i])
+						keys.ability:ApplyDataDrivenModifier(caster, target, modifierList[i], {duration = (masterComboCooldownRemaining-15)})		
+					end
+				end		
 			end
 		end
 	else
@@ -147,9 +166,9 @@ function OnGalatineStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local casterLoc = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
-	local orbLoc = caster:GetAbsOrigin()
 	local dist = (targetPoint - casterLoc):Length2D()
-	local diff = (targetPoint - caster:GetAbsOrigin()):Normalized()
+	local orbLoc = caster:GetAbsOrigin()
+	local diff = caster:GetForwardVector()
 	local timeElapsed = 0
 	local flyingDist = 0
 	local InFirstLoop = true
@@ -174,6 +193,9 @@ function OnGalatineStart(keys)
 	Timers:CreateTimer(1.5, function()
 		if caster:IsAlive() and timeElapsed < 1.5 and flyingDist < dist and caster.IsGalatineActive then
 			if InFirstLoop then
+				casterLoc = caster:GetAbsOrigin()
+				orbLoc = caster:GetAbsOrigin()
+				diff = caster:GetForwardVector()
 				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
 				InFirstLoop = false
 			end
@@ -191,7 +213,7 @@ function OnGalatineStart(keys)
 			-- Explosion on allies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-				v:Heal(v:GetHealth() + keys.Damage * 33/100, caster)
+				v:Heal(keys.Damage * 33/100, caster)
 				if caster.IsSunlightAcquired then
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
@@ -206,10 +228,18 @@ function OnGalatineStart(keys)
 			-- Explosion on enemies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
 			for k,v in pairs(targets) do
-				DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-				if caster.IsEclipseAcquired then
-					local multiplier = (keys.Radius - (galatineDummy:GetAbsOrigin() - v:GetAbsOrigin()):Length2D())/keys.Radius
-					DoDamage(caster, v, keys.Damage/2 * multiplier , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				if not caster.IsEclipseAcquired then
+					DoDamage(caster, v, keys.Damage , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+				else
+					-- calculate the distance from center to enemy
+					local distFromCenter = (galatineDummy:GetAbsOrigin() - v:GetAbsOrigin()):Length2D()
+					local multiplier = 0
+					if distFromCenter < 100 then 
+						multiplier = 1.3
+					else
+						multiplier = 1.3 - (distFromCenter-100)/400 * 30/100
+					end
+					DoDamage(caster, v, keys.Damage * multiplier , DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 				end
 			end
 
@@ -333,6 +363,7 @@ function OnSupernovaStart(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_supernova_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+
 
 	Timers:CreateTimer(4.0, function()
 		if target:IsAlive() then
@@ -495,7 +526,7 @@ function OnFairyDamageTaken(keys)
 	local ability = keys.ability
 	local currentHealth = caster:GetHealth()
 
-	if currentHealth == 0 and keys.ability:IsCooldownReady() then
+	if currentHealth == 0 and keys.ability:IsCooldownReady() and IsRevivePossible(caster) then
 		caster:SetHealth(500)
 		keys.ability:StartCooldown(60) 
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gawain_blessing_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})

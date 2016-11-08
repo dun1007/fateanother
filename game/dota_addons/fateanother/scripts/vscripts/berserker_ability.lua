@@ -1,6 +1,3 @@
-require("Physics")
-require("util")
-
 function OnFissureStart(keys)
 	local caster = keys.caster
 	local frontward = caster:GetForwardVector()
@@ -243,8 +240,22 @@ function BerserkEnd(keys)
 	keys.caster:SetRenderColor(255, 255, 255)
 end
 
+
+function OnNineCast(keys)
+	local caster = keys.caster
+	local casterName = caster:GetName()
+	if casterName == "npc_dota_hero_doom_bringer" then
+		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_CAST_ABILITY_5, rate=0.2})
+	elseif casterName == "npc_dota_hero_sven" then
+		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_RUN, rate=0.2})
+	elseif casterName == "npc_dota_hero_ember_spirit" then
+		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_RUN, rate=0.2})
+	end
+end
+
 function OnNineStart(keys)
 	local caster = keys.caster
+	local casterName = caster:GetName()
 	local targetPoint = keys.target_points[1]
 	local ability = keys.ability
 	local berserker = Physics:Unit(caster)
@@ -257,7 +268,15 @@ function OnNineStart(keys)
 	caster:SetPhysicsVelocity(caster:GetForwardVector()*distance)
 	caster:SetNavCollisionType(PHYSICS_NAV_BOUNCE)
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 4.0)
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_dash_anim", {})
+	caster:EmitSound("Hero_OgreMagi.Ignite.Cast")
+	--ability:ApplyDataDrivenModifier(caster, caster, "modifier_dash_anim", {})
+	if casterName == "npc_dota_hero_doom_bringer" then
+		StartAnimation(caster, {duration=1, activity=ACT_DOTA_CAST_ABILITY_5, rate=0.5})
+	elseif casterName == "npc_dota_hero_sven" then
+		StartAnimation(caster, {duration=1, activity=ACT_DOTA_RUN, rate=0.5})
+	elseif casterName == "npc_dota_hero_ember_spirit" then
+		StartAnimation(caster, {duration=1, activity=ACT_DOTA_RUN, rate=0.8})
+	end
 
 	Timers:CreateTimer(1.0, function()
 		caster:OnPreBounce(nil)
@@ -322,14 +341,10 @@ function OnNineLanded(caster, ability)
 	caster.NineLanded = true
 
 	-- swap animation
-	caster:RemoveModifierByName("modifier_dash_anim")
 	if caster:GetName() == "npc_dota_hero_doom_bringer" then 
-		-- needs buffer so the existing animation ends
-		Timers:CreateTimer(0.1, function()
-			if caster:IsAlive() then
-				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
-			end
-		end)
+		if caster:IsAlive() then
+			StartAnimation(caster, {duration=3.5, activity=ACT_DOTA_CAST_ABILITY_6, rate=1.0})
+		end
 	end
 
 	-- main timer
@@ -340,12 +355,12 @@ function OnNineLanded(caster, ability)
 			ParticleManager:SetParticleControl(particle, 1, Vector(0,0,(nineCounter % 2) * 180))
 			if caster:GetName() == "npc_dota_hero_sven" then 
 				if math.random(0,1) == 0 then 
-					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
+					StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK, rate=2.5})
 				else
-					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim3", {}) 
+					StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK2, rate=2.5})
 				end
 			elseif caster:GetName() == "npc_dota_hero_ember_spirit" then 
-				ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim", {}) 
+				StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK, rate=3.0}) 
 			end
 			caster:EmitSound("Hero_EarthSpirit.StoneRemnant.Impact") 
 
@@ -383,7 +398,7 @@ function OnNineLanded(caster, ability)
 					EmitGlobalSound("Berserker.Roar")
 				elseif caster:GetName() == "npc_dota_hero_sven" then
 					EmitGlobalSound("Lancelot.Roar1" )
-					ability:ApplyDataDrivenModifier(caster, caster, "modifier_nine_anim2", {})
+					StartAnimation(caster, {duration=0.7, activity=ACT_DOTA_CAST_ABILITY_6, rate=3.0})
 				elseif caster:GetName() == "npc_dota_hero_ember_spirit" then
 					caster:EmitSound("Archer.NineFinish") 
 				end
@@ -463,12 +478,15 @@ function OnGodHandDeath(keys)
 	dummy:AddNewModifier(caster, nil, "modifier_phased", {duration=1.0})
 	dummy:AddNewModifier(caster, nil, "modifier_kill", {duration=1.1})
 
+
 	--print("God Hand activated")
 	Timers:CreateTimer({
 		endTime = 1,
 		callback = function()
-
-		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 then
+		print(caster.bIsGHReady)
+		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 and caster.bIsGHReady then
+			caster.bIsGHReady = false
+			Timers:CreateTimer(7.0, function() caster.bIsGHReady = true end)
 			EmitGlobalSound("Berserker.Roar") 
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			caster.GodHandStock = caster.GodHandStock - 1
@@ -519,7 +537,6 @@ function OnReincarnationDamageTaken(keys)
 	else
 		caster.ReincarnationDamageTaken = caster.ReincarnationDamageTaken+damageTaken
 	end
-
 	if caster.ReincarnationDamageTaken > 20000 and caster.IsGodHandAcquired then
 		caster.ReincarnationDamageTaken = 0
 		caster.GodHandStock = caster.GodHandStock + 1
@@ -530,7 +547,9 @@ end
 
 function GainReincarnationRegenStack(caster, ability)
 	local modifier = ability:ApplyDataDrivenModifier(caster, caster, "modifier_reincarnation_stack", {})
-	if modifier:GetStackCount() < 5 then modifier:IncrementStackCount() end
+	if modifier:GetStackCount() < 5 then 
+		modifier:IncrementStackCount() 
+	end
 
 	if not caster.reincarnation_particle then caster.reincarnation_particle = ParticleManager:CreateParticle("particles/custom/berserker/reincarnation/regen_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster) end
 	ParticleManager:SetParticleControl(caster.reincarnation_particle, 1, Vector(modifier:GetStackCount(),0,0))
@@ -574,7 +593,7 @@ function OnGodHandAcquired(keys)
 	hero.GodHandStock = 11
 	ability:ApplyDataDrivenModifier(hero, hero, "modifier_god_hand_stock", {}) 
 	hero:SetModifierStackCount("modifier_god_hand_stock", hero, 11)
-
+	hero.bIsGHReady = true
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

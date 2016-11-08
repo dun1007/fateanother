@@ -6,6 +6,7 @@
     <scripts>
         <include src="file://{resources}/scripts/custom_game/fateanother_util.js" />  
         <include src="file://{resources}/scripts/custom_game/hud_base.js" />
+        <include src="file://{resources}/scripts/sounds.js" />
     </scripts>
     <Panel hittest="false" class="BarebonesBaseHud">
         <Panel hittest="false" class="BarebonesTopNotifications">

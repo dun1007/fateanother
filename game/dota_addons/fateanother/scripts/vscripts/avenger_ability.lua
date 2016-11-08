@@ -10,16 +10,31 @@ function OnDPStart(keys)
     	keys.ability:StartCooldown(1)
     end
 
-	if caster:HasModifier("modifier_purge") or caster:HasModifier("modifier_aestus_domus_aurea_lock") or caster:HasModifier("locked") then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot blink while Purged" } )
+	if IsLocked(caster) then 
 		keys.ability:EndCooldown()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
 		return
 	end
 
+	if caster:HasModifier("modifier_aestus_domus_aurea_lock") then
+		local target = 0
+		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 1200, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
+		for i=1, #targets do
+			target = targets[i]
+			if target:GetName() == "npc_dota_hero_lina" then
+				break
+			end
+		end
+		if not IsFacingUnit(caster, target, 90) then
+			SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
+			keys.ability:EndCooldown()
+			return
+		end
+	end 
 
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown()  
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Travel to Targeted Location" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return 
 	end 
 	local currentStack = caster:GetModifierStackCount("modifier_dark_passage", keys.ability)
@@ -266,7 +281,7 @@ function OnVengeanceStart(keys)
 	local target = keys.target
 	local ability = keys.ability
 	if caster:HasModifier("modifier_blood_mark_restriction") then 
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used" } )
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 		caster:GiveMana(ability:GetManaCost(1))
 		keys.ability:EndCooldown()
 		return
@@ -323,8 +338,10 @@ function OnTFStart(keys)
     end
     caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
     caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
+    caster.OriginalModel = "models/avenger/trueform/trueform.vmdl"
     caster:SetModel("models/avenger/trueform/trueform.vmdl")
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
+
     caster:SetModelScale(1.1)
 
     caster:EmitSound("Avenger.TransformShort")
@@ -350,6 +367,7 @@ function OnTFEnd(keys)
     if demoncore:GetToggleState() then
     	demoncore:ToggleAbility()
     end
+    caster.OriginalModel = "models/avenger/avenger.vmdl"
     caster:SetModel("models/avenger/avenger.vmdl")
     caster:SetOriginalModel("models/avenger/avenger.vmdl")
 
@@ -430,8 +448,8 @@ function OnEndlessStart(keys)
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_endless_loop_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
+	EmitGlobalSound("Avenger.Darkness")
 	EmitGlobalSound("Avenger.Berg")
-	EmitGlobalSound("Hero_Nightstalker.Darkness")
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_endless_loop", {})
 	Timers:CreateTimer(3.0, function() 
 		if resetCounter == 4 or not caster:IsAlive() then return end
@@ -444,7 +462,7 @@ function OnEndlessStart(keys)
 			ParticleManager:DestroyParticle( particle, false )
 			ParticleManager:ReleaseParticleIndex( particle )
 		end)
-		caster:EmitSound("Hero_LifeStealer.Consume")
+		caster:EmitSound("Avenger.Consume")
 		resetCounter = resetCounter + 1
 		return 3.0
 	end)

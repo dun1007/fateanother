@@ -121,6 +121,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 
 		var playerIDPanel = playerPanel.FindChildInLayoutFile( "PlayerID" );
 		var playerGoldPanel = playerPanel.FindChildInLayoutFile( "PlayerGold" );
+		var playerSealPanel = playerPanel.FindChildInLayoutFile( "SealIndicator" );
 		var playerID = playerInfo.player_id;
 		var playerTeam = playerInfo.player_team_id;
 		if ( playerIDPanel !== null)
@@ -138,9 +139,29 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 			} 
 			else
 			{
-				playerGoldPanel.text = "????";
+				playerGoldPanel.text = "";
 			}
 		}
+		if ( playerSealPanel !== null)
+		{
+			if (playerTeam == Players.GetTeam(Players.GetLocalPlayer()))
+			{
+				var bIsRevoked = ScoreboardUpdater_IsRevoked(Players.GetPlayerHeroEntityIndex(playerID));
+				if (bIsRevoked)
+				{
+					playerSealPanel.SetImage("file://{images}/spellicons/cmd_seal_4_disabled.png") ;
+				}
+				else
+				{
+					playerSealPanel.SetImage("file://{images}/spellicons/cmd_seal_4.png") ;
+				}
+
+			}
+			//playerSealPanel = 0;
+		}
+
+
+
 	}
 	
 	var playerItemsContainer = playerPanel.FindChildInLayoutFile( "PlayerItemsContainer" );
@@ -487,3 +508,50 @@ function ScoreboardUpdater_GetSortedTeamInfoList( scoreboardHandle )
 	return teamsList;
 }
 
+var revokes = [
+    "modifier_subterranean_grasp_revoke",
+    "modifier_enkidu_hold",
+    "jump_pause",
+    "pause_sealdisabled",
+    "rb_sealdisabled",
+    "revoked",
+    "modifier_command_seal_2",
+    "modifier_command_seal_3",
+    "modifier_command_seal_4"
+]
+
+function ScoreboardUpdater_IsRevoked(hero)
+{
+	/* var buffCount = Entities.GetNumBuffs(hero) + 1;
+	$.Msg(buffCount);
+	for (var i=0;i<buffCount + 1; i++)
+	{
+		var buffName = Buffs.GetName(hero,i);
+		$.Msg(buffName);
+		for (var j=0; j<revokes.length; j++)
+		{
+			if (buffName == revokes[j])
+			{
+				return true
+			}
+		}
+	}
+	return false */
+	for (var j=0; j<revokes.length; j++)
+	{
+		if (Entities.HasModifier(hero, revokes[j]))
+		{
+			return true
+		}
+	}
+	return false
+}
+
+Entities.HasModifier = function(entIndex, modifierName){
+	var nBuffs = Entities.GetNumBuffs(entIndex)
+	for (var i = 0; i < nBuffs; i++) {
+		if (Buffs.GetName(entIndex, Entities.GetBuff(entIndex, i)) == modifierName)
+			return true
+	};
+	return false
+};

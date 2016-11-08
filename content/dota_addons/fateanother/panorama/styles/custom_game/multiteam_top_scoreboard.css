@@ -232,31 +232,52 @@
 #PlayerIDBar
 {
     width: 64px;
-    height: 17px;
+    height: 20px;
     border-bottom:1px solid #000000;
     flow-children: right;
     background-color: #0d1c22ff, gradient( radial, 100% -0%, 100px -40px, 320% 270%, from( #3a464bff ), color-stop( 0.23, #0d1c22ff ), to( #0d1c22ff ) );
+}
+
+#SealIndicator
+{
+    width: 20px;
+    height: 25px;
+    flow-children: right;
+    background-color: #0d1c22ff, gradient( radial, 100% -0%, 100px -40px, 320% 270%, from( #3a464bff ), color-stop( 0.23, #0d1c22ff ), to( #0d1c22ff ) );
+
 
 }
 
 #PlayerID
 {
     color: #EE9A00;
-    text-shadow: 0px 0px 6px 8 #000000;
-    font-size: 15px;
+    text-shadow: 1px 1px 1px 3 #000000;
+    font-size: 20px;
     font-weight: bold;
+    margin-left: 3px;
+    margin-top: 3px;
 }
 
 #PlayerGold
 {
-	margin-left: 5px;
+	margin-left: 0px;
+    margin-top: 2px;
     color: 	#FFD700;
+    text-shadow: 0px 0px 1px 3 #000000;
+    font-size: 13px;
+    font-weight: bold;
+    horizontal-align: center;
+    vertical-align: center;
+}
+
+#PlayerSeal
+{
+    color:  #FFD700;
     text-shadow: 0px 0px 6px 8 #000000;
     font-size: 15px;
     font-weight: bold;
     horizontal-align: center;
 }
-
 
 #HeroIcon
 {
@@ -299,9 +320,9 @@
 
 #RespawnIndicator
 {
-	margin-top: 38px;
+	margin-top: 55px;
 	width: 42px;
-	height: 49px;
+	height: 25px;
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -320,8 +341,8 @@
     width: 100%;
 	text-align: center;
     vertical-align: bottom;
-	margin-bottom: 4px;
-    font-size: 18px;
+	margin-bottom: 0px;
+    font-size: 15px;
     text-shadow: 2px 2px 2px black;
 }
 

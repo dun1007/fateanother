@@ -1,5 +1,5 @@
 ATTR_NSS_BONUS_DAMAGE = 150
-ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 5
+ATTR_NSS_STACK_DAMAGE_PERCENTAGE = 10
 ATTR_AGI_RATIO = 2.0
 ATTR_MANA_REFUND = 200
 
@@ -71,14 +71,14 @@ end
 function OnBerserkStart(keys)
     local caster = keys.caster
     if caster.bIsDualClassAcquired ~= true then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Attribute Not Earned" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Attribute_Not_Earned")
         return
     end
 
     if IsRevoked(caster) then
-        FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Revoked from Master" } )
         keys.ability:EndCooldown()
+        SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
         return
     end
     GrantCosmicOrbitResist(caster)
@@ -298,9 +298,9 @@ function OnNSSStart(keys)
 	caster.ProcStunDuration = keys.ProcStunDuration
 	target.IsNSSProcReady = true
 	if caster:HasModifier("modifier_lishuwen_berserk") then
-		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Cannot Be Used(Berserk)" } )
 		keys.ability:EndCooldown()
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(1))
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 		return			
 	end
 	if IsSpellBlocked(keys.target) then return end
@@ -343,18 +343,16 @@ function OnNSSTakeDamage(keys)
 	local target = keys.unit
 	local ability = keys.ability
 	local attacker = keys.attacker
-	local damage = caster.ProcDamage
-	local stunDuration = caster.ProcStunDuration
+	local damage = keys.ProcDamage
+	local stunDuration = keys.ProcStunDuration
 
 	if attacker:GetName() == "npc_dota_hero_bloodseeker" and target.IsNSSProcReady then
 		target.IsNSSProcReady = false
 		target:AddNewModifier(caster, target, "modifier_stunned", {Duration = stunDuration})
-		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+		DoDamage(caster, target, damage, DAMAGE_TYPE_PURE, 0, keys.ability, false)
 		Timers:CreateTimer(caster.ProcStunDuration + 0.3, function()
 			target.IsNSSProcReady = true
 		end)
-		caster.ProcDamage = caster.ProcDamage /2
-		caster.ProcStunDuration = caster.ProcStunDuration/2
 
 		target:EmitSound("hero_bloodseeker.rupture.cast")
 	end
@@ -374,7 +372,7 @@ function OnNSSDelayFinished(keys)
 	if target:HasModifier("modifier_mark_of_fatality") then
 		local abil = caster:FindAbilityByName("lishuwen_martial_arts")
 		local currentStack = target:GetModifierStackCount("modifier_mark_of_fatality", abil)
-		damage = damage + (target:GetMaxHealth() - target:GetHealth()) * ATTR_NSS_STACK_DAMAGE_PERCENTAGE * currentStack/100
+		damage = (target:GetMaxHealth() - target:GetHealth()) * ATTR_NSS_STACK_DAMAGE_PERCENTAGE * currentStack/100
 	end
 	print("dealt "	.. damage .. " damage")
 	--target:SetMana(target:GetMana() - damage)
@@ -451,6 +449,7 @@ function OnDragonStrike1Start(keys)
 
 	caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_raging_dragon_strike_2", false, true) 
 	caster.bIsCurrentDSCycleFinished = false
+	caster.bIsCurrentDSCycleStarted = true
 
 
 	-- start a timer to revert layout back after set time(4 sec)
@@ -525,7 +524,17 @@ function OnDragonStrike3Start(keys)
 	caster:SwapAbilities("lishuwen_fierce_tiger_strike","lishuwen_raging_dragon_strike_3", true, true) 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
-	if #targets == 0 then return end
+	if #targets == 0 then 
+
+    	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
+    	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+    	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
+    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+		local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
+		masterabil:EndCooldown()
+		masterabil:StartCooldown(masterabil:GetCooldown(1)/4)    
+		return 
+	end
 
 	local startpoint = caster:GetAbsOrigin()
 	local beginpoint = startpoint
@@ -607,7 +616,7 @@ end
 
 function LishuwenCheckCombo(caster, ability)
     if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
-        if ability == caster:FindAbilityByName("lishuwen_concealment") then
+        --[[if ability == caster:FindAbilityByName("lishuwen_concealment") then
             QUsed = true
             Qtime = GameRules:GetGameTime()
             Timers:CreateTimer({
@@ -616,27 +625,27 @@ function LishuwenCheckCombo(caster, ability)
                 QUsed = false
             end
             })
-        elseif ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
-            if QUsed == true then 
-                caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
-                Timers:CreateTimer('raging_dragon_timer',{
-                    endTime = 4,
-                    callback = function()
-                    if not caster.bIsCurrentDSCycleFinished then
-                    	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
-                    	ReduceCooldown(abil, abil:GetCooldown(1)/2)
-                    	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
-                    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/2})
-						local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
-						masterabil:EndCooldown()
-						masterabil:StartCooldown(masterabil:GetCooldown(1)/2)            	
-                    end	
-					local currentAbil = caster:GetAbilityByIndex(2)	
-					caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false) 
-                    QUsed = false
-                end
-                })
+        else]]
+
+    	if ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:FindAbilityByName("lishuwen_fierce_tiger_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
+            caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
+            Timers:CreateTimer('raging_dragon_timer',{
+                endTime = 4,
+                callback = function()
+                if not caster.bIsCurrentDSCycleFinished and caster.bIsCurrentDSCycleStarted then
+                	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
+                	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+                	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
+                	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+					local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
+					masterabil:EndCooldown()
+					masterabil:StartCooldown(masterabil:GetCooldown(1)/4)            	
+                end	
+				local currentAbil = caster:GetAbilityByIndex(2)	
+				caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false)
+				caster.bIsCurrentDSCycleStarted = false
             end
+            })
         end
     end
 end
