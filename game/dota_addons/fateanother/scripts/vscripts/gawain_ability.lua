@@ -176,6 +176,10 @@ function OnGalatineStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_vfx", {})
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.75)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_anim",{})
+	EmitGlobalSound("Saber.Excalibur_Ready")
+	Timers:CreateTimer(1.2, function()
+		EmitGlobalSound("Saber.Excalibur_Ready")
+	end)
 	EmitGlobalSound("Gawain.Galatine")
 
 

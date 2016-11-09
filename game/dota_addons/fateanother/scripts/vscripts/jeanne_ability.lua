@@ -58,7 +58,11 @@ function OnSaintRespawn(keys)
         	--print(playerHero:GetName() ..  " " .. playerHero:GetKills() .. " " .. playerHero:GetDeaths())
         	if playerHero:GetKills() > playerHero:GetDeaths() then
         		--print("applying modifier to " .. playerHero:GetName())
-	        	ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
+        		if caster.IsSaintImproved then
+	        		ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff_attr", {})
+	        	else
+	        		ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
+	        	end
 	        	--playerHero:EmitSound("Hero_Chen.TestOfFaith.Cast")
         	end
 

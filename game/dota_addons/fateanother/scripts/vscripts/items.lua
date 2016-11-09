@@ -195,7 +195,7 @@ function TPScroll(keys)
 
 	caster.TPLoc = nil
 	local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, 10000, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_OTHER, 0, FIND_CLOSEST, false) 
-	if targets[1] == nil then
+	if targets[1] == nil or targets[1]:GetAbsOrigin().y < -2000 then
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
 		local newTP = CreateItem("item_teleport_scroll" , caster, nil)
 		caster:AddItem(newTP)

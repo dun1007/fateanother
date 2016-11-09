@@ -3984,6 +3984,18 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 				}
 			}
+			"modifier_breaker_gorgon_turnrate"
+			{
+				"Duration"			"16.0"
+				"IsDebuff"			"1"
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-200"
+				}
+			}
 		}
 	}
 	
@@ -4392,7 +4404,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"petrify_chance"			"30"
+				"turn_rate"			"200"
 			}
 			"02"
 			{
@@ -25249,9 +25261,14 @@
 			{
 				"IsDebuff"		"1"
 				"Duration"		"300"
+			}
+			"modifier_saint_debuff_attr"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"300"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"10"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"13"
 				}
 			}
 		}
@@ -26062,7 +26079,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"		"10"
+				"bonus_damage"		"13"
 			}			
 			"02"
 			{

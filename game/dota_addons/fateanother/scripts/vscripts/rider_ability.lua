@@ -67,12 +67,13 @@ function OnBGStart(keys)
 	for k,v in pairs(targets) do
 		if not IsImmuneToSlow(v) then ability:ApplyDataDrivenModifier(caster, v, "modifier_breaker_gorgon", {Duration = keys.duration}) end
 		if caster.IsSealAcquired then  
-			local rngesus = math.random(100)
+			--[[local rngesus = math.random(100)
 			if rngesus < 30 then
 				v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 2.5})
 				ParticleManager:CreateParticle("particles/status_fx/status_effect_medusa_stone_gaze.vpcf", PATTACH_ROOTBONE_FOLLOW, v)
 
-			end
+			end]]
+			ability:ApplyDataDrivenModifier(caster, v, "modifier_breaker_gorgon_turnrate", {})
 		end
 	end
 end

@@ -251,7 +251,7 @@ function KnightInitialize(keys)
         end
 
         if ability:GetLevel() == 1 then
-                print("ability lvl 1")
+                --print("ability lvl 1")
                 caster:AddAbility("lancelot_caliburn")
                 caster:AddAbility("fate_empty1")
                 caster:AddAbility("fate_empty2")
@@ -316,7 +316,7 @@ function OnAronditeStart(keys)
     listOfSkills={"lancelot_caliburn","lancelot_gae_bolg","lancelot_nine_lives","lancelot_rule_breaker","lancelot_tsubame_gaeshi"}
     for i = 1,levelKoH do
         caster:FindAbilityByName(listOfSkills[i]):StartCooldown(10)
-        print(caster:FindAbilityByName(listOfSkills[i]).IsResetable)
+        --print(caster:FindAbilityByName(listOfSkills[i]).IsResetable)
         caster:FindAbilityByName(listOfSkills[i]).IsResetable = false
         Timers:CreateTimer(10.0, function()
             caster:FindAbilityByName(listOfSkills[i]).IsResetable = true

@@ -559,8 +559,8 @@ function OnTGStart(keys)
 	giveUnitDataDrivenModifier(caster, caster, "dragged", 1.0)
 	giveUnitDataDrivenModifier(caster, caster, "revoked", 1.0)
 	if caster.IsGanryuAcquired then 
-		Timers:CreateTimer(0.3, function()
-			giveUnitDataDrivenModifier(caster, target, "silenced", 0.21)
+		Timers:CreateTimer(0.4, function()
+			giveUnitDataDrivenModifier(caster, target, "silenced", 0.11)
 		end)
 	end
 
