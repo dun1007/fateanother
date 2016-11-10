@@ -8805,7 +8805,7 @@
 			}
 			"modifier_first_hit"
 			{
-				"Duration"		"%duration + 1.0"
+				"Duration"		"%duration" //Reduced from duration+1 to duration, I assume +1 is to account for travel time of dagger when one breaks ambush at the end of duration. No longer necessary.
 				"IsHidden"		"0"
 				"OnAttackStart"
 				{
@@ -8815,6 +8815,27 @@
 						"Function"			"OnFirstHitStart"
 					}					
 				}				
+				"OnAttackFailed"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_first_hit"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnAbilityCast"
+					}								
+				}
+			}
+			"modifier_thrown"
+			{
+				"Duration"		"1.0" //I don't think any attack takes > 1s to land.
+				"IsHidden"		"1"			
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -8841,22 +8862,6 @@
 							"03"		"255 0 0"				//color
 						}
 					}				
-				}
-				"OnAttackFailed"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_first_hit"
-						"Target"			"CASTER"
-					}
-				}
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"ta_ability"
-						"Function"			"OnAbilityCast"
-					}								
 				}
 			}
 		}

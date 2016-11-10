@@ -308,14 +308,18 @@ function OnAmbushBroken(keys)
 end
 
 function OnFirstHitStart(keys)
-	keys.caster:RemoveModifierByName("modifier_ambush")
+	local caster = keys.caster
+	local ability = keys.ability
+	caster:RemoveModifierByName("modifier_ambush")
+	caster:RemoveModifierByName("modifier_first_hit")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_thrown", {}) 
 end
 
 function OnFirstHitLanded(keys)
-	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_first_hit") return end -- Linken effect checker
+	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_thrown") return end -- Linken effect checker
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	keys.caster:EmitSound("Hero_TemplarAssassin.Meld.Attack")
-	keys.caster:RemoveModifierByName("modifier_first_hit")
+	keys.caster:RemoveModifierByName("modifier_thrown")
 	keys.caster:RemoveModifierByName("modifier_ambush")
 end
 

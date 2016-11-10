@@ -363,11 +363,12 @@ function OnNSSDelayFinished(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local damage = 0
+
+	if caster.bIsCirculatoryShockAcquired ~= true then return end --If without circulatory shock attribute, no damage at end of open_wound_duration (3.5s).
 	--[[local damage = target:GetMana() * keys.DelayedDamagePercentage/100
 	if target:GetName() == "npc_dota_hero_juggernaut" or target:GetName() == "npc_dota_hero_shadow_shaman" then
 		damage = (target:GetMaxHealth() - target:GetHealth()) * keys.DelayedDamagePercentage/100
 	end]]
-
 
 	if target:HasModifier("modifier_mark_of_fatality") then
 		local abil = caster:FindAbilityByName("lishuwen_martial_arts")
