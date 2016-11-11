@@ -780,11 +780,11 @@ function DistributeGoldV2(hero, cutoff)
         local eligibleGoldAmt = 4950 - PlayerResource:GetReliableGold(plyIDTable[k])
         -- only grant eligible amount of gold and save the rest on residue
         if goldPerPerson + residue> eligibleGoldAmt then
-            residue = residue + goldPerPerson - eligibleGoldAmt --update surplus residue
+            residue = residue + goldPerPerson - eligibleGoldAmt
             GiveGold(playerID, plyIDTable[k], eligibleGoldAmt)
+        -- add residue up
         else
             GiveGold(playerID, plyIDTable[k], goldPerPerson+residue)
-            residue = 0 --resets residue to 0
         end
     end
 end
