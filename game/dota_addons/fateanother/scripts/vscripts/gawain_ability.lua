@@ -176,10 +176,6 @@ function OnGalatineStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_vfx", {})
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", 1.75)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_excalibur_galatine_anim",{})
-	EmitGlobalSound("Saber.Excalibur_Ready")
-	Timers:CreateTimer(1.2, function()
-		EmitGlobalSound("Saber.Excalibur_Ready")
-	end)
 	EmitGlobalSound("Gawain.Galatine")
 
 
@@ -222,7 +218,7 @@ function OnGalatineStart(keys)
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
 						if healTimer > 3 then return end
-						v:Heal(v:GetHealth() + keys.Damage * 11/100, caster)
+						v:Heal(keys.Damage * 11/100, caster)
 						healTimer = healTimer + 1
 						return 1.0
 					end)

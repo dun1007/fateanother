@@ -14,12 +14,12 @@
 					{
 						"value"
 						{
-							"value0"		"sounds/gawain/gawain_galatine.vsnd"
+							"value0"		"sounds/gawain/gawain_galatine_old.vsnd"
 						}
 					}
 					"volume"
 					{
-						"value"		"2.000000"
+						"value"		"1.3000000"
 					}
 					"pitch"
 					{

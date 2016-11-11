@@ -113,3 +113,11 @@
     "DOTA_Tooltip_Ability_rider_5th_attribute_seal"             "Seal"
     "DOTA_Tooltip_ability_rider_5th_attribute_seal_Description" "Causes Breaker Gorgon to increase turn rate of affected enemies.\nIn addition, Bloodfort Andromeda charms enemies caught within, forcing them to move towards the singularity."
     "DOTA_Tooltip_Ability_rider_5th_attribute_seal_petrify_chance"              "%TURN RATE INCREASE:"
+
+    //=================================
+    //  NEW VERSION
+    //=================================
+    "npc_dota_hero_windrunner"             "Caster(Extra), N.N"
+    "npc_dota_hero_enchantress"             "Caster(Extra), Tamamo"
+    "npc_dota_hero_lina"        "Saber(Extra), Nero"
+    "npc_dota_hero_omniknight"      "White Saber(Extra)"

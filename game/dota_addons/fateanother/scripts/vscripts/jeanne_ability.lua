@@ -4,7 +4,7 @@ function OnMREXDamageTaken(keys)
 	local ability = keys.ability
 	local attacker = keys.attacker
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_magic_resistance_ex", {})
-	if caster.IsSaintImproved and PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff") then return end
+	if caster.IsSaintImproved and (PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff") or PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff_attr")) then return end
 	--print("asdasd")
 	ChangeMREXStack(keys, -1)
 end
@@ -59,6 +59,7 @@ function OnSaintRespawn(keys)
         	if playerHero:GetKills() > playerHero:GetDeaths() then
         		--print("applying modifier to " .. playerHero:GetName())
         		if caster.IsSaintImproved then
+        			if playerHero:HasModifier("modifier_saint_debuff") then playerHero:RemoveModifierByName("modifier_saint_debuff") end
 	        		ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff_attr", {})
 	        	else
 	        		ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_saint_debuff", {})
@@ -85,7 +86,7 @@ function OnIDPing(keys)
         		MinimapEvent( caster:GetTeamNumber(), caster, playerHero:GetAbsOrigin().x, playerHero:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2)
         	end)
         	--ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_identity_discernment_unjust", {})
-        	if playerHero:HasModifier("modifier_saint_debuff") then
+        	if playerHero:HasModifier("modifier_saint_debuff") or playerHero:HasModifier("modifier_saint_debuff_attr") then
         		SpawnAttachedVisionDummy(caster, playerHero, 200, duration, true)
         	end
         end
@@ -160,7 +161,7 @@ function OnPurgeStart(keys)
 		local targets = FindUnitsInRadius(caster:GetTeam(), targetPoint, nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
 			local targetDamage = damage
-			if v:HasModifier("modifier_saint_debuff") and  (v:GetKills() - v:GetDeaths()) > 0 then
+			if (v:HasModifier("modifier_saint_debuff") or v:HasModifier("modifier_saint_debuff_attr")) and  (v:GetKills() - v:GetDeaths()) > 0 then
 				DoDamage(caster, v, damagePerKill * (v:GetKills() - v:GetDeaths()), DAMAGE_TYPE_PURE, 0, ability, false)
 			end
 	        DoDamage(caster, v, targetDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -188,7 +189,7 @@ function OnGodResolutionProc(keys)
 
 	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 	giveUnitDataDrivenModifier(caster, target, "revoked", duration)
-	if target:HasModifier("modifier_saint_debuff") then
+	if target:HasModifier("modifier_saint_debuff") or target:HasModifier("modifier_saint_debuff_attr") then
 		 giveUnitDataDrivenModifier(caster, target, "stunned", 0.1)
 	end
 
@@ -229,7 +230,7 @@ function OnGodResolutionStart(keys)
 		end
 		local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 		for k,v in pairs(targets) do
-			if v:HasModifier("modifier_saint_debuff") then
+			if v:HasModifier("modifier_saint_debuff") or v:HasModifier("modifier_saint_debuff_attr") then
 				 giveUnitDataDrivenModifier(caster, v, "stunned", 0.1)
 			end
 	        DoDamage(caster, v, tickDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
@@ -393,7 +394,7 @@ function OnLEAllyDamageTaken(keys)
 	local ability = keys.ability
 	local victim = keys.unit
 	local attacker = keys.attacker
-	if caster.IsSaintImproved and PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff") then
+	if caster.IsSaintImproved and PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff") or PlayerResource:GetSelectedHeroEntity(attacker:GetPlayerOwnerID()):HasModifier("modifier_saint_debuff_attr") then
 		return
 	end
 
