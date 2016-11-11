@@ -168,7 +168,7 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("fate_empty1", a2:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty2", a3:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty3", a4:GetName(), true, true) 
-                caster:SwapAbilities("fate_empty4", a6:GetName(), true, true) 
+                caster:SwapAbilities("fate_empty4", a6:GetName(), true, false) 
         elseif ability:GetLevel() == 2 then
                 caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
                 caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
@@ -177,7 +177,7 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty2", a3:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty3", a4:GetName(), true, true) 
-                caster:SwapAbilities("fate_empty4", a6:GetName(), true, true)                 
+                caster:SwapAbilities("fate_empty4", a6:GetName(), true, false)                 
         elseif ability:GetLevel() == 3 then
                 caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
                 caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
@@ -187,7 +187,7 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
                 caster:SwapAbilities("fate_empty3", a3:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_nine_lives", a4:GetName(), true, true) 
-                caster:SwapAbilities("fate_empty4", a6:GetName(), true, true)               
+                caster:SwapAbilities("fate_empty4", a6:GetName(), true, false)               
         elseif ability:GetLevel() == 4 then
                 caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
                 caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
@@ -198,7 +198,7 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_rule_breaker", a3:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_nine_lives", a4:GetName(), true, true) 
-                caster:SwapAbilities("fate_empty4", a6:GetName(), true, true)                    
+                caster:SwapAbilities("fate_empty4", a6:GetName(), true, false)                    
         elseif ability:GetLevel() == 5 then
                 caster:FindAbilityByName("lancelot_caliburn"):SetLevel(NPLevel) 
                 caster:FindAbilityByName("lancelot_gae_bolg"):SetLevel(NPLevel)
@@ -210,7 +210,7 @@ function OnKnightStart(keys)
                 caster:SwapAbilities("lancelot_gae_bolg", a2:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_rule_breaker", a3:GetName(), true, true) 
                 caster:SwapAbilities("lancelot_nine_lives", a4:GetName(), true, true) 
-                caster:SwapAbilities("lancelot_tsubame_gaeshi", a6:GetName(), true, true) 
+                caster:SwapAbilities("lancelot_tsubame_gaeshi", a6:GetName(), true, false) 
         end
 end
 
@@ -223,17 +223,19 @@ function OnKnightClosed(keys)
         local a4 = caster:GetAbilityByIndex(3)
         local a5 = caster:GetAbilityByIndex(4)
         local a6 = caster:GetAbilityByIndex(5)
-
-        caster:SwapAbilities(a1:GetName(), "lancelot_smg_barrage", true ,true) 
-        caster:SwapAbilities(a2:GetName(), "lancelot_double_edge", true, true) 
-        caster:SwapAbilities(a3:GetName(), "lancelot_knight_of_honor", true, true) 
-        if caster:HasAbility("lancelot_blessing_of_fairy") then 
-            caster:SwapAbilities(a4:GetName(), "lancelot_blessing_of_fairy", true, true) 
+        -- if knight attribute is not taken, caster.KnightLevel~=nil is false and therefore kills off queueing a 2nd skill. 
+        caster:SwapAbilities(a1:GetName(), "lancelot_smg_barrage", caster.KnightLevel~=nil ,true) 
+        caster:SwapAbilities(a2:GetName(), "lancelot_double_edge", caster.KnightLevel~=nil, true) 
+        caster:SwapAbilities(a3:GetName(), "lancelot_knight_of_honor", caster.KnightLevel~=nil, true)
+        if caster.nukeAvail == true then 
+            caster:SwapAbilities(a4:GetName(), "lancelot_nuke", caster.KnightLevel~=nil, true) 
+        elseif caster:HasAbility("lancelot_blessing_of_fairy") then 
+            caster:SwapAbilities(a4:GetName(), "lancelot_blessing_of_fairy", caster.KnightLevel~=nil, true) 
         else 
-            caster:SwapAbilities(a4:GetName(), "rubick_empty1", true, true) 
+            caster:SwapAbilities(a4:GetName(), "rubick_empty1", caster.KnightLevel~=nil, true) 
         end
-        caster:SwapAbilities(a5:GetName(), "lancelot_arms_mastership", true, true) 
-        caster:SwapAbilities(a6:GetName(), "lancelot_arondite", true, true )       
+        caster:SwapAbilities(a5:GetName(), "lancelot_arms_mastership", caster.KnightLevel~=nil, true) 
+        caster:SwapAbilities(a6:GetName(), "lancelot_arondite", caster.KnightLevel~=nil, true )       
 end
 
 function KnightInitialize(keys)
@@ -311,7 +313,7 @@ function OnAronditeStart(keys)
     end)
     ability:ApplyDataDrivenModifier(caster, caster, "modifier_arondite", {})
 
-    --Fix for Arondight-KoH abuse
+    --Fix for Arondight-KoH abuse, UPDATE: seeing as how SwapAbilities(,,,false) appears to effectively kills off abuse, below fix may no longer be necessary.
     levelKoH = caster:FindAbilityByName("lancelot_knight_of_honor"):GetLevel()
     listOfSkills={"lancelot_caliburn","lancelot_gae_bolg","lancelot_nine_lives","lancelot_rule_breaker","lancelot_tsubame_gaeshi"}
     for i = 1,levelKoH do
@@ -611,7 +613,8 @@ function LancelotCheckCombo(caster, ability)
                 local abilname = "rubick_empty1"
                 if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
 
-                caster:SwapAbilities("lancelot_nuke", abilname, true, true) 
+                caster:SwapAbilities("lancelot_nuke", abilname, true, true)
+                caster.nukeAvail = true
                 local newTime =  GameRules:GetGameTime()
                 Timers:CreateTimer({
                     endTime = 3,
@@ -619,6 +622,7 @@ function LancelotCheckCombo(caster, ability)
                     if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
                     caster:SwapAbilities("lancelot_nuke", abilname, true, true) 
                     WUsed = false
+                    caster.nukeAvail = false
                 end
                 })
             end
