@@ -532,6 +532,9 @@ function OnBloodMarkAcquired(keys)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+    if hero:HasModifier("modifier_true_form") then
+    	hero:SwapAbilities("fate_empty1", "avenger_blood_mark", true, true) 
+    end
 end
 
 function OnOverdriveAcquired(keys)
