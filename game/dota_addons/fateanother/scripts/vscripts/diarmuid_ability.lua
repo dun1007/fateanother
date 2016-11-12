@@ -68,6 +68,7 @@ end
 function OnDSStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:HasModifier("modifier_rampant_warrior") then return end--appears stacking W and Combo is possible from sealing, remove if stacking is intended feature
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 end
 
@@ -96,7 +97,9 @@ function OnRampantWarriorStart(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
-
+	if caster:HasModifier("modifier_double_spearsmanship") then --appears stacking W and Combo is possible from sealing, remove if stacking is intended feature
+		caster:RemoveModifierByName("modifier_double_spearsmanship")
+	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior", {})
 
 	caster:FindAbilityByName("diarmuid_double_spearsmanship"):ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_combo", {})
@@ -188,7 +191,9 @@ function OnBuidheStart(keys)
 			caster:FindAbilityByName("diarmuid_gae_dearg"):StartCooldown(32)
 			local doublestrike = caster:FindAbilityByName("diarmuid_double_spear_strike")
 			doublestrike:StartCooldown(55)
-			doublestrike:ToggleAbility()
+			if doublestrike:GetToggleState() == true then
+				doublestrike:ToggleAbility()
+			end
 			caster:SetMana(caster:GetMana() - 550)
 			Timers:CreateTimer(55, function()
 				doublestrike:ToggleAbility() 
@@ -267,7 +272,9 @@ function OnDeargStart(keys)
 			caster:FindAbilityByName("diarmuid_gae_buidhe"):StartCooldown(32)
 			local doublestrike = caster:FindAbilityByName("diarmuid_double_spear_strike")
 			doublestrike:StartCooldown(55)
-			doublestrike:ToggleAbility()
+			if doublestrike:GetToggleState() == true then
+				doublestrike:ToggleAbility()
+			end
 			caster:SetMana(caster:GetMana() - 550)
 			Timers:CreateTimer(55, function()
 				doublestrike:ToggleAbility() 

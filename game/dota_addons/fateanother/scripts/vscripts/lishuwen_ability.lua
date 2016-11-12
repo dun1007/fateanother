@@ -528,12 +528,12 @@ function OnDragonStrike3Start(keys)
 	if #targets == 0 then 
 
     	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
-    	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+    	ReduceCooldown(abil, abil:GetCooldown(1)*0.75)
     	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
-    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())*0.25})
 		local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
 		masterabil:EndCooldown()
-		masterabil:StartCooldown(masterabil:GetCooldown(1)/4)    
+		masterabil:StartCooldown(masterabil:GetCooldown(1)*0.25)    
 		return 
 	end
 
@@ -627,7 +627,6 @@ function LishuwenCheckCombo(caster, ability)
             end
             })
         else]]
-
     	if ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:FindAbilityByName("lishuwen_fierce_tiger_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
             caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
             Timers:CreateTimer('raging_dragon_timer',{
@@ -635,12 +634,12 @@ function LishuwenCheckCombo(caster, ability)
                 callback = function()
                 if not caster.bIsCurrentDSCycleFinished and caster.bIsCurrentDSCycleStarted then
                 	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
-                	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+                	ReduceCooldown(abil, abil:GetCooldown(1)*0.75)
                 	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
-                	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+                	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())*0.25})
 					local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
 					masterabil:EndCooldown()
-					masterabil:StartCooldown(masterabil:GetCooldown(1)/4)            	
+					masterabil:StartCooldown(masterabil:GetCooldown(1)*0.25)            	
                 end	
 				local currentAbil = caster:GetAbilityByIndex(2)	
 				caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false)

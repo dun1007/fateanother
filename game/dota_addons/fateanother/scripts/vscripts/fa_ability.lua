@@ -684,7 +684,7 @@ end
 function FACheckCombo(caster, ability)
 	if caster:GetStrength() >= 24.1 and caster:GetAgility() >= 24.1 then
 		if ability == caster:FindAbilityByName("false_assassin_gate_keeper") and caster:FindAbilityByName("false_assassin_heart_of_harmony"):IsCooldownReady() and caster:FindAbilityByName("false_assassin_tsubame_mai"):IsCooldownReady() then
-			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", true, true) 
+			caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", false, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()

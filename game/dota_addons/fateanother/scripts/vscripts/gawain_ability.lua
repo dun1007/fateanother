@@ -102,18 +102,16 @@ function OnDevoteHit(keys)
 			end
 
 			--Lower the remaining cooldown duration of the Master 2 (Rin)
-			if target:GetStrength() >= 19.1 and target:GetAgility() >= 19.1 and target:GetIntellect() >= 19.1 then 	--Checks if the target can cast combo
-				local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
-				local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
-				masterComboAbility:EndCooldown()	
-				masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)
-				for i = 1, #modifierList do
-					if target:HasModifier(modifierList[i]) then
-						target:RemoveModifierByName(modifierList[i])
-						keys.ability:ApplyDataDrivenModifier(caster, target, modifierList[i], {duration = (masterComboCooldownRemaining-15)})		
-					end
-				end		
-			end
+			local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
+			local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
+			masterComboAbility:EndCooldown()	
+			masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)
+			for i = 1, #modifierList do
+				if target:HasModifier(modifierList[i]) then
+					target:RemoveModifierByName(modifierList[i])
+					keys.ability:ApplyDataDrivenModifier(caster, target, modifierList[i], {duration = (masterComboCooldownRemaining-15)})		
+				end
+			end		
 		end
 	else
 		-- process enemy effect
@@ -594,7 +592,7 @@ end
 function GawainCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gawain_invigorating_ray") and caster:FindAbilityByName("gawain_suns_embrace"):IsCooldownReady() and caster:FindAbilityByName("gawain_supernova"):IsCooldownReady() then
-			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
+			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", false, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()

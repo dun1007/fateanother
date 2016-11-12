@@ -559,7 +559,7 @@ end
 function GilgaCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") and caster:FindAbilityByName("gilgamesh_enuma_elish"):IsCooldownReady() and caster:FindAbilityByName("gilgamesh_max_enuma_elish"):IsCooldownReady() then
-			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", false, true) 
 			Timers:CreateTimer({
 				endTime = 5,
 				callback = function()
