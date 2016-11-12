@@ -69,7 +69,7 @@ var abilities = [
 	["lishuwen_concealment", "lishuwen_cosmic_orbit", "lishuwen_fierce_tiger_strike", "lishuwen_martial_arts", "fate_empty1", "lishuwen_no_second_strike"],
 	["jeanne_charisma", "jeanne_purge_the_unjust", "jeanne_gods_resolution", "jeanne_magic_resistance_ex", "jeanne_saint", "jeanne_luminosite_eternelle"],
 	["astolfo_hippogriff_vanish", "astolfo_down_with_a_touch", "astolfo_la_black_luna", "fate_empty1", "astolfo_casa_di_logistilla", "astolfo_hippogriff_raid"],
-	["fate_empty1", "fate_empty2", "fate_empty3", "fate_empty4", "fate_empty5", "fate_empty6"]
+	["nursery_rhyme_white_queens_enigma", "nursery_rhyme_the_plains_of_water", "nursery_rhyme_doppelganger", "nursery_rhyme_shapeshift", "nursery_rhyme_nameless_forest", "nursery_rhyme_queens_glass_game"]
 ]
 
 var attributes = [
@@ -94,7 +94,7 @@ var attributes = [
 	["lishuwen_attribute_circulatory_shock", "lishuwen_attribute_improve_martial_arts", "lishuwen_attribute_dual_class", "lishuwen_attribute_furious_chain"],
 	["jeanne_attribute_identity_discernment", "jeanne_attribute_improve_saint", "jeanne_attribute_punishment", "jeanne_attribute_divine_symbol"],
 	["astolfo_attribute_riding", "astolfo_attribute_monstrous_strength", "astolfo_attribute_independent_action", "astolfo_attribute_sanity"],
-	["fate_empty1","fate_empty2","fate_empty3","fate_empty4","fate_empty5"]
+	["nursery_rhyme_attribute_forever_together","nursery_rhyme_attribute_nightmare","nursery_rhyme_attribute_reminiscence","nursery_rhyme_attribute_improve_queens_glass_game"]
 ]
 
 var comboes = [
@@ -118,7 +118,8 @@ var comboes = [
 	"tamamo_polygamist_castration_fist",
 	"lishuwen_raging_dragon_strike",
 	"jeanne_combo_la_pucelle",
-	"astolfo_hippogriff_ride"
+	"astolfo_hippogriff_ride",
+	"nursery_rhyme_story_for_somebodys_sake"
 ]
 
 var guidelinks = [
@@ -143,7 +144,8 @@ var guidelinks = [
 	"http://fa-d2.wikia.com/wiki/Assassin_%28Li_Shu_Wen%29#Gameplay",
 	"http://fa-d2.wikia.com/wiki/Jeanne_d%27Arc#Gameplay",
 	"http://fa-d2.wikia.com/wiki/Jeanne_d%27Arc#Gameplay",
-	"http://fa-d2.wikia.com/wiki/Rider_of_Black#Gameplay"
+	"http://fa-d2.wikia.com/wiki/Rider_of_Black#Gameplay",
+	"http://fa-d2.wikia.com/wiki/Rider_of_Black#Gameplay"   //placeholder for nursery rhyme's page
 ]
 
 function CreateContextAbilityPanel(panel, abilityname)

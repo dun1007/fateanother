@@ -192,17 +192,12 @@ AstolfoAttribute = {
 }
 
 NRAttribute = {
-	"fate_empty1",
-	"fate_empty2",
-	"fate_empty3",
-	"fate_empty4",
-	"fate_empty5",
-	--[["nursery_rhyme_attribute_jabberwocky",
+	"nursery_rhyme_attribute_forever_together",
+	"nursery_rhyme_attribute_nightmare",
+	"nursery_rhyme_attribute_reminiscence",
 	"nursery_rhyme_attribute_improve_queens_glass_game",
-	"nursery_rhyme_attribute_improve_nameless_forest",
-	"nursery_rhyme_attribute_unending_rhymes",
-	"nursery_rhyme_attribute_dragon_skillet",]]
-	attrCount = 5
+	"nursery_rhyme_story_for_somebodys_sake",
+	attrCount = 4
 }
 --[[LiAttribute = {
 	attrCount = 4
