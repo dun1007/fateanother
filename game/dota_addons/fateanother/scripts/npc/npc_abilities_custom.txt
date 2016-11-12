@@ -21224,7 +21224,48 @@
 				"TextureName"	"astolfo_hippogriff_ride"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
-
+			"modifier_instinct_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"saber_instinct"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_strike_air_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"saber_attribute_strike_air"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_battle_continuation_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lancer_5th_battle_continuation"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_hrunting_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"archer_5th_hrunting"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_overedge_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"archer_5th_overedge"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_blood_mark_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"avenger_blood_mark"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_quickdraw_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"false_assassin_quickdraw"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 
