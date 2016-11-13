@@ -77,7 +77,7 @@ modifierList = {"modifier_max_mana_burst_cooldown","modifier_delusional_illusion
 "modifier_larret_de_mort_cooldown","modifier_annihilate_cooldown","modifier_fiery_finale_cooldown",
 "modifier_polygamist_cooldown","modifier_raging_dragon_strike_cooldown","modifier_la_pucelle_cooldown","modifier_hippogriff_ride_cooldown",
 "modifier_strike_air_cooldown","modifier_instinct_cooldown","modifier_battle_continuation_cooldown","modifier_hrunting_cooldown",
-"modifier_overedge_cooldown","modifier_blood_mark_cooldown","modifier_quickdraw_cooldown"} --last 2 lines are non-combos.
+"modifier_overedge_cooldown","modifier_blood_mark_cooldown","modifier_quickdraw_cooldown","modifier_eternal_arms_mastership_cooldown","modifier_mystic_shackle_cooldown"} --last 2 lines are non-combos.
 
 function OnDevoteHit(keys)
 	local caster = keys.caster

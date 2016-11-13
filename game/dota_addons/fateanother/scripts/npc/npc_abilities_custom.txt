@@ -12559,6 +12559,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"lancelot_bless_of_fairy"
+		"AbilityCooldown"				"45"
 		"MaxLevel"						"1"
 		
 		"AbilitySpecial"
@@ -12604,6 +12605,11 @@
 					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	    	}
+	    	"modifier_blessing_of_fairy_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 
@@ -21264,6 +21270,18 @@
 			{
 				"IsDebuff"	"1"
 				"TextureName"	"false_assassin_quickdraw"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_mystic_shackle_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"wisp_tether"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_eternal_arms_mastership_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lancelot_arms_mastership"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
 		}
