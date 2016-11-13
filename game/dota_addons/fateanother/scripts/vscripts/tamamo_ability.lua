@@ -28,7 +28,7 @@ function OnArmedUpStart(keys)
 	local a1 = caster:FindAbilityByName("tamamo_soulstream") -- Soulstream 
 	local a2 = caster:FindAbilityByName("tamamo_subterranean_grasp") -- Subterranean Grasp
 	local a3 = nil
-	if caster:GetAbilityByIndex(2):GetAbilityName() == "tamamo_mantra" then
+	if caster.bIsShackleAvailable ~= true then
 		a3 = caster:FindAbilityByName("tamamo_mantra") -- Mantra
 	else
 		a3 = caster:FindAbilityByName("tamamo_mystic_shackle")

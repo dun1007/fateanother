@@ -442,6 +442,11 @@ function OnLaPucelleTakeDamage(keys)
 			GameRules:SendCustomMessage("#la_pucelle_alert_1", 0, 0)
 			caster.bIsLaPucelleActivatedThisRound = true
 			caster.LaPucelleKiller = attacker
+			if not caster.LaPucelleKiller:IsHero() then
+                if IsValidEntity(caster.LaPucelleKiller:GetPlayerOwner()) then 
+        	    	caster.LaPucelleKiller = caster.LaPucelleKiller:GetPlayerOwner():GetAssignedHero()
+        		end
+    		end
 
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
 
