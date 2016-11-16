@@ -495,6 +495,7 @@ function OnUBWStart(keys)
 			if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
 				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2000
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	            if #weaponTargets == 0 then return 0.2 end
 				local targetIndex = RandomInt(1, #weaponTargets)
 				local swordTarget = weaponTargets[targetIndex]
 				local swordOrigin = caster:GetAbsOrigin() + Vector(0,0,500) + RandomVector(1000)

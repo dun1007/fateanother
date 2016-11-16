@@ -505,19 +505,28 @@
 	    	"ApplyModifier"
 	    	{
 	    		"ModifierName"	"item_pot_regen"
-	    		"Target"	"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 			"FireSound"
 			{
 				"EffectName"	"DOTA_Item.ClarityPotion.Activate"
-				"Target"		"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 			}
 	    }
 	    "Modifiers"
 	    {
 	        "item_pot_regen"
 	        {	
-	        	"Duration"	"10.0"
+	        	"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+	        	"Duration"		"10.0"
 	        	"EffectName"	"particles/items_fx/healing_flask.vpcf"
 	        	"EffectAttachType"	"attach_hitloc"
 	            "Properties"
@@ -726,18 +735,27 @@
 	    	"ApplyModifier"
 	    	{
 	    		"ModifierName"	"modifier_speed_gem"
-	    		"Target"		"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 	    	"FireSound"
 	    	{
 	    		"EffectName"		"DOTA_Item.PhaseBoots.Activate"
-	    		"Target"		"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_speed_gem"
 	    	{
+	    		"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
 				"EffectAttachType"		"follow_origin"	
 	    		"Duration"		"10.0"
@@ -870,12 +888,20 @@
 	    	"ApplyModifier"
 	    	{
 	    		"ModifierName"		"modifier_berserk_scroll"
-	    		"Target"			"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 	    	"FireSound"
 	    	{
 	    		"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
-	    		"Target"			"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 	    	"SpendCharge" {}
 	    }
@@ -883,6 +909,7 @@
 	    {
 	    	"modifier_berserk_scroll"
 	    	{
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 	    		"Duration"		"10.0"
 				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -1219,7 +1246,11 @@
 	    	"FireSound"
 	    	{
 	    		"EffectName"	"DOTA_Item.Mekansm.Activate"
-	    		"Target"		"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 	    	"RunScript"
 			{
@@ -1232,6 +1263,7 @@
 	    {
 	    	"modifier_healing_scroll"
 	    	{	
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
 				"EffectAttachType"	"follow_overhead"
 	    		"Duration"		"5.0"
@@ -2297,7 +2329,11 @@
 	    		{
 					"AttachEffect"
 					{
-						"Target"			"CASTER"
+	    				"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
 						"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
 						"EffectAttachType"	"follow_origin"
 					}
