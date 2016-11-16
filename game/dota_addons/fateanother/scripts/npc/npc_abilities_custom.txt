@@ -27340,6 +27340,7 @@
 			}
 		}
 	}
+
 	//====================================
 	// Nursery Rhyme: Shapeshift(D)
 	//====================================
@@ -27351,10 +27352,10 @@
 		"MaxLevel"						"2"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"25"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
-
+		"AbilityTextureName"			"nursery_rhyme_shapeshift"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
@@ -27362,16 +27363,16 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"2500"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"40"
+		"AbilityCooldown"				"60"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"30"
+		"AbilityManaCost"				"300"
 		
 		"AbilitySpecial"
 		{
@@ -27407,11 +27408,13 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"25"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"nursery_rhyme_nameless_forest"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"	
 
-		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
 		}
@@ -27465,23 +27468,26 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
-
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"			"nursery_rhyme_white_queens_enigma"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"
+
 		"precache"
 		{
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"1"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27492,7 +27498,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"15"
+				"damage"				"20"
 			}
 			"02"
 			{
@@ -27563,23 +27569,25 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
 
-		"AnimationPlaybackRate" 		"1.0"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"	
+		"AbilityTextureName"			"nursery_rhyme_the_plains_of_water"
 		"precache"
 		{
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"1"
+		"AbilityCastRange"				"200"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27630,11 +27638,13 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
-		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
+		"LevelsBetweenUpgrades"			"2"
 
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityTextureName"			"nursery_rhyme_doppelganger"
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
@@ -27642,8 +27652,8 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"1"
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
@@ -27701,7 +27711,8 @@
 		"LevelsBetweenUpgrades"			"2"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
+		"AbilityTextureName"			"nursery_rhyme_queens_glass_game"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
@@ -27710,16 +27721,16 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"900"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"180"
+		"AbilityCooldown"				"55"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"600"
+		"AbilityManaCost"				"800"
 		
 		"AbilitySpecial"
 		{
@@ -27775,11 +27786,10 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"RequiredLevel"					"1"
-		"LevelsBetweenUpgrades"			"2"
+		"RequiredLevel"					"24"
+		"LevelsBetweenUpgrades"			"24"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
+		"AbilityTextureName"			"nursery_rhyme_story_for_somebodys_sake"
 
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
@@ -27788,7 +27798,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"400"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -27832,7 +27842,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"true_assassin_attribute_improve_presence_concealment"
+		"AbilityTextureName"			"nursery_rhyme_attribute_forever_together"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -27871,7 +27881,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"true_assassin_attribute_improve_presence_concealment"
+		"AbilityTextureName"			"nursery_rhyme_attribute_nightmare"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -27910,7 +27920,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"true_assassin_attribute_improve_presence_concealment"
+		"AbilityTextureName"			"nursery_rhyme_attribute_reminiscence"
 		
 		
 		"AbilityCastPoint"				"0.0"
@@ -27949,7 +27959,7 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
-		"AbilityTextureName"			"true_assassin_attribute_improve_presence_concealment"
+		"AbilityTextureName"			"nursery_rhyme_attribute_improve_queens_glass_game"
 		
 		
 		"AbilityCastPoint"				"0.0"
