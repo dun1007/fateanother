@@ -528,7 +528,7 @@ function BScroll(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	if caster:HasModifier("jump_pause_nosilence") then
-		RefundItem(caster, ability, "item_b_scroll")
+		RefundItem(caster, ability)
 		return
 	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_b_scroll", {})
