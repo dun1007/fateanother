@@ -44,6 +44,16 @@ function SetTimer( message, duration )
 	});
 }
 
+function TimerClicked() {
+	if (!GameUI.IsAltDown()) {
+		return;
+	}
+	var messageLabel = $("#TimerMsg");
+	var timeLabel = $("#TimerRemaining");
+	var message = messageLabel.text + " ▶ " + timeLabel.text
+	GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
+}
+
 
 function UpdateTimer(message, duration)
 {
@@ -53,6 +63,7 @@ function UpdateTimer(message, duration)
 (function()
 {
 	$.GetContextPanel().SetTimer = SetTimer;
+	$.GetContextPanel().TimerClicked = TimerClicked;
 	//GameEvents.Subscribe( "dota_ability_changed", RebuildAbilityUI ); // major rebuild
 	//AutoUpdateAbility(); // initial update of dynamic state
 })();
