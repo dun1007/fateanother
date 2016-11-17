@@ -25,7 +25,7 @@ function LancerOnTakeDamage(keys)
 	if currentHealth == 0 and keys.ability:IsCooldownReady() and keys.DamageTaken <= highend and keys.DamageTaken >= lowend and IsRevivePossible(caster) then
 		caster:SetHealth(health)
 		keys.ability:StartCooldown(cd) 
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_continuation_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_continuation_cooldown", {duration = cd})
 		local reviveFx = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(reviveFx, 3, caster:GetAbsOrigin())
 
