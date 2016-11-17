@@ -652,21 +652,6 @@ function FateGameMode:OnPlayerChat(keys)
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_bgm_off", {} )
     end
 
-    if text == "-savestash" then
-        local hero = ply:GetAssignedHero()
-        SaveStashState(hero)
-    end
-
-    if text == "-loadstash" then
-        local hero = ply:GetAssignedHero()
-        LoadStashState(hero)
-    end
-
-    if text == "-cscroll" then
-        local hero = ply:GetAssignedHero()
-        hero.CStock = 10
-    end
-
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
@@ -1150,9 +1135,6 @@ function FateGameMode:OnItemPurchased( keys )
                 LoadStashState(hero)
             else
                 local itemsWithSameName = Entities:FindAllByName(itemName)
-                for i,k in ipairs(itemsWithSameName) do
-                    DeepPrintTable(k)
-                end
                 local droppedItem
                 local purchasedTime = -9999 
                 for i = 1,#itemsWithSameName do
@@ -1163,9 +1145,8 @@ function FateGameMode:OnItemPurchased( keys )
                     end
                 end
 
-                print(purchasedTime)
                 if droppedItem == nil then
-                    print("Item was nil: " .. itemName)
+                    print("Unexpected: Item was nil - " .. itemName)
                 else
                     droppedItem:GetContainer():RemoveSelf()
                     droppedItem:RemoveSelf()
