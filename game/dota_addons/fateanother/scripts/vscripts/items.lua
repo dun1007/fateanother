@@ -561,6 +561,11 @@ function SScroll(keys)
 
 	DoDamage(caster, target, 400, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 	ApplyPurge(target)
+
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_purge", {})
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier1", {})
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier2", {})
+
 	local boltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
 	ParticleManager:SetParticleControl(boltFx, 1, Vector(target:GetAbsOrigin().x,target:GetAbsOrigin().y,target:GetAbsOrigin().z+((target:GetBoundingMaxs().z - target:GetBoundingMins().z)/2)))
 
@@ -595,6 +600,10 @@ function EXScroll(keys)
 	}
 	DoDamage(caster, target, 600, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 	ApplyPurge(target)
+
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_purge", {})
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier1", {})
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_slow_tier2", {})
 
 	local boltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_zuus/zuus_arc_lightning.vpcf", PATTACH_OVERHEAD_FOLLOW, caster)
 	--local lightningBoltFx = ParticleManager:CreateParticle("particles/units/heroes/hero_leshrac/leshrac_lightning_bolt.vpcf", PATTACH_ABSORIGIN, target)

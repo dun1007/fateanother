@@ -1667,22 +1667,6 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_purge"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier1"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier2"
-	    		"Target"			"TARGET"
-	    	}
-	    		    		
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
@@ -1811,22 +1795,6 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_purge"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier1"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier2"
-	    		"Target"			"TARGET"
-	    	}
-	    		    		
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
