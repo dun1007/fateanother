@@ -652,6 +652,16 @@ function FateGameMode:OnPlayerChat(keys)
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_bgm_off", {} )
     end
 
+    if text == "-savestash" then
+        local hero = ply:GetAssignedHero()
+        SaveStashState(hero)
+    end
+
+    if text == "-loadstash" then
+        local hero = ply:GetAssignedHero()
+        LoadStashState(hero)
+    end
+
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
@@ -1097,7 +1107,6 @@ function FateGameMode:OnItemPurchased( keys )
     CheckItemCombinationInStash(hero)
 
     local oldStash = GetStashItems(hero)
-
 
 
     if hero.IsInBase == false then
