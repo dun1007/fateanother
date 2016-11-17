@@ -476,6 +476,39 @@ function StashBlink(keys)
 	FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
 end
 
+function ManaEssence(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	if caster:HasModifier("jump_pause_nosilence") then
+		RefundItem(caster, ability)
+		return
+	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_pot_regen", {})
+	caster:EmitSound("DOTA_Item.ClarityPotion.Activate")
+end
+
+function BerserkScroll(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	if caster:HasModifier("jump_pause_nosilence") then
+		RefundItem(caster, ability)
+		return
+	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_berserk_scroll", {})
+	caster:EmitSound("DOTA_Item.MaskOfMadness.Activate")
+end
+
+function SpeedGem(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	if caster:HasModifier("jump_pause_nosilence") then
+		RefundItem(caster, ability)
+		return
+	end
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_speed_gem", {})
+	caster:EmitSound("DOTA_Item.PhaseBoots.Activate")
+end
+
 function CScroll(keys)
 	local caster = keys.caster
 	local ability = keys.ability
