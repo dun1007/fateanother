@@ -40,7 +40,6 @@ function OnVanishStart(keys)
 		caster:GiveMana(ability:GetManaCost(1)) 
 		return 
 	end 
-	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local info = {
 		Target = target, -- chainTarget
 		Source = caster, -- chainSource
@@ -55,8 +54,13 @@ function OnVanishStart(keys)
 end
 
 function OnVanishHit(keys)
-	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(target)
+		or target:IsMagicImmune()
+	then
+		return
+	end -- Linken effect checker
+	local caster = keys.caster
 	local ability = keys.ability
 	local damage = keys.Damage
 	ApplyPurge(target)

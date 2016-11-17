@@ -830,14 +830,14 @@ function IsSpellBlocked(target)
     elseif target:HasModifier("modifier_wind_protection_passive") then
         if math.random(100) < 15 then
             EmitSoundWithCooldown("DOTA_Item.LinkensSphere.Activate", target, 1)
-            ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
-            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
-            return true 
+            local particle = ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
+            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
+            return true
         end
-    else 
+    else
         return false
     end
-end 
+end
 
 function EmitSoundWithCooldown(soundname, target, cooldown)
     if not target.bIsSoundOnCooldown then

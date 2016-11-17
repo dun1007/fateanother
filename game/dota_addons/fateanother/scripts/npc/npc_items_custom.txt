@@ -502,29 +502,16 @@
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"	"item_pot_regen"
-	    		"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-	    	}
-			"FireSound"
+	    	"RunScript"
 			{
-				"EffectName"	"DOTA_Item.ClarityPotion.Activate"
-	    		"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
+				"ScriptFile"	"items"
+				"Function"		"ManaEssence"
 			}
 	    }
 	    "Modifiers"
 	    {
 	        "item_pot_regen"
-	        {	
+	        {
 	        	"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 	        	"Duration"		"10.0"
 	        	"EffectName"	"particles/items_fx/healing_flask.vpcf"
@@ -732,24 +719,11 @@
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"	"modifier_speed_gem"
-	    		"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-	    	}
-	    	"FireSound"
-	    	{
-	    		"EffectName"		"DOTA_Item.PhaseBoots.Activate"
-	    		"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-	    	}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"SpeedGem"
+			}
 	    }
 	    "Modifiers"
 	    {
@@ -885,24 +859,11 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_berserk_scroll"
-	    		"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-	    	}
-	    	"FireSound"
-	    	{
-	    		"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
-	    		"Target"
-				{
-					"Center"	"CASTER"
-					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
-				}
-	    	}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"BerserkScroll"
+			}
 	    	"SpendCharge" {}
 	    }
 	    "Modifiers"
@@ -1667,22 +1628,6 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_purge"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier1"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier2"
-	    		"Target"			"TARGET"
-	    	}
-	    		    		
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
@@ -1811,22 +1756,6 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_purge"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier1"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier2"
-	    		"Target"			"TARGET"
-	    	}
-	    		    		
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
