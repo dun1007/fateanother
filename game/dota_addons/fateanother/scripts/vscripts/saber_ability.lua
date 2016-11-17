@@ -59,12 +59,16 @@ function CreateWind(keys)
 end
 
 function InvisibleAirPull(keys)
-	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-	if keys.target:GetName() == "npc_dota_hero_bounty_hunter" and keys.target.IsPFWAcquired then return end -- Protection from Wind checker
+	local target = keys.target
+	if IsSpellBlocked(target) -- Linken's
+		or target:IsMagicImmune() -- Magic immunity
+		or target:GetName() == "npc_dota_hero_bounty_hunter" and target.IsPFWAcquired -- Protection from Wind
+	then
+		return
+	end
 
 	keys.caster.invisible_air_reach_target = true					-- Addition
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 
