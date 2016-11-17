@@ -1572,18 +1572,13 @@ function SaveStashState(hero)
         table.insert(stashState, i, item and item:GetName())
         table.insert(stashChargeState, i, item and item:GetCurrentCharges())
     end
-    for i=1,6 do
-        local m = (stashState[i] or "nil")
-        local m1 = (stashChargeState[i] or "nil")
-        print(m .. " " .. m1)
-    end
     hero.stashState = stashState
     hero.stashChargeState = stashChargeState
 end
 
 function LoadStashState(hero)
-    local stashState = hero.stashState
-    local stashChargeState = hero.stashChargeState
+    local stashState = hero.stashState or {}
+    local stashChargeState = hero.stashChargeState or {}
     -- fill inventory with dummy items so AddItem adds to correct index
     for i=0,5 do
         local item = hero:GetItemInSlot(i)
