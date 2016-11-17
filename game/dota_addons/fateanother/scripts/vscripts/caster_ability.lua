@@ -771,6 +771,8 @@ function OnItemStart(keys)
 
 	caster:AddItem(item)
 	CheckItemCombination(caster)
+
+    SaveStashState(caster)
 end
 
 function OnArgosStart(keys)

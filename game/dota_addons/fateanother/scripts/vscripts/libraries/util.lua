@@ -1563,3 +1563,48 @@ function RemoveHeroFromLinkTables(targethero)
         end
     end)]]
 end
+
+function SaveStashState(hero)
+    local stashState = {}
+    local stashChargeState = {}
+    for i=1, 6 do
+        local item = hero:GetItemInSlot(i + 5)
+        table.insert(stashState, i, item and item:GetName())
+        table.insert(stashChargeState, i, item and item:GetCurrentCharges())
+    end
+    hero.stashState = stashState
+    hero.stashChargeState = stashChargeState
+end
+
+function LoadStashState(hero)
+    local stashState = hero.stashState or {}
+    local stashChargeState = hero.stashChargeState or {}
+    -- fill inventory with dummy items so AddItem adds to correct index
+    for i=0,5 do
+        local item = hero:GetItemInSlot(i)
+        if item == nil then
+            local dummyItem = CreateItem("item_dummy_item", nil, nil)
+            hero:AddItem(dummyItem)
+        end
+    end
+    for i=1,6 do
+        local item = hero:GetItemInSlot(i + 5)
+        hero:RemoveItem(item)
+
+        local savedItemName = stashState[i]
+        local newItem = CreateItem(savedItemName or "item_dummy_item", nil, nil)
+        hero:AddItem(newItem)
+
+        local charges = stashChargeState[i]
+        if charges ~= nil then
+            newItem:SetCurrentCharges(charges)
+        end
+    end
+    -- clear dummy items
+    for i=0,11 do
+        local item = hero:GetItemInSlot(i)
+        if item:GetName() == "item_dummy_item" then
+            hero:RemoveItem(item)
+        end
+    end
+end

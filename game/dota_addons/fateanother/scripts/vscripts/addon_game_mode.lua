@@ -1096,46 +1096,66 @@ function FateGameMode:OnItemPurchased( keys )
     local hero = PlayerResource:GetPlayer(plyID):GetAssignedHero()
     CheckItemCombinationInStash(hero)
 
-    local oldStash = GetStashItems(hero)
-
-
-
-    if hero.IsInBase == false then
-        if PlayerResource:GetGold(plyID) + itemCost < itemCost * 1.5 then
-            -- This will take care of non-component items
-            for i = 1, #oldStash do
-                if oldStash[i]:GetName() == itemName then
-                    SendErrorMessage(plyID, "#Not_Enough_Gold_Item")
-                    --hero:RemoveItem(oldStash[i])
-                    hero:ModifyGold(itemCost, true, 0)
-                    oldStash[i]:RemoveSelf()
-                    break
-                end
-            end
-        else
-            --print("Deducing extra cost" .. itemCost*0.5 .. "from player gold")
-            hero:ModifyGold(-itemCost*0.5, true , 0)
-        end
-        -- If hero is in base, check for C scroll stock
-    else
-        -- If hero is in base, check for C scroll stock
+    local isPriceIncreased = true
+    if hero.IsInBase then
         if itemName == "item_c_scroll" then
             if hero.CStock > 0 then
                 hero.CStock = hero.CStock - 1
-
+                isPriceIncreased = false
             else
-                for i = 1, #oldStash do
-                    if oldStash[i]:GetName() == "item_c_scroll" then
-                        SendErrorMessage(plyID, "#Out_Of_Stock_C_Scroll")
-                        --hero:RemoveItem(oldStash[i])
-                        hero:ModifyGold(itemCost, true, 0)
-                        oldStash[i]:RemoveSelf()
-                        break
+                SendErrorMessage(plyID, "#Out_Of_Stock_C_Scroll")
+            end
+        else
+            isPriceIncreased = false
+        end
+    end
+
+    if isPriceIncreased then
+        if PlayerResource:GetGold(plyID) >= itemCost * 0.5 then
+            -- account for unreliable gold
+            local unreliableGold = PlayerResource:GetUnreliableGold(plyID)
+            hero:ModifyGold(-itemCost * 0.5, false, 0)
+            local diff = math.max(itemCost * 0.5 - unreliableGold, 0)
+            hero:ModifyGold(-diff, true, 0)
+        else
+            SendErrorMessage(plyID, "#Not_Enough_Gold_Item")
+            hero:ModifyGold(itemCost, true, 0)
+            local isItemDropped = true
+
+            local stash = GetStashItems(hero)
+            local oldStash = hero.stashState or {}
+            for i = 1,6 do
+                if stash[i] ~= oldStash[i] then
+                    isItemDropped = false
+                    break
+                end
+            end
+
+            if not isItemDropped then
+                LoadStashState(hero)
+            else
+                local itemsWithSameName = Entities:FindAllByName(itemName)
+                local droppedItem
+                local purchasedTime = -9999 
+                for i = 1,#itemsWithSameName do
+                    local item = itemsWithSameName[i]
+                    if item:GetPurchaser() == hero and item:GetPurchaseTime() > purchasedTime then
+                        droppedItem = item
+                        purchasedTime = item:GetPurchaseTime()
                     end
+                end
+
+                if droppedItem == nil then
+                    print("Unexpected: Item was nil - " .. itemName)
+                else
+                    droppedItem:GetContainer():RemoveSelf()
+                    droppedItem:RemoveSelf()
                 end
             end
         end
     end
+
+    SaveStashState(hero)
 
     if PlayerResource:GetGold(plyID) < 200 and hero.bIsAutoGoldRequestOn then
         Notifications:RightToTeamGold(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 7, nil, {color="rgb(255,255,255)", ["font-size"]="20px"}, true)
@@ -1144,11 +1164,9 @@ end
 
 function GetStashItems(hero)
     local stashTable = {}
-    for i=6,11 do
-        local heroItem = hero:GetItemInSlot(i)
-        if heroItem ~= nil then
-            table.insert(stashTable, heroItem)
-        end
+    for i=1,6 do
+        local item = hero:GetItemInSlot(i + 5)
+        table.insert(stashTable, i, item and item:GetName())
     end
     return stashTable
 end
@@ -1914,16 +1932,19 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
         if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 6 and targetIndex <= 11) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
+            SaveStashState(caster)
             return false
         -- Item is currently placed in stash, while target is in inventory
         elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 0 and targetIndex <=5) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges, true, false)
+            SaveStashState(caster)
             return false
         -- Item is currently placed in stash, and it is just being moved within there
         elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 6 and targetIndex <=11) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
+            SaveStashState(caster)
             return false
         end
     -- What do we do when item is bought?
@@ -1965,6 +1986,7 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
         EmitSoundOnClient("General.Sell", caster:GetPlayerOwner())
         caster:ModifyGold(GetItemCost(ability:GetName()) *0.5, true , 0)
         ability:RemoveSelf()
+        SaveStashState(caster)
         return false
     end
     return true
