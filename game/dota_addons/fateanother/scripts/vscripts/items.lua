@@ -483,7 +483,7 @@ function ManaEssence(keys)
 		RefundItem(caster, ability)
 		return
 	end
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_pot_regen", {})
+	ability:ApplyDataDrivenModifier(caster, caster, "item_pot_regen", {})
 	caster:EmitSound("DOTA_Item.ClarityPotion.Activate")
 end
 
