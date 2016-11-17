@@ -515,6 +515,24 @@ vectors = {
 	Vector(0,-500, 500),
 	Vector(0,0, 0)
 }
+--vectorsV2[i] = vectors[i]-vectors[i-1], if i-1==0, then vectors[i-1] == (0,0,0), vectors sum up to 0 for V2.
+vectorsV2 = {
+	Vector(500, 500, 500),
+	Vector(-1000,-1000,-200),
+	Vector(1000,0,100),
+	Vector(-800, 900, 100),
+	Vector(300,-900, 0),
+	Vector(300, 500, -100),
+	Vector(200, 500, 100),
+	Vector(-1000,-1000,-200),
+	Vector(200, 900, 200),
+	Vector(800, 100, 0),
+	Vector(-1000,-1000,-200),
+	Vector(1000,0,100),
+	Vector(-800, 900, 100),
+	Vector(300,-900, 0),
+	Vector(0,500, -500)
+}
 
 function OnDragonStrike3Start(keys)
 	local caster = keys.caster
@@ -537,8 +555,6 @@ function OnDragonStrike3Start(keys)
 		return 
 	end
 
-	local startpoint = caster:GetAbsOrigin()
-	local beginpoint = startpoint
 	local endpoint = nil
 	local counter = 0
 
@@ -587,17 +603,17 @@ function OnDragonStrike3Start(keys)
 
 		--newpoint = Vector(startpoint.x + RandomInt(1,600), startpoint.y + RandomInt(1, 600), startpoint.y+500)
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_3_anim", {})
-		newpoint = startpoint+vectors[counter+1]*0.5
+		local currentpoint = caster:GetAbsOrigin()
+		local newpoint = currentpoint+vectorsV2[counter+1]*0.5
 		caster:SetAbsOrigin(newpoint)
 		local trailFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf", PATTACH_CUSTOMORIGIN, caster )
-		ParticleManager:SetParticleControl( trailFx, 1, beginpoint )
+		ParticleManager:SetParticleControl( trailFx, 1, currentpoint )
 		ParticleManager:SetParticleControl( trailFx, 0, newpoint )
 
 		if target ~= nil then
 		    local groundFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN, target )
 		    ParticleManager:SetParticleControl( groundFx, 1, target:GetAbsOrigin())
 	   	end
-		beginpoint = newpoint
 		caster:EmitSound("Hero_Tusk.WalrusPunch.Target")
 		counter = counter + 1
 		return 0.08

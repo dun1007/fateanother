@@ -599,12 +599,16 @@ function EndUBW(caster)
     local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300
     , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
-    for i=1, #units do
-    	if IsValidEntity(units[i]) and not units[i]:IsNull() then
+
+	i = 1
+	while i <= #units do
+		if IsValidEntity(units[i]) and not units[i]:IsNull() then
 			if string.match(units[i]:GetUnitName(),"dummy") then 
 				table.remove(units, i)
+				i = i - 1
 			end
 		end
+		i = i + 1
 	end
 
     for i=1, #units do
