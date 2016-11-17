@@ -166,6 +166,8 @@ end
 function RefundItem(caster, item)
 	local charges = item:GetCurrentCharges()
 	if charges == 0 then
+		-- if the item has zero charges, it is removed from
+		-- the inventory, therefore we have to recreate the item
 		local itemName = item:GetAbilityName()
 		item = CreateItem(itemName, caster, nil)
 		item:SetCurrentCharges(1)
