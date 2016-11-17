@@ -914,6 +914,8 @@ function OnAMAcquired(keys)
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
     local statTable = CreateTemporaryStatTable(hero)
     CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
+
+    SaveStashState(hero)
 end
 
 function OnReplenishmentAcquired(keys)
@@ -929,6 +931,8 @@ function OnReplenishmentAcquired(keys)
 	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
     local statTable = CreateTemporaryStatTable(hero)
     CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
+
+    SaveStashState(hero)
 end
 
 function OnProsperityAcquired(keys)
