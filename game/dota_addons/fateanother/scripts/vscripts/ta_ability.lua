@@ -352,10 +352,10 @@ function OnModStart(keys)
 end
 
 function SelfModRefresh(keys)
-	local caster = keys.caster
-	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
-	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
+	local hero = keys.caster:GetPlayerOwner():GetAssignedHero()
+	hero:RemoveModifierByName("modifier_ta_agi_bonus") 
+	hero:FindAbilityByName("true_assassin_self_modification"):ApplyDataDrivenModifier(hero, hero, "modifier_ta_agi_bonus", {}) 
+	hero:SetModifierStackCount("modifier_ta_agi_bonus", hero, hero:GetKills())
 end
 
 function OnStealStart(keys)

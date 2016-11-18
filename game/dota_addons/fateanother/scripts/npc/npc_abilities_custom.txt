@@ -23670,7 +23670,7 @@
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "lishuwen_martial_arts"
-		"AbilityCastRange"				"%search_radius"
+		//"AbilityCastRange"				"%search_radius"                     duplicate key #1, not sure if cast range is meant to be 700 700 or 700 1050.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -23689,7 +23689,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"700"                // duplicate key #2
 		"AbilityCastRangeBuffer"		"250"
 		"AbilityCastPoint"				"0.4"
 
@@ -23745,6 +23745,14 @@
 				"Aura_Radius"			"%search_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"lishuwen_ability"
+						"Function"			"AuraRefresh"
+					}					
+				}
 			}
 			"modifier_martial_arts_aura_enemy"
 			{

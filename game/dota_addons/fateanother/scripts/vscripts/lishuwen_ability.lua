@@ -685,6 +685,7 @@ function OnMartialArtsImproved(keys)
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 	hero:FindAbilityByName("lishuwen_martial_arts"):SetLevel(2)
+	AuraRefresh(keys)
 	-- allow NSS and FTS to apply mark of fatality
 end
 
@@ -709,4 +710,10 @@ function OnFuriousChainAcquired(keys)
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 	-- AGI scaling and mana refund on abilities
 	-- aspd and ms buff
+end
+
+function AuraRefresh(keys)
+	local hero = keys.caster:GetPlayerOwner():GetAssignedHero()
+	hero:RemoveModifierByName("modifier_martial_arts_aura") 
+	hero:FindAbilityByName("lishuwen_martial_arts"):ApplyDataDrivenModifier(hero, hero, "modifier_martial_arts_aura", {}) 
 end
