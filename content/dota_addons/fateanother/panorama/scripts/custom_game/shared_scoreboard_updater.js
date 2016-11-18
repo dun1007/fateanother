@@ -25,6 +25,32 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		playerPanel = $.CreatePanel( "Panel", playersContainer, playerPanelName );
 		playerPanel.SetAttributeInt( "player_id", playerId );
 		playerPanel.BLoadLayout( scoreboardConfig.playerXmlName, false, false );
+
+		playerPanel.SetPanelEvent(
+			"onactivate",
+			function() {
+				if (!GameUI.IsAltDown()) {
+					Players.PlayerPortraitClicked(playerId, false, false);
+					return;
+				}
+				var playerInfo = Game.GetPlayerInfo(playerId);
+				var isDead = playerInfo.player_respawn_seconds >= 0;
+				var localPlayerId = Game.GetLocalPlayerID();
+				var message;
+				if (localPlayerId == playerId) {
+					message = "_gray__arrow_ _default_I am _gold_" + (isDead ? "dead" : "alive") + "_default_!";
+				} else {
+					var localPlayerInfo = Game.GetPlayerInfo(localPlayerId);
+					if (playerInfo.player_team_id != localPlayerInfo.player_team_id) {
+						var heroName = playerInfo.player_selected_hero
+						message = "_gray__arrow_ _default_Enemy _gold_" + heroName + "_default_ is " + (isDead ? "dead" : "missing") + "!";
+					}
+				}
+				if (message) {
+					GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
+				}
+			}
+		);
 	}
 
 	playerPanel.SetHasClass( "is_local_player", ( playerId == Game.GetLocalPlayerID() ) );
@@ -458,6 +484,7 @@ function ScoreboardUpdater_InitializeScoreboard( scoreboardConfig, scoreboardPan
 		scoreboardConfig.shouldSort = true;
 	}
 	_ScoreboardUpdater_UpdateAllTeamsAndPlayers( scoreboardConfig, scoreboardPanel );
+
 	return { "scoreboardConfig": scoreboardConfig, "scoreboardPanel":scoreboardPanel }
 }
 
