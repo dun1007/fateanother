@@ -720,7 +720,8 @@ function OnPlayerAltClick(eventSourceIndex, keys)
 		return
 	end
 	player.altClickTime = currentTime
-	Say(player, keys.message, keys.toAll and false or true)
+  local message = SubstituteMessageCodes(keys.message)
+	Say(player, message, keys.toAll and false or true)
 end
 
 function DistributeGold(hero, cutoff)
