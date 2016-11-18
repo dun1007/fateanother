@@ -746,63 +746,6 @@ function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bI
     if bIsStashChecked then CheckItemCombinationInStash(hero) end
 end
 
-
-
-function FindName(name)
-    local heroName = nil
-    --print("Finding name")
-    if name == "npc_dota_hero_legion_commander" then
-        heroName = "Saber"
-    elseif name == "npc_dota_hero_phantom_lancer" then
-        heroName = "Lancer(5th)"
-    elseif name == "npc_dota_hero_spectre" then
-        heroName = "Saber Alter(5th)"
-    elseif name == "npc_dota_hero_ember_spirit" then
-        heroName = "Archer(5th)"
-    elseif name == "npc_dota_hero_templar_assassin" then
-        heroName = "Rider(5th)"
-    elseif name == "npc_dota_hero_doom_bringer" then
-        heroName = "Berserker(5th)"
-    elseif name == "npc_dota_hero_juggernaut" then
-        heroName = "Assassin(5th)"
-    elseif name == "npc_dota_hero_bounty_hunter" then
-        heroName = "True Assassin(5th)"
-    elseif name == "npc_dota_hero_crystal_maiden" then
-        heroName = "Caster(5th)"
-    elseif name == "npc_dota_hero_skywrath_mage" then
-        heroName = "Archer(4th)"
-    elseif name == "npc_dota_hero_sven" then
-        heroName = "Berserker(4th)"
-    elseif name == "npc_dota_hero_vengefulspirit" then
-        heroName = "Avenger"
-    elseif name == "npc_dota_hero_huskar" then
-        heroName = "Lancer(4th)"
-    elseif name == "npc_dota_hero_chen" then
-        heroName = "Rider(4th)"
-    elseif name == "npc_dota_hero_shadow_shaman" then
-        heroName = "Caster(4th)"
-    elseif name == "npc_dota_hero_lina" then
-        heroName = "Red Saber(Extra)"
-    elseif name == "npc_dota_hero_omniknight" then
-        heroName = "White Saber(Extra)"
-    elseif name == "npc_dota_hero_enchantress" then
-        heroName = "Caster(Extra)"
-    elseif name == "npc_dota_hero_bloodseeker" then
-        heroName = "Assassin(Extra)"
-    elseif name == "npc_dota_hero_mirana" then
-        heroName = "Ruler(Apocrypha)"
-    elseif name == "npc_dota_hero_queenofpain" then
-        heroName = "Rider of Black(Apocrypha)"
-    elseif name == "npc_dota_hero_windrunner" then
-        heroName = "loli castah"
-    else
-        heroName = "Undefined"
-    end
-    return heroName
-end
-
-
-
 function AddValueToTable(table, value)
     for i=1, 100 do
         if table[i] == nil then 
@@ -1667,4 +1610,8 @@ function SubstituteMessageCodes(message)
         message = string.gsub(message, k , v)
     end
     return message
+end
+
+function FindName(name)
+    return heroNames[name] or "Undefined"
 end
