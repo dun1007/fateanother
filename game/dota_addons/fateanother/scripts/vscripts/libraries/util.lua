@@ -1630,11 +1630,40 @@ local substitutions = {
   ["_green_"] = "",
 
   --symbols
-  ["_arrow_"] = "▶"
+  ["_arrow_"] = "▶",
 }
+
+local heroNames = {
+  ["npc_dota_hero_legion_commander"] = "Saber",
+  ["npc_dota_hero_phantom_lancer"] = "Lancer(5th)",
+  ["npc_dota_hero_spectre"] = "Saber Alter(5th)",
+  ["npc_dota_hero_ember_spirit"] = "Archer(5th)",
+  ["npc_dota_hero_templar_assassin"] = "Rider(5th)",
+  ["npc_dota_hero_doom_bringer"] = "Berserker(5th)",
+  ["npc_dota_hero_juggernaut"] = "Assassin(5th)",
+  ["npc_dota_hero_bounty_hunter"] = "True Assassin(5th)",
+  ["npc_dota_hero_crystal_maiden"] = "Caster(5th)",
+  ["npc_dota_hero_skywrath_mage"] = "Archer(4th)",
+  ["npc_dota_hero_sven"] = "Berserker(4th)",
+  ["npc_dota_hero_vengefulspirit"] = "Avenger",
+  ["npc_dota_hero_huskar"] = "Lancer(4th)",
+  ["npc_dota_hero_chen"] = "Rider(4th)",
+  ["npc_dota_hero_shadow_shaman"] = "Caster(4th)",
+  ["npc_dota_hero_lina"] = "Red Saber(Extra)",
+  ["npc_dota_hero_omniknight"] = "White Saber(Extra)",
+  ["npc_dota_hero_enchantress"] = "Caster(Extra)",
+  ["npc_dota_hero_bloodseeker"] = "Assassin(Extra)",
+  ["npc_dota_hero_mirana"] = "Ruler(Apocrypha)",
+  ["npc_dota_hero_queenofpain"] = "Rider of Black(Apocrypha)",
+  ["npc_dota_hero_windrunner"] = "loli castah",
+}
+
 
 function SubstituteMessageCodes(message)
   for k,v in pairs(substitutions) do
+    message = string.gsub(message, k , v)
+  end
+  for k,v in pairs(heroNames) do
     message = string.gsub(message, k , v)
   end
   return message
