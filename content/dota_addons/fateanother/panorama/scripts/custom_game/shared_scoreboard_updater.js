@@ -38,12 +38,12 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 				var localPlayerId = Game.GetLocalPlayerID();
 				var message;
 				if (localPlayerId == playerId) {
-					message = "_gray__arrow_ _default_I am " + (isDead ? "dead" : "alive") + "!";
+					message = "_gray__arrow_ _default_I am _gold_" + (isDead ? "dead" : "alive") + "_default_!";
 				} else {
 					var localPlayerInfo = Game.GetPlayerInfo(localPlayerId);
 					if (playerInfo.player_team_id != localPlayerInfo.player_team_id) {
 						var heroName = playerInfo.player_selected_hero
-						message = "_gray__arrow_ _default_Enemy " + heroName + " is " + (isDead ? "dead" : "missing") + "!";
+						message = "_gray__arrow_ _default_Enemy _gold_" + heroName + "_default_ is " + (isDead ? "dead" : "missing") + "!";
 					}
 				}
 				if (message) {

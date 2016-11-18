@@ -50,7 +50,7 @@ function TimerClicked() {
 	}
 	var messageLabel = $("#TimerMsg");
 	var timeLabel = $("#TimerRemaining");
-	var message = messageLabel.text + "_blue_ _arrow_ _default_" + timeLabel.text;
+	var message = "_gold_" + messageLabel.text + "_gray_ _arrow_ _default_" + timeLabel.text;
 	GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
 }
 

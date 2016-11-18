@@ -104,7 +104,7 @@ function MasterClicked() {
 	var manaPanel = $("#MasterManaNumber");
 	var health = healthPanel.text;
 	var mana = manaPanel.text;
-	var message = "My master has _gray__arrow_ _default_" + health
+	var message = "_gray__arrow_ _gold_Master _default_has " + health
 		+ " _red_health _default_and " + mana + " _blue_mana";
 	GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
 }
