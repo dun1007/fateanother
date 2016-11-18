@@ -21,6 +21,21 @@
 			var playerId = $.GetContextPanel().GetAttributeInt( "player_id", -1 );
 			$.GetContextPanel().SetHasClass( "player_muted", Game.IsPlayerMuted( playerId ) );
 		})();
+
+		function DeathsClicked() {
+			var playerId = $.GetContextPanel().GetAttributeInt("player_id", -1);
+			var localPlayerId = Game.GetLocalPlayerID();
+			if (playerId != localPlayerId) {
+				return
+			}
+			var playerInfo = Game.GetPlayerInfo(playerId);
+			var numDeaths = playerInfo.player_deaths;
+			var deathText = numDeaths == 1 ? "death" : "deaths";
+			var deathColor = numDeaths >= 30 ? "_red_" : "_gold_";
+			var message = "_gray__arrow_ _default_I have " + deathColor + numDeaths
+				+ " " + deathText + "_default_!"
+			GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
+		}
 	</script>
 	<Panel class="PlayerRow">
 		<Panel id="PlayerRowContainer">
@@ -39,7 +54,7 @@
 			<Panel id="KillsContainer" class="ScoreCol_Kills ScoreboardPanel">
 				<Label id="Kills" text="999" />
 			</Panel>
-			<Panel id="DeathsContainer" class="ScoreCol_Deaths ScoreboardPanel">
+			<Panel id="DeathsContainer" class="ScoreCol_Deaths ScoreboardPanel" onactivate="DeathsClicked();">
 				<Label id="Deaths" text="999" />
 			</Panel>
 			<Panel id="AssistsContainer" class="ScoreCol_Assists ScoreboardPanel">
