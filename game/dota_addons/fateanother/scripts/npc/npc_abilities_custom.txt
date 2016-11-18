@@ -27359,6 +27359,10 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
+			"particle"			"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+			"particle"			"particles/generic_gameplay/illusion_killed.vpcf"
+			"particle"			"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
 		}
 		
 		// Casting
@@ -27368,7 +27372,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"60"
+		"AbilityCooldown"				"40 20"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27381,6 +27385,26 @@
 				"var_type"			"FIELD_FLOAT"
 				"duration"				"3 7"
 			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"				"200 400"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"radius"				"350"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow"				"-15 -40"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_duration"				"1.5 3"
+			}
 		}
 		
 
@@ -27388,8 +27412,88 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnShapeShiftStart"
+			 	"Duration"		"%duration"
+			 	"Target"		"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_nursery_rhyme_shapeshift_clone"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"ThinkInterval" 		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"nursery_rhyme_ability"
+						"Function"				"OnShapeShiftTargetLookout"
+						"Radius"				"%radius"
+						"Damage"				"%damage"
+						"Target"		"POINT"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"nursery_rhyme_ability"
+						"Function"				"OnShapeShiftEnd"
+					}
+				}				
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_nursery_rhyme_shapeshift_slow"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%slow_duration"		
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}		
+			}
+		}
+	}
+
+
+	//====================================
+	// Nursery Rhyme: Shapeshift(swap)
+	//====================================
+	"nursery_rhyme_shapeshift_swap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"24"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"			"nursery_rhyme_queens_glass_game"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+		"AbilityCastPoint"				"0.15"
+		"AbilityCooldown"				"0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnShapeShiftSwap"
 			}
 		}
 
