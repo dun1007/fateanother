@@ -1608,3 +1608,34 @@ function LoadStashState(hero)
         end
     end
 end
+
+local substitutions = {
+  -- colours
+  ["_gray_"] = "",
+  ["_silver_"] = "	",
+  ["_default_"] = "",
+  ["_yellow_"] = "",
+  ["_gold_"] = "",
+  ["_orange_"] = "",
+  ["_lightred_"] = "",
+  ["_red_"] = "",
+  ["_magenta_"] = "",
+  ["_pink_"] = "",
+  ["_violet_"] = "",
+  ["_purple_"] = "",
+  ["_blue_"] = "",
+  ["_darkgreen_"] = "",
+  ["_olive_"] = "",
+  ["_lightgreen_"] = "",
+  ["_green_"] = "",
+
+  --symbols
+  ["_arrow_"] = "▶"
+}
+
+function SubstituteMessageCodes(message)
+  for k,v in pairs(substitutions) do
+    message = string.gsub(message, k , v)
+  end
+  return message
+end
