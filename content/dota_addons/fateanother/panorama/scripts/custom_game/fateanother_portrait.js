@@ -89,6 +89,24 @@ function SetupPortrait(data)
 	heroPortrait.SetImage(imageDir) ;
 	masterUnit = data.shardUnit;
 	UpdateHealthAndMana();
+
+	$("#MasterStatusPanel").SetPanelEvent(
+		"onactivate",
+		MasterClicked
+	);
+}
+
+function MasterClicked() {
+	if (!GameUI.IsAltDown()) {
+		return;
+	}
+	var healthPanel = $("#MasterHealthNumber");
+	var manaPanel = $("#MasterManaNumber");
+	var health = healthPanel.text;
+	var mana = manaPanel.text;
+	var message = "My master has _gray__arrow_ _default_" + health
+		+ " _red_health _default_and " + mana + " _blue_mana";
+	GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
 }
 
 (function()
