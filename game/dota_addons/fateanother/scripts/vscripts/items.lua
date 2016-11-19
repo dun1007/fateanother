@@ -711,12 +711,12 @@ end
 function FullHeal(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	if caster:HasModifier("jump_pause_nosilence") then
+	if caster:HasModifier("jump_pause_nosilence")
+		or caster:GetHealth() == caster:GetMaxHealth() and caster:GetMana() == caster:GetMaxMana()
+	then
 		RefundItem(caster, ability)
 		return
 	end
-
-	if caster:GetHealth() == caster:GetMaxHealth() and caster:GetMana() == caster:GetMaxMana() then keys.ability:EndCooldown() return end
 
 	caster:SetHealth(caster:GetMaxHealth())
 	caster:SetMana(caster:GetMaxMana())
