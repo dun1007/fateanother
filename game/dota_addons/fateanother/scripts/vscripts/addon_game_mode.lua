@@ -444,9 +444,7 @@ function FateGameMode:OnAllPlayersLoaded()
             IsGameStarted = true
             GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
             CreateUITimer("Next Holy Grail's Blessing", FIRST_BLESSING_PERIOD, "ten_min_timer")
-            self:LoopOverPlayers(function(player, playerID, playerHero)
-                playerHero:RemoveModifierByName("round_pause")
-            end)
+
             Timers:CreateTimer('round_10min_bonus', {
                 endTime = FIRST_BLESSING_PERIOD,
                 callback = function()
@@ -2048,6 +2046,7 @@ function FateGameMode:InitializeRound()
         local hero = playerHero
 
         ResetAbilities(hero)
+        hero:RemoveModifierByName("round_pause")
         giveUnitDataDrivenModifier(hero, hero, "round_pause", PRE_ROUND_DURATION) -- Pause all heroes
         hero:SetGold(0, false)
         hero.CStock = 10
