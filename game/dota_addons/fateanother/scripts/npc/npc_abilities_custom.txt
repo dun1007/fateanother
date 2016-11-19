@@ -27363,7 +27363,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
 		"AbilityTextureName"			"nursery_rhyme_shapeshift"
-		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
@@ -27486,7 +27486,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"24"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityTextureName"			"nursery_rhyme_queens_glass_game"
+		"AbilityTextureName"			"nursery_rhyme_shapeshift_swap"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
 		"AbilityCastPoint"				"0.15"
@@ -27507,6 +27507,7 @@
 
 		"Modifiers"
 		{
+
 		}
 	}
 	//====================================
@@ -27521,7 +27522,7 @@
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"25"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"AbilityTextureName"			"nursery_rhyme_nameless_forest"
 		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
@@ -27529,6 +27530,7 @@
 
 		"precache"
 		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
 		}
 		
 		// Casting
@@ -27558,17 +27560,84 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnNamelessStart"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_nameless_forest"
+			{
+				"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnNamelessDebuffStart"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnNamelessEnd"						
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_SILENCED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
 		}
 	}
 
+	//====================================
+	// Nursery Rhyme: Reminiscence(undo F)
+	//====================================
+	"nursery_rhyme_reminiscence"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"24"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityTextureName"			"nursery_rhyme_reminiscence"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
+		"AbilityCooldown"				"0"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnReminiscenceStart"
+			}
+		}
+
+		"Modifiers"
+		{
+
+		}
+	}
 	//====================================
 	// Nursery Rhyme: White Queen's Enigma(Q)
 	//====================================
@@ -27590,6 +27659,9 @@
 
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_tusk/tusk_ice_shards_projectile.vpcf"
+			"particle"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
 		}
 		
 		// Casting
@@ -27635,7 +27707,7 @@
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"revoke_duration"				"1 1.5 2 2.5 3"
+				"revoke_duration"				"1 1.25 1.5 1.75 2"
 			}
 			"07"
 			{
@@ -27650,7 +27722,7 @@
 			"09"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"disarm_duration"				"1.5 1.8 2.1 2.4 2.7"
+				"disarm_duration"				"2 2.5 3 3.5 4"
 			}
 		}
 		
@@ -27659,8 +27731,34 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnEnigmaStart"
+			 	"Target"		"POINT"
+			 	"StartRadius"	"%width"
+			 	"EndRadius"		"%width"
+			 	"Speed"			"%speed"
+			 	"Range"			"%length"
+			 	"Delay"			"%cast_delay"
+			}
+		}
+		
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnEnigmaHit"
+			 	"Damage"		"%damage"
+			 	"DefaultStunDuration"		"%default_stun_duration"
+			 	"CCNum"				"%cc_numbers"
+			 	"stunned"			"%stun_duration"
+			 	"silenced"		"%silence_duration"
+			 	"revoked"			"%revoke_duration"
+			 	"locked"			"%lock_duration"
+			 	"rooted"			"%root_duration"
+			 	"disarmed"			"%disarm_duration"
 			}
 		}
 

@@ -1363,7 +1363,7 @@
 		"override_hero"				"npc_dota_hero_windrunner"
 		"DisableWearables" 			"1"
 		"Model"						"models/nurseryrhyme/nurseryrhyme.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.78"
 		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"				"6"
