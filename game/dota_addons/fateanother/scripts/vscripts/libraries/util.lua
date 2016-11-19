@@ -1079,7 +1079,11 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 
         
         -- if target is linked, distribute damages 
-        if target:HasModifier("modifier_share_damage") and not isLoop and target.linkTable ~= nil then
+        if target:HasModifier("modifier_share_damage")
+          and not isLoop
+          and not (abil:GetName() == "avenger_verg_avesta" and source:GetTeam() == target:GetTeam())
+          and target.linkTable ~= nil
+        then
             -- Calculate the damage to secondary targets separately, in order to prevent MR from being twice as effective on primary target.
             local damageToAllies =  dmgtable.damage
 
