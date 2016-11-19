@@ -298,8 +298,29 @@ function OnBelleStart(keys)
 	Timers:CreateTimer(1.3, function() 
 		local origin = caster:GetAbsOrigin()
 		if (origin - targetPoint):Length2D() < 2000 then 
+			-- set unit's final position first before checking if IsInSameRealm
+			-- to allow Belle across river etc
+			-- only if it is across realms do we try to adjust position
 			caster:SetAbsOrigin(targetPoint)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+			local currentPosition = caster:GetAbsOrigin()
+			if not IsInSameRealm(currentPosition, initialPosition) then
+				local diffVector = currentPosition - initialPosition
+				local normalisedVector = diffVector:Normalized()
+				local length = diffVector:Length2D()
+				local newPosition = currentPosition
+				while length >= 0
+					and (not IsInSameRealm(currentPosition, initialPosition)
+						or GridNav:IsBlocked(currentPosition)
+						or not GridNav:IsTraversable(currentPosition)
+					)
+				do
+					currentPosition = currentPosition - normalisedVector * 10
+					length = length - 10
+				end
+				caster:SetAbsOrigin(currentPosition)
+				FindClearSpaceForUnit(caster, currentPosition, true)
+			end
 		end
 		caster:EmitSound("Misc.Crash")
 	end)
