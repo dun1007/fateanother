@@ -938,23 +938,27 @@ end
 -- loc 2 = vector
 function IsInSameRealm(loc1, loc2)
     -- above -2000 normal map
+    if loc1.y > -2000 and loc2.y > -2000 then
+      -- both are in normal map
+      return true
+    elseif not (loc1.y <= -2000 and loc2.y <= -2000) then
+      return false
+    end
     -- 3300 split between AotK and UBW
+    if loc1.x < 3300 and loc2.x < 3300 then
+      -- both are in AotK
+      return true
+    elseif not (loc1.x >= 3300 and loc2.x >= 3300) then
+      return false
+    end
     -- below -6300 master location
-    if loc1.y > -2000 and loc2.y <= -2000
-        or loc2.y > -2000 and loc1.y <= -2000
-    then
-        return false
+    if loc1.y > -6300 and loc2.y > -6300 then
+      -- both are in UBW
+      return true
+    elseif not (loc1.y <= -6300 and loc2.y <= -6300) then
+      return false
     end
-    if loc1.x > 3300 and loc2.x <= 3300
-        or loc2.x > 3300 and loc1.x <= 3300
-    then
-        return false
-    end
-    if loc1.y > -6300 and loc2.y <= -6300
-        or loc2.y > -6300 and loc1.y <= -6300
-    then
-        return false
-    end
+    -- both are in master area
     return true
 end
 
