@@ -2307,29 +2307,14 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             end
             _G.IsPreRound = true
 
-            local vColumn = Vector(0, -200 ,0)
-            local vRow = Vector(200, 0, 0)
-
-            -- [0] [1]
-            -- [2] [3]
-            -- [4] [x] x is default spawn
-            local radiantOffset = vColumn * -2 + vRow * -1
-            local radiantSpawn = SPAWN_POSITION_RADIANT_DM + radiantOffset
-
-            -- [0] [1]
-            -- [2] [x]
-            -- [4] [5] x is default spawn
-            local direOffset = vColumn * -1 + vRow * -1
-            local direSpawn = SPAWN_POSITION_DIRE_DM + direOffset
-
             local team2Index = 0
             local team3Index = 0
 
             self:LoopOverPlayers(function(player, playerID, playerHero)
                 local respawnPos = playerHero.RespawnPos
                 if self.nCurrentRound >= 2 then
-                    local team = playerHero:GetTeam()
                     local index
+                    local team = playerHero:GetTeam()
                     if team == 2 then
                         index = team2Index
                         team2Index = team2Index + 1
@@ -2337,13 +2322,7 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
                         index = team3Index
                         team3Index = team3Index + 1
                     end
-                    local row = index % 2
-                    local column = math.floor(index / 2)
-                    local offset = vRow * row + vColumn * column
-
-                    local respawnSide = (team + self.nCurrentRound) % 2
-                    local defaultRespawnPos = respawnSide == 1 and radiantSpawn or direSpawn
-                    respawnPos = defaultRespawnPos + vRow * row + vColumn * column
+                    respawnPos = GetRespawnPos(playerHero, self.nCurrentRound, index)
                 end
                 playerHero:SetRespawnPosition(respawnPos)
                 playerHero:RespawnHero(false, false, false)
@@ -2354,6 +2333,32 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         end
     })
 
+end
+
+function GetRespawnPos(playerHero, currentRound, index)
+    local vColumn = Vector(0, -200 ,0)
+    local vRow = Vector(200, 0, 0)
+
+    -- [0] [1]
+    -- [2] [3]
+    -- [4] [x] x is default spawn
+    local radiantOffset = vColumn * -2 + vRow * -1
+    local radiantSpawn = SPAWN_POSITION_RADIANT_DM + radiantOffset
+
+    -- [0] [1]
+    -- [2] [x]
+    -- [4] [5] x is default spawn
+    local direOffset = vColumn * -1 + vRow * -1
+    local direSpawn = SPAWN_POSITION_DIRE_DM + direOffset
+
+    local row = index % 2
+    local column = math.floor(index / 2)
+    local offset = vRow * row + vColumn * column
+
+    local team = playerHero:GetTeam()
+    local respawnSide = (team + currentRound) % 2
+    local defaultRespawnPos = respawnSide == 1 and radiantSpawn or direSpawn
+    return defaultRespawnPos + vRow * row + vColumn * column
 end
 
 function FateGameMode:LoopOverPlayers(callback)
