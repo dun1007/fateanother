@@ -380,7 +380,7 @@ function OnMaxStart(keys)
 				
 				local excalFxIndex = ParticleManager:CreateParticle("particles/custom/saber/max_excalibur/shockwave.vpcf", PATTACH_ABSORIGIN_FOLLOW, dummy)
 					
-				Timers:CreateTimer(1.8, function()
+				Timers:CreateTimer(1.7, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( excalFxIndex )
 					Timers:CreateTimer( 0.5, function()
