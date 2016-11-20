@@ -2307,46 +2307,47 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
             end
             _G.IsPreRound = true
 
+            local vColumn = Vector(0, -200 ,0)
+            local vRow = Vector(200, 0, 0)
+
+            -- [0] [1]
+            -- [2] [3]
+            -- [4] [x] x is default spawn
+            local radiantOffset = vColumn * -2 + vRow * -1
+            local radiantSpawn = SPAWN_POSITION_RADIANT_DM + radiantOffset
+
+            -- [0] [1]
+            -- [2] [x]
+            -- [4] [5] x is default spawn
+            local direOffset = vColumn * -1 + vRow * -1
+            local direSpawn = SPAWN_POSITION_DIRE_DM + direOffset
+
+            local team2Index = 0
+            local team3Index = 0
+
             self:LoopOverPlayers(function(player, playerID, playerHero)
-                local pHero = playerHero
-                --[[if pHero.RespawnPos == SPAWN_POSITION_RADIANT_DM then
-                    pHero.RespawnPos = SPAWN_POSITION_DIRE_DM
-                    --print(pHero:GetName() .. "'s location is set to DIRE spawn")
-                elseif pHero.RespawnPos == SPAWN_POSITION_DIRE_DM then
-                    pHero.RespawnPos = SPAWN_POSITION_RADIANT_DM
-                    --print(pHero:GetName() .. "'s location is set to RADIANT spawn")
-                end]]
-
-                --[[if RADIANT then
-                    check if RADIANT team
-                        if round = 0 or 1,
-                        if odd rounds, set spawn location to RADIANT
-                        else DIRE
-                    end
-                --]]
-                if pHero:GetTeam() == 2 then
-                    if self.nCurrentRound == 0 or self.nCurrentRound == 1 then -- if round = 0 or 1, do not change anything
-
-                    elseif self.nCurrentRound % 2 == 0 then -- if even rounds, set spawn to DIRE
-                        pHero.RespawnPos = SPAWN_POSITION_DIRE_DM
+                local respawnPos = playerHero.RespawnPos
+                if self.nCurrentRound >= 2 then
+                    local team = playerHero:GetTeam()
+                    local index
+                    if team == 2 then
+                        index = team2Index
+                        team2Index = team2Index + 1
                     else
-                        pHero.RespawnPos = SPAWN_POSITION_RADIANT_DM
+                        index = team3Index
+                        team3Index = team3Index + 1
                     end
-                elseif pHero:GetTeam() == 3 then
-                    if self.nCurrentRound == 0 or self.nCurrentRound == 1 then -- if round = 0 or 1, do not change anything
+                    local row = index % 2
+                    local column = math.floor(index / 2)
+                    local offset = vRow * row + vColumn * column
 
-                    elseif self.nCurrentRound % 2 == 0 then -- if even rounds, set spawn to RADIANT
-                        pHero.RespawnPos = SPAWN_POSITION_RADIANT_DM
-                    else
-                        pHero.RespawnPos = SPAWN_POSITION_DIRE_DM
-                    end
+                    local respawnSide = (team + self.nCurrentRound) % 2
+                    local defaultRespawnPos = respawnSide == 1 and radiantSpawn or direSpawn
+                    respawnPos = defaultRespawnPos + vRow * row + vColumn * column
                 end
-
-
-                --print(pHero.RespawnPos)
-                pHero:SetRespawnPosition(pHero.RespawnPos)
-                pHero:RespawnHero(false, false, false)
-                ProjectileManager:ProjectileDodge(pHero)
+                playerHero:SetRespawnPosition(respawnPos)
+                playerHero:RespawnHero(false, false, false)
+                ProjectileManager:ProjectileDodge(playerHero)
             end)
             self:InitializeRound()
             _G.CurrentGameState = "FATE_PRE_ROUND"
