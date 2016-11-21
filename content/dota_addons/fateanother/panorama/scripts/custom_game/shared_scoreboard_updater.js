@@ -369,18 +369,21 @@ function _ScoreboardUpdater_ReorderTeam( scoreboardConfig, teamsParent, teamPane
 // sort / reorder as necessary
 function compareFunc( a, b ) // GameUI.CustomUIConfig().sort_teams_compare_func;
 {
-	if ( a.team_score < b.team_score )
-	{
-		return 1; // [ B, A ]
+	var scoreA;
+	var scoreB;
+	if (Game.GetMapInfo().map_display_name == "fate_elim_6v6") {
+		scoreA = a.team_id == 2 ? g_RadiantScore : g_DireScore;
+		scoreB = b.team_id == 2 ? g_RadiantScore : g_DireScore;
+	} else {
+		scoreA = a.team_score;
+		scoreB = b.team_score;
 	}
-	else if ( a.team_score > b.team_score )
-	{
+	if (scoreA < scoreB) {
+		return 1; // [ B, A ]
+	} else if (scoreA > scoreB) {
 		return -1; // [ A, B ]
 	}
-	else
-	{
-		return 0;
-	}
+	return 0;
 };
 
 function stableCompareFunc( a, b )
