@@ -305,7 +305,7 @@ function OnGOBThink(keys)
 		--ParticleManager:SetParticleControlOrientation(caster.LatestGOBParticle, 0, Vector(1,0,0), Vector(0.5,1,0.5), Vector(1,0.5,0.5))
 	end
 
-	if not caster.IsSumerAcquired or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
+	if not caster.IsSumerAcquired or not caster:IsAlive() or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
 		local projectile = unit.GOBProjectile
 		local leftvec = Vector(-frontward.y, frontward.x, 0)
 		local rightvec = Vector(frontward.y, -frontward.x, 0)

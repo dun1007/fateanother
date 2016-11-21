@@ -290,7 +290,6 @@ function WardFam(keys)
 	caster.ward:AddNewModifier(caster, caster, "modifier_invisible", {})
 	caster.ward:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = keys.Radius, duration = keys.Duration})
     caster.ward:AddNewModifier(caster, caster, "modifier_kill", {duration = keys.Duration})
-
     EmitSoundOnLocationForAllies(targetPoint,"DOTA_Item.ObserverWard.Activate",caster)
 end
 
@@ -316,11 +315,12 @@ end
 
 function BecomeWard(keys)
 	local caster = keys.caster
-	local transform = CreateUnitByName("ward_familiar", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
+	local hero = caster:GetPlayerOwner():GetAssignedHero()
+	local transform = CreateUnitByName("ward_familiar", caster:GetAbsOrigin(), true, hero, hero, caster:GetTeamNumber())
 
-	transform:AddNewModifier(caster, caster, "modifier_invisible", {})
-	transform:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105})
-	transform:AddNewModifier(caster, caster, "modifier_kill", {duration = 105})
+	transform:AddNewModifier(hero, hero, "modifier_invisible", {})
+	transform:AddNewModifier(hero, hero, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105})
+	transform:AddNewModifier(hero, hero, "modifier_kill", {duration = 105})
 	caster:EmitSound("DOTA_Item.ObserverWard.Activate")
 	Timers:CreateTimer({
 		endTime = 0.1,
