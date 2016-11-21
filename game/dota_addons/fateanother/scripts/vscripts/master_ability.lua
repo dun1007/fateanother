@@ -1099,20 +1099,21 @@ end
 
 function OnComboCheck(keys)
 	local caster = keys.caster
+	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 	local hero = ply:GetAssignedHero()
 
-	if hero:HasModifier("combo_cooldown") then
-		hero:RemoveModifierByName("combo_cooldown")
+	if caster:HasModifier("combo_cooldown") then
+		caster:RemoveModifierByName("combo_cooldown")
 	end
-	if hero:HasModifier("combo_unavailable") then
-		hero:RemoveModifierByName("combo_unavailable")
+	if caster:HasModifier("combo_unavailable") then
+		caster:RemoveModifierByName("combo_unavailable")
 	end
 
 	local comboAvailability = GetComboAvailability(hero)
 	if comboAvailability == -1 then
-		giveUnitDataDrivenModifier(hero, hero, "combo_unavailable", 1)
+		ability:ApplyDataDrivenModifier(caster, caster, "combo_unavailable", {duration=1})
 	elseif comboAvailability > 0 then
-		giveUnitDataDrivenModifier(hero, hero, "combo_cooldown", comboAvailability)
+		ability:ApplyDataDrivenModifier(caster, caster, "combo_cooldown", {duration=comboAvailability})
 	end
 end
