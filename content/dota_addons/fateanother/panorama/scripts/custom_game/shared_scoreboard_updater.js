@@ -601,7 +601,12 @@ Entities.HasModifier = function(entIndex, modifierName){
 	return false
 };
 
-function GetComboStatus(entIndex) {
+function GetComboStatus(heroEntIndex) {
+	var config = GameUI.CustomUIConfig();
+	var entIndex = config.masterUnits && config.masterUnits[heroEntIndex];
+	if (!entIndex) {
+		return -1
+	}
 	var nBuffs = Entities.GetNumBuffs(entIndex)
 	for (var i = 0; i < nBuffs; i++) {
 		var buff = Entities.GetBuff(entIndex, i);
