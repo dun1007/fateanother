@@ -235,6 +235,7 @@ function OnTMLanded(keys)
 
 	Timers:CreateTimer(2.0, function()
 		if caster:IsAlive() then
+			caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,target:GetAbsOrigin().z))
 			keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_tg_cast_anim", {})
 			EmitGlobalSound("FA.TGReady")
 			ExecuteOrderFromTable({
