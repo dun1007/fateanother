@@ -122,6 +122,16 @@ function UpdateMountStatus(data)
     $.Msg(bIsMounted);
 }
 
+function RegisterMasterUnit(data) {
+    var config = GameUI.CustomUIConfig()
+    if (!config.masterUnits) {
+        config.masterUnits = {}
+    }
+    var hero = data.hero;
+    var masterUnit = data.shardUnit;
+    config.masterUnits[hero] = masterUnit;
+}
+
 (function()
 {
     $("#FateConfigBoard").visible = false;
@@ -132,4 +142,5 @@ function UpdateMountStatus(data)
     GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
     GameEvents.Subscribe( "player_summoned_transport", RegisterTransport);
     GameEvents.Subscribe( "player_mount_status_changed", UpdateMountStatus);
+	GameEvents.Subscribe( "player_register_master_unit", RegisterMasterUnit);
 })();
