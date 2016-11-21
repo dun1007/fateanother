@@ -907,9 +907,11 @@ function FateGameMode:OnHeroInGame(hero)
     LevelAllAbility(master2)
     local playerData = {
         masterUnit = master2:entindex(),
-        shardUnit = master:entindex()
+        shardUnit = master:entindex(),
+        hero = hero:entindex()
     }
-    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero", playerData )
+    CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "player_selected_hero", playerData)
+    CustomGameEventManager:Send_ServerToAllClients("player_register_master_unit", playerData)
     --[[-- Create personal stash for hero
     masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
     masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
