@@ -316,7 +316,21 @@ end
 
 function BecomeWard(keys)
 	local caster = keys.caster
-	local transform = CreateUnitByName("ward_familiar", caster:GetAbsOrigin(), true, caster, caster, caster:GetTeamNumber())
+	local origin = caster:GetAbsOrigin()
+
+	local transform = CreateUnitByName("ward_familiar", origin, true, caster, caster, caster:GetTeamNumber())
+	local wardPos = transform:GetAbsOrigin()
+
+	if GridNav:IsBlocked(wardPos)
+		or not GridNav:IsTraversable(wardPos)
+		or wardPos.y < -2000
+	then
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
+		local hero = caster:GetPlayerOwner():GetAssignedHero()
+		hero:ModifyGold(800, true , 0)
+		transform:RemoveSelf()
+		return
+	end
 
 	transform:AddNewModifier(caster, caster, "modifier_invisible", {})
 	transform:AddNewModifier(caster, caster, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105})
