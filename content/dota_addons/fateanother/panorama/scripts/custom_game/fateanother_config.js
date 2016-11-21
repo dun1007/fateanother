@@ -124,12 +124,14 @@ function UpdateMountStatus(data)
 
 function RegisterMasterUnit(data) {
     var config = GameUI.CustomUIConfig()
-    if (!config.masterUnits) {
-        config.masterUnits = {}
-    }
     var hero = data.hero;
     var masterUnit = data.shardUnit;
     config.masterUnits[hero] = masterUnit;
+}
+
+function RegisterAllMasterUnits(data) {
+    var config = GameUI.CustomUIConfig()
+    config.masterUnits = data;
 }
 
 (function()
@@ -142,5 +144,12 @@ function RegisterMasterUnit(data) {
     GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
     GameEvents.Subscribe( "player_summoned_transport", RegisterTransport);
     GameEvents.Subscribe( "player_mount_status_changed", UpdateMountStatus);
-	GameEvents.Subscribe( "player_register_master_unit", RegisterMasterUnit);
+
+    var config = GameUI.CustomUIConfig()
+    if (!config.masterUnits) {
+        config.masterUnits = {}
+    }
+
+    GameEvents.Subscribe( "player_register_master_unit", RegisterMasterUnit);
+    GameEvents.Subscribe( "player_register_all_master_units", RegisterAllMasterUnits);
 })();

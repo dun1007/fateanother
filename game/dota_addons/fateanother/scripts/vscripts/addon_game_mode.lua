@@ -1077,6 +1077,22 @@ function FateGameMode:OnPlayerReconnect(keys)
         }
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_selected_hero", playerData )
         --CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
+
+        local masterUnits = {}
+        self:LoopOverPlayers(function(player, playerID, hero)
+            if hero == nil then
+              return
+            end
+            local masterUnit = hero.MasterUnit
+            if masterUnit == nil then
+              return
+            end
+
+            local masterEntIndex = masterUnit:entindex()
+            local heroEntIndex = hero:entindex()
+            masterUnits[heroEntIndex] = masterEntIndex
+        end)
+        CustomGameEventManager:Send_ServerToPlayer(ply, "player_register_all_master_units", masterUnits)
         return
     end)
 end
