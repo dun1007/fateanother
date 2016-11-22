@@ -5,6 +5,8 @@
 	</styles>
 	<Panel hittest="false" class="HeroSelectPlayerRoot">
 		<Image id="PlayerPortrait" />
-		<Label id="PlayerName" />
+		<Panel id="PlayerName">
+			<Label id="PlayerNameText" />
+		</Panel>
 	</Panel>
 </root>

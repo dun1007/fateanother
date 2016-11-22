@@ -66,7 +66,7 @@
 {
     horizontal-align: center;
     flow-children: right;
-    height: 50px;
+    height: 70px;
 }
 
 .local_player_team #PlayerPortraitsOverlay
@@ -131,11 +131,17 @@
 
 #PlayerName
 {
+    width: 90px;
+    height: 20px;
+}
+
+#PlayerNameText
+{
     color: #a9aaaa;
     font-size: 16px;
-    text-align: center;
-	width: 90px;
-	white-space: nowrap;
+    width: fit-children;
+    white-space: nowrap;
+    horizontal-align: center;
 }
 
 .HeroSelectPlayerRoot.hero_highlighted #PlayerPortrait
