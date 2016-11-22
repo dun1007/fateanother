@@ -1636,3 +1636,68 @@ end
 function FindName(name)
     return heroNames[name] or "Undefined"
 end
+
+local heroCombos = {
+    ["npc_dota_hero_legion_commander"] = "saber_max_excalibur",
+    ["npc_dota_hero_phantom_lancer"] = "lancer_5th_wesen_gae_bolg",
+    ["npc_dota_hero_spectre"] = "saber_alter_max_mana_burst",
+    ["npc_dota_hero_ember_spirit"] = "archer_5th_arrow_rain",
+    ["npc_dota_hero_templar_assassin"] = "rider_5th_bellerophon_2",
+    ["npc_dota_hero_doom_bringer"] = "berserker_5th_madmans_roar",
+    ["npc_dota_hero_juggernaut"] = "false_assassin_tsubame_mai",
+    ["npc_dota_hero_bounty_hunter"] = "true_assassin_combo",
+    ["npc_dota_hero_crystal_maiden"] = "caster_5th_hecatic_graea_powered",
+    ["npc_dota_hero_skywrath_mage"] = "gilgamesh_max_enuma_elish",
+    ["npc_dota_hero_sven"] = "lancelot_nuke",
+    ["npc_dota_hero_vengefulspirit"] = "avenger_endless_loop",
+    ["npc_dota_hero_huskar"] = "diarmuid_rampant_warrior",
+    ["npc_dota_hero_chen"] = "iskander_annihilate",
+    ["npc_dota_hero_shadow_shaman"] = "gille_larret_de_mort",
+    ["npc_dota_hero_lina"] = "nero_fiery_finale",
+    ["npc_dota_hero_omniknight"] = "gawain_supernova",
+    ["npc_dota_hero_enchantress"] = "tamamo_polygamist_castration_fist",
+    ["npc_dota_hero_bloodseeker"] = "lishuwen_raging_dragon_strike",
+    ["npc_dota_hero_mirana"] = "jeanne_combo_la_pucelle",
+    ["npc_dota_hero_queenofpain"] = "astolfo_hippogriff_ride",
+    ["npc_dota_hero_windrunner"] = "nursery_rhyme_story_for_somebodys_sake",
+}
+
+function GetHeroCombo(hero)
+    local name = hero:GetName()
+    return heroCombos[name] or ""
+end
+
+-- returns -1 if combo is not available
+-- returns 0 if combo is available and ready
+-- otherwise returns cooldown remaning on combo
+function GetComboAvailability(hero)
+    local heroName = hero:GetName()
+    if heroName == "npc_dota_hero_juggernaut" then
+        if hero:GetStrength() < 24.1 or hero:GetAgility() < 24.1 then
+            return -1
+        end
+    else
+        local statreq = 19.1
+        if heroName == "npc_dota_hero_sven" then
+            local ability = hero:FindAbilityByName("lancelot_arondite")
+            if hero:HasModifier("modifier_arondite") then
+                statreq = statreq + ability:GetLevelSpecialValueFor("bonus_allstat", ability:GetLevel() - 1)
+            end
+        end
+        if hero:GetStrength() < statreq
+            or hero:GetAgility() < statreq
+            or hero:GetIntellect() < statreq
+        then
+            return -1
+        end
+    end
+    local comboName = GetHeroCombo(hero)
+    if comboName == "" then
+        return -1
+    end
+    local combo = hero:FindAbilityByName(comboName)
+    if combo == nil then
+        return -1
+    end
+    return combo:GetCooldownTimeRemaining()
+end

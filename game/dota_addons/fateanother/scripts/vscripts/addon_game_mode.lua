@@ -923,9 +923,11 @@ function FateGameMode:OnHeroInGame(hero)
     LevelAllAbility(master2)
     local playerData = {
         masterUnit = master2:entindex(),
-        shardUnit = master:entindex()
+        shardUnit = master:entindex(),
+        hero = hero:entindex()
     }
-    CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "player_selected_hero", playerData )
+    CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "player_selected_hero", playerData)
+    CustomGameEventManager:Send_ServerToAllClients("player_register_master_unit", playerData)
     --[[-- Create personal stash for hero
     masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
     masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
@@ -1091,6 +1093,22 @@ function FateGameMode:OnPlayerReconnect(keys)
         }
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_selected_hero", playerData )
         --CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
+
+        local masterUnits = {}
+        self:LoopOverPlayers(function(player, playerID, hero)
+            if hero == nil then
+              return
+            end
+            local masterUnit = hero.MasterUnit
+            if masterUnit == nil then
+              return
+            end
+
+            local masterEntIndex = masterUnit:entindex()
+            local heroEntIndex = hero:entindex()
+            masterUnits[heroEntIndex] = masterEntIndex
+        end)
+        CustomGameEventManager:Send_ServerToPlayer(ply, "player_register_all_master_units", masterUnits)
         return
     end)
 end

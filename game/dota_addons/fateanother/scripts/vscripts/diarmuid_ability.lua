@@ -195,8 +195,10 @@ function OnBuidheStart(keys)
 				doublestrike:ToggleAbility()
 			end
 			caster:SetMana(caster:GetMana() - 550)
-			Timers:CreateTimer(55, function()
-				doublestrike:ToggleAbility() 
+			Timers:CreateTimer(55.2, function()
+				if doublestrike:IsCooldownReady() and not doublestrike:GetToggleState() then 
+					doublestrike:ToggleAbility()
+				end
 			end)
 			OnDeargStart(keys)
 		end)
@@ -276,8 +278,10 @@ function OnDeargStart(keys)
 				doublestrike:ToggleAbility()
 			end
 			caster:SetMana(caster:GetMana() - 550)
-			Timers:CreateTimer(55, function()
-				doublestrike:ToggleAbility() 
+			Timers:CreateTimer(55.2, function()
+				if doublestrike:IsCooldownReady() and not doublestrike:GetToggleState() then 
+					doublestrike:ToggleAbility()
+				end
 			end)
 			OnBuidheStart(keys)
 		end)

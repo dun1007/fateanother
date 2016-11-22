@@ -186,9 +186,12 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_instinct_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
-
 					"Random"
 					{
 						"Chance"	"%crit_rate"
@@ -207,6 +210,7 @@
 			"modifier_instinct_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "300"
@@ -222,8 +226,12 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_instinct_crit_hit"
-			            "Target"   			"CASTER"    
-			        }			
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
+   			        }			
 				}
 			}
 		}
@@ -2778,7 +2786,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_darklight_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 
 					"Random"
@@ -2798,6 +2810,7 @@
 			"modifier_darklight_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "300"
@@ -2813,8 +2826,12 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_darklight_crit_hit"
-			            "Target"   			"CASTER"    
-			        }			
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
+  			        }			
 				}
 			}
 		}
@@ -6244,6 +6261,7 @@
 			"modifier_courage_attack_damage_buff"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Duration"		"%duration"
 				"Properties"
 				{
@@ -6268,7 +6286,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_courage_attack_damage_buff"
-						"Target" 		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 				}
 			}
@@ -14273,9 +14295,12 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_murderous_instinct_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
-
 					"Random"
 					{
 						"Chance"	"%critical_rate"
@@ -14328,6 +14353,7 @@
 			"modifier_murderous_instinct_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
@@ -14348,7 +14374,11 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_murderous_instinct_crit_hit"
-			            "Target"   			"CASTER"    
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}   
 			        }			
 				}
 			}
@@ -15861,7 +15891,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_rampant_warrior_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 
 					"Random"
@@ -15882,6 +15916,7 @@
 			"modifier_rampant_warrior_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
@@ -15897,7 +15932,11 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_rampant_warrior_crit_hit"
-			            "Target"   			"CASTER"    
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}   
 			        }			
 				}
 			}
@@ -19894,7 +19933,7 @@
 			{
 				"ModifierName"		"modifier_gladiusanus_blauserum"
 				"Target"			"CASTER"
-				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 		}
 
@@ -19909,7 +19948,7 @@
 			{
 				"ModifierName"		"modifier_gladiusanus_blauserum_mitigation"
 				"Target"			"CASTER"
-				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Flags" 			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 		}
 
@@ -19942,7 +19981,7 @@
 				"Duration"		"%duration"
 				"IsHidden"		"0"
 				"IsDebuff"		"0"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_per_stack"
@@ -19973,7 +20012,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_gladiusanus_blauserum"
-						"Target"			"CASTER"
+	    				"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 					"RunScript"
 					{
@@ -19993,6 +20036,7 @@
 			"modifier_gladiusanus_blauserum_mitigation"
 			{
 				"IsDebuff"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -23775,7 +23819,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_martial_arts_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 					"RunScript"
 					{
@@ -23797,6 +23845,7 @@
 			"modifier_martial_arts_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%critical_damage"
@@ -23811,8 +23860,12 @@
 			    	}
 			        "RemoveModifier"
 			        {
-			            "ModifierName"  	"modifier_instinct_crit_hit"
-			            "Target"   			"CASTER"    
+			            "ModifierName"  	"modifier_martial_arts_crit_hit"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 			        }			
 				}
 			}
@@ -28494,6 +28547,32 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 		  	}
+			"modifier_combo_checker"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"ThinkInterval"				"0.3"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"master_ability"
+					 	"Function"		"OnComboCheck"
+					}
+				}
+			}
+			"combo_unavailable"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"combo_cooldown"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 	//================================================

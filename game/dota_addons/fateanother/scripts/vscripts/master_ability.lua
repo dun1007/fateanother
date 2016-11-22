@@ -1096,3 +1096,24 @@ function OnHeroRespawn(keys)
 	end
 	FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
 end
+
+function OnComboCheck(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	if caster:HasModifier("combo_cooldown") then
+		caster:RemoveModifierByName("combo_cooldown")
+	end
+	if caster:HasModifier("combo_unavailable") then
+		caster:RemoveModifierByName("combo_unavailable")
+	end
+
+	local comboAvailability = GetComboAvailability(hero)
+	if comboAvailability == -1 then
+		ability:ApplyDataDrivenModifier(caster, caster, "combo_unavailable", {duration=1})
+	elseif comboAvailability > 0 then
+		ability:ApplyDataDrivenModifier(caster, caster, "combo_cooldown", {duration=comboAvailability})
+	end
+end
