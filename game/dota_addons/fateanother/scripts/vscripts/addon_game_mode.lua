@@ -1100,6 +1100,9 @@ function FateGameMode:OnPlayerReconnect(keys)
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_selected_hero", playerData )
         --CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
 
+        local statTable = CreateTemporaryStatTable(hero)
+        CustomGameEventManager:Send_ServerToPlayer(ply, "servant_stats_updated", statTable)
+
         local masterUnits = {}
         self:LoopOverPlayers(function(player, playerID, hero)
             if hero == nil then
