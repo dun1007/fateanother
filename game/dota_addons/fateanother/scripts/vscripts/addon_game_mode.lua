@@ -695,6 +695,12 @@ function FateGameMode:OnPlayerChat(keys)
         end
     end
 
+    if text == "-reconnect" then
+        if GameRules:IsCheatMode() then
+            self:OnPlayerReconnect({PlayerID=plyID})
+        end
+    end
+
     if text == "-sealtest" then
         if Convars:GetBool("sv_cheats") then
             hero.MasterUnit:SetMana(10)
@@ -1109,8 +1115,37 @@ function FateGameMode:OnPlayerReconnect(keys)
             masterUnits[heroEntIndex] = masterEntIndex
         end)
         CustomGameEventManager:Send_ServerToPlayer(ply, "player_register_all_master_units", masterUnits)
+
+        RecreateUITimer(ply, "round_10min_bonus", "Next Holy Grail's Blessing", "ten_min_timer")
+        RecreateUITimer(ply, "shard_drop_event", "Next Holy Grail's Shard", "shard_drop_timer")
+        RecreateUITimer(ply, "beginround", "Pre-Round", "pregame_timer")
+        RecreateUITimer(ply, "round_timer", "Round " .. self.nCurrentRound, "round_timer" .. self.nCurrentRound)
+
         return
     end)
+end
+
+function RecreateUITimer(playerID, timerName, message, description)
+    local timer = Timers.timers[timerName]
+    if timer == nil then
+      return
+    end
+
+    local endTime = timer.endTime
+    if endTime == nil then
+      return
+    end
+
+    local gameTime = GameRules:GetGameTime()
+    local duration = endTime - gameTime
+
+    local timerData = {
+        timerMsg = message,
+        timerDuration = duration,
+        timerDescription = description
+    }
+
+    CustomGameEventManager:Send_ServerToPlayer(playerID, "display_timer", timerData)
 end
 
 -- An item was purchased by a player
