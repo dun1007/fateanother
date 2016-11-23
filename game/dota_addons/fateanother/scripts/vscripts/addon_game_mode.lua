@@ -1175,6 +1175,7 @@ function FateGameMode:OnItemPurchased( keys )
     CheckItemCombinationInStash(hero)
 
     local isPriceIncreased = true
+    local isCStockMessage = false
     if hero.IsInBase then
         if itemName == "item_c_scroll" then
             if hero.CStock > 0 then
@@ -1182,6 +1183,7 @@ function FateGameMode:OnItemPurchased( keys )
                 isPriceIncreased = false
             else
                 SendErrorMessage(plyID, "#Out_Of_Stock_C_Scroll")
+                isCStockMessage = true
             end
         else
             isPriceIncreased = false
@@ -1196,7 +1198,7 @@ function FateGameMode:OnItemPurchased( keys )
             local diff = math.max(itemCost * 0.5 - unreliableGold, 0)
             hero:ModifyGold(-diff, true, 0)
         else
-            SendErrorMessage(plyID, "#Not_Enough_Gold_Item")
+            SendErrorMessage(plyID, isCStockMessage and "#Out_Of_Stock_C_Scroll" or "#Not_Enough_Gold_Item")
             hero:ModifyGold(itemCost, true, 0)
             local isItemDropped = true
 
