@@ -1097,11 +1097,16 @@ function FateGameMode:OnPlayerReconnect(keys)
             masterUnit = hero.MasterUnit2:entindex(),
             shardUnit = hero.MasterUnit:entindex()
         }
-        CustomGameEventManager:Send_ServerToPlayer( ply, "player_selected_hero", playerData )
+        CustomGameEventManager:Send_ServerToPlayer(ply, "player_selected_hero", playerData)
         --CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
 
         local statTable = CreateTemporaryStatTable(hero)
         CustomGameEventManager:Send_ServerToPlayer(ply, "servant_stats_updated", statTable)
+
+        local winnerEventData = {}
+        winnerEventData.radiantScore = self.nRadiantScore
+        winnerEventData.direScore = self.nDireScore
+        CustomGameEventManager:Send_ServerToPlayer(ply, "winner_decided", winnerEventData)
 
         local masterUnits = {}
         self:LoopOverPlayers(function(player, playerID, hero)
