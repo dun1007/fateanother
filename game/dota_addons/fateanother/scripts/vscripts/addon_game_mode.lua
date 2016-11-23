@@ -1037,6 +1037,8 @@ function FateGameMode:OnHeroInGame(hero)
         elseif hero:GetName() == "npc_dota_hero_queenofpain" then
             --Attachments:AttachProp(hero, "attach_sword", "models/astolfo/astolfo_sword.vmdl")
         end
+
+        self:InitialiseMissingPanoramaData(hero:GetPlayerOwner())
     end)
 end
 
@@ -1124,37 +1126,41 @@ function FateGameMode:OnPlayerReconnect(keys)
         CustomGameEventManager:Send_ServerToPlayer(ply, "player_selected_hero", playerData)
         --CustomGameEventManager:Send_ServerToAllClients( "victory_condition_set", victoryConditionData ) -- Send the winner to Javascript
 
-        local statTable = CreateTemporaryStatTable(hero)
-        CustomGameEventManager:Send_ServerToPlayer(ply, "servant_stats_updated", statTable)
-
-        local winnerEventData = {}
-        winnerEventData.radiantScore = self.nRadiantScore
-        winnerEventData.direScore = self.nDireScore
-        CustomGameEventManager:Send_ServerToPlayer(ply, "winner_decided", winnerEventData)
-
-        local masterUnits = {}
-        self:LoopOverPlayers(function(player, playerID, hero)
-            if hero == nil then
-              return
-            end
-            local masterUnit = hero.MasterUnit
-            if masterUnit == nil then
-              return
-            end
-
-            local masterEntIndex = masterUnit:entindex()
-            local heroEntIndex = hero:entindex()
-            masterUnits[heroEntIndex] = masterEntIndex
-        end)
-        CustomGameEventManager:Send_ServerToPlayer(ply, "player_register_all_master_units", masterUnits)
-
-        RecreateUITimer(ply, "round_10min_bonus", "Next Holy Grail's Blessing", "ten_min_timer")
-        RecreateUITimer(ply, "shard_drop_event", "Next Holy Grail's Shard", "shard_drop_timer")
-        RecreateUITimer(ply, "beginround", "Pre-Round", "pregame_timer")
-        RecreateUITimer(ply, "round_timer", "Round " .. self.nCurrentRound, "round_timer" .. self.nCurrentRound)
-
-        return
+        self:InitialiseMissingPanoramaData(ply)
     end)
+end
+
+function FateGameMode:InitialiseMissingPanoramaData(ply)
+    local hero = ply:GetAssignedHero()
+
+    local statTable = CreateTemporaryStatTable(hero)
+    CustomGameEventManager:Send_ServerToPlayer(ply, "servant_stats_updated", statTable)
+
+    local winnerEventData = {}
+    winnerEventData.radiantScore = self.nRadiantScore
+    winnerEventData.direScore = self.nDireScore
+    CustomGameEventManager:Send_ServerToPlayer(ply, "winner_decided", winnerEventData)
+
+    local masterUnits = {}
+    self:LoopOverPlayers(function(player, playerID, hero)
+        if hero == nil then
+          return
+        end
+        local masterUnit = hero.MasterUnit
+        if masterUnit == nil then
+          return
+        end
+
+        local masterEntIndex = masterUnit:entindex()
+        local heroEntIndex = hero:entindex()
+        masterUnits[heroEntIndex] = masterEntIndex
+    end)
+    CustomGameEventManager:Send_ServerToPlayer(ply, "player_register_all_master_units", masterUnits)
+
+    RecreateUITimer(ply, "round_10min_bonus", "Next Holy Grail's Blessing", "ten_min_timer")
+    RecreateUITimer(ply, "shard_drop_event", "Next Holy Grail's Shard", "shard_drop_timer")
+    RecreateUITimer(ply, "beginround", "Pre-Round", "pregame_timer")
+    RecreateUITimer(ply, "round_timer", "Round " .. self.nCurrentRound, "round_timer" .. self.nCurrentRound)
 end
 
 function RecreateUITimer(playerID, timerName, message, description)
