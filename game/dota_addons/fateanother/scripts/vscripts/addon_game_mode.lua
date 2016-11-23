@@ -650,6 +650,18 @@ function FateGameMode:OnPlayerChat(keys)
         CustomGameEventManager:Send_ServerToPlayer( ply, "player_bgm_off", {} )
     end
 
+    if text == "-roll" then
+        DoRoll(plyID, 100)
+    end
+
+    local rollText = string.match(text, "^-roll (%d+)")
+    if rollText ~= nil then
+        local rollAmount = tonumber(rollText)
+        if rollAmount > 0 then
+            DoRoll(plyID, tonumber(rollAmount))
+        end
+    end
+
     -- Sends a message to request gold
     local pID, goldAmt = string.match(text, "^-(%d%d?) (%d+)")
     if pID ~= nil and goldAmt ~= nil then
@@ -713,6 +725,18 @@ function FateGameMode:OnPlayerChat(keys)
         --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (gold amount) </font>to help him out!" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
         Notifications:RightToTeamGold(hero:GetTeam(), "<font color='#FF5050'>" .. FindName(hero:GetName()) .. "</font> at <font color='#FFD700'>" .. hero:GetGold() .. "g</font> is requesting gold. Type <font color='#58ACFA'>-" .. plyID .. " (goldamount)</font> to send gold!", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"}, false)
     end
+end
+
+function DoRoll(playerId, num)
+  print(playerId)
+    local roll = RandomInt(1, num)
+    local message = "_gray__arrow_ _default_ Rolls _gold_" .. roll .. "_default_ out of " .. num
+    local keys = {
+        PlayerID = playerId,
+        message = message,
+        toAll = true
+    }
+    OnPlayerAltClick(nil, keys)
 end
 
 function OnPlayerAltClick(eventSourceIndex, keys)
