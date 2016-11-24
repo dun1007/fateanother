@@ -17,30 +17,41 @@ function FormatTime( seconds ) {
 	return h + hours + ":" + m + minutes + ":" + s + seconds;
 }
 
-function SetTimer( message, duration )
+function SetTimer(message, duration) {
+	// offset by 1 since I believe GetGameTime() rounds down
+	// this means that if a 10 second timer is created at
+	// say 30.8s GameTime the timer will reach 00:00 at
+	// 40s GameTime and disappear at 41s (showing 00:00 for around
+	// 0.8 seconds). By offseting by 1, the timer instead reaches
+	// 00:01 at 40s and disappears  at 41s.
+	// This introduces some error but is unavoidable since
+	// GetGameTime() only resolves to seconds. It is more intuitive
+	// that the timer finishes on the 00:00 tick, instead of waiting
+	// on 00:00 for an additional tick.
+	// If the duration is 0, assume the timer is meant to be removed
+	var endTime = duration <= 0 ? 0 : (duration + Game.GetGameTime() + 1);
+	SetTimerHelper(message, endTime);
+}
+
+function SetTimerHelper(message, endTime)
 {
+	var timeDiff = endTime - Game.GetGameTime();
+	if (timeDiff <= 0) {
+		$.GetContextPanel().RemoveAndDeleteChildren();
+		return;
+	}
+
 	var messageLabel = $("#TimerMsg");
 	var timeLabel = $("#TimerRemaining");
 	if (!messageLabel || !timeLabel) {
 		return;
 	}
-	var time = duration;
-	var gameTime = Game.GetGameTime();
-	var msg = message;
-	messageLabel.text = msg;
-	timeLabel.text = FormatTime(time);
 
+	messageLabel.text = message;
+	timeLabel.text = FormatTime(timeDiff, 0);
 
-	$.Schedule(1, function(){
-		if (gameTime != Game.GetGameTime())
-		{
-			time = duration - 1;
-		}
-		if (time <= 0) {
-			$.GetContextPanel().RemoveAndDeleteChildren();
-			return;
-		}
-		SetTimer(msg, time);
+	$.Schedule(0.2, function(){
+		SetTimerHelper(message, endTime);
 	});
 }
 

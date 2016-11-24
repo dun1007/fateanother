@@ -27,7 +27,7 @@ function UpdatePlayer( teamPanel, playerId )
 	var playerPanel = playerContainer.FindChild( playerPanelName );
 	if ( playerPanel === null )
 	{
-		playerPanel = $.CreatePanel( "Image", playerContainer, playerPanelName );
+		playerPanel = $.CreatePanel( "Panel", playerContainer, playerPanelName );
 		playerPanel.BLoadLayout( "file://{resources}/layout/custom_game/multiteam_hero_select_overlay_player.xml", false, false );
 		playerPanel.AddClass( "PlayerPanel" );
 	}
@@ -65,7 +65,7 @@ function UpdatePlayer( teamPanel, playerId )
 		playerPortrait.SetImage( "file://{images}/custom_game/unassigned.png" );
 	}
 
-	var playerName = playerPanel.FindChildInLayoutFile( "PlayerName" );
+	var playerName = playerPanel.FindChildInLayoutFile( "PlayerNameText" );
 	playerName.text = playerInfo.player_name;
 
 	playerPanel.SetHasClass( "is_local_player", ( playerId == Game.GetLocalPlayerID() ) );

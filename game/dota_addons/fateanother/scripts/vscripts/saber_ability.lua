@@ -363,7 +363,7 @@ function OnMaxStart(keys)
 			callback = function()
 			if caster:IsAlive() then
 			-- Create Particle for projectile
-				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() + 300 * casterFacing, false, caster, caster, caster:GetTeamNumber())
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 				dummy:SetForwardVector(casterFacing)
 				Timers:CreateTimer( function()
@@ -380,7 +380,7 @@ function OnMaxStart(keys)
 				
 				local excalFxIndex = ParticleManager:CreateParticle("particles/custom/saber/max_excalibur/shockwave.vpcf", PATTACH_ABSORIGIN_FOLLOW, dummy)
 					
-				Timers:CreateTimer( 2.00, function()
+				Timers:CreateTimer(1.7, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( excalFxIndex )
 					Timers:CreateTimer( 0.5, function()

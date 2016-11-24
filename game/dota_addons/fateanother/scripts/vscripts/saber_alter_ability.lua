@@ -16,16 +16,8 @@ function OnDerangeStart(keys)
 		local maximum_charges = keys.ability:GetLevelSpecialValueFor( "maximum_charges", keys.ability:GetLevel() - 1 )
 		
 		-- Check the amount of next charge
-		local chance = RandomInt( 1, 100 )
-		local next_charge = 0
-		if chance > 67 then
-			next_charge = 3
-		elseif chance > 34 then
-			next_charge = 2
-		elseif chance > 1 then
-			next_charge = 1
-		end
-		
+		local next_charge = RandomInt(1, 3)
+
 		-- Check if the charges will become over capacity
 		if not caster.ManaBlastCount then caster.ManaBlastCount = 0 end	-- This might be because I was debugging it to double check nil value
 

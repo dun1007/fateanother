@@ -245,21 +245,23 @@ function OnBelleStart(keys)
 	local targetPoint = keys.target_points[1]
 	local radius = keys.Radius
 	local ply = caster:GetPlayerOwner()
+	local origin = caster:GetAbsOrigin()
+	local initialPosition = origin
 	local ascendCount = 0
 	local descendCount = 0
-	if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2500 or not IsInSameRealm(caster:GetAbsOrigin(), targetPoint) then 
+	if (origin - targetPoint):Length2D() > 2500 or not IsInSameRealm(origin, targetPoint) then 
 		caster:SetMana(caster:GetMana()+keys.ability:GetManaCost(keys.ability:GetLevel()-1)) 
 		keys.ability:EndCooldown()
 		FireGameEvent( 'custom_error_show', { player_ID = caster:GetPlayerOwnerID(), _error = "Invalid Target Location" } ) 
 		return
 	end
-	local dist = (caster:GetAbsOrigin() - targetPoint):Length2D() 
+	local dist = (origin - targetPoint):Length2D() 
 	local dmgdelay = dist * 0.000416
 	
 	-- Attach particle
 	local belleFxIndex = ParticleManager:CreateParticle( "particles/custom/rider/rider_bellerophon_1.vpcf", PATTACH_CUSTOMORIGIN_FOLLOW, caster )
-	ParticleManager:SetParticleControlEnt( belleFxIndex, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
-	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", caster:GetAbsOrigin(), true )
+	ParticleManager:SetParticleControlEnt( belleFxIndex, 0, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", origin, true )
+	ParticleManager:SetParticleControlEnt( belleFxIndex, 1, caster, PATTACH_POINT_FOLLOW, "attach_hitloc", origin, true )
 	
 	if caster.IsRidingAcquired then keys.Damage = keys.Damage + 150 end 
 	giveUnitDataDrivenModifier(keys.caster, keys.caster, "jump_pause", 1.3)
@@ -268,33 +270,57 @@ function OnBelleStart(keys)
 	end)
 
 	local descendVec = Vector(0,0,0)
-	descendVec = (targetPoint - Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, 1150)):Normalized()
+	descendVec = (targetPoint - Vector(origin.x, origin.y, 1150)):Normalized()
 	Timers:CreateTimer(function()
 		if ascendCount == 23 then 
 		 	return
 		end
-		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x,caster:GetAbsOrigin().y,caster:GetAbsOrigin().z+50))
+		local origin = caster:GetAbsOrigin()
+		caster:SetAbsOrigin(Vector(origin.x, origin.y, origin.z + 50))
 		ascendCount = ascendCount + 1
 		return 0.033
 	end)
 
 
 	Timers:CreateTimer(1.0, function()
-		if (caster:GetAbsOrigin() - targetPoint):Length2D() > 2000 then return end
+		local origin = caster:GetAbsOrigin()
+		if (origin - targetPoint):Length2D() > 2000 then return end
 		if descendCount == 9 then return end
 
-		caster:SetAbsOrigin(Vector(caster:GetAbsOrigin().x + descendVec.x * dist/6 ,
-									caster:GetAbsOrigin().y + descendVec.y * dist/6,
-									caster:GetAbsOrigin().z - 127))
+		caster:SetAbsOrigin(Vector(origin.x + descendVec.x * dist/6 ,
+									origin.y + descendVec.y * dist/6,
+									origin.z - 127))
 		descendCount = descendCount + 1
 		return 0.033
 	end)
 
 	-- this is when Rider makes a landing 
 	Timers:CreateTimer(1.3, function() 
-		if (caster:GetAbsOrigin() - targetPoint):Length2D() < 2000 then 
+		local origin = caster:GetAbsOrigin()
+		if (origin - targetPoint):Length2D() < 2000 then 
+			-- set unit's final position first before checking if IsInSameRealm
+			-- to allow Belle across river etc
+			-- only if it is across realms do we try to adjust position
 			caster:SetAbsOrigin(targetPoint)
 			FindClearSpaceForUnit(caster, caster:GetAbsOrigin(), true)
+			local currentPosition = caster:GetAbsOrigin()
+			if not IsInSameRealm(currentPosition, initialPosition) then
+				local diffVector = currentPosition - initialPosition
+				local normalisedVector = diffVector:Normalized()
+				local length = diffVector:Length2D()
+				local newPosition = currentPosition
+				while length >= 0
+					and (not IsInSameRealm(currentPosition, initialPosition)
+						or GridNav:IsBlocked(currentPosition)
+						or not GridNav:IsTraversable(currentPosition)
+					)
+				do
+					currentPosition = currentPosition - normalisedVector * 10
+					length = length - 10
+				end
+				caster:SetAbsOrigin(currentPosition)
+				FindClearSpaceForUnit(caster, currentPosition, true)
+			end
 		end
 		caster:EmitSound("Misc.Crash")
 	end)

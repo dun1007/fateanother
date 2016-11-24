@@ -315,8 +315,22 @@ end
 
 function BecomeWard(keys)
 	local caster = keys.caster
+	local origin = caster:GetAbsOrigin()
+
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local transform = CreateUnitByName("ward_familiar", caster:GetAbsOrigin(), true, hero, hero, caster:GetTeamNumber())
+	local wardPos = transform:GetAbsOrigin()
+
+	if GridNav:IsBlocked(wardPos)
+		or not GridNav:IsTraversable(wardPos)
+		or wardPos.y < -2000
+	then
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Invalid_Location")
+		hero:ModifyGold(800, true , 0)
+		transform:RemoveSelf()
+		return
+	end
+
 
 	transform:AddNewModifier(hero, hero, "modifier_invisible", {})
 	transform:AddNewModifier(hero, hero, "modifier_item_ward_true_sight", {true_sight_range = 1600, duration = 105})
@@ -711,12 +725,12 @@ end
 function FullHeal(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	if caster:HasModifier("jump_pause_nosilence") then
+	if caster:HasModifier("jump_pause_nosilence")
+		or caster:GetHealth() == caster:GetMaxHealth() and caster:GetMana() == caster:GetMaxMana()
+	then
 		RefundItem(caster, ability)
 		return
 	end
-
-	if caster:GetHealth() == caster:GetMaxHealth() and caster:GetMana() == caster:GetMaxMana() then keys.ability:EndCooldown() return end
 
 	caster:SetHealth(caster:GetMaxHealth())
 	caster:SetMana(caster:GetMaxMana())

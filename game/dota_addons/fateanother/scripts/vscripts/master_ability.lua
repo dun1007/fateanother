@@ -384,7 +384,7 @@ function OnSeal4Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or IsRevoked(hero) and hero:GetMana() == hero:GetMaxMana() then
+	if not hero:IsAlive() or IsRevoked(hero) or hero:GetMana() == hero:GetMaxMana() then
 		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")

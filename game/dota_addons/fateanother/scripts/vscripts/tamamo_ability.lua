@@ -558,7 +558,10 @@ function OnShackleThink(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
-	if dist > 2500 or target:IsMagicImmune() then
+	if dist > 2500
+		or target:IsMagicImmune()
+		or not IsInSameRealm(caster:GetAbsOrigin(), target:GetAbsOrigin())
+	then
 		target:RemoveModifierByName("modifier_mystic_shackle")
 	elseif dist > 700 then
 		local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()

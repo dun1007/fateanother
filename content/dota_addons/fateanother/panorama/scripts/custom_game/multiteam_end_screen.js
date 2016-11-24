@@ -28,19 +28,25 @@ function UpdateRoundScore( data )
 	var teamInfoList = ScoreboardUpdater_GetSortedTeamInfoList( endScoreboardHandle );
 	var delay = 0.2;
 	var delay_per_panel = 1 / teamInfoList.length;
+
+	var winningTeamId = Game.GetGameWinner();
+
 	for ( var teamInfo of teamInfoList )
 	{
 		var teamPanel = ScoreboardUpdater_GetTeamPanel( endScoreboardHandle, teamInfo.team_id );
-		teamPanel.SetHasClass( "team_endgame", false );
-		var callback = function( panel )
-		{
-			return function(){ panel.SetHasClass( "team_endgame", 1 ); }
-		}( teamPanel );
+		teamPanel.SetHasClass("team_endgame", false);
+		var callback = function(panel, team_id) {
+			return (function() {
+				panel.SetHasClass("team_endgame", 1);
+				if (team_id == winningTeamId) {
+					panel.SetHasClass("team_winner", 1);
+				}
+			});
+		}(teamPanel, teamInfo.team_id);
 		$.Schedule( delay, callback )
 		delay += delay_per_panel;
 	}
 	
-	var winningTeamId = Game.GetGameWinner();
 	var winningTeamDetails = Game.GetTeamDetails( winningTeamId );
 	var endScreenVictory = $( "#EndScreenVictory" );
 	if ( endScreenVictory )

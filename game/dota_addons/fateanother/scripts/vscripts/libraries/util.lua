@@ -937,11 +937,28 @@ end
 -- loc 1 = vector
 -- loc 2 = vector
 function IsInSameRealm(loc1, loc2)
-    if loc1.y < -2000 and loc2.y > -2000 then
-        return false
-    elseif loc1.y > -2000 and loc2.y < -2000 then
-        return false
+    -- above -2000 normal map
+    if loc1.y > -2000 and loc2.y > -2000 then
+      -- both are in normal map
+      return true
+    elseif not (loc1.y <= -2000 and loc2.y <= -2000) then
+      return false
     end
+    -- 3300 split between AotK and UBW
+    if loc1.x < 3300 and loc2.x < 3300 then
+      -- both are in AotK
+      return true
+    elseif not (loc1.x >= 3300 and loc2.x >= 3300) then
+      return false
+    end
+    -- below -6300 master location
+    if loc1.y > -6300 and loc2.y > -6300 then
+      -- both are in UBW
+      return true
+    elseif not (loc1.y <= -6300 and loc2.y <= -6300) then
+      return false
+    end
+    -- both are in master area
     return true
 end
 
@@ -1079,7 +1096,11 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 
         
         -- if target is linked, distribute damages 
-        if target:HasModifier("modifier_share_damage") and not isLoop and target.linkTable ~= nil then
+        if target:HasModifier("modifier_share_damage")
+          and not isLoop
+          and not (abil:GetName() == "avenger_verg_avesta" and source:GetTeam() == target:GetTeam())
+          and target.linkTable ~= nil
+        then
             -- Calculate the damage to secondary targets separately, in order to prevent MR from being twice as effective on primary target.
             local damageToAllies =  dmgtable.damage
 
