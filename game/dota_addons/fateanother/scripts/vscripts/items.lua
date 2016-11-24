@@ -157,6 +157,8 @@ function TransferItem(keys)
 
 		hero:AddItem(newItem)
 		CheckItemCombination(hero)
+
+		SaveStashState(hero)
 	else
 		SendErrorMessage(hero:GetPlayerOwnerID(), "#No_Items_Found")
 	end
