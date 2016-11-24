@@ -23,6 +23,9 @@
 		})();
 
 		function DeathsClicked() {
+			if (!GameUI.IsAltDown()) {
+				return;
+			}
 			var playerId = $.GetContextPanel().GetAttributeInt("player_id", -1);
 			var localPlayerId = Game.GetLocalPlayerID();
 			if (playerId != localPlayerId) {
