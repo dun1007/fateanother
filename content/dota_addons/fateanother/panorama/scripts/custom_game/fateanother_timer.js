@@ -28,12 +28,15 @@ function SetTimer(message, duration) {
 	// GetGameTime() only resolves to seconds. It is more intuitive
 	// that the timer finishes on the 00:00 tick, instead of waiting
 	// on 00:00 for an additional tick.
-	SetTimerHelper(message, duration, Game.GetGameTime() + 1);
+	// If the duration is 0, assume the timer is meant to be removed
+	var endTime = duration <= 0 ? 0 : (duration + Game.GetGameTime() + 1);
+	SetTimerHelper(message, endTime);
 }
 
-function SetTimerHelper(message, duration, previousTime)
+function SetTimerHelper(message, endTime)
 {
-	if (duration <= 0) {
+	var timeDiff = endTime - Game.GetGameTime();
+	if (timeDiff <= 0) {
 		$.GetContextPanel().RemoveAndDeleteChildren();
 		return;
 	}
@@ -45,12 +48,10 @@ function SetTimerHelper(message, duration, previousTime)
 	}
 
 	messageLabel.text = message;
-	timeLabel.text = FormatTime(duration, 0);
+	timeLabel.text = FormatTime(timeDiff, 0);
 
 	$.Schedule(0.2, function(){
-		var currentTime = Game.GetGameTime();
-		var timeDifference = currentTime - previousTime;
-		SetTimerHelper(message, duration - timeDifference, currentTime);
+		SetTimerHelper(message, endTime);
 	});
 }
 
