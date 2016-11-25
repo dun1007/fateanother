@@ -249,13 +249,13 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 	_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerGoldAmount", goldValue );
 
 	var hero = Players.GetPlayerHeroEntityIndex(playerID);
-	var comboStatus = GetComboStatus(hero)
+	var comboStatus = isTeammate ? GetComboStatus(hero) : -2;
 	playerPanel.SetHasClass( "player_ultimate_ready", comboStatus == 0);
 	// playerPanel.SetHasClass( "player_ultimate_no_mana", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NO_MANA) );
 	playerPanel.SetHasClass( "player_ultimate_not_leveled", comboStatus == -1);
-	// playerPanel.SetHasClass( "player_ultimate_hidden", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN) );
+	playerPanel.SetHasClass( "player_ultimate_hidden", comboStatus == -2);
 	playerPanel.SetHasClass( "player_ultimate_cooldown", comboStatus > 0);
-	_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerUltimateCooldown", ultStateOrTime );
+	// _ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerUltimateCooldown", ultStateOrTime );
 }
 
 
