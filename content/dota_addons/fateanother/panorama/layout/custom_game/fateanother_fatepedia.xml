@@ -17,6 +17,8 @@
                     <Label id="FatepediaHeroName" hittest="false">
                     </Label>
                 </Panel>
+
+
                 <Label id="InnateText" class="FatepediaSkillContextText" contentheight="200px" text="Innates" hittest="true"/>
                 <Label id="QWERText" class="FatepediaSkillContextText" text="Abilities" hittest="true"/>
                 <Label id="ComboText" class="FatepediaSkillContextText" text="Combo" hittest="true"/>

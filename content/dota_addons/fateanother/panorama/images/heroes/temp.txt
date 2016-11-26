@@ -20,3 +20,4 @@
 <Image src="file://{images}/spellicons/npc_dota_hero_sven.png" />
 <Image src="file://{images}/spellicons/npc_dota_hero_templar_assassin.png" />
 <Image src="file://{images}/spellicons/npc_dota_hero_vengefulspirit.png" />
+<Image src="file://{images}/spellicons/npc_dota_hero_windrunner.png" />

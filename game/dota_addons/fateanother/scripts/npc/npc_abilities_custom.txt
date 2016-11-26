@@ -27538,7 +27538,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"24"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"nursery_rhyme_shapeshift_swap"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
@@ -28123,7 +28123,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"24"
 		"LevelsBetweenUpgrades"			"24"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"nursery_rhyme_story_for_somebodys_sake"
 
 		"AnimationPlaybackRate" 		"1.0"
