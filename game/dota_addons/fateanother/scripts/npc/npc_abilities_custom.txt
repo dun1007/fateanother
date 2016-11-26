@@ -22688,10 +22688,11 @@
 				"EffectAttachType"		"follow_origin"
 				"OnDestroy"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"		"modifier_subterranean_grasp"
-						"Target"			"TARGET"
+						"ScriptFile"		"tamamo_ability"
+						"Function"			"OnSGApplyCC"
+						"Duration"			"%duration"
 					}
 				}
 			}
@@ -22725,10 +22726,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_reduction"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"modifier_subterranean_grasp_revoke"
@@ -27543,7 +27540,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
 		"AbilityCastPoint"				"0.15"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"5"
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100"
@@ -27996,7 +27993,7 @@
 						"SharedDamage"		"%damage_shared"
 					}
 				}		
-				"OnDeath"
+				"OnDestroy"
 				{
 					"RunScript"
 					{
@@ -28044,24 +28041,28 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"2"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 		"AbilityTextureName"			"nursery_rhyme_queens_glass_game"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
+			"particle"		"particles/custom/nursery_rhyme/queens_glass_game/queens_glass_game_aoe.vpcf"
+			"particle"		"particles/custom/berserker/reincarnation/regen_buff.vpcf"
+			"particle"		"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
 		}
-		
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"900"
-		"AbilityCastPoint"				"0.3"
+
+		"AbilityCastPoint"				"0.7"
+		"AbilityChannelTime"			"%channel_duration"		
+		"AbilityCastRange"				"%radius"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"200"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"55"
+		"AbilityCooldown"				"50"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -28072,28 +28073,39 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"instant_heal"				"400 500 600 700 800"
+				"radius"				"800"
 			}
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"instant_heal_pct"				"15"
+				"channel_duration"				"4 5 6 7 8"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"heal_over_time_pct"				"2 2.5 3 3.5 4"
+				"instant_heal"				"300 375 450 525 600"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"upkeep_mana_cost"				"3"
+				"instant_heal_pct"				"15"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
+				"heal_over_time_pct"				"2 2.5 3 3.5 4"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"upkeep_mana_cost"				"3"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
 				"incoming_damage"				"200"
 			}
+
 		}
 		
 
@@ -28101,13 +28113,93 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"		"nursery_rhyme_ability"
+			 	"Function"			"OnGlassGameStart"
+			 	"Radius"			"%radius"
+			 	"InstantHeal"		"%instant_heal"
+			 	"InstantHealPct"	"%instant_heal_pct"
+			}
+		}
+
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnGlassGameEnd"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnGlassGameEnd"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_queens_glass_game"
+			{
+				"IsHidden"				"0"
+				"Aura"					"modifier_queens_glass_game_hp_regen"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster"	 "0"
+				"Duration"				"%channel_duration"
+	            "ThinkInterval"		"1"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"PlayGlassGameTickSound"
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"CreateGlassGameEffect"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"RemoveGlassGameEffect"
+					}
+				}
+			}
+			
+			"modifier_queens_glass_game_hp_regen"
+			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnGlassGameAuraApplied"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnGlassGameAuraEnd"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_over_time_pct"
+				}
+			}
 		}
 	}
 

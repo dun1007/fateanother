@@ -8,7 +8,8 @@ CCTable = {
 	-- below are Dota 2 base modifiers that I might have been using previously
 	"modifier_stunned",
 	"modifier_disarmed",
-	"modifier_silenced"
+	"modifier_silenced",
+	"modifier_enkidu_hold"
 }
 
 -- stores CC duration in script scope
@@ -246,15 +247,20 @@ function ChainLightning(keys, source, target, count, CC, bIsFirstItrn)
 					table.insert(CC, "stunned")
 				elseif CCTable[i] == "modifier_silenced" then 
 					table.insert(CC, "silenced")
-				elseif CCTable[i] == "modifier_silenced" then 
+				elseif CCTable[i] == "modifier_disarmed" then 
 					table.insert(CC, "disarmed") 
+				elseif CCTable[i] == "modifier_enkidu_hold" then
+					print("enkidu")
+					table.insert(CC, "stunned")
+					table.insert(CC, "disarmed") 
+					table.insert(CC, "rooted") 
 				else
 					table.insert(CC, CCTable[i])
 				end  
 			end
 		end
 	end
-	print(#CC)
+	--print(#CC)
 	-- reduce base damage by reduction amount if not first bounce, and apply CC
 	if not bIsFirstItrn then
 		keys.Damage = keys.Damage * (100-reduction)/100
@@ -295,7 +301,7 @@ function OnCloneStart(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local duration = keys.Duration
-	local cloneHealth = target:GetMaxHealth() * keys.Health/100 
+	local cloneHealth = target:GetHealth() * keys.Health/100 
 
 	-- check for existing clone 
 	if caster.bCloneExists then
@@ -308,7 +314,7 @@ function OnCloneStart(keys)
 	illusion:SetModel(target:GetModelName())
 	illusion:SetOriginalModel(target:GetModelName())
 	illusion:SetModelScale(target:GetModelScale())
-	illusion:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})
+	--illusion:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})
 	StartAnimation(illusion, {duration=duration, activity=ACT_DOTA_IDLE, rate=1})
 	--illusion:SetPlayerID(target:GetPlayerID()) 
 	--illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = 0, incoming_damage = 0 })
@@ -319,6 +325,13 @@ function OnCloneStart(keys)
 		illusion:SetBaseMaxHealth(cloneHealth)
 		illusion:SetMaxHealth(cloneHealth)
 		illusion:ModifyHealth(cloneHealth, nil, false, 0)
+	end)
+	Timers:CreateTimer(duration, function()
+		if IsValidEntity(illusion) and not illusion:IsNull() then 
+			illusion:Kill(ability, caster)
+			illusion:AddEffects(EF_NODRAW)
+			--illusion:SetAbsOrigin(Vector(10000,10000,0))
+		end
 	end)
 
 	caster.CurrentDoppelganger = illusion
@@ -360,7 +373,8 @@ function OnCloneOriginalTakeDamage(keys)
 	if caster.CurrentDoppelgangerOriginal.bIsInvulDuetoDoppel then
 		caster.CurrentDoppelgangerOriginal:SetHealth(1)
 		caster.CurrentDoppelgangerOriginal.bIsInvulDuetoDoppel = false
-		caster.CurrentDoppelganger:ForceKill(false)
+
+		caster.CurrentDoppelganger:Kill(ability, caster)
 	end
 end
 
@@ -368,8 +382,17 @@ function OnCloneDeath(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local target = keys.target
-	caster.CurrentDoppelganger:SetAbsOrigin(Vector(10000,10000,0))
+	local cloneKillFx = ParticleManager:CreateParticle( "particles/generic_gameplay/illusion_killed.vpcf", PATTACH_CUSTOMORIGIN, nil )
+	ParticleManager:SetParticleControl( cloneKillFx, 0, caster.CurrentDoppelganger:GetAbsOrigin()+Vector(0,0,100) )
+
+	caster.CurrentDoppelganger:AddEffects(EF_NODRAW)
+	--illusion:SetModel("models/development/invisiblebox.vmdl")
+	--illusion:SetOriginalModel("models/development/invisiblebox.vmdl")
+
+	--caster.CurrentDoppelganger:SetHealth(1)
+	--caster.CurrentDoppelganger:SetAbsOrigin(Vector(10000,10000,0))
 	caster.CurrentDoppelgangerOriginal:RemoveModifierByName("modifier_doppelganger_enemy")
+	caster.CurrentDoppelganger:ForceKill(false)
 	caster.CurrentDoppelgangerOriginal = nil
 	caster.bCloneExists = false
 end
@@ -378,10 +401,87 @@ function OnCloneOriginalDeath(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 
-	caster.CurrentDoppelganger:ForceKill(false)
+	caster.CurrentDoppelganger:Kill(ability, caster)
 end
---[[
 
+function OnGlassGameStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local radius = keys.Radius
+	local instantHeal = keys.InstantHeal
+	local instantHealPct = keys.InstantHealPct
+
+	-- give caster heal aura modifier
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_queens_glass_game", {})
+	-- find team units in radius and grant them instant heal
+	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+	for k,v in pairs(targets) do
+		local missingHealth = (v:GetMaxHealth() - v:GetHealth()) * instantHealPct/100
+		v:Heal(instantHeal + missingHealth, caster)
+		local healFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_chen/chen_hand_of_god.vpcf", PATTACH_CUSTOMORIGIN, nil );
+		ParticleManager:SetParticleControl( healFx, 0, v:GetAbsOrigin())
+		v:EmitSound("Item.GuardianGreaves.Target")
+
+	end
+	EmitGlobalSound("NR.Chronosphere")
+	EmitGlobalSound("NR.GlassGame.Begin")
+	caster:EmitSound("NR.Tick")
+	--[[local SacFx = ParticleManager:CreateParticle("particles/custom/caster/sacrifice/caster_sacrifice_indicator.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster )
+	ParticleManager:SetParticleControl( SacFx, 0, caster:GetAbsOrigin())
+	ParticleManager:SetParticleControl( SacFx, 1, Vector(radius,0,0))]]
+end
+
+function OnGlassGameEnd(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	caster:RemoveModifierByName("modifier_queens_glass_game")
+	caster:StopSound("NR.Tick")
+end
+
+function PlayGlassGameTickSound(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+end
+
+function CreateGlassGameEffect(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	caster.aoeFx = ParticleManager:CreateParticle( "particles/custom/nursery_rhyme/queens_glass_game/queens_glass_game_aoe.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControl( caster.aoeFx, 0, caster:GetAbsOrigin())
+
+end
+
+function RemoveGlassGameEffect(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	ParticleManager:DestroyParticle( caster.aoeFx, false )
+	ParticleManager:ReleaseParticleIndex( caster.aoeFx )
+	caster.aoeFx = nil
+end
+
+
+function OnGlassGameAuraApplied(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+
+	if not target.reincarnation_particle then target.reincarnation_particle = ParticleManager:CreateParticle("particles/custom/berserker/reincarnation/regen_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, target) end
+	ParticleManager:SetParticleControl(target.reincarnation_particle, 1, Vector(8,0,0))
+end
+
+function OnGlassGameAuraEnd(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+
+	ParticleManager:DestroyParticle(target.reincarnation_particle, false)
+	target.reincarnation_particle = nil
+end
+
+--[[
 function OnShapeShiftStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability

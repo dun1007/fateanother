@@ -156,7 +156,7 @@ function OnChainStart(keys)
 	    )
 	end
 
-	print(caster.IsGOBUp)
+	--print(caster.IsGOBUp)
 	if caster.IsGOBUp and caster.IsSumerAcquired then 
 		-- Casting by dummy doesn't work for some reason
 		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())

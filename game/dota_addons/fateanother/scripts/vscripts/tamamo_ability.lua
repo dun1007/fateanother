@@ -488,6 +488,18 @@ function OnSGStart(keys)
 	target:EmitSound("Hero_Visage.GraveChill.Cast")
 end
 
+function OnSGApplyCC(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_subterranean_grasp", {})
+	giveUnitDataDrivenModifier(caster, target, "rooted", keys.Duration)
+	if caster.IsSpiritTheftAcquired then
+		giveUnitDataDrivenModifier(caster, target, "revoked", keys.Duration)
+	end
+end
+
 function OnSGDestroy(keys)
 	local caster = keys.caster
 	local target = keys.target

@@ -1120,7 +1120,7 @@ function OnRBStart(keys)
 	if caster.IsRBImproved then
 		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(25)
-		giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", 3.0)
+		giveUnitDataDrivenModifier(caster, target, "revoked", 7.5)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dagger_of_treachery", {}) 
 	end
 

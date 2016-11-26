@@ -881,7 +881,7 @@
 		// General
 		//----------------------------------------------------------------
 		"BaseClass"					"npc_dota_creature"
-		"Model"						"models/development/invisiblebox.vmdl"
+		"Model"						"models/assassin/asn.vmdl"
 		"ModelScale"				"1.0"
 		"Level"						"1"
 		"HealthBarOffset"			"300"
