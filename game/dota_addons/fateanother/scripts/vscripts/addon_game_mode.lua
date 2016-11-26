@@ -1985,6 +1985,12 @@ function FateGameMode:TakeDamageFilter(filterTable)
         local particle = ParticleManager:CreateParticle("particles/econ/items/sniper/sniper_charlie/sniper_assassinate_impact_blood_charlie.vpcf", PATTACH_CUSTOMORIGIN, nil)
         ParticleManager:SetParticleControl(particle, 1, attacker:GetAbsOrigin())
     end
+    -- if Nursery Rhyme's Doppelganger is attemping to deal lethal damage
+    if inflictor and inflictor:GetName() == "nursery_rhyme_doppelganger" and damage > victim:GetHealth() then
+        --print("no u cant kill")
+        victim:SetHealth(100000)
+        victim.bIsInvulDuetoDoppel = true
+    end
     if not attacker.bIsDmgPopupDisabled then
         if damageType == 1 or damageType == 2 or damageType == 4 then
             PopupDamage(victim, math.floor(damage), Vector(255,255,255), damageType)

@@ -1,3 +1,26 @@
+CCTable = {
+	"silenced",
+	"stunned",
+	"revoked",
+	"locked",
+	"rooted",
+	"disarmed",
+	-- below are Dota 2 base modifiers that I might have been using previously
+	"modifier_stunned",
+	"modifier_disarmed",
+	"modifier_silenced"
+}
+
+-- stores CC duration in script scope
+CCDurationTable = {
+	stunned = 0,
+	silenced = 0,
+	revoked = 0,
+	locked = 0,
+	rooted = 0,
+	disarmed = 0
+}
+
 function OnShapeShiftStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -18,6 +41,12 @@ function OnShapeShiftStart(keys)
 	caster.ShapeShiftDest = targetPoint
 	caster:SwapAbilities("nursery_rhyme_shapeshift", "nursery_rhyme_shapeshift_swap", false, true)
 	
+	local cloneFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControl( cloneFx, 0, caster:GetAbsOrigin())
+	Timers:CreateTimer( 0.7, function()
+		ParticleManager:DestroyParticle( cloneFx, false )
+		ParticleManager:ReleaseParticleIndex( cloneFx )
+	end)
 	caster:EmitSound("Hero_Terrorblade.ConjureImage")
 	-- enable sub-ability that swaps position 
 end
@@ -138,15 +167,6 @@ function OnEnigmaStart(keys)
 	end)
 end
 
-CCTable = {
-	"silenced",
-	"stunned",
-	"revoked",
-	"locked",
-	"rooted",
-	"disarmed"
-}
-
 function OnEnigmaHit(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -183,6 +203,182 @@ function OnEnigmaHit(keys)
 	end)
 	target:EmitSound("Hero_Tusk.IceShards")
 
+end
+
+function OnEnigmaLevelUp(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	CCDurationTable.stunned = keys.stunned
+	CCDurationTable.silenced = keys.silenced
+	CCDurationTable.revoked = keys.revoked
+	CCDurationTable.locked = keys.locked
+	CCDurationTable.rooted = keys.rooted
+	CCDurationTable.disarmed = keys.disarmed
+end
+
+function OnPlainStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local bounceCount = keys.MaxBounce
+
+	ChainLightning(keys, caster, target, bounceCount, nil, true)
+end
+
+--[[
+Iterative function that shoots chain lightning to eligible target until bounce > count
+]]
+function ChainLightning(keys, source, target, count, CC, bIsFirstItrn)
+	local caster = keys.caster
+	local ability = keys.ability
+	local reduction = keys.DmgRed
+	local damage = keys.Damage
+	if not CC then CC = {} end -- temporal storage for list of CCs to be applied by W	
+
+	if count == 0 then return end
+
+	-- if first bounce, snapshot the CC target currently has
+	if bIsFirstItrn then
+		for i=1, #CCTable do
+			if target:HasModifier(CCTable[i]) then
+				if CCTable[i] == "modifier_stunned" then 
+					table.insert(CC, "stunned")
+				elseif CCTable[i] == "modifier_silenced" then 
+					table.insert(CC, "silenced")
+				elseif CCTable[i] == "modifier_silenced" then 
+					table.insert(CC, "disarmed") 
+				else
+					table.insert(CC, CCTable[i])
+				end  
+			end
+		end
+	end
+	print(#CC)
+	-- reduce base damage by reduction amount if not first bounce, and apply CC
+	if not bIsFirstItrn then
+		keys.Damage = keys.Damage * (100-reduction)/100
+		damage = keys.Damage
+
+		for i=1, #CC do
+			print("Applying " .. CC[i] .. " for " .. tostring(CCDurationTable[CC[i]]) .. " seconds")
+			giveUnitDataDrivenModifier(caster, target, CC[i], CCDurationTable[CC[i]])
+		end
+	end
+
+	Timers:CreateTimer(0.2, function()
+		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+
+	end)
+
+	local lightningFx = ParticleManager:CreateParticle( "particles/custom/nursery_rhyme/plains_of_water.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControlEnt( lightningFx, 0, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source:GetAbsOrigin() + Vector( 0, 0, 96 ), true );
+	ParticleManager:SetParticleControlEnt( lightningFx, 1, target, PATTACH_POINT_FOLLOW, "attach_hitloc", target:GetOrigin() + Vector(0,0,96), true );
+	target:EmitSound("Hero_Winter_Wyvern.SplinterBlast.Target")
+
+	Timers:CreateTimer(0.2, function()
+		if IsValidEntity(target) and not target:IsNull() then
+			local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 550, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
+			for k,v in pairs(targets) do
+				if v ~= target then 
+					ChainLightning(keys, target, v, count-1, CC, false)
+					return
+				end
+			end
+		end
+	end)
+end
+
+
+function OnCloneStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local duration = keys.Duration
+	local cloneHealth = target:GetMaxHealth() * keys.Health/100 
+
+	-- check for existing clone 
+	if caster.bCloneExists then
+		if IsValidEntity(caster.CurrentDoppelganger) and not caster.CurrentDoppelganger:IsNull() then
+			caster.CurrentDoppelganger:ForceKill(false)
+		end 
+	end
+
+	local illusion = CreateUnitByName("pseudo_illusion", target:GetAbsOrigin() + (caster:GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * 300, true, target, nil, target:GetTeamNumber()) 
+	illusion:SetModel(target:GetModelName())
+	illusion:SetOriginalModel(target:GetModelName())
+	illusion:SetModelScale(target:GetModelScale())
+	illusion:AddNewModifier(caster, nil, "modifier_kill", {duration = duration})
+	StartAnimation(illusion, {duration=duration, activity=ACT_DOTA_IDLE, rate=1})
+	--illusion:SetPlayerID(target:GetPlayerID()) 
+	--illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = 0, incoming_damage = 0 })
+	--illusion:MakeIllusion()
+	illusion:SetBaseMagicalResistanceValue(0)
+	-- god why do i have to always wait 1 damn frame
+	Timers:CreateTimer(0.033, function()
+		illusion:SetBaseMaxHealth(cloneHealth)
+		illusion:SetMaxHealth(cloneHealth)
+		illusion:ModifyHealth(cloneHealth, nil, false, 0)
+	end)
+
+	caster.CurrentDoppelganger = illusion
+	caster.CurrentDoppelgangerOriginal = target
+	caster.bCloneExists = true
+	ability:ApplyDataDrivenModifier(caster, illusion, "modifier_doppelganger", {})
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_doppelganger_enemy", {})
+	giveUnitDataDrivenModifier(caster, illusion, "pause_sealdisabled", duration)
+
+	target:EmitSound("Hero_Terrorblade.Sunder.Target")
+	local cloneFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControl( cloneFx, 0, target:GetAbsOrigin())
+	local cloneFx2 = ParticleManager:CreateParticle( "particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControl( cloneFx2, 0, illusion:GetAbsOrigin())
+	Timers:CreateTimer( 0.7, function()
+		ParticleManager:DestroyParticle( cloneFx, false )
+		ParticleManager:ReleaseParticleIndex( cloneFx )
+		ParticleManager:DestroyParticle( cloneFx2, false )
+		ParticleManager:ReleaseParticleIndex( cloneFx2 )
+	end)
+end
+
+function OnCloneTakeDamage(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local damageTaken = keys.DamageTaken
+	local damageShared = keys.SharedDamage
+
+	DoDamage(caster, caster.CurrentDoppelgangerOriginal, damageTaken*damageShared/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+end
+
+function OnCloneOriginalTakeDamage(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	local damageTaken = keys.DamageTaken
+
+	if caster.CurrentDoppelgangerOriginal.bIsInvulDuetoDoppel then
+		caster.CurrentDoppelgangerOriginal:SetHealth(1)
+		caster.CurrentDoppelgangerOriginal.bIsInvulDuetoDoppel = false
+		caster.CurrentDoppelganger:ForceKill(false)
+	end
+end
+
+function OnCloneDeath(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local target = keys.target
+	caster.CurrentDoppelganger:SetAbsOrigin(Vector(10000,10000,0))
+	caster.CurrentDoppelgangerOriginal:RemoveModifierByName("modifier_doppelganger_enemy")
+	caster.CurrentDoppelgangerOriginal = nil
+	caster.bCloneExists = false
+end
+
+function OnCloneOriginalDeath(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	caster.CurrentDoppelganger:ForceKill(false)
 end
 --[[
 

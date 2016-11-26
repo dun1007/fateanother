@@ -807,7 +807,7 @@ end
 
 function IsRevivePossible(target)
     if target:HasModifier("can_be_executed") then
-        print("cannot revive")
+        --print("cannot revive")
         return false
     end
     return true

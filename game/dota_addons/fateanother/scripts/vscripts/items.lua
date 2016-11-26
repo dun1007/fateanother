@@ -374,7 +374,7 @@ function SpiritLink(keys)
 	-- add list of linked targets to hero table
 	for i=1,#targets do
 		targets[i].linkTable = linkTargets
-		print("Table Contents " .. i .. " : " .. targets[i]:GetName())
+		--print("Table Contents " .. i .. " : " .. targets[i]:GetName())
 		keys.ability:ApplyDataDrivenModifier(caster, targets[i], "modifier_share_damage", {})
 	end
 end
@@ -382,7 +382,7 @@ end
 function OnLinkDamageTaken(keys)
     LoopOverHeroes(function(hero)
         if hero:HasModifier("modifier_share_damage") and hero:GetHealth() == 0 then
-            print("Spirit Link broken on " .. hero:GetName())
+            --print("Spirit Link broken on " .. hero:GetName())
             if IsRevivePossible(hero) then hero:SetHealth(1) end
             hero:RemoveModifierByName("modifier_share_damage")
             RemoveHeroFromLinkTables(hero)

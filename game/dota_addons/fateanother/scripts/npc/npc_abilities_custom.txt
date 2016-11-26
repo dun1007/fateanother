@@ -27794,7 +27794,20 @@
 			 	"Delay"			"%cast_delay"
 			}
 		}
-		
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnEnigmaLevelUp"
+			 	"stunned"			"%stun_duration"
+			 	"silenced"		"%silence_duration"
+			 	"revoked"			"%revoke_duration"
+			 	"locked"			"%lock_duration"
+			 	"rooted"			"%root_duration"
+			 	"disarmed"			"%disarm_duration"
+			}
+		}
 		
 		"OnProjectileHitUnit"
 		{
@@ -27841,16 +27854,19 @@
 		"AbilityTextureName"			"nursery_rhyme_the_plains_of_water"
 		"precache"
 		{
+			"particle"			"particles/custom/nursery_rhyme/plains_of_water.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"950"
 		"AbilityCastPoint"				"0.3"
+		"AbilityCastRangeBuffer"		"75"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"7"
+		"AbilityCooldown"				"14 13 12 10 9"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27880,8 +27896,11 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnPlainStart"
+			 	"MaxBounce"		"%max_bounce"
+			 	"Damage"		"%damage"
+			 	"DmgRed"		"%dmg_reduction"
 			}
 		}
 
@@ -27911,6 +27930,8 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf"
+			"particle"	"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"
 		}
 		
 		// Casting
@@ -27950,13 +27971,64 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnCloneStart"
+			 	"Duration"		"%duration"
+			 	"Health"		"%doppelganger_health"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_doppelganger"
+			{
+				"EffectName"				"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"	
+				"EffectAttachType"			"attach_origin"
+				"Duration"					"%duration"
+				
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnCloneTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"SharedDamage"		"%damage_shared"
+					}
+				}		
+				"OnDeath"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"nursery_rhyme_ability"
+					 	"Function"		"OnCloneDeath"
+					}
+				}		
+			}
+			"modifier_doppelganger_enemy"
+			{
+				"IsDebuff"					"1"
+				"EffectName"				"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"	
+				"EffectAttachType"			"attach_origin"
+				"Duration"					"%duration"		
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnCloneOriginalTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"nursery_rhyme_ability"
+					 	"Function"		"OnCloneOriginalDeath"
+					}
+				}			
+			}
 		}
 	}
 
