@@ -27446,7 +27446,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"200 400"
+				"damage"				"200"
 			}
 			"03"
 			{
@@ -27568,7 +27568,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"MaxLevel"						"1"
+		"MaxLevel"						"2"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"25"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
@@ -27585,12 +27585,12 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"200"
+		"AbilityCastRange"				"200 350"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"180"
+		"AbilityCooldown"				"180 120"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27650,6 +27650,27 @@
 					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
+			"modifier_nameless_forest_stat_steal_debuff"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"20"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"-15"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-15"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-15"
+				}
+			}
+			"modifier_nameless_forest_stat_steal_buff"
+			{
+				"Duration"		"20"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"15"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"15"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"15"
+				}
+			}
 		}
 	}
 
@@ -27664,7 +27685,7 @@
 		"MaxLevel"						"1"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"24"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"nursery_rhyme_reminiscence"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
@@ -27732,7 +27753,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"20"
+				"damage"				"15 17.5 20 22.5 25"
 			}
 			"02"
 			{
@@ -27863,7 +27884,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"14 13 12 10 9"
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27874,7 +27895,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"400 430 460 490 520"
+				"damage"				"300 325 350 375 400"
 			}
 			"02"
 			{
@@ -27903,7 +27924,29 @@
 
 		"Modifiers"
 		{
+			"modifier_plains_of_water_int_debuff"
+			{
+				"IsHidden"		"1"
+				"IsDebuff"		"1"
+				"Duration"		"15"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"-2"
+				}
+			}
+			"modifier_plains_of_water_int_buff"
+			{
+				"IsHidden"		"1"
+				"Duration"		"15"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"2"
+				}
+			}
 		}
+
 	}
 
 
@@ -27929,6 +27972,7 @@
 		{
 			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf"
 			"particle"	"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"
+			"particle"	"particles/units/heroes/hero_bane/bane_fiendsgrip_hands.vpcf"
 		}
 		
 		// Casting
@@ -27938,7 +27982,7 @@
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"29"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27982,7 +28026,16 @@
 				"EffectName"				"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"	
 				"EffectAttachType"			"attach_origin"
 				"Duration"					"%duration"
-				
+	            "ThinkInterval"		"0.99"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnCloneThink"
+					}
+				}
+
 				"OnTakeDamage"
 				{
 					"RunScript"
@@ -28026,6 +28079,17 @@
 					}
 				}			
 			}
+			"modifier_doppelganger_lookaway_slow"
+			{
+				"EffectName"				"particles/units/heroes/hero_bane/bane_fiendsgrip_hands.vpcf"	
+				"EffectAttachType"			"attach_origin"
+				"Duration"		"1"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-70"
+				}
+			}
 		}
 	}
 
@@ -28052,6 +28116,7 @@
 			"particle"		"particles/custom/nursery_rhyme/queens_glass_game/queens_glass_game_aoe.vpcf"
 			"particle"		"particles/custom/berserker/reincarnation/regen_buff.vpcf"
 			"particle"		"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"		"particles/neutral_fx/roshan_death_aegis_starfall.vpcf"
 		}
 
 		"AbilityCastPoint"				"0.7"
@@ -28073,7 +28138,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"radius"				"800"
+				"radius"				"750"
 			}
 			"02"
 			{
@@ -28083,7 +28148,7 @@
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"instant_heal"				"300 375 450 525 600"
+				"instant_heal"				"400 500 600 700 800"
 			}
 			"04"
 			{
@@ -28093,7 +28158,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"heal_over_time_pct"				"2 2.5 3 3.5 4"
+				"heal_over_time_pct"				"2 3.5 5 6.5 8"
 			}
 			"06"
 			{
@@ -28147,7 +28212,7 @@
 				"Aura_Radius"			"%radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_ALL"
-				"Aura_ApplyToCaster"	 "0"
+				//"Aura_ApplyToCaster"	 "0"
 				"Duration"				"%channel_duration"
 	            "ThinkInterval"		"1"
 	            "OnIntervalThink"
@@ -28155,7 +28220,8 @@
 					"RunScript"
 					{
 						"ScriptFile"	"nursery_rhyme_ability"
-						"Function"		"PlayGlassGameTickSound"
+						"Function"		"OnGlassGameThink"
+						"ManaCost"		"%upkeep_mana_cost"
 					}
 				}
 				"OnCreated"
@@ -28174,8 +28240,23 @@
 						"Function"		"RemoveGlassGameEffect"
 					}
 				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
+				}
 			}
-			
+
+			"modifier_queens_glass_game_mana_aura"
+			{
+				"IsHidden"				"0"
+				"Aura"					"modifier_queens_glass_game_mana_regen"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster"	 "0"
+				"Duration"				"%channel_duration"
+			}
+
 			"modifier_queens_glass_game_hp_regen"
 			{
 				"OnCreated"
@@ -28198,6 +28279,13 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_over_time_pct"
+				}
+			}
+			"modifier_queens_glass_game_mana_regen"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%heal_over_time_pct"
 				}
 			}
 		}
@@ -28274,7 +28362,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -28285,7 +28373,27 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"search_radius"			"2500"
+				"slow_amount"			"70"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_sec"			"2"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shapeshift_duration"			"7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shapeshift_slow"			"40"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shapeshift_cd"			"20"
 			}
 		}
 		
@@ -28293,8 +28401,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	""
-				"Function"		""
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnFTAcquired"
 			}
 		}
 	}
@@ -28313,7 +28421,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"15"
 
 		"precache"
 		{
@@ -28324,7 +28432,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"search_radius"			"2500"
+				"extra_bounce"			"2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_ratio"			"1"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_steal"			"2"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_steal_duration"			"15"
 			}
 		}
 		
@@ -28332,8 +28455,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	""
-				"Function"		""
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnNightmareAcquired"
 			}
 		}
 	}
@@ -28352,7 +28475,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"12"
 
 		"precache"
 		{
@@ -28363,7 +28486,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"search_radius"			"2500"
+				"cdr"			"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_cast_range"			"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stat_steal"			"15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stat_steal_duration"			"15"
 			}
 		}
 		
@@ -28371,8 +28509,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	""
-				"Function"		""
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnReminiscenceAcquired"
 			}
 		}
 	}
@@ -28391,7 +28529,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"1"
+		"AbilityManaCost"				"11"
 
 		"precache"
 		{
@@ -28402,7 +28540,22 @@
 			"01"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"search_radius"			"2500"
+				"heal_bonus"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_bonus_missing_health"			"5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_ratio"			"0.5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cdr"			"70"
 			}
 		}
 		
@@ -28410,8 +28563,8 @@
 		{
 			"RunScript"
 			{
-				"ScriptFile"	""
-				"Function"		""
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnImproveQGGAcquired"
 			}
 		}
 	}

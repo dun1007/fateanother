@@ -1375,6 +1375,7 @@
 		"Ability6"					"nursery_rhyme_queens_glass_game"
 		"Ability7"					"nursery_rhyme_story_for_somebodys_sake"
 		"Ability8"					"nursery_rhyme_shapeshift_swap"
+		"Ability9"					"nursery_rhyme_reminiscence"
 		"Ability15"					"presence_detection_passive"
 		"Ability16"					"attribute_bonus"
 

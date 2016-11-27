@@ -107,6 +107,10 @@ function OnNamelessStart(keys)
 	caster.NamelessTarget = target
 	ApplyPurge(target)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_nameless_forest", {})
+
+	if caster.bIsReminiscenceAcquired then
+		caster:SwapAbilities("nursery_rhyme_nameless_forest", "nursery_rhyme_reminiscence", true, true)
+	end
 end
 
 function OnNamelessDebuffStart(keys)
@@ -125,6 +129,11 @@ function OnNamelessEnd(keys)
 
 	target:RemoveEffects(EF_NODRAW)
 	target:StopSound("Hero_Winter_Wyvern.ColdEmbrace")
+	if caster.bIsReminiscenceAcquired then
+		caster:SwapAbilities("nursery_rhyme_nameless_forest", "nursery_rhyme_reminiscence", true, false)
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_nameless_forest_stat_steal_buff", {})
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_nameless_forest_stat_steal_debuff", {})
+	end
 end
 
 function OnReminiscenceStart(keys)
@@ -224,6 +233,12 @@ function OnPlainStart(keys)
 	local target = keys.target
 	local bounceCount = keys.MaxBounce
 
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+
+	if caster.bIsNightmareAcquired then 
+		bounceCount = bounceCount + 2
+	end
+
 	ChainLightning(keys, caster, target, bounceCount, nil, true)
 end
 
@@ -250,10 +265,11 @@ function ChainLightning(keys, source, target, count, CC, bIsFirstItrn)
 				elseif CCTable[i] == "modifier_disarmed" then 
 					table.insert(CC, "disarmed") 
 				elseif CCTable[i] == "modifier_enkidu_hold" then
-					print("enkidu")
+					--print("enkidu")
 					table.insert(CC, "stunned")
 					table.insert(CC, "disarmed") 
 					table.insert(CC, "rooted") 
+					table.insert(CC, "revoked")
 				else
 					table.insert(CC, CCTable[i])
 				end  
@@ -265,16 +281,22 @@ function ChainLightning(keys, source, target, count, CC, bIsFirstItrn)
 	if not bIsFirstItrn then
 		keys.Damage = keys.Damage * (100-reduction)/100
 		damage = keys.Damage
-
 		for i=1, #CC do
-			print("Applying " .. CC[i] .. " for " .. tostring(CCDurationTable[CC[i]]) .. " seconds")
+			--print("Applying " .. CC[i] .. " for " .. tostring(CCDurationTable[CC[i]]) .. " seconds")
 			giveUnitDataDrivenModifier(caster, target, CC[i], CCDurationTable[CC[i]])
 		end
 	end
 
 	Timers:CreateTimer(0.2, function()
+		if caster.bIsNightmareAcquired then 
+			-- steal int by 2, duration 15 sec
+			if target:IsHero() then
+				ability:ApplyDataDrivenModifier(caster, target, "modifier_plains_of_water_int_debuff", {})
+				ability:ApplyDataDrivenModifier(caster, caster, "modifier_plains_of_water_int_buff", {})
+			end
+			damage = damage + 1*caster:GetIntellect()
+		end
 		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-
 	end)
 
 	local lightningFx = ParticleManager:CreateParticle( "particles/custom/nursery_rhyme/plains_of_water.vpcf", PATTACH_CUSTOMORIGIN, nil );
@@ -303,14 +325,23 @@ function OnCloneStart(keys)
 	local duration = keys.Duration
 	local cloneHealth = target:GetHealth() * keys.Health/100 
 
+	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
+
 	-- check for existing clone 
 	if caster.bCloneExists then
 		if IsValidEntity(caster.CurrentDoppelganger) and not caster.CurrentDoppelganger:IsNull() then
 			caster.CurrentDoppelganger:ForceKill(false)
 		end 
 	end
-
-	local illusion = CreateUnitByName("pseudo_illusion", target:GetAbsOrigin() + (caster:GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * 300, true, target, nil, target:GetTeamNumber()) 
+	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
+	local illusionSpawnLoc = Vector(0,0,0)
+	
+	if dist > 300 then 
+		illusionSpawnLoc = target:GetAbsOrigin() + (caster:GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * 300
+	else
+		illusionSpawnLoc = target:GetAbsOrigin() + (caster:GetAbsOrigin() - target:GetAbsOrigin()):Normalized() * dist/2
+	end
+	local illusion = CreateUnitByName("pseudo_illusion", illusionSpawnLoc, true, target, nil, target:GetTeamNumber()) 
 	illusion:SetModel(target:GetModelName())
 	illusion:SetOriginalModel(target:GetModelName())
 	illusion:SetModelScale(target:GetModelScale())
@@ -364,6 +395,20 @@ function OnCloneTakeDamage(keys)
 	DoDamage(caster, caster.CurrentDoppelgangerOriginal, damageTaken*damageShared/100, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 end
 
+--[[
+slow applier when attribute is acquired
+]]
+function OnCloneThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	if caster.bIsFTAcquired then
+		if not IsFacingUnit(caster.CurrentDoppelgangerOriginal, caster.CurrentDoppelganger, 180) then
+			DoDamage(caster, caster.CurrentDoppelgangerOriginal, caster:GetIntellect()*2 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			ability:ApplyDataDrivenModifier(caster, caster.CurrentDoppelgangerOriginal, "modifier_doppelganger_lookaway_slow", {})
+		end
+	end
+end
+
 function OnCloneOriginalTakeDamage(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -410,19 +455,33 @@ function OnGlassGameStart(keys)
 	local radius = keys.Radius
 	local instantHeal = keys.InstantHeal
 	local instantHealPct = keys.InstantHealPct
+	if caster.bIsQGGImproved then
+		instantHeal = instantHeal+150
+		instantHealPct = 20
+	end
 
 	-- give caster heal aura modifier
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_queens_glass_game", {})
+	if caster.bIsQGGImproved then
+		print("applied aura")
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_queens_glass_game_mana_aura", {})
+	end
 	-- find team units in radius and grant them instant heal
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	for k,v in pairs(targets) do
 		local missingHealth = (v:GetMaxHealth() - v:GetHealth()) * instantHealPct/100
-		v:Heal(instantHeal + missingHealth, caster)
+		local totalHeal = instantHeal + missingHealth
+		v:Heal(totalHeal, caster)
+		if caster.bIsQGGImproved then
+			v:GiveMana(totalHeal/2)
+		end
 		local healFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_chen/chen_hand_of_god.vpcf", PATTACH_CUSTOMORIGIN, nil );
-		ParticleManager:SetParticleControl( healFx, 0, v:GetAbsOrigin())
+		ParticleManager:SetParticleControl( healFx, 0, v:GetAbsOrigin() + Vector(0,0,50))
 		v:EmitSound("Item.GuardianGreaves.Target")
-
 	end
+
+	local shineFx = ParticleManager:CreateParticle( "particles/items_fx/aegis_respawn_aegis_starfall.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControl( shineFx, 0, caster:GetAbsOrigin())
 	EmitGlobalSound("NR.Chronosphere")
 	EmitGlobalSound("NR.GlassGame.Begin")
 	caster:EmitSound("NR.Tick")
@@ -436,12 +495,22 @@ function OnGlassGameEnd(keys)
 	local ability = keys.ability
 
 	caster:RemoveModifierByName("modifier_queens_glass_game")
+	if caster.bIsQGGImproved then
+		caster:RemoveModifierByName("modifier_queens_glass_game_mana_aura")
+	end
 	caster:StopSound("NR.Tick")
 end
 
-function PlayGlassGameTickSound(keys)
+function OnGlassGameThink(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	local manaCost = keys.ManaCost * caster:GetMaxMana() / 100
+	--print(manaCost)
+	if  manaCost > caster:GetMana() then 
+		caster:Stop() -- stop channeling
+	else
+		caster:SetMana(caster:GetMana() - manaCost)
+	end
 end
 
 function CreateGlassGameEffect(keys)
@@ -450,6 +519,8 @@ function CreateGlassGameEffect(keys)
 
 	caster.aoeFx = ParticleManager:CreateParticle( "particles/custom/nursery_rhyme/queens_glass_game/queens_glass_game_aoe.vpcf", PATTACH_CUSTOMORIGIN, nil );
 	ParticleManager:SetParticleControl( caster.aoeFx, 0, caster:GetAbsOrigin())
+	caster.aoeFx2 = ParticleManager:CreateParticle( "particles/custom/nursery_rhyme/queens_glass_game/queens_glass_game_bookswirl.vpcf", PATTACH_CUSTOMORIGIN, nil );
+	ParticleManager:SetParticleControl( caster.aoeFx2, 1, caster:GetAbsOrigin())
 
 end
 
@@ -460,6 +531,10 @@ function RemoveGlassGameEffect(keys)
 	ParticleManager:DestroyParticle( caster.aoeFx, false )
 	ParticleManager:ReleaseParticleIndex( caster.aoeFx )
 	caster.aoeFx = nil
+
+	ParticleManager:DestroyParticle( caster.aoeFx2, false )
+	ParticleManager:ReleaseParticleIndex( caster.aoeFx2 )
+	caster.aoeFx2 = nil
 end
 
 
@@ -491,3 +566,61 @@ function OnShapeShiftStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 end]]
+
+--[[
+        "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together"		"Forever Together"
+        "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_Description"		"I Am You, and You Are Me causes target to be slowed 
+        and take damage continuously if it is looking away from its doppelganger. Also, improves Shapeshift's max duration and slow, and reduces its cooldown."
+        ]]
+function OnFTAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	--hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
+	-- Set master 1's mana 
+	hero.bIsFTAcquired = true
+	hero:FindAbilityByName("nursery_rhyme_shapeshift"):SetLevel(2)
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnNightmareAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	--hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
+	-- Set master 1's mana 
+	hero.bIsNightmareAcquired = true
+
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnReminiscenceAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	--hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
+	-- Set master 1's mana 
+	hero.bIsReminiscenceAcquired = true
+	hero:FindAbilityByName("nursery_rhyme_nameless_forest"):SetLevel(2)
+	
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
+
+function OnImproveQGGAcquired(keys)
+	local caster = keys.caster
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+
+	--hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
+	-- Set master 1's mana 
+	hero.bIsQGGImproved = true
+	
+	local master = hero.MasterUnit
+	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
+end
