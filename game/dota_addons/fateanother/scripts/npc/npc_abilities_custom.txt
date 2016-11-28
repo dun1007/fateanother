@@ -22782,12 +22782,17 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_modifier"			"190 205 220 235 250"
+				"damage_modifier"			"300 325 350 375 400"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_modifier_enemy"			"150 150 175 200 200"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"orb_amount"				"3 4 5 6 7"
+				"orb_amount"				"3 5 5 5 7"
 			}
 			"04"
 			{
@@ -22826,7 +22831,7 @@
 						"ScriptFile"    "tamamo_ability"
 						"Function"      "OnMantraTakeDamage"
 						"DamageTaken"	"%attack_damage"
-						"Damage"		"%damage_modifier"
+						"BlockAmt"		"%damage_modifier"
 					}
 				}
 			}
@@ -22843,7 +22848,7 @@
 						"ScriptFile"    "tamamo_ability"
 						"Function"      "OnMantraTakeDamage"
 						"DamageTaken"	"%attack_damage"
-						"Damage"		"%damage_modifier"
+						"Damage"		"%damage_modifier_enemy"
 					}
 				}
 			}
@@ -23498,7 +23503,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"int_ratio"			"0.75"
+				"int_ratio"			"0.5"
 			}
 			"02"
 			{
@@ -27540,7 +27545,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
 		"AbilityCastPoint"				"0.15"
-		"AbilityCooldown"				"5"
+		"AbilityCooldown"				"8"
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"100"
@@ -27689,7 +27694,7 @@
 		"AbilityTextureName"			"nursery_rhyme_reminiscence"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"5"
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"				"0"
@@ -27753,7 +27758,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"15 17.5 20 22.5 25"
+				"damage"				"21 22 23 24 25"
 			}
 			"02"
 			{
@@ -27895,7 +27900,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"300 325 350 375 400"
+				"damage"				"400 425 450 475 500"
 			}
 			"02"
 			{
@@ -28138,7 +28143,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"radius"				"750"
+				"radius"				"875"
 			}
 			"02"
 			{
@@ -28309,11 +28314,15 @@
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"particle"			"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
+			"particle"			"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"400"
+		"AbilityCastRange"				"200"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -28338,13 +28347,58 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnNRComboStart"
+				"TimeLimit"		"%time_limit"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_story_for_someones_sake"
+			{
+				"EffectName"				"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+				"EffectAttachType"			"attach_origin"
+				"Duration"		"%time_limit - 0.1"
+	            "ThinkInterval"		"5"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"PingLocationForEnemies"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnNRComboEnd"
+					}					
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnNRComboDeath"						
+					}
+				}
+			}
+			"modifier_story_for_someones_sake_enemy"
+			{
+				"EffectName"				"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
+				"EffectAttachType"			"attach_origin"
+				"Duration"		"%time_limit - 0.1"
+				"IsDebuff"		"1"
+			}
+
+			"modifier_story_for_someones_sake_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 
@@ -28378,7 +28432,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_sec"			"2"
+				"damage_per_sec"			"3"
 			}
 			"03"
 			{

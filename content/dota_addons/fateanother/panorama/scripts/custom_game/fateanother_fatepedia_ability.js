@@ -19,7 +19,8 @@ var heroes = [
 	"npc_dota_hero_enchantress",
 	"npc_dota_hero_bloodseeker",
 	"npc_dota_hero_mirana",
-	"npc_dota_hero_queenofpain"
+	"npc_dota_hero_queenofpain",
+	"npc_dota_hero_windrunner"
 ]
 
 var names = [
@@ -38,12 +39,13 @@ var names = [
 	"Berserker(4th)",
 	"Caster(4th)",
 	"Rider(4th)",
-	"Red Saber(Extra)",
-	"White Saber(Extra)",
-	"Caster(Extra)",
+	"Saber(Extra), Nero",
+	"Saber(Extra), Gawain",
+	"Caster(Extra), Tamamo",
 	"Assassin(Extra)",
 	"Ruler(Apocrypha)",
-	"Rider of Black(Apocrypha)"
+	"Rider of Black(Apocrypha)",
+	"Caster(Extra), N.R"
 ]
 
 
@@ -176,6 +178,7 @@ function GetIndex(array, object)
 		if (array[i] == object) 
 		{
 			return i
+			
 		}
 	}
 	return -1

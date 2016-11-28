@@ -379,7 +379,7 @@ function OnNineLanded(caster, ability)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
+					giveUnitDataDrivenModifier(caster, v, "revoked", 1.0)
 					-- push enemies back
 					local pushback = Physics:Unit(v)
 					v:PreventDI()
@@ -419,7 +419,7 @@ function OnNineLanded(caster, ability)
 				for k,v in pairs(targets) do
 					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
+					giveUnitDataDrivenModifier(caster, v, "revoked", 1.0)
 				end
 
 				ParticleManager:SetParticleControl(particle, 2, Vector(1,1,radius))

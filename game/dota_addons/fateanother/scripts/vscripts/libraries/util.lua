@@ -129,6 +129,12 @@ cleansable = {
     "modifier_fierce_tiger_strike_3_slow",
     "modifier_purge_the_unjust_slow",
     "modifier_gods_resolution_slow",
+    "modifier_down_with_a_touch_slow",
+    "modifier_down_with_a_touch_slow_2",
+    "modifier_down_with_a_touch_slow_3",
+    "modifier_la_black_luna_slow",
+    "modifier_nursery_rhyme_shapeshift_slow",
+    "modifier_doppelganger_lookaway_slow",
     -- Other CCs
     "modifier_stunned",
     "modifier_rule_breaker",
@@ -176,7 +182,9 @@ slowmodifier = {
     "modifier_down_with_a_touch_slow",
     "modifier_down_with_a_touch_slow_2",
     "modifier_down_with_a_touch_slow_3",
-    "modifier_la_black_luna_slow"
+    "modifier_la_black_luna_slow",
+    "modifier_nursery_rhyme_shapeshift_slow",
+    "modifier_doppelganger_lookaway_slow"
 }
 
 donotlevel = {
@@ -244,7 +252,11 @@ CannotReset = {
     "tamamo_mystic_shackle",
     "astolfo_casa_di_logistilla",
     "astolfo_hippogriff_ride",
-    "astolfo_hippogriff_rush"
+    "astolfo_hippogriff_rush",
+    "nursery_rhyme_shapeshift",
+    "nursery_rhyme_shapeshift_swap",
+    "nursery_rhyme_nameless_forest",
+    "nursery_rhyme_reminiscence"
 }
 
 femaleservant = {
@@ -254,7 +266,8 @@ femaleservant = {
     "npc_dota_hero_crystal_maiden",
     "npc_dota_hero_lina",
     "npc_dota_hero_enchantress",
-    "npc_dota_hero_mirana"
+    "npc_dota_hero_mirana",
+    "npc_dota_hero_windrunner"
 }
 
 itemComp = {
@@ -1613,13 +1626,13 @@ local heroNames = {
     ["npc_dota_hero_huskar"] = "Lancer(4th)",
     ["npc_dota_hero_chen"] = "Rider(4th)",
     ["npc_dota_hero_shadow_shaman"] = "Caster(4th)",
-    ["npc_dota_hero_lina"] = "Red Saber(Extra)",
-    ["npc_dota_hero_omniknight"] = "White Saber(Extra)",
-    ["npc_dota_hero_enchantress"] = "Caster(Extra)",
+    ["npc_dota_hero_lina"] = "Saber(Extra), Nero",
+    ["npc_dota_hero_omniknight"] = "Saber(Extra), Gawain",
+    ["npc_dota_hero_enchantress"] = "Caster(Extra), Tamamo",
     ["npc_dota_hero_bloodseeker"] = "Assassin(Extra)",
     ["npc_dota_hero_mirana"] = "Ruler(Apocrypha)",
     ["npc_dota_hero_queenofpain"] = "Rider of Black(Apocrypha)",
-    ["npc_dota_hero_windrunner"] = "loli castah",
+    ["npc_dota_hero_windrunner"] = "Caster(Extra), N.R",
 }
 
 

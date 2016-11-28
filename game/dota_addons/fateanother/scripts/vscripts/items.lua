@@ -202,7 +202,7 @@ end
 function TPScroll(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	if caster:HasModifier("jump_pause_nosilence") then
+	if caster:HasModifier("jump_pause_nosilence") or caster:HasModifier("modifier_story_for_someones_sake") then
 		RefundItem(caster, ability)
 		caster:Stop()
 		return
@@ -348,7 +348,7 @@ function BecomeWard(keys)
 end
 
 function SpiritLink(keys)
-	print("Spirit Link Used")
+	--print("Spirit Link Used")
 	local caster = keys.caster
 	local ability = keys.ability
 	if caster:HasModifier("jump_pause_nosilence") then
@@ -361,14 +361,16 @@ function SpiritLink(keys)
 	caster:EmitSound("Hero_Warlock.FatalBonds" )
 	-- set up table for link
 	for i=1,#targets do
-		linkTargets[i] = targets[i]
-		--print("Added hero to link table : " .. targets[i]:GetName())
-		RemoveHeroFromLinkTables(targets[i])
+		if targets[i]:GetUnitName() ~= "pseudo_illusion" then
+			linkTargets[i] = targets[i]
+			--print("Added hero to link table : " .. targets[i]:GetName())
+			RemoveHeroFromLinkTables(targets[i])
 
-		-- particle
-    	local pulseFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf", PATTACH_CUSTOMORIGIN, caster )
-	    ParticleManager:SetParticleControl( pulseFx, 0, caster:GetAbsOrigin() + Vector(0,0,100))
-	    ParticleManager:SetParticleControl( pulseFx, 1, targets[i]:GetAbsOrigin() + Vector(0,0,100))
+			-- particle
+	    	local pulseFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_warlock/warlock_fatal_bonds_pulse.vpcf", PATTACH_CUSTOMORIGIN, caster )
+		    ParticleManager:SetParticleControl( pulseFx, 0, caster:GetAbsOrigin() + Vector(0,0,100))
+		    ParticleManager:SetParticleControl( pulseFx, 1, targets[i]:GetAbsOrigin() + Vector(0,0,100))
+		end
 	end
 
 	-- add list of linked targets to hero table
@@ -519,7 +521,7 @@ end
 function SpeedGem(keys)
 	local caster = keys.caster
 	local ability = keys.ability
-	if caster:HasModifier("jump_pause_nosilence") then
+	if caster:HasModifier("jump_pause_nosilence") or caster:HasModifier("modifier_story_for_someones_sake") then
 		RefundItem(caster, ability)
 		return
 	end

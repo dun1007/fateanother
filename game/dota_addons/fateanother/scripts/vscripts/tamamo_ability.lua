@@ -334,7 +334,7 @@ function OnSoulstreamProjectileTick(keys)
 	local casterLoc = target:GetAbsOrigin()
 	local ability = keys.ability
 	local damage = keys.Damage
-	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.75 end
+	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.5 end
 	damage = damage + damage*caster.CurrentSoulstreamStack*keys.StackBonus/100
 
 	if target:IsAlive() then
@@ -609,18 +609,20 @@ function OnMantraTakeDamage(keys)
 	local attacker = keys.attacker
 	local ability = keys.ability
 	local damageTaken = keys.DamageTaken
-	local orbDamage = keys.Damage
+	local orbBlockAmt = 0
+	local orbDamageEnemy = 0
 	local currentStack = 0
 	local modifierName = 0
 	local currentHealth = target:GetHealth() 
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		modifierName = "modifier_mantra_ally"
+		orbBlockAmt = keys.BlockAmt 
 		if currentHealth == 0 then
-			print("lethal")
+			--print("lethal")
 		else
-			if orbDamage < keys.DamageTaken then
-				target:SetHealth(currentHealth + orbDamage)
+			if orbBlockAmt < keys.DamageTaken then
+				target:SetHealth(currentHealth + orbBlockAmt)
 			else
 				target:SetHealth(currentHealth + keys.DamageTaken)
 			end
@@ -631,7 +633,8 @@ function OnMantraTakeDamage(keys)
 		else
 			--print(attacker:GetName() .. " attacked " .. target:GetName())
 			target.IsMantraProcOnCooldown = true
-			DoDamage(caster, target, orbDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			orbDamageEnemy = keys.Damage
+			DoDamage(caster, target, orbDamageEnemy, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			Timers:CreateTimer(0.299, function()
 				target.IsMantraProcOnCooldown = false
 			end)

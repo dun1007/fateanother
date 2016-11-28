@@ -3,6 +3,7 @@ require('lishuwen_ability')
 require('archer_ability')
 require('master_ability')
 require('gille_ability')
+require('nursery_rhyme_ability')
 require('libraries/notifications')
 require('items')
 require('modifiers/attributes')
@@ -1332,7 +1333,15 @@ function FateGameMode:OnAbilityUsed(keys)
     local abilityname = keys.abilityname
     local hero = PlayerResource:GetPlayer(keys.PlayerID):GetAssignedHero()
 
-
+    if abilityname and abilityname == "nursery_rhyme_story_for_somebodys_sake" then
+        local comboAbil = hero:FindAbilityByName("nursery_rhyme_story_for_somebodys_sake")
+        --print( comboAbil:GetLevelSpecialValueFor("time_limit", 2) )
+        Timers:CreateTimer(comboAbil:GetLevelSpecialValueFor("time_limit", 2), function()
+            if hero.bIsNRComboSuccessful and hero:IsAlive() then
+                self:FinishRound(false, 2)
+            end
+        end)
+    end
 
     -- Check whether ability is an item active or not
     if not string.match(abilityname,"item") then
@@ -2286,12 +2295,12 @@ end
 function FateGameMode:FinishRound(IsTimeOut, winner)
     print("[FATE] Winner decided")
     --UTIL_RemoveImmediate( roundQuest ) -- Stop round timer
-
+    print(self.nRadiantScore)
     _G.CurrentGameState = "FATE_POST_ROUND"
     CreateUITimer(("Round " .. self.nCurrentRound), 0, "round_timer" .. self.nCurrentRound)
     CreateUITimer("Pre-Round", 0, "pregame_timer")
 
-    -- clean up marbles and pause heroes for 5 seconds
+    -- clean up marbles and pause heroes for 5 seconds(as well as NR combo)
     self:LoopOverPlayers(function(player, playerID, playerHero)
         if playerHero:IsAlive() then
             giveUnitDataDrivenModifier(playerHero, playerHero, "round_pause", 5.0)
@@ -2309,6 +2318,12 @@ function FateGameMode:FinishRound(IsTimeOut, winner)
         end
         if playerHero:HasModifier("modifier_saint_debuff") then
             playerHero:RemoveModifierByName("modifier_saint_debuff")
+        end
+        if playerHero:HasModifier("modifier_story_for_someones_sake") then
+            playerHero:RemoveModifierByName("modifier_story_for_someones_sake")
+        end
+        if playerHero:HasModifier("modifier_story_for_someones_sake_enemy") then
+            playerHero:RemoveModifierByName("modifier_story_for_someones_sake_enemy")
         end
     end)
 
@@ -2563,4 +2578,9 @@ function FateGameMode:OnConnectFull(keys)
     self.vPlayerList[keys.userid] = playerID
     SendChatToPanorama("player " .. playerID .. " got assigned to " .. keys.userid .. "index in player list")
     --print(self.vPlayerList[keys.userid])]]
+end
+
+function FateGameMode:MakeDraw()
+    print("draw")
+    self:FinishRound(false,2)
 end

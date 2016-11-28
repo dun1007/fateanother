@@ -19,7 +19,8 @@ var heroes = [
 	"npc_dota_hero_enchantress",
 	"npc_dota_hero_bloodseeker",
 	"npc_dota_hero_mirana",
-	"npc_dota_hero_queenofpain"
+	"npc_dota_hero_queenofpain",
+	"npc_dota_hero_windrunner"
 
 ]
 

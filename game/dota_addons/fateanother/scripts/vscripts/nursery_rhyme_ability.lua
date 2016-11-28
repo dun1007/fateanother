@@ -359,7 +359,7 @@ function OnCloneStart(keys)
 	end)
 	Timers:CreateTimer(duration, function()
 		if IsValidEntity(illusion) and not illusion:IsNull() then 
-			illusion:Kill(ability, caster)
+			illusion:ForceKill(false)
 			illusion:AddEffects(EF_NODRAW)
 			--illusion:SetAbsOrigin(Vector(10000,10000,0))
 		end
@@ -403,7 +403,7 @@ function OnCloneThink(keys)
 	local ability = keys.ability
 	if caster.bIsFTAcquired then
 		if not IsFacingUnit(caster.CurrentDoppelgangerOriginal, caster.CurrentDoppelganger, 180) then
-			DoDamage(caster, caster.CurrentDoppelgangerOriginal, caster:GetIntellect()*2 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			DoDamage(caster, caster.CurrentDoppelgangerOriginal, caster:GetIntellect()*3 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			ability:ApplyDataDrivenModifier(caster, caster.CurrentDoppelgangerOriginal, "modifier_doppelganger_lookaway_slow", {})
 		end
 	end
@@ -419,7 +419,7 @@ function OnCloneOriginalTakeDamage(keys)
 		caster.CurrentDoppelgangerOriginal:SetHealth(1)
 		caster.CurrentDoppelgangerOriginal.bIsInvulDuetoDoppel = false
 
-		caster.CurrentDoppelganger:Kill(ability, caster)
+		caster.CurrentDoppelganger:ForceKill(false)
 	end
 end
 
@@ -446,7 +446,7 @@ function OnCloneOriginalDeath(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 
-	caster.CurrentDoppelganger:Kill(ability, caster)
+	caster.CurrentDoppelganger:ForceKill(false)
 end
 
 function OnGlassGameStart(keys)
@@ -455,6 +455,9 @@ function OnGlassGameStart(keys)
 	local radius = keys.Radius
 	local instantHeal = keys.InstantHeal
 	local instantHealPct = keys.InstantHealPct
+
+	NRCheckCombo(caster, ability)
+
 	if caster.bIsQGGImproved then
 		instantHeal = instantHeal+150
 		instantHealPct = 20
@@ -463,7 +466,7 @@ function OnGlassGameStart(keys)
 	-- give caster heal aura modifier
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_queens_glass_game", {})
 	if caster.bIsQGGImproved then
-		print("applied aura")
+		--print("applied aura")
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_queens_glass_game_mana_aura", {})
 	end
 	-- find team units in radius and grant them instant heal
@@ -544,7 +547,6 @@ function OnGlassGameAuraApplied(keys)
 	local target = keys.target
 
 	if not target.reincarnation_particle then target.reincarnation_particle = ParticleManager:CreateParticle("particles/custom/berserker/reincarnation/regen_buff.vpcf", PATTACH_ABSORIGIN_FOLLOW, target) end
-	ParticleManager:SetParticleControl(target.reincarnation_particle, 1, Vector(8,0,0))
 end
 
 function OnGlassGameAuraEnd(keys)
@@ -555,6 +557,106 @@ function OnGlassGameAuraEnd(keys)
 	ParticleManager:DestroyParticle(target.reincarnation_particle, false)
 	target.reincarnation_particle = nil
 end
+
+--[[
+Round finish mechanics 
+]]
+function OnNRComboStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability	
+	
+	if GameRules:GetGameTime() > 60 + _G.RoundStartTime then
+		ability:EndCooldown()
+		caster:GiveMana(ability:GetManaCost(1)) 
+		caster:Stop()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
+		return 
+	end
+
+	-- Set master's combo cooldown
+	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+	masterCombo:EndCooldown()
+	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_story_for_someones_sake_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	
+	caster.bIsNRComboSuccessful = false
+	caster.nNRComboQuoteCount = 1
+
+	-- apply timer modifier for caster and all enemy heroes
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_story_for_someones_sake", {})
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	if playerHero ~= caster then
+    		ability:ApplyDataDrivenModifier(caster, playerHero, "modifier_story_for_someones_sake_enemy", {})
+    	end
+    end)
+
+    GameRules:SendCustomMessage("<font color='#FF0000'>You feel the very fabric of time being twisted.</font>", 0, 0)
+
+    EmitGlobalSound("NR.GlobalPing")
+    caster:EmitSound("NR.Tick")
+end
+
+function PingLocationForEnemies(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	if caster.nNRComboQuoteCount == 3 then
+		GameRules:SendCustomMessage("<font color='#FF0000'>This story will go on forever.</font>", 0, 0)
+		EmitGlobalSound("Hero_Wisp.Tether.Stop")
+	elseif caster.nNRComboQuoteCount == 4 then
+		GameRules:SendCustomMessage("<font color='#FF0000'>As long as the slender fingers return to the first page,</font>", 0, 0)
+		EmitGlobalSound("Hero_Wisp.Tether.Stop")
+	elseif caster.nNRComboQuoteCount == 5 then
+		GameRules:SendCustomMessage("<font color='#FF0000'>As if picking up the next volume.</font>", 0, 0)
+		EmitGlobalSound("Hero_Wisp.Tether.Stop")
+	end
+	caster.nNRComboQuoteCount = caster.nNRComboQuoteCount+1
+
+    LoopOverPlayers(function(player, playerID, playerHero)
+    	if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and player and playerHero then
+    		MinimapEvent( playerHero:GetTeamNumber(), playerHero, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+    	end
+    end)	
+end
+
+function OnNRComboEnd(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	caster:StopSound("NR.Tick")
+	if caster:IsAlive() and _G.CurrentGameState == "FATE_ROUND_ONGOING" then 
+		caster.bIsNRComboSuccessful = true 
+		GameRules:SendCustomMessage("<font color='#FF0000'>Once again denying reality to the reader.</font>", 0, 0)
+		EmitGlobalSound("Hero_Wisp.Tether.Stun")
+	end
+end
+
+function OnNRComboDeath(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+    --[[LoopOverPlayers(function(player, playerID, playerHero)
+    	if playerHero ~= caster then
+    		playerHero:RemoveModifierByName("modifier_story_for_someones_sake_enemy")
+    	end
+    end)]]
+	EmitGlobalSound("Hero_Wisp.Tether.Stun")
+    GameRules:SendCustomMessage("<font color='#58ACFA'>The fabric of time has become normal again.</font>", 0, 0)
+end
+
+function NRCheckCombo(caster, ability)
+	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
+		if ability == caster:FindAbilityByName("nursery_rhyme_queens_glass_game") then
+			caster:SwapAbilities("nursery_rhyme_queens_glass_game", "nursery_rhyme_story_for_somebodys_sake", false, true)
+			Timers:CreateTimer({
+				endTime = 2,
+				callback = function()
+				caster:SwapAbilities("nursery_rhyme_queens_glass_game", "nursery_rhyme_story_for_somebodys_sake", true, false)
+			end
+			})
+		end
+	end
+end
+
 
 --[[
 function OnShapeShiftStart(keys)
