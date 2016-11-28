@@ -256,7 +256,8 @@ CannotReset = {
     "nursery_rhyme_shapeshift",
     "nursery_rhyme_shapeshift_swap",
     "nursery_rhyme_nameless_forest",
-    "nursery_rhyme_reminiscence"
+    "nursery_rhyme_reminiscence",
+    "nursery_rhyme_story_for_somebodys_sake"
 }
 
 femaleservant = {

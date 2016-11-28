@@ -564,6 +564,7 @@ Round finish mechanics
 function OnNRComboStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability	
+	local cooldown = keys.ability:GetCooldown(1)
 	
 	if GameRules:GetGameTime() > 60 + _G.RoundStartTime then
 		ability:EndCooldown()
@@ -572,12 +573,15 @@ function OnNRComboStart(keys)
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
 		return 
 	end
-
+	if caster.bIsQGGImproved then 
+		ReduceCooldown(ability, 70)
+		cooldown = cooldown - 70
+	end
 	-- Set master's combo cooldown
 	local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
 	masterCombo:EndCooldown()
-	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
-	ability:ApplyDataDrivenModifier(caster, caster, "modifier_story_for_someones_sake_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+	masterCombo:StartCooldown(cooldown)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_story_for_someones_sake_cooldown", {duration = cooldown})
 	
 	caster.bIsNRComboSuccessful = false
 	caster.nNRComboQuoteCount = 1
