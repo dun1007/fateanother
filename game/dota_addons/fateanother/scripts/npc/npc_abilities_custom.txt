@@ -27525,6 +27525,93 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 				}		
 			}
+			"modifier_b_scroll"
+	    	{
+				"EffectName"	"particles/custom/item/item_b_scroll_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"TextureName" "item_b_scroll"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
+	    	}
+	    	"modifier_a_scroll"
+	    	{
+	    		"TextureName" 	"item_a_scroll"
+				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
+	    			//"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+	    		}
+	    	}
+	    	"modifier_healing_scroll"
+	    	{	
+	    		"TextureName" 	"item_healing_scroll"
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_amount"
+	    		}
+	    	}
+	    	"modifier_speed_gem"
+	    	{
+	    		"TextureName" 			"item_sphere"
+	    		"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"		"follow_origin"	
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"30"
+	    		}
+	    	}
+	    	"modifier_berserk_scroll"
+	    	{
+	    		"TextureName" 	"berserk_scroll"
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
+				"EffectAttachType"	"follow_origin"
+	    		"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"100"
+				}
+	    	}
+	    	"item_pot_regen"
+	        {
+	        	"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+	        	"EffectName"	"particles/items_fx/healing_flask.vpcf"
+	        	"TextureName" 	"mana_essence"
+	        	"EffectAttachType"	"attach_hitloc"
+	            "Properties"
+	            {
+	            	"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"50"
+	            	"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"30"
+	            }
+	            "OnTakeDamage"
+	            {
+	            	"RemoveModifier"
+	            	{
+	            		"Target"	"CASTER"
+	            		"ModifierName"		"item_pot_regen"
+	            	}
+	            }
+	        } 
 		}
 	}
 

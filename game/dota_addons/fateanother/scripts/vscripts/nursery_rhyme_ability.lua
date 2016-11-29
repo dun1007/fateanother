@@ -22,6 +22,8 @@ CCDurationTable = {
 	disarmed = 0
 }
 
+itemModifiers = {"modifier_b_scroll","modifier_a_scroll","modifier_healing_scroll","modifier_speed_gem","modifier_berserk_scroll","item_pot_regen"}
+
 function OnShapeShiftStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -42,6 +44,33 @@ function OnShapeShiftStart(keys)
 	caster.ShapeShiftDest = targetPoint
 	caster:SwapAbilities("nursery_rhyme_shapeshift", "nursery_rhyme_shapeshift_swap", false, true)
 	
+	--start of mimic function (work in progress)
+	for i=1, (caster:GetLevel()-1) do
+		illusion:HeroLevelUp(false)
+	end
+
+	for i = 1, #itemModifiers do
+		if caster:HasModifier(itemModifiers[i]) then
+			ability:ApplyDataDrivenModifier(caster, illusion, itemModifiers[i], {duration = caster:FindModifierByName(itemModifiers[i]):GetRemainingTime()})		
+		end
+	end	
+
+	illusion:SetBaseStrength(caster:GetBaseStrength())
+	illusion:SetBaseIntellect(caster:GetBaseIntellect())
+	illusion:SetBaseAgility(caster:GetBaseAgility())
+	illusion:ModifyAgility(0) --do not remove this seemingly useless line
+
+	illusion:SetMaxHealth(caster:GetMaxHealth())
+	illusion:SetHealth(caster:GetHealth())
+	illusion:SetBaseHealthRegen(caster:GetHealthRegen()) -- No SetHealthRegen
+
+	illusion:SetMana(caster:GetMana()) 
+	-- Only GetMaxMana but no SetMaxMana, Only GetManaRegen but no SetManaRegen
+	illusion:SetPhysicalArmorBaseValue(caster:GetPhysicalArmorBaseValue())
+
+	illusion:SetBaseMoveSpeed(caster:GetBaseMoveSpeed()) -- No GetMoveSpeed function
+	-- end mimic
+
 	local cloneFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf", PATTACH_CUSTOMORIGIN, nil );
 	ParticleManager:SetParticleControl( cloneFx, 0, caster:GetAbsOrigin())
 	Timers:CreateTimer( 0.7, function()
