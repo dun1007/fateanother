@@ -21273,6 +21273,12 @@
 				"IsDebuff"	"1"
 				"TextureName"	"astolfo_hippogriff_ride"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}			
+			"modifier_story_for_someones_sake_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"nursery_rhyme_story_for_somebodys_sake"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
 			"modifier_instinct_cooldown"
 			{

@@ -678,7 +678,7 @@ end
 
 function NRCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
-		if ability == caster:FindAbilityByName("nursery_rhyme_queens_glass_game") then
+		if ability == caster:FindAbilityByName("nursery_rhyme_queens_glass_game") and caster:FindAbilityByName("nursery_rhyme_story_for_somebodys_sake"):IsCooldownReady() then
 			caster:SwapAbilities("nursery_rhyme_queens_glass_game", "nursery_rhyme_story_for_somebodys_sake", false, true)
 			Timers:CreateTimer({
 				endTime = 2,

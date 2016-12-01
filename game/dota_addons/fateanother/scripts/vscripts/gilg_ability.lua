@@ -84,6 +84,7 @@ function OnChainStart(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_enkidu_hold", {})
 	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
+	DoDamage(caster, target, 0, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) -- For reseting TA invis timer
 	
 	-- Check if caster already had particle
 	if caster.enkiduBind ~= nil then

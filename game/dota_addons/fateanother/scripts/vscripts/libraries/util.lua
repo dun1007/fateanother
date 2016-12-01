@@ -1098,7 +1098,18 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     end
 
     -- if damage was not fully absorbed by shield, deal residue damage 
-    if IsAbsorbed == true then return else
+    if IsAbsorbed == true then
+        local dmgtable = {
+            attacker = source,
+            victim = target,
+            damage = 0,
+            damage_type = dmg_type,
+            damage_flags = dmg_flag,
+            ability = abil
+        }
+        ApplyDamage(dmgtable)
+        return 
+    else
         local dmgtable = {
             attacker = source,
             victim = target,
