@@ -43,20 +43,8 @@
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_7] = "#1bc0d8;"; // { 27, 192, 216 }	--		Light Blue
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_8] = "#65d413;"; // { 101, 212, 19 }	--	
 
-		var tooltipManager = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("Tooltips");
-		var abilityTooltip = tooltipManager.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse("Contents");
-		// remove transparency
-		// abilityTooltip.style.backgroundColor = "gradient( linear, 0% 0%, 0% 100%, from( #2d2d2dfd ), to( #000000fd ) )";
-		abilityTooltip.style.width = "315px";
-		abilityTooltip.style.padding = "20px 20px 40px 20px";
-
-		var buffTooltip = tooltipManager.FindChildTraverse("DOTABuffTooltip").FindChildTraverse("Contents");
-		// remove transparency
-		// buffTooltip.style.backgroundColor = "gradient( linear, 0% 0%, 0% 100%, from( #2d2d2dff ), to( #000000ff ) )";
-
 		var hud = $.GetContextPanel().GetParent().GetParent();
 		GameUI.CustomUIConfig().hud = hud;
-hud.style.zIndex = -100;
 	</script>
 
 	<Panel>

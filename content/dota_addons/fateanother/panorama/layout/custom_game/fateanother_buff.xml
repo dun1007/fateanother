@@ -4,13 +4,13 @@
         <include src="file://{resources}/styles/custom_game/fateanother_buff_bar.css" />
     </styles>
     <Panel class="BuffContainer" hittest="true">
-      <Panel id="TooltipRoot" class="TooltipRoot" />
-      <Image class="BuffIcon" src="file://{images}/custom_game/default_buff_icon.png" />
-      <Image id="BuffIcon" class="BuffIcon" />
-      <Label id="BuffStacks" class="BuffStacks" />
-      <Image id="BuffActive" class="Buff" src="file://{images}/custom_game/buff_active.png" />
-      <Image id="BuffCooldown" class="Buff Cooldown" src="file://{images}/custom_game/buff_cooldown.png" />
-      <Image id="DebuffActive" class="Buff" src="file://{images}/custom_game/debuff_active.png" />
-      <Image id="DebuffCooldown" class="Buff Cooldown" src="file://{images}/custom_game/debuff_cooldown.png" />
+      <!-- <Panel id="TooltipRoot" class="TooltipRoot" /> -->
+      <!-- <Image class="BuffIcon" src="file://{images}/custom_game/default_buff_icon.png" /> -->
+      <!-- <Image id="BuffIcon" class="BuffIcon" /> -->
+      <!-- <Label id="BuffStacks" class="BuffStacks" /> -->
+      <!-- <Image id="BuffActive" class="Buff" src="file://{images}/custom_game/buff_active.png" /> -->
+      <!-- <Image id="BuffCooldown" class="Buff Cooldown" src="file://{images}/custom_game/buff_cooldown.png" /> -->
+      <!-- <Image id="DebuffActive" class="Buff" src="file://{images}/custom_game/debuff_active.png" /> -->
+      <!-- <Image id="DebuffCooldown" class="Buff Cooldown" src="file://{images}/custom_game/debuff_cooldown.png" /> -->
     </Panel>
 </root>

@@ -42,7 +42,7 @@ var buffHasStacks = {
     modifier_plains_of_water_int_buff: true,
 };
 
-var buffFixedDuration = {
+var buffCooldown = {
     modifier_instinct_cooldown: 35,
     modifier_madmans_roar_cooldown: 150,
     modifier_strike_air_cooldown: 60,
@@ -94,22 +94,7 @@ function BuffPanel(parent) {
     var panel = $.CreatePanel("Panel", parent, "");
     panel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_buff.xml", false, false);
     this.panel = panel;
-    this.tooltipRoot = panel.FindChild("TooltipRoot");
     var that = this;
-
-    this.panel.SetPanelEvent(
-        "onmouseover",
-        function() {
-            that.OnMouseOver();
-        }
-    )
-
-    this.panel.SetPanelEvent(
-        "onmouseout",
-        function() {
-            that.OnMouseOut();
-        }
-    )
 
     this.panel.SetPanelEvent(
         "onactivate",
@@ -131,17 +116,6 @@ BuffPanel.prototype.SetBuff = function(unit, buff) {
     this.hasStacks = !!buffHasStacks[this.name];
 }
 
-BuffPanel.prototype.OnMouseOver = function() {
-    if (!this.buff || !this.unit) {
-        return;
-    }
-    $.DispatchEvent("DOTAShowBuffTooltip", this.tooltipRoot, this.unit, this.buff, false);
-}
-
-BuffPanel.prototype.OnMouseOut = function() {
-    $.DispatchEvent("DOTAHideBuffTooltip");
-}
-
 BuffPanel.prototype.OnActivate = function() {
     if (!Entities.IsHero(this.unit) || !GameUI.IsAltDown()) {
         return;
@@ -150,8 +124,7 @@ BuffPanel.prototype.OnActivate = function() {
     var localName = $.Localize("DOTA_Tooltip_" + this.name);
     var colour = this.isDebuff ? "_red_" : "_green_";
     var message;
-    if (EndsWith(this.name, "cooldown")
-        && buffFixedDuration[this.name]
+    if (buffCooldown[this.name]
         && Entities.GetTeamNumber(this.unit) == Players.GetTeam(Game.GetLocalPlayerID())) {
         var remainingTime = Math.ceil(this.remainingTime);
         message = colour + localName + " _default_( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " )";
@@ -172,40 +145,7 @@ BuffPanel.prototype.SetVisible = function(visible) {
     SetVisiblePanel(this.panel, visible);
 }
 
-BuffPanel.prototype.Update = function() {
-    var buffIconPanel = this.panel.FindChild("BuffIcon");
-    buffIconPanel.SetImage( "file://{images}/spellicons/" + this.image + ".png");
-
-    var prefix = this.isDebuff ? "Debuff" : "Buff";
-    var otherPrefix = this.isDebuff ? "Buff" : "Debuff";
-
-    SetVisiblePanel(this.panel.FindChild(prefix + "Active"), true);
-    SetVisiblePanel(this.panel.FindChild(prefix + "Cooldown"), true);
-    SetVisiblePanel(this.panel.FindChild(otherPrefix + "Active"), false);
-    SetVisiblePanel(this.panel.FindChild(otherPrefix + "Cooldown"), false);
-
-    var stacksPanel = this.panel.FindChild("BuffStacks");
-    SetVisiblePanel(stacksPanel, this.hasStacks);
-    stacksPanel.text = this.stackCount;
-
-    var cooldownPanel = this.panel.FindChild(prefix + "Cooldown")
-    var progress;
-    // $.Msg(this.name + " " + Buffs.GetCreationTime(this.unit, this.buff))
-    if (this.name.match("aura") || buffIsAura[this.name]) {
-        progress = 0;
-    } else if (this.duration < 0) {
-        progress = 0;
-    } else if (this.remainingTime < 0) {
-        progress = 360;
-    } else {
-        var duration = buffFixedDuration[this.name] || this.duration;
-        progress = 360 - this.remainingTime / duration * 360;
-        if (isNaN(progress)) {
-            progress = 360;
-        }
-    }
-    cooldownPanel.style.clip = "radial(50% 50%, 0deg, " + progress + "deg)";
-}
+BuffPanel.prototype.Update = function() {}
 
 var BuffBar = function(panel) {
     this.panel = panel;
@@ -275,7 +215,7 @@ BuffBar.prototype.GetVisibleBuffs = function() {
             continue;
         }
         visibleBuffs.push(buff);
-        if (visibleBuffs.length >= 12) {
+        if (visibleBuffs.length >= 8) {
             break;
         }
     }
