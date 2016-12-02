@@ -43,6 +43,15 @@
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_7] = "#1bc0d8;"; // { 27, 192, 216 }	--		Light Blue
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_8] = "#65d413;"; // { 101, 212, 19 }	--	
 
+		var tooltipManager = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("Tooltips");
+		var abilityTooltip = tooltipManager.FindChildTraverse("DOTAAbilityTooltip").FindChildTraverse("Contents");
+		// remove transparency
+		// abilityTooltip.style.backgroundColor = "gradient( linear, 0% 0%, 0% 100%, from( #2d2d2dfd ), to( #000000fd ) )";
+		abilityTooltip.style.width = "315px";
+
+		var buffTooltip = tooltipManager.FindChildTraverse("DOTABuffTooltip").FindChildTraverse("Contents");
+		// remove transparency
+		// buffTooltip.style.backgroundColor = "gradient( linear, 0% 0%, 0% 100%, from( #2d2d2dff ), to( #000000ff ) )";
 	</script>
 
 	<Panel>
@@ -54,6 +63,8 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_fatepedia.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_config.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_buff_bar.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_ability_proxy.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_spellbook.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml" />
 		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
