@@ -6,6 +6,7 @@
     <scripts>
         <include src="file://{resources}/scripts/custom_game/fateanother_ability_proxy.js" />
     </scripts>
+    <!-- <Panel class="AbilityProxy" hittest="false" style="visibility: collapse;"> -->
     <Panel class="AbilityProxy" hittest="false">
         <Button id="Ability0" class="Ability" hittest="true">
                 <Panel class="AbilityTooltipRoot" />

@@ -15,178 +15,275 @@
 [   PanoramaScript         ]: GetAbility
 **/
 
-// var hero = Players.GetPlayerHeroEntityIndex(playerId);
-// var nBuffs = Entities.GetNumBuffs(hero)
-// var buff = Entities.GetBuff(hero, i)
-
 var buffHasStacks = {
+    modifier_lancer_incinerate: true,
+    modifier_derange_counter: true,
     modifier_courage_damage_stack_indicator: true,
     modifier_courage_stackable_buff: true,
-    modifier_madness_stack: true,
     modifier_god_hand_stock: true,
+    modifier_ta_agi_bonus: true,
+    modifier_dark_passage: true,
+    modifier_gae_buidhe: true,
+    modifier_madness_stack: true,
+    modifier_gladiusanus_blauserum: true,
+    modifier_fiery_heaven_indicator: true,
+    modifier_fiery_heaven_indicator_enemy: true,
+    modifier_frigid_heaven_indicator: true,
+    modifier_frigid_heaven_indicator_enemy: true,
+    modifier_gust_heaven_indicator: true,
+    modifier_gust_heaven_indicator_enemy  : true,
+    modifier_soulstream_stack: true,
+    modifier_mantra_ally: true,
+    modifier_mantra_enemy: true,
+    modifier_mark_of_fatality: true,
+    modifier_furious_chain_buff: true,
+    modifier_magic_resistance_ex_shield: true,
+    modifier_plains_of_water_int_debuff: true,
+    modifier_plains_of_water_int_buff: true,
 };
 
+var buffFixedDuration = {
+    modifier_instinct_cooldown: 35,
+    modifier_madmans_roar_cooldown: 150,
+    modifier_strike_air_cooldown: 60,
+    modifier_max_excalibur_cooldown: 150,
+    modifier_battle_continuation_cooldown: 60,
+    modifier_wesen_gae_bolg_cooldown: 90,
+    modifier_max_mana_burst_cooldown: 150,
+    modifier_bellerophon_2_cooldown: 100,
+    modifier_arrow_rain_cooldown: 180,
+    modifier_overedge_cooldown: 60,
+    modifier_hrunting_cooldown: 80,
+    modifier_quickdraw_cooldown: 60,
+    modifier_tsubame_mai_cooldown: 150,
+    modifier_delusional_illusion_cooldown: 150,
+    modifier_max_enuma_elish_cooldown: 160,
+    modifier_hecatic_graea_powered_cooldown: 150,
+    modifier_eternal_arms_mastership_cooldown: 45,
+    modifier_blessing_of_fairy_cooldown: 45,
+    modifier_nuke_cooldown: 150,
+    modifier_blood_mark_cooldown: 50,
+    modifier_endless_loop_cooldown: 100,
+    modifier_rampant_warrior_cooldown: 100,
+    modifier_annihilate_cooldown: 140,
+    modifier_larret_de_mort_cooldown: 150,
+    modifier_fiery_finale_cooldown: 180,
+    modifier_laus_saint_cladius_cooldown: 0, // unused
+    modifier_invictus_spiritus_cooldown: 60,
+    modifier_gawain_blessing_cooldown: 60,
+    modifier_meltdown_cooldown: 90,
+    modifier_supernova_cooldown: 170,
+    modifier_mystic_shackle_cooldown: 30,
+    modifier_fates_call_cooldown: 0, // unused
+    modifier_polygamist_cooldown: 120,
+    modifier_raging_dragon_strike_cooldown: 110,
+    modifier_la_pucelle_cooldown: 135,
+    modifier_hippogriff_ride_cooldown: 150,
+    modifier_story_for_someones_sake_cooldown: 450,
+};
+
+var buffIsAura = {
+    modifier_aestus_domus_aurea_debuff: true,
+    modifier_aestus_domus_aurea_debuff_attribute: true,
+    modifier_aestus_domus_aurea_debuff_slow: true,
+    modifier_big_bad_voodoo_invulnerability: true,
+};
+
+
 function BuffPanel(parent) {
-    var that = {};
     var panel = $.CreatePanel("Panel", parent, "");
     panel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_buff.xml", false, false);
-    that.panel = panel;
-    that.tooltipRoot = panel.FindChild("TooltipRoot");
+    this.panel = panel;
+    this.tooltipRoot = panel.FindChild("TooltipRoot");
+    var that = this;
 
-    that.panel.SetPanelEvent(
+    this.panel.SetPanelEvent(
         "onmouseover",
         function() {
             that.OnMouseOver();
         }
     )
 
-    that.panel.SetPanelEvent(
+    this.panel.SetPanelEvent(
         "onmouseout",
         function() {
             that.OnMouseOut();
         }
     )
 
-    that.panel.SetPanelEvent(
+    this.panel.SetPanelEvent(
         "onactivate",
         function() {
             that.OnActivate();
         }
     )
-
-    that.SetBuff = function(unit, buff) {
-        that.buff = buff;
-        that.unit = unit;
-        that.name = Buffs.GetName(unit, buff);
-        that.image = Buffs.GetTexture(unit, buff);
-        that.duration = Buffs.GetDuration(unit, buff);
-        that.remainingTime = Buffs.GetRemainingTime(unit, buff);
-        that.stackCount = Buffs.GetStackCount(unit, buff);
-        that.isDebuff = Buffs.IsDebuff(unit, buff);
-        that.hasStacks = !!buffHasStacks[that.name];
-    }
-
-    that.OnMouseOver = function() {
-        if (!that.buff || !that.unit) {
-            return;
-        }
-        $.DispatchEvent("DOTAShowBuffTooltip", that.tooltipRoot, that.unit, that.buff, false);
-    }
-
-    that.OnMouseOut = function() {
-        $.DispatchEvent("DOTAHideBuffTooltip");
-    }
-
-    that.OnActivate = function() {
-        if (!Entities.IsHero(that.unit) || !GameUI.IsAltDown()) {
-            return;
-        }
-        var localName = $.Localize("DOTA_Tooltip_" + that.name);
-        var colour = that.isDebuff ? "_red_" : "_green_";
-        var message = "_default_Affected by " + colour + localName + "_default_";
-        if (that.hasStacks) {
-            message += " ( _gold_" + that.stackCount + "_default_ stack" + (that.stackCount == 1 ? "" : "s") + " )"
-        }
-        GameEvents.SendCustomGameEventToServer("player_alt_click_buff", {
-            message: message,
-            ability: that.name,
-            unit: that.unit
-        });
-    }
-
-    that.SetVisible = function(visible) {
-        SetVisiblePanel(that.panel, visible);
-    }
-
-    that.Update = function() {
-        var buffIconPanel = this.panel.FindChild("BuffIcon");
-        buffIconPanel.SetImage( "file://{images}/spellicons/" + that.image + ".png");
-
-        var prefix = that.isDebuff ? "Debuff" : "Buff";
-        var otherPrefix = that.isDebuff ? "Buff" : "Debuff";
-
-        SetVisiblePanel(that.panel.FindChild(prefix + "Active"), true);
-        SetVisiblePanel(that.panel.FindChild(prefix + "Cooldown"), true);
-        SetVisiblePanel(that.panel.FindChild(otherPrefix + "Active"), false);
-        SetVisiblePanel(that.panel.FindChild(otherPrefix + "Cooldown"), false);
-
-        var stacksPanel = that.panel.FindChild("BuffStacks");
-        SetVisiblePanel(stacksPanel, that.hasStacks);
-        stacksPanel.text = that.stackCount;
-
-        var cooldownPanel = that.panel.FindChild(prefix + "Cooldown")
-        var progress;
-        if (that.duration < 0) {
-            progress = 0;
-        } else if (that.remainingTime < 0) {
-            progress = 360;
-        } else {
-            progress = 360 - that.remainingTime / that.duration * 360;
-            if (isNaN(progress)) {
-                progress = 360;
-            }
-        }
-        cooldownPanel.style.clip = "radial(50% 50%, 0deg, " + progress + "deg)";
-    }
-
-    return that;
 }
 
+BuffPanel.prototype.SetBuff = function(unit, buff) {
+    this.buff = buff;
+    this.unit = unit;
+    this.name = Buffs.GetName(unit, buff);
+    this.image = Buffs.GetTexture(unit, buff);
+    this.duration = Buffs.GetDuration(unit, buff);
+    this.remainingTime = Buffs.GetRemainingTime(unit, buff);
+    this.stackCount = Buffs.GetStackCount(unit, buff);
+    this.isDebuff = Buffs.IsDebuff(unit, buff);
+    this.hasStacks = !!buffHasStacks[this.name];
+}
+
+BuffPanel.prototype.OnMouseOver = function() {
+    if (!this.buff || !this.unit) {
+        return;
+    }
+    $.DispatchEvent("DOTAShowBuffTooltip", this.tooltipRoot, this.unit, this.buff, false);
+}
+
+BuffPanel.prototype.OnMouseOut = function() {
+    $.DispatchEvent("DOTAHideBuffTooltip");
+}
+
+BuffPanel.prototype.OnActivate = function() {
+    if (!Entities.IsHero(this.unit) || !GameUI.IsAltDown()) {
+        return;
+    }
+    $.Msg(this.name)
+    var localName = $.Localize("DOTA_Tooltip_" + this.name);
+    var colour = this.isDebuff ? "_red_" : "_green_";
+    var message;
+    if (EndsWith(this.name, "cooldown")
+        && buffFixedDuration[this.name]
+        && Entities.GetTeamNumber(this.unit) == Players.GetTeam(Game.GetLocalPlayerID())) {
+        var remainingTime = Math.ceil(this.remainingTime);
+        message = colour + localName + " _default_( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " )";
+    } else {
+        message = "_default_Affected by " + colour + localName + "_default_";
+        if (this.hasStacks) {
+            message += " ( _gold_" + this.stackCount + "_default_ stack" + (this.stackCount == 1 ? "" : "s") + " )"
+        }
+    }
+    GameEvents.SendCustomGameEventToServer("player_alt_click_buff", {
+        message: message,
+        ability: this.name,
+        unit: this.unit
+    });
+}
+
+BuffPanel.prototype.SetVisible = function(visible) {
+    SetVisiblePanel(this.panel, visible);
+}
+
+BuffPanel.prototype.Update = function() {
+    var buffIconPanel = this.panel.FindChild("BuffIcon");
+    buffIconPanel.SetImage( "file://{images}/spellicons/" + this.image + ".png");
+
+    var prefix = this.isDebuff ? "Debuff" : "Buff";
+    var otherPrefix = this.isDebuff ? "Buff" : "Debuff";
+
+    SetVisiblePanel(this.panel.FindChild(prefix + "Active"), true);
+    SetVisiblePanel(this.panel.FindChild(prefix + "Cooldown"), true);
+    SetVisiblePanel(this.panel.FindChild(otherPrefix + "Active"), false);
+    SetVisiblePanel(this.panel.FindChild(otherPrefix + "Cooldown"), false);
+
+    var stacksPanel = this.panel.FindChild("BuffStacks");
+    SetVisiblePanel(stacksPanel, this.hasStacks);
+    stacksPanel.text = this.stackCount;
+
+    var cooldownPanel = this.panel.FindChild(prefix + "Cooldown")
+    var progress;
+    // $.Msg(this.name + " " + Buffs.GetCreationTime(this.unit, this.buff))
+    if (this.name.match("aura") || buffIsAura[this.name]) {
+        progress = 0;
+    } else if (this.duration < 0) {
+        progress = 0;
+    } else if (this.remainingTime < 0) {
+        progress = 360;
+    } else {
+        var duration = buffFixedDuration[this.name] || this.duration;
+        progress = 360 - this.remainingTime / duration * 360;
+        if (isNaN(progress)) {
+            progress = 360;
+        }
+    }
+    cooldownPanel.style.clip = "radial(50% 50%, 0deg, " + progress + "deg)";
+}
 
 var BuffBar = function(panel) {
-    var that = {};
-    that.panel = panel;
-    that.buffPanels = [];
-    that.unit = null;
+    this.panel = panel;
+    this.buffPanels = [];
+    this.unit = Players.GetLocalPlayerPortraitUnit();
+    this.resolutionClass = null;
+}
 
-    that.UpdateSelectedUnit = function() {
-        that.unit = Players.GetLocalPlayerPortraitUnit();
+BuffBar.prototype.UpdateSelectedUnit = function() {
+    this.unit = Players.GetLocalPlayerPortraitUnit();
+}
+
+BuffBar.prototype.UpdateQueryUnit = function() {
+    var queryUnit = Players.GetQueryUnit(Players.GetLocalPlayer());
+    if (queryUnit != -1) {
+        this.unit = queryUnit;
     }
+}
 
-    that.UpdateQueryUnit = function() {
-        var queryUnit = Players.GetQueryUnit(Players.GetLocalPlayer());
-        that.unit = queryUnit == -1 ? null : queryUnit;
-    }
+BuffBar.prototype.Update = function() {
+    if (this.unit !== null && this.unit != -1) {
 
-    that.Update = function() {
-        if (that.unit !== null) {
-            var visibleBuffs = that.GetVisibleBuffs();
-            for (var i = that.buffPanels.length; i < visibleBuffs.length; i++) {
-                var buffPanel = BuffPanel(that.panel);
-                that.buffPanels.push(buffPanel);
-            }
-            for (var i = visibleBuffs.length; i < that.buffPanels.length; i++) {
-                that.buffPanels[i].SetVisible(false);
-            }
-            for (var i = 0; i < visibleBuffs.length; i++) {
-                  var buff = visibleBuffs[i];
-                  var buffPanel = that.buffPanels[i];
-                  buffPanel.SetVisible(true);
-                  buffPanel.SetBuff(that.unit, buff);
-                  buffPanel.Update();
-            }
+        var hud = GameUI.CustomUIConfig().hud;
+        var resolutionHeight = hud.actuallayoutheight;
+        var resolutionWidth = hud.actuallayoutwidth;
+
+        if (resolutionHeight <= 576 || resolutionWidth <= 720) {
+            this.panel.visible = false;
+            return;
+        }
+
+        var resolutionClass = "r" + resolutionWidth + "x" + resolutionHeight;
+
+        if (resolutionClass != this.resolutionClass) {
+            this.panel.SetHasClass(this.resolutionClass, false);
+            this.panel.SetHasClass(resolutionClass, true);
+            this.resolutionClass = resolutionClass;
+        }
+
+        this.panel.visible = true;
+
+        var visibleBuffs = this.GetVisibleBuffs();
+        for (var i = this.buffPanels.length; i < visibleBuffs.length; i++) {
+            var buffPanel = new BuffPanel(this.panel);
+            this.buffPanels.push(buffPanel);
+        }
+        for (var i = visibleBuffs.length; i < this.buffPanels.length; i++) {
+            this.buffPanels[i].SetVisible(false);
+        }
+        for (var i = 0; i < visibleBuffs.length; i++) {
+              var buff = visibleBuffs[i];
+              var buffPanel = this.buffPanels[i];
+              buffPanel.SetVisible(true);
+              buffPanel.SetBuff(this.unit, buff);
+              buffPanel.Update();
         }
     }
+}
 
-    that.GetVisibleBuffs = function() {
-        var visibleBuffs = [];
-        var nBuffs = Entities.GetNumBuffs(that.unit)
-        for (var i = 0; i < nBuffs; i++)  {
-            var buff = Entities.GetBuff(that.unit, i)
-            if (Buffs.IsHidden(that.unit, buff)
-                || !Buffs.GetName(that.unit, buff)) {
-                continue;
-            }
-            visibleBuffs.push(buff);
+BuffBar.prototype.GetVisibleBuffs = function() {
+    var visibleBuffs = [];
+    var nBuffs = Entities.GetNumBuffs(this.unit)
+    for (var i = 0; i < nBuffs; i++)  {
+        var buff = Entities.GetBuff(this.unit, i)
+        if (Buffs.IsHidden(this.unit, buff)
+            || !Buffs.GetName(this.unit, buff)) {
+            continue;
         }
-        return visibleBuffs;
+        visibleBuffs.push(buff);
+        if (visibleBuffs.length >= 12) {
+            break;
+        }
     }
-
-    return that;
+    return visibleBuffs;
 }
 
 function SetVisiblePanel(panel, visible) {
-    panel.SetHasClass("Hidden", !visible);
+    panel.visible = visible;
 }
 
 function EndsWith(string, suffix) {
@@ -194,15 +291,18 @@ function EndsWith(string, suffix) {
 }
 
 
-var bar = BuffBar($.GetContextPanel());
+var buffBar = new BuffBar($.GetContextPanel());
 
-function Update() {
-    bar.Update();
-    $.Schedule(1/60, Update);
+GameEvents.Subscribe("dota_player_update_selected_unit", function() {
+    buffBar.UpdateSelectedUnit();
+});
+GameEvents.Subscribe("dota_player_update_query_unit", function() {
+    buffBar.UpdateQueryUnit();
+});
+
+function UpdateBuffBar() {
+    buffBar.Update();
+    $.Schedule(1/60, UpdateBuffBar);
 }
 
-GameEvents.Subscribe("dota_player_update_selected_unit", bar.UpdateSelectedUnit);
-GameEvents.Subscribe("dota_player_update_query_unit", bar.UpdateQueryUnit);
-
-Update();
-
+UpdateBuffBar();
