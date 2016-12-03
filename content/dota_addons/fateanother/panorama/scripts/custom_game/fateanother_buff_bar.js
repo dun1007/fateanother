@@ -1,20 +1,3 @@
-/**
-[   PanoramaScript         ]: GetName
-[   PanoramaScript         ]: GetClass
-[   PanoramaScript         ]: GetTexture
-[   PanoramaScript         ]: GetDuration
-[   PanoramaScript         ]: GetDieTime
-[   PanoramaScript         ]: GetRemainingTime
-[   PanoramaScript         ]: GetElapsedTime
-[   PanoramaScript         ]: GetCreationTime
-[   PanoramaScript         ]: GetStackCount
-[   PanoramaScript         ]: IsDebuff
-[   PanoramaScript         ]: IsHidden
-[   PanoramaScript         ]: GetCaster
-[   PanoramaScript         ]: GetParent
-[   PanoramaScript         ]: GetAbility
-**/
-
 var buffHasStacks = {
     modifier_lancer_incinerate: true,
     modifier_derange_counter: true,
@@ -82,18 +65,13 @@ var buffCooldown = {
     modifier_story_for_someones_sake_cooldown: 450,
 };
 
-var buffIsAura = {
-    modifier_aestus_domus_aurea_debuff: true,
-    modifier_aestus_domus_aurea_debuff_attribute: true,
-    modifier_aestus_domus_aurea_debuff_slow: true,
-    modifier_big_bad_voodoo_invulnerability: true,
-};
-
-
-function BuffPanel(parent) {
+function BuffPanel(buffBar, index) {
+    this.buffBar = buffBar;
+    var parent = this.buffBar.panel;
     var panel = $.CreatePanel("Panel", parent, "");
     panel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_buff.xml", false, false);
     this.panel = panel;
+    this.index = index;
     var that = this;
 
     this.panel.SetPanelEvent(
@@ -117,17 +95,28 @@ BuffPanel.prototype.SetBuff = function(unit, buff) {
 }
 
 BuffPanel.prototype.OnActivate = function() {
-    if (!Entities.IsHero(this.unit) || !GameUI.IsAltDown()) {
+    if (!Entities.IsHero(this.buffBar.unit) || !GameUI.IsAltDown()) {
         return;
     }
-    $.Msg(this.name)
+
+    var visibleBuffs = this.buffBar.GetVisibleBuffs();
+    var buff = visibleBuffs[this.index];
+    if (!buff) {
+        return;
+    }
+
+    this.SetBuff(this.buffBar.unit, buff);
+
     var localName = $.Localize("DOTA_Tooltip_" + this.name);
     var colour = this.isDebuff ? "_red_" : "_green_";
     var message;
-    if (buffCooldown[this.name]
-        && Entities.GetTeamNumber(this.unit) == Players.GetTeam(Game.GetLocalPlayerID())) {
-        var remainingTime = Math.ceil(this.remainingTime);
-        message = colour + localName + " _default_( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " )";
+    if (buffCooldown[this.name]) {
+        if (Entities.GetTeamNumber(this.unit) == Players.GetTeam(Game.GetLocalPlayerID())) {
+            var remainingTime = Math.ceil(this.remainingTime);
+            message = colour + localName + " _default_( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " )";
+        } else {
+            message = "_default_" + colour + localName + "_default_";
+        }
     } else {
         message = "_default_Affected by " + colour + localName + "_default_";
         if (this.hasStacks) {
@@ -141,17 +130,17 @@ BuffPanel.prototype.OnActivate = function() {
     });
 }
 
-BuffPanel.prototype.SetVisible = function(visible) {
-    SetVisiblePanel(this.panel, visible);
-}
-
-BuffPanel.prototype.Update = function() {}
-
-var BuffBar = function(panel) {
+var BuffBar = function(panel, numBuffs) {
     this.panel = panel;
     this.buffPanels = [];
     this.unit = Players.GetLocalPlayerPortraitUnit();
     this.resolutionClass = null;
+    this.numBuffs = numBuffs || 8;
+
+    for (var i = 0; i < this.numBuffs; i++) {
+        var buffPanel = new BuffPanel(this, i);
+        this.buffPanels.push(buffPanel);
+    }
 }
 
 BuffBar.prototype.UpdateSelectedUnit = function() {
@@ -166,43 +155,24 @@ BuffBar.prototype.UpdateQueryUnit = function() {
 }
 
 BuffBar.prototype.Update = function() {
-    if (this.unit !== null && this.unit != -1) {
+    var hud = GameUI.CustomUIConfig().hud;
+    var resolutionHeight = hud.actuallayoutheight;
+    var resolutionWidth = hud.actuallayoutwidth;
 
-        var hud = GameUI.CustomUIConfig().hud;
-        var resolutionHeight = hud.actuallayoutheight;
-        var resolutionWidth = hud.actuallayoutwidth;
-
-        if (resolutionHeight <= 576 || resolutionWidth <= 720) {
-            this.panel.visible = false;
-            return;
-        }
-
-        var resolutionClass = "r" + resolutionWidth + "x" + resolutionHeight;
-
-        if (resolutionClass != this.resolutionClass) {
-            this.panel.SetHasClass(this.resolutionClass, false);
-            this.panel.SetHasClass(resolutionClass, true);
-            this.resolutionClass = resolutionClass;
-        }
-
-        this.panel.visible = true;
-
-        var visibleBuffs = this.GetVisibleBuffs();
-        for (var i = this.buffPanels.length; i < visibleBuffs.length; i++) {
-            var buffPanel = new BuffPanel(this.panel);
-            this.buffPanels.push(buffPanel);
-        }
-        for (var i = visibleBuffs.length; i < this.buffPanels.length; i++) {
-            this.buffPanels[i].SetVisible(false);
-        }
-        for (var i = 0; i < visibleBuffs.length; i++) {
-              var buff = visibleBuffs[i];
-              var buffPanel = this.buffPanels[i];
-              buffPanel.SetVisible(true);
-              buffPanel.SetBuff(this.unit, buff);
-              buffPanel.Update();
-        }
+    if (resolutionHeight <= 576 || resolutionWidth <= 720) {
+        this.panel.visible = false;
+        return;
     }
+
+    var resolutionClass = "r" + resolutionWidth + "x" + resolutionHeight;
+
+    if (resolutionClass != this.resolutionClass) {
+        this.panel.SetHasClass(this.resolutionClass, false);
+        this.panel.SetHasClass(resolutionClass, true);
+        this.resolutionClass = resolutionClass;
+    }
+
+    this.panel.visible = true;
 }
 
 BuffBar.prototype.GetVisibleBuffs = function() {
@@ -215,15 +185,11 @@ BuffBar.prototype.GetVisibleBuffs = function() {
             continue;
         }
         visibleBuffs.push(buff);
-        if (visibleBuffs.length >= 8) {
+        if (visibleBuffs.length >= this.numBuffs) {
             break;
         }
     }
     return visibleBuffs;
-}
-
-function SetVisiblePanel(panel, visible) {
-    panel.visible = visible;
 }
 
 function EndsWith(string, suffix) {
@@ -231,7 +197,7 @@ function EndsWith(string, suffix) {
 }
 
 
-var buffBar = new BuffBar($.GetContextPanel());
+var buffBar = new BuffBar($.GetContextPanel(), 8);
 
 GameEvents.Subscribe("dota_player_update_selected_unit", function() {
     buffBar.UpdateSelectedUnit();
