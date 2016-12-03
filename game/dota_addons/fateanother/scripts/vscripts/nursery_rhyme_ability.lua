@@ -53,22 +53,35 @@ function OnShapeShiftStart(keys)
 		if caster:HasModifier(itemModifiers[i]) then
 			ability:ApplyDataDrivenModifier(caster, illusion, itemModifiers[i], {duration = caster:FindModifierByName(itemModifiers[i]):GetRemainingTime()})		
 		end
-	end	
+	end
+
+	for itemSlot=0,5 do
+		local item = caster:GetItemInSlot(itemSlot)
+		if item ~= nil then
+			local itemName = item:GetName()
+			local newItem = CreateItem(itemName, illusion, illusion)
+			local currCharge = item:GetCurrentCharges()
+			--illusion:AddItem(newItem)
+			CreateItemAtSlot(illusion, itemName, itemSlot, currCharge, 1, 1)
+		end
+	end
 
 	illusion:SetBaseStrength(caster:GetBaseStrength())
 	illusion:SetBaseIntellect(caster:GetBaseIntellect())
 	illusion:SetBaseAgility(caster:GetBaseAgility())
-	illusion:ModifyAgility(0) --do not remove this seemingly useless line
+	illusion:ModifyAgility(0) --do not remove this seemingly useless line; removing will result in -20 agi and I have no freaking idea why
 
 	illusion:SetMaxHealth(caster:GetMaxHealth())
 	illusion:SetHealth(caster:GetHealth())
-	illusion:SetBaseHealthRegen(caster:GetHealthRegen()) -- No SetHealthRegen
+	-- Only GetMaxMana but no SetMaxMana wth valve
+	illusion:SetMana(caster:GetMana())
 
-	illusion:SetMana(caster:GetMana()) 
-	-- Only GetMaxMana but no SetMaxMana, Only GetManaRegen but no SetManaRegen
-	illusion:SetPhysicalArmorBaseValue(caster:GetPhysicalArmorBaseValue())
+	illusion:SetBaseHealthRegen(caster:GetHealthRegen() - caster:GetStrength() * (0.03) + (caster:GetStrength() - caster:GetBaseStrength()) * 0.03) -- 0.03 being dota2's base hpregen/str
+	illusion:SetBaseManaRegen(caster:GetManaRegen() + caster:GetIntellect() * (0.25 - 0.04) + (caster:GetIntellect() - caster:GetBaseIntellect()) * 0.04) -- 0.25 being fate's mpregen/int, 0.04 being dota2's
+	illusion:SetPhysicalArmorBaseValue(caster:GetPhysicalArmorBaseValue() + (caster:GetAgility() - caster:GetBaseAgility()) / 7) -- 1/7 being dota2's base armor/agi
 
-	illusion:SetBaseMoveSpeed(caster:GetBaseMoveSpeed()) -- No GetMoveSpeed function
+	illusion:SetBaseMoveSpeed(caster:GetBaseMoveSpeed()) --illusion shows 300 movespeed but actual movespeed is mimicked over.
+	-- stuff not done: Setting illusion's max mana, bonus stats from leveling strAgiInt+2 
 	-- end mimic
 
 	local cloneFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf", PATTACH_CUSTOMORIGIN, nil );
@@ -125,6 +138,8 @@ function OnShapeShiftSwap(keys)
 	caster:SetAbsOrigin(caster.ShapeShiftIllusion:GetAbsOrigin())
 	caster.ShapeShiftIllusion:SetAbsOrigin(casterPos)
 	caster.bIsSwapUsed = true
+	caster:MoveToPosition(caster.ShapeShiftDest)
+	caster.ShapeShiftIllusion:Hold()
 end
 
 
