@@ -18,9 +18,17 @@
   visibility: collapse;
 }
 
+.HUDFlipped .BuffBar {
+    margin-left: 5.4%;
+}
+
 // 16x10
 .AspectRatio16x10 .BuffBar {
     position: 31.6% 80% 0px;
+}
+
+.HUDFlipped.AspectRatio16x10 .BuffBar {
+    margin-left: 6.9%;
 }
 
 .AspectRatio16x10 .BuffContainer {
@@ -41,6 +49,10 @@
 // 4x3
 .AspectRatio4x3 .BuffBar {
     position: 33.50% 80% 0px;
+}
+
+.HUDFlipped.AspectRatio4x3 .BuffBar {
+    margin-left: 3.9%;
 }
 
 .AspectRatio4x3 .BuffContainer {
