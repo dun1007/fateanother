@@ -148,6 +148,8 @@ var BuffBar = function(panel, numBuffs) {
     this.unit = Players.GetLocalPlayerPortraitUnit();
     this.resolutionClass = null;
     this.numBuffs = numBuffs || 8;
+    this.enabled = true;
+    this.visible = true;
 
     for (var i = 0; i < this.numBuffs; i++) {
         var buffPanel = new BuffPanel(this, i);
@@ -172,6 +174,7 @@ BuffBar.prototype.Update = function() {
     var resolutionWidth = hud.actuallayoutwidth;
 
     if (resolutionHeight <= 576 || resolutionWidth <= 720) {
+        this.visible = false;
         this.panel.visible = false;
         return;
     }
@@ -184,7 +187,20 @@ BuffBar.prototype.Update = function() {
         this.resolutionClass = resolutionClass;
     }
 
-    this.panel.visible = true;
+    this.visible = true;
+    this.panel.visible = this.enabled;
+}
+
+BuffBar.prototype.Enable = function() {
+    this.enabled = true;
+    this.panel.SetHasClass("Disabled", false);
+    this.Update();
+}
+
+BuffBar.prototype.Disable = function() {
+    this.enabled = false;
+    this.panel.SetHasClass("Disabled", true);
+    this.Update();
 }
 
 BuffBar.prototype.GetVisibleBuffs = function() {
@@ -210,6 +226,7 @@ function EndsWith(string, suffix) {
 
 
 var buffBar = new BuffBar($.GetContextPanel(), 8);
+GameUI.CustomUIConfig().buffBar = buffBar;
 
 GameEvents.Subscribe("dota_player_update_selected_unit", function() {
     buffBar.UpdateSelectedUnit();
@@ -220,7 +237,7 @@ GameEvents.Subscribe("dota_player_update_query_unit", function() {
 
 function UpdateBuffBar() {
     buffBar.Update();
-    $.Schedule(1/60, UpdateBuffBar);
+    $.Schedule(1, UpdateBuffBar);
 }
 
 UpdateBuffBar();
