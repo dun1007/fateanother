@@ -57,7 +57,6 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_config.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_buff_bar.xml" />
-		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_ability_proxy.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_spellbook.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml" />
 		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
