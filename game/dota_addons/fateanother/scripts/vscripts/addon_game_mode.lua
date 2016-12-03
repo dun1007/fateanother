@@ -754,24 +754,6 @@ function OnPlayerAltClick(eventSourceIndex, keys)
 	Say(player, message, not keys.toAll)
 end
 
-function OnPlayerAltClickBuff(eventSourceIndex, keys)
-	local playerId = keys.PlayerID
-	local player = PlayerResource:GetPlayer(playerId)
-	local unit = EntIndexToHScript(keys.unit)
-	if unit:GetTeamNumber() ~= player:GetTeamNumber() then
-		message = "Enemy _gold_" .. unit:GetName() .. " _gray__arrow_ " .. keys.message
-	elseif unit:GetPlayerOwner() == player then
-		message = "_gray__arrow_ " .. keys.message
-	else
-		return
-	end
-	OnPlayerAltClick(nil, {
-		PlayerID = playerId,
-		toAll = false,
-		message = message
-	})
-end
-
 function DistributeGold(hero, cutoff)
     -- get gold amount of teammates
     -- exclude from table if more than stated amount
@@ -1857,7 +1839,6 @@ function FateGameMode:InitGameMode()
     CustomGameEventManager:RegisterListener( "config_option_4_checked", OnConfig4Checked )
     -- CustomGameEventManager:RegisterListener( "player_chat_panorama", OnPlayerChat )
     CustomGameEventManager:RegisterListener( "player_alt_click", OnPlayerAltClick )
-    CustomGameEventManager:RegisterListener( "player_alt_click_buff", OnPlayerAltClickBuff )
     -- LUA modifiers
     LinkLuaModifier("modifier_ms_cap", "modifiers/modifier_ms_cap", LUA_MODIFIER_MOTION_NONE)
 

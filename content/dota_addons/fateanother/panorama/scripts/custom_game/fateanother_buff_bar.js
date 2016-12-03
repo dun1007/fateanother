@@ -109,21 +109,33 @@ BuffPanel.prototype.OnActivate = function() {
 
     var localName = $.Localize("DOTA_Tooltip_" + this.name);
     var colour = this.isDebuff ? "_red_" : "_green_";
-    var message;
+
+    var localPlayerId = Game.GetLocalPlayerID();
+    var sameTeam = Entities.GetTeamNumber(this.unit) == Players.GetTeam(localPlayerId);;
+
+    if (sameTeam && this.unit != Players.GetPlayerHeroEntityIndex(localPlayerId)) {
+        return;
+    }
+
+    var message = sameTeam
+        ? ""
+        : "Enemy _gold_" + Entities.GetUnitName(this.unit) + " ";
+
+    message += "_gray__arrow_ ";
+
     if (buffCooldown[this.name]) {
-        if (Entities.GetTeamNumber(this.unit) == Players.GetTeam(Game.GetLocalPlayerID())) {
+        message += "_default_ " + colour + localName + "_default_";
+        if (sameTeam) {
             var remainingTime = Math.ceil(this.remainingTime);
-            message = colour + localName + " _default_( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " )";
-        } else {
-            message = "_default_" + colour + localName + "_default_";
+            message += " ( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " remain )";
         }
     } else {
-        message = "_default_Affected by " + colour + localName + "_default_";
+        message += "_default_Affected by " + colour + localName + "_default_";
         if (this.hasStacks) {
             message += " ( _gold_" + this.stackCount + "_default_ stack" + (this.stackCount == 1 ? "" : "s") + " )"
         }
     }
-    GameEvents.SendCustomGameEventToServer("player_alt_click_buff", {
+    GameEvents.SendCustomGameEventToServer("player_alt_click", {
         message: message,
         ability: this.name,
         unit: this.unit
