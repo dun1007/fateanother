@@ -8,6 +8,12 @@ function OnFateConfigButtonPressed()
     if (!configPanel)
         return;
     configPanel.visible = !configPanel.visible;
+
+    var buffBar = GameUI.CustomUIConfig().buffBar;
+    configPanel.FindChildTraverse("option6").enabled = buffBar.visible;
+    if (buffBar.visible) {
+        configPanel.FindChildTraverse("option6").checked = buffBar.enabled;
+    }
 }
 
 
@@ -59,6 +65,17 @@ function OnConfig5Toggle()
     portraitUI_1.visible = !portraitUI_1.visible;
     portraitUI_2.visible = !portraitUI_2.visible;
     portraitUI_3.visible = !portraitUI_3.visible;
+}
+
+function OnConfig6Toggle() {
+    var configPanel = $.GetContextPanel();
+    var option6 = configPanel.FindChildTraverse("option6");
+    var buffBar = GameUI.CustomUIConfig().buffBar;
+    if (option6.checked) {
+        buffBar.Enable();
+    } else {
+        buffBar.Disable();
+    }
 }
 
 function PlayerChat(event)
