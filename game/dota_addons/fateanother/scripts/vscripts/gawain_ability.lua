@@ -3,6 +3,13 @@ function OnIRStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 
+	if target:GetName() == "npc_dota_ward_base" then 
+		keys.ability:EndCooldown()
+		caster:GiveMana(keys.ability:GetManaCost(1))
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
+		return
+	end
+
 	GawainCheckCombo(caster, keys.ability)
 	GenerateArtificialSun(caster, target:GetAbsOrigin())
 

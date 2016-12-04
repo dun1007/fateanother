@@ -409,15 +409,15 @@ function OnEnumaStart(keys)
 	end)
 
 	Timers:CreateTimer(3.0, function() 
+		-- Destroy charge particle regardless of alive/dead
+		ParticleManager:DestroyParticle( chargeFxIndex, false )
+		ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 		if caster:IsAlive() then
 			frontward = caster:GetForwardVector()
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			enuma.vVelocity = frontward * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 10000, 0, true)
-			-- Destroy charge particle
-			ParticleManager:DestroyParticle( chargeFxIndex, false )
-			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 
 			-- Create particle
 			local casterLocation = caster:GetAbsOrigin()
@@ -507,6 +507,9 @@ function OnMaxEnumaStart(keys)
 	end)
 
 	Timers:CreateTimer(3.75, function()
+		-- Destroy charge particle regardless of alive/dead
+		ParticleManager:DestroyParticle( chargeFxIndex, false )
+		ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 		if caster:IsAlive() then
 			frontward = caster:GetForwardVector()
 			enuma.vSpawnOrigin = caster:GetAbsOrigin()
@@ -514,9 +517,6 @@ function OnMaxEnumaStart(keys)
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 10000, 0, true)
 			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
-			-- Destroy charge particle
-			ParticleManager:DestroyParticle( chargeFxIndex, false )
-			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 
 			-- Create particle
 			local casterLocation = caster:GetAbsOrigin()
