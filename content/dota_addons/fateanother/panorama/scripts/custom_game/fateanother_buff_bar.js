@@ -124,7 +124,7 @@ BuffPanel.prototype.OnActivate = function() {
     message += "_gray__arrow_ ";
 
     if (buffCooldown[this.name]) {
-        message += "_default_ " + colour + localName + "_default_";
+        message += colour + localName + "_default_";
         if (sameTeam) {
             var remainingTime = Math.ceil(this.remainingTime);
             message += " ( _gold_" + remainingTime + "_default_ second" + (remainingTime == 1 ? "" : "s") + " remain )";
