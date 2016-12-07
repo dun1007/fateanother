@@ -68,6 +68,18 @@ function UpdatePlayer( teamPanel, playerId )
 	var playerName = playerPanel.FindChildInLayoutFile( "PlayerNameText" );
 	playerName.text = playerInfo.player_name;
 
+	var playerNameContainer = playerPanel.FindChild("PlayerColorBar");
+	var playerColor = Players.GetPlayerColor(playerId);
+	if (playerColor >= 0) {
+		var red = playerColor & 255;
+		var green = playerColor >> 8 & 255;
+		var blue = playerColor >> 16 & 255;
+		var hexColor = "rgb(" + red + "," + green + "," + blue + ")";
+		playerNameContainer.style.backgroundColor = hexColor;
+	} else {
+		playerNameContainer.style.color = "black";
+	}
+
 	playerPanel.SetHasClass( "is_local_player", ( playerId == Game.GetLocalPlayerID() ) );
 }
 
@@ -118,16 +130,6 @@ function UpdateTimer()
 			teamLogoPanel.BLoadLayout( logo_xml, false, false );
 		}
 		
-		var teamGradient = teamPanel.FindChildInLayoutFile( "TeamGradient" );
-		if ( teamGradient && GameUI.CustomUIConfig().team_colors )
-		{
-			var teamColor = GameUI.CustomUIConfig().team_colors[ teamId ];
-			teamColor = teamColor.replace( ";", "" );
-			var gradientText = 'gradient( linear, 0% 0%, 0% 100%, from( #00000000 ), to( ' + teamColor + '40 ) );';
-//			$.Msg( gradientText );
-			teamGradient.style.backgroundColor = gradientText;
-		}
-
 		if ( teamName )
 		{
 			teamName.text = $.Localize( Game.GetTeamDetails( teamId ).team_name );

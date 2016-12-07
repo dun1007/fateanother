@@ -87,6 +87,12 @@ function OnAutoAssignPressed()
 //--------------------------------------------------------------------------------------------------
 function OnShufflePlayersPressed()
 {
+	// if set up time is 0 or less
+	var gameTime = Game.GetGameTime();
+	var transitionTime = Game.GetStateTransitionTime();
+	if (Math.floor(transitionTime - gameTime) <= 0) {
+		return;
+	}
 	// Shuffle the team assignments of any players which are assigned to a team, 
 	// this will not assign any players to a team which are currently unassigned. 
 	// This will also not attempt to keep players in a party on the same team.

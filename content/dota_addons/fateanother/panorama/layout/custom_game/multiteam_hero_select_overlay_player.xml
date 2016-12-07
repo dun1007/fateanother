@@ -4,6 +4,7 @@
 		<include src="file://{resources}/styles/custom_game/multiteam_hero_select_overlay.css" />
 	</styles>
 	<Panel hittest="false" class="HeroSelectPlayerRoot">
+		<Panel hittest="false" id="PlayerColorBar" />
 		<Image id="PlayerPortrait" />
 		<Panel id="PlayerName">
 			<Label id="PlayerNameText" />

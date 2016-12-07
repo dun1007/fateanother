@@ -146,19 +146,29 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		var playerColorBar = playerPanel.FindChildInLayoutFile( "PlayerColorBar" );
 		if ( playerColorBar !== null )
 		{
-			if ( GameUI.CustomUIConfig().team_colors )
-			{
-				var teamColor = GameUI.CustomUIConfig().team_colors[ playerInfo.player_team_id ];
-				if ( teamColor )
-				{
-					playerColorBar.style.backgroundColor = teamColor;
-				}
+			var playerColor = Players.GetPlayerColor(playerId);
+			if (playerColor >= 0) {
+				var red = playerColor & 255;
+				var green = playerColor >> 8 & 255;
+				var blue = playerColor >> 16 & 255;
+				var hexColor = "rgb(" + red + "," + green + "," + blue + ")";
+				playerColorBar.style.backgroundColor = hexColor;
+			} else {
+				playerColorBar.style.backgroundColor = "black";
 			}
-			else
-			{
-				var playerColor = "#000000";
-				playerColorBar.style.backgroundColor = playerColor;
-			}
+			// if ( GameUI.CustomUIConfig().team_colors )
+			// {
+				// var teamColor = GameUI.CustomUIConfig().team_colors[ playerInfo.player_team_id ];
+				// if ( teamColor )
+				// {
+					// playerColorBar.style.backgroundColor = teamColor;
+				// }
+			// }
+			// else
+			// {
+				// var playerColor = "#000000";
+				// playerColorBar.style.backgroundColor = playerColor;
+			// }
 		}
 
 		var playerIDPanel = playerPanel.FindChildInLayoutFile( "PlayerID" );
