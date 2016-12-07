@@ -32,18 +32,22 @@ function OnShapeShiftStart(keys)
 	local pid = caster:GetPlayerID()
 
 	-- create illusion
-	local illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeamNumber()) 
+	local illusion = CreateUnitByName(caster:GetUnitName(), caster:GetAbsOrigin(), true, caster, nil, caster:GetTeamNumber())
 	illusion:SetPlayerID(pid) 
 	illusion:AddNewModifier(caster, ability, "modifier_illusion", { duration = duration, outgoing_damage = 0, incoming_damage = 300 })
 	illusion:MakeIllusion()
-	illusion:AddNewModifier(caster, nil, "modifier_phased", {duration = duration})
 	ability:ApplyDataDrivenModifier(caster, illusion, "modifier_nursery_rhyme_shapeshift_clone", {})
-	caster:AddNewModifier(caster, nil, "modifier_phased", {duration = duration})
 	caster.ShapeShiftIllusion = illusion
 	caster.bIsSwapUsed = false 
 	caster.ShapeShiftDest = targetPoint
 	caster:SwapAbilities("nursery_rhyme_shapeshift", "nursery_rhyme_shapeshift_swap", false, true)
-	
+
+	--illusion:SetControllableByPlayer(pid, true)
+	--print(illusion:GetOwner())
+	illusion:SetOwner(caster) -- Attempt to change color of illusion on minimap but failed, worked for ZC but not for this. Wtf.
+	--print(illusion:GetOwner():GetName())
+	--print(illusion:IsClone(),illusion:IsConsideredHero(),illusion:IsControllableByAnyPlayer(),illusion:IsCreature(),illusion:IsCreep(),illusion:IsHero(),illusion:IsIllusion(),illusion:IsNeutralUnitType(),illusion:IsOwnedByAnyPlayer(),illusion:IsRealHero(),illusion:IsSummoned())
+
 	--start of mimic function (work in progress)
 	for i=1, (caster:GetLevel()-1) do
 		illusion:HeroLevelUp(false)
@@ -66,6 +70,18 @@ function OnShapeShiftStart(keys)
 		end
 	end
 
+	for abilitySlot=0,10 do
+		if abilitySlot == 9 then goto skip9 end --skip presence_detection_passive
+		local abilityCopy = caster:GetAbilityByIndex(abilitySlot)
+		if abilityCopy ~= nil then 
+			local abilityLevel = abilityCopy:GetLevel()
+			local abilityName = abilityCopy:GetAbilityName()
+			local illusionAbility = illusion:FindAbilityByName(abilityName)
+			illusionAbility:SetLevel(abilityLevel)
+		end
+		::skip9::
+	end
+
 	illusion:SetBaseStrength(caster:GetBaseStrength())
 	illusion:SetBaseIntellect(caster:GetBaseIntellect())
 	illusion:SetBaseAgility(caster:GetBaseAgility())
@@ -76,9 +92,9 @@ function OnShapeShiftStart(keys)
 	-- Only GetMaxMana but no SetMaxMana wth valve
 	illusion:SetMana(caster:GetMana())
 
-	illusion:SetBaseHealthRegen(caster:GetHealthRegen() - caster:GetStrength() * (0.03) + (caster:GetStrength() - caster:GetBaseStrength()) * 0.03) -- 0.03 being dota2's base hpregen/str
-	illusion:SetBaseManaRegen(caster:GetManaRegen() + caster:GetIntellect() * (0.25 - 0.04) + (caster:GetIntellect() - caster:GetBaseIntellect()) * 0.04) -- 0.25 being fate's mpregen/int, 0.04 being dota2's
-	illusion:SetPhysicalArmorBaseValue(caster:GetPhysicalArmorBaseValue() + (caster:GetAgility() - caster:GetBaseAgility()) / 7) -- 1/7 being dota2's base armor/agi
+	illusion:SetBaseHealthRegen(caster:GetHealthRegen() - caster:GetStrength() * (0.03)) -- 0.03 being dota2's base hpregen/str
+	illusion:SetBaseManaRegen(caster:GetManaRegen() + caster:GetIntellect() * (0.25 - 0.04)) -- 0.25 being fate's mpregen/int, 0.04 being dota2's
+	illusion:SetPhysicalArmorBaseValue(caster:GetPhysicalArmorBaseValue()) -- 1/7 being dota2's base armor/agi
 
 	illusion:SetBaseMoveSpeed(caster:GetBaseMoveSpeed()) --illusion shows 300 movespeed but actual movespeed is mimicked over.
 	-- stuff not done: Setting illusion's max mana, bonus stats from leveling strAgiInt+2 

@@ -138,33 +138,47 @@ function OnBuidheStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+	local nStacks = keys.nStacks
+	local unitReduction = keys.unitReduction
+	local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
+
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
 	if caster.IsRoseBloomAcquired then 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_mark_of_mortality", {})
 	end
 
-	if target:GetHealth() < keys.Damage then
+	if target:GetMaxHealth() < (currentStack + nStacks) * unitReduction then
 		target:Kill(keys.ability, caster)
 	end
+
 	local MR = 0
 	if target:IsHero() then MR = target:GetMagicalArmorValue() end
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	local targetHealthPercentage = target:GetHealth() / target:GetMaxHealth()
 
 	if target:GetHealth() > 0 and target:IsAlive() then
-		local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
-		if currentStack == 0 and target:HasModifier("modifier_gae_buidhe") then currentStack = 1 end
+
 		target:RemoveModifierByName("modifier_gae_buidhe") 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_gae_buidhe", {}) 
-		target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + 1)
+		target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + nStacks)
 		if target:IsRealHero() then target:CalculateStatBonus() end
 
-		local targetNewHealth = target:GetHealth() + keys.Damage * (1-MR) * targetHealthPercentage 
-	    target:SetHealth(targetNewHealth)
 	end
 
+	currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability) --refresh currentstack after debuff
 
+	Timers:CreateTimer(function()
+		if target:HasModifier("modifier_gae_buidhe") == false then return end
+		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+  --   	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
+  		if target:GetMaxHealth() < currentStack * unitReduction then -- for heroes that modifies maxHp like avenger with E
+			target:Kill(keys.ability, caster)
+		elseif target:GetHealth() > (target:GetMaxHealth() - currentStack * unitReduction) then
+			target:SetHealth(target:GetMaxHealth() - currentStack * unitReduction)
+		end
+		return 0.01
+		end
+	)
 
 	EmitGlobalSound("ZL.Gae_Buidhe")
 	target:EmitSound("Hero_Lion.Impale")

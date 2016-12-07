@@ -15999,14 +15999,19 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_reduction"	"-500 -600 -700 -800 -900"
+				"number_stacks"		"5 6 7 8 9"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"250"
+				"unit_reduction"	"100"
 			}
 			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"250"
+			}
+			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"cast_time"			"1.1"
@@ -16028,6 +16033,8 @@
 			 	"ScriptFile"	"diarmuid_ability"
 			 	"Function"		"OnBuidheStart"
 			 	"Damage"		"%damage"
+			 	"nStacks"		"%number_stacks"
+			 	"unitReduction"	"%unit_reduction"
 			 }
 		}
 		"Modifiers"
@@ -16037,10 +16044,6 @@
 				"IsHidden"		"0"
 				"IsDebuff"		"1"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%health_reduction"
-				}
 				"OnDeath"
 				{
 					"RunScript"
@@ -16161,6 +16164,16 @@
 				"var_type"			"FIELD_FLOAT"
 				"cast_time"			"1.2"
 			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"number_stacks"		"5 6 7 8 9"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"unit_reduction"	"100"
+			}
 		}
 		
 		"OnAbilityPhaseStart"
@@ -16179,6 +16192,8 @@
 			 	"Function"		"OnDeargStart"
 			 	"MinDamage"		"%min_damage"
 			 	"MaxDamage"		"%max_damage"
+			 	"nStacks"		"%number_stacks"	//for casting dearg with doublespear on
+			 	"unitReduction"	"%unit_reduction"	//for casting dearg with doublespear on
 			 }
 		}
 		"Modifiers"
@@ -27516,7 +27531,8 @@
 				}				
 				"States"
 				{
-					"MODIFIER_STATE_DISARMED"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"modifier_nursery_rhyme_shapeshift_slow"

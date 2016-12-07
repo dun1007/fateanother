@@ -166,12 +166,11 @@ function OnBerserkStart(keys)
 		if berserkCounter == duration then return end
 		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
   --   	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
-		caster:SetHealth(hplock)
+		caster:SetHealth(math.min(hplock , caster:GetMaxHealth() - caster:GetModifierStackCount("modifier_gae_buidhe", keys.ability) * 100)) -- 100 being unit health reduction, refer to ZL KV/lua.
 		berserkCounter = berserkCounter + 0.01
 		return 0.01
 		end
 	)
-
 
 	if caster.IsEternalRageAcquired then 
 		local explosionCounter = 0
