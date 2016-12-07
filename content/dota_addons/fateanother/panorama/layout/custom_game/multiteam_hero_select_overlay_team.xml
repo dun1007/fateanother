@@ -5,7 +5,6 @@
 	</styles>
 	<Panel hittest="false" class="HeroSelectTeamRoot">
 		<Panel id="TeamHeaderAndPlayers">
-			<Panel id="TeamGradient" />
 			<Panel>
 				<Panel id="PlayerPortraitsOverlay" />
 				<Panel id="PlayersContainer" />
