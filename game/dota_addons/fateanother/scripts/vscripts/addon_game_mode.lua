@@ -750,7 +750,7 @@ function OnPlayerAltClick(eventSourceIndex, keys)
 		return
 	end
 	player.altClickTime = currentTime
-  local message = SubstituteMessageCodes(keys.message)
+	local message = SubstituteMessageCodes(keys.message)
 	Say(player, message, not keys.toAll)
 end
 

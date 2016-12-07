@@ -1,0 +1,71 @@
+.BuffBar {
+    width: 36%;
+    height: 3.7%;
+    position: 33.83% 80% 0px;
+    margin-left: 0.26%;
+    flow-children: right;
+    /* border: 1px solid red; */
+}
+
+.BuffContainer {
+    margin-right: 1%;
+    width: 5.75%;
+    height: 100%;
+    /* border: 1px solid yellow; */
+}
+
+.Disabled {
+  visibility: collapse;
+}
+
+.Hidden {
+  visibility: collapse;
+}
+
+.HUDFlipped .BuffBar {
+    margin-left: 5.4%;
+}
+
+// 16x10
+.AspectRatio16x10 .BuffBar {
+    position: 31.6% 80% 0px;
+}
+
+.HUDFlipped.AspectRatio16x10 .BuffBar {
+    margin-left: 6.9%;
+}
+
+.AspectRatio16x10 .BuffContainer {
+    margin-right: 1%;
+    width: 6.5%;
+}
+
+// 1280x768
+.BuffBar.r1280x768 {
+    position: 31.75% 79.3% 0px;
+}
+
+// 720x480
+.BuffBar.r720x480 {
+    position: 31.75% 81.0% 0px;
+}
+
+// 4x3
+.AspectRatio4x3 .BuffBar {
+    position: 33.50% 80% 0px;
+}
+
+.HUDFlipped.AspectRatio4x3 .BuffBar {
+    margin-left: 3.9%;
+}
+
+.AspectRatio4x3 .BuffContainer {
+    width: 6.3%;
+    margin-right: 1.4%;
+}
+
+.AspectRatio4x3 .BuffBar {
+    width: 600px;
+}
+
+
