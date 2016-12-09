@@ -96,7 +96,7 @@ function RuneMagicClose(keys)
 	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "fate_empty1", true, true) 
 	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", true, true) 
-	caster:GetAbilityByIndex(0):EndCooldown() 
+	--caster:GetAbilityByIndex(0):EndCooldown() 
 
 end
 

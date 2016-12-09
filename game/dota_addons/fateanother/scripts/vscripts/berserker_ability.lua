@@ -163,12 +163,12 @@ function OnBerserkStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_berserk_self_buff", {})
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
-		if berserkCounter == duration then return end
+		if berserkCounter > duration then return end
 		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
   --   	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
 		caster:SetHealth(math.min(hplock , caster:GetMaxHealth() - caster:GetModifierStackCount("modifier_gae_buidhe", keys.ability) * 100)) -- 100 being unit health reduction, refer to ZL KV/lua.
-		berserkCounter = berserkCounter + 0.01
-		return 0.01
+		berserkCounter = berserkCounter + 0.033
+		return 0.033
 		end
 	)
 
@@ -485,7 +485,7 @@ function OnGodHandDeath(keys)
 		print(caster.bIsGHReady)
 		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 and caster.bIsGHReady then
 			caster.bIsGHReady = false
-			Timers:CreateTimer(7.0, function() caster.bIsGHReady = true end)
+			Timers:CreateTimer(10.0, function() caster.bIsGHReady = true end)
 			EmitGlobalSound("Berserker.Roar") 
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			caster.GodHandStock = caster.GodHandStock - 1

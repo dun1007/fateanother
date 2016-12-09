@@ -641,16 +641,18 @@ function NeroTakeDamage(keys)
 
 
 	if caster:GetHealth() == 0 and IsRevivePossible(caster) and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) then
+		caster:SetHealth(caster:GetMaxHealth()*0.33)
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
 		
 		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
-		caster:SetHealth(1)
+		--caster:SetHealth(1)
 		Timers:CreateTimer(function()
 			if healCounter == 3 or not caster:IsAlive() then return end
-			caster:SetHealth(caster:GetHealth() + caster:GetMaxHealth() * 0.1)
+			--caster:SetHealth(caster:GetHealth() + caster:GetMaxHealth() * 0.1)
 			healCounter = healCounter + 1
 			return 1.0
 		end)
-		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
+		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "rb_sealdisabled", 4.5)
 		caster:FindAbilityByName("nero_invictus_spiritus"):ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus_cooldown", {duration = 60})
 	end

@@ -224,9 +224,9 @@ function OnGOBStart(keys)
 	{
 		Ability = ability,
         EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
-        iMoveSpeed = 1000,
+        iMoveSpeed = 1350,
         vSpawnOrigin = Vector(0,0,0),
-        fDistance = 1000,
+        fDistance = 1350,
         fStartRadius = 100,
         fEndRadius = 100,
         Source = caster,
@@ -332,7 +332,7 @@ function OnGOBHit(keys)
 	local caster = keys.caster
 	local damage = keys.Damage
 	if caster.IsSumerAcquired then
-		damage = damage + caster:GetAttackDamage()*0.5
+		damage = damage + caster:GetAttackDamage()*0.65
 	end
 	if target:GetUnitName() == "gille_gigantic_horror" then damage = damage*2.5 end
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)

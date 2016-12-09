@@ -880,8 +880,9 @@ function OnAvariceAcquired(keys)
 		hero.AvariceCount = hero.AvariceCount + 1
 	end
 
+	-- distribute gold
 	local teamTable = {}
-	for i=0, 9 do
+	for i=0, 11 do
 		local player = PlayerResource:GetPlayer(i)
 		if player ~= nil then 
 			hero = PlayerResource:GetPlayer(i):GetAssignedHero()
@@ -892,7 +893,7 @@ function OnAvariceAcquired(keys)
 	end
 
 	for i=1,#teamTable do
-		local goldperperson = 20000/#teamTable
+		local goldperperson = 10000/#teamTable
 		--print("Distributing " .. goldperperson .. " per person")
 		teamTable[i]:ModifyGold(goldperperson, true, 0)
 	end

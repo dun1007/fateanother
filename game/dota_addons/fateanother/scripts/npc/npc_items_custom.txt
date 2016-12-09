@@ -2308,6 +2308,7 @@
 	    "precache"
 	    {
 	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
+	    	"particle"		"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
 	    }
 	    "OnSpellStart"
 	    {
@@ -2318,6 +2319,20 @@
 				"Function"		"FullHeal"
 			}
 	    }	
+	    "Modifiers"
+	    {
+			"shard_of_replenishment_armor_buff"
+			{
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"Duration"			"10"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"100"
+				}
+			}
+		}
 	}
 
 	"item_gille_contaminate" 

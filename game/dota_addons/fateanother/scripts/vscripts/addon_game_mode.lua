@@ -453,10 +453,14 @@ function FateGameMode:OnAllPlayersLoaded()
                     CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
                     self:LoopOverPlayers(function(player, playerID, playerHero)
                         local hero = playerHero
+                        local manaReward = BLESSING_MANA_REWARD
+                        if hero:GetLevel() == 24 then 
+                            manaReward = manaReward + 3 
+                        end
                         hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth())
-                        hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+BLESSING_MANA_REWARD)
+                        hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+manaReward)
                         hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
-                        hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+BLESSING_MANA_REWARD)
+                        hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+manaReward)
                         MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
                     end)
                     --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
@@ -928,8 +932,11 @@ function FateGameMode:OnHeroInGame(hero)
     end)
     hero.bIsDirectTransferEnabled = true -- True by default
     Attributes:ModifyBonuses(hero)
+
     -- Set music off
     local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+    SendToServerConsole("dota_music_battle_enable 0")
+    SendToConsole("dota_music_battle_enable 0")  
     player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 100000)
 
     -- Create Command Seal master for hero
@@ -1420,6 +1427,13 @@ function FateGameMode:OnPlayerLevelUp(keys)
     --Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
 
     Notifications:Top(player, {text= "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", duration=5, style={color="rgb(255,255,255)", ["font-size"]="20px"}, continue=true})
+    if level == 24 then
+        Notifications:Top(player, {text= "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has ascended to max level! Your Master's max health has been increased by 2.", duration=8, style={color="rgb(255,140,0)", ["font-size"]="35px"}, continue=true})
+        Notifications:Top(player, {text= "Exalted by your ascension, Holy Grail's Blessing from now on will award 3 more mana.", duration=8, style={color="rgb(255,140,0)", ["font-size"]="35px"}, continue=true})
+
+        hero.MasterUnit:SetMaxHealth(hero.MasterUnit:GetMaxHealth()+2)
+        hero.MasterUnit2:SetMaxHealth(hero.MasterUnit:GetMaxHealth())
+    end
     MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
 end
 
@@ -1630,6 +1644,14 @@ function FateGameMode:OnEntityKilled( keys )
             if _G.CurrentGameState ~= "FATE_POST_ROUND" then
                 if nRadiantAlive == 0 then
                     --print("All Radiant heroes eliminated, removing existing timers and declaring winner...")
+
+                    self:LoopOverPlayers(function(player, playerID, playerHero)
+                        if playerHero:GetTeam() == DOTA_TEAM_BADGUYS then
+                            -- give 15% XP
+                            playerHero:AddExperience(_G.XP_PER_LEVEL_TABLE[playerHero:GetLevel()] * 0.15 , false, false)
+                        end
+                    end)
+
                     Timers:RemoveTimer('round_timer')
                     Timers:RemoveTimer('alertmsg')
                     Timers:RemoveTimer('alertmsg2')
@@ -1638,6 +1660,14 @@ function FateGameMode:OnEntityKilled( keys )
                     self:FinishRound(false, 1)
                 elseif nDireAlive == 0 then
                     --print("All Dire heroes eliminated, removing existing timers and declaring winner...")
+
+                    self:LoopOverPlayers(function(player, playerID, playerHero)
+                        if playerHero:GetTeam() == DOTA_TEAM_GOODGUYS then
+                            -- give 15% XP
+                            playerHero:AddExperience(_G.XP_PER_LEVEL_TABLE[playerHero:GetLevel()] * 0.15 , false, false)
+                        end
+                    end)
+
                     Timers:RemoveTimer('round_timer')
                     Timers:RemoveTimer('alertmsg')
                     Timers:RemoveTimer('alertmsg2')
@@ -2177,6 +2207,12 @@ function FateGameMode:InitializeRound()
         giveUnitDataDrivenModifier(hero, hero, "round_pause", PRE_ROUND_DURATION) -- Pause all heroes
         hero:SetGold(0, false)
         hero.CStock = 10
+
+        if hero.AvariceCount ~= nil then
+            hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 2 * hero.AvariceCount)
+            hero.MasterUnit2:SetMana(hero.MasterUnit:GetMana())
+            --print("granted more mana")
+        end
 
         -- Grant gold
         if hero:GetGold() < 5000 then --

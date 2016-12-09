@@ -176,7 +176,7 @@ function OnBuidheStart(keys)
 		elseif target:GetHealth() > (target:GetMaxHealth() - currentStack * unitReduction) then
 			target:SetHealth(target:GetMaxHealth() - currentStack * unitReduction)
 		end
-		return 0.01
+		return 0.033
 		end
 	)
 
@@ -347,13 +347,13 @@ end
 
 function OnDSToggleOn(keys)
 	local caster = keys.caster
-	print("double spear on")
+	--print("double spear on")
 	caster.IsDoubleSpearReady = true
 end
 
 function OnDSToggleOff(keys)
 	local caster = keys.caster
-	print("double spear off")
+	--print("double spear off")
 	caster.IsDoubleSpearReady = false
 end
 

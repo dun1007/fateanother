@@ -1689,7 +1689,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityTextureName"			"lancer_5th_rune_magic"
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"0"
 		"AbilityCastPoint"				"0.0"
 
 		"OnSpellStart"
@@ -1726,6 +1726,7 @@
 		"AbilityManaCost"				"100"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCooldown"				"30"
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
@@ -1748,11 +1749,6 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"Disengage"
 				"Distance"		"%distance"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
 			}
 			"FireSound"
 			{
@@ -1780,6 +1776,7 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCooldown"				"30"
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
@@ -1801,11 +1798,6 @@
 			{
 				"Target"		"CASTER"
 				"HealAmount"	"%heal"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
 			}
 			"FireSound"
 			{
@@ -1839,6 +1831,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"30"
 
 		"precache"
 		{
@@ -1875,11 +1868,6 @@
 				"Radius"		"%radius"
 				"Target"		"POINT"
 			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
-			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_TemplarAssassin.Trap.Cast"
@@ -1899,6 +1887,7 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCooldown"				"30"
 		"AbilitySpecial"
 		{
 			"01"
@@ -1915,11 +1904,6 @@
 				"Function"		"Conversion"
 				"Percentage"	"%percentage"
 			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
-			}
 		}
 	}
 
@@ -1933,6 +1917,7 @@
 		"AbilityTextureName"			"keeper_of_the_light_blinding_light"
 		"AbilityManaCost"				"100"
 		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"30"
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -2122,8 +2107,8 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300"
-		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastRange"				"350"
+		"AbilityCastRangeBuffer"		"250"
 		"AbilityCastPoint"				"1.2"
 
 		// Time		
@@ -2627,13 +2612,17 @@
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 				"Aura_Flags"  "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
+				}
 			}
 			"saber_alter_mana_shroud_aura_effect"
 			{
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_bonus"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
 				}
 			}
 		}
@@ -6716,7 +6705,7 @@
 			}			
 			"modifier_god_hand_debuff"
 			{
-				"Duration"		"7"
+				"Duration"		"10"
 				"IsDebuff"		"1"
 				"Properties"
 				{
@@ -6902,7 +6891,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"20"
+		"AbilityManaCost"				"23"
 
 		"precache"
 		{
@@ -6918,7 +6907,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"6"	
+				"duration"			"10"	
 			}
 			"03"
 			{
@@ -10007,7 +9996,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"1350"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -10065,7 +10054,7 @@
 			"modifier_gob_thinker"
 			{
 				"Duration"			"%duration"
-	            "ThinkInterval"		"0.15"
+	            "ThinkInterval"		"0.12"
 	            "OnIntervalThink"
 	         	{
 					"RunScript"
@@ -10498,7 +10487,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"dmg_ratio"			"0.5"
+				"dmg_ratio"			"0.65"
 			}
 		}
 		
@@ -20092,6 +20081,7 @@
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-100"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"99999"
 				}
 				"States"
 				{
@@ -21289,12 +21279,6 @@
 				"TextureName"	"astolfo_hippogriff_ride"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}			
-			"modifier_story_for_someones_sake_cooldown"
-			{
-				"IsDebuff"	"1"
-				"TextureName"	"nursery_rhyme_story_for_somebodys_sake"
-				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
-			}
 			"modifier_instinct_cooldown"
 			{
 				"IsDebuff"	"1"
@@ -21347,6 +21331,12 @@
 			{
 				"IsDebuff"	"1"
 				"TextureName"	"lancelot_arms_mastership"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_story_for_someones_sake_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"nursery_rhyme_story_for_somebodys_sake"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
 		}
@@ -23166,7 +23156,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700 750 800 850 900"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.7"
 		"AbilityCooldown"				"49"
 		"AbilityManaCost"				"800"
 
@@ -28046,7 +28036,7 @@
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"-2"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"-3"
 				}
 			}
 			"modifier_plains_of_water_int_buff"
@@ -28056,7 +28046,7 @@
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"2"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"3"
 				}
 			}
 		}
@@ -28140,7 +28130,7 @@
 				"EffectName"				"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"	
 				"EffectAttachType"			"attach_origin"
 				"Duration"					"%duration"
-	            "ThinkInterval"		"0.99"
+	            "ThinkInterval"		"0.33"
 	            "OnIntervalThink"
 	         	{
 					"RunScript"
@@ -28197,7 +28187,7 @@
 			{
 				"EffectName"				"particles/units/heroes/hero_bane/bane_fiendsgrip_hands.vpcf"	
 				"EffectAttachType"			"attach_origin"
-				"Duration"		"1"
+				"Duration"		"0.75"
 				"IsDebuff"		"1"
 				"Properties"
 				{
@@ -28257,7 +28247,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"channel_duration"				"4 5 6 7 8"
+				"channel_duration"				"3 5 7 9 11"
 			}
 			"03"
 			{
@@ -28426,6 +28416,8 @@
 			"particle"			"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 			"particle"			"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
 			"particle"			"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"			"particles/custom/screen_red_splash.vpcf"
+			"particle"			"particles/custom/screen_lightblue_splash.vpcf"
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
 		}
 		
@@ -28525,7 +28517,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"15"
+		"AbilityManaCost"				"13"
 
 		"precache"
 		{
@@ -28541,7 +28533,7 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"damage_per_sec"			"3"
+				"damage_per_sec"			"4.5"
 			}
 			"03"
 			{
@@ -28600,12 +28592,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"int_ratio"			"1"
+				"int_ratio"			"1.5"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"int_steal"			"2"
+				"int_steal"			"3"
 			}
 			"04"
 			{
@@ -28708,14 +28700,19 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"heal_bonus_missing_health"			"5"
+				"heal_bonus_int_ratio"			"4"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"mana_ratio"			"0.5"
+				"heal_bonus_missing_health"			"5"
 			}
 			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_ratio"			"0.5"
+			}
+			"05"
 			{
 				"var_type"				"FIELD_FLOAT"
 				"cdr"			"70"

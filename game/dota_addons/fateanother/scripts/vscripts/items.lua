@@ -404,12 +404,12 @@ end
 
 function Blink(keys)
 	local caster = keys.caster
-
+	local ability = keys.ability
 	local casterPos = caster:GetAbsOrigin()
 	local targetPoint = keys.target_points[1]
 	local newTargetPoint = nil
 
-	if IsLocked(caster) or caster:HasModifier("jump_pause_nosilence") then
+	if IsLocked(caster) or caster:HasModifier("jump_pause_nosilence") or caster:HasModifier("modifier_story_for_someones_sake") then
 		keys.ability:EndCooldown()
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Blink")
 		return
@@ -738,6 +738,7 @@ function FullHeal(keys)
 
 	caster:SetHealth(caster:GetMaxHealth())
 	caster:SetMana(caster:GetMaxMana())
+	ability:ApplyDataDrivenModifier(caster, caster, "shard_of_replenishment_armor_buff", {})
 
 	caster:EmitSound("DOTA_Item.Mekansm.Activate")
 	local mekFx = ParticleManager:CreateParticle("particles/items2_fx/mekanism.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)

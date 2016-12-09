@@ -347,17 +347,15 @@ function ChainLightning(keys, source, target, count, CC, bIsFirstItrn)
 		end
 	end
 
-	Timers:CreateTimer(0.2, function()
-		if caster.bIsNightmareAcquired then 
-			-- steal int by 2, duration 15 sec
-			if target:IsHero() then
-				ability:ApplyDataDrivenModifier(caster, target, "modifier_plains_of_water_int_debuff", {})
-				ability:ApplyDataDrivenModifier(caster, caster, "modifier_plains_of_water_int_buff", {})
-			end
-			damage = damage + 1*caster:GetIntellect()
+	if caster.bIsNightmareAcquired then 
+		-- steal int by 2, duration 15 sec
+		if target:IsHero() then
+			ability:ApplyDataDrivenModifier(caster, target, "modifier_plains_of_water_int_debuff", {})
+			ability:ApplyDataDrivenModifier(caster, caster, "modifier_plains_of_water_int_buff", {})
 		end
-		DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
-	end)
+		damage = damage + 1.5*caster:GetIntellect()
+	end
+	DoDamage(caster, target, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 
 	local lightningFx = ParticleManager:CreateParticle( "particles/custom/nursery_rhyme/plains_of_water.vpcf", PATTACH_CUSTOMORIGIN, nil );
 	ParticleManager:SetParticleControlEnt( lightningFx, 0, source, PATTACH_POINT_FOLLOW, "attach_hitloc", source:GetAbsOrigin() + Vector( 0, 0, 96 ), true );
@@ -383,7 +381,7 @@ function OnCloneStart(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local duration = keys.Duration
-	local cloneHealth = target:GetHealth() * keys.Health/100 
+	local cloneHealth = target:GetMaxHealth() * keys.Health/100 
 
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
@@ -463,7 +461,7 @@ function OnCloneThink(keys)
 	local ability = keys.ability
 	if caster.bIsFTAcquired then
 		if not IsFacingUnit(caster.CurrentDoppelgangerOriginal, caster.CurrentDoppelganger, 180) then
-			DoDamage(caster, caster.CurrentDoppelgangerOriginal, caster:GetIntellect()*3 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			DoDamage(caster, caster.CurrentDoppelgangerOriginal, caster:GetIntellect()*1.5 , DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			ability:ApplyDataDrivenModifier(caster, caster.CurrentDoppelgangerOriginal, "modifier_doppelganger_lookaway_slow", {})
 		end
 	end
@@ -667,18 +665,21 @@ function PingLocationForEnemies(keys)
 	if caster.nNRComboQuoteCount == 3 then
 		GameRules:SendCustomMessage("<font color='#FF0000'>This story will go on forever.</font>", 0, 0)
 		EmitGlobalSound("Hero_Wisp.Tether.Stop")
+		local blueScreenFx = ParticleManager:CreateParticle("particles/custom/screen_lightblue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	elseif caster.nNRComboQuoteCount == 4 then
 		GameRules:SendCustomMessage("<font color='#FF0000'>As long as the slender fingers return to the first page,</font>", 0, 0)
 		EmitGlobalSound("Hero_Wisp.Tether.Stop")
+		local blueScreenFx = ParticleManager:CreateParticle("particles/custom/screen_lightblue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	elseif caster.nNRComboQuoteCount == 5 then
 		GameRules:SendCustomMessage("<font color='#FF0000'>As if picking up the next volume.</font>", 0, 0)
 		EmitGlobalSound("Hero_Wisp.Tether.Stop")
+		local blueScreenFx = ParticleManager:CreateParticle("particles/custom/screen_lightblue_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	end
 	caster.nNRComboQuoteCount = caster.nNRComboQuoteCount+1
 
     LoopOverPlayers(function(player, playerID, playerHero)
     	if playerHero:GetTeamNumber() ~= caster:GetTeamNumber() and player and playerHero then
-    		MinimapEvent( playerHero:GetTeamNumber(), playerHero, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+    		MinimapEvent( playerHero:GetTeamNumber(), playerHero, caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_ENEMY_TELEPORTING, 2 )
     	end
     end)	
 end
@@ -691,6 +692,8 @@ function OnNRComboEnd(keys)
 		caster.bIsNRComboSuccessful = true 
 		GameRules:SendCustomMessage("<font color='#FF0000'>Once again denying reality to the reader.</font>", 0, 0)
 		EmitGlobalSound("Hero_Wisp.Tether.Stun")
+
+		local RedScreenFx = ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
 	end
 end
 

@@ -117,7 +117,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"44"
 		"AttackDamageMax"				"51"
-		"AttackRate"					"0.95"
+		"AttackRate"					"0.85"
 		"AttackRange"					"250"
 		"AttackAcquisitionRange"		"350"
 		
@@ -1386,7 +1386,7 @@
 		"Attribute3"				"nursery_rhyme_attribute_reminiscence"
 		"Attribute4"				"nursery_rhyme_attribute_improve_queens_glass_game"
 		
-		"StatusHealth"					"900"
+		"StatusHealth"					"1050"
 		"StatusHealthRegen"				"5"
 		"StatusMana"					"1200"
 		"StatusManaRegen"				"4"
