@@ -945,6 +945,7 @@ function FateGameMode:OnHeroInGame(hero)
     master:SetMana(0)
     hero.MasterUnit = master
     LevelAllAbility(master)
+    hero:FindAbilityByName("attribute_bonus"):SetHidden(false)
     master:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
     master:AddItem(CreateItem("item_master_transfer_items2", nil, nil))
     master:AddItem(CreateItem("item_master_transfer_items3", nil, nil))
@@ -1040,9 +1041,9 @@ function FateGameMode:OnHeroInGame(hero)
         --SendKVToFatepedia(player) -- send KV to fatepedia
 
         if hero:GetName() == "npc_dota_hero_crystal_maiden" then
-            for i=6, 11 do
+            --[[for i=6, 11 do
                 hero:GetAbilityByIndex(i):SetHidden(false)
-            end
+            end]]
         elseif hero:GetName() == "npc_dota_hero_queenofpain" then
             --Attachments:AttachProp(hero, "attach_sword", "models/astolfo/astolfo_sword.vmdl")
         end
@@ -1284,14 +1285,14 @@ end
 function GetStashItems(hero)
     local stashTable = {}
     for i=1,6 do
-        local item = hero:GetItemInSlot(i + 5)
+        local item = hero:GetItemInSlot(i + 8)
         table.insert(stashTable, i, item and item:GetName())
     end
     return stashTable
 end
 
 function FindItemInStash(hero, itemname)
-    for i=6, 11 do
+    for i=9, 14 do
         local heroItem = hero:GetItemInSlot(i)
         if heroItem == nil then return nil end
         if heroItem:GetName() == itemname then
@@ -1811,7 +1812,7 @@ function FateGameMode:InitGameMode()
     -- Set game rules
     GameRules:SetUseUniversalShopMode(true)
     GameRules:SetSameHeroSelectionEnabled(false)
-    GameRules:SetHeroSelectionTime(0)
+    GameRules:SetHeroSelectionTime(60)
     GameRules:SetPreGameTime(60)
     GameRules:SetUseCustomHeroXPValues(true)
     GameRules:SetUseBaseGoldBountyOnHeroes(false)
@@ -2076,7 +2077,7 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
     if orderType == 19 then
         local currentItemIndex, itemName = nil
         local charges = -1
-        for i=0, 11 do
+        for i=0, 14 do
             if ability == caster:GetItemInSlot(i) then
                 currentItemIndex = i
                 itemName = ability:GetName()
@@ -2085,19 +2086,19 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
             end
         end
         -- Item is currently placed in inventory, while target is in stash
-        if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 6 and targetIndex <= 11) then
+        if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 9 and targetIndex <= 14) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
             SaveStashState(caster)
             return false
         -- Item is currently placed in stash, while target is in inventory
-        elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 0 and targetIndex <=5) then
+        elseif (currentItemIndex >= 9 and currentItemIndex <= 14) and (targetIndex >= 0 and targetIndex <=5) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges, true, false)
             SaveStashState(caster)
             return false
         -- Item is currently placed in stash, and it is just being moved within there
-        elseif (currentItemIndex >= 6 and currentItemIndex <= 11) and (targetIndex >= 6 and targetIndex <=11) then
+        elseif (currentItemIndex >= 9 and currentItemIndex <= 14) and (targetIndex >= 6 and targetIndex <=11) then
             ability:RemoveSelf()
             CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
             SaveStashState(caster)
@@ -2209,7 +2210,7 @@ function FateGameMode:InitializeRound()
         hero.CStock = 10
 
         if hero.AvariceCount ~= nil then
-            hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 2 * hero.AvariceCount)
+            hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 1 * hero.AvariceCount)
             hero.MasterUnit2:SetMana(hero.MasterUnit:GetMana())
             --print("granted more mana")
         end

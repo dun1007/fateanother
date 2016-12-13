@@ -485,7 +485,7 @@ function OnGodHandDeath(keys)
 		print(caster.bIsGHReady)
 		if IsTeamWiped(caster) == false and caster.GodHandStock > 0 and caster.bIsGHReady then
 			caster.bIsGHReady = false
-			Timers:CreateTimer(10.0, function() caster.bIsGHReady = true end)
+			Timers:CreateTimer(7.0, function() caster.bIsGHReady = true end)
 			EmitGlobalSound("Berserker.Roar") 
 			local particle = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 			caster.GodHandStock = caster.GodHandStock - 1

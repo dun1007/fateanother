@@ -1,6 +1,22 @@
 ATTR_HEARTSEEKER_AD_RATIO = 2
 ATTR_HEARTSEEKER_COMBO_AD_RATIO = 3
 
+function OnPFAStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_lancer_protection_from_arrows_active", {duration=3})
+	caster:EmitSound("DOTA_Item.Buckler.Activate")
+	StartAnimation(caster, {duration=1, activity=ACT_DOTA_CAST_ABILITY_1, rate=0.45})
+
+end
+
+function OnPFAThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ProjectileManager:ProjectileDodge(caster)
+end
+
 function OnBattleContinuationStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -94,7 +110,11 @@ function RuneMagicClose(keys)
 	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", true, true) 
 	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", true, true) 
 	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", true, true) 
-	caster:SwapAbilities(a5:GetName(), "fate_empty1", true, true) 
+	if caster.IsPFAAcquired then
+		caster:SwapAbilities(a5:GetName(), "lancer_5th_protection_from_arrows", true, true) 
+	else
+		caster:SwapAbilities(a5:GetName(), "fate_empty1", true, true) 
+	end
 	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", true, true) 
 	--caster:GetAbilityByIndex(0):EndCooldown() 
 
@@ -558,6 +578,7 @@ function OnPFAAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("lancer_5th_protection_from_arrows"):SetLevel(1) 
+	hero:SwapAbilities("fate_empty1" , "lancer_5th_protection_from_arrows", true, true)
 	hero.IsPFAAcquired = true
 
 	-- Set master 1's mana 

@@ -1656,11 +1656,21 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"lancer_5th_protection_from_arrows"
+		"AbilityCooldown"				"60"
 
+		"Precache"
+		{
+			"particle"		"particles/customgames/capturepoints/cp_wind.vpcf"
+		}
 		"OnSpellStart"
 		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnPFAStart"
+			}
 		}
 
 		"Modifiers"
@@ -1671,7 +1681,23 @@
 				"IsHidden"		"0"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"35"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"25"
+				}
+			}
+			"modifier_lancer_protection_from_arrows_active"
+			{
+				"EffectName"		"particles/customgames/capturepoints/cp_wind.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Duration"						"3"
+				"ThinkInterval"					"0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lancer_ability"
+						"Function"		"OnPFAThink"
+					}
 				}
 			}
 		}
@@ -1689,7 +1715,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityTextureName"			"lancer_5th_rune_magic"
-		"AbilityCooldown"				"0"
+		"AbilityCooldown"				"0.5"
 		"AbilityCastPoint"				"0.0"
 
 		"OnSpellStart"
@@ -1982,6 +2008,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"silencer_last_word"
 		
+		"AbilityCooldown"				"0.5"
 		"AbilityCastPoint"				"0.0"
 
 		"OnSpellStart"
@@ -2509,7 +2536,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"evasion_bonus"			"35"
+				"evasion_bonus"			"25"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"3"
 			}
 		}
 		
@@ -2537,7 +2569,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -6705,7 +6737,7 @@
 			}			
 			"modifier_god_hand_debuff"
 			{
-				"Duration"		"10"
+				"Duration"		"7"
 				"IsDebuff"		"1"
 				"Properties"
 				{
@@ -25303,7 +25335,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_duration"			"25"
+				"regen_duration"			"5"
 			}
 		}
 
@@ -25508,9 +25540,14 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius_modifier"				"300 350 400 450 500"
+				"bonus_damage"		"12 24 36 48 60"
 			}
 			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_modifier"				"300 350 400 450 500"
+			}
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"3 4 5 6 7"
@@ -25539,12 +25576,11 @@
 		{
 			"modifier_jeanne_charisma_str"
 			{
-				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%stat_modifier"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
-				
 				"OnDestroy"
 				{
 					"RunScript"
@@ -25556,10 +25592,10 @@
 			}
 			"modifier_jeanne_charisma_agi"
 			{
-				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%stat_modifier"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
 				
 				"OnDestroy"
@@ -25573,10 +25609,10 @@
 			}
 			"modifier_jeanne_charisma_int"
 			{
-				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%stat_modifier"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
 				
 				"OnDestroy"
@@ -25761,6 +25797,16 @@
 				"var_type"			"FIELD_FLOAT"
 				"slow_amount"			"-50"
 			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mr_bonus"			"30"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_bonus"			"10"
+			}
 		}
 		
 		"OnSpellStart"
@@ -25807,6 +25853,14 @@
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_amount"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
+				}
+			}
+			"modifier_gods_resolution_active_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_bonus"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_bonus"
 				}
 			}
 
@@ -27872,17 +27926,17 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"				"0.5 0.7 0.9 1.1 1.3"
+				"stun_duration"				"0.5 0.55 0.6 0.65 0.7"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"silence_duration"				"1 1.25 1.5 1.75 2"
+				"silence_duration"				"0.3 0.4 0.5 0.6 0.7"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"revoke_duration"				"1 1.25 1.5 1.75 2"
+				"revoke_duration"				"0.3 0.4 0.5 0.6 0.7"
 			}
 			"07"
 			{
@@ -28262,7 +28316,7 @@
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"heal_over_time_pct"				"2 3.5 5 6.5 8"
+				"heal_over_time_pct"				"3 5 7 9 11"
 			}
 			"06"
 			{

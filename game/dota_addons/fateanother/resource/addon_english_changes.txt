@@ -176,7 +176,7 @@
     "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_Note2"          "The table of Crowd Control effects is snapshot when primary target takes first bounce."
 
     "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger"      "I Am You, and You Are Me"
-    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_Description"      "Caster conjures a stationary doppelganger of target enemy hero, which can be attacked by Caster and her allies. Doppelganger cannot act, has percentage of original's current health, and shares the pain with original."
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_Description"      "Caster conjures a stationary doppelganger of target enemy hero, which can be attacked by Caster and her allies. Doppelganger cannot act, has percentage of original's max health, and shares the pain with original."
     "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_doppelganger_health"           "%DOPPELGANGER HEALTH:"
     "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_damage_shared"     "%SHARED DAMAGE:"
     "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_duration"  "DURATION:"
@@ -198,7 +198,7 @@
     "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Description"   "<font color='#58ACFA'>Combo Requirement: 20 in all stats</font>\n<font color='#58ACFA'>Combo Sequence: R-R in 2 seconds</font>\n\nCaster conjures a time-rewinding Noble Phantasm. If she is not killed in a given time, current round will reset back to the beginning with an unconditional draw.\nThis abiity cannot be used if round timer is past 60 seconds."
     "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_time_limit"    "TIME LIMIT:"
     "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note0"         "Until the spell's completion, Caster's location will be pinged by enemy team every 5 seconds."
-    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note1"         "Caster cannot use Teleport Scroll and Gem of Speed while channeling."
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note1"         "Caster cannot use Teleport Scroll, Gem of Speed, and Blink Scroll while channeling."
     "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note2"         "If a draw occurs due to this ability's effect, default win condition will not apply."
     "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Lore"  "This story will go on forever.\nAs long as the slender fingers return to the first page,\nAs if picking up the next volume.\nOnce again denying reality to the reader."
 
@@ -226,8 +226,21 @@
     "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence_stat_steal_duration" "STAT STEAL DURATION:"
 
     "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game"        "Improve Queen's Glass Game"
-    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_Description"        "Increaes Queen's Glass Game's instant heal amount and causes its healing effect to replenish portion of mana as well.\nIn addition, A Story for Somebody's Sake's cooldown is reduced."
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_Description"        "Increaes Queen's Glass Game's instant heal amount based on Caster's INT and causes its healing effect to replenish portion of mana as well.\nIn addition, A Story for Somebody's Sake's cooldown is reduced."
     "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_heal_bonus"     "BONUS INSTANT HEAL AMOUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_heal_bonus_int_ratio"   "EXTRA INSTANT HEAL AMOUNT INT RATIO:"
     "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_heal_bonus_missing_health"  "BONUS HEAL AMOUNT BASED ON MISSING HEALTH:"
     "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_mana_ratio" "HEALTH TO MANA RATIO:"
     "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_cdr"            "COMBO COOLDOWN REDUCTION:"
+
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol"   "Divine Symbol"
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Description"   "Increases Luminosite Eternelle's maximum crowd control duration, and causes it to apply Charisma to all allied Servants within sacred zone at cast. In addition, Ruler automatically casts Charisma on herself when La Pucelle activates."
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Note0"             "Charisma effect follows current level."
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_bonus_duration"    "EXTRA CC DURATION:"
+
+    "DOTA_Tooltip_Ability_jeanne_saint"     "Saint"
+    "DOTA_Tooltip_Ability_jeanne_saint_Description" "Ruler judges each enemy Servant by their K/D counts. Servants whose Kills are higher than their Deaths are marked as <font color='#ff9900'>Unjust.</font>\nRuler's abilities gain special effects against Unjust enemies."

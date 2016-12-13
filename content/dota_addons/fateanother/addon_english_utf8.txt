@@ -2862,13 +2862,12 @@
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex"	"Magic Resistance: EX"
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_Description"	"Ruler's unwavering piety grants her layers of protection from magic. A layer is temporarily disabled whenever she takes a hit, and takes time to regenerate."
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_Lore"		"The determined spirit is impenetrable shield on its own."
-        "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_Note0"		"Protection buff can be removed by soft dispel effects (e.g., S Scroll)."
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_bonus_mr_per_stack"	"%BONUS MR PER STACK:"
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_max_stack"				"MAX STACK:"
         "DOTA_Tooltip_Ability_jeanne_magic_resistance_ex_regen_duration"		"RECOVERY PERIOD:"
 
 		"DOTA_Tooltip_Ability_jeanne_saint"		"Saint"
-        "DOTA_Tooltip_Ability_jeanne_saint_Description"	"Each round, Ruler judges each enemy Servant by their K/D counts. Servants whose Kills are higher than their Deaths are marked as <font color='#ff9900'>Unjust.</font>\nRuler's abilities gain special effects against Unjust enemies."
+        "DOTA_Tooltip_Ability_jeanne_saint_Description"	"Ruler judges each enemy Servant by their K/D counts. Servants whose Kills are higher than their Deaths are marked as <font color='#ff9900'>Unjust.</font>\nRuler's abilities gain special effects against Unjust enemies."
         "DOTA_Tooltip_Ability_jeanne_saint_Lore"	"The scale of justice misses no sinner."
 
         "DOTA_Tooltip_Ability_jeanne_identity_discernment" 	"Identity Discernment"
@@ -2879,9 +2878,10 @@
         "identity_discernment_alert"			"<font color='#ff9900'>Ruler(Apocrypha) just used her authority to ping all enemy Servants on the map!</font>"
 
         "DOTA_Tooltip_Ability_jeanne_charisma"		"Charisma"
-        "DOTA_Tooltip_Ability_jeanne_charisma_Description"	"Ruler grants divine inspiration to an ally, granting a bonus to their primary stat and True Sight in a small radius for the duration."
+        "DOTA_Tooltip_Ability_jeanne_charisma_Description"	"Ruler grants divine inspiration to an ally, granting a bonus to their primary stat, attack damage, and True Sight in a small radius for the duration."
         "DOTA_Tooltip_Ability_jeanne_charisma_Lore"		"Once the commander of national army, Ruler's ability to compel a person makes her sixteen-year-old appearance hardly relevant."
         "DOTA_Tooltip_Ability_jeanne_charisma_stat_modifier"	"STAT MODIFIER AMOUNT:"
+        "DOTA_Tooltip_Ability_jeanne_charisma_bonus_damage"		"BONUS ATTACK DAMAGE:"
         "DOTA_Tooltip_Ability_jeanne_charisma_radius_modifier"	"TRUE SIGHT RADIUS:"
         "DOTA_Tooltip_Ability_jeanne_charisma_duration"			"DURATION:"
 
@@ -2894,7 +2894,7 @@
         "DOTA_Tooltip_Ability_jeanne_purge_the_unjust_bonus_damage_perkill"	"UNJUST BONUS DAMAGE PER KILL:"
 
         "DOTA_Tooltip_Ability_jeanne_gods_resolution"		"God's Resolution"
-        "DOTA_Tooltip_Ability_jeanne_gods_resolution_Description"	"<font color='#58ACFA'>PASSIVE:</font> Ruler's attacks have a chance to deal bonus magic damage based on the target's current health and <font color='#FF3399'>revoke</font> them from their Master.\n<font color='#58ACFA'>ACTIVE:</font> Channels the wrath of god around her, continously dealing damage to nearby enemies and <font color='#FF3399'>slowing</font> their movement and attack speeds.\n<font color='#ff9900'>UNJUST BONUS:</font> Also ministuns."
+        "DOTA_Tooltip_Ability_jeanne_gods_resolution_Description"	"<font color='#58ACFA'>PASSIVE:</font> Ruler's attacks have a chance to deal bonus magic damage based on the target's current health and <font color='#FF3399'>revoke</font> them from their Master.\n<font color='#58ACFA'>ACTIVE:</font> Channels the wrath of god around her, continously dealing damage to nearby enemies and <font color='#FF3399'>slowing</font> their movement and attack speeds. Ruler gains bonus armor and magic resistance while channeling.\n<font color='#ff9900'>UNJUST BONUS:</font> Also ministuns."
         "DOTA_Tooltip_Ability_jeanne_gods_resolution_Note0"		"Ruler is stunned and revoked from Master while casting."
         "DOTA_Tooltip_Ability_jeanne_gods_resolution_passive_chance"	"%PASSIVE PROC CHANCE:"
         "DOTA_Tooltip_Ability_jeanne_gods_resolution_passive_damage_percentage"		"%PASSIVE DAMAGE:"
@@ -2903,6 +2903,8 @@
         "DOTA_Tooltip_Ability_jeanne_gods_resolution_active_duration"				"ACTIVE DURATION:"
         "DOTA_Tooltip_Ability_jeanne_gods_resolution_radius"					"ACTIVE RADIUS:"
         "DOTA_Tooltip_Ability_jeanne_gods_resolution_slow_amount"				"%ACTIVE SLOW AMOUNT:"
+        "DOTA_Tooltip_Ability_jeanne_gods_resolution_mr_bonus"					"%ACTIVE BONUS MR:"
+        "DOTA_Tooltip_Ability_jeanne_gods_resolution_armor_bonus"				"ACTIVE BONUS ARMOR:"
 
 
         "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle"		"Luminosite Eternelle"
@@ -2945,7 +2947,8 @@
         "DOTA_Tooltip_Ability_jeanne_attribute_punishment_active_duration"	"GODS RESOLUTION ACTIVE DURATION:"
 
         "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol"	"Divine Symbol"
-        "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Description"	"Increases Luminosite Eternelle's maximum crowd control duration. In addition, its sacred zone applies the current level of Charisma to allied Servants within it when created."
+        "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Description"	"Increases Luminosite Eternelle's maximum crowd control duration, and causes it to apply Charisma to all allied Servants within sacred zone at cast. In addition, Ruler automatically casts Charisma on herself when La Pucelle activates."
+        "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Note0"				"Charisma effect follows current level."
         "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_bonus_duration"	"EXTRA CC DURATION:"
 
 
@@ -3186,7 +3189,7 @@
 		"DOTA_Tooltip_ability_master_shard_of_holy_grail_Lore"	"A shard of the legendary artifact that is known to descend upon the soul in its most dire situation. Despite being a makeshift, a trivial wish of mere human may not be asking too much...\n"
 
 		"DOTA_Tooltip_Ability_master_shard_of_avarice"				"Shard of Avarice"
-		"DOTA_Tooltip_ability_master_shard_of_avarice_Description"	"Instantly grants 10,000 gold, distributed evenly over your teammates. Also, grants 1,500 bonus gold and 2 Master Mana at the beginning of round."
+		"DOTA_Tooltip_ability_master_shard_of_avarice_Description"	"Instantly grants 10,000 gold, distributed evenly over your teammates. Also, grants 1,500 bonus gold and 1 Master Mana at the beginning of round."
 		"DOTA_Tooltip_Ability_master_shard_of_avarice_Lore"			"A shard of the legendary artifact that is known to descend upon the soul in its most dire situation. Despite being a makeshift, a trivial wish of mere human may not be asking too much...\n"
 
 		"DOTA_Tooltip_Ability_master_shard_of_anti_magic"				"Shard of Anti-Magic"

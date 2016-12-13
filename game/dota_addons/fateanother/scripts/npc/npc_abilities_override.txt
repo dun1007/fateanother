@@ -251,6 +251,9 @@
 	"item_winter_greevil_treat"			"REMOVE"
 	"item_winter_greevil_garbage"			"REMOVE"
 	"item_winter_greevil_chewy"			"REMOVE"
+	"item_recipe_iron_talon"			"REMOVE"
+	"item_faerie_fire"					"REMOVE"
+	"item_iron_talon"					"REMOVE"
 
 
 	"satyr_trickster_purge"

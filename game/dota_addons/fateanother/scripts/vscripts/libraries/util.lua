@@ -30,8 +30,7 @@ softdispellable = {
     "modifier_lishuwen_concealment",
     "modifier_jeanne_charisma_str",
     "modifier_jeanne_charisma_agi",
-    "modifier_jeanne_charisma_int",
-    "modifier_magic_resistance_ex_shield"
+    "modifier_jeanne_charisma_int"
 }
 
 strongdispellable = {
@@ -66,7 +65,6 @@ strongdispellable = {
     "modifier_jeanne_charisma_str",
     "modifier_jeanne_charisma_agi",
     "modifier_jeanne_charisma_int",
-    "modifier_magic_resistance_ex_shield",
 
     -- Strong Dispelable
     "modifier_b_scroll",
@@ -210,6 +208,7 @@ CannotReset = {
     "saber_strike_air",
     "saber_max_excalibur",
     "lancer_5th_battle_continuation",
+    "lancer_5th_protection_from_arrows",
     "lancer_5th_wesen_gae_bolg",
     "saber_alter_max_mana_burst",
     "rider_5th_bellerophon_2",
@@ -587,7 +586,7 @@ function CheckItemCombinationInStash(hero)
     local bIsMatchingFound = false
 
     -- loop through stash
-    for i=6,11 do
+    for i=9,14 do
         if bIsMatchingFound then break end
 
         local currentItem = hero:GetItemInSlot(i)
@@ -596,7 +595,7 @@ function CheckItemCombinationInStash(hero)
             local currentItemIndex1 = i
             if GetMatchingItem(currentItemName1) then
                 -- first component found, find second component
-                for j=6,11 do
+                for j=9,14 do
                     if bIsMatchingFound then break end
 
                     if j == currentItemIndex1 then goto continue end -- just continue if we are looking at the same slot as first component

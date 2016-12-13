@@ -112,11 +112,11 @@ function OnIRStart(keys)
 	local primaryStat = target:GetPrimaryAttribute()
 
 	if primaryStat == 0 then 
-		ability:ApplyDataDrivenModifier(caster, target, "modifier_jeanne_charisma_str", {})
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_jeanne_charisma_str", {duration = duration})
 	elseif primaryStat == 1 then
-		ability:ApplyDataDrivenModifier(caster, target, "modifier_jeanne_charisma_agi", {})
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_jeanne_charisma_agi", {duration = duration})
 	elseif primaryStat == 2 then
-		ability:ApplyDataDrivenModifier(caster, target, "modifier_jeanne_charisma_int", {})
+		ability:ApplyDataDrivenModifier(caster, target, "modifier_jeanne_charisma_int", {duration = duration})
 	end 
 	SpawnAttachedVisionDummy(caster, target, radius, duration, true)
 
@@ -214,11 +214,10 @@ function OnGodResolutionStart(keys)
 	local tickPeriod = 0.2
 
 	giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", duration)
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gods_resolution_active_buff", {duration = duration})
 	Timers:CreateTimer(0.1, function()
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_gods_resolution_anim", {})
 	end)
-
-	caster:EmitSound("Hero_ArcWarden.MagneticField")
 
 	Timers:CreateTimer(function()
 		if not caster:IsAlive() then return end
@@ -243,6 +242,8 @@ function OnGodResolutionStart(keys)
 
 		return tickPeriod
 	end)
+
+	caster:EmitSound("Hero_ArcWarden.MagneticField")
 end
 
 function OnLECastStart(keys)
@@ -439,6 +440,17 @@ function OnLaPucelleTakeDamage(keys)
 			giveUnitDataDrivenModifier(caster, caster, "pause_sealdisabled", delay)
 			giveUnitDataDrivenModifier(caster, caster, "revoked", duration+delay)
 			ability:ApplyDataDrivenModifier(caster, caster, "modifier_la_pucelle_anim", {})
+
+			-- apply charisma
+			if caster.IsDivineSymbolAcquired then
+				local newKeys = keys
+				newKeys.ability = caster:FindAbilityByName("jeanne_charisma")
+				newKeys.target = caster
+				newKeys.Radius = newKeys.ability:GetSpecialValueFor("radius_modifier")
+		 		newKeys.Duration = duration
+				OnIRStart(newKeys)
+			end
+
 			GameRules:SendCustomMessage("#la_pucelle_alert_1", 0, 0)
 			caster.bIsLaPucelleActivatedThisRound = true
 			caster.LaPucelleKiller = attacker
@@ -452,7 +464,7 @@ function OnLaPucelleTakeDamage(keys)
 
 			ability:StartCooldown(ability:GetCooldown(1))
 			-- Set master's combo cooldown
-			local masterCombo = caster.MasterUnit2:FindAbilityByName(keys.ability:GetAbilityName())
+			local masterCombo = caster.MasterUnit2:FindAbilityByName(ability:GetAbilityName())
 			masterCombo:EndCooldown()
 			masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 

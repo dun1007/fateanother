@@ -135,7 +135,8 @@ function TransferItem(keys)
 	local item = keys.ability
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	local stash_item = hero:GetItemInSlot(keys.Slot+5) -- This looks for slot 6/7/8/9/10/11(Stash)
+	local stash_item = hero:GetItemInSlot(keys.Slot+8) -- This looks for slot 6/7/8/9/10/11(Stash)
+
 	--PrintTable(stash_item)
 	-- If item is found, remove it from stash and add it to hero
 	if stash_item ~= nil then
