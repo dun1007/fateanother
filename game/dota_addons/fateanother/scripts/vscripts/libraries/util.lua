@@ -187,6 +187,7 @@ slowmodifier = {
 
 donotlevel = {
     "attribute_bonus",
+    "attribute_bonus_custom",
     "saber_improved_instinct",
     "lancer_5th_protection_from_arrows",
     "saber_alter_darklight_passive",

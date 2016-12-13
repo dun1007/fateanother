@@ -945,7 +945,7 @@ function FateGameMode:OnHeroInGame(hero)
     master:SetMana(0)
     hero.MasterUnit = master
     LevelAllAbility(master)
-    hero:FindAbilityByName("attribute_bonus"):SetHidden(false)
+    hero:FindAbilityByName("attribute_bonus_custom"):SetHidden(false)
     master:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
     master:AddItem(CreateItem("item_master_transfer_items2", nil, nil))
     master:AddItem(CreateItem("item_master_transfer_items3", nil, nil))

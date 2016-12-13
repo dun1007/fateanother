@@ -39,6 +39,8 @@
         newUI.FindChildTraverse("LevelUpButton").SetPanelEvent("onactivate", function(){});
         newUI.FindChildTraverse("LevelUpButton").SetPanelEvent("onmouseover", function(){});
 
+        //CreateAbilityPanel(newUI.FindChildTraverse("StatBranch"), Players.GetPlayerHeroEntityIndex(Game.GetLocalPlayerID()),)
+
         // stat
         var statUI = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("StatDrawerTopRight").FindChildTraverse("stragiint");
         statUI.AddClass("AltPressed");

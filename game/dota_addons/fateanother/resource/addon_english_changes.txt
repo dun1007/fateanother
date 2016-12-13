@@ -244,3 +244,12 @@
 
     "DOTA_Tooltip_Ability_jeanne_saint"     "Saint"
     "DOTA_Tooltip_Ability_jeanne_saint_Description" "Ruler judges each enemy Servant by their K/D counts. Servants whose Kills are higher than their Deaths are marked as <font color='#ff9900'>Unjust.</font>\nRuler's abilities gain special effects against Unjust enemies."
+
+
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+    "DOTA_Tooltip_ability_attribute_bonus_custom"   "Acquire All Stats"
+    "DOTA_Tooltip_ability_attribute_bonus_custom_Description"       "Increases your STR, AGI, and INT."
+    "DOTA_Tooltip_ability_attribute_bonus_custom_stats"         "STAT BONUS:"

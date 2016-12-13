@@ -28,7 +28,7 @@
 		"Ability8"					"saber_improved_instinct"
 		"Ability9"					"saber_strike_air"
 		"Ability10"					"presence_detection_passive"
-		"Ability11"					"attribute_bonus"
+		"Ability11"					"attribute_bonus_custom"
 		"Combo"						"saber_max_excalibur"
 		"AttributeNumber"			"4"
 		"Attribute1"				"saber_attribute_improve_excalibur"
@@ -97,7 +97,7 @@
 		"Ability13"					"lancer_5th_wesen_gae_bolg"
 		"Ability14"					"lancer_5th_protection_from_arrows"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						"lancer_5th_wesen_gae_bolg"
 		"AttributeNumber"			"4"
@@ -160,7 +160,7 @@
 		"Ability7"				"saber_alter_max_mana_burst"
 		"Ability8"				"saber_alter_darklight_passive"
 		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability10"				"attribute_bonus_custom"
 		
 		"Combo"						"saber_alter_max_mana_burst"
 		"AttributeNumber"			"4"
@@ -227,7 +227,7 @@
 		"Ability11"				"archer_5th_hrunting"
 		"Ability12"				"archer_5th_sword_barrage_retreat_shot"
 		"Ability13"				"presence_detection_passive"
-		"Ability14"				"attribute_bonus"
+		"Ability14"				"attribute_bonus_custom"
 
 		"Combo"						"archer_5th_arrow_rain"
 		"AttributeNumber"			"5"
@@ -291,7 +291,7 @@
 		"Ability7"				"rider_5th_bellerophon_2"
 		"Ability8"				"rider_5th_monstrous_strength_passive"
 		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability10"				"attribute_bonus_custom"
 
 		"Combo"						"rider_5th_bellerophon_2"
 		"AttributeNumber"			"4"
@@ -356,7 +356,7 @@
 		"Ability9"				"berserker_5th_god_hand"
 		"Ability10"				"berserker_5th_reincarnation"
 		"Ability11"				"presence_detection_passive"
-		"Ability12"				"attribute_bonus"
+		"Ability12"				"attribute_bonus_custom"
 
 		"Combo"						"berserker_5th_madmans_roar"
 		"AttributeNumber"			"4"
@@ -420,7 +420,7 @@
 		"Ability8"				"false_assassin_quickdraw"
 		"Ability9"				"false_assassin_presence_concealment"
 		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability11"				"attribute_bonus_custom"
 
 		"Combo"						"false_assassin_tsubame_mai"
 		"AttributeNumber"			"4"
@@ -483,7 +483,7 @@
 		"Ability9"				"true_assassin_protection_from_wind"
 		"Ability10"				"true_assassin_dirk_improved"
 		"Ability11"				"presence_detection_passive"
-		"Ability12"				"attribute_bonus"
+		"Ability12"				"attribute_bonus_custom"
 		"Ability13"				"true_assassin_dirk_attr_temp"
 
 		"Combo"						"true_assassin_combo"
@@ -554,7 +554,7 @@
 		"Ability12"				"caster_5th_sacrifice"
 		"Ability13"				"caster_5th_hecatic_graea_powered"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"caster_5th_hecatic_graea_powered"
 		"AttributeNumber"			"4"
@@ -617,7 +617,7 @@
 		"Ability8"				"gilgamesh_gate_of_babylon_toggle"
 		"Ability9"				"gilgamesh_sword_barrage_improved"
 		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability11"				"attribute_bonus_custom"
 
 		"Combo"						"gilgamesh_max_enuma_elish"
 		"AttributeNumber"			"4"
@@ -682,7 +682,7 @@
 		"Ability12"				"lancelot_tsubame_gaeshi"
 		"Ability13"				"lancelot_nuke"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"lancelot_nuke"
 		"AttributeNumber"			"4"
@@ -747,7 +747,7 @@
 		"Ability10"				"avenger_blood_mark"
 		"Ability11"				"avenger_endless_loop"
 		"Ability12"				"presence_detection_passive"
-		"Ability13"				"attribute_bonus"
+		"Ability13"				"attribute_bonus_custom"
 		"Ability14"				"avenger_overdrive"
 		"Ability15"				"avenger_autoattack"
 
@@ -811,7 +811,7 @@
 		"Ability7"				"diarmuid_rampant_warrior"
 		"Ability8"				"diarmuid_double_spear_strike"
 		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability10"				"attribute_bonus_custom"
 		"Ability11"				"diarmuid_autoattack"
 
 		"Combo"						"diarmuid_rampant_warrior"
@@ -872,7 +872,7 @@
 		"Ability6"				"gille_abyssal_contract"
 		"Ability7"				"gille_larret_de_mort"
 		"Ability8"				"presence_detection_passive"
-		"Ability9"				"attribute_bonus"
+		"Ability9"				"attribute_bonus_custom"
 
 		"Combo"						"gille_larret_de_mort"
 		"AttributeNumber"			"5"
@@ -940,7 +940,7 @@
 		"Ability12"				"fate_empty3"
 		"Ability13"				"fate_empty4"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"iskander_annihilate"
 		"AttributeNumber"			"4"
@@ -1006,7 +1006,7 @@
 		"Ability12"				"nero_acquire_clairvoyance"
 		"Ability13"				"nero_close_spellbook"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"nero_fiery_finale"
 		"AttributeNumber"			"4"
@@ -1069,7 +1069,7 @@
 		"Ability8"				"gawain_divine_meltdown"
 		"Ability9"				"gawain_excalibur_galatine_detonate"
 		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability11"				"attribute_bonus_custom"
 
 		"Combo"						"gawain_supernova"
 		"AttributeNumber"			"5"
@@ -1135,7 +1135,7 @@
 		"Ability13"				"fate_empty2"
 		"Ability14"				"tamamo_mystic_shackle"
 		"Ability15"				"presence_detection_passive"
-		"Ability16"				"attribute_bonus"
+		"Ability16"				"attribute_bonus_custom"
 		
 		"StatusHealth"					"1150"
 		"StatusHealthRegen"				"4.0"
@@ -1196,7 +1196,7 @@
 		"Ability12"				"lishuwen_berserk"
 
 		"Ability15"				"presence_detection_passive"
-		"Ability16"				"attribute_bonus"
+		"Ability16"				"attribute_bonus_custom"
 		
 		"StatusHealth"					"1150"
 		"StatusHealthRegen"				"4.0"
@@ -1251,7 +1251,7 @@
 		"Ability7"					"jeanne_combo_la_pucelle"
 		"Ability8"					"jeanne_identity_discernment"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						"jeanne_combo_la_pucelle"
 		"AttributeNumber"			"4"
@@ -1313,7 +1313,7 @@
 		"Ability7"					"astolfo_hippogriff_ride"
 		"Ability8"					"astolfo_hippogriff_rush"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						""
 		"AttributeNumber"			"4"
@@ -1377,7 +1377,7 @@
 		"Ability8"					"nursery_rhyme_shapeshift_swap"
 		"Ability9"					"nursery_rhyme_reminiscence"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						"nursery_rhyme_story_for_somebodys_sake"
 		"AttributeNumber"			"4"
