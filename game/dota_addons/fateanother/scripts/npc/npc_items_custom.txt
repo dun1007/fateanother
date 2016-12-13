@@ -533,6 +533,32 @@
 	    }
 	} 
 
+	"item_dummy" 
+	{
+		//		GENERAL
+		//-------------------------------------
+	    "ID"           			"1100"
+	    "BaseClass"    			"item_datadriven"
+	    "AbilityTextureName" 	"mana_essence"
+	    "AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"	
+	    
+	    "AbilityCooldown"		"10"
+
+	    "ItemCost"     "99999"
+	    "ItemQuality"  "component"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+	    "ItemInitialCharges" "2"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "0"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	} 
+
+
 	"item_recipe_condensed_mana_essence"
 	{
 	    "ID" "1101"

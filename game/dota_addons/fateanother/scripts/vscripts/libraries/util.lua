@@ -608,7 +608,7 @@ function CheckItemCombinationInStash(hero)
                             bIsMatchingFound = true
                             if not currentItem:IsNull() then currentItem:RemoveSelf() end
                             if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                            CreateItemAtSlot(hero, tItemComboTable[currentItemName1], 6, -1, false, true)
+                            CreateItemAtSlot(hero, tItemComboTable[currentItemName1], 9, -1, false, true)
                         end
                     end
                     ::continue::
@@ -732,12 +732,11 @@ function CheckItemCombinationInStash(hero)
     end
 end]]--
 
--- 
 function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bIsStashChecked)
     local dummyitemtable = {}
     for i = 0, slot-1 do
         if hero:GetItemInSlot(i) == nil then
-            local dummyitem = CreateItem("item_blink_scroll", nil, nil)
+            local dummyitem = CreateItem("item_dummy", nil, nil)
             table.insert(dummyitemtable, dummyitem)
             hero:AddItem(dummyitem)
         end

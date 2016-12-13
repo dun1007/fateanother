@@ -416,15 +416,6 @@ function FateGameMode:OnAllPlayersLoaded()
         DisplayTip()
         end
     })
-    Timers:CreateTimer('random', {
-        endtime = 56,
-        callback = function()
-        self:LoopOverPlayers(function(player, playerID, playerHero)
-            --if not player:GetAssignedHero() then
-                player:MakeRandomHeroSelection()
-            --end
-        end)
-    end})
     Timers:CreateTimer('startgame', {
         endTime = 60,
         callback = function()
@@ -606,6 +597,18 @@ function FateGameMode:OnPlayerChat(keys)
             end)
         end
     end
+
+    if text == "-inventestsetup" then
+        if Convars:GetBool("sv_cheats") then
+                hero:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
+                hero:AddItem(CreateItem("item_master_transfer_items2", nil, nil))
+                hero:AddItem(CreateItem("item_master_transfer_items3", nil, nil))
+                hero:AddItem(CreateItem("item_master_transfer_items4", nil, nil))
+                hero:AddItem(CreateItem("item_master_transfer_items5", nil, nil))
+                hero:AddItem(CreateItem("item_master_transfer_items6", nil, nil))
+        end
+    end
+
     if text == "-unpause" then
         --[[for _,plyr in pairs(self.vPlayerList) do
         local hr = plyr:GetAssignedHero()
@@ -2077,7 +2080,6 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
     end
     -- What do we do when handling the move between inventory and stash?
     if orderType == 11 then
-        PrintTable(filterTable)
     end
 
     if orderType == DOTA_UNIT_ORDER_RADAR then
@@ -2094,6 +2096,11 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
                 break
             end
         end
+        caster:SwapItems(currentItemIndex, targetIndex)
+        CheckItemCombination(caster)
+        CheckItemCombinationInStash(caster)
+        return false
+        --[[
         -- Item is currently placed in inventory, while target is in stash
         if (currentItemIndex >= 0 and currentItemIndex <= 5) and (targetIndex >= 9 and targetIndex <= 14) then
             ability:RemoveSelf()
@@ -2112,7 +2119,7 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
             CreateItemAtSlot(caster, itemName, targetIndex, charges, false, true)
             SaveStashState(caster)
             return false
-        end
+        end]]
     -- What do we do when item is bought?
     elseif orderType == 16 then
         --[[
