@@ -44,7 +44,6 @@
 	            	<Panel id="CustomizationShardLayout" hittest="false">
 		            </Panel>
 	            </Panel>
-
 	        </Panel>
 	    </Panel>
         <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" onmouseover="OnCustomizeButtonShowTooltip()" onmouseout="OnCustomizeButtonHideTooltip()" hittest="true">

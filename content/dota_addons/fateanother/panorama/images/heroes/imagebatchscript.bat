@@ -1,1 +1,1 @@
-dir /B | grep ".png" | sed "s/^\(.*\)$/<Image src=\"file:\/\/{images}\/spellicons\/\1\" \/>/g" > temp.txt
+dir /B | grep ".png" | sed "s/^\(.*\)$/<Image src=\"file:\/\/{images}\/heroes\/selection\1\" \/>/g" > temp.txt

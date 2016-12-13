@@ -363,7 +363,7 @@ function FateGameMode:OnAllPlayersLoaded()
     GameRules:SendCustomMessage("Fate/Another " .. FATE_VERSION .. " by Dun1007", 0, 0)
     --GameRules:SendCustomMessage("Game is currently in alpha phase of development and you may run into major issues that I hope to address ASAP. Please wait patiently for the official release.", 0, 0)
     GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_60", 0, 0)
-    FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
+    --FireGameEvent('cgm_timer_display', { timerMsg = "Hero Select", timerSeconds = 61, timerEnd = true, timerPosition = 100})
 
     -- initialize vector targeting
     --VectorTarget:Init({noOrderFilter = true })
@@ -410,13 +410,21 @@ function FateGameMode:OnAllPlayersLoaded()
     Timers:CreateTimer('30secondalert', {
         endTime = 30,
         callback = function()
-
+        print("alert30")
         GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_1", 0, 0)
-        GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_2", 0, 0)
+        --GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_2", 0, 0)
         DisplayTip()
         end
     })
-
+    Timers:CreateTimer('random', {
+        endtime = 56,
+        callback = function()
+        self:LoopOverPlayers(function(player, playerID, playerHero)
+            --if not player:GetAssignedHero() then
+                player:MakeRandomHeroSelection()
+            --end
+        end)
+    end})
     Timers:CreateTimer('startgame', {
         endTime = 60,
         callback = function()
@@ -847,6 +855,7 @@ function FateGameMode:OnGameRulesStateChange(keys)
     elseif newState == DOTA_GAMERULES_STATE_INIT then
         --Timers:RemoveTimer("alljointimer")
     elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
+        print("hero selection phase")
         Timers:CreateTimer(2.0, function()
             FateGameMode:OnAllPlayersLoaded()
         end)
@@ -1812,8 +1821,8 @@ function FateGameMode:InitGameMode()
     -- Set game rules
     GameRules:SetUseUniversalShopMode(true)
     GameRules:SetSameHeroSelectionEnabled(false)
-    GameRules:SetHeroSelectionTime(60)
-    GameRules:SetPreGameTime(60)
+    GameRules:SetHeroSelectionTime(9999)
+    GameRules:SetPreGameTime(0)
     GameRules:SetUseCustomHeroXPValues(true)
     GameRules:SetUseBaseGoldBountyOnHeroes(false)
     GameRules:SetCustomGameSetupTimeout(20)
