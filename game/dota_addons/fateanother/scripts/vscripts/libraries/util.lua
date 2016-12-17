@@ -513,11 +513,13 @@ function LevelAllAbility(hero)
     for i=0, 14 do
         local ability = hero:GetAbilityByIndex(i)
         if ability == nil then return end
-        local level0 = false
+        local level0 = false -- whether ability should be kept level 0 or not
         -- If skill shouldn't be leveled, do not set level to 1
         for i=1, #donotlevel do
             if ability:GetName() == donotlevel[i] then level0 = true end
         end
+        -- If skill is actually a talent, do not level it
+        if string.match(ability:GetName(),"special_bonus") then level0 = true end
         if not level0 then ability:SetLevel(1) end
         -- if skill should not be reset when using command seal, flag it as unresetable
         for i=1, #CannotReset do
@@ -552,10 +554,8 @@ function CheckItemCombination(hero)
     -- loop through stash
     for i=0,5 do
         if bIsMatchingFound then break end
-
         local currentItem = hero:GetItemInSlot(i)
         if currentItem then
-
             local currentItemName1 = currentItem:GetName()
             local currentItemIndex1 = i
             if GetMatchingItem(currentItemName1) then
@@ -628,115 +628,12 @@ function GetMatchingItem(name)
     return false
 end
 
---[[function CheckItemCombination(hero)
-    local isMatchingFound = false
-    --print("checking item combination of " .. hero:GetName())
-    -- loop through stash
-    for i=0,5 do 
-        local currentItem = hero:GetItemInSlot(i)
-        -- if item is there, check for combination
-        if currentItem ~= nil then
-            local currentItemName = currentItem:GetName()
-            -- Loop through composition list 
-            for i=1, #itemComp do 
-                -- component 1 is matching, check if item component 2 exists
-                if itemComp[i][1] == currentItemName then
-                    for j=0,5 do 
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][2] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                -- component 2 is matching, check if item component 1 exists
-                elseif itemComp[i][2] == currentItemName then
-                    for j=0,5 do
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][1] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                end
-            end 
-        end
-        if isMatchingFound then break end
-    end
-end
-
-function CheckItemCombinationInStash(hero)
-    local isMatchingFound = false
-    -- loop through stash
-    --print("checking item combination in stash of " .. hero:GetName())
-    for i=6,11 do 
-        local currentItem = hero:GetItemInSlot(i)
-        -- if item is there, check for combination
-        if currentItem ~= nil then
-            local currentItemName = currentItem:GetName()
-            -- Loop through composition list 
-            for i=1, #itemComp do 
-                -- component 1 is matching, check if item component 2 exists
-                if itemComp[i][1] == currentItemName then
-                    for j=6,11 do
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][2] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                -- component 2 is matching, check if item component 1 exists
-                elseif itemComp[i][2] == currentItemName then
-                    for j=6,11 do
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][1] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                end
-            end 
-        end
-        if isMatchingFound then break end
-    end
-end]]--
 
 function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bIsStashChecked)
     local dummyitemtable = {}
     for i = 0, slot-1 do
         if hero:GetItemInSlot(i) == nil then
-            local dummyitem = CreateItem("item_dummy", nil, nil)
+            local dummyitem = CreateItem("item_dummy_item", nil, nil)
             table.insert(dummyitemtable, dummyitem)
             hero:AddItem(dummyitem)
         end
@@ -746,11 +643,6 @@ function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bI
         newItem:SetCurrentCharges(charges)
     end
     hero:AddItem(newItem)
-    --[[if slot >= 6 then
-        hero:AddItem(CreateItem(itemname, hero, hero))
-    else
-        hero:AddItem(CreateItem(itemname, nil, nil))
-    end]]
 
     for i = 1, #dummyitemtable do
         hero:RemoveItem(dummyitemtable[i]) 

@@ -598,14 +598,15 @@ function FateGameMode:OnPlayerChat(keys)
         end
     end
 
-    if text == "-inventestsetup" then
+    if text == "-inven" then
         if Convars:GetBool("sv_cheats") then
-                hero:AddItem(CreateItem("item_master_transfer_items1", nil, nil))
-                hero:AddItem(CreateItem("item_master_transfer_items2", nil, nil))
-                hero:AddItem(CreateItem("item_master_transfer_items3", nil, nil))
-                hero:AddItem(CreateItem("item_master_transfer_items4", nil, nil))
-                hero:AddItem(CreateItem("item_master_transfer_items5", nil, nil))
-                hero:AddItem(CreateItem("item_master_transfer_items6", nil, nil))
+            for i=6, 8 do
+                if hero:GetItemInSlot(i) then 
+                    print(hero:GetItemInSlot(i):GetName())
+                else
+                    print("nil item")
+                end
+            end
         end
     end
 
@@ -859,6 +860,8 @@ function FateGameMode:OnGameRulesStateChange(keys)
         --Timers:RemoveTimer("alljointimer")
     elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
         print("hero selection phase")
+
+
         Timers:CreateTimer(2.0, function()
             FateGameMode:OnAllPlayersLoaded()
         end)
@@ -903,7 +906,13 @@ function FateGameMode:OnHeroInGame(hero)
     hero:SetGold(0, false)
     hero.OriginalModel = hero:GetModelName()
     LevelAllAbility(hero)
-    Timers:CreateTimer(0.85, function()
+    hero:AddItem(CreateItem("item_dummy_item", hero, hero))
+    hero:AddItem(CreateItem("item_dummy_item", hero, hero))
+    hero:AddItem(CreateItem("item_dummy_item", hero, hero))
+    Timers:CreateTimer(0.25, function() hero:SwapItems(DOTA_ITEM_SLOT_1, DOTA_ITEM_SLOT_7) end)
+    Timers:CreateTimer(0.5, function() hero:SwapItems(DOTA_ITEM_SLOT_2, DOTA_ITEM_SLOT_8) end)
+    Timers:CreateTimer(0.75, function()
+        hero:SwapItems(DOTA_ITEM_SLOT_3, DOTA_ITEM_SLOT_9)
         hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
     end)
     hero.CStock = 10
@@ -1435,6 +1444,12 @@ function FateGameMode:OnPlayerLevelUp(keys)
     local player = EntIndexToHScript(keys.player)
     local hero = player:GetAssignedHero()
     local level = keys.level
+
+    --fuck 7.0
+    if level == 17 or level == 19 or level == 21 or level == 22 or level == 23 or level == 24 then
+        hero:SetAbilityPoints(hero:GetAbilityPoints()+1)
+    end
+
     hero.MasterUnit:SetMana(hero.MasterUnit:GetMana() + 3)
     hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana() + 3)
     --Notifications:Top(player, "<font color='#58ACFA'>" .. FindName(hero:GetName()) .. "</font> has gained a level. Master has received <font color='#58ACFA'>3 mana.</font>", 5, nil, {color="rgb(255,255,255)", ["font-size"]="20px"})
@@ -1800,6 +1815,7 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 6)
         GameRules:SetHeroRespawnEnabled(false)
         GameRules:SetGoldPerTick(0)
+        GameRules:SetStartingGold(0)    
 
     elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 3)
@@ -1807,6 +1823,7 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 3)
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 3)
         GameRules:SetGoldPerTick(7.5)
+        GameRules:SetStartingGold(0)    
 
     elseif _G.GameMap == "fate_ffa" then
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
@@ -1820,6 +1837,7 @@ function FateGameMode:InitGameMode()
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
         GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
         GameRules:SetGoldPerTick(7.5)
+        GameRules:SetStartingGold(0)    
     end
     -- Set game rules
     GameRules:SetUseUniversalShopMode(true)

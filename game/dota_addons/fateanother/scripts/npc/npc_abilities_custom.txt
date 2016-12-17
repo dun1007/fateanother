@@ -2769,7 +2769,7 @@
 						"EffectRadius"			"%radius"
 						"ControlPoints"
 						{
-							"01"				"%radius+150 3 0"
+							"01"				"400 3 0"
 						}
 					}
 				}
@@ -16801,7 +16801,7 @@
 		{
 			"modifier_gordius_wheel"
 			{		
-				"Duration"		"%duration+1"
+				"Duration"		"11"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-350"
@@ -26103,7 +26103,7 @@
 			}
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"duration"			"8"
 			}
 			"03"
@@ -26146,7 +26146,7 @@
 				"EffectAttachType"	"follow_origin"
 				"StatusEffectName" 		"particles/status_fx/status_effect_keeper_spirit_form.vpcf" 	   
 				"StatusEffectPriority"  "10"
-				"Duration"	"%duration+%delay"
+				"Duration"	"10"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
@@ -28514,7 +28514,7 @@
 			{
 				"EffectName"				"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
 				"EffectAttachType"			"attach_origin"
-				"Duration"		"%time_limit - 0.1"
+				"Duration"		"29.8"
 	            "ThinkInterval"		"5"
 	            "OnIntervalThink"
 	         	{
@@ -28545,7 +28545,7 @@
 			{
 				"EffectName"				"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
 				"EffectAttachType"			"attach_origin"
-				"Duration"		"%time_limit - 0.1"
+				"Duration"		"29.8"
 				"IsDebuff"		"1"
 			}
 
