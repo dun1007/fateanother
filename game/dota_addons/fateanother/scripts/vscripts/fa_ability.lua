@@ -26,8 +26,8 @@ function OnGKStart(keys)
 	local ply = caster:GetPlayerOwner()
 	FACheckCombo(keys.caster, keys.ability)
 	if caster.IsQuickdrawAcquired then 
-		caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true) 
-		Timers:CreateTimer(5, function() return caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, true)   end)
+		caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", false, true) 
+		Timers:CreateTimer(5, function() return caster:SwapAbilities("false_assassin_gate_keeper", "false_assassin_quickdraw", true, false)   end)
 	end
 
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_gate_keeper_self_buff", {})
@@ -689,7 +689,7 @@ function FACheckCombo(caster, ability)
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", true, true) 
+				caster:SwapAbilities("false_assassin_heart_of_harmony", "false_assassin_tsubame_mai", true, false) 
 			end
 			})			
 		end
@@ -735,7 +735,7 @@ function OnVitrificationAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsVitrificationAcquired = true
 	hero:FindAbilityByName("false_assassin_presence_concealment"):SetLevel(1) 
-	hero:SwapAbilities("fate_empty1", "false_assassin_presence_concealment", true, true) 
+	hero:SwapAbilities("fate_empty1", "false_assassin_presence_concealment", false, true) 
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

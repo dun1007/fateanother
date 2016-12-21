@@ -534,7 +534,7 @@ function OnIDAcquired(keys)
 	local hero = PlayerResource:GetSelectedHeroEntity(pid)
 	hero.bIsIDAcquired = true
 
-	hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", true, true) 
+	hero:SwapAbilities("jeanne_saint", "jeanne_identity_discernment", false, true) 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

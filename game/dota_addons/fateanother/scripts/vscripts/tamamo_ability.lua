@@ -37,12 +37,12 @@ function OnArmedUpStart(keys)
 	local a5 = caster:FindAbilityByName("tamamo_armed_up") -- fate_empty1
 	local a6 = caster:FindAbilityByName("tamamo_amaterasu") -- Amaterasu
 
-	caster:SwapAbilities("tamamo_fiery_heaven", a1:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_frigid_heaven", a2:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_gust_heaven", a3:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_fiery_heaven", a1:GetName(), true, false) 
+	caster:SwapAbilities("tamamo_frigid_heaven", a2:GetName(), true, false) 
+	caster:SwapAbilities("tamamo_gust_heaven", a3:GetName(), true, false) 
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_close_spellbook", a5:GetName(), true,true) 
-	caster:SwapAbilities("fate_empty2", a6:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_close_spellbook", a5:GetName(), true,false) 
+	caster:SwapAbilities("fate_empty2", a6:GetName(), true, false) 
 end
 
 function OnFireCharmLoaded(keys)
@@ -178,16 +178,16 @@ function CloseCharmList(keys)
 	local a6 = caster:FindAbilityByName("fate_empty2") -- Amaterasu
 
 
-	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, false) 
+	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, false) 
 	if caster.bIsShackleAvailable then
-		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, true) 
+		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, false) 
 	else
-		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
+		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, false) 
 	end
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
-	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,false) 
+	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, false) 
 end
 
 function OnCharmAttacked(keys)
@@ -546,7 +546,7 @@ function OnMantraStart(keys)
 		
 		--ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
 		if caster:GetAbilityByIndex(2):GetName() == "tamamo_mantra" then
-			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,true) 
+			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", false,true) 
 			caster.bIsShackleAvailable = true
 			Timers:CreateTimer(3.0, function()
 				caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,false) 

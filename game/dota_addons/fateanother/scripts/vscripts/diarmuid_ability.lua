@@ -398,7 +398,7 @@ function OnDoubleSpearAcquired(keys)
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero.IsDoubleSpearAcquired = true
     hero.IsDoubleSpearReady = true
-    hero:SwapAbilities("fate_empty1", "diarmuid_double_spear_strike", true, true) 
+    hero:SwapAbilities("fate_empty1", "diarmuid_double_spear_strike", false, true) 
 	hero:FindAbilityByName("diarmuid_double_spear_strike"):ToggleAbility()
     -- Set master 1's mana 
     local master = hero.MasterUnit

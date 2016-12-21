@@ -169,7 +169,7 @@ function OnNamelessStart(keys)
 	ability:ApplyDataDrivenModifier(caster, target, "modifier_nameless_forest", {})
 
 	if caster.bIsReminiscenceAcquired then
-		caster:SwapAbilities("nursery_rhyme_nameless_forest", "nursery_rhyme_reminiscence", true, true)
+		caster:SwapAbilities("nursery_rhyme_nameless_forest", "nursery_rhyme_reminiscence", false, true)
 	end
 end
 

@@ -331,13 +331,13 @@ function OnTFStart(keys)
 	AvengerCheckCombo(keys.caster, keys.ability)
 	--local a1 = caster:GetAbilityByIndex(0)
 	--local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
-    caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
+    caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", false, true) 
     caster:SetMana(newMana)
     if caster.IsBloodMarkAcquired then 
-    	caster:SwapAbilities("fate_empty1", "avenger_blood_mark", true, true) 
+    	caster:SwapAbilities("fate_empty1", "avenger_blood_mark", false, true) 
     end
-    caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", true, true) 
-    caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
+    caster:SwapAbilities("avenger_tawrich_zarich", "avenger_vengeance_mark", false, true) 
+    caster:SwapAbilities("avenger_true_form", "avenger_demon_core", false, true)
     caster.OriginalModel = "models/avenger/trueform/trueform.vmdl"
     caster:SetModel("models/avenger/trueform/trueform.vmdl")
     caster:SetOriginalModel("models/avenger/trueform/trueform.vmdl")
@@ -356,13 +356,13 @@ end
 function OnTFEnd(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
-    caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, true) 
+    caster:SwapAbilities("avenger_murderous_instinct", "avenger_unlimited_remains", true, false) 
     local a2 = caster:GetAbilityByIndex(1):GetAbilityName()
-    caster:SwapAbilities("avenger_tawrich_zarich", a2, true, true) 
+    caster:SwapAbilities("avenger_tawrich_zarich", a2, true, false) 
     if caster.IsBloodMarkAcquired then 
-    	caster:SwapAbilities("fate_empty1", "avenger_blood_mark", true, true) 
+    	caster:SwapAbilities("fate_empty1", "avenger_blood_mark", true, false) 
     end
-    caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, true)
+    caster:SwapAbilities("avenger_true_form", "avenger_demon_core", true, false)
     local demoncore = caster:FindAbilityByName("avenger_demon_core")
     if demoncore:GetToggleState() then
     	demoncore:ToggleAbility()
@@ -505,7 +505,7 @@ function AvengerCheckCombo(caster, ability)
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", true, true) 
+				caster:SwapAbilities("avenger_verg_avesta", "avenger_endless_loop", true, false) 
 			end
 			})
 		end

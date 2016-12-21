@@ -455,7 +455,7 @@ function BerCheckCombo(caster, ability)
 				Timers:CreateTimer({
 					endTime = 4 - (newTime - QTime),
 					callback = function()
-					caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+					caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", false, true) 
 					QUsed = false
 				end
 				})

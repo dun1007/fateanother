@@ -490,7 +490,7 @@ function OnRideAscend(keys)
 	local duration = keys.Duration
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause_nosilence", duration)
 	caster:AddEffects(EF_NODRAW)
-	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", true, true)
+	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", false, true)
 	local ascendFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_ascend.vpcf", PATTACH_CUSTOMORIGIN, nil )
 	ParticleManager:SetParticleControl( ascendFx, 0, caster:GetAbsOrigin())
 	--local aoeIndicatorFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_aoe_indicator.vpcf", PATTACH_CUSTOMORIGIN, nil )

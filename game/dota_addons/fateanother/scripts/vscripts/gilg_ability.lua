@@ -564,7 +564,7 @@ function GilgaCheckCombo(caster, ability)
 			Timers:CreateTimer({
 				endTime = 5,
 				callback = function()
-				caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+				caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, false) 
 			end
 			})			
 		end
@@ -600,7 +600,7 @@ function OnRainOfSwordsAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsRainAcquired = true
-	hero:SwapAbilities("gilgamesh_sword_barrage","gilgamesh_sword_barrage_improved", true, true)
+	hero:SwapAbilities("gilgamesh_sword_barrage","gilgamesh_sword_barrage_improved", false, true)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

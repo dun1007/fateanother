@@ -408,10 +408,10 @@ function OnUBWStart(keys)
 	local ubwdummyLoc4 = ubwCenter + Vector(-600,-600, 1000)
 
     -- swap Archer's skillset with UBW ones
-    caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
-    caster:SwapAbilities("archer_5th_kanshou_bakuya", "archer_5th_sword_barrage_retreat_shot", true, true) 
-    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
-    caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
+    caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", false, true) 
+    caster:SwapAbilities("archer_5th_kanshou_bakuya", "archer_5th_sword_barrage_retreat_shot", false, true) 
+    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", false, true) 
+    caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", false, true) 
     -- Find eligible UBW targets
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -577,7 +577,7 @@ function EndUBW(caster)
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, false) 
     
     if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(7):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
-    	print("fix for start hrunt start ubw end ubw end hrunt")
+    	--print("fix for start hrunt start ubw end ubw end hrunt")
     	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true)
     	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, true)
     end
@@ -1369,11 +1369,11 @@ end
 function ArcherCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() and caster:FindAbilityByName("archer_5th_arrow_rain"):IsCooldownReady() then
-			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", false, true) 
 			Timers:CreateTimer({
 				endTime = 5,
 				callback = function()
-				caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+				caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, false) 
 			end
 			})			
 		end

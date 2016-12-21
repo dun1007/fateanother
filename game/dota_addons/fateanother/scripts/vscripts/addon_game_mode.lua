@@ -1483,6 +1483,7 @@ function FateGameMode:OnPlayerPickHero(keys)
     local heroClass = keys.hero
     local heroEntity = EntIndexToHScript(keys.heroindex)
     local player = EntIndexToHScript(keys.player)
+
 end
 
 -- A player killed another player in a multi-team context
@@ -1850,6 +1851,7 @@ function FateGameMode:InitGameMode()
     GameRules:SetFirstBloodActive(false)
     GameRules:SetCustomGameEndDelay(30)
     GameRules:SetCustomVictoryMessageDuration(30)
+
 
     -- Random seed for RNG
     local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')

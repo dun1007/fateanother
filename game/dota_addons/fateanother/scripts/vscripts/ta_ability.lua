@@ -477,11 +477,11 @@ function TACheckCombo(caster, ability)
 			})
 		elseif ability == caster:FindAbilityByName("true_assassin_ambush") and caster:FindAbilityByName("true_assassin_combo"):IsCooldownReady()  then
 			if AmbushUsed == true then 
-				caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+				caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", false, true)
 				Timers:CreateTimer({
 					endTime = 8,
 					callback = function()
-					caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+					caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, false)
 				end
 				})
 			end

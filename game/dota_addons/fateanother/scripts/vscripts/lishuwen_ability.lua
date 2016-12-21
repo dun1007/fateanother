@@ -540,7 +540,7 @@ function OnDragonStrike3Start(keys)
 	GrantCosmicOrbitResist(caster)
 	caster.bIsCurrentDSCycleFinished = true
 	Timers:RemoveTimer('raging_dragon_timer')
-	caster:SwapAbilities("lishuwen_fierce_tiger_strike","lishuwen_raging_dragon_strike_3", true, true) 
+	caster:SwapAbilities("lishuwen_fierce_tiger_strike","lishuwen_raging_dragon_strike_3", true, false) 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	if #targets == 0 then 
@@ -694,7 +694,7 @@ function OnDualClassAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.bIsDualClassAcquired = true
-	hero:SwapAbilities("lishuwen_berserk", "fate_empty1", true, true) 
+	hero:SwapAbilities("lishuwen_berserk", "fate_empty1", true, false) 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

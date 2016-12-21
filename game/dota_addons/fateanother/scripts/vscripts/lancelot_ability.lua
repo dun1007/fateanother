@@ -614,14 +614,14 @@ function LancelotCheckCombo(caster, ability)
                 local abilname = "rubick_empty1"
                 if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
 
-                caster:SwapAbilities("lancelot_nuke", abilname, true, true)
+                caster:SwapAbilities("lancelot_nuke", abilname, true, false)
                 caster.nukeAvail = true
                 local newTime =  GameRules:GetGameTime()
                 Timers:CreateTimer({
                     endTime = 3,
                     callback = function()
                     if caster:FindAbilityByName("lancelot_blessing_of_fairy") then abilname = "lancelot_blessing_of_fairy" end
-                    caster:SwapAbilities("lancelot_nuke", abilname, true, true) 
+                    caster:SwapAbilities("lancelot_nuke", abilname, false, true) 
                     WUsed = false
                     caster.nukeAvail = false
                 end

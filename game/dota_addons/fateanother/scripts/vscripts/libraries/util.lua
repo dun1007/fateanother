@@ -1093,7 +1093,7 @@ function FillInventory(entity)
     for i=0, 5 do
         local hero_item = entity:GetItemInSlot(i)
         if hero_item == nil then
-            entity:AddItem(CreateItem("item_dummy_item" , nil, nil))
+            entity:AddItem(CreateItem("item_dummy_item_unusable" , nil, nil))
         end
     end
 end

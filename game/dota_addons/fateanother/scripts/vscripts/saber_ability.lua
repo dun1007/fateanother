@@ -716,8 +716,9 @@ function OnSAUpstreamAcquired(keys)
 
 	hero.bIsUpstreamAcquired = true
 	hero.bIsUpstreamReady = true
-	hero:AddAbility("saber_strike_air_upstream")
-	hero:FindAbilityByName("saber_strike_air_upstream"):SetLevel(1)
+	local upstreamAbil = hero:AddAbility("saber_strike_air_upstream")
+	upstreamAbil:SetLevel(1)
+	upstreamAbil:SetHidden(true)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

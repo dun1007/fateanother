@@ -205,7 +205,7 @@ function OnGalatineStart(keys)
 				casterLoc = caster:GetAbsOrigin()
 				orbLoc = caster:GetAbsOrigin()
 				diff = caster:GetForwardVector()
-				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
+				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", false, true)
 				InFirstLoop = false
 			end
 			orbLoc = orbLoc + diff * 33
@@ -217,7 +217,7 @@ function OnGalatineStart(keys)
 			GenerateArtificialSun(caster, orbLoc)
 
 			if caster:GetAbilityByIndex(2):GetAbilityName() == "gawain_excalibur_galatine_detonate" then
-				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
+				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, false)
 			end
 			-- Explosion on allies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
@@ -281,7 +281,7 @@ function OnGalatineDetonate(keys)
 	local caster = keys.caster
 	caster.IsGalatineActive = false
 	if caster:GetAbilityByIndex(2):GetAbilityName() == "gawain_excalibur_galatine_detonate" then
-		caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
+		caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, false)
 	end
 end
 
@@ -607,7 +607,7 @@ function GawainCheckCombo(caster, ability)
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
+				caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, false) 
 			end
 			})			
 		end

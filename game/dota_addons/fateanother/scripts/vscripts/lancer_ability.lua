@@ -59,12 +59,12 @@ function RuneMagicOpen(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-	caster:SwapAbilities("lancer_5th_rune_of_disengage", a1:GetName(), true, true) 
+	caster:SwapAbilities("lancer_5th_rune_of_disengage", a1:GetName(), true, false) 
 	caster:SwapAbilities("lancer_5th_rune_of_replenishment", a2:GetName(), true, false) 
-	caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_rune_of_flame", a4:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_close_spellbook", a5:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, false) --same problem as Medea using hecate when W-R is activated almost simultaneously
+	caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, false) 
+	caster:SwapAbilities("lancer_5th_rune_of_flame", a4:GetName(), true, false) 
+	caster:SwapAbilities("lancer_5th_close_spellbook", a5:GetName(), true, false) 
+	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, true) --same problem as Medea using hecate when W-R is activated almost simultaneously
 end
 
 function RuneLevelUp(keys)
@@ -106,16 +106,16 @@ function RuneMagicClose(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-	caster:SwapAbilities(a1:GetName(), "lancer_5th_rune_magic", true, true) 
-	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", true, true) 
-	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", true, true) 
-	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", true, true) 
+	caster:SwapAbilities(a1:GetName(), "lancer_5th_rune_magic", false, true) 
+	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", false, true) 
+	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", false, true) 
+	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", false, true) 
 	if caster.IsPFAAcquired then
-		caster:SwapAbilities(a5:GetName(), "lancer_5th_protection_from_arrows", true, true) 
+		caster:SwapAbilities(a5:GetName(), "lancer_5th_protection_from_arrows", false, true) 
 	else
-		caster:SwapAbilities(a5:GetName(), "fate_empty1", true, true) 
+		caster:SwapAbilities(a5:GetName(), "fate_empty1", false, true) 
 	end
-	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", true, true) 
+	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", false, true) 
 	--caster:GetAbilityByIndex(0):EndCooldown() 
 
 end
@@ -544,7 +544,7 @@ function LancerCheckCombo(caster, ability)
 				endTime = 3,
 				callback = function()
 				if caster:GetAbilityByIndex(2):GetName() == "lancer_5th_wesen_gae_bolg" then 
-					caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+					caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, false) 
 				end
 			end
 			})
@@ -578,7 +578,7 @@ function OnPFAAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("lancer_5th_protection_from_arrows"):SetLevel(1) 
-	hero:SwapAbilities("fate_empty1" , "lancer_5th_protection_from_arrows", true, true)
+	hero:SwapAbilities("fate_empty1" , "lancer_5th_protection_from_arrows", false, true)
 	hero.IsPFAAcquired = true
 
 	-- Set master 1's mana 
