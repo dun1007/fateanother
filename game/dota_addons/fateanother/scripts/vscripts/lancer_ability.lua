@@ -64,7 +64,7 @@ function RuneMagicOpen(keys)
 	caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, false) 
 	caster:SwapAbilities("lancer_5th_rune_of_flame", a4:GetName(), true, false) 
 	caster:SwapAbilities("lancer_5th_close_spellbook", a5:GetName(), true, false) 
-	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, true) --same problem as Medea using hecate when W-R is activated almost simultaneously
+	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, false) --same problem as Medea using hecate when W-R is activated almost simultaneously
 end
 
 function RuneLevelUp(keys)

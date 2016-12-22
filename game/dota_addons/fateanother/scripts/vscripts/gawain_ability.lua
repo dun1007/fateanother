@@ -633,6 +633,7 @@ function OnFairyAcquired(keys)
 
     hero:AddAbility("gawain_blessing_of_fairy")
     hero:FindAbilityByName("gawain_blessing_of_fairy"):SetLevel(1)
+    hero:FindAbilityByName("gawain_blessing_of_fairy"):SetHidden(true)
     --hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_blessing_of_fairy", true, true)
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -644,7 +645,7 @@ function OnMeltdownAcquired(keys)
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero.IsMeltdownAcquired = true
-    hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_divine_meltdown", true, true)
+    hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_divine_meltdown", false, true)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

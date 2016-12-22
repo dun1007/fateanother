@@ -375,6 +375,7 @@ function OnMindEyeAcquired(keys)
     hero.IsMindEyeAcquired = true
     hero:AddAbility("diarmuid_minds_eye") 
     hero:FindAbilityByName("diarmuid_minds_eye"):SetLevel(1)
+    hero:FindAbilityByName("diarmuid_minds_eye"):SetHidden(true)
     hero:SetDayTimeVisionRange(1100)
     hero:SetNightTimeVisionRange(1100)
     -- Set master 1's mana 

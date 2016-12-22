@@ -19,7 +19,7 @@ function FarSightVision(keys)
 	end
 
 	if caster.IsHruntingAcquired then
-		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, true) 
+		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", false, true) 
 		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
 	end
 	
@@ -578,8 +578,8 @@ function EndUBW(caster)
     
     if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(7):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
     	--print("fix for start hrunt start ubw end ubw end hrunt")
-    	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true)
-    	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, true)
+    	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", false, true)
+    	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, false)
     end
 
 	CreateUITimer("Unlimited Blade Works", 0, "ubw_timer")

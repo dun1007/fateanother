@@ -501,7 +501,7 @@ function OnTerritoryMobilize(keys)
 	caster.IsMobilized = true
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", false, true) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty5", false, true)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", false, true)
 	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", false, true)
 	caster:SwapAbilities("caster_5th_recall", "fate_empty4", false, true)
 	caster:SwapAbilities("fate_empty_nothidden", "caster_5th_dimensional_jump", false, true)
@@ -519,7 +519,7 @@ function OnTerritoryImmobilize(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_territory_root", {}) 
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, false) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty5", true, false)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", true, false)
 	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, false)
 	caster:SwapAbilities("caster_5th_recall", "fate_empty4", true, false)
 	caster:SwapAbilities("fate_empty_nothidden", "caster_5th_dimensional_jump", true, false)
@@ -741,7 +741,7 @@ function OnMountDeath(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:RemoveModifierByName("modifier_mount_caster")
-	caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+	caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", false, true) 
 	hero.IsMounted = false
 	SendMountStatus(hero)
 end
@@ -872,10 +872,10 @@ function OnAncientStart(keys)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
 	caster:SwapAbilities("caster_5th_wall_of_flame", a1:GetName(), true, false) 
-	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, true) 
-	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) 
-	caster:SwapAbilities("caster_5th_mana_transfer", a4:GetName(), true, true) 
-	caster:SwapAbilities("caster_5th_close_spellbook", a5:GetName(), true,true) 
+	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, false) 
+	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) -- true true so caster can open spellbook while casting rulebreak 
+	caster:SwapAbilities("caster_5th_mana_transfer", a4:GetName(), true, false) 
+	caster:SwapAbilities("caster_5th_close_spellbook", a5:GetName(), true, false) 
 	caster:SwapAbilities("caster_5th_sacrifice", a6:GetName(), true, false) 
 end
 
@@ -1090,11 +1090,11 @@ function OnAncientClosed(keys)
 		print("combo is currently active")
 		ultiName = "caster_5th_hecatic_graea_powered"
 	end
-	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", true ,true) 
-	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", true, true) 
+	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", false ,true) 
+	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", false, true) 
 	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", false, true) 
-	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
-	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
+	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", false, true) 
+	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", false, true) 
 	caster:SwapAbilities(a6:GetName(), ultiName, false, true )
 	local spellbook = caster:FindAbilityByName("caster_5th_ancient_magic")
 	if spellbook:GetToggleState() then

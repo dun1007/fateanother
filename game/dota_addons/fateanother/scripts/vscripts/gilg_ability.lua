@@ -588,7 +588,7 @@ function OnPowerOfSumerAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsSumerAcquired = true
 
-	hero:SwapAbilities("gilgamesh_gate_of_babylon_toggle", "gilgamesh_golden_rule", true, true)
+	hero:SwapAbilities("gilgamesh_gate_of_babylon_toggle", "gilgamesh_golden_rule", true, false)
 	hero:FindAbilityByName("gilgamesh_gate_of_babylon_toggle"):ToggleAbility()
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

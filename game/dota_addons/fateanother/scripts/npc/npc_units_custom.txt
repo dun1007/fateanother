@@ -553,7 +553,7 @@
 		"Ability8"					"caster_5th_dimensional_jump"
 		"Ability9"					"fate_empty3"
 		"Ability10"					"fate_empty4"
-		"Ability11"					"fate_empty5"
+		"Ability11"					"fate_empty2"
 		"ArmorPhysical"				"0"			// Physical protection.
 
 		"BountyXP"					"200"	// Experience earn.

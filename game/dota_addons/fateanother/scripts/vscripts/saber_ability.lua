@@ -702,7 +702,7 @@ function OnStrikeAirAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:SwapAbilities("saber_charisma","saber_strike_air", true, true)
+	hero:SwapAbilities("saber_charisma","saber_strike_air", false, true)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

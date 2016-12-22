@@ -582,6 +582,7 @@ function OnMStrengthAcquired(keys)
     hero:SetBaseStrength(hero:GetBaseStrength()+10) 
     hero:AddAbility("astolfo_monstrous_strength")
     hero:FindAbilityByName("astolfo_monstrous_strength"):SetLevel(1)
+    hero:FindAbilityByName("astolfo_monstrous_strength"):SetHidden(true)
 end
 
 function OnIActionAcquired(keys)
@@ -595,6 +596,7 @@ function OnIActionAcquired(keys)
 
     hero:AddAbility("astolfo_independent_action")
     hero:FindAbilityByName("astolfo_independent_action"):SetLevel(1)
+    hero:FindAbilityByName("astolfo_independent_action"):SetHidden(true)
 end
 
 function OnSanityAcquired(keys)
@@ -608,5 +610,5 @@ function OnSanityAcquired(keys)
 
     hero:AddAbility("astolfo_down_with_a_touch_passive")
     hero:FindAbilityByName("astolfo_down_with_a_touch_passive"):SetLevel(1)
-
+    hero:FindAbilityByName("astolfo_down_with_a_touch_passive"):SetHidden(true)
 end
