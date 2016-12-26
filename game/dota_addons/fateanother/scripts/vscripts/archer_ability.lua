@@ -20,7 +20,11 @@ function FarSightVision(keys)
 
 	if caster.IsHruntingAcquired then
 		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", false, true) 
-		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
+		Timers:CreateTimer(8, function() 
+			local hruntHidden = caster:FindAbilityByName("archer_5th_hrunting"):IsHidden()
+			caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false)
+			caster:FindAbilityByName("archer_5th_clairvoyance"):SetHidden(hruntHidden) --if hrunt is already hidden, it means it is hidden as a result of UBW, which means that we have to hide clair too. 
+		end)
 	end
 	
 	--EmitGlobalSound("Hero_KeeperOfTheLight.BlindingLight")
