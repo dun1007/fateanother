@@ -61,10 +61,14 @@ function RuneMagicOpen(keys)
 	local a6 = caster:GetAbilityByIndex(5)
 	caster:SwapAbilities("lancer_5th_rune_of_disengage", a1:GetName(), true, false) 
 	caster:SwapAbilities("lancer_5th_rune_of_replenishment", a2:GetName(), true, false) 
-	caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, false) 
+	if a3:GetName() == "lancer_5th_wesen_gae_bolg" then
+		caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, false) 
+	else
+		caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, true) -- opening a spellbook should not cancel gae bolg's casting point
+	end 
 	caster:SwapAbilities("lancer_5th_rune_of_flame", a4:GetName(), true, false) 
 	caster:SwapAbilities("lancer_5th_close_spellbook", a5:GetName(), true, false) 
-	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, false) --same problem as Medea using hecate when W-R is activated almost simultaneously
+	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, true) -- same as above
 end
 
 function RuneLevelUp(keys)
