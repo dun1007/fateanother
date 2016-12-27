@@ -2623,7 +2623,7 @@
 	    "ItemKillable" "0" 
 	    "ItemSellable" "0"
 	    "ItemPurchasable" "0"
-	    "ItemDroppable" "0"
+	    "ItemDroppable" "1"
 	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
 	    "ItemStackable" "0"
 	    "ItemPermanent" "1"
