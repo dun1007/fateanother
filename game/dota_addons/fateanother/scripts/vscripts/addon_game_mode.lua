@@ -407,7 +407,7 @@ function FateGameMode:OnAllPlayersLoaded()
         end
     end]]
 
-    Timers:CreateTimer('30secondalert', {
+    --[[Timers:CreateTimer('30secondalert', {
         endTime = 30,
         callback = function()
         print("alert30")
@@ -415,81 +415,7 @@ function FateGameMode:OnAllPlayersLoaded()
         --GameRules:SendCustomMessage("#Fate_Choose_Hero_Alert_30_2", 0, 0)
         DisplayTip()
         end
-    })
-    Timers:CreateTimer('startgame', {
-        endTime = 60,
-        callback = function()
-            -- Set a think function for timer
-            local CENTER_POSITION = Vector(0,0,0)
-            local SHARD_DROP_PERIOD = 0
-            if _G.GameMap == "fate_elim_6v6" then
-                self.nCurrentRound = 1
-                self:InitializeRound() -- Start the game after forcing a pick for every player
-                BLESSING_PERIOD = 600
-            elseif _G.GameMap == "fate_ffa" then
-                BLESSING_PERIOD = 300
-                SHARD_DROP_PERIOD = 180
-                CENTER_POSITION = FFA_CENTER
-                CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
-                _G.CurrentGameState = "FATE_ROUND_ONGOING"
-            elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
-                BLESSING_PERIOD = 300
-                SHARD_DROP_PERIOD = 180
-                CENTER_POSITION = TRIO_RUMBLE_CENTER
-                CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
-                _G.CurrentGameState = "FATE_ROUND_ONGOING"
-
-            end
-            GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
-            IsPickPhase = false
-            IsGameStarted = true
-            GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
-            CreateUITimer("Next Holy Grail's Blessing", FIRST_BLESSING_PERIOD, "ten_min_timer")
-
-            Timers:CreateTimer('round_10min_bonus', {
-                endTime = FIRST_BLESSING_PERIOD,
-                callback = function()
-                    CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
-                    self:LoopOverPlayers(function(player, playerID, playerHero)
-                        local hero = playerHero
-                        local manaReward = BLESSING_MANA_REWARD
-                        if hero:GetLevel() == 24 then 
-                            manaReward = manaReward + 3 
-                        end
-                        hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth())
-                        hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+manaReward)
-                        hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
-                        hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+manaReward)
-                        MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
-                    end)
-                    --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
-                    Notifications:TopToAll({text="#Fate_Timer_10minute", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="25px"}})
-
-
-                    return BLESSING_PERIOD
-            end})
-            if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
-                Timers:CreateTimer('shard_drop_alert', {
-                    endTime = SHARD_DROP_PERIOD - 5,
-                    callback = function()
-                    Notifications:TopToAll({text="<font color='#58ACFA'>Shard of Holy Grail </font> inbound! It will drop onto random location within center area.", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="35px"}})
-                    EmitGlobalSound( "powerup_03" )
-                    return SHARD_DROP_PERIOD
-                end})
-                Timers:CreateTimer('shard_drop_event', {
-                    endTime = SHARD_DROP_PERIOD,
-                    callback = function()
-                    CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
-                    --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
-                    for i=1, 2 do
-                        local itemVector = CENTER_POSITION + Vector(RandomInt(-1300,1300), RandomFloat(-1300, 1300), 0)
-                        CreateShardDrop(itemVector)
-                    end
-                    return SHARD_DROP_PERIOD
-                end})
-            end
-        end
-    })
+    })]]
 end
 
 
@@ -501,6 +427,81 @@ This function is called once and only once when the game completely begins (abou
         ]]
 function FateGameMode:OnGameInProgress()
     print("[FATE] The game has officially begun")
+
+    Timers:CreateTimer(5.0, function()
+       -- Set a think function for timer
+        local CENTER_POSITION = Vector(0,0,0)
+        local SHARD_DROP_PERIOD = 0
+        if _G.GameMap == "fate_elim_6v6" then
+            self.nCurrentRound = 1
+            self:InitializeRound() -- Start the game after forcing a pick for every player
+            BLESSING_PERIOD = 600
+        elseif _G.GameMap == "fate_ffa" then
+            BLESSING_PERIOD = 300
+            SHARD_DROP_PERIOD = 180
+            CENTER_POSITION = FFA_CENTER
+            CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
+            _G.CurrentGameState = "FATE_ROUND_ONGOING"
+        elseif _G.GameMap == "fate_trio_rumble_3v3v3v3" then
+            BLESSING_PERIOD = 300
+            SHARD_DROP_PERIOD = 180
+            CENTER_POSITION = TRIO_RUMBLE_CENTER
+            CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
+            _G.CurrentGameState = "FATE_ROUND_ONGOING"
+
+        end
+        GameRules:GetGameModeEntity():SetThink( "OnGameTimerThink", self, 1 )
+        IsPickPhase = false
+        IsGameStarted = true
+        GameRules:SendCustomMessage("#Fate_Game_Begin", 0, 0)
+        CreateUITimer("Next Holy Grail's Blessing", FIRST_BLESSING_PERIOD, "ten_min_timer")
+
+        Timers:CreateTimer('round_10min_bonus', {
+            endTime = FIRST_BLESSING_PERIOD,
+            callback = function()
+                CreateUITimer("Next Holy Grail's Blessing", BLESSING_PERIOD, "ten_min_timer")
+                self:LoopOverPlayers(function(player, playerID, playerHero)
+                    local hero = playerHero
+                    local manaReward = BLESSING_MANA_REWARD
+                    if hero:GetLevel() == 24 then 
+                        manaReward = manaReward + 3 
+                    end
+                    hero.MasterUnit:SetHealth(hero.MasterUnit:GetMaxHealth())
+                    hero.MasterUnit:SetMana(hero.MasterUnit:GetMana()+manaReward)
+                    hero.MasterUnit2:SetHealth(hero.MasterUnit2:GetMaxHealth())
+                    hero.MasterUnit2:SetMana(hero.MasterUnit2:GetMana()+manaReward)
+                    MinimapEvent( hero:GetTeamNumber(), hero, hero.MasterUnit:GetAbsOrigin().x, hero.MasterUnit2:GetAbsOrigin().y, DOTA_MINIMAP_EVENT_HINT_LOCATION, 2 )
+                end)
+                --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                Notifications:TopToAll({text="#Fate_Timer_10minute", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="25px"}})
+
+
+                return BLESSING_PERIOD
+        end})
+        if _G.GameMap == "fate_trio_rumble_3v3v3v3" or _G.GameMap == "fate_ffa" then
+            Timers:CreateTimer('shard_drop_alert', {
+                endTime = SHARD_DROP_PERIOD - 5,
+                callback = function()
+                Notifications:TopToAll({text="<font color='#58ACFA'>Shard of Holy Grail </font> inbound! It will drop onto random location within center area.", duration=5.0, style={color="rgb(255,255,255)", ["font-size"]="35px"}})
+                EmitGlobalSound( "powerup_03" )
+                return SHARD_DROP_PERIOD
+            end})
+            Timers:CreateTimer('shard_drop_event', {
+                endTime = SHARD_DROP_PERIOD,
+                callback = function()
+                CreateUITimer("Next Holy Grail's Shard", SHARD_DROP_PERIOD, "shard_drop_timer")
+                --Notifications:TopToAll("#Fate_Timer_10minute", 5, nil, {color="rgb(255,255,255)", ["font-size"]="25px"})
+                for i=1, 2 do
+                    local itemVector = CENTER_POSITION + Vector(RandomInt(-1300,1300), RandomFloat(-1300, 1300), 0)
+                    CreateShardDrop(itemVector)
+                end
+                return SHARD_DROP_PERIOD
+            end})
+        end
+    end)
+
+
+
     -- add xp granter and level its skills
     local bIsDummyNeeded = true
     local dummyLevel = 0
@@ -860,11 +861,11 @@ function FateGameMode:OnGameRulesStateChange(keys)
         --Timers:RemoveTimer("alljointimer")
     elseif newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
         print("hero selection phase")
-
-
         Timers:CreateTimer(2.0, function()
             FateGameMode:OnAllPlayersLoaded()
         end)
+    elseif newState == DOTA_GAMERULES_STATE_STRATEGY_TIME then
+        -- screw 7.00
     elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
         FateGameMode:OnGameInProgress()
     end
@@ -954,12 +955,6 @@ function FateGameMode:OnHeroInGame(hero)
     hero.bIsDirectTransferEnabled = true -- True by default
     Attributes:ModifyBonuses(hero)
 
-    -- Set music off
-    local player = PlayerResource:GetPlayer(hero:GetPlayerID())
-    SendToServerConsole("dota_music_battle_enable 0")
-    SendToConsole("dota_music_battle_enable 0")  
-    player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 100000)
-
     -- Create Command Seal master for hero
     master = CreateUnitByName("master_1", Vector(4500 + hero:GetPlayerID()*320,-7050,0), true, hero, hero, hero:GetTeamNumber())
     master:SetControllableByPlayer(hero:GetPlayerID(), true)
@@ -987,8 +982,6 @@ function FateGameMode:OnHeroInGame(hero)
         shardUnit = master:entindex(),
         hero = hero:entindex()
     }
-    CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "player_selected_hero", playerData)
-    CustomGameEventManager:Send_ServerToAllClients("player_register_master_unit", playerData)
     --[[-- Create personal stash for hero
     masterStash = CreateUnitByName("master_stash", Vector(4500 + hero:GetPlayerID()*350,-7250,0), true, hero, hero, hero:GetTeamNumber())
     masterStash:SetControllableByPlayer(hero:GetPlayerID(), true)
@@ -1071,6 +1064,15 @@ function FateGameMode:OnHeroInGame(hero)
 
         self:InitialiseMissingPanoramaData(hero:GetPlayerOwner())
     end)
+
+    -- Set music off
+    local player = PlayerResource:GetPlayer(hero:GetPlayerID())
+    SendToServerConsole("dota_music_battle_enable 0")
+    SendToConsole("dota_music_battle_enable 0")  
+    player:SetMusicStatus(DOTA_MUSIC_STATUS_NONE, 100000)
+
+    CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "player_selected_hero", playerData)
+    CustomGameEventManager:Send_ServerToAllClients("player_register_master_unit", playerData)
 end
 
 -- This is for swapping hero models in
@@ -2119,6 +2121,7 @@ function FateGameMode:ExecuteOrderFilter(filterTable)
         caster:SwapItems(currentItemIndex, targetIndex)
         CheckItemCombination(caster)
         CheckItemCombinationInStash(caster)
+        SaveStashState(caster)
         return false
         --[[
         -- Item is currently placed in inventory, while target is in stash

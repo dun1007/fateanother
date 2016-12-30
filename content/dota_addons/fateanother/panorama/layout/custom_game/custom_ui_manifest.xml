@@ -41,6 +41,11 @@
         newUI.FindChildTraverse("LevelUpButton").SetPanelEvent("onactivate", function(){});
         newUI.FindChildTraverse("LevelUpButton").SetPanelEvent("onmouseover", function(){});
 
+        newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
+        newUI.FindChildTraverse("StatBranchChannel").style.visibility = "collapse";
+
+
+
         // backpack
         newUI.FindChildTraverse("inventory").FindChildTraverse("inventory_items").FindChildTraverse("inventory_backpack_list").style.visibility = "collapse";
 
@@ -83,7 +88,8 @@
 
         // Team Container
         var teamScoreUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("scoreboard");
-        teamScoreUI.style.height = "770px";
+        teamScoreUI.style.height = "780px";
+        teamScoreUI.FindChildTraverse("Background").style.height = "780px";
         //teamScoreUI.FindChildTraverse("LocalTeamInventory").style.visibility = "collapse";
 
         var radiantScoreUI = teamScoreUI.FindChildTraverse("Background").FindChildTraverse("RadiantTeamContainer");
@@ -92,8 +98,8 @@
         direScoreHeaderUI.style.marginTop = "-18px";
         direScoreHeaderUI.style.marginBottom = "-4px";
 
-        radiantScoreUI.style.height = "340px";
-        direScoreUI.style.height = "340px";
+        radiantScoreUI.style.height = "330px";
+        direScoreUI.style.height = "330px";
 
         for (var i=0; i<radiantScoreUI.GetChildCount(); i++)
         {
