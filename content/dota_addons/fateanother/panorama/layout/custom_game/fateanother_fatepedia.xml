@@ -35,7 +35,7 @@
         </Panel>
 
         <Button id="FatepediaOpenButton" onactivate="OnFatepediaButtonPressed()" onmouseover="OnFatepediaButtonShowTooltip()" onmouseout="OnFatepediaButtonHideTooltip()" hittest="true">
-            <Image id="FatepediaOpenButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <!--<Image id="FatepediaOpenButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>-->
             <Label id="FatepediaOpenButtonImageText" class="FatepediaOpenText" text="#FA_Fatepedia" hittest="false"/>
         </Button>
     </Panel>

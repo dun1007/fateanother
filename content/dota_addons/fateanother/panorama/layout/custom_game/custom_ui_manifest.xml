@@ -83,6 +83,10 @@
         var commonItemSearchUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("shop").FindChildTraverse("Main").FindChildTraverse("HeightLimiter").FindChildTraverse("SearchContainer");
         commonItemSearchUI.style.visibility = "collapse";
 
+        // Combat events(kill etc)
+        var combatEventUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("combat_events");
+        combatEventUI.style.visibility = "collapse";
+
         // Quickbuy
         var quickbuyUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("quickbuy").FindChildTraverse("QuickBuyRows");
 
@@ -136,6 +140,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_config.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_buff_bar.xml" />
+		<!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_combatevent.xml" />-->
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_spellbook.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml" />
 		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />

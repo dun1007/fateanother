@@ -56,7 +56,7 @@
 
         </Panel>
         <Button id="FateConfigButton" onactivate="OnFateConfigButtonPressed()" onmouseover="OnFateConfigButtonShowTooltip()" onmouseout="OnFateConfigButtonHideTooltip()" hittest="true">
-            <Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <!--<Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>-->
             <Label id="FateConfigButtonImageText" class="FateConfigOpenText" text="#FA_Config" hittest="false"/>
         </Button>
     </Panel>

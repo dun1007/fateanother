@@ -1,0 +1,10 @@
+.CombatEventRoot
+{
+    horizontal-align: left;
+    vertical-align: center;
+    margin-top: 0%;
+    flow-children: down;
+    width: 400px;
+    height: 200px;
+    background-color: blue;
+}

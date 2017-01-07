@@ -2,12 +2,12 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 20.5%;
-    margin-left: 11%;
+    margin-bottom: 24%;
+    margin-left: 0%;
     flow-children: down; 
 }
 
-.AspectRatio16x10 .FateConfigRoot
+/*.AspectRatio16x10 .FateConfigRoot
 {
     horizontal-align: left;
     vertical-align: bottom;
@@ -32,13 +32,13 @@
     margin-bottom: 20.5%;
     margin-left: 11%;
     flow-children: down; 
-}
+}*/
 
 #FateConfigButton
 {
     width: 150px;
     height: 40px;
-    brightness: 0.7;
+    brightness: 1.5;
 }
 
 #FateConfigBoard
@@ -60,8 +60,11 @@
 
 #FateConfigButtonImageText
 {
-    horizontal-align: center;
     vertical-align: middle;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( #425663cc ), color-stop( .5, #42566355 ), to( #0000 ) );
 }
 
 #FateConfigMainPanel
