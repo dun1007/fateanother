@@ -92,8 +92,10 @@
 
         // Team Container
         var teamScoreUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("scoreboard");
-        teamScoreUI.style.height = "780px";
-        teamScoreUI.FindChildTraverse("Background").style.height = "780px";
+
+        teamScoreUI.style.height = "800px";
+        teamScoreUI.style.marginLeft = 	"60%";
+        teamScoreUI.FindChildTraverse("Background").style.height = "800px";
         //teamScoreUI.FindChildTraverse("LocalTeamInventory").style.visibility = "collapse";
 
         var radiantScoreUI = teamScoreUI.FindChildTraverse("Background").FindChildTraverse("RadiantTeamContainer");
@@ -140,7 +142,7 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_config.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_buff_bar.xml" />
-		<!--<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_combatevent.xml" />-->
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_combatevent.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_spellbook.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml" />
 		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />

@@ -1625,6 +1625,11 @@ function FateGameMode:OnEntityKilled( keys )
             -- Display gold message
             local assistString = "plus <font color='#FFFF66'>" .. #assistTable * 300 .. "</font> gold split between contributors!"
             GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold, " .. assistString, 0, 0)
+            -- Convert to entindex before sending kill event to panorama
+            for i=1, #assistTable do
+                assistTable[i] = assistTable[i]:entindex()
+            end
+            CustomGameEventManager:Send_ServerToAllClients( "fate_hero_killed", {killer=killerEntity:entindex(), victim=killedUnit:entindex(), assists=assistTable } )
 
             --[[-- Give assist bounty
             for k, _ in pairs(killedUnit.assistTable) do

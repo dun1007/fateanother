@@ -1,10 +1,58 @@
-.CombatEventRoot
+#CombatEventPanel
 {
     horizontal-align: left;
-    vertical-align: center;
-    margin-top: 0%;
-    flow-children: down;
+    margin-top: 518px;
+    flow-children: up;
     width: 400px;
     height: 200px;
-    background-color: blue;
+    //background-color: blue;
+}
+
+.CombatEventPopupEnemy
+{
+	flow-children: right;
+	width: 200px;
+	height: 40px;
+
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 40% 20%, 100% 0%, from( #ff3333 ), color-stop( .5, #ffb3b3 ), to( #0000 ) );
+}
+
+.CombatEventPopupAlly
+{
+	flow-children: right;
+	width: 200px;
+	height: 40px;
+
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 40% 20%, 100% 0%, from( #00b300 ), color-stop( .5, #66ff66 ), to( #0000 ) );
+}
+
+.CombatEventPortrait
+{
+	margin: 4px 1.5px 4px 1.5px;
+	max-width: 50px;
+	max-height: 32px;
+	border: 2px solid #111111FF;
+	border-radius: 4px;
+}
+
+.VictimOverlay
+{
+	brightness: 0.2;
+}
+
+.KillerOverlay
+{
+}
+
+.CombatEventIcon
+{
+	max-width: 30px;
+	max-height: 30px;
+	vertical-align: center;
 }

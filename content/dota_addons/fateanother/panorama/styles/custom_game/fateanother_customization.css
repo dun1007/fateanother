@@ -70,7 +70,7 @@
     transition-property: opacity;
     transition-duration: 0.12s;
     transition-timing-function: ease-in-out;
-    background-color: gradient( linear, 0% 0%, 100% 0%, from( #425663cc ), color-stop( .5, #42566355 ), to( #0000 ) );
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( #FFD700 ), color-stop( .5, #7f6b00 ), to( #0000 ) );
 }
 
 
