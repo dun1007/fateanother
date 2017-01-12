@@ -79,6 +79,10 @@
         KDAUI.style.marginTop = "5px";
         KDAUI.style.marginLeft = "150px";
 
+        // Glyph, Scan
+        var glyphScanUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("GlyphScanContainer");
+        glyphScanUI.style.visibility = "collapse";
+
         // Common item search
         var commonItemSearchUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("shop").FindChildTraverse("Main").FindChildTraverse("HeightLimiter").FindChildTraverse("SearchContainer");
         commonItemSearchUI.style.visibility = "collapse";

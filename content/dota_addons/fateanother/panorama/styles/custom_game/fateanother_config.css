@@ -5,6 +5,7 @@
     margin-bottom: 24%;
     margin-left: 0%;
     flow-children: down; 
+    z-index: 9999;
 }
 
 /*.AspectRatio16x10 .FateConfigRoot

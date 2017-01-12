@@ -1,10 +1,10 @@
 #CombatEventPanel
 {
     horizontal-align: left;
-    margin-top: 518px;
-    flow-children: up;
+    margin-top: 468px;
+    flow-children: down;
     width: 400px;
-    height: 200px;
+    height: 250px;
     //background-color: blue;
 }
 
@@ -13,11 +13,13 @@
 	flow-children: right;
 	width: 200px;
 	height: 40px;
-
     transition-property: opacity;
     transition-duration: 0.12s;
     transition-timing-function: ease-in-out;
     background-color: gradient( linear, 40% 20%, 100% 0%, from( #ff3333 ), color-stop( .5, #ffb3b3 ), to( #0000 ) );
+    animation-name: flyin_lefttoright;
+    animation-duration: .3s;
+    animation-timing-function: linear;
 }
 
 .CombatEventPopupAlly
@@ -25,11 +27,13 @@
 	flow-children: right;
 	width: 200px;
 	height: 40px;
-
     transition-property: opacity;
     transition-duration: 0.12s;
     transition-timing-function: ease-in-out;
     background-color: gradient( linear, 40% 20%, 100% 0%, from( #00b300 ), color-stop( .5, #66ff66 ), to( #0000 ) );
+    animation-name: flyin_lefttoright;
+    animation-duration: .3s;
+    animation-timing-function: linear;
 }
 
 .CombatEventPortrait
@@ -55,4 +59,16 @@
 	max-width: 30px;
 	max-height: 30px;
 	vertical-align: center;
+}
+
+@keyframes 'flyin_lefttoright' {
+  from {
+    opacity:0;
+    transform: translateX(-40px);
+  }
+
+  to {
+    opacity:1;
+    transform: translateX(0px);
+  }
 }

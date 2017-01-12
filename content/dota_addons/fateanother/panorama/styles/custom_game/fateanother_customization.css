@@ -5,6 +5,7 @@
     margin-bottom: 29.5%;
     margin-left: 0%;
     flow-children: down;
+    z-index: 9999;
 }
 
 /*.AspectRatio16x10 .CustomizationBoardRoot
@@ -52,6 +53,7 @@
     //border:3px solid #DAA520;
     //box-shadow: fill #fffb84 1px 3px 2px 2px; // outer, filled
     overflow: scroll;
+    opacity: 0.9;
 
 }
 

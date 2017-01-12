@@ -5,6 +5,7 @@
     margin-bottom: 27%;
     margin-left: 0%;
     flow-children: down; 
+    z-index: 9999;
 }
 
 /*.AspectRatio16x9 .FatepediaRoot
@@ -50,7 +51,7 @@
     //border:3px solid #DAA520;
     flow-children: down;
     overflow: scroll;
-    //opacity: 0.9;
+    opacity: 0.9;
 
 }
 

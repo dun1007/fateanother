@@ -1018,7 +1018,7 @@ function FateGameMode:OnHeroInGame(hero)
     -- Announce the summon
     local heroName = FindName(hero:GetName())
     hero.name = heroName
-    GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned. Check your Master in the bottom right of the map.", 0, 0)
+    GameRules:SendCustomMessage("Servant <font color='#58ACFA'>" .. heroName .. "</font> has been summoned.", 0, 0)
 
     if _G.GameMap == "fate_elim_6v6" then
         if self.nCurrentRound == 0 then
@@ -1539,7 +1539,8 @@ function FateGameMode:OnEntityKilled( keys )
 
         -- if TK occured, do nothing and announce it
         if killerEntity:GetTeam() == killedUnit:GetTeam() then
-            GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain friendly Servant <font color='#FF5050'>" .. killedUnit.name .. "</font>!", 0, 0)
+            --GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain friendly Servant <font color='#FF5050'>" .. killedUnit.name .. "</font>!", 0, 0)
+            CustomGameEventManager:Send_ServerToAllClients( "fate_hero_killed", {killer=killerEntity:entindex(), victim=killedUnit:entindex(), assists=nil } )
         else
             -- Add to death count
             if killedUnit.DeathCount == nil then
@@ -1624,7 +1625,7 @@ function FateGameMode:OnEntityKilled( keys )
 
             -- Display gold message
             local assistString = "plus <font color='#FFFF66'>" .. #assistTable * 300 .. "</font> gold split between contributors!"
-            GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold, " .. assistString, 0, 0)
+            --GameRules:SendCustomMessage("<font color='#FF5050'>" .. killerEntity.name .. "</font> has slain <font color='#FF5050'>" .. killedUnit.name .. "</font> for <font color='#FFFF66'>" .. bounty .. "</font> gold, " .. assistString, 0, 0)
             -- Convert to entindex before sending kill event to panorama
             for i=1, #assistTable do
                 assistTable[i] = assistTable[i]:entindex()
@@ -2222,7 +2223,7 @@ function FateGameMode:InitializeRound()
     _G.IsPreRound = true
     CreateUITimer("Pre-Round", PRE_ROUND_DURATION, "pregame_timer")
     --FireGameEvent('cgm_timer_display', { timerMsg = "Pre-Round", timerSeconds = 16, timerEnd = true, timerPosition = 0})
-    DisplayTip()
+    --DisplayTip()
     Say(nil, string.format("Round %d will begin in " .. PRE_ROUND_DURATION .. " seconds.", self.nCurrentRound), false)
 
 

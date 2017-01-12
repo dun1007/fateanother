@@ -48,7 +48,7 @@
 	    </Panel>
 	    <DOTAHeroMovie id="DailyHeroMovie" class="HeroMovie" src="file://{resources}/videos/heroes/npc_dota_hero_legion_commander.webm" controls="none" repeat="true" autoplay="onload" />
         <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" onmouseover="OnCustomizeButtonShowTooltip()" onmouseout="OnCustomizeButtonHideTooltip()" hittest="true">
-            <!--<Image id="CustomizationOpenButtonImage" src="file://{images}/misc/kill_icon.png" hittest="false"/>-->
+            <!--<Image id="CustomizationOpenButtonImage" src="file://{images}/misc/death_icon.png" hittest="false"/>-->
             <Label id="CustomizationOpenButtonText" class="CustomizationText" text="#Fateanother_Customize" hittest="false"/>
         </Button>
     </Panel>
