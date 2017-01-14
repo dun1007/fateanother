@@ -7,8 +7,10 @@
         <include src="file://{resources}/scripts/custom_game/fateanother_combatevent.js" /> 
     </scripts>
     <Panel class="CombatEventRoot" hittest="false">
-    	<Panel id="CombatEventPanel" hittest="false" >
-    	</Panel>
+        <Panel id="GoldEventPanel" hittest="false">
+        </Panel>
+        <Panel id="CombatEventPanel" hittest="false" >
+        </Panel>
     </Panel>
 
 </root>

@@ -652,6 +652,14 @@ end
 ]]
 function OnArcaneWrathCast(keys)
 	local caster = keys.caster 
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+	if not hero.IsMounted then
+		caster:Stop()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
+		return
+	end
+
 	local pfx = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_freezing_field_casterribbons_arcana1.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl( pfx, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, caster:GetAbsOrigin().z+300))
 	caster:EmitSound("Hero_Ancient_Apparition.ColdFeetCast")
@@ -692,21 +700,21 @@ function OnMountStart(keys)
 	Timers:CreateTimer(0.2, function()
 		if caster:IsAlive() and not hero:HasModifier("jump_pause") then
 			if hero.IsMounted then
-				-- If Caster is attempting to unmount on not traversable terrain
+				-- If Caster is attempting to unmount on not traversable terrain,
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
 					keys.ability:EndCooldown()
 					SendErrorMessage(hero:GetPlayerOwnerID(), "#Cannot_Unmount")
 					return								
 				else
-					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", false, true) 
+					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 					hero:RemoveModifierByName("modifier_mount_caster")
 					caster:RemoveModifierByName("modifier_mount")
 					hero.IsMounted = false
 					SendMountStatus(hero)
 				end
-			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
+			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 and not hero:HasModifier("stunned") and not hero:HasModifier("modifier_stunned") then
 				hero.IsMounted = true
-				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, false) 
+				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
 				SendMountStatus(hero)

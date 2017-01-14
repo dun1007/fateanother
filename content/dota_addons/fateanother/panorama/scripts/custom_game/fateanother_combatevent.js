@@ -58,7 +58,64 @@ function OnHeroKilled(data)
 	});
 }
 
-function ClearCombatEvent()
+function OnGoldSent(data)
+{
+	$.Msg("[FATE] fate_gold_sent");
+	$.Msg(data, "\n------");
+	var goldAmt = data.goldAmt
+	var sender = data.sender
+	var recipent = data.recipent
+    var playerID = Players.GetLocalPlayer();
+    var hero = Players.GetPlayerHeroEntityIndex( playerID )
+
+	var popupCount = $("#GoldEventPanel").GetChildCount();
+	//$.Msg(popupCount);
+	if (popupCount > 5)
+	{
+		$("#GoldEventPanel").GetChild(0).DeleteAsync(0);
+	}
+
+
+	if (recipent == hero)
+	{
+		Game.EmitSound("Quickbuy.Available"); 
+	}
+
+	var popup = $.CreatePanel('Panel', $("#GoldEventPanel"), '');
+	popup.hittest = false;
+	popup.AddClass('GoldEventPopup');
+
+	var recipentPortrait = $.CreatePanel('DOTAHeroImage', popup, '');
+	recipentPortrait.heroimagestyle = "landscape";
+	recipentPortrait.heroname = Entities.GetUnitName(recipent);
+	recipentPortrait.hittest = false;
+	recipentPortrait.AddClass('CombatEventPortrait');
+
+	var arrowPanel = $.CreatePanel('Panel', popup, '');
+	arrowPanel.style.flowChildren = "down";
+	arrowPanel.style.horizontalAlign = "middle";
+
+	var arrowIcon = $.CreatePanel('Image', arrowPanel, '');
+	arrowIcon.SetImage("file://{images}/misc/gold_arrow.png");
+	arrowIcon.AddClass('GoldEventIcon');
+	arrowIcon.hittest = false;
+
+	var goldAmount = $.CreatePanel('Label', arrowPanel, '');
+	goldAmount.text = goldAmt
+	goldAmount.AddClass('GoldAmountText');
+
+	var senderPortrait = $.CreatePanel('DOTAHeroImage', popup, '');
+	senderPortrait.heroimagestyle = "landscape";
+	senderPortrait.heroname = Entities.GetUnitName(sender);
+	senderPortrait.hittest = false;
+	senderPortrait.AddClass('CombatEventPortrait');
+
+	$.Schedule(8, function(){
+		if (popup) {popup.DeleteAsync(0);}
+	});
+}
+
+function ClearKDPopup()
 {
 	$.Schedule(4.5, function() {
 		for (var i=0; i<$("#CombatEventPanel").GetChildCount(); i++)
@@ -70,5 +127,6 @@ function ClearCombatEvent()
 
 (function () {
     GameEvents.Subscribe("fate_hero_killed", OnHeroKilled );
-    //GameEvents.Subscribe("winner_decided", ClearCombatEvent);
+    GameEvents.Subscribe("fate_gold_sent", OnGoldSent );
+    //GameEvents.Subscribe("winner_decided", ClearKDPopup);
 })();

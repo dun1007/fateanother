@@ -691,7 +691,7 @@ function FateGameMode:OnPlayerChat(keys)
             local targetHero = PlayerResource:GetPlayer(tonumber(pID)):GetAssignedHero()
             hero:ModifyGold(-tonumber(goldAmt), true , 0)
             targetHero:ModifyGold(tonumber(goldAmt), true, 0)
-
+            CustomGameEventManager:Send_ServerToTeam(hero:GetTeamNumber(), "fate_gold_sent", {goldAmt=tonumber(goldAmt), sender=hero:entindex(), recipent=targetHero:entindex()} )
             --GameRules:SendCustomMessage("<font color='#58ACFA'>" .. hero.name .. "</font> sent " .. goldAmt .. " gold to <font color='#58ACFA'>" .. targetHero.name .. "</font>" , hero:GetTeamNumber(), hero:GetPlayerOwnerID())
         end
     end
