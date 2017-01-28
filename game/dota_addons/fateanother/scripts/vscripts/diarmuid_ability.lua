@@ -78,7 +78,7 @@ function OnDSLanded(keys)
 	local ability = keys.ability
 	if not caster.bIsDoubleAttackOnCD then
 		Timers:CreateTimer(0.033, function()
-			caster:PerformAttack(target, true, true, true, true, false)
+			caster:PerformAttack( target, true, true, true, true, false, false, false )
 			caster.bIsDoubleAttackOnCD = true
 			Timers:CreateTimer(0.066, function()
 				caster.bIsDoubleAttackOnCD = false

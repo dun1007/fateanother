@@ -31,7 +31,7 @@ function astolfo_hippogriff_rush:OnSpellStart()
 			for k,v in pairs(targets) do
 				if not v.bIsDamagedByHippoRush then 
 		        	DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, self, false)
-		        	caster:PerformAttack(v, true, true, true, true, false)
+		        	caster:PerformAttack( v, true, true, true, true, false, false, true )
 		        	v.bIsDamagedByHippoRush = true
 		        	Timers:CreateTimer(0.75, function()
 		        		v.bIsDamagedByHippoRush = false

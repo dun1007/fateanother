@@ -9,7 +9,7 @@
 
 	    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_TIMEOFDAY, false );      //Time of day (clock).
 	    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_HEROES, false );     //Heroes and team score at the top of the HUD.
-	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );      //Lefthand flyout scoreboard.
+	    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );      //Lefthand flyout scoreboard.
 	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_PANEL, false );     //Hero actions UI.
 	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ACTION_MINIMAP, false );     //Minimap.
 	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_INVENTORY_PANEL, false );      //Entire Inventory UI
@@ -29,25 +29,29 @@
 		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );
 		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );
 
-		// Root
+		// Talent
 		var UIRoot = $.GetContextPanel().GetParent().GetParent()
 
-		// talent
-        var newUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats").FindChildTraverse("center_block");
-        newUI.FindChildTraverse("StatBranch").AddClass("NonHero");
-        newUI.FindChildTraverse("StatBranch").FindChildTraverse("StatBranchGraphics").FindChildTraverse("StatBranchChannel").style.visibility = "collapse";
-        newUI.FindChildTraverse("StatBranch").SetPanelEvent("onmouseover", function(){});
-        newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
-        newUI.FindChildTraverse("LevelUpButton").SetPanelEvent("onactivate", function(){});
-        newUI.FindChildTraverse("LevelUpButton").SetPanelEvent("onmouseover", function(){});
+		var hudRoot;
+		var panel;
+		for( panel = $.GetContextPanel(); panel != null; panel = panel.GetParent())
+		{
+			hudRoot = panel;
+		}
+		if (hudRoot != null)
+		{
+			var statBranch = hudRoot.FindChildTraverse("StatBranch");
+			if (statBranch != null)
+			{
+				statBranch.style.visibility = "collapse";
+			}
 
-        newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
-        newUI.FindChildTraverse("StatBranchChannel").style.visibility = "collapse";
-
-
-
-        // backpack
-        newUI.FindChildTraverse("inventory").FindChildTraverse("inventory_items").FindChildTraverse("inventory_backpack_list").style.visibility = "collapse";
+			var statLevel = hudRoot.FindChildTraverse("level_stats_frame");
+			if (statLevel != null)
+			{
+				statLevel.style.visibility = "collapse";
+			}
+		}
 
         // startegy
         var strategyUI = UIRoot.FindChildTraverse("MainContents").FindChildTraverse("ScreenContainer").FindChildTraverse("StrategyScreen").FindChildTraverse("RightContainer");
@@ -78,6 +82,10 @@
         UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("quickstats").style.width = "400px";
         KDAUI.style.marginTop = "5px";
         KDAUI.style.marginLeft = "150px";
+
+        // backpack
+        var backpackUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats").FindChildTraverse("center_block").FindChildTraverse("inventory").FindChildTraverse("inventory_items").FindChildTraverse("InventoryContainer").FindChildTraverse("inventory_backpack_list");
+        backpackUI.style.visibility = "collapse";
 
         // Glyph, Scan
         var glyphScanUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("GlyphScanContainer");

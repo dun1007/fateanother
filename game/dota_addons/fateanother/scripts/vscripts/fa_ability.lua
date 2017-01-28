@@ -132,7 +132,7 @@ function OnHeartDamageTaken(keys)
 		local counter = 0
 		Timers:CreateTimer(function()
 			if counter == keys.AttackCount then return end 
-			caster:PerformAttack(target, true, true, true, true, false)
+			caster:PerformAttack( target, true, true, true, true, false, false, true )
 			CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(500), target:GetAbsOrigin()+RandomVector(500))
 			counter = counter+1
 			return 0.1
@@ -224,7 +224,7 @@ function OnTMLanded(keys)
 	Timers:CreateTimer(0.8, function()
 		if slashCounter == 0 then caster:SetModel("models/development/invisiblebox.vmdl") ability:ApplyDataDrivenModifier(caster, caster, "modifier_tsubame_mai_baseattack_reduction", {}) end
 		if slashCounter == 5 or not caster:IsAlive() then caster:SetModel("models/assassin/asn.vmdl") return end
-		caster:PerformAttack(target, true, true, true, true, false)
+		caster:PerformAttack( target, true, true, true, true, false, false, true )
 		CreateSlashFx(caster, target:GetAbsOrigin()+RandomVector(400), target:GetAbsOrigin()+RandomVector(400))
 		caster:SetAbsOrigin(target:GetAbsOrigin()+RandomVector(400))
 		EmitGlobalSound("FA.Quickdraw") 
@@ -429,7 +429,7 @@ function OnQuickdrawHit(keys)
 
 	local damage = 500 + keys.caster:GetAgility() * 13
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	caster:PerformAttack(target, true, true, true, true, false)
+	caster:PerformAttack( target, true, true, true, true, false, false, true )
 
 	local firstImpactIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
     ParticleManager:SetParticleControl(firstImpactIndex, 0, target:GetAbsOrigin())
@@ -477,7 +477,7 @@ function OnWBStart(keys)
 		else
 			giveUnitDataDrivenModifier(caster, v, "drag_pause", 0.5)
 			DoDamage(caster, v, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-			caster:PerformAttack(v, true, true, true, true, false)
+			caster:PerformAttack( target, true, true, true, true, false, false, true )
 			local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 		    ParticleManager:SetParticleControl(slashIndex, 0, v:GetAbsOrigin())
 		    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
@@ -577,7 +577,7 @@ function OnTGStart(keys)
 			if caster.IsGanryuAcquired then 
 				giveUnitDataDrivenModifier(caster, target, "silenced", 0.31)
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-				caster:PerformAttack(target, true, true, true, true, false)
+				caster:PerformAttack( target, true, true, true, true, false, false, true )
 				local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(slashIndex, 0, target:GetAbsOrigin())
 			    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
@@ -593,7 +593,7 @@ function OnTGStart(keys)
 				end]]
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-				caster:PerformAttack(target, true, true, true, true, false)
+				caster:PerformAttack( target, true, true, true, true, false, false, true )
 				local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(slashIndex, 0, target:GetAbsOrigin())
 			    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
@@ -613,7 +613,7 @@ function OnTGStart(keys)
 			if caster.IsGanryuAcquired then 
 				giveUnitDataDrivenModifier(caster, target, "silenced", 0.31)
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-				caster:PerformAttack(target, true, true, true, true, false)
+				caster:PerformAttack( target, true, true, true, true, false, false, true )
 				local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(slashIndex, 0, target:GetAbsOrigin())
 			    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
@@ -629,7 +629,7 @@ function OnTGStart(keys)
 				end]]
 			else
 				DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-				caster:PerformAttack(target, true, true, true, true, false)
+				caster:PerformAttack( target, true, true, true, true, false, false, true )
 				local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(slashIndex, 0, target:GetAbsOrigin())
 			    ParticleManager:SetParticleControl(slashIndex, 1, Vector(500,0,150))
@@ -649,7 +649,7 @@ function OnTGStart(keys)
 			if caster.IsGanryuAcquired then
 				local targets = FindUnitsInRadius(caster:GetTeam(), target:GetAbsOrigin(), nil, 250, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
 				DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-				caster:PerformAttack(target, true, true, true, true, false)
+				caster:PerformAttack( target, true, true, true, true, false, false, true )
 				target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 				local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(slashIndex, 0, target:GetAbsOrigin())
@@ -666,7 +666,7 @@ function OnTGStart(keys)
 				end]]
 			else
 				DoDamage(caster, target, keys.LastDamage, DAMAGE_TYPE_PURE, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, keys.ability, false)
-				caster:PerformAttack(target, true, true, true, true, false)
+				caster:PerformAttack( target, true, true, true, true, false, false, true )
 				target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.5})
 				local slashIndex = ParticleManager:CreateParticle( "particles/custom/false_assassin/tsubame_gaeshi/tsubame_gaeshi_windup_indicator_flare.vpcf", PATTACH_CUSTOMORIGIN, nil )
 			    ParticleManager:SetParticleControl(slashIndex, 0, target:GetAbsOrigin())

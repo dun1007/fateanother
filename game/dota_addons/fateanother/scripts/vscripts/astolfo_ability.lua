@@ -165,7 +165,8 @@ function OnDownHit(keys)
 	end
 
 	if caster.bIsSanityAcquired then
-		caster:PerformAttack(target, true, true, true, true, false)
+		--caster:PerformAttack(target, true, true, true, true, false)
+		caster:PerformAttack( target, true, true, true, true, false, false, false )
 	end
 end
 
