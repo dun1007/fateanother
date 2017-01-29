@@ -433,10 +433,11 @@ function Blink(keys)
 	end
 
 
-
-
 	if GridNav:IsBlocked(targetPoint) or not GridNav:IsTraversable(targetPoint) then
 		keys.ability:EndCooldown()
+		if ability:GetName() == "caster_5th_dimensional_jump" then
+			caster:GiveMana(150) -- 150 being mana cost of Dimensional Jump
+		end
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Travel")
 		return
 	end

@@ -1152,8 +1152,6 @@ function OnHGStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
-	local ply = caster:GetPlayerOwner()
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local radius = keys.Radius
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
@@ -1277,8 +1275,6 @@ function OnHGPStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
-	local ply = caster:GetPlayerOwner()
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local radius = keys.Radius
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil

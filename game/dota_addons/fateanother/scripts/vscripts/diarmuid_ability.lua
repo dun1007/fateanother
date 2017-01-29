@@ -156,7 +156,7 @@ function OnBuidheStart(keys)
 	if target:IsHero() then MR = target:GetMagicalArmorValue() end
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
 
-	if target:GetHealth() > 0 and target:IsAlive() then
+	if target:GetHealth() > 0 and target:IsAlive() and caster:IsAlive() then
 
 		target:RemoveModifierByName("modifier_gae_buidhe") 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_gae_buidhe", {}) 
