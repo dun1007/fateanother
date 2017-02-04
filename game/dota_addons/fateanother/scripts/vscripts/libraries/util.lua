@@ -1448,7 +1448,7 @@ function SaveStashState(hero)
     local stashState = {}
     local stashChargeState = {}
     for i=1, 6 do
-        local item = hero:GetItemInSlot(i + 5)
+        local item = hero:GetItemInSlot(i + 8)
         table.insert(stashState, i, item and item:GetName())
         table.insert(stashChargeState, i, item and item:GetCurrentCharges())
     end
@@ -1468,7 +1468,7 @@ function LoadStashState(hero)
         end
     end
     for i=1,6 do
-        local item = hero:GetItemInSlot(i + 5)
+        local item = hero:GetItemInSlot(i + 8)
         hero:RemoveItem(item)
 
         local savedItemName = stashState[i]
@@ -1481,7 +1481,7 @@ function LoadStashState(hero)
         end
     end
     -- clear dummy items
-    for i=0,11 do
+    for i=0,14 do
         local item = hero:GetItemInSlot(i)
         if item:GetName() == "item_dummy_item" then
             hero:RemoveItem(item)
