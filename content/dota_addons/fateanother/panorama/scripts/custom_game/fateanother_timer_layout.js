@@ -13,7 +13,7 @@ function CreateTimer(data) {
 	var desc = data.timerDescription;
 	var timerPanel = 0;
 	//If timer is already present
-	if (desc in timerTable) 
+	if (desc in timerTable)
 	{
 		if (timerTable[desc] == null)
 		{
@@ -25,7 +25,7 @@ function CreateTimer(data) {
 			$.Msg("object is already present, deleting if new duration input is 0");
 			timerPanel = timerTable[desc]
 			timerTable[desc].RemoveAndDeleteChildren();
-			delete timerTable[desc];	
+			delete timerTable[desc];
 			//return;
 		}
 	}
@@ -36,6 +36,10 @@ function CreateTimer(data) {
 	timerTable[desc] = timerPanel;
 	timerPanel.BLoadLayout("file://{resources}/layout/custom_game/fateanother_timer.xml", false, false );
 	timerPanel.SetTimer(message, duration);
+	timerPanel.SetPanelEvent(
+		"onactivate",
+		timerPanel.TimerClicked
+	);
 }
 
 

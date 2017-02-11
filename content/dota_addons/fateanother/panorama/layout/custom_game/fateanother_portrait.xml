@@ -19,7 +19,7 @@
                 onmouseout="MasterHideTooltip()"
                 onactivate="MasterPortraitClick()"/>
         </Panel>
-        <Panel id="MasterStatusPanel"   hittest="false">
+        <Panel id="MasterStatusPanel"   hittest="true">
             <Panel id="MasterHealthPanel"   hittest="false">
                 <Label id="MasterHealthText" class="MasterHealth" text="#Fateanother_Master_Health" hittest="true" 
                     onmouseover="MasterHealthShowTooltip()"

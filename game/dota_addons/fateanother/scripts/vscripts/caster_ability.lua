@@ -501,7 +501,7 @@ function OnTerritoryMobilize(keys)
 	caster.IsMobilized = true
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", false, true) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty5", false, true)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", false, true)
 	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", false, true)
 	caster:SwapAbilities("caster_5th_recall", "fate_empty4", false, true)
 	caster:SwapAbilities("fate_empty_nothidden", "caster_5th_dimensional_jump", false, true)
@@ -519,7 +519,7 @@ function OnTerritoryImmobilize(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_territory_root", {}) 
 	caster:SwapAbilities("caster_5th_mobilize", "caster_5th_immobilize", true, false) 
 
-	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty5", true, false)
+	caster:SwapAbilities("caster_5th_mana_drain", "fate_empty2", true, false)
 	caster:SwapAbilities("caster_5th_territory_explosion", "fate_empty3", true, false)
 	caster:SwapAbilities("caster_5th_recall", "fate_empty4", true, false)
 	caster:SwapAbilities("fate_empty_nothidden", "caster_5th_dimensional_jump", true, false)
@@ -652,6 +652,14 @@ end
 ]]
 function OnArcaneWrathCast(keys)
 	local caster = keys.caster 
+	local pid = caster:GetPlayerOwnerID()
+	local hero = PlayerResource:GetSelectedHeroEntity(pid)
+	if not hero.IsMounted then
+		caster:Stop()
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
+		return
+	end
+
 	local pfx = ParticleManager:CreateParticle("particles/econ/items/crystal_maiden/crystal_maiden_maiden_of_icewrack/maiden_freezing_field_casterribbons_arcana1.vpcf", PATTACH_ABSORIGIN, caster)
 	ParticleManager:SetParticleControl( pfx, 0, Vector(caster:GetAbsOrigin().x, caster:GetAbsOrigin().y, caster:GetAbsOrigin().z+300))
 	caster:EmitSound("Hero_Ancient_Apparition.ColdFeetCast")
@@ -692,21 +700,21 @@ function OnMountStart(keys)
 	Timers:CreateTimer(0.2, function()
 		if caster:IsAlive() and not hero:HasModifier("jump_pause") then
 			if hero.IsMounted then
-				-- If Caster is attempting to unmount on not traversable terrain
+				-- If Caster is attempting to unmount on not traversable terrain,
 				if GridNav:IsBlocked(caster:GetAbsOrigin()) or not GridNav:IsTraversable(caster:GetAbsOrigin()) then
 					keys.ability:EndCooldown()
 					SendErrorMessage(hero:GetPlayerOwnerID(), "#Cannot_Unmount")
 					return								
 				else
-					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", false, true) 
+					caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 					hero:RemoveModifierByName("modifier_mount_caster")
 					caster:RemoveModifierByName("modifier_mount")
 					hero.IsMounted = false
 					SendMountStatus(hero)
 				end
-			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then
+			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 and not hero:HasModifier("stunned") and not hero:HasModifier("modifier_stunned") then
 				hero.IsMounted = true
-				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, false) 
+				caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_mount_caster", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_mount", {}) 
 				SendMountStatus(hero)
@@ -741,7 +749,7 @@ function OnMountDeath(keys)
 	local caster = keys.caster
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:RemoveModifierByName("modifier_mount_caster")
-	caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", true, true) 
+	caster:SwapAbilities("caster_5th_dragon_arcane_wrath", "fate_empty2", false, true) 
 	hero.IsMounted = false
 	SendMountStatus(hero)
 end
@@ -771,6 +779,8 @@ function OnItemStart(keys)
 
 	caster:AddItem(item)
 	CheckItemCombination(caster)
+
+    SaveStashState(caster)
 end
 
 function OnArgosStart(keys)
@@ -870,10 +880,10 @@ function OnAncientStart(keys)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
 	caster:SwapAbilities("caster_5th_wall_of_flame", a1:GetName(), true, false) 
-	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, true) 
-	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) 
-	caster:SwapAbilities("caster_5th_mana_transfer", a4:GetName(), true, true) 
-	caster:SwapAbilities("caster_5th_close_spellbook", a5:GetName(), true,true) 
+	caster:SwapAbilities("caster_5th_silence", a2:GetName(), true, false) 
+	caster:SwapAbilities("caster_5th_divine_words", a3:GetName(), true, true) -- true true so caster can open spellbook while casting rulebreak 
+	caster:SwapAbilities("caster_5th_mana_transfer", a4:GetName(), true, false) 
+	caster:SwapAbilities("caster_5th_close_spellbook", a5:GetName(), true, false) 
 	caster:SwapAbilities("caster_5th_sacrifice", a6:GetName(), true, false) 
 end
 
@@ -1088,11 +1098,11 @@ function OnAncientClosed(keys)
 		print("combo is currently active")
 		ultiName = "caster_5th_hecatic_graea_powered"
 	end
-	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", true ,true) 
-	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", true, true) 
+	caster:SwapAbilities(a1:GetName(), "caster_5th_argos", false ,true) 
+	caster:SwapAbilities(a2:GetName(), "caster_5th_ancient_magic", false, true) 
 	caster:SwapAbilities(a3:GetName(), "caster_5th_rule_breaker", false, true) 
-	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", true, true) 
-	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", true, true) 
+	caster:SwapAbilities(a4:GetName(), "caster_5th_territory_creation", false, true) 
+	caster:SwapAbilities(a5:GetName(), "caster_5th_item_construction", false, true) 
 	caster:SwapAbilities(a6:GetName(), ultiName, false, true )
 	local spellbook = caster:FindAbilityByName("caster_5th_ancient_magic")
 	if spellbook:GetToggleState() then
@@ -1118,7 +1128,7 @@ function OnRBStart(keys)
 	if caster.IsRBImproved then
 		keys.ability:EndCooldown()
 		keys.ability:StartCooldown(25)
-		giveUnitDataDrivenModifier(caster, target, "rb_sealdisabled", 3.0)
+		giveUnitDataDrivenModifier(caster, target, "revoked", 7.5)
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_dagger_of_treachery", {}) 
 	end
 
@@ -1142,8 +1152,6 @@ function OnHGStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
-	local ply = caster:GetPlayerOwner()
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local radius = keys.Radius
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil
@@ -1267,8 +1275,6 @@ function OnHGPStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
 	local targetPoint = keys.target_points[1]
-	local ply = caster:GetPlayerOwner()
-	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	local radius = keys.Radius
 	local boltradius = keys.RadiusBolt
 	local boltvector = nil

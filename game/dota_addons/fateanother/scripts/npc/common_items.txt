@@ -1,0 +1,20 @@
+"CommonItems"
+{
+	"Version"		"1"
+	
+	"item_c_scroll"		"1"
+	"item_b_scroll"		"1"
+	"item_a_scroll"		"1"
+	"item_s_scroll"		"1"
+	"item_ex_scroll"		"1"
+	"item_mana_essence"		"1"
+	"item_condensed_mana_essence"		"1"
+	"item_teleport_scroll"		"1"
+	"item_gem_of_speed"		"1"
+	"item_scout_familiar"		"1"
+	"item_berserk_scroll"		"1"
+	"item_ward_familiar"		"1"
+	"item_spirit_link"		"1"
+	"item_healing_scroll"		"1"
+
+}

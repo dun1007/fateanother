@@ -68,6 +68,7 @@ end
 function OnDSStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
+	if caster:HasModifier("modifier_rampant_warrior") then return end--appears stacking W and Combo is possible from sealing, remove if stacking is intended feature
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_double_spearsmanship", {})
 end
 
@@ -77,7 +78,7 @@ function OnDSLanded(keys)
 	local ability = keys.ability
 	if not caster.bIsDoubleAttackOnCD then
 		Timers:CreateTimer(0.033, function()
-			caster:PerformAttack(target, true, true, true, true, false)
+			caster:PerformAttack( target, true, true, true, true, false, false, false )
 			caster.bIsDoubleAttackOnCD = true
 			Timers:CreateTimer(0.066, function()
 				caster.bIsDoubleAttackOnCD = false
@@ -96,7 +97,9 @@ function OnRampantWarriorStart(keys)
 	masterCombo:EndCooldown()
 	masterCombo:StartCooldown(keys.ability:GetCooldown(1))
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
-
+	if caster:HasModifier("modifier_double_spearsmanship") then --appears stacking W and Combo is possible from sealing, remove if stacking is intended feature
+		caster:RemoveModifierByName("modifier_double_spearsmanship")
+	end
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior", {})
 
 	caster:FindAbilityByName("diarmuid_double_spearsmanship"):ApplyDataDrivenModifier(caster, caster, "modifier_rampant_warrior_combo", {})
@@ -135,33 +138,47 @@ function OnBuidheStart(keys)
 	local caster = keys.caster
 	local target = keys.target
 	local ply = caster:GetPlayerOwner()
+	local nStacks = keys.nStacks
+	local unitReduction = keys.unitReduction
+	local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
+
 	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 
 	if caster.IsRoseBloomAcquired then 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_mark_of_mortality", {})
 	end
 
-	if target:GetHealth() < keys.Damage then
+	if target:GetMaxHealth() < (currentStack + nStacks) * unitReduction then
 		target:Kill(keys.ability, caster)
 	end
+
 	local MR = 0
 	if target:IsHero() then MR = target:GetMagicalArmorValue() end
 	DoDamage(caster, target, keys.Damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-	local targetHealthPercentage = target:GetHealth() / target:GetMaxHealth()
 
-	if target:GetHealth() > 0 and target:IsAlive() then
-		local currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability)
-		if currentStack == 0 and target:HasModifier("modifier_gae_buidhe") then currentStack = 1 end
+	if target:GetHealth() > 0 and target:IsAlive() and caster:IsAlive() then
+
 		target:RemoveModifierByName("modifier_gae_buidhe") 
 		keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_gae_buidhe", {}) 
-		target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + 1)
+		target:SetModifierStackCount("modifier_gae_buidhe", keys.ability, currentStack + nStacks)
 		if target:IsRealHero() then target:CalculateStatBonus() end
 
-		local targetNewHealth = target:GetHealth() + keys.Damage * (1-MR) * targetHealthPercentage 
-	    target:SetHealth(targetNewHealth)
 	end
 
+	currentStack = target:GetModifierStackCount("modifier_gae_buidhe", keys.ability) --refresh currentstack after debuff
 
+	Timers:CreateTimer(function()
+		if target:HasModifier("modifier_gae_buidhe") == false then return end
+		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
+  --   	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
+  		if target:GetMaxHealth() < currentStack * unitReduction then -- for heroes that modifies maxHp like avenger with E
+			target:Kill(keys.ability, caster)
+		elseif target:GetHealth() > (target:GetMaxHealth() - currentStack * unitReduction) then
+			target:SetHealth(target:GetMaxHealth() - currentStack * unitReduction)
+		end
+		return 0.033
+		end
+	)
 
 	EmitGlobalSound("ZL.Gae_Buidhe")
 	target:EmitSound("Hero_Lion.Impale")
@@ -188,10 +205,14 @@ function OnBuidheStart(keys)
 			caster:FindAbilityByName("diarmuid_gae_dearg"):StartCooldown(32)
 			local doublestrike = caster:FindAbilityByName("diarmuid_double_spear_strike")
 			doublestrike:StartCooldown(55)
-			doublestrike:ToggleAbility()
+			if doublestrike:GetToggleState() == true then
+				doublestrike:ToggleAbility()
+			end
 			caster:SetMana(caster:GetMana() - 550)
-			Timers:CreateTimer(55, function()
-				doublestrike:ToggleAbility() 
+			Timers:CreateTimer(55.2, function()
+				if doublestrike:IsCooldownReady() and not doublestrike:GetToggleState() then 
+					doublestrike:ToggleAbility()
+				end
 			end)
 			OnDeargStart(keys)
 		end)
@@ -267,10 +288,14 @@ function OnDeargStart(keys)
 			caster:FindAbilityByName("diarmuid_gae_buidhe"):StartCooldown(32)
 			local doublestrike = caster:FindAbilityByName("diarmuid_double_spear_strike")
 			doublestrike:StartCooldown(55)
-			doublestrike:ToggleAbility()
+			if doublestrike:GetToggleState() == true then
+				doublestrike:ToggleAbility()
+			end
 			caster:SetMana(caster:GetMana() - 550)
-			Timers:CreateTimer(55, function()
-				doublestrike:ToggleAbility() 
+			Timers:CreateTimer(55.2, function()
+				if doublestrike:IsCooldownReady() and not doublestrike:GetToggleState() then 
+					doublestrike:ToggleAbility()
+				end
 			end)
 			OnBuidheStart(keys)
 		end)
@@ -322,13 +347,13 @@ end
 
 function OnDSToggleOn(keys)
 	local caster = keys.caster
-	print("double spear on")
+	--print("double spear on")
 	caster.IsDoubleSpearReady = true
 end
 
 function OnDSToggleOff(keys)
 	local caster = keys.caster
-	print("double spear off")
+	--print("double spear off")
 	caster.IsDoubleSpearReady = false
 end
 
@@ -350,6 +375,7 @@ function OnMindEyeAcquired(keys)
     hero.IsMindEyeAcquired = true
     hero:AddAbility("diarmuid_minds_eye") 
     hero:FindAbilityByName("diarmuid_minds_eye"):SetLevel(1)
+    hero:FindAbilityByName("diarmuid_minds_eye"):SetHidden(true)
     hero:SetDayTimeVisionRange(1100)
     hero:SetNightTimeVisionRange(1100)
     -- Set master 1's mana 
@@ -373,7 +399,7 @@ function OnDoubleSpearAcquired(keys)
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero.IsDoubleSpearAcquired = true
     hero.IsDoubleSpearReady = true
-    hero:SwapAbilities("fate_empty1", "diarmuid_double_spear_strike", true, true) 
+    hero:SwapAbilities("fate_empty1", "diarmuid_double_spear_strike", false, true) 
 	hero:FindAbilityByName("diarmuid_double_spear_strike"):ToggleAbility()
     -- Set master 1's mana 
     local master = hero.MasterUnit

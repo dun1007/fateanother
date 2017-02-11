@@ -59,12 +59,16 @@ function CreateWind(keys)
 end
 
 function InvisibleAirPull(keys)
-	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
-	if keys.target:GetName() == "npc_dota_hero_bounty_hunter" and keys.target.IsPFWAcquired then return end -- Protection from Wind checker
+	local target = keys.target
+	if IsSpellBlocked(target) -- Linken's
+		or target:IsMagicImmune() -- Magic immunity
+		or target:GetName() == "npc_dota_hero_bounty_hunter" and target.IsPFWAcquired -- Protection from Wind
+	then
+		return
+	end
 
 	keys.caster.invisible_air_reach_target = true					-- Addition
 	local caster = keys.caster
-	local target = keys.target
 	local ability = keys.ability
 	local ply = caster:GetPlayerOwner()
 
@@ -359,7 +363,7 @@ function OnMaxStart(keys)
 			callback = function()
 			if caster:IsAlive() then
 			-- Create Particle for projectile
-				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
+				local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin() + 300 * casterFacing, false, caster, caster, caster:GetTeamNumber())
 				dummy:FindAbilityByName("dummy_unit_passive"):SetLevel(1)
 				dummy:SetForwardVector(casterFacing)
 				Timers:CreateTimer( function()
@@ -376,7 +380,7 @@ function OnMaxStart(keys)
 				
 				local excalFxIndex = ParticleManager:CreateParticle("particles/custom/saber/max_excalibur/shockwave.vpcf", PATTACH_ABSORIGIN_FOLLOW, dummy)
 					
-				Timers:CreateTimer( 2.00, function()
+				Timers:CreateTimer(1.7, function()
 					ParticleManager:DestroyParticle( excalFxIndex, false )
 					ParticleManager:ReleaseParticleIndex( excalFxIndex )
 					Timers:CreateTimer( 0.5, function()
@@ -698,7 +702,7 @@ function OnStrikeAirAcquired(keys)
 	local caster = keys.caster
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
-	hero:SwapAbilities("saber_charisma","saber_strike_air", true, true)
+	hero:SwapAbilities("saber_charisma","saber_strike_air", false, true)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -712,8 +716,9 @@ function OnSAUpstreamAcquired(keys)
 
 	hero.bIsUpstreamAcquired = true
 	hero.bIsUpstreamReady = true
-	hero:AddAbility("saber_strike_air_upstream")
-	hero:FindAbilityByName("saber_strike_air_upstream"):SetLevel(1)
+	local upstreamAbil = hero:AddAbility("saber_strike_air_upstream")
+	upstreamAbil:SetLevel(1)
+	upstreamAbil:SetHidden(true)
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

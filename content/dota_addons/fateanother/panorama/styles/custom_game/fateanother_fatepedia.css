@@ -2,16 +2,17 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 26.5%;
+    margin-bottom: 27%;
     margin-left: 0%;
     flow-children: down; 
+    z-index: 9999;
 }
 
-.AspectRatio16x9 .FatepediaRoot
+/*.AspectRatio16x9 .FatepediaRoot
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 26.5%;
+    margin-bottom: 20.5%;
     margin-left: 0%;
     flow-children: down; 
 }
@@ -20,7 +21,7 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 26.5%;
+    margin-bottom: 20.5%;
     margin-left: 0%;
     flow-children: down; 
 }
@@ -29,16 +30,16 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 25%;
+    margin-bottom: 20.5%;
     margin-left: 0%;
     flow-children: down; 
-}
+}*/
 
 #FatepediaOpenButton
 {
     width: 150px;
     height: 40px;
-    brightness: 0.7;
+    brightness: 1.5;
 }
 
 #FatepediaBoard
@@ -51,6 +52,7 @@
     flow-children: down;
     overflow: scroll;
     opacity: 0.9;
+
 }
 
 #FatepediaOpenButtonImage
@@ -59,8 +61,11 @@
 
 #FatepediaOpenButtonImageText
 {
-    horizontal-align: center;
     vertical-align: middle;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( #425663cc ), color-stop( .5, #42566355 ), to( #0000 ) );
 }
 
 .FatepediaSkillContextText

@@ -84,6 +84,7 @@ function OnChainStart(keys)
 	keys.ability:ApplyDataDrivenModifier(caster, target, "modifier_enkidu_hold", {})
 	caster:EmitSound("Gilgamesh.Enkidu" ) 
 	enkiduTarget = target
+	DoDamage(caster, target, 0, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false) -- For reseting TA invis timer
 	
 	-- Check if caster already had particle
 	if caster.enkiduBind ~= nil then
@@ -156,7 +157,7 @@ function OnChainStart(keys)
 	    )
 	end
 
-	print(caster.IsGOBUp)
+	--print(caster.IsGOBUp)
 	if caster.IsGOBUp and caster.IsSumerAcquired then 
 		-- Casting by dummy doesn't work for some reason
 		local dummy = CreateUnitByName("dummy_unit", caster:GetAbsOrigin(), false, caster, caster, caster:GetTeamNumber())
@@ -223,9 +224,9 @@ function OnGOBStart(keys)
 	{
 		Ability = ability,
         EffectName = "particles/custom/gilgamesh/gilgamesh_gob_model.vpcf",
-        iMoveSpeed = 1000,
+        iMoveSpeed = 1350,
         vSpawnOrigin = Vector(0,0,0),
-        fDistance = 1000,
+        fDistance = 1350,
         fStartRadius = 100,
         fEndRadius = 100,
         Source = caster,
@@ -305,7 +306,7 @@ function OnGOBThink(keys)
 		--ParticleManager:SetParticleControlOrientation(caster.LatestGOBParticle, 0, Vector(1,0,0), Vector(0.5,1,0.5), Vector(1,0.5,0.5))
 	end
 
-	if not caster.IsSumerAcquired or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
+	if not caster.IsSumerAcquired or not caster:IsAlive() or (caster.IsSumerAcquired and toggleAbil:GetToggleState()) then
 		local projectile = unit.GOBProjectile
 		local leftvec = Vector(-frontward.y, frontward.x, 0)
 		local rightvec = Vector(frontward.y, -frontward.x, 0)
@@ -331,7 +332,7 @@ function OnGOBHit(keys)
 	local caster = keys.caster
 	local damage = keys.Damage
 	if caster.IsSumerAcquired then
-		damage = damage + caster:GetAttackDamage()*0.5
+		damage = damage + caster:GetAttackDamage()*0.65
 	end
 	if target:GetUnitName() == "gille_gigantic_horror" then damage = damage*2.5 end
 	DoDamage(keys.caster, keys.target, damage, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
@@ -408,15 +409,15 @@ function OnEnumaStart(keys)
 	end)
 
 	Timers:CreateTimer(3.0, function() 
+		-- Destroy charge particle regardless of alive/dead
+		ParticleManager:DestroyParticle( chargeFxIndex, false )
+		ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 		if caster:IsAlive() then
 			frontward = caster:GetForwardVector()
 			enuma.vSpawnOrigin = caster:GetAbsOrigin() 
 			enuma.vVelocity = frontward * keys.Speed
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 10000, 0, true)
-			-- Destroy charge particle
-			ParticleManager:DestroyParticle( chargeFxIndex, false )
-			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 
 			-- Create particle
 			local casterLocation = caster:GetAbsOrigin()
@@ -506,6 +507,9 @@ function OnMaxEnumaStart(keys)
 	end)
 
 	Timers:CreateTimer(3.75, function()
+		-- Destroy charge particle regardless of alive/dead
+		ParticleManager:DestroyParticle( chargeFxIndex, false )
+		ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 		if caster:IsAlive() then
 			frontward = caster:GetForwardVector()
 			enuma.vSpawnOrigin = caster:GetAbsOrigin()
@@ -513,9 +517,6 @@ function OnMaxEnumaStart(keys)
 			projectile = ProjectileManager:CreateLinearProjectile(enuma)
 			ScreenShake(caster:GetOrigin(), 7, 1.0, 2, 10000, 0, true)
 			ParticleManager:CreateParticle("particles/custom/screen_scarlet_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
-			-- Destroy charge particle
-			ParticleManager:DestroyParticle( chargeFxIndex, false )
-			ParticleManager:ReleaseParticleIndex( chargeFxIndex )
 
 			-- Create particle
 			local casterLocation = caster:GetAbsOrigin()
@@ -559,11 +560,11 @@ end
 function GilgaCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gilgamesh_gate_of_babylon") and caster:FindAbilityByName("gilgamesh_enuma_elish"):IsCooldownReady() and caster:FindAbilityByName("gilgamesh_max_enuma_elish"):IsCooldownReady() then
-			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+			caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", false, true) 
 			Timers:CreateTimer({
 				endTime = 5,
 				callback = function()
-				caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, true) 
+				caster:SwapAbilities("gilgamesh_enuma_elish", "gilgamesh_max_enuma_elish", true, false) 
 			end
 			})			
 		end
@@ -587,7 +588,7 @@ function OnPowerOfSumerAcquired(keys)
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsSumerAcquired = true
 
-	hero:SwapAbilities("gilgamesh_gate_of_babylon_toggle", "gilgamesh_golden_rule", true, true)
+	hero:SwapAbilities("gilgamesh_gate_of_babylon_toggle", "gilgamesh_golden_rule", true, false)
 	hero:FindAbilityByName("gilgamesh_gate_of_babylon_toggle"):ToggleAbility()
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
@@ -599,7 +600,7 @@ function OnRainOfSwordsAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.IsRainAcquired = true
-	hero:SwapAbilities("gilgamesh_sword_barrage","gilgamesh_sword_barrage_improved", true, true)
+	hero:SwapAbilities("gilgamesh_sword_barrage","gilgamesh_sword_barrage_improved", false, true)
 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit

@@ -25,6 +25,48 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		playerPanel = $.CreatePanel( "Panel", playersContainer, playerPanelName );
 		playerPanel.SetAttributeInt( "player_id", playerId );
 		playerPanel.BLoadLayout( scoreboardConfig.playerXmlName, false, false );
+
+		playerPanel.SetPanelEvent(
+			"onactivate",
+			function() {
+				if (GameUI.IsAltDown()) {
+					var playerInfo = Game.GetPlayerInfo(playerId);
+					var isDead = playerInfo.player_respawn_seconds >= 0;
+					var localPlayerId = Game.GetLocalPlayerID();
+					var message;
+					if (localPlayerId == playerId) {
+						message = "_gray__arrow_ _default_I am _gold_" + (isDead ? "dead" : "alive") + "_default_!";
+					} else {
+						var localPlayerInfo = Game.GetPlayerInfo(localPlayerId);
+						if (playerInfo.player_team_id != localPlayerInfo.player_team_id) {
+							var heroName = playerInfo.player_selected_hero
+							message = "_gray__arrow_ _default_Enemy _gold_" + heroName + "_default_ is " + (isDead ? "dead" : "missing") + "!";
+						}
+					}
+					if (message) {
+						GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
+					}
+				} else if (GameUI.IsControlDown()) {
+					var localPlayerId = Game.GetLocalPlayerID();
+					if (localPlayerId != playerId) {
+						return;
+					}
+					var hero = Players.GetPlayerHeroEntityIndex(playerID);
+					var comboStatus = GetComboStatus(hero)
+					var message = "_gold_ Combo _gray__arrow_ _default_";
+					if (comboStatus == 0) {
+						message += "Ready"
+					} else if (comboStatus == -1) {
+						message += "Unavailable"
+					} else {
+						message += "On cooldown ( " + Math.ceil(comboStatus) + " seconds remain )"
+					}
+					GameEvents.SendCustomGameEventToServer("player_alt_click", {message: message});
+				} else {
+							Players.PlayerPortraitClicked(playerId, false, false);
+				}
+			}
+		);
 	}
 
 	playerPanel.SetHasClass( "is_local_player", ( playerId == Game.GetLocalPlayerID() ) );
@@ -104,19 +146,29 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 		var playerColorBar = playerPanel.FindChildInLayoutFile( "PlayerColorBar" );
 		if ( playerColorBar !== null )
 		{
-			if ( GameUI.CustomUIConfig().team_colors )
-			{
-				var teamColor = GameUI.CustomUIConfig().team_colors[ playerInfo.player_team_id ];
-				if ( teamColor )
-				{
-					playerColorBar.style.backgroundColor = teamColor;
-				}
+			var playerColor = Players.GetPlayerColor(playerId);
+			if (playerColor >= 0) {
+				var red = playerColor & 255;
+				var green = playerColor >> 8 & 255;
+				var blue = playerColor >> 16 & 255;
+				var hexColor = "rgb(" + red + "," + green + "," + blue + ")";
+				playerColorBar.style.backgroundColor = hexColor;
+			} else {
+				playerColorBar.style.backgroundColor = "black";
 			}
-			else
-			{
-				var playerColor = "#000000";
-				playerColorBar.style.backgroundColor = playerColor;
-			}
+			// if ( GameUI.CustomUIConfig().team_colors )
+			// {
+				// var teamColor = GameUI.CustomUIConfig().team_colors[ playerInfo.player_team_id ];
+				// if ( teamColor )
+				// {
+					// playerColorBar.style.backgroundColor = teamColor;
+				// }
+			// }
+			// else
+			// {
+				// var playerColor = "#000000";
+				// playerColorBar.style.backgroundColor = playerColor;
+			// }
 		}
 
 		var playerIDPanel = playerPanel.FindChildInLayoutFile( "PlayerID" );
@@ -206,12 +258,14 @@ function _ScoreboardUpdater_UpdatePlayerPanel( scoreboardConfig, playersContaine
 
 	_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerGoldAmount", goldValue );
 
-	playerPanel.SetHasClass( "player_ultimate_ready", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_READY ) );
-	playerPanel.SetHasClass( "player_ultimate_no_mana", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NO_MANA) );
-	playerPanel.SetHasClass( "player_ultimate_not_leveled", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NOT_LEVELED) );
-	playerPanel.SetHasClass( "player_ultimate_hidden", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_HIDDEN) );
-	playerPanel.SetHasClass( "player_ultimate_cooldown", ( ultStateOrTime > 0 ) );
-	_ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerUltimateCooldown", ultStateOrTime );
+	var hero = Players.GetPlayerHeroEntityIndex(playerID);
+	var comboStatus = isTeammate ? GetComboStatus(hero) : -2;
+	playerPanel.SetHasClass( "player_ultimate_ready", comboStatus == 0);
+	// playerPanel.SetHasClass( "player_ultimate_no_mana", ( ultStateOrTime == PlayerUltimateStateOrTime_t.PLAYER_ULTIMATE_STATE_NO_MANA) );
+	playerPanel.SetHasClass( "player_ultimate_not_leveled", comboStatus == -1);
+	playerPanel.SetHasClass( "player_ultimate_hidden", comboStatus == -2);
+	playerPanel.SetHasClass( "player_ultimate_cooldown", comboStatus > 0);
+	// _ScoreboardUpdater_SetTextSafe( playerPanel, "PlayerUltimateCooldown", ultStateOrTime );
 }
 
 
@@ -343,18 +397,21 @@ function _ScoreboardUpdater_ReorderTeam( scoreboardConfig, teamsParent, teamPane
 // sort / reorder as necessary
 function compareFunc( a, b ) // GameUI.CustomUIConfig().sort_teams_compare_func;
 {
-	if ( a.team_score < b.team_score )
-	{
-		return 1; // [ B, A ]
+	var scoreA;
+	var scoreB;
+	if (Game.GetMapInfo().map_display_name == "fate_elim_6v6") {
+		scoreA = a.team_id == 2 ? g_RadiantScore : g_DireScore;
+		scoreB = b.team_id == 2 ? g_RadiantScore : g_DireScore;
+	} else {
+		scoreA = a.team_score;
+		scoreB = b.team_score;
 	}
-	else if ( a.team_score > b.team_score )
-	{
+	if (scoreA < scoreB) {
+		return 1; // [ B, A ]
+	} else if (scoreA > scoreB) {
 		return -1; // [ A, B ]
 	}
-	else
-	{
-		return 0;
-	}
+	return 0;
 };
 
 function stableCompareFunc( a, b )
@@ -458,6 +515,7 @@ function ScoreboardUpdater_InitializeScoreboard( scoreboardConfig, scoreboardPan
 		scoreboardConfig.shouldSort = true;
 	}
 	_ScoreboardUpdater_UpdateAllTeamsAndPlayers( scoreboardConfig, scoreboardPanel );
+
 	return { "scoreboardConfig": scoreboardConfig, "scoreboardPanel":scoreboardPanel }
 }
 
@@ -555,3 +613,23 @@ Entities.HasModifier = function(entIndex, modifierName){
 	};
 	return false
 };
+
+function GetComboStatus(heroEntIndex) {
+	var config = GameUI.CustomUIConfig();
+	var entIndex = config.masterUnits && config.masterUnits[heroEntIndex];
+	if (!entIndex) {
+		return -1
+	}
+	var nBuffs = Entities.GetNumBuffs(entIndex)
+	for (var i = 0; i < nBuffs; i++) {
+		var buff = Entities.GetBuff(entIndex, i);
+		var buffName = Buffs.GetName(entIndex, buff);
+		if (buffName == "combo_unavailable") {
+			return -1
+		}
+		if (buffName == "combo_cooldown") {
+			return Buffs.GetRemainingTime(entIndex, buff);
+		}
+	};
+	return 0;
+}

@@ -28,7 +28,7 @@
 		"Ability8"					"saber_improved_instinct"
 		"Ability9"					"saber_strike_air"
 		"Ability10"					"presence_detection_passive"
-		"Ability11"					"attribute_bonus"
+		"Ability11"					"attribute_bonus_custom"
 		"Combo"						"saber_max_excalibur"
 		"AttributeNumber"			"4"
 		"Attribute1"				"saber_attribute_improve_excalibur"
@@ -97,7 +97,7 @@
 		"Ability13"					"lancer_5th_wesen_gae_bolg"
 		"Ability14"					"lancer_5th_protection_from_arrows"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						"lancer_5th_wesen_gae_bolg"
 		"AttributeNumber"			"4"
@@ -117,7 +117,7 @@
 		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
 		"AttackDamageMin"				"44"
 		"AttackDamageMax"				"51"
-		"AttackRate"					"0.95"
+		"AttackRate"					"0.85"
 		"AttackRange"					"250"
 		"AttackAcquisitionRange"		"350"
 		
@@ -160,7 +160,7 @@
 		"Ability7"				"saber_alter_max_mana_burst"
 		"Ability8"				"saber_alter_darklight_passive"
 		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability10"				"attribute_bonus_custom"
 		
 		"Combo"						"saber_alter_max_mana_burst"
 		"AttributeNumber"			"4"
@@ -227,7 +227,7 @@
 		"Ability11"				"archer_5th_hrunting"
 		"Ability12"				"archer_5th_sword_barrage_retreat_shot"
 		"Ability13"				"presence_detection_passive"
-		"Ability14"				"attribute_bonus"
+		"Ability14"				"attribute_bonus_custom"
 
 		"Combo"						"archer_5th_arrow_rain"
 		"AttributeNumber"			"5"
@@ -291,7 +291,7 @@
 		"Ability7"				"rider_5th_bellerophon_2"
 		"Ability8"				"rider_5th_monstrous_strength_passive"
 		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability10"				"attribute_bonus_custom"
 
 		"Combo"						"rider_5th_bellerophon_2"
 		"AttributeNumber"			"4"
@@ -356,7 +356,7 @@
 		"Ability9"				"berserker_5th_god_hand"
 		"Ability10"				"berserker_5th_reincarnation"
 		"Ability11"				"presence_detection_passive"
-		"Ability12"				"attribute_bonus"
+		"Ability12"				"attribute_bonus_custom"
 
 		"Combo"						"berserker_5th_madmans_roar"
 		"AttributeNumber"			"4"
@@ -420,7 +420,7 @@
 		"Ability8"				"false_assassin_quickdraw"
 		"Ability9"				"false_assassin_presence_concealment"
 		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability11"				"attribute_bonus_custom"
 
 		"Combo"						"false_assassin_tsubame_mai"
 		"AttributeNumber"			"4"
@@ -483,7 +483,7 @@
 		"Ability9"				"true_assassin_protection_from_wind"
 		"Ability10"				"true_assassin_dirk_improved"
 		"Ability11"				"presence_detection_passive"
-		"Ability12"				"attribute_bonus"
+		"Ability12"				"attribute_bonus_custom"
 		"Ability13"				"true_assassin_dirk_attr_temp"
 
 		"Combo"						"true_assassin_combo"
@@ -554,7 +554,7 @@
 		"Ability12"				"caster_5th_sacrifice"
 		"Ability13"				"caster_5th_hecatic_graea_powered"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"caster_5th_hecatic_graea_powered"
 		"AttributeNumber"			"4"
@@ -617,7 +617,7 @@
 		"Ability8"				"gilgamesh_gate_of_babylon_toggle"
 		"Ability9"				"gilgamesh_sword_barrage_improved"
 		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability11"				"attribute_bonus_custom"
 
 		"Combo"						"gilgamesh_max_enuma_elish"
 		"AttributeNumber"			"4"
@@ -682,7 +682,7 @@
 		"Ability12"				"lancelot_tsubame_gaeshi"
 		"Ability13"				"lancelot_nuke"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"lancelot_nuke"
 		"AttributeNumber"			"4"
@@ -747,7 +747,7 @@
 		"Ability10"				"avenger_blood_mark"
 		"Ability11"				"avenger_endless_loop"
 		"Ability12"				"presence_detection_passive"
-		"Ability13"				"attribute_bonus"
+		"Ability13"				"attribute_bonus_custom"
 		"Ability14"				"avenger_overdrive"
 		"Ability15"				"avenger_autoattack"
 
@@ -811,7 +811,7 @@
 		"Ability7"				"diarmuid_rampant_warrior"
 		"Ability8"				"diarmuid_double_spear_strike"
 		"Ability9"				"presence_detection_passive"
-		"Ability10"				"attribute_bonus"
+		"Ability10"				"attribute_bonus_custom"
 		"Ability11"				"diarmuid_autoattack"
 
 		"Combo"						"diarmuid_rampant_warrior"
@@ -872,7 +872,7 @@
 		"Ability6"				"gille_abyssal_contract"
 		"Ability7"				"gille_larret_de_mort"
 		"Ability8"				"presence_detection_passive"
-		"Ability9"				"attribute_bonus"
+		"Ability9"				"attribute_bonus_custom"
 
 		"Combo"						"gille_larret_de_mort"
 		"AttributeNumber"			"5"
@@ -940,7 +940,7 @@
 		"Ability12"				"fate_empty3"
 		"Ability13"				"fate_empty4"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"iskander_annihilate"
 		"AttributeNumber"			"4"
@@ -1006,7 +1006,7 @@
 		"Ability12"				"nero_acquire_clairvoyance"
 		"Ability13"				"nero_close_spellbook"
 		"Ability14"				"presence_detection_passive"
-		"Ability15"				"attribute_bonus"
+		"Ability15"				"attribute_bonus_custom"
 
 		"Combo"						"nero_fiery_finale"
 		"AttributeNumber"			"4"
@@ -1069,7 +1069,7 @@
 		"Ability8"				"gawain_divine_meltdown"
 		"Ability9"				"gawain_excalibur_galatine_detonate"
 		"Ability10"				"presence_detection_passive"
-		"Ability11"				"attribute_bonus"
+		"Ability11"				"attribute_bonus_custom"
 
 		"Combo"						"gawain_supernova"
 		"AttributeNumber"			"5"
@@ -1135,7 +1135,7 @@
 		"Ability13"				"fate_empty2"
 		"Ability14"				"tamamo_mystic_shackle"
 		"Ability15"				"presence_detection_passive"
-		"Ability16"				"attribute_bonus"
+		"Ability16"				"attribute_bonus_custom"
 		
 		"StatusHealth"					"1150"
 		"StatusHealthRegen"				"4.0"
@@ -1196,7 +1196,7 @@
 		"Ability12"				"lishuwen_berserk"
 
 		"Ability15"				"presence_detection_passive"
-		"Ability16"				"attribute_bonus"
+		"Ability16"				"attribute_bonus_custom"
 		
 		"StatusHealth"					"1150"
 		"StatusHealthRegen"				"4.0"
@@ -1251,7 +1251,7 @@
 		"Ability7"					"jeanne_combo_la_pucelle"
 		"Ability8"					"jeanne_identity_discernment"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						"jeanne_combo_la_pucelle"
 		"AttributeNumber"			"4"
@@ -1313,7 +1313,7 @@
 		"Ability7"					"astolfo_hippogriff_ride"
 		"Ability8"					"astolfo_hippogriff_rush"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
 		"Combo"						""
 		"AttributeNumber"			"4"
@@ -1363,28 +1363,30 @@
 		"override_hero"				"npc_dota_hero_windrunner"
 		"DisableWearables" 			"1"
 		"Model"						"models/nurseryrhyme/nurseryrhyme.vmdl"
-		"ModelScale"				"1.0"
+		"ModelScale"				"0.78"
 		"DrawParticlesWhileHidden" "1"
 
 		"AbilityLayout"				"6"
 		"Ability1"					"nursery_rhyme_white_queens_enigma"
 		"Ability2"					"nursery_rhyme_the_plains_of_water"
 		"Ability3"					"nursery_rhyme_doppelganger"
-		"Ability4"					"fate_empty4"
-		"Ability5"					"fate_empty5"
-		"Ability6"					"fate_empty6"
+		"Ability4"					"nursery_rhyme_shapeshift"
+		"Ability5"					"nursery_rhyme_nameless_forest"
+		"Ability6"					"nursery_rhyme_queens_glass_game"
+		"Ability7"					"nursery_rhyme_story_for_somebodys_sake"
+		"Ability8"					"nursery_rhyme_shapeshift_swap"
+		"Ability9"					"nursery_rhyme_reminiscence"
 		"Ability15"					"presence_detection_passive"
-		"Ability16"					"attribute_bonus"
+		"Ability16"					"attribute_bonus_custom"
 
-		"Combo"						"fate_empty_nothidden"
-		"AttributeNumber"			"5"
-		"Attribute1"				"fate_empty1"
-		"Attribute2"				"fate_empty2"
-		"Attribute3"				"fate_empty3"
-		"Attribute4"				"fate_empty4"
-		"Attribute4"				"fate_empty5"
+		"Combo"						"nursery_rhyme_story_for_somebodys_sake"
+		"AttributeNumber"			"4"
+		"Attribute1"				"nursery_rhyme_attribute_forever_together"
+		"Attribute2"				"nursery_rhyme_attribute_nightmare"
+		"Attribute3"				"nursery_rhyme_attribute_reminiscence"
+		"Attribute4"				"nursery_rhyme_attribute_improve_queens_glass_game"
 		
-		"StatusHealth"					"900"
+		"StatusHealth"					"1050"
 		"StatusHealthRegen"				"5"
 		"StatusMana"					"1200"
 		"StatusManaRegen"				"4"
@@ -1398,7 +1400,7 @@
 		"AttackDamageMax"				"60"
 		"AttackRate"					"1.4"
 		"AttackAcquisitionRange"		"1000"
-		"ProjectileModel"	"particles/units/heroes/hero_witchdoctor/witchdoctor_ward_attack.vpcf"
+		"ProjectileModel"	"particles/units/heroes/hero_winter_wyvern/winter_wyvern_arctic_attack.vpcf"
 		"ProjectileSpeed"	"1000"
 		
 		
@@ -1417,4 +1419,73 @@
 		"VisionDaytimeRange"			"800"
 		"VisionNighttimeRange"			"800"
 	}
+
+	
+	//=================================================================================================================
+	//	Archer of Red - Atalanta
+	//=================================================================================================================
+	"npc_dota_hero_atalanta"
+	{
+		"override_hero"			"npc_dota_hero_drow_ranger"
+		"DisableWearables" 			"1"
+		"Model"					"models/atlanta/atlanta.vmdl"
+		//"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.00"
+		//"HeroID"					"114"
+		"DrawParticlesWhileHidden" "1"
+
+		"AbilityLayout"			"6"
+		"Ability1"				""
+		"Ability2"				""
+		"Ability3"				""
+		"Ability4"				""
+		"Ability5"				""
+		"Ability6"				""
+		"Ability13"				"presence_detection_passive"
+		"Ability14"				"attribute_bonus_custom"
+
+		"Combo"						""
+		"AttributeNumber"			"5"
+		"Attribute1"				""
+		"Attribute2"				""
+		"Attribute3"				""
+		"Attribute4"				""
+		"Attribute5"				""
+
+
+		"StatusHealth"					"1100"
+		"StatusHealthRegen"				"7"
+		"StatusMana"					"1050"
+		"StatusManaRegen"				"5"
+		
+		"ArmorPhysical"					"4"
+		"MagicalResistance"				"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackRange"					"700"
+		"AttackDamageMin"				"53"
+		"AttackDamageMax"				"57"
+		"AttackRate"					"1.1"
+		"AttackAcquisitionRange"		"1000"
+		"AttackAnimationPoint"			"0.3"
+		"ProjectileModel"	"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
+		"ProjectileSpeed"	"1500"
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.7"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.4"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.9"
+		
+		"MovementSpeed"					"340"
+		"MovementTurnRate"				"0.8"
+		
+		"VisionDaytimeRange"			"1300"
+		"VisionNighttimeRange"			"1300"
+
+	}
+	
 }

@@ -3,6 +3,13 @@ function OnIRStart(keys)
 	local ply = caster:GetPlayerOwner()
 	local target = keys.target
 
+	if target:GetName() == "npc_dota_ward_base" then 
+		keys.ability:EndCooldown()
+		caster:GiveMana(keys.ability:GetManaCost(1))
+		SendErrorMessage(caster:GetPlayerOwnerID(), "#Cannot_Be_Cast_Now")
+		return
+	end
+
 	GawainCheckCombo(caster, keys.ability)
 	GenerateArtificialSun(caster, target:GetAbsOrigin())
 
@@ -75,7 +82,9 @@ modifierList = {"modifier_max_mana_burst_cooldown","modifier_delusional_illusion
 "modifier_hecatic_graea_powered_cooldown","modifier_tsubame_mai_cooldown","modifier_madmans_roar_cooldown",
 "modifier_max_enuma_elish_cooldown","modifier_endless_loop_cooldown","modifier_rampant_warrior_cooldown","modifier_nuke_cooldown",
 "modifier_larret_de_mort_cooldown","modifier_annihilate_cooldown","modifier_fiery_finale_cooldown",
-"modifier_polygamist_cooldown","modifier_raging_dragon_strike_cooldown","modifier_la_pucelle_cooldown","modifier_hippogriff_ride_cooldown"}
+"modifier_polygamist_cooldown","modifier_raging_dragon_strike_cooldown","modifier_la_pucelle_cooldown","modifier_hippogriff_ride_cooldown","modifier_story_for_someones_sake_cooldown",
+"modifier_strike_air_cooldown","modifier_instinct_cooldown","modifier_battle_continuation_cooldown","modifier_hrunting_cooldown",
+"modifier_overedge_cooldown","modifier_blood_mark_cooldown","modifier_quickdraw_cooldown","modifier_eternal_arms_mastership_cooldown","modifier_mystic_shackle_cooldown"} --last 2 lines are non-combos.
 
 function OnDevoteHit(keys)
 	local caster = keys.caster
@@ -102,18 +111,18 @@ function OnDevoteHit(keys)
 			end
 
 			--Lower the remaining cooldown duration of the Master 2 (Rin)
-			if target:GetStrength() >= 19.1 and target:GetAgility() >= 19.1 and target:GetIntellect() >= 19.1 then 	--Checks if the target can cast combo
-				local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
-				local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
-				masterComboAbility:EndCooldown()	
-				masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)
-				for i = 1, #modifierList do
-					if target:HasModifier(modifierList[i]) then
-						target:RemoveModifierByName(modifierList[i])
-						keys.ability:ApplyDataDrivenModifier(caster, target, modifierList[i], {duration = (masterComboCooldownRemaining-15)})		
-					end
-				end		
-			end
+			local masterComboAbility = target.MasterUnit2:GetAbilityByIndex(5)									--Get the target's Master's combo ability
+			local masterComboCooldownRemaining = masterComboAbility:GetCooldownTimeRemaining()					--Get the remaining cooldown time
+			masterComboAbility:EndCooldown()	
+			masterComboAbility:StartCooldown(masterComboCooldownRemaining-15)
+			--Refreshing the cooldown modifiers, including non-combos.
+			for i = 1, #modifierList do
+				if target:HasModifier(modifierList[i]) then
+					cdRemaining = target:FindModifierByName(modifierList[i]):GetRemainingTime()
+					target:RemoveModifierByName(modifierList[i])
+					keys.ability:ApplyDataDrivenModifier(caster, target, modifierList[i], {duration = cdRemaining-15})		
+				end
+			end	
 		end
 	else
 		-- process enemy effect
@@ -196,7 +205,7 @@ function OnGalatineStart(keys)
 				casterLoc = caster:GetAbsOrigin()
 				orbLoc = caster:GetAbsOrigin()
 				diff = caster:GetForwardVector()
-				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
+				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", false, true)
 				InFirstLoop = false
 			end
 			orbLoc = orbLoc + diff * 33
@@ -208,7 +217,7 @@ function OnGalatineStart(keys)
 			GenerateArtificialSun(caster, orbLoc)
 
 			if caster:GetAbilityByIndex(2):GetAbilityName() == "gawain_excalibur_galatine_detonate" then
-				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
+				caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, false)
 			end
 			-- Explosion on allies
 			local targets = FindUnitsInRadius(caster:GetTeam(), galatineDummy:GetAbsOrigin(), nil, keys.Radius, DOTA_UNIT_TARGET_TEAM_FRIENDLY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false) 
@@ -218,7 +227,7 @@ function OnGalatineStart(keys)
 					local healTimer = 1
 					Timers:CreateTimer(1.0, function()
 						if healTimer > 3 then return end
-						v:Heal(v:GetHealth() + keys.Damage * 11/100, caster)
+						v:Heal(keys.Damage * 11/100, caster)
 						healTimer = healTimer + 1
 						return 1.0
 					end)
@@ -272,7 +281,7 @@ function OnGalatineDetonate(keys)
 	local caster = keys.caster
 	caster.IsGalatineActive = false
 	if caster:GetAbilityByIndex(2):GetAbilityName() == "gawain_excalibur_galatine_detonate" then
-		caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, true)
+		caster:SwapAbilities("gawain_excalibur_galatine", "gawain_excalibur_galatine_detonate", true, false)
 	end
 end
 
@@ -594,11 +603,11 @@ end
 function GawainCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("gawain_invigorating_ray") and caster:FindAbilityByName("gawain_suns_embrace"):IsCooldownReady() and caster:FindAbilityByName("gawain_supernova"):IsCooldownReady() then
-			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
+			caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", false, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, true) 
+				caster:SwapAbilities("gawain_suns_embrace", "gawain_supernova", true, false) 
 			end
 			})			
 		end
@@ -624,6 +633,7 @@ function OnFairyAcquired(keys)
 
     hero:AddAbility("gawain_blessing_of_fairy")
     hero:FindAbilityByName("gawain_blessing_of_fairy"):SetLevel(1)
+    hero:FindAbilityByName("gawain_blessing_of_fairy"):SetHidden(true)
     --hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_blessing_of_fairy", true, true)
     -- Set master 1's mana 
     local master = hero.MasterUnit
@@ -635,7 +645,7 @@ function OnMeltdownAcquired(keys)
     local ply = caster:GetPlayerOwner()
     local hero = caster:GetPlayerOwner():GetAssignedHero()
     hero.IsMeltdownAcquired = true
-    hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_divine_meltdown", true, true)
+    hero:SwapAbilities(hero:GetAbilityByIndex(4):GetName(), "gawain_divine_meltdown", false, true)
     -- Set master 1's mana 
     local master = hero.MasterUnit
     master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))

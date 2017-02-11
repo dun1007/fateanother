@@ -308,14 +308,18 @@ function OnAmbushBroken(keys)
 end
 
 function OnFirstHitStart(keys)
-	keys.caster:RemoveModifierByName("modifier_ambush")
+	local caster = keys.caster
+	local ability = keys.ability
+	caster:RemoveModifierByName("modifier_ambush")
+	caster:RemoveModifierByName("modifier_first_hit")
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_thrown", {}) 
 end
 
 function OnFirstHitLanded(keys)
-	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_first_hit") return end -- Linken effect checker
+	if IsSpellBlocked(keys.target) then keys.caster:RemoveModifierByName("modifier_thrown") return end -- Linken effect checker
 	DoDamage(keys.caster, keys.target, keys.Damage, DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 	keys.caster:EmitSound("Hero_TemplarAssassin.Meld.Attack")
-	keys.caster:RemoveModifierByName("modifier_first_hit")
+	keys.caster:RemoveModifierByName("modifier_thrown")
 	keys.caster:RemoveModifierByName("modifier_ambush")
 end
 
@@ -349,8 +353,8 @@ end
 
 function SelfModRefresh(keys)
 	local caster = keys.caster
-	caster:RemoveModifierByName("modifier_ta_agi_bonus") 
-	keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
+	caster:RemoveModifierByName("modifier_ta_agi_bonus")
+	caster:FindAbilityByName("true_assassin_self_modification"):ApplyDataDrivenModifier(caster, caster, "modifier_ta_agi_bonus", {}) 
 	caster:SetModifierStackCount("modifier_ta_agi_bonus", caster, caster:GetKills())
 end
 
@@ -473,11 +477,11 @@ function TACheckCombo(caster, ability)
 			})
 		elseif ability == caster:FindAbilityByName("true_assassin_ambush") and caster:FindAbilityByName("true_assassin_combo"):IsCooldownReady()  then
 			if AmbushUsed == true then 
-				caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+				caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", false, true)
 				Timers:CreateTimer({
 					endTime = 8,
 					callback = function()
-					caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, true)
+					caster:SwapAbilities("true_assassin_ambush", "true_assassin_combo", true, false)
 				end
 				})
 			end

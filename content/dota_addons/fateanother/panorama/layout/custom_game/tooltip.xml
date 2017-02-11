@@ -1,0 +1,10 @@
+<root>
+    <styles>
+        <include src="s2r://panorama/styles/dotastyles.vcss_c" />
+    </styles>
+    <script>
+    </script>
+<Panel class="Tooltip">
+<Label text="TTATATAT"/>
+</Panel>
+</root>

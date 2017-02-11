@@ -192,17 +192,12 @@ AstolfoAttribute = {
 }
 
 NRAttribute = {
-	"fate_empty1",
-	"fate_empty2",
-	"fate_empty3",
-	"fate_empty4",
-	"fate_empty5",
-	--[["nursery_rhyme_attribute_jabberwocky",
+	"nursery_rhyme_attribute_forever_together",
+	"nursery_rhyme_attribute_nightmare",
+	"nursery_rhyme_attribute_reminiscence",
 	"nursery_rhyme_attribute_improve_queens_glass_game",
-	"nursery_rhyme_attribute_improve_nameless_forest",
-	"nursery_rhyme_attribute_unending_rhymes",
-	"nursery_rhyme_attribute_dragon_skillet",]]
-	attrCount = 5
+	"nursery_rhyme_story_for_somebodys_sake",
+	attrCount = 4
 }
 --[[LiAttribute = {
 	attrCount = 4
@@ -389,7 +384,7 @@ function OnSeal4Start(keys)
 		return 
 	end
 
-	if not hero:IsAlive() or IsRevoked(hero) and hero:GetMana() == hero:GetMaxMana() then
+	if not hero:IsAlive() or IsRevoked(hero) or hero:GetMana() == hero:GetMaxMana() then
 		caster:SetMana(caster:GetMana()+1) 
 		keys.ability:EndCooldown() 
 		SendErrorMessage(caster:GetPlayerOwnerID(), "#Revoked_Error")
@@ -885,8 +880,9 @@ function OnAvariceAcquired(keys)
 		hero.AvariceCount = hero.AvariceCount + 1
 	end
 
+	-- distribute gold
 	local teamTable = {}
-	for i=0, 9 do
+	for i=0, 11 do
 		local player = PlayerResource:GetPlayer(i)
 		if player ~= nil then 
 			hero = PlayerResource:GetPlayer(i):GetAssignedHero()
@@ -897,7 +893,7 @@ function OnAvariceAcquired(keys)
 	end
 
 	for i=1,#teamTable do
-		local goldperperson = 20000/#teamTable
+		local goldperperson = 10000/#teamTable
 		--print("Distributing " .. goldperperson .. " per person")
 		teamTable[i]:ModifyGold(goldperperson, true, 0)
 	end
@@ -919,6 +915,8 @@ function OnAMAcquired(keys)
 	hero:AddItem(CreateItem("item_shard_of_anti_magic" , nil, nil)) 
     local statTable = CreateTemporaryStatTable(hero)
     CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
+
+    SaveStashState(hero)
 end
 
 function OnReplenishmentAcquired(keys)
@@ -934,6 +932,8 @@ function OnReplenishmentAcquired(keys)
 	hero:AddItem(CreateItem("item_shard_of_replenishment" , nil, nil)) 
     local statTable = CreateTemporaryStatTable(hero)
     CustomGameEventManager:Send_ServerToPlayer( hero:GetPlayerOwner(), "servant_stats_updated", statTable ) -- Send the current stat info to JS
+
+    SaveStashState(hero)
 end
 
 function OnProsperityAcquired(keys)
@@ -1096,4 +1096,25 @@ function OnHeroRespawn(keys)
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "spawn_invulnerable", 3.0)
 	end
 	FindClearSpaceForUnit( caster, caster:GetAbsOrigin(), true )
+end
+
+function OnComboCheck(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	local ply = caster:GetPlayerOwner()
+	local hero = ply:GetAssignedHero()
+
+	if caster:HasModifier("combo_cooldown") then
+		caster:RemoveModifierByName("combo_cooldown")
+	end
+	if caster:HasModifier("combo_unavailable") then
+		caster:RemoveModifierByName("combo_unavailable")
+	end
+
+	local comboAvailability = GetComboAvailability(hero)
+	if comboAvailability == -1 then
+		ability:ApplyDataDrivenModifier(caster, caster, "combo_unavailable", {duration=1})
+	elseif comboAvailability > 0 then
+		ability:ApplyDataDrivenModifier(caster, caster, "combo_cooldown", {duration=comboAvailability})
+	end
 end

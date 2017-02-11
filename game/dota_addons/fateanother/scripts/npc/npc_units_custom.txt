@@ -553,7 +553,7 @@
 		"Ability8"					"caster_5th_dimensional_jump"
 		"Ability9"					"fate_empty3"
 		"Ability10"					"fate_empty4"
-		"Ability11"					"fate_empty5"
+		"Ability11"					"fate_empty2"
 		"ArmorPhysical"				"0"			// Physical protection.
 
 		"BountyXP"					"200"	// Experience earn.
@@ -866,6 +866,71 @@
 		// Status
 		//----------------------------------------------------------------
 		"StatusHealth"				"1100"
+		"StatusHealthRegen"			"0"
+		"StatusMana"				"0"
+		"StatusManaRegen"			"0"
+		
+		// Vision
+		//----------------------------------------------------------------
+		"VisionDaytimeRange"		"1000"
+		"VisionNighttimeRange"		"1000"
+	}
+
+	"pseudo_illusion"
+	{
+		// General
+		//----------------------------------------------------------------
+		"BaseClass"					"npc_dota_creature"
+		"Model"						"models/assassin/asn.vmdl"
+		"ModelScale"				"1.0"
+		"Level"						"1"
+		"HealthBarOffset"			"300"
+
+		// Abilities
+		//----------------------------------------------------------------
+		"Ability1"					""	 
+		"Ability2"					""	 
+		
+		// Armor
+		//----------------------------------------------------------------
+		"ArmorPhysical"				"0"
+		"MagicalResistance"			"0"
+		
+		// Attack
+		//----------------------------------------------------------------
+		"AttackCapabilities"			"DOTA_UNIT_CAP_MELEE_ATTACK"
+		"AttackRange"					"1"
+		"AttackDamageMin"				"0"
+		"AttackDamageMax"				"0"
+		"AttackRate"					"9"
+		"AttackAcquisitionRange"		"0"
+		"AttackAnimationPoint"			"0.1"
+		"AttackRange"					"1"
+		
+		
+		// Bounds
+		//----------------------------------------------------------------
+		"BoundsHullName"			"DOTA_HULL_SIZE_HERO"
+		"RingRadius"				"70"
+		"CollisionSize"				"50"
+		"FormationRank"				"0"
+		
+		// Movement
+		//----------------------------------------------------------------
+		"MovementCapabilities"		"DOTA_UNIT_CAP_MOVE_GROUND"
+		"MovementSpeed"				"300"
+		"MovementTurnRate"			"0.5"
+
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.7"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.8"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0"		
+		// Status
+		//----------------------------------------------------------------
+		"StatusHealth"				"3000"
 		"StatusHealthRegen"			"0"
 		"StatusMana"				"0"
 		"StatusManaRegen"			"0"

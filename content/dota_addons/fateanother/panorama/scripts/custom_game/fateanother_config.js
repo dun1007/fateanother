@@ -8,6 +8,12 @@ function OnFateConfigButtonPressed()
     if (!configPanel)
         return;
     configPanel.visible = !configPanel.visible;
+
+    var buffBar = GameUI.CustomUIConfig().buffBar;
+    configPanel.FindChildTraverse("option6").enabled = buffBar.visible;
+    if (buffBar.visible) {
+        configPanel.FindChildTraverse("option6").checked = buffBar.enabled;
+    }
 }
 
 
@@ -59,6 +65,17 @@ function OnConfig5Toggle()
     portraitUI_1.visible = !portraitUI_1.visible;
     portraitUI_2.visible = !portraitUI_2.visible;
     portraitUI_3.visible = !portraitUI_3.visible;
+}
+
+function OnConfig6Toggle() {
+    var configPanel = $.GetContextPanel();
+    var option6 = configPanel.FindChildTraverse("option6");
+    var buffBar = GameUI.CustomUIConfig().buffBar;
+    if (option6.checked) {
+        buffBar.Enable();
+    } else {
+        buffBar.Disable();
+    }
 }
 
 function PlayerChat(event)
@@ -122,6 +139,18 @@ function UpdateMountStatus(data)
     $.Msg(bIsMounted);
 }
 
+function RegisterMasterUnit(data) {
+    var config = GameUI.CustomUIConfig()
+    var hero = data.hero;
+    var masterUnit = data.shardUnit;
+    config.masterUnits[hero] = masterUnit;
+}
+
+function RegisterAllMasterUnits(data) {
+    var config = GameUI.CustomUIConfig()
+    config.masterUnits = data;
+}
+
 (function()
 {
     $("#FateConfigBoard").visible = false;
@@ -132,4 +161,12 @@ function UpdateMountStatus(data)
     GameEvents.Subscribe( "dota_player_update_selected_unit", CheckTransportSelection );
     GameEvents.Subscribe( "player_summoned_transport", RegisterTransport);
     GameEvents.Subscribe( "player_mount_status_changed", UpdateMountStatus);
+
+    var config = GameUI.CustomUIConfig()
+    if (!config.masterUnits) {
+        config.masterUnits = {}
+    }
+
+    GameEvents.Subscribe( "player_register_master_unit", RegisterMasterUnit);
+    GameEvents.Subscribe( "player_register_all_master_units", RegisterAllMasterUnits);
 })();

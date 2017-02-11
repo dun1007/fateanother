@@ -30,8 +30,7 @@ softdispellable = {
     "modifier_lishuwen_concealment",
     "modifier_jeanne_charisma_str",
     "modifier_jeanne_charisma_agi",
-    "modifier_jeanne_charisma_int",
-    "modifier_magic_resistance_ex_shield"
+    "modifier_jeanne_charisma_int"
 }
 
 strongdispellable = {
@@ -66,7 +65,6 @@ strongdispellable = {
     "modifier_jeanne_charisma_str",
     "modifier_jeanne_charisma_agi",
     "modifier_jeanne_charisma_int",
-    "modifier_magic_resistance_ex_shield",
 
     -- Strong Dispelable
     "modifier_b_scroll",
@@ -129,6 +127,12 @@ cleansable = {
     "modifier_fierce_tiger_strike_3_slow",
     "modifier_purge_the_unjust_slow",
     "modifier_gods_resolution_slow",
+    "modifier_down_with_a_touch_slow",
+    "modifier_down_with_a_touch_slow_2",
+    "modifier_down_with_a_touch_slow_3",
+    "modifier_la_black_luna_slow",
+    "modifier_nursery_rhyme_shapeshift_slow",
+    "modifier_doppelganger_lookaway_slow",
     -- Other CCs
     "modifier_stunned",
     "modifier_rule_breaker",
@@ -176,11 +180,14 @@ slowmodifier = {
     "modifier_down_with_a_touch_slow",
     "modifier_down_with_a_touch_slow_2",
     "modifier_down_with_a_touch_slow_3",
-    "modifier_la_black_luna_slow"
+    "modifier_la_black_luna_slow",
+    "modifier_nursery_rhyme_shapeshift_slow",
+    "modifier_doppelganger_lookaway_slow"
 }
 
 donotlevel = {
     "attribute_bonus",
+    "attribute_bonus_custom",
     "saber_improved_instinct",
     "lancer_5th_protection_from_arrows",
     "saber_alter_darklight_passive",
@@ -202,6 +209,7 @@ CannotReset = {
     "saber_strike_air",
     "saber_max_excalibur",
     "lancer_5th_battle_continuation",
+    "lancer_5th_protection_from_arrows",
     "lancer_5th_wesen_gae_bolg",
     "saber_alter_max_mana_burst",
     "rider_5th_bellerophon_2",
@@ -244,7 +252,12 @@ CannotReset = {
     "tamamo_mystic_shackle",
     "astolfo_casa_di_logistilla",
     "astolfo_hippogriff_ride",
-    "astolfo_hippogriff_rush"
+    "astolfo_hippogriff_rush",
+    "nursery_rhyme_shapeshift",
+    "nursery_rhyme_shapeshift_swap",
+    "nursery_rhyme_nameless_forest",
+    "nursery_rhyme_reminiscence",
+    "nursery_rhyme_story_for_somebodys_sake"
 }
 
 femaleservant = {
@@ -254,7 +267,8 @@ femaleservant = {
     "npc_dota_hero_crystal_maiden",
     "npc_dota_hero_lina",
     "npc_dota_hero_enchantress",
-    "npc_dota_hero_mirana"
+    "npc_dota_hero_mirana",
+    "npc_dota_hero_windrunner"
 }
 
 itemComp = {
@@ -499,11 +513,13 @@ function LevelAllAbility(hero)
     for i=0, 14 do
         local ability = hero:GetAbilityByIndex(i)
         if ability == nil then return end
-        local level0 = false
+        local level0 = false -- whether ability should be kept level 0 or not
         -- If skill shouldn't be leveled, do not set level to 1
         for i=1, #donotlevel do
             if ability:GetName() == donotlevel[i] then level0 = true end
         end
+        -- If skill is actually a talent, do not level it
+        if string.match(ability:GetName(),"special_bonus") then level0 = true end
         if not level0 then ability:SetLevel(1) end
         -- if skill should not be reset when using command seal, flag it as unresetable
         for i=1, #CannotReset do
@@ -538,10 +554,8 @@ function CheckItemCombination(hero)
     -- loop through stash
     for i=0,5 do
         if bIsMatchingFound then break end
-
         local currentItem = hero:GetItemInSlot(i)
         if currentItem then
-
             local currentItemName1 = currentItem:GetName()
             local currentItemIndex1 = i
             if GetMatchingItem(currentItemName1) then
@@ -573,7 +587,7 @@ function CheckItemCombinationInStash(hero)
     local bIsMatchingFound = false
 
     -- loop through stash
-    for i=6,11 do
+    for i=9,14 do
         if bIsMatchingFound then break end
 
         local currentItem = hero:GetItemInSlot(i)
@@ -582,7 +596,7 @@ function CheckItemCombinationInStash(hero)
             local currentItemIndex1 = i
             if GetMatchingItem(currentItemName1) then
                 -- first component found, find second component
-                for j=6,11 do
+                for j=9,14 do
                     if bIsMatchingFound then break end
 
                     if j == currentItemIndex1 then goto continue end -- just continue if we are looking at the same slot as first component
@@ -594,7 +608,7 @@ function CheckItemCombinationInStash(hero)
                             bIsMatchingFound = true
                             if not currentItem:IsNull() then currentItem:RemoveSelf() end
                             if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                            CreateItemAtSlot(hero, tItemComboTable[currentItemName1], 6, -1, false, true)
+                            CreateItemAtSlot(hero, tItemComboTable[currentItemName1], 9, -1, false, true)
                         end
                     end
                     ::continue::
@@ -614,116 +628,12 @@ function GetMatchingItem(name)
     return false
 end
 
---[[function CheckItemCombination(hero)
-    local isMatchingFound = false
-    --print("checking item combination of " .. hero:GetName())
-    -- loop through stash
-    for i=0,5 do 
-        local currentItem = hero:GetItemInSlot(i)
-        -- if item is there, check for combination
-        if currentItem ~= nil then
-            local currentItemName = currentItem:GetName()
-            -- Loop through composition list 
-            for i=1, #itemComp do 
-                -- component 1 is matching, check if item component 2 exists
-                if itemComp[i][1] == currentItemName then
-                    for j=0,5 do 
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][2] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                -- component 2 is matching, check if item component 1 exists
-                elseif itemComp[i][2] == currentItemName then
-                    for j=0,5 do
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][1] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 0, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                end
-            end 
-        end
-        if isMatchingFound then break end
-    end
-end
 
-function CheckItemCombinationInStash(hero)
-    local isMatchingFound = false
-    -- loop through stash
-    --print("checking item combination in stash of " .. hero:GetName())
-    for i=6,11 do 
-        local currentItem = hero:GetItemInSlot(i)
-        -- if item is there, check for combination
-        if currentItem ~= nil then
-            local currentItemName = currentItem:GetName()
-            -- Loop through composition list 
-            for i=1, #itemComp do 
-                -- component 1 is matching, check if item component 2 exists
-                if itemComp[i][1] == currentItemName then
-                    for j=6,11 do
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][2] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                -- component 2 is matching, check if item component 1 exists
-                elseif itemComp[i][2] == currentItemName then
-                    for j=6,11 do
-                        local currentItem2 = hero:GetItemInSlot(j)
-                        if currentItem2 ~= nil and currentItem2 ~= currentItem then
-                            local currentItemName2 = currentItem2:GetName()
-                            if itemComp[i][1] == currentItemName2 then
-                                isMatchingFound = true
-                                print("match found, fusing items")
-                                if not currentItem:IsNull() then currentItem:RemoveSelf() end
-                                if not currentItem2:IsNull() then currentItem2:RemoveSelf() end
-                                CreateItemAtSlot(hero, itemComp[i][3], 6, -1)
-                                break
-                            end
-                        end
-                    end
-                    if isMatchingFound then break end
-                end
-            end 
-        end
-        if isMatchingFound then break end
-    end
-end]]--
-
--- 
 function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bIsStashChecked)
     local dummyitemtable = {}
     for i = 0, slot-1 do
         if hero:GetItemInSlot(i) == nil then
-            local dummyitem = CreateItem("item_blink_scroll", nil, nil)
+            local dummyitem = CreateItem("item_dummy_item", nil, nil)
             table.insert(dummyitemtable, dummyitem)
             hero:AddItem(dummyitem)
         end
@@ -733,11 +643,6 @@ function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bI
         newItem:SetCurrentCharges(charges)
     end
     hero:AddItem(newItem)
-    --[[if slot >= 6 then
-        hero:AddItem(CreateItem(itemname, hero, hero))
-    else
-        hero:AddItem(CreateItem(itemname, nil, nil))
-    end]]
 
     for i = 1, #dummyitemtable do
         hero:RemoveItem(dummyitemtable[i]) 
@@ -745,63 +650,6 @@ function CreateItemAtSlot(hero, itemname, slot, charges, bIsInventoryChecked, bI
     if bIsInventoryChecked then CheckItemCombination(hero) end 
     if bIsStashChecked then CheckItemCombinationInStash(hero) end
 end
-
-
-
-function FindName(name)
-    local heroName = nil
-    --print("Finding name")
-    if name == "npc_dota_hero_legion_commander" then
-        heroName = "Saber"
-    elseif name == "npc_dota_hero_phantom_lancer" then
-        heroName = "Lancer(5th)"
-    elseif name == "npc_dota_hero_spectre" then
-        heroName = "Saber Alter(5th)"
-    elseif name == "npc_dota_hero_ember_spirit" then
-        heroName = "Archer(5th)"
-    elseif name == "npc_dota_hero_templar_assassin" then
-        heroName = "Rider(5th)"
-    elseif name == "npc_dota_hero_doom_bringer" then
-        heroName = "Berserker(5th)"
-    elseif name == "npc_dota_hero_juggernaut" then
-        heroName = "Assassin(5th)"
-    elseif name == "npc_dota_hero_bounty_hunter" then
-        heroName = "True Assassin(5th)"
-    elseif name == "npc_dota_hero_crystal_maiden" then
-        heroName = "Caster(5th)"
-    elseif name == "npc_dota_hero_skywrath_mage" then
-        heroName = "Archer(4th)"
-    elseif name == "npc_dota_hero_sven" then
-        heroName = "Berserker(4th)"
-    elseif name == "npc_dota_hero_vengefulspirit" then
-        heroName = "Avenger"
-    elseif name == "npc_dota_hero_huskar" then
-        heroName = "Lancer(4th)"
-    elseif name == "npc_dota_hero_chen" then
-        heroName = "Rider(4th)"
-    elseif name == "npc_dota_hero_shadow_shaman" then
-        heroName = "Caster(4th)"
-    elseif name == "npc_dota_hero_lina" then
-        heroName = "Red Saber(Extra)"
-    elseif name == "npc_dota_hero_omniknight" then
-        heroName = "White Saber(Extra)"
-    elseif name == "npc_dota_hero_enchantress" then
-        heroName = "Caster(Extra)"
-    elseif name == "npc_dota_hero_bloodseeker" then
-        heroName = "Assassin(Extra)"
-    elseif name == "npc_dota_hero_mirana" then
-        heroName = "Ruler(Apocrypha)"
-    elseif name == "npc_dota_hero_queenofpain" then
-        heroName = "Rider of Black(Apocrypha)"
-    elseif name == "npc_dota_hero_windrunner" then
-        heroName = "loli castah"
-    else
-        heroName = "Undefined"
-    end
-    return heroName
-end
-
-
 
 function AddValueToTable(table, value)
     for i=1, 100 do
@@ -830,14 +678,14 @@ function IsSpellBlocked(target)
     elseif target:HasModifier("modifier_wind_protection_passive") then
         if math.random(100) < 15 then
             EmitSoundWithCooldown("DOTA_Item.LinkensSphere.Activate", target, 1)
-            ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
-            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin()) 
-            return true 
+            local particle = ParticleManager:CreateParticle("particles/items_fx/immunity_sphere.vpcf", PATTACH_ABSORIGIN, target)
+            ParticleManager:SetParticleControl(particle, 0, target:GetAbsOrigin())
+            return true
         end
-    else 
+    else
         return false
     end
-end 
+end
 
 function EmitSoundWithCooldown(soundname, target, cooldown)
     if not target.bIsSoundOnCooldown then
@@ -864,7 +712,7 @@ end
 
 function IsRevivePossible(target)
     if target:HasModifier("can_be_executed") then
-        print("cannot revive")
+        --print("cannot revive")
         return false
     end
     return true
@@ -994,11 +842,28 @@ end
 -- loc 1 = vector
 -- loc 2 = vector
 function IsInSameRealm(loc1, loc2)
-    if loc1.y < -2000 and loc2.y > -2000 then
-        return false
-    elseif loc1.y > -2000 and loc2.y < -2000 then
-        return false
+    -- above -2000 normal map
+    if loc1.y > -2000 and loc2.y > -2000 then
+      -- both are in normal map
+      return true
+    elseif not (loc1.y <= -2000 and loc2.y <= -2000) then
+      return false
     end
+    -- 3300 split between AotK and UBW
+    if loc1.x < 3300 and loc2.x < 3300 then
+      -- both are in AotK
+      return true
+    elseif not (loc1.x >= 3300 and loc2.x >= 3300) then
+      return false
+    end
+    -- below -6300 master location
+    if loc1.y > -6300 and loc2.y > -6300 then
+      -- both are in UBW
+      return true
+    elseif not (loc1.y <= -6300 and loc2.y <= -6300) then
+      return false
+    end
+    -- both are in master area
     return true
 end
 
@@ -1124,7 +989,18 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
     end
 
     -- if damage was not fully absorbed by shield, deal residue damage 
-    if IsAbsorbed == true then return else
+    if IsAbsorbed == true then
+        local dmgtable = {
+            attacker = source,
+            victim = target,
+            damage = 0,
+            damage_type = dmg_type,
+            damage_flags = dmg_flag,
+            ability = abil
+        }
+        ApplyDamage(dmgtable)
+        return 
+    else
         local dmgtable = {
             attacker = source,
             victim = target,
@@ -1136,7 +1012,11 @@ function DoDamage(source, target , dmg, dmg_type, dmg_flag, abil, isLoop)
 
         
         -- if target is linked, distribute damages 
-        if target:HasModifier("modifier_share_damage") and not isLoop and target.linkTable ~= nil then
+        if target:HasModifier("modifier_share_damage")
+          and not isLoop
+          and not (abil:GetName() == "avenger_verg_avesta" and source:GetTeam() == target:GetTeam())
+          and target.linkTable ~= nil
+        then
             -- Calculate the damage to secondary targets separately, in order to prevent MR from being twice as effective on primary target.
             local damageToAllies =  dmgtable.damage
 
@@ -1213,7 +1093,7 @@ function FillInventory(entity)
     for i=0, 5 do
         local hero_item = entity:GetItemInSlot(i)
         if hero_item == nil then
-            entity:AddItem(CreateItem("item_dummy_item" , nil, nil))
+            entity:AddItem(CreateItem("item_dummy_item_unusable" , nil, nil))
         end
     end
 end
@@ -1562,4 +1442,178 @@ function RemoveHeroFromLinkTables(targethero)
             end
         end
     end)]]
+end
+
+function SaveStashState(hero)
+    local stashState = {}
+    local stashChargeState = {}
+    for i=1, 6 do
+        local item = hero:GetItemInSlot(i + 8)
+        table.insert(stashState, i, item and item:GetName())
+        table.insert(stashChargeState, i, item and item:GetCurrentCharges())
+    end
+    hero.stashState = stashState
+    hero.stashChargeState = stashChargeState
+end
+
+function LoadStashState(hero)
+    local stashState = hero.stashState or {}
+    local stashChargeState = hero.stashChargeState or {}
+    -- fill inventory with dummy items so AddItem adds to correct index
+    for i=0,5 do
+        local item = hero:GetItemInSlot(i)
+        if item == nil then
+            local dummyItem = CreateItem("item_dummy_item", nil, nil)
+            hero:AddItem(dummyItem)
+        end
+    end
+    for i=1,6 do
+        local item = hero:GetItemInSlot(i + 8)
+        hero:RemoveItem(item)
+
+        local savedItemName = stashState[i]
+        local newItem = CreateItem(savedItemName or "item_dummy_item", nil, nil)
+        hero:AddItem(newItem)
+
+        local charges = stashChargeState[i]
+        if charges ~= nil then
+            newItem:SetCurrentCharges(charges)
+        end
+    end
+    -- clear dummy items
+    for i=0,14 do
+        local item = hero:GetItemInSlot(i)
+        if item:GetName() == "item_dummy_item" then
+            hero:RemoveItem(item)
+        end
+    end
+end
+
+local substitutions = {
+    -- colours
+    ["_gray_"] = "",
+    ["_silver_"] = "	",
+    ["_default_"] = "",
+    ["_yellow_"] = "",
+    ["_gold_"] = "",
+    ["_orange_"] = "",
+    ["_lightred_"] = "",
+    ["_red_"] = "",
+    ["_magenta_"] = "",
+    ["_pink_"] = "",
+    ["_violet_"] = "",
+    ["_purple_"] = "",
+    ["_blue_"] = "",
+    ["_darkgreen_"] = "",
+    ["_olive_"] = "",
+    ["_lightgreen_"] = "",
+    ["_green_"] = "",
+
+    --symbols
+    ["_arrow_"] = "▶",
+}
+
+local heroNames = {
+    ["npc_dota_hero_legion_commander"] = "Saber",
+    ["npc_dota_hero_phantom_lancer"] = "Lancer(5th)",
+    ["npc_dota_hero_spectre"] = "Saber Alter(5th)",
+    ["npc_dota_hero_ember_spirit"] = "Archer(5th)",
+    ["npc_dota_hero_templar_assassin"] = "Rider(5th)",
+    ["npc_dota_hero_doom_bringer"] = "Berserker(5th)",
+    ["npc_dota_hero_juggernaut"] = "Assassin(5th)",
+    ["npc_dota_hero_bounty_hunter"] = "True Assassin(5th)",
+    ["npc_dota_hero_crystal_maiden"] = "Caster(5th)",
+    ["npc_dota_hero_skywrath_mage"] = "Archer(4th)",
+    ["npc_dota_hero_sven"] = "Berserker(4th)",
+    ["npc_dota_hero_vengefulspirit"] = "Avenger",
+    ["npc_dota_hero_huskar"] = "Lancer(4th)",
+    ["npc_dota_hero_chen"] = "Rider(4th)",
+    ["npc_dota_hero_shadow_shaman"] = "Caster(4th)",
+    ["npc_dota_hero_lina"] = "Saber(Extra), Nero",
+    ["npc_dota_hero_omniknight"] = "Saber(Extra), Gawain",
+    ["npc_dota_hero_enchantress"] = "Caster(Extra), Tamamo",
+    ["npc_dota_hero_bloodseeker"] = "Assassin(Extra)",
+    ["npc_dota_hero_mirana"] = "Ruler(Apocrypha)",
+    ["npc_dota_hero_queenofpain"] = "Rider of Black(Apocrypha)",
+    ["npc_dota_hero_windrunner"] = "Caster(Extra), N.R",
+}
+
+
+function SubstituteMessageCodes(message)
+    for k,v in pairs(substitutions) do
+        message = string.gsub(message, k , v)
+    end
+    for k,v in pairs(heroNames) do
+        message = string.gsub(message, k , v)
+    end
+    return message
+end
+
+function FindName(name)
+    return heroNames[name] or "Undefined"
+end
+
+local heroCombos = {
+    ["npc_dota_hero_legion_commander"] = "saber_max_excalibur",
+    ["npc_dota_hero_phantom_lancer"] = "lancer_5th_wesen_gae_bolg",
+    ["npc_dota_hero_spectre"] = "saber_alter_max_mana_burst",
+    ["npc_dota_hero_ember_spirit"] = "archer_5th_arrow_rain",
+    ["npc_dota_hero_templar_assassin"] = "rider_5th_bellerophon_2",
+    ["npc_dota_hero_doom_bringer"] = "berserker_5th_madmans_roar",
+    ["npc_dota_hero_juggernaut"] = "false_assassin_tsubame_mai",
+    ["npc_dota_hero_bounty_hunter"] = "true_assassin_combo",
+    ["npc_dota_hero_crystal_maiden"] = "caster_5th_hecatic_graea_powered",
+    ["npc_dota_hero_skywrath_mage"] = "gilgamesh_max_enuma_elish",
+    ["npc_dota_hero_sven"] = "lancelot_nuke",
+    ["npc_dota_hero_vengefulspirit"] = "avenger_endless_loop",
+    ["npc_dota_hero_huskar"] = "diarmuid_rampant_warrior",
+    ["npc_dota_hero_chen"] = "iskander_annihilate",
+    ["npc_dota_hero_shadow_shaman"] = "gille_larret_de_mort",
+    ["npc_dota_hero_lina"] = "nero_fiery_finale",
+    ["npc_dota_hero_omniknight"] = "gawain_supernova",
+    ["npc_dota_hero_enchantress"] = "tamamo_polygamist_castration_fist",
+    ["npc_dota_hero_bloodseeker"] = "lishuwen_raging_dragon_strike",
+    ["npc_dota_hero_mirana"] = "jeanne_combo_la_pucelle",
+    ["npc_dota_hero_queenofpain"] = "astolfo_hippogriff_ride",
+    ["npc_dota_hero_windrunner"] = "nursery_rhyme_story_for_somebodys_sake",
+}
+
+function GetHeroCombo(hero)
+    local name = hero:GetName()
+    return heroCombos[name] or ""
+end
+
+-- returns -1 if combo is not available
+-- returns 0 if combo is available and ready
+-- otherwise returns cooldown remaning on combo
+function GetComboAvailability(hero)
+    local heroName = hero:GetName()
+    if heroName == "npc_dota_hero_juggernaut" then
+        if hero:GetStrength() < 24.1 or hero:GetAgility() < 24.1 then
+            return -1
+        end
+    else
+        local statreq = 19.1
+        if heroName == "npc_dota_hero_sven" then
+            local ability = hero:FindAbilityByName("lancelot_arondite")
+            if hero:HasModifier("modifier_arondite") then
+                statreq = statreq + ability:GetLevelSpecialValueFor("bonus_allstat", ability:GetLevel() - 1)
+            end
+        end
+        if hero:GetStrength() < statreq
+            or hero:GetAgility() < statreq
+            or hero:GetIntellect() < statreq
+        then
+            return -1
+        end
+    end
+    local comboName = GetHeroCombo(hero)
+    if comboName == "" then
+        return -1
+    end
+    local combo = hero:FindAbilityByName(comboName)
+    if combo == nil then
+        return -1
+    end
+    return combo:GetCooldownTimeRemaining()
 end

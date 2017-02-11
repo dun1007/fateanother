@@ -1,0 +1,129 @@
+#CombatEventPanel
+{
+    horizontal-align: left;
+    flow-children: down;
+    margin-top: 468px;
+    width: 200px;
+    height: 250px;
+    opacity: 0.7;
+    //background-color: blue;
+}
+
+#GoldEventPanel
+{
+    horizontal-align: left;
+    margin-top: 218px;
+    flow-children: down;
+    width: 200px;
+    height: 250px;
+    opacity: 0.7;
+    //background-color: yellow;
+}
+
+
+.CombatEventPopupEnemy
+{
+	flow-children: right;
+	width: 200px;
+	height: 40px;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 40% 20%, 100% 0%, from( #ff3333 ), color-stop( .5, #ffb3b3 ), to( #0000 ) );
+    animation-name: flyin_lefttoright;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+}
+
+.CombatEventPopupAlly
+{
+	flow-children: right;
+	width: 200px;
+	height: 40px;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 40% 20%, 100% 0%, from( #00b300 ), color-stop( .5, #66ff66 ), to( #0000 ) );
+    animation-name: flyin_lefttoright;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+}
+
+.CombatEventPortrait
+{
+	margin: 4px 1.5px 4px 1.5px;
+	max-width: 50px;
+	max-height: 32px;
+	border: 2px solid #111111FF;
+	border-radius: 4px;
+}
+
+.VictimOverlay
+{
+	brightness: 0.2;
+}
+
+.KillerOverlay
+{
+}
+
+.CombatEventIcon
+{
+	max-width: 30px;
+	max-height: 30px;
+	vertical-align: center;
+}
+
+@keyframes 'flyin_lefttoright' {
+  0% {
+    opacity:0;
+    transform: translateX(-40px);
+  }
+
+  8% {
+    opacity:1;
+    transform: translateX(0px);
+  }
+
+  92% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+}
+
+.GoldEventPopup
+{
+    flow-children: right;
+    width: 200px;
+    height: 40px;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 40% 20%, 100% 0%, from( #FFD700 ), color-stop( .5, #B39700 ), to( #0000 ) );
+    animation-name: flyin_lefttoright;
+    animation-duration: 8s;
+    animation-timing-function: linear;
+}
+
+.GoldEventIcon
+{
+    max-width: 30px;
+    max-height: 30px;
+    vertical-align: center;
+    brightness: 0.5;
+}
+
+.GoldAmountText
+{
+    color: #FFFFFF;
+    text-shadow: 0px 0px 10px 5 #000000;
+    font-size: 15px;
+    font-weight: bold;
+    horizontal-align: middle;
+    margin-top: -10px;
+}

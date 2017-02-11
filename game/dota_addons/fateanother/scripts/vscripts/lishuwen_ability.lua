@@ -363,11 +363,12 @@ function OnNSSDelayFinished(keys)
 	local target = keys.target
 	local ability = keys.ability
 	local damage = 0
+
+	if caster.bIsCirculatoryShockAcquired ~= true then return end --If without circulatory shock attribute, no damage at end of open_wound_duration (3.5s).
 	--[[local damage = target:GetMana() * keys.DelayedDamagePercentage/100
 	if target:GetName() == "npc_dota_hero_juggernaut" or target:GetName() == "npc_dota_hero_shadow_shaman" then
 		damage = (target:GetMaxHealth() - target:GetHealth()) * keys.DelayedDamagePercentage/100
 	end]]
-
 
 	if target:HasModifier("modifier_mark_of_fatality") then
 		local abil = caster:FindAbilityByName("lishuwen_martial_arts")
@@ -514,6 +515,24 @@ vectors = {
 	Vector(0,-500, 500),
 	Vector(0,0, 0)
 }
+--vectorsV2[i] = vectors[i]-vectors[i-1], if i-1==0, then vectors[i-1] == (0,0,0), vectors sum up to 0 for V2.
+vectorsV2 = {
+	Vector(500, 500, 500),
+	Vector(-1000,-1000,-200),
+	Vector(1000,0,100),
+	Vector(-800, 900, 100),
+	Vector(300,-900, 0),
+	Vector(300, 500, -100),
+	Vector(200, 500, 100),
+	Vector(-1000,-1000,-200),
+	Vector(200, 900, 200),
+	Vector(800, 100, 0),
+	Vector(-1000,-1000,-200),
+	Vector(1000,0,100),
+	Vector(-800, 900, 100),
+	Vector(300,-900, 0),
+	Vector(0,500, -500)
+}
 
 function OnDragonStrike3Start(keys)
 	local caster = keys.caster
@@ -521,23 +540,21 @@ function OnDragonStrike3Start(keys)
 	GrantCosmicOrbitResist(caster)
 	caster.bIsCurrentDSCycleFinished = true
 	Timers:RemoveTimer('raging_dragon_timer')
-	caster:SwapAbilities("lishuwen_fierce_tiger_strike","lishuwen_raging_dragon_strike_3", true, true) 
+	caster:SwapAbilities("lishuwen_fierce_tiger_strike","lishuwen_raging_dragon_strike_3", true, false) 
 	local targets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 500
             , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, 0, FIND_ANY_ORDER, false)
 	if #targets == 0 then 
 
     	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
-    	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+    	ReduceCooldown(abil, abil:GetCooldown(1)*0.75)
     	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
-    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+    	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())*0.25})
 		local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
 		masterabil:EndCooldown()
-		masterabil:StartCooldown(masterabil:GetCooldown(1)/4)    
+		masterabil:StartCooldown(masterabil:GetCooldown(1)*0.25)    
 		return 
 	end
 
-	local startpoint = caster:GetAbsOrigin()
-	local beginpoint = startpoint
 	local endpoint = nil
 	local counter = 0
 
@@ -586,17 +603,17 @@ function OnDragonStrike3Start(keys)
 
 		--newpoint = Vector(startpoint.x + RandomInt(1,600), startpoint.y + RandomInt(1, 600), startpoint.y+500)
 		ability:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_3_anim", {})
-		newpoint = startpoint+vectors[counter+1]*0.5
+		local currentpoint = caster:GetAbsOrigin()
+		local newpoint = currentpoint+vectorsV2[counter+1]*0.5
 		caster:SetAbsOrigin(newpoint)
 		local trailFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_ember_spirit/ember_spirit_sleightoffist_trail.vpcf", PATTACH_CUSTOMORIGIN, caster )
-		ParticleManager:SetParticleControl( trailFx, 1, beginpoint )
+		ParticleManager:SetParticleControl( trailFx, 1, currentpoint )
 		ParticleManager:SetParticleControl( trailFx, 0, newpoint )
 
 		if target ~= nil then
 		    local groundFx = ParticleManager:CreateParticle( "particles/units/heroes/hero_earthshaker/earthshaker_echoslam_start_f_fallback_low.vpcf", PATTACH_ABSORIGIN, target )
 		    ParticleManager:SetParticleControl( groundFx, 1, target:GetAbsOrigin())
 	   	end
-		beginpoint = newpoint
 		caster:EmitSound("Hero_Tusk.WalrusPunch.Target")
 		counter = counter + 1
 		return 0.08
@@ -626,7 +643,6 @@ function LishuwenCheckCombo(caster, ability)
             end
             })
         else]]
-
     	if ability == caster:FindAbilityByName("lishuwen_cosmic_orbit") and caster:FindAbilityByName("lishuwen_raging_dragon_strike"):IsCooldownReady() and caster:FindAbilityByName("lishuwen_fierce_tiger_strike"):IsCooldownReady() and caster:GetAbilityByIndex(2):GetName() == "lishuwen_fierce_tiger_strike" then
             caster:SwapAbilities("lishuwen_raging_dragon_strike", "lishuwen_fierce_tiger_strike", true, false) 
             Timers:CreateTimer('raging_dragon_timer',{
@@ -634,12 +650,12 @@ function LishuwenCheckCombo(caster, ability)
                 callback = function()
                 if not caster.bIsCurrentDSCycleFinished and caster.bIsCurrentDSCycleStarted then
                 	local abil = caster:FindAbilityByName("lishuwen_raging_dragon_strike")
-                	ReduceCooldown(abil, abil:GetCooldown(1)/4)
+                	ReduceCooldown(abil, abil:GetCooldown(1)*0.75)
                 	caster:RemoveModifierByName("modifier_raging_dragon_strike_cooldown")
-                	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())/4})
+                	abil:ApplyDataDrivenModifier(caster, caster, "modifier_raging_dragon_strike_cooldown", {duration = abil:GetCooldown(abil:GetLevel())*0.25})
 					local masterabil = caster.MasterUnit2:FindAbilityByName("lishuwen_raging_dragon_strike")
 					masterabil:EndCooldown()
-					masterabil:StartCooldown(masterabil:GetCooldown(1)/4)            	
+					masterabil:StartCooldown(masterabil:GetCooldown(1)*0.25)            	
                 end	
 				local currentAbil = caster:GetAbilityByIndex(2)	
 				caster:SwapAbilities("lishuwen_fierce_tiger_strike",currentAbil:GetAbilityName() , true, false)
@@ -669,6 +685,7 @@ function OnMartialArtsImproved(keys)
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 	hero:FindAbilityByName("lishuwen_martial_arts"):SetLevel(2)
+	AuraRefresh(keys)
 	-- allow NSS and FTS to apply mark of fatality
 end
 
@@ -677,7 +694,7 @@ function OnDualClassAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero.bIsDualClassAcquired = true
-	hero:SwapAbilities("lishuwen_berserk", "fate_empty1", true, true) 
+	hero:SwapAbilities("lishuwen_berserk", "fate_empty1", true, false) 
 	-- Set master 1's mana 
 	local master = hero.MasterUnit
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
@@ -693,4 +710,10 @@ function OnFuriousChainAcquired(keys)
 	master:SetMana(master:GetMana() - keys.ability:GetManaCost(keys.ability:GetLevel()))
 	-- AGI scaling and mana refund on abilities
 	-- aspd and ms buff
+end
+
+function AuraRefresh(keys)
+	local hero = keys.caster:GetPlayerOwner():GetAssignedHero()
+	hero:RemoveModifierByName("modifier_martial_arts_aura") 
+	hero:FindAbilityByName("lishuwen_martial_arts"):ApplyDataDrivenModifier(hero, hero, "modifier_martial_arts_aura", {}) 
 end

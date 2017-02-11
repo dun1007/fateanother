@@ -689,7 +689,7 @@ function OnIntegrateStart(keys)
 					caster.AttemptingIntegrate = false
 					SendMountStatus(hero)
 				end
-			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 then 
+			elseif (caster:GetAbsOrigin() - hero:GetAbsOrigin()):Length2D() < 400 and not hero:HasModifier("stunned") and not hero:HasModifier("modifier_stunned") then 
 				hero.IsIntegrated = true
 				keys.ability:ApplyDataDrivenModifier(caster, hero, "modifier_integrate_gille", {})
 				keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_integrate", {})  

@@ -66,14 +66,14 @@
 {
     horizontal-align: center;
     flow-children: right;
-    height: 50px;
+    height: 100px;
 }
 
 .local_player_team #PlayerPortraitsOverlay
 {
 	width: 100%;
     height: 50px;
-    box-shadow: fill #ffffff80 -3px -3px 3px 6px;
+    box-shadow: fill #ffffff80 -1px 1px 6px 6px;
 }
 
 #EndSpacer
@@ -131,14 +131,29 @@
 
 #PlayerName
 {
+    width: 90px;
+    height: 20px;
+}
+
+#PlayerNameText
+{
     color: #a9aaaa;
     font-size: 16px;
-    text-align: center;
-	width: 90px;
-	white-space: nowrap;
+    width: fit-children;
+    white-space: nowrap;
+    horizontal-align: center;
 }
 
 .HeroSelectPlayerRoot.hero_highlighted #PlayerPortrait
 {
     saturation: 0.0;
+}
+
+#PlayerColorBar
+{
+    height: 10px;
+    width: 100%;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 1px solid #000000;
 }

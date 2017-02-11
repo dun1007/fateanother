@@ -24,8 +24,109 @@
 	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );     //Hero selection game mode name display.
 	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );     //Hero selection clock.
 	    //GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_TOP_MENU_BUTTONS, false );     //Top-left menu buttons in the HUD.
-	    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );      //Endgame scoreboard.    
+	    GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );      //Endgame scoreboard. 
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_TEAMS, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_GAME_NAME, false );
+		//GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_HERO_SELECTION_CLOCK, false );
 
+		// Talent
+		var UIRoot = $.GetContextPanel().GetParent().GetParent()
+
+		var hudRoot;
+		var panel;
+		for( panel = $.GetContextPanel(); panel != null; panel = panel.GetParent())
+		{
+			hudRoot = panel;
+		}
+		if (hudRoot != null)
+		{
+			var statBranch = hudRoot.FindChildTraverse("StatBranch");
+			if (statBranch != null)
+			{
+				statBranch.style.visibility = "collapse";
+			}
+
+			var statLevel = hudRoot.FindChildTraverse("level_stats_frame");
+			if (statLevel != null)
+			{
+				statLevel.style.visibility = "collapse";
+			}
+		}
+
+        // startegy
+        var strategyUI = UIRoot.FindChildTraverse("MainContents").FindChildTraverse("ScreenContainer").FindChildTraverse("StrategyScreen").FindChildTraverse("RightContainer");
+        strategyUI.style.visibility = "collapse";
+
+        // role filter
+        var roleFilterUI = UIRoot.FindChildTraverse("MainContents").FindChildTraverse("ScreenContainer").FindChildTraverse("HeroPickScreen").FindChildTraverse("HeroPickScreenContents").FindChildTraverse("HeroPickLeftColumn").FindChildTraverse("HeroFilters").FindChildTraverse("MainFilters");
+        roleFilterUI.style.visibility = "collapse";
+
+        // DOTA minimap
+        var minimapUI = UIRoot.FindChildTraverse("PreGame").FindChildTraverse("BottomPanelsContainer").FindChildTraverse("PreMinimapContainer");
+        minimapUI.style.visibility = "collapse";
+
+        // Team Composition
+        var teamCompUI = UIRoot.FindChildTraverse("PreGame").FindChildTraverse("BottomPanelsContainer").FindChildTraverse("BottomPanels").FindChildTraverse("GridTeamComp");
+        teamCompUI.style.visibility = "collapse";
+
+        // Current Active Quest
+        var activeQuestUI = UIRoot.FindChildTraverse("PreGame").FindChildTraverse("BottomPanelsContainer").FindChildTraverse("BottomPanels").FindChildTraverse("BattlePassContainer");
+        activeQuestUI.style.visibility = "collapse";
+
+        // Available Item Container
+        var itemContainerUI = UIRoot.FindChildTraverse("PreGame").FindChildTraverse("BottomPanelsContainer").FindChildTraverse("AvailableItemsContainer");
+        itemContainerUI.style.visibility = "collapse";
+
+        // KDA
+        var KDAUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("quickstats").FindChildTraverse("QuickStatsContainer");
+        UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("quickstats").style.width = "400px";
+        KDAUI.style.marginTop = "5px";
+        KDAUI.style.marginLeft = "150px";
+
+        // backpack
+        var backpackUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("center_with_stats").FindChildTraverse("center_block").FindChildTraverse("inventory").FindChildTraverse("inventory_items").FindChildTraverse("InventoryContainer").FindChildTraverse("inventory_backpack_list");
+        backpackUI.style.visibility = "collapse";
+
+        // Glyph, Scan
+        var glyphScanUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("GlyphScanContainer");
+        glyphScanUI.style.visibility = "collapse";
+
+        // Common item search
+        var commonItemSearchUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("shop").FindChildTraverse("Main").FindChildTraverse("HeightLimiter").FindChildTraverse("SearchContainer");
+        commonItemSearchUI.style.visibility = "collapse";
+
+        // Combat events(kill etc)
+        var combatEventUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("combat_events");
+        combatEventUI.style.visibility = "collapse";
+
+        // Quickbuy
+        var quickbuyUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("lower_hud").FindChildTraverse("shop_launcher_block").FindChildTraverse("quickbuy").FindChildTraverse("QuickBuyRows");
+
+        // Team Container
+        var teamScoreUI = UIRoot.FindChildTraverse("HUDElements").FindChildTraverse("scoreboard");
+
+        teamScoreUI.style.height = "800px";
+        teamScoreUI.style.marginLeft = 	"60%";
+        teamScoreUI.FindChildTraverse("Background").style.height = "800px";
+        //teamScoreUI.FindChildTraverse("LocalTeamInventory").style.visibility = "collapse";
+
+        var radiantScoreUI = teamScoreUI.FindChildTraverse("Background").FindChildTraverse("RadiantTeamContainer");
+        var direScoreUI = teamScoreUI.FindChildTraverse("Background").FindChildTraverse("DireTeamContainer");
+        var direScoreHeaderUI = teamScoreUI.FindChildTraverse("Background").FindChildTraverse("DireHeader");
+        direScoreHeaderUI.style.marginTop = "-18px";
+        direScoreHeaderUI.style.marginBottom = "-4px";
+
+        radiantScoreUI.style.height = "330px";
+        direScoreUI.style.height = "330px";
+
+        for (var i=0; i<radiantScoreUI.GetChildCount(); i++)
+        {
+        	radiantScoreUI.GetChild(i).style.height = "15%";
+        }
+        for (var i=0; i<direScoreUI.GetChildCount(); i++)
+        {
+        	direScoreUI.GetChild(i).style.height = "15%";
+        }
 
 		GameUI.CustomUIConfig().team_colors = {}
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#3dd296;"; // { 61, 210, 150 }	--		Teal
@@ -39,6 +140,8 @@
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_7] = "#1bc0d8;"; // { 27, 192, 216 }	--		Light Blue
 		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_CUSTOM_8] = "#65d413;"; // { 101, 212, 19 }	--	
 
+		var hud = $.GetContextPanel().GetParent().GetParent();
+		GameUI.CustomUIConfig().hud = hud;
 	</script>
 
 	<Panel>
@@ -50,6 +153,8 @@
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_fatepedia.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_config.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/barebones_attachments.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_buff_bar.xml" />
+		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_combatevent.xml" />
 		<!-- <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fateanother_spellbook.xml" /> -->
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/statcollection.xml" />
 		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/team_select.xml" />
@@ -58,6 +163,8 @@
 		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
 		<CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/inventory.xml" />
 		<CustomUIElement type="GameInfo" layoutfile="file://{resources}/layout/custom_game/fateanother_game_info.xml" />
+		<CustomUIElement type="HeroSelection" layoutfile="file://{resources}/layout/custom_game/multiteam_hero_select_overlay.xml" />
+		
 	</Panel>
 </root>
 

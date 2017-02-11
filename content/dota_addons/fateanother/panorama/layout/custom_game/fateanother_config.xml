@@ -39,6 +39,7 @@
                     <ToggleButton id="option3" checked="false" class="FateConfigOpenText" text="#FA_Config_Option3" onmouseover="Config3ShowTooltip()" onmouseout="Config3HideTooltip()" onactivate="OnConfig3Toggle()"/>
                     <ToggleButton id="option4" checked="false" class="FateConfigOpenText" text="#FA_Config_Option4" onactivate="OnConfig4Toggle()" />
                     <ToggleButton id="option5" checked="false" class="FateConfigOpenText" text="#FA_Config_Option5" onactivate="OnConfig5Toggle()" /> 
+                    <ToggleButton id="option6" checked="false" class="FateConfigOpenText" text="#FA_Config_Option6" onactivate="OnConfig6Toggle()" /> 
                 </Panel>
                 <Panel id="FateConfigCmdPanel" class="bordertest" hittest="false">
                     <Label id="FateConfigCmdText" class="FateConfigOpenText" text="Commands" hittest="false"/>
@@ -55,7 +56,7 @@
 
         </Panel>
         <Button id="FateConfigButton" onactivate="OnFateConfigButtonPressed()" onmouseover="OnFateConfigButtonShowTooltip()" onmouseout="OnFateConfigButtonHideTooltip()" hittest="true">
-            <Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <!--<Image id="FateConfigButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>-->
             <Label id="FateConfigButtonImageText" class="FateConfigOpenText" text="#FA_Config" hittest="false"/>
         </Button>
     </Panel>

@@ -102,6 +102,7 @@
 		"FA_Config_Option3_Context"		"When placed on mount(e.g Ancient Dragon, Gigantic Horror), selecting hero automatically reselects mount instead. Check this option if you want to disable this function."
 		"FA_Config_Option4"				"Disable alert sound upon presence detection"
 		"FA_Config_Option5"				"Hide Portrait/Master UI"
+		"FA_Config_Option6"				"Enable alt-click on buffs"
 
 		"FA_Config_Cmd1"	"Pops a message that asks for gold to your team."
 		"FA_Config_Cmd2"	"Turns BGM on/off."

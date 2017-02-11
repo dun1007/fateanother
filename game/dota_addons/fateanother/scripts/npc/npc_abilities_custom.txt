@@ -143,7 +143,7 @@
 			"04"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"cooldown"				"45"
+				"cooldown"				"35"
 			}
 		}
 		
@@ -186,9 +186,12 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_instinct_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
-
 					"Random"
 					{
 						"Chance"	"%crit_rate"
@@ -207,6 +210,7 @@
 			"modifier_instinct_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "300"
@@ -222,8 +226,12 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_instinct_crit_hit"
-			            "Target"   			"CASTER"    
-			        }			
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
+   			        }			
 				}
 			}
 		}
@@ -1648,11 +1656,21 @@
 	{
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"lancer_5th_protection_from_arrows"
+		"AbilityCooldown"				"60"
 
+		"Precache"
+		{
+			"particle"		"particles/customgames/capturepoints/cp_wind.vpcf"
+		}
 		"OnSpellStart"
 		{
+			"RunScript"
+			{
+				"ScriptFile"	"lancer_ability"
+				"Function"		"OnPFAStart"
+			}
 		}
 
 		"Modifiers"
@@ -1663,7 +1681,23 @@
 				"IsHidden"		"0"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"35"
+					"MODIFIER_PROPERTY_EVASION_CONSTANT"	"25"
+				}
+			}
+			"modifier_lancer_protection_from_arrows_active"
+			{
+				"EffectName"		"particles/customgames/capturepoints/cp_wind.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Duration"						"3"
+				"ThinkInterval"					"0.1"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"lancer_ability"
+						"Function"		"OnPFAThink"
+					}
 				}
 			}
 		}
@@ -1681,7 +1715,7 @@
 		"LevelsBetweenUpgrades"			"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
 		"AbilityTextureName"			"lancer_5th_rune_magic"
-		"AbilityCooldown"				"20"
+		"AbilityCooldown"				"0.5"
 		"AbilityCastPoint"				"0.0"
 
 		"OnSpellStart"
@@ -1718,6 +1752,7 @@
 		"AbilityManaCost"				"100"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCooldown"				"30"
 		"precache"
 		{
 			"particle"				"particles/units/heroes/hero_phantom_assassin/phantom_assassin_phantom_strike_end.vpcf"
@@ -1740,11 +1775,6 @@
 				"ScriptFile"	"lancer_ability"
 				"Function"		"Disengage"
 				"Distance"		"%distance"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
 			}
 			"FireSound"
 			{
@@ -1772,6 +1802,7 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCooldown"				"30"
 		"precache"
 		{
 			"particle"	"particles/units/heroes/hero_omniknight/omniknight_purification.vpcf"
@@ -1793,11 +1824,6 @@
 			{
 				"Target"		"CASTER"
 				"HealAmount"	"%heal"
-			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
 			}
 			"FireSound"
 			{
@@ -1831,6 +1857,7 @@
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
 		"AbilityCastRange"				"500"
+		"AbilityCooldown"				"30"
 
 		"precache"
 		{
@@ -1867,11 +1894,6 @@
 				"Radius"		"%radius"
 				"Target"		"POINT"
 			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
-			}
 			"FireSound"
 			{
 				"EffectName"		"Hero_TemplarAssassin.Trap.Cast"
@@ -1891,6 +1913,7 @@
 		"AbilityCastPoint"				"0.3"
 		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
 		"AnimationPlaybackRate" 		"1.0"
+		"AbilityCooldown"				"30"
 		"AbilitySpecial"
 		{
 			"01"
@@ -1907,11 +1930,6 @@
 				"Function"		"Conversion"
 				"Percentage"	"%percentage"
 			}
-			"RunScript"
-			{
-				"ScriptFile"	"lancer_ability"
-				"Function"		"RuneMagicUsed"
-			}
 		}
 	}
 
@@ -1925,6 +1943,7 @@
 		"AbilityTextureName"			"keeper_of_the_light_blinding_light"
 		"AbilityManaCost"				"100"
 		"AbilityCastPoint"				"0.3"
+		"AbilityCooldown"				"30"
 		"OnSpellStart"
 		{
 			"RunScript"
@@ -1989,6 +2008,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"silencer_last_word"
 		
+		"AbilityCooldown"				"0.5"
 		"AbilityCastPoint"				"0.0"
 
 		"OnSpellStart"
@@ -2114,8 +2134,8 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"300"
-		"AbilityCastRangeBuffer"		"150"
+		"AbilityCastRange"				"350"
+		"AbilityCastRangeBuffer"		"250"
 		"AbilityCastPoint"				"1.2"
 
 		// Time		
@@ -2516,7 +2536,12 @@
 			"01"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"evasion_bonus"			"35"
+				"evasion_bonus"			"25"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"duration"			"3"
 			}
 		}
 		
@@ -2544,7 +2569,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"17"
+		"AbilityManaCost"				"10"
 
 		"precache"
 		{
@@ -2619,13 +2644,17 @@
 				"Aura_Teams"	"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
 				"Aura_Types"	"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 				"Aura_Flags"  "DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES"
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
+				}
 			}
 			"saber_alter_mana_shroud_aura_effect"
 			{
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"%mana_regen_bonus"
-					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor"
 				}
 			}
 		}
@@ -2740,7 +2769,7 @@
 						"EffectRadius"			"%radius"
 						"ControlPoints"
 						{
-							"01"				"%radius+150 3 0"
+							"01"				"400 3 0"
 						}
 					}
 				}
@@ -2778,7 +2807,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_darklight_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 
 					"Random"
@@ -2798,6 +2831,7 @@
 			"modifier_darklight_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "300"
@@ -2813,8 +2847,12 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_darklight_crit_hit"
-			            "Target"   			"CASTER"    
-			        }			
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
+  			        }			
 				}
 			}
 		}
@@ -3984,6 +4022,18 @@
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
 				}
 			}
+			"modifier_breaker_gorgon_turnrate"
+			{
+				"Duration"			"16.0"
+				"IsDebuff"			"1"
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-200"
+				}
+			}
 		}
 	}
 	
@@ -4392,7 +4442,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"petrify_chance"			"30"
+				"turn_rate"			"200"
 			}
 			"02"
 			{
@@ -6232,6 +6282,7 @@
 			"modifier_courage_attack_damage_buff"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Duration"		"%duration"
 				"Properties"
 				{
@@ -6256,7 +6307,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_courage_attack_damage_buff"
-						"Target" 		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 				}
 			}
@@ -6868,7 +6923,7 @@
 		
 		"AbilityCastPoint"				"0.0"
 		"AbilityCooldown"				"9999"
-		"AbilityManaCost"				"20"
+		"AbilityManaCost"				"23"
 
 		"precache"
 		{
@@ -6884,7 +6939,7 @@
 			"02"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"duration"			"6"	
+				"duration"			"10"	
 			}
 			"03"
 			{
@@ -8793,7 +8848,7 @@
 			}
 			"modifier_first_hit"
 			{
-				"Duration"		"%duration + 1.0"
+				"Duration"		"%duration" //Reduced from duration+1 to duration, I assume +1 is to account for travel time of dagger when one breaks ambush at the end of duration. No longer necessary.
 				"IsHidden"		"0"
 				"OnAttackStart"
 				{
@@ -8803,6 +8858,27 @@
 						"Function"			"OnFirstHitStart"
 					}					
 				}				
+				"OnAttackFailed"
+				{
+					"RemoveModifier"
+					{
+						"ModifierName"		"modifier_first_hit"
+						"Target"			"CASTER"
+					}
+				}
+				"OnAbilityExecuted"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"ta_ability"
+						"Function"			"OnAbilityCast"
+					}								
+				}
+			}
+			"modifier_thrown"
+			{
+				"Duration"		"1.0" //I don't think any attack takes > 1s to land.
+				"IsHidden"		"1"			
 				"OnAttackLanded"
 				{
 					"RunScript"
@@ -8829,22 +8905,6 @@
 							"03"		"255 0 0"				//color
 						}
 					}				
-				}
-				"OnAttackFailed"
-				{
-					"RemoveModifier"
-					{
-						"ModifierName"		"modifier_first_hit"
-						"Target"			"CASTER"
-					}
-				}
-				"OnAbilityExecuted"
-				{
-					"RunScript"
-					{
-						"ScriptFile"		"ta_ability"
-						"Function"			"OnAbilityCast"
-					}								
 				}
 			}
 		}
@@ -9968,7 +10028,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"800"
+		"AbilityCastRange"				"1350"
 		"AbilityCastPoint"				"0.3"
 
 		// Time		
@@ -10026,7 +10086,7 @@
 			"modifier_gob_thinker"
 			{
 				"Duration"			"%duration"
-	            "ThinkInterval"		"0.15"
+	            "ThinkInterval"		"0.12"
 	            "OnIntervalThink"
 	         	{
 					"RunScript"
@@ -10459,7 +10519,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"dmg_ratio"			"0.5"
+				"dmg_ratio"			"0.65"
 			}
 		}
 		
@@ -10928,7 +10988,7 @@
 		// General		//------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"caster_immobilize"
 		"AbilityCastPoint"				"1.6"
 		"AbilityCooldown"				"0"
@@ -10976,7 +11036,7 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"						"ability_datadriven"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"			"phantom_assassin_phantom_strike"
 		"MaxLevel"						"1"
 
@@ -12542,6 +12602,7 @@
 		"BaseClass"						"ability_datadriven"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"lancelot_bless_of_fairy"
+		"AbilityCooldown"				"45"
 		"MaxLevel"						"1"
 		
 		"AbilitySpecial"
@@ -12587,6 +12648,11 @@
 					"MODIFIER_STATE_MAGIC_IMMUNE"	"MODIFIER_STATE_VALUE_ENABLED"
 				}
 	    	}
+	    	"modifier_blessing_of_fairy_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 
@@ -12962,7 +13028,7 @@
 			}
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"aoe_damage_percent"	"0.5"
 			}
 			"03"
@@ -14250,9 +14316,12 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_murderous_instinct_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
-
 					"Random"
 					{
 						"Chance"	"%critical_rate"
@@ -14305,6 +14374,7 @@
 			"modifier_murderous_instinct_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_multiplier"
@@ -14325,7 +14395,11 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_murderous_instinct_crit_hit"
-			            "Target"   			"CASTER"    
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}   
 			        }			
 				}
 			}
@@ -15838,7 +15912,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_rampant_warrior_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 
 					"Random"
@@ -15859,6 +15937,7 @@
 			"modifier_rampant_warrior_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%crit_damage"
@@ -15874,7 +15953,11 @@
 			        "RemoveModifier"
 			        {
 			            "ModifierName"  	"modifier_rampant_warrior_crit_hit"
-			            "Target"   			"CASTER"    
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}   
 			        }			
 				}
 			}
@@ -15937,14 +16020,19 @@
 			"03"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"health_reduction"	"-500 -600 -700 -800 -900"
+				"number_stacks"		"5 6 7 8 9"
 			}
 			"04"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"range"				"250"
+				"unit_reduction"	"100"
 			}
 			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range"				"250"
+			}
+			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"cast_time"			"1.1"
@@ -15966,6 +16054,8 @@
 			 	"ScriptFile"	"diarmuid_ability"
 			 	"Function"		"OnBuidheStart"
 			 	"Damage"		"%damage"
+			 	"nStacks"		"%number_stacks"
+			 	"unitReduction"	"%unit_reduction"
 			 }
 		}
 		"Modifiers"
@@ -15975,10 +16065,6 @@
 				"IsHidden"		"0"
 				"IsDebuff"		"1"
 				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_BONUS"		"%health_reduction"
-				}
 				"OnDeath"
 				{
 					"RunScript"
@@ -16099,6 +16185,16 @@
 				"var_type"			"FIELD_FLOAT"
 				"cast_time"			"1.2"
 			}
+			"06"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"number_stacks"		"5 6 7 8 9"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"unit_reduction"	"100"
+			}
 		}
 		
 		"OnAbilityPhaseStart"
@@ -16117,6 +16213,8 @@
 			 	"Function"		"OnDeargStart"
 			 	"MinDamage"		"%min_damage"
 			 	"MaxDamage"		"%max_damage"
+			 	"nStacks"		"%number_stacks"	//for casting dearg with doublespear on
+			 	"unitReduction"	"%unit_reduction"	//for casting dearg with doublespear on
 			 }
 		}
 		"Modifiers"
@@ -16703,7 +16801,7 @@
 		{
 			"modifier_gordius_wheel"
 			{		
-				"Duration"		"%duration+1"
+				"Duration"		"11"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_TURN_RATE_PERCENTAGE"		"-350"
@@ -19871,7 +19969,7 @@
 			{
 				"ModifierName"		"modifier_gladiusanus_blauserum"
 				"Target"			"CASTER"
-				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Flags"				"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 		}
 
@@ -19886,7 +19984,7 @@
 			{
 				"ModifierName"		"modifier_gladiusanus_blauserum_mitigation"
 				"Target"			"CASTER"
-				"Flags" "DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				"Flags" 			"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
 			}
 		}
 
@@ -19919,7 +20017,7 @@
 				"Duration"		"%duration"
 				"IsHidden"		"0"
 				"IsDebuff"		"0"
-				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"	"%damage_per_stack"
@@ -19950,7 +20048,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"		"modifier_gladiusanus_blauserum"
-						"Target"			"CASTER"
+	    				"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 					"RunScript"
 					{
@@ -19970,6 +20072,7 @@
 			"modifier_gladiusanus_blauserum_mitigation"
 			{
 				"IsDebuff"		"0"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"50"
@@ -20010,6 +20113,7 @@
 				{
 					"MODIFIER_PROPERTY_OVERRIDE_ANIMATION_RATE"		"0.5"
 					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"	"-100"
+					"MODIFIER_PROPERTY_HEALTH_BONUS"				"99999"
 				}
 				"States"
 				{
@@ -21206,8 +21310,67 @@
 				"IsDebuff"	"1"
 				"TextureName"	"astolfo_hippogriff_ride"
 				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}			
+			"modifier_instinct_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"saber_instinct"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 			}
-
+			"modifier_strike_air_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"saber_attribute_strike_air"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_battle_continuation_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lancer_5th_battle_continuation"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_hrunting_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"archer_5th_hrunting"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_overedge_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"archer_5th_overedge"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_blood_mark_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"avenger_blood_mark"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_quickdraw_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"false_assassin_quickdraw"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_mystic_shackle_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"wisp_tether"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_eternal_arms_mastership_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"lancelot_arms_mastership"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"modifier_story_for_someones_sake_cooldown"
+			{
+				"IsDebuff"	"1"
+				"TextureName"	"nursery_rhyme_story_for_somebodys_sake"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 
@@ -22568,10 +22731,11 @@
 				"EffectAttachType"		"follow_origin"
 				"OnDestroy"
 				{
-					"ApplyModifier"
+					"RunScript"
 					{
-						"ModifierName"		"modifier_subterranean_grasp"
-						"Target"			"TARGET"
+						"ScriptFile"		"tamamo_ability"
+						"Function"			"OnSGApplyCC"
+						"Duration"			"%duration"
 					}
 				}
 			}
@@ -22605,10 +22769,6 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_reduction"
-				}
-				"States"
-				{
-					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
 			"modifier_subterranean_grasp_revoke"
@@ -22665,12 +22825,17 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"damage_modifier"			"190 205 220 235 250"
+				"damage_modifier"			"300 325 350 375 400"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"damage_modifier_enemy"			"150 150 175 200 200"
 			}
 			"03"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"orb_amount"				"3 4 5 6 7"
+				"orb_amount"				"3 5 5 5 7"
 			}
 			"04"
 			{
@@ -22709,7 +22874,7 @@
 						"ScriptFile"    "tamamo_ability"
 						"Function"      "OnMantraTakeDamage"
 						"DamageTaken"	"%attack_damage"
-						"Damage"		"%damage_modifier"
+						"BlockAmt"		"%damage_modifier"
 					}
 				}
 			}
@@ -22726,7 +22891,7 @@
 						"ScriptFile"    "tamamo_ability"
 						"Function"      "OnMantraTakeDamage"
 						"DamageTaken"	"%attack_damage"
-						"Damage"		"%damage_modifier"
+						"Damage"		"%damage_modifier_enemy"
 					}
 				}
 			}
@@ -23023,7 +23188,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"700 750 800 850 900"
 		"AbilityCastRangeBuffer"		"0"
-		"AbilityCastPoint"				"0.4"
+		"AbilityCastPoint"				"0.7"
 		"AbilityCooldown"				"49"
 		"AbilityManaCost"				"800"
 
@@ -23381,7 +23546,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"int_ratio"			"0.75"
+				"int_ratio"			"0.5"
 			}
 			"02"
 			{
@@ -23594,7 +23759,7 @@
 		"AbilityBehavior" 		"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass" 					"ability_datadriven"
 		"AbilityTextureName"            "lishuwen_martial_arts"
-		"AbilityCastRange"				"%search_radius"
+		//"AbilityCastRange"				"%search_radius"                     duplicate key #1, not sure if cast range is meant to be 700 700 or 700 1050.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
 		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
@@ -23613,7 +23778,7 @@
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"700"
+		"AbilityCastRange"				"700"                // duplicate key #2
 		"AbilityCastRangeBuffer"		"250"
 		"AbilityCastPoint"				"0.4"
 
@@ -23669,6 +23834,14 @@
 				"Aura_Radius"			"%search_radius"
 				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 				"Aura_Types"			"DOTA_UNIT_TARGET_HERO"
+				"OnRespawn"
+				{
+					"RunScript"
+					{
+						"ScriptFile"		"lishuwen_ability"
+						"Function"			"AuraRefresh"
+					}					
+				}
 			}
 			"modifier_martial_arts_aura_enemy"
 			{
@@ -23691,7 +23864,11 @@
 					"RemoveModifier"
 					{
 						"ModifierName"	"modifier_martial_arts_crit_hit"
-						"Target"		"CASTER"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 					}
 					"RunScript"
 					{
@@ -23713,6 +23890,7 @@
 			"modifier_martial_arts_crit_hit"
 			{
 				"IsHidden"		"1"
+				"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_PREATTACK_CRITICALSTRIKE" "%critical_damage"
@@ -23727,8 +23905,12 @@
 			    	}
 			        "RemoveModifier"
 			        {
-			            "ModifierName"  	"modifier_instinct_crit_hit"
-			            "Target"   			"CASTER"    
+			            "ModifierName"  	"modifier_martial_arts_crit_hit"
+						"Target"
+ 						{
+ 							"Center"	"CASTER"
+ 							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+ 						}
 			        }			
 				}
 			}
@@ -25153,7 +25335,7 @@
 			"03"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"regen_duration"			"25"
+				"regen_duration"			"5"
 			}
 		}
 
@@ -25249,9 +25431,14 @@
 			{
 				"IsDebuff"		"1"
 				"Duration"		"300"
+			}
+			"modifier_saint_debuff_attr"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"300"
 				"Properties"
 				{
-					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"10"
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"13"
 				}
 			}
 		}
@@ -25353,9 +25540,14 @@
 			"02"
 			{
 				"var_type"			"FIELD_INTEGER"
-				"radius_modifier"				"300 350 400 450 500"
+				"bonus_damage"		"12 24 36 48 60"
 			}
 			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"radius_modifier"				"300 350 400 450 500"
+			}
+			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
 				"duration"			"3 4 5 6 7"
@@ -25384,12 +25576,11 @@
 		{
 			"modifier_jeanne_charisma_str"
 			{
-				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%stat_modifier"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
-				
 				"OnDestroy"
 				{
 					"RunScript"
@@ -25401,10 +25592,10 @@
 			}
 			"modifier_jeanne_charisma_agi"
 			{
-				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"	"%stat_modifier"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
 				
 				"OnDestroy"
@@ -25418,10 +25609,10 @@
 			}
 			"modifier_jeanne_charisma_int"
 			{
-				"Duration"				"%duration"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%stat_modifier"
+					"MODIFIER_PROPERTY_PREATTACK_BONUS_DAMAGE"	"%bonus_damage"
 				}
 				
 				"OnDestroy"
@@ -25606,6 +25797,16 @@
 				"var_type"			"FIELD_FLOAT"
 				"slow_amount"			"-50"
 			}
+			"09"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"mr_bonus"			"30"
+			}
+			"10"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"armor_bonus"			"10"
+			}
 		}
 		
 		"OnSpellStart"
@@ -25652,6 +25853,14 @@
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%slow_amount"
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow_amount"
+				}
+			}
+			"modifier_gods_resolution_active_buff"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"		"%armor_bonus"
+					"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%mr_bonus"
 				}
 			}
 
@@ -25894,7 +26103,7 @@
 			}
 			"02"
 			{
-				"var_type"			"FIELD_INTEGER"
+				"var_type"			"FIELD_FLOAT"
 				"duration"			"8"
 			}
 			"03"
@@ -25937,7 +26146,7 @@
 				"EffectAttachType"	"follow_origin"
 				"StatusEffectName" 		"particles/status_fx/status_effect_keeper_spirit_form.vpcf" 	   
 				"StatusEffectPriority"  "10"
-				"Duration"	"%duration+%delay"
+				"Duration"	"10"
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"%bonus_aspd"
@@ -26062,7 +26271,7 @@
 			"01"
 			{
 				"var_type"				"FIELD_INTEGER"
-				"bonus_damage"		"10"
+				"bonus_damage"		"13"
 			}			
 			"02"
 			{
@@ -27261,6 +27470,404 @@
 	}
 
 	//====================================
+	// Nursery Rhyme: Shapeshift(D)
+	//====================================
+	"nursery_rhyme_shapeshift"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"25"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityTextureName"			"nursery_rhyme_shapeshift"
+		"AbilityCastAnimation" 			"ACT_DOTA_IDLE"
+		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"			"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+			"particle"			"particles/generic_gameplay/illusion_killed.vpcf"
+			"particle"			"particles/units/heroes/hero_disruptor/disruptor_thunder_strike_bolt.vpcf"
+			"soundfile"	"soundevents/game_sounds_heroes/game_sounds_terrorblade.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"2500"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"40 20"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"300"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"3 7"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"damage"				"200"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"radius"				"350"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow"				"-15 -40"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"slow_duration"				"1.5 3"
+			}
+		}
+		
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnShapeShiftStart"
+			 	"Duration"		"%duration"
+			 	"Target"		"POINT"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_nursery_rhyme_shapeshift_clone"
+			{
+				"IsHidden"			"1"
+				"Duration"			"%duration"
+				"ThinkInterval" 		"0.25"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"nursery_rhyme_ability"
+						"Function"				"OnShapeShiftTargetLookout"
+						"Radius"				"%radius"
+						"Damage"				"%damage"
+						"Target"		"POINT"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"			"nursery_rhyme_ability"
+						"Function"				"OnShapeShiftEnd"
+					}
+				}				
+				"States"
+				{
+					"MODIFIER_STATE_DISARMED"			"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_nursery_rhyme_shapeshift_slow"
+			{
+				"IsDebuff"			"1"
+				"Duration"			"%slow_duration"		
+				"EffectName"		"particles/custom/rider/rider_breaker_gorgon_debuff.vpcf"
+				"EffectAttachType"	"follow_origin"
+				
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"%slow"
+				}		
+			}
+			"modifier_b_scroll"
+	    	{
+				"EffectName"	"particles/custom/item/item_b_scroll_shield.vpcf"
+				"EffectAttachType"	"follow_origin"
+				"TextureName" "item_b_scroll"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_heal_core.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
+	    	}
+	    	"modifier_a_scroll"
+	    	{
+	    		"TextureName" 	"item_a_scroll"
+				"EffectName" 	"particles/units/heroes/hero_oracle/oracle_fatesedict_arc_pnt.vpcf"
+				"OnCreated"
+				{
+			    	"FireEffect"
+			    	{
+			    		"EffectName"		"particles/units/heroes/hero_oracle/oracle_false_promise_cast_enemy.vpcf"
+			    		"EffectAttachType"	"attach_origin"
+			    		"Target"			"CASTER"
+			    	}
+				}
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MAGICAL_RESISTANCE_BONUS"	"%bonus_mr"
+	    			//"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%bonus_armor"
+	    		}
+	    	}
+	    	"modifier_healing_scroll"
+	    	{	
+	    		"TextureName" 	"item_healing_scroll"
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
+				"EffectAttachType"	"follow_overhead"
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"%armor_amount"
+	    		}
+	    	}
+	    	"modifier_speed_gem"
+	    	{
+	    		"TextureName" 			"item_sphere"
+	    		"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
+				"EffectAttachType"		"follow_origin"	
+	    		"Properties"
+	    		{
+	    			"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"30"
+	    		}
+	    	}
+	    	"modifier_berserk_scroll"
+	    	{
+	    		"TextureName" 	"berserk_scroll"
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
+				"EffectAttachType"	"follow_origin"
+	    		"Properties"
+				{
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"	"100"
+				}
+	    	}
+	    	"item_pot_regen"
+	        {
+	        	"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+	        	"EffectName"	"particles/items_fx/healing_flask.vpcf"
+	        	"TextureName" 	"mana_essence"
+	        	"EffectAttachType"	"attach_hitloc"
+	            "Properties"
+	            {
+	            	"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT"	"50"
+	            	"MODIFIER_PROPERTY_MANA_REGEN_CONSTANT"		"30"
+	            }
+	            "OnTakeDamage"
+	            {
+	            	"RemoveModifier"
+	            	{
+	            		"Target"	"CASTER"
+	            		"ModifierName"		"item_pot_regen"
+	            	}
+	            }
+	        } 
+		}
+	}
+
+
+	//====================================
+	// Nursery Rhyme: Shapeshift(swap)
+	//====================================
+	"nursery_rhyme_shapeshift_swap"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"24"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"nursery_rhyme_shapeshift_swap"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+		"AbilityCastPoint"				"0.15"
+		"AbilityCooldown"				"8"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"100"
+
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnShapeShiftSwap"
+			}
+		}
+
+		"Modifiers"
+		{
+
+		}
+	}
+	//====================================
+	// Nursery Rhyme: Nameless Forest(F)
+	//====================================
+	"nursery_rhyme_nameless_forest"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"2"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"25"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityTextureName"			"nursery_rhyme_nameless_forest"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
+		"AnimationPlaybackRate" 		"1.0"	
+
+		"precache"
+		{
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"200 350"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"180 120"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"600"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"duration"				"3"
+			}
+		}
+		
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnNamelessStart"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_nameless_forest"
+			{
+				"EffectName"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff.vpcf"
+				"EffectAttachType"		"follow_origin"
+				"Duration"		"%duration"
+				"IsDebuff"		"1"
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnNamelessDebuffStart"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnNamelessEnd"						
+					}
+				}
+				"States"
+				{
+					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_INVULNERABLE"    "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NOT_ON_MINIMAP" "MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_NO_HEALTH_BAR"	"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_STUNNED"		"MODIFIER_STATE_VALUE_ENABLED"
+					"MODIFIER_STATE_SILENCED"		"MODIFIER_STATE_SILENCED"
+					"MODIFIER_STATE_NO_UNIT_COLLISION"	"MODIFIER_STATE_VALUE_ENABLED"
+				}
+			}
+			"modifier_nameless_forest_stat_steal_debuff"
+			{
+				"IsDebuff"		"1"
+				"Duration"		"20"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"-15"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"-15"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"-15"
+				}
+			}
+			"modifier_nameless_forest_stat_steal_buff"
+			{
+				"Duration"		"20"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"15"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"15"
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"15"
+				}
+			}
+		}
+	}
+
+	//====================================
+	// Nursery Rhyme: Reminiscence(undo F)
+	//====================================
+	"nursery_rhyme_reminiscence"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"24"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"nursery_rhyme_reminiscence"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+		"AbilityCooldown"				"5"
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnReminiscenceStart"
+			}
+		}
+
+		"Modifiers"
+		{
+
+		}
+	}
+	//====================================
 	// Nursery Rhyme: White Queen's Enigma(Q)
 	//====================================
 	"nursery_rhyme_white_queens_enigma"
@@ -27271,23 +27878,29 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
-
+		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
+		"AbilityTextureName"			"nursery_rhyme_white_queens_enigma"
+		"AbilityCastAnimation" 			"ACT_DOTA_ATTACK"
 		"AnimationPlaybackRate" 		"1.0"
+
 		"precache"
 		{
+			"particle"			"particles/units/heroes/hero_tusk/tusk_ice_shards_projectile.vpcf"
+			"particle"			"particles/units/heroes/hero_winter_wyvern/wyvern_cold_embrace_buff_model.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_tusk.vsndevts"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"1"
+		"AbilityCastRange"				"1000"
+		"AbilityCastPoint"				"0.3"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27298,7 +27911,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"15"
+				"damage"				"21 22 23 24 25"
 			}
 			"02"
 			{
@@ -27313,17 +27926,17 @@
 			"04"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"stun_duration"				"0.5 0.7 0.9 1.1 1.3"
+				"stun_duration"				"0.5 0.55 0.6 0.65 0.7"
 			}
 			"05"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"silence_duration"				"1 1.25 1.5 1.75 2"
+				"silence_duration"				"0.3 0.4 0.5 0.6 0.7"
 			}
 			"06"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"revoke_duration"				"1 1.5 2 2.5 3"
+				"revoke_duration"				"0.3 0.4 0.5 0.6 0.7"
 			}
 			"07"
 			{
@@ -27338,7 +27951,7 @@
 			"09"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"disarm_duration"				"1.5 1.8 2.1 2.4 2.7"
+				"disarm_duration"				"2 2.5 3 3.5 4"
 			}
 		}
 		
@@ -27347,8 +27960,47 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnEnigmaStart"
+			 	"Target"		"POINT"
+			 	"StartRadius"	"%width"
+			 	"EndRadius"		"%width"
+			 	"Speed"			"%speed"
+			 	"Range"			"%length"
+			 	"Delay"			"%cast_delay"
+			}
+		}
+		"OnUpgrade"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnEnigmaLevelUp"
+			 	"stunned"			"%stun_duration"
+			 	"silenced"		"%silence_duration"
+			 	"revoked"			"%revoke_duration"
+			 	"locked"			"%lock_duration"
+			 	"rooted"			"%root_duration"
+			 	"disarmed"			"%disarm_duration"
+			}
+		}
+		
+		"OnProjectileHitUnit"
+		{
+			"DeleteOnHit"			"false"
+			"RunScript"
+			{
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnEnigmaHit"
+			 	"Damage"		"%damage"
+			 	"DefaultStunDuration"		"%default_stun_duration"
+			 	"CCNum"				"%cc_numbers"
+			 	"stunned"			"%stun_duration"
+			 	"silenced"		"%silence_duration"
+			 	"revoked"			"%revoke_duration"
+			 	"locked"			"%lock_duration"
+			 	"rooted"			"%root_duration"
+			 	"disarmed"			"%disarm_duration"
 			}
 		}
 
@@ -27369,23 +28021,28 @@
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
 		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
 
-		"AnimationPlaybackRate" 		"1.0"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AnimationPlaybackRate" 		"1.0"	
+		"AbilityTextureName"			"nursery_rhyme_the_plains_of_water"
 		"precache"
 		{
+			"particle"			"particles/custom/nursery_rhyme/plains_of_water.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_winter_wyvern.vsndevts"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"1"
+		"AbilityCastRange"				"950"
+		"AbilityCastPoint"				"0.3"
+		"AbilityCastRangeBuffer"		"75"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"7"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27396,7 +28053,7 @@
 			"01"
 			{
 				"var_type"			"FIELD_FLOAT"
-				"damage"				"400 430 460 490 520"
+				"damage"				"400 425 450 475 500"
 			}
 			"02"
 			{
@@ -27415,14 +28072,39 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnPlainStart"
+			 	"MaxBounce"		"%max_bounce"
+			 	"Damage"		"%damage"
+			 	"DmgRed"		"%dmg_reduction"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_plains_of_water_int_debuff"
+			{
+				"IsHidden"		"1"
+				"IsDebuff"		"1"
+				"Duration"		"15"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"-3"
+				}
+			}
+			"modifier_plains_of_water_int_buff"
+			{
+				"IsHidden"		"1"
+				"Duration"		"15"
+				"Attributes"	"MODIFIER_ATTRIBUTE_MULTIPLE"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"		"3"
+				}
+			}
 		}
+
 	}
 
 
@@ -27436,24 +28118,29 @@
 		"BaseClass"						"ability_datadriven"
 		"MaxLevel"						"5"
 		"RequiredLevel"					"1"
-		"LevelsBetweenUpgrades"			"1"
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_ALL"
-		"AbilityTextureName"			"jeanne_luminosite_eternelle"
+		"LevelsBetweenUpgrades"			"2"
 
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_ENEMY"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+		"AbilityTextureName"			"nursery_rhyme_doppelganger"
 		"AnimationPlaybackRate" 		"1.0"
 		"precache"
 		{
+			"particle"	"particles/units/heroes/hero_terrorblade/terrorblade_mirror_image.vpcf"
+			"particle"	"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"
+			"particle"	"particles/units/heroes/hero_bane/bane_fiendsgrip_hands.vpcf"
 		}
 		
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"1"
+		"AbilityCastRange"				"800"
+		"AbilityCastPoint"				"0.5"
 
 		// Time		
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"1"
+		"AbilityCooldown"				"29"
 
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
@@ -27483,13 +28170,616 @@
 		{
 			"RunScript"
 			{
-			 	"ScriptFile"	""
-			 	"Function"		""
+			 	"ScriptFile"	"nursery_rhyme_ability"
+			 	"Function"		"OnCloneStart"
+			 	"Duration"		"%duration"
+			 	"Health"		"%doppelganger_health"
 			}
 		}
 
 		"Modifiers"
 		{
+			"modifier_doppelganger"
+			{
+				"EffectName"				"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"	
+				"EffectAttachType"			"attach_origin"
+				"Duration"					"%duration"
+	            "ThinkInterval"		"0.33"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnCloneThink"
+					}
+				}
+
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnCloneTakeDamage"
+						"DamageTaken"	"%attack_damage"
+						"SharedDamage"		"%damage_shared"
+					}
+				}		
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"nursery_rhyme_ability"
+					 	"Function"		"OnCloneDeath"
+					}
+				}		
+			}
+			"modifier_doppelganger_enemy"
+			{
+				"IsDebuff"					"1"
+				"EffectName"				"particles/custom/nursery_rhyme/doppelganger/doppelganger.vpcf"	
+				"EffectAttachType"			"attach_origin"
+				"Duration"					"%duration"		
+				"OnTakeDamage"
+				{
+					"RunScript"
+					{
+						"ScriptFile"    "nursery_rhyme_ability"
+						"Function"      "OnCloneOriginalTakeDamage"
+						"DamageTaken"	"%attack_damage"
+					}
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"nursery_rhyme_ability"
+					 	"Function"		"OnCloneOriginalDeath"
+					}
+				}			
+			}
+			"modifier_doppelganger_lookaway_slow"
+			{
+				"EffectName"				"particles/units/heroes/hero_bane/bane_fiendsgrip_hands.vpcf"	
+				"EffectAttachType"			"attach_origin"
+				"Duration"		"0.75"
+				"IsDebuff"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"	"-70"
+				}
+			}
+		}
+	}
+
+
+	//====================================
+	// Nursery Rhyme: Queen's Glass Game
+	//====================================
+	"nursery_rhyme_queens_glass_game"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"5"
+		"RequiredLevel"					"1"
+		"LevelsBetweenUpgrades"			"2"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_CHANNELED"
+		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+		"AbilityTextureName"			"nursery_rhyme_queens_glass_game"
+		"AbilityCastAnimation" 			"ACT_DOTA_CAST_ABILITY_1"
+
+		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"		"particles/custom/nursery_rhyme/queens_glass_game/queens_glass_game_aoe.vpcf"
+			"particle"		"particles/custom/berserker/reincarnation/regen_buff.vpcf"
+			"particle"		"soundevents/game_sounds_heroes/game_sounds_faceless_void.vsndevts"
+			"particle"		"particles/neutral_fx/roshan_death_aegis_starfall.vpcf"
+		}
+
+		"AbilityCastPoint"				"0.7"
+		"AbilityChannelTime"			"%channel_duration"		
+		"AbilityCastRange"				"%radius"
+		"AbilityCooldown"				"20"
+		"AbilityManaCost"				"200"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"50"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"800"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"radius"				"875"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"channel_duration"				"3 5 7 9 11"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"instant_heal"				"400 500 600 700 800"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"instant_heal_pct"				"15"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"heal_over_time_pct"				"3 5 7 9 11"
+			}
+			"06"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"upkeep_mana_cost"				"3"
+			}
+			"07"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"incoming_damage"				"200"
+			}
+
+		}
+		
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+			 	"ScriptFile"		"nursery_rhyme_ability"
+			 	"Function"			"OnGlassGameStart"
+			 	"Radius"			"%radius"
+			 	"InstantHeal"		"%instant_heal"
+			 	"InstantHealPct"	"%instant_heal_pct"
+			}
+		}
+
+		"OnChannelInterrupted"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnGlassGameEnd"
+			}
+		}
+		"OnChannelSucceeded"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnGlassGameEnd"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_queens_glass_game"
+			{
+				"IsHidden"				"0"
+				"Aura"					"modifier_queens_glass_game_hp_regen"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_ALL"
+				//"Aura_ApplyToCaster"	 "0"
+				"Duration"				"%channel_duration"
+	            "ThinkInterval"		"1"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnGlassGameThink"
+						"ManaCost"		"%upkeep_mana_cost"
+					}
+				}
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"CreateGlassGameEffect"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"RemoveGlassGameEffect"
+					}
+				}
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"		"100"
+				}
+			}
+
+			"modifier_queens_glass_game_mana_aura"
+			{
+				"IsHidden"				"0"
+				"Aura"					"modifier_queens_glass_game_mana_regen"
+				"Aura_Radius"			"%radius"
+				"Aura_Teams"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
+				"Aura_Types"			"DOTA_UNIT_TARGET_ALL"
+				"Aura_ApplyToCaster"	 "0"
+				"Duration"				"%channel_duration"
+			}
+
+			"modifier_queens_glass_game_hp_regen"
+			{
+				"OnCreated"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnGlassGameAuraApplied"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnGlassGameAuraEnd"
+					}
+				}
+
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"		"%heal_over_time_pct"
+				}
+			}
+			"modifier_queens_glass_game_mana_regen"
+			{
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_MANA_REGEN_PERCENTAGE"		"%heal_over_time_pct"
+				}
+			}
+		}
+	}
+
+
+	//====================================
+	// Nursery Rhyme: A Story for Somebody's Sake(COMBO)
+	//====================================
+	"nursery_rhyme_story_for_somebodys_sake"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"RequiredLevel"					"24"
+		"LevelsBetweenUpgrades"			"24"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_HIDDEN"
+		"AbilityTextureName"			"nursery_rhyme_story_for_somebodys_sake"
+
+		"AnimationPlaybackRate" 		"1.0"
+		"precache"
+		{
+			"particle"			"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+			"particle"			"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
+			"particle"			"soundevents/game_sounds_heroes/game_sounds_abaddon.vsndevts"
+			"particle"			"particles/custom/screen_red_splash.vpcf"
+			"particle"			"particles/custom/screen_lightblue_splash.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_wisp.vsndevts"
+		}
+		
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"200"
+		"AbilityCastPoint"				"0.3"
+
+		// Time		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"450"
+
+		// Cost
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"600"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_FLOAT"
+				"time_limit"				"30"
+			}
+		}
+		
+
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnNRComboStart"
+				"TimeLimit"		"%time_limit"
+			}
+		}
+
+		"Modifiers"
+		{
+			"modifier_story_for_someones_sake"
+			{
+				"EffectName"				"particles/units/heroes/hero_abaddon/abaddon_borrowed_time.vpcf"
+				"EffectAttachType"			"attach_origin"
+				"Duration"		"29.8"
+	            "ThinkInterval"		"5"
+	            "OnIntervalThink"
+	         	{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"PingLocationForEnemies"
+					}
+				}
+				"OnDestroy"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnNRComboEnd"
+					}					
+				}
+				"OnDeath"
+				{
+					"RunScript"
+					{
+						"ScriptFile"	"nursery_rhyme_ability"
+						"Function"		"OnNRComboDeath"						
+					}
+				}
+			}
+			"modifier_story_for_someones_sake_enemy"
+			{
+				"EffectName"				"particles/econ/items/wraith_king/wraith_king_ti6_bracer/wraith_king_ti6_witness_ambient_body.vpcf"
+				"EffectAttachType"			"attach_origin"
+				"Duration"		"29.8"
+				"IsDebuff"		"1"
+			}
+
+			"modifier_story_for_someones_sake_cooldown"
+			{
+				"IsDebuff"	"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+		}
+	}
+
+	//=======================================
+	// Nursery Rhyme Attribute: Forever Together
+	//=======================================
+	"nursery_rhyme_attribute_forever_together"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nursery_rhyme_attribute_forever_together"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"13"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"slow_amount"			"70"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"damage_per_sec"			"4.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shapeshift_duration"			"7"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shapeshift_slow"			"40"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"shapeshift_cd"			"20"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnFTAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Nursery Rhyme Attribute: Nightmare
+	//=======================================
+	"nursery_rhyme_attribute_nightmare"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nursery_rhyme_attribute_nightmare"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"15"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"extra_bounce"			"2"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_ratio"			"1.5"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_steal"			"3"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"int_steal_duration"			"15"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnNightmareAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Nursery Rhyme Attribute: Reminiscence
+	//=======================================
+	"nursery_rhyme_attribute_reminiscence"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nursery_rhyme_attribute_reminiscence"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"12"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cdr"			"60"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"bonus_cast_range"			"200"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stat_steal"			"15"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stat_steal_duration"			"15"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnReminiscenceAcquired"
+			}
+		}
+	}
+
+	//=======================================
+	// Nursery Rhyme Attribute: Improve Queens Glass Game
+	//=======================================
+	"nursery_rhyme_attribute_improve_queens_glass_game"
+	{
+		// General		//------------------------------------------------------------------------------------------------------------
+		"BaseClass"						"ability_datadriven"
+		"MaxLevel"						"1"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_IGNORE_PSEUDO_QUEUE | DOTA_ABILITY_BEHAVIOR_IGNORE_CHANNEL"
+		"AbilityTextureName"			"nursery_rhyme_attribute_improve_queens_glass_game"
+		
+		
+		"AbilityCastPoint"				"0.0"
+		"AbilityCooldown"				"9999"
+		"AbilityManaCost"				"11"
+
+		"precache"
+		{
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_bonus"			"100"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_bonus_int_ratio"			"4"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"heal_bonus_missing_health"			"5"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"mana_ratio"			"0.5"
+			}
+			"05"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cdr"			"70"
+			}
+		}
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"nursery_rhyme_ability"
+				"Function"		"OnImproveQGGAcquired"
+			}
 		}
 	}
 
@@ -27788,6 +29078,32 @@
 					"MODIFIER_STATE_ROOTED"		"MODIFIER_STATE_VALUE_ENABLED"
 				}
 		  	}
+			"modifier_combo_checker"
+			{
+				"Passive"		"1"
+				"IsHidden"		"1"
+				"ThinkInterval"				"0.3"
+				"OnIntervalThink"
+				{
+					"RunScript"
+					{
+					 	"ScriptFile"	"master_ability"
+					 	"Function"		"OnComboCheck"
+					}
+				}
+			}
+			"combo_unavailable"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
+			"combo_cooldown"
+			{
+				"IsDebuff"		"1"
+				"IsHidden"		"1"
+				"Attributes"		"MODIFIER_ATTRIBUTE_PERMANENT | MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+			}
 		}
 	}
 	//================================================
@@ -28458,6 +29774,43 @@
 		{
 		}		
 	}
+
+	//=================================================================================================================
+	// All stats +2
+	//=================================================================================================================
+    "attribute_bonus_custom"
+    {
+        "BaseClass" "ability_datadriven"
+        "AbilityBehavior"   "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+        "AbilityTextureName"   "attribute_bonus"
+        "MaxLevel"  "7"
+        "LevelsBetweenUpgrades" "2"
+        "RequiredLevel" "5"
+
+        "AbilitySpecial"
+        {
+			"01"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"stats"			"2 4 6 8 10 12 14"
+			}
+		}
+		"Modifiers"
+		{
+			"modifier_all_stats"
+			{
+				"Passive"	"1"
+				"IsHidden"		"1"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_STATS_INTELLECT_BONUS"	"%stats"
+					"MODIFIER_PROPERTY_STATS_STRENGTH_BONUS"	"%stats"
+					"MODIFIER_PROPERTY_STATS_AGILITY_BONUS"		"%stats"
+				}
+			}
+		}	
+    }
+
 	//=================================================================================================================
 	// Attribute List
 	//=================================================================================================================

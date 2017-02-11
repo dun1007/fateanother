@@ -1,11 +1,11 @@
 function OnIPStart(keys)
 	local caster = keys.caster
 
-	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "nero_acquire_divinity", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "nero_acquire_golden_rule", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_acquire_martial_arts", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "nero_close_spellbook", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "nero_acquire_clairvoyance", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "nero_acquire_divinity", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "nero_acquire_golden_rule", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_acquire_martial_arts", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "nero_close_spellbook", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "nero_acquire_clairvoyance", false, true)
 end
 
 function OnIPRespawn(keys)
@@ -25,7 +25,7 @@ function OnDivinityAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local currentPassive = caster:GetAbilityByIndex(3):GetName()
 	if currentPassive ~= "fate_empty1" then
-		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", false, true)
 		caster:RemoveAbility(currentPassive)
 	end
 	for i=1, #PassiveModifiers do
@@ -39,7 +39,7 @@ function OnDivinityAcquired(keys)
 	else
 		caster:FindAbilityByName("berserker_5th_divinity"):SetLevel(1)
 	end
-	caster:SwapAbilities("berserker_5th_divinity", "fate_empty1", true, true)
+	caster:SwapAbilities("berserker_5th_divinity", "fate_empty1", true, false)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 
 	OnIPClose(keys)
@@ -53,7 +53,7 @@ function OnGoldenRuleAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local currentPassive = caster:GetAbilityByIndex(3):GetName()
 	if currentPassive ~= "fate_empty1" then
-		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", false, true)
 		caster:RemoveAbility(currentPassive)
 	end
 	for i=1, #PassiveModifiers do
@@ -67,7 +67,7 @@ function OnGoldenRuleAcquired(keys)
 	else
 		caster:FindAbilityByName("gilgamesh_golden_rule"):SetLevel(1)
 	end
-	caster:SwapAbilities("gilgamesh_golden_rule", "fate_empty1", true, true)
+	caster:SwapAbilities("gilgamesh_golden_rule", "fate_empty1", true, false)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end
@@ -77,7 +77,7 @@ function OnMindEyeAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local currentPassive = caster:GetAbilityByIndex(3):GetName()
 	if currentPassive ~= "fate_empty1" then
-		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", false, true)
 		caster:RemoveAbility(currentPassive)
 	end
 	for i=1, #PassiveModifiers do
@@ -91,7 +91,7 @@ function OnMindEyeAcquired(keys)
 	else
 		caster:FindAbilityByName("false_assassin_minds_eye"):SetLevel(1)
 	end
-	caster:SwapAbilities("false_assassin_minds_eye", "fate_empty1", true, true)
+	caster:SwapAbilities("false_assassin_minds_eye", "fate_empty1", true, false)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end
@@ -101,7 +101,7 @@ function OnMartialArtsAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local currentPassive = caster:GetAbilityByIndex(3):GetName()
 	if currentPassive ~= "fate_empty1" then
-		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", false, true)
 		caster:RemoveAbility(currentPassive)
 	end
 	for i=1, #PassiveModifiers do
@@ -115,7 +115,7 @@ function OnMartialArtsAcquired(keys)
 	else
 		caster:FindAbilityByName("lishuwen_martial_arts"):SetLevel(1)
 	end
-	caster:SwapAbilities("lishuwen_martial_arts", "fate_empty1", true, true)
+	caster:SwapAbilities("lishuwen_martial_arts", "fate_empty1", true, false)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end
@@ -125,7 +125,7 @@ function OnClairvoyanceAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local currentPassive = caster:GetAbilityByIndex(3):GetName()
 	if currentPassive ~= "fate_empty1" then
-		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", false, true)
 		caster:RemoveAbility(currentPassive)
 	end
 	for i=1, #PassiveModifiers do
@@ -140,7 +140,7 @@ function OnClairvoyanceAcquired(keys)
 	else
 		caster:FindAbilityByName("archer_5th_clairvoyance"):SetLevel(1)
 	end
-	caster:SwapAbilities("archer_5th_clairvoyance", "fate_empty1", true, true)
+	caster:SwapAbilities("archer_5th_clairvoyance", "fate_empty1", true, false)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end
@@ -150,7 +150,7 @@ function OnItemConstructionAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local currentPassive = caster:GetAbilityByIndex(3):GetName()
 	if currentPassive ~= "fate_empty1" then
-		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", true, true)
+		caster:SwapAbilities(caster:GetAbilityByIndex(3):GetName(), "fate_empty1", false, true)
 		caster:RemoveAbility(currentPassive)
 	end
 	for i=1, #PassiveModifiers do
@@ -160,18 +160,18 @@ function OnItemConstructionAcquired(keys)
 	end
 	caster:AddAbility("caster_5th_item_construction")
 	caster:FindAbilityByName("caster_5th_item_construction"):SetLevel(1)
-	caster:SwapAbilities("caster_5th_item_construction", "fate_empty1", true, true)
+	caster:SwapAbilities("caster_5th_item_construction", "fate_empty1", true, false)
 	caster:FindAbilityByName("nero_imperial_privilege"):StartCooldown(9999)
 	OnIPClose(keys)
 end
 
 function OnIPClose(keys)
 	local caster = keys.caster
-	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "nero_gladiusanus_blauserum", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "nero_tres_fontaine_ardent", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_rosa_ichthys", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "nero_imperial_privilege", true, true)
-	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "nero_aestus_domus_aurea", true, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(0):GetName(), "nero_gladiusanus_blauserum", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(1):GetName(), "nero_tres_fontaine_ardent", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(2):GetName(), "nero_rosa_ichthys", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "nero_imperial_privilege", false, true)
+	caster:SwapAbilities(caster:GetAbilityByIndex(5):GetName(), "nero_aestus_domus_aurea", false, true)
 end
 function OnGBStart(keys)
 	local caster = keys.caster
@@ -641,16 +641,18 @@ function NeroTakeDamage(keys)
 
 
 	if caster:GetHealth() == 0 and IsRevivePossible(caster) and caster.IsISAcquired and not caster:HasModifier("modifier_invictus_spiritus_cooldown") and not IsRevoked(caster) then
+		caster:SetHealth(caster:GetMaxHealth()*0.33)
+		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
 		
 		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
-		caster:SetHealth(1)
+		--caster:SetHealth(1)
 		Timers:CreateTimer(function()
 			if healCounter == 3 or not caster:IsAlive() then return end
-			caster:SetHealth(caster:GetHealth() + caster:GetMaxHealth() * 0.1)
+			--caster:SetHealth(caster:GetHealth() + caster:GetMaxHealth() * 0.1)
 			healCounter = healCounter + 1
 			return 1.0
 		end)
-		keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus",{})
+		caster:EmitSound("Hero_SkeletonKing.Reincarnate")
 		giveUnitDataDrivenModifier(keys.caster, keys.caster, "rb_sealdisabled", 4.5)
 		caster:FindAbilityByName("nero_invictus_spiritus"):ApplyDataDrivenModifier(caster, caster, "modifier_invictus_spiritus_cooldown", {duration = 60})
 	end
@@ -662,11 +664,11 @@ end
 function NeroCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("nero_aestus_domus_aurea") and caster:FindAbilityByName("nero_tres_fontaine_ardent"):IsCooldownReady() and caster:FindAbilityByName("nero_fiery_finale"):IsCooldownReady() then
-			caster:SwapAbilities("nero_tres_fontaine_ardent", "nero_fiery_finale", true, true) 
+			caster:SwapAbilities("nero_tres_fontaine_ardent", "nero_fiery_finale", false, true) 
 			Timers:CreateTimer({
 				endTime = 3,
 				callback = function()
-				caster:SwapAbilities("nero_tres_fontaine_ardent", "nero_fiery_finale", true, true) 
+				caster:SwapAbilities("nero_tres_fontaine_ardent", "nero_fiery_finale", true, false) 
 			end
 			})			
 		end

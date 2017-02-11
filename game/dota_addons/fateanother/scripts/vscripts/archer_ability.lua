@@ -19,8 +19,12 @@ function FarSightVision(keys)
 	end
 
 	if caster.IsHruntingAcquired then
-		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, true) 
-		Timers:CreateTimer(8, function() caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false) return end)
+		caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", false, true) 
+		Timers:CreateTimer(8, function() 
+			local hruntHidden = caster:FindAbilityByName("archer_5th_hrunting"):IsHidden()
+			caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_hrunting", true, false)
+			caster:FindAbilityByName("archer_5th_clairvoyance"):SetHidden(hruntHidden) --if hrunt is already hidden, it means it is hidden as a result of UBW, which means that we have to hide clair too. 
+		end)
 	end
 	
 	--EmitGlobalSound("Hero_KeeperOfTheLight.BlindingLight")
@@ -408,10 +412,10 @@ function OnUBWStart(keys)
 	local ubwdummyLoc4 = ubwCenter + Vector(-600,-600, 1000)
 
     -- swap Archer's skillset with UBW ones
-    caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", true, true) 
-    caster:SwapAbilities("archer_5th_kanshou_bakuya", "archer_5th_sword_barrage_retreat_shot", true, true) 
-    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", true, true) 
-    caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, true) 
+    caster:SwapAbilities(caster:GetAbilityByIndex(4):GetName(), "archer_5th_sword_barrage", false, true) 
+    caster:SwapAbilities("archer_5th_kanshou_bakuya", "archer_5th_sword_barrage_retreat_shot", false, true) 
+    caster:SwapAbilities("archer_5th_broken_phantasm", "archer_5th_sword_barrage_confine", false, true) 
+    caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", false, true) 
     -- Find eligible UBW targets
 	ubwTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetOrigin(), nil, keys.Radius
             , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
@@ -495,6 +499,7 @@ function OnUBWStart(keys)
 			if caster:IsAlive() and caster:HasModifier("modifier_ubw_death_checker") then
 				local weaponTargets = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, 2000
 	            , DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES, FIND_ANY_ORDER, false)
+	            if #weaponTargets == 0 then return 0.2 end
 				local targetIndex = RandomInt(1, #weaponTargets)
 				local swordTarget = weaponTargets[targetIndex]
 				local swordOrigin = caster:GetAbsOrigin() + Vector(0,0,500) + RandomVector(1000)
@@ -504,7 +509,7 @@ function OnUBWStart(keys)
 				ParticleManager:SetParticleControl( swordFxIndex, 0, swordOrigin )
 				ParticleManager:SetParticleControl( swordFxIndex, 1, swordVector * 5000 )
 				Timers:CreateTimer(0.1, function()
-					if swordTarget:IsAlive() then
+					if swordTarget:IsAlive() and not swordTarget:HasModifier("modifier_lancer_protection_from_arrows_active") then
 						DoDamage(caster, swordTarget, ATTR_PROJECTION_PASSIVE_WEAPON_DAMAGE+caster:GetIntellect()*0.3 , DAMAGE_TYPE_PHYSICAL, 0, keys.ability, false)
 					end
 					ParticleManager:DestroyParticle( swordFxIndex, false )
@@ -576,9 +581,9 @@ function EndUBW(caster)
     caster:SwapAbilities("archer_5th_ubw", "archer_5th_nine_lives", true, false) 
     
     if caster:GetAbilityByIndex(4):GetName()=="archer_5th_clairvoyance" and caster:GetAbilityByIndex(7):GetName()=="archer_5th_hrunting" and caster:GetAbilityByIndex(10):GetName()=="archer_5th_sword_barrage" then
-    	print("fix for start hrunt start ubw end ubw end hrunt")
-    	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", true, true)
-    	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, true)
+    	--print("fix for start hrunt start ubw end ubw end hrunt")
+    	caster:SwapAbilities("archer_5th_clairvoyance", "archer_5th_sword_barrage", false, true)
+    	caster:SwapAbilities("archer_5th_hrunting", "archer_5th_sword_barrage", true, false)
     end
 
 	CreateUITimer("Unlimited Blade Works", 0, "ubw_timer")
@@ -598,12 +603,16 @@ function EndUBW(caster)
     local units = FindUnitsInRadius(caster:GetTeam(), ubwCenter, nil, 1300
     , DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_UNIT_TARGET_FLAG_MAGIC_IMMUNE_ENEMIES + DOTA_UNIT_TARGET_FLAG_INVULNERABLE, FIND_ANY_ORDER, false)
 
-    for i=1, #units do
-    	if IsValidEntity(units[i]) and not units[i]:IsNull() then
+
+	i = 1
+	while i <= #units do
+		if IsValidEntity(units[i]) and not units[i]:IsNull() then
 			if string.match(units[i]:GetUnitName(),"dummy") then 
 				table.remove(units, i)
+				i = i - 1
 			end
 		end
+		i = i + 1
 	end
 
     for i=1, #units do
@@ -1364,11 +1373,11 @@ end
 function ArcherCheckCombo(caster, ability)
 	if caster:GetStrength() >= 19.1 and caster:GetAgility() >= 19.1 and caster:GetIntellect() >= 19.1 then
 		if ability == caster:FindAbilityByName("archer_5th_ubw") and caster:FindAbilityByName("archer_5th_rho_aias"):IsCooldownReady() and caster:FindAbilityByName("archer_5th_arrow_rain"):IsCooldownReady() then
-			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+			caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", false, true) 
 			Timers:CreateTimer({
 				endTime = 5,
 				callback = function()
-				caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, true) 
+				caster:SwapAbilities("archer_5th_rho_aias", "archer_5th_arrow_rain", true, false) 
 			end
 			})			
 		end

@@ -28,7 +28,7 @@ function OnArmedUpStart(keys)
 	local a1 = caster:FindAbilityByName("tamamo_soulstream") -- Soulstream 
 	local a2 = caster:FindAbilityByName("tamamo_subterranean_grasp") -- Subterranean Grasp
 	local a3 = nil
-	if caster:GetAbilityByIndex(2):GetAbilityName() == "tamamo_mantra" then
+	if caster.bIsShackleAvailable ~= true then
 		a3 = caster:FindAbilityByName("tamamo_mantra") -- Mantra
 	else
 		a3 = caster:FindAbilityByName("tamamo_mystic_shackle")
@@ -37,12 +37,12 @@ function OnArmedUpStart(keys)
 	local a5 = caster:FindAbilityByName("tamamo_armed_up") -- fate_empty1
 	local a6 = caster:FindAbilityByName("tamamo_amaterasu") -- Amaterasu
 
-	caster:SwapAbilities("tamamo_fiery_heaven", a1:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_frigid_heaven", a2:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_gust_heaven", a3:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_fiery_heaven", a1:GetName(), true, false) 
+	caster:SwapAbilities("tamamo_frigid_heaven", a2:GetName(), true, false) 
+	caster:SwapAbilities("tamamo_gust_heaven", a3:GetName(), true, false) 
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_close_spellbook", a5:GetName(), true,true) 
-	caster:SwapAbilities("fate_empty2", a6:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_close_spellbook", a5:GetName(), true,false) 
+	caster:SwapAbilities("fate_empty2", a6:GetName(), true, false) 
 end
 
 function OnFireCharmLoaded(keys)
@@ -178,16 +178,16 @@ function CloseCharmList(keys)
 	local a6 = caster:FindAbilityByName("fate_empty2") -- Amaterasu
 
 
-	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_soulstream", a1:GetName(), true, false) 
+	caster:SwapAbilities("tamamo_subterranean_grasp", a2:GetName(), true, false) 
 	if caster.bIsShackleAvailable then
-		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, true) 
+		caster:SwapAbilities("tamamo_mystic_shackle", a3:GetName(), true, false) 
 	else
-		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, true) 
+		caster:SwapAbilities("tamamo_mantra", a3:GetName(), true, false) 
 	end
 	--caster:SwapAbilities("fate_empty2", a4:GetName(), true, true) 
-	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,true) 
-	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, true) 
+	caster:SwapAbilities("tamamo_armed_up", a5:GetName(), true,false) 
+	caster:SwapAbilities("tamamo_amaterasu", a6:GetName(), true, false) 
 end
 
 function OnCharmAttacked(keys)
@@ -334,7 +334,7 @@ function OnSoulstreamProjectileTick(keys)
 	local casterLoc = target:GetAbsOrigin()
 	local ability = keys.ability
 	local damage = keys.Damage
-	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.75 end
+	if caster.IsSpiritTheftAcquired then damage = damage+caster:GetIntellect()*0.5 end
 	damage = damage + damage*caster.CurrentSoulstreamStack*keys.StackBonus/100
 
 	if target:IsAlive() then
@@ -488,6 +488,18 @@ function OnSGStart(keys)
 	target:EmitSound("Hero_Visage.GraveChill.Cast")
 end
 
+function OnSGApplyCC(keys)
+	local caster = keys.caster
+	local target = keys.target
+	local ability = keys.ability
+
+	ability:ApplyDataDrivenModifier(caster, target, "modifier_subterranean_grasp", {})
+	giveUnitDataDrivenModifier(caster, target, "rooted", keys.Duration)
+	if caster.IsSpiritTheftAcquired then
+		giveUnitDataDrivenModifier(caster, target, "revoked", keys.Duration)
+	end
+end
+
 function OnSGDestroy(keys)
 	local caster = keys.caster
 	local target = keys.target
@@ -534,7 +546,7 @@ function OnMantraStart(keys)
 		
 		--ability:ApplyDataDrivenModifier(caster, target, "modifier_mantra_tether", {})
 		if caster:GetAbilityByIndex(2):GetName() == "tamamo_mantra" then
-			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,true) 
+			caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", false,true) 
 			caster.bIsShackleAvailable = true
 			Timers:CreateTimer(3.0, function()
 				caster:SwapAbilities("tamamo_mantra", "tamamo_mystic_shackle", true,false) 
@@ -558,7 +570,10 @@ function OnShackleThink(keys)
 	local ability = keys.ability
 	local target = keys.target
 	local dist = (caster:GetAbsOrigin() - target:GetAbsOrigin()):Length2D()
-	if dist > 2500 then
+	if dist > 2500
+		or target:IsMagicImmune()
+		or not IsInSameRealm(caster:GetAbsOrigin(), target:GetAbsOrigin())
+	then
 		target:RemoveModifierByName("modifier_mystic_shackle")
 	elseif dist > 700 then
 		local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
@@ -594,18 +609,20 @@ function OnMantraTakeDamage(keys)
 	local attacker = keys.attacker
 	local ability = keys.ability
 	local damageTaken = keys.DamageTaken
-	local orbDamage = keys.Damage
+	local orbBlockAmt = 0
+	local orbDamageEnemy = 0
 	local currentStack = 0
 	local modifierName = 0
 	local currentHealth = target:GetHealth() 
 
 	if target:GetTeamNumber() == caster:GetTeamNumber() then
 		modifierName = "modifier_mantra_ally"
+		orbBlockAmt = keys.BlockAmt 
 		if currentHealth == 0 then
-			print("lethal")
+			--print("lethal")
 		else
-			if orbDamage < keys.DamageTaken then
-				target:SetHealth(currentHealth + orbDamage)
+			if orbBlockAmt < keys.DamageTaken then
+				target:SetHealth(currentHealth + orbBlockAmt)
 			else
 				target:SetHealth(currentHealth + keys.DamageTaken)
 			end
@@ -616,7 +633,8 @@ function OnMantraTakeDamage(keys)
 		else
 			--print(attacker:GetName() .. " attacked " .. target:GetName())
 			target.IsMantraProcOnCooldown = true
-			DoDamage(caster, target, orbDamage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
+			orbDamageEnemy = keys.Damage
+			DoDamage(caster, target, orbDamageEnemy, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 			Timers:CreateTimer(0.299, function()
 				target.IsMantraProcOnCooldown = false
 			end)
@@ -876,10 +894,10 @@ function OnPCFAcquired(keys)
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2"):SetLevel(1)
 	hero:FindAbilityByName("tamamo_polygamist_castration_fist_2").IsResetable = false
 	Timers:CreateTimer(0.033, function()
-		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true)
+		hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", false, true)
 		-- Checks if Tamamo is on the verge of casting Castration Fist when PCF attribute is acquired to avoid SwapAbilities-ing to oblivion.
 		if hero:GetAbilityByIndex(3):GetName() == "fate_empty1" then
-			 hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", true, true)
+			 hero:SwapAbilities("fate_empty1", "tamamo_polygamist_castration_fist_2", false, true)
 		end
 	end)
 

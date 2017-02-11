@@ -249,43 +249,6 @@
 	    }
 	}
 
-	"item_dummy_item" 
-	{
-	    "ID"           "1992"
-	    "BaseClass"    "item_datadriven"
-	    "AbilityTextureName" ""
-	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
-	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
-	    "ItemQuality"  "consumable"
-
-	    "ItemCost"     "99999"
-	    "ItemKillable" "0" 
-	    "ItemSellable" "0"
-	    "ItemPurchasable" "0"
-	    "ItemDroppable" "0"
-	    "ItemShareability" "ITEM_FULLY_SHAREABLE_STACKING"
-
-
-	    "SideShop"     "1" 
-	    "SecretShop"   "0"
-
-	    "ItemStackable" "0"
-	    "ItemPermanent" "1"
-	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
-
-	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-	    //"AbilityCooldown"				"2.0"
-	    //"AbilityCastRange"				"0"
-	    "precache"
-	    {
-	    }
-
-
-	    "OnSpellStart"
-	    {
-	    }
-	}
-
 	"item_apply_modifiers"
 	{
 	    // General
@@ -502,22 +465,18 @@
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"	"item_pot_regen"
-	    		"Target"	"CASTER"
-	    	}
-			"FireSound"
+	    	"RunScript"
 			{
-				"EffectName"	"DOTA_Item.ClarityPotion.Activate"
-				"Target"		"CASTER"
+				"ScriptFile"	"items"
+				"Function"		"ManaEssence"
 			}
 	    }
 	    "Modifiers"
 	    {
 	        "item_pot_regen"
-	        {	
-	        	"Duration"	"10.0"
+	        {
+	        	"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+	        	"Duration"		"10.0"
 	        	"EffectName"	"particles/items_fx/healing_flask.vpcf"
 	        	"EffectAttachType"	"attach_hitloc"
 	            "Properties"
@@ -535,7 +494,7 @@
 	            }
 	        } 
 	    }
-	} 
+	}
 
 	"item_recipe_condensed_mana_essence"
 	{
@@ -723,21 +682,17 @@
 	    "OnSpellStart"
 	    {
 	    	"SpendCharge" {}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"	"modifier_speed_gem"
-	    		"Target"		"CASTER"
-	    	}
-	    	"FireSound"
-	    	{
-	    		"EffectName"		"DOTA_Item.PhaseBoots.Activate"
-	    		"Target"		"CASTER"
-	    	}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"SpeedGem"
+			}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_speed_gem"
 	    	{
+	    		"Attributes"			"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"EffectName"			"particles/units/heroes/hero_dark_seer/dark_seer_surge.vpcf"
 				"EffectAttachType"		"follow_origin"	
 	    		"Duration"		"10.0"
@@ -867,22 +822,18 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_berserk_scroll"
-	    		"Target"			"CASTER"
-	    	}
-	    	"FireSound"
-	    	{
-	    		"EffectName"		"DOTA_Item.MaskOfMadness.Activate"
-	    		"Target"			"CASTER"
-	    	}
+	    	"RunScript"
+			{
+				"ScriptFile"	"items"
+				"Function"		"BerserkScroll"
+			}
 	    	"SpendCharge" {}
 	    }
 	    "Modifiers"
 	    {
 	    	"modifier_berserk_scroll"
 	    	{
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 	    		"Duration"		"10.0"
 				"EffectName"		"particles/items2_fx/mask_of_madness.vpcf"
 				"EffectAttachType"	"follow_origin"
@@ -1219,7 +1170,11 @@
 	    	"FireSound"
 	    	{
 	    		"EffectName"	"DOTA_Item.Mekansm.Activate"
-	    		"Target"		"CASTER"
+	    		"Target"
+				{
+					"Center"	"CASTER"
+					"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+				}
 	    	}
 	    	"RunScript"
 			{
@@ -1232,6 +1187,7 @@
 	    {
 	    	"modifier_healing_scroll"
 	    	{	
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
 				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
 				"EffectAttachType"	"follow_overhead"
 	    		"Duration"		"5.0"
@@ -1635,22 +1591,6 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_purge"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier1"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier2"
-	    		"Target"			"TARGET"
-	    	}
-	    		    		
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
@@ -1779,22 +1719,6 @@
 		}
 	    "OnSpellStart"
 	    {
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_purge"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier1"
-	    		"Target"			"TARGET"
-	    	}
-	    	"ApplyModifier"
-	    	{
-	    		"ModifierName"		"modifier_slow_tier2"
-	    		"Target"			"TARGET"
-	    	}
-	    		    		
 	    	"RunScript"
 			{
 				"ScriptFile"	"items"
@@ -2297,7 +2221,11 @@
 	    		{
 					"AttachEffect"
 					{
-						"Target"			"CASTER"
+	    				"Target"
+						{
+							"Center"	"CASTER"
+							"Flags"		"DOTA_UNIT_TARGET_FLAG_INVULNERABLE"
+						}
 						"EffectName"		"particles/items_fx/black_king_bar_avatar.vpcf"
 						"EffectAttachType"	"follow_origin"
 					}
@@ -2343,6 +2271,7 @@
 	    "precache"
 	    {
 	    	"particle"	 	"particles/items2_fx/mekanism.vpcf"
+	    	"particle"		"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
 	    }
 	    "OnSpellStart"
 	    {
@@ -2353,6 +2282,20 @@
 				"Function"		"FullHeal"
 			}
 	    }	
+	    "Modifiers"
+	    {
+			"shard_of_replenishment_armor_buff"
+			{
+	    		"Attributes"	"MODIFIER_ATTRIBUTE_IGNORE_INVULNERABLE"
+				"EffectName"	"particles/units/heroes/hero_lich/lich_frost_armor_model.vpcf"
+				"EffectAttachType"	"follow_overhead"
+				"Duration"			"10"
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"	"100"
+				}
+			}
+		}
 	}
 
 	"item_gille_contaminate" 
@@ -2637,5 +2580,58 @@
 		"ItemInitialCharges"			"0"
 		"ItemKillable"					"0"
 		"ItemCastOnPickup"				"1"
+	}
+
+
+	"item_dummy_item" 
+	{
+	    "ID"           "1135"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" ""
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "1" 
+	    "ItemSellable" "1"
+	    "ItemPurchasable" "1"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+	    "ItemInitialCharges" "5"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+	    "AbilityCastPoint"				"5000"
+	    "precache"
+	    {
+	    }
+	}
+
+	"item_dummy_item_unusable" 
+	{
+	    "ID"           "1136"
+	    "BaseClass"    "item_datadriven"
+	    "AbilityTextureName" ""
+	    "Model"        "models/props_gameplay/tpscroll01.vmdl" 
+	    "Effect"       "particles/generic_gameplay/dropped_item.vpcf"
+	    "ItemQuality"  "consumable"
+
+	    "ItemCost"     "99999"
+	    "ItemKillable" "0" 
+	    "ItemSellable" "0"
+	    "ItemPurchasable" "0"
+	    "ItemDroppable" "1"
+	    "ItemShareability" "ITEM_FULLY_SHAREABLE"
+	    "ItemStackable" "0"
+	    "ItemPermanent" "1"
+	    "ItemDisassembleRule" "DOTA_ITEM_DISASSEMBLE_NEVER"
+
+	    "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
+	    "precache"
+	    {
+	    }
 	}
 }

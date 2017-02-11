@@ -4,9 +4,9 @@
         <include src="file://{resources}/styles/custom_game/fateanother_timer.css" />
     </styles>
     <scripts>
-        <include src="file://{resources}/scripts/custom_game/fateanother_timer.js" /> 
+        <include src="file://{resources}/scripts/custom_game/fateanother_timer.js" />
     </scripts>
-    <Panel class="TimerBody" hittest="false">
+    <Panel class="TimerBody" hittest="true">
         <Label id="TimerMsg" text="Round"/>
         <Label id="TimerRemaining" text="00:00:00"/>
     </Panel>

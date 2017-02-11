@@ -2,16 +2,17 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 30%;
+    margin-bottom: 29.5%;
     margin-left: 0%;
     flow-children: down;
+    z-index: 9999;
 }
 
-.AspectRatio16x10 .CustomizationBoardRoot
+/*.AspectRatio16x10 .CustomizationBoardRoot
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 30%;
+    margin-bottom: 24%;
     margin-left: 0%;
     flow-children: down;
 }
@@ -20,7 +21,7 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 30%;
+    margin-bottom: 24%;
     margin-left: 0%;
     flow-children: down;
 }
@@ -29,10 +30,10 @@
 {
     horizontal-align: left;
     vertical-align: bottom;
-    margin-bottom: 28.5%;
+    margin-bottom: 24%;
     margin-left: 0%;
     flow-children: down;
-}
+}*/
 
 #CustomizationOpenButton
 {
@@ -48,11 +49,12 @@
     height: 400px;
     //background-image: url("file://{images}/custom_game/customization_background.png");
     background-color: gradient( linear, 0% 0%, 0% 100%, from( #486186 ), color-stop( 0.5, #21262c ), to( #486186 ) );
-    border-radius: 50px 50px 50px 50px;
-    border:3px solid #DAA520;
+    //border-radius: 50px 50px 50px 50px;
+    //border:3px solid #DAA520;
     //box-shadow: fill #fffb84 1px 3px 2px 2px; // outer, filled
     overflow: scroll;
     opacity: 0.9;
+
 }
 
 .CustomizationText
@@ -66,8 +68,11 @@
 
 #CustomizationOpenButtonText
 {
-    horizontal-align: center;
     vertical-align: middle;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+    transition-timing-function: ease-in-out;
+    background-color: gradient( linear, 0% 0%, 100% 0%, from( #FFD700 ), color-stop( .5, #7f6b00 ), to( #0000 ) );
 }
 
 

@@ -106,3 +106,150 @@
 
     "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle"      "Luminosite Eternelle"
     "DOTA_Tooltip_Ability_jeanne_luminosite_eternelle_Description"  "Ruler hurls her flag in target direction, <font color='#FF3399'>rooting, disarming</font>, and dimensionally <font color='#FF3399'>locking</font> enemies along its path. The flag is then planted in the ground, creating a sacred zone that reduces incoming damage for allied heroes.\nWhenever allies suffer damage, the flag is damaged as well. Destroying the flag removes root and lock statuses remaining on victims.\n<font color='#ff9900'>UNJUST BONUS:</font>Victim takes 30%% increased damage."
+
+    //=====================================
+    //  NEW VERSION
+    //====================================
+    "DOTA_Tooltip_Ability_rider_5th_attribute_seal"             "Seal"
+    "DOTA_Tooltip_ability_rider_5th_attribute_seal_Description" "Causes Breaker Gorgon to increase turn rate of affected enemies.\nIn addition, Bloodfort Andromeda charms enemies caught within, forcing them to move towards the singularity."
+    "DOTA_Tooltip_Ability_rider_5th_attribute_seal_petrify_chance"              "%TURN RATE INCREASE:"
+
+    //=================================
+    //  NEW VERSION
+    //=================================
+    "npc_dota_hero_windrunner"             "Caster(Extra), N.N"
+    "npc_dota_hero_enchantress"             "Caster(Extra), Tamamo"
+    "npc_dota_hero_lina"        "Saber(Extra), Nero"
+    "npc_dota_hero_omniknight"      "White Saber(Extra)"
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+    "DOTA_Tooltip_Ability_tamamo_mantra"     "Mantra"
+    "DOTA_Tooltip_Ability_tamamo_mantra_damage_modifier"     "DAMAGE MODIFICATION ON ALLY:"
+    "DOTA_Tooltip_Ability_tamamo_mantra_damage_modifier_enemy"  "DAMAGE MODIFICATION ON ENEMY:"
+
+    //====================================
+    //      Caster(Extra) - Nursery Rhyme
+    //====================================
+    "npc_dota_hero_windrunner"             "Caster(Extra), N.R"
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift"      "Shapeshift"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_Description"      "Caster sends a copy of herself towards target direction. Upon getting in close to enemy hero, clone will deal magic damage to surrounding enemies, slow their movespeed, and disappear.\nWhile it persists, activating this ability again will shift the position of Caster and a copy."
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_duration"        "CLONE DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_damage"          "DAMAGE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_radius"          "RADIUS:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_slow"            "%SLOW AMOUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_slow_duration"   "SLOW DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_Note0"       "Clone Caster has the base movement speed of Caster and takes 300%% extra damage."
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_Note1"       "Cannot shift position more than once."
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_Note2"       "Both Casters are phased while clone persists."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_swap"      "Swap Position"
+    "DOTA_Tooltip_Ability_nursery_rhyme_shapeshift_swap_Description"    "Instantly switches position with clone."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_nameless_forest"      "Nameless Forest"
+    "DOTA_Tooltip_Ability_nursery_rhyme_nameless_forest_Description"      "Caster confines target hero in her Reality Marble, <font color='#FF3399'>expelling</font> it from the game for duration."
+    "DOTA_Tooltip_Ability_nursery_rhyme_nameless_forest_duration"       "DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_nameless_forest_Note0"          "Applies soft dispel."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma"      "White Queen's Enigma"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_Description"      "Launches an enigmatic force in a line. When hit, it deals magic damage based on target's current health, <font color='#FF3399'>stuns</font> briefly, and causes victim to suffer <font color='#FF3399'>number of randomly chosen Crowd Control effects.</font>"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_damage"     "%DAMAGE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_default_stun_duration"  "DEFAULT STUN DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_cc_numbers"         "NUMBER OF CC APPLIED:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_stun_duration"      "STUN DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_silence_duration"   "SILENCE DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_revoke_duration"    "REVOKE DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_lock_duration"  "LOCK DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_root_duration"  "ROOT DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_disarm_duration"    "DISARM DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_white_queens_enigma_Note0"          "The pool of Crowd Control effects are Stun, Silence, Revoke, Lock, Root, and Disarm."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water"      "The Plains of Water"
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_Description"      "Hurls a frost bolt that bounces through nearby enemy units. Each bounce reduces bolt's damage, but applies <font color='#FF3399'>all Crowd Control effects primary target is being affected by.</font>"
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_damage"         "DAMAGE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_max_bounce"     "MAX BOUNCE COUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_dmg_reduction"  "%DAMAGE REDUCTION PER BOUNCE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_Note0"          "Can hit the same unit multiple times."
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_Note1"          "Crowd Control effect duration follows current level of White Queen's Enigma."
+    "DOTA_Tooltip_Ability_nursery_rhyme_the_plains_of_water_Note2"          "The table of Crowd Control effects is snapshot when primary target takes first bounce."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger"      "I Am You, and You Are Me"
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_Description"      "Caster conjures a stationary doppelganger of target enemy hero, which can be attacked by Caster and her allies. Doppelganger cannot act, has percentage of original's max health, and shares the pain with original."
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_doppelganger_health"           "%DOPPELGANGER HEALTH:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_damage_shared"     "%SHARED DAMAGE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_duration"  "DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_Note0"     "Only 1 doppelganger can exist at a time."
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_Note1"     "Shared damage from doppelganger cannot be lethal."
+    "DOTA_Tooltip_Ability_nursery_rhyme_doppelganger_Note2"     "Doppelganger cannot be linked with Spirit Link."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game"      "Queen's Glass Game"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_Description"      "CHANNELING: Caster winds back the battle, healing all allies instantly and over time.\nDuring channeling and 1 second after finishing it, Caster takes additional damage."
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_radius"       "RADIUS:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_channel_duration"     "CHANNELING DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_instant_heal"     "INSTANT HEAL:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_instant_heal_pct" "%INSTANT HEAL BASED ON MISSING HEALTH:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_heal_over_time_pct"   "%HEAL OVER TIME BASED ON MAX HEALTH:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_upkeep_mana_cost"     "%UPKEEP MANA COST PER SEC:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_queens_glass_game_incoming_damage"      "%INCOMING DAMAGE:"
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake"   "A Story for Somebody's Sake"
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Description"   "<font color='#58ACFA'>Combo Requirement: 20 in all stats</font>\n<font color='#58ACFA'>Combo Sequence: R-R in 2 seconds</font>\n\nCaster conjures a time-rewinding Noble Phantasm. If she is not killed in a given time, current round will reset back to the beginning with an unconditional draw.\nThis abiity cannot be used if round timer is past 60 seconds."
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_time_limit"    "TIME LIMIT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note0"         "Until the spell's completion, Caster's location will be pinged by enemy team every 5 seconds."
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note1"         "Caster cannot use Teleport Scroll, Gem of Speed, and Blink Scroll while channeling."
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Note2"         "If a draw occurs due to this ability's effect, default win condition will not apply."
+    "DOTA_Tooltip_Ability_nursery_rhyme_story_for_somebodys_sake_Lore"  "This story will go on forever.\nAs long as the slender fingers return to the first page,\nAs if picking up the next volume.\nOnce again denying reality to the reader."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together"     "Forever Together"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_Description"     "I Am You, and You Are Me causes target to be slowed and take damage every second based on INT continuously if it is looking away from its doppelganger. Also, improves Shapeshift's max duration and slow, and reduces its cooldown."
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_slow_amount"     "%LOOKAWAY SLOW AMOUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_damage_per_sec"  "LOOKAWAY DAMAGE INT RATIO:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_shapeshift_duration"     "SHAPESHIFT DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_shapeshift_slow"         "SHAPESHIFT SLOW:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_forever_together_shapeshift_cd"           "SHAPESHIFT COOLDOWN:"
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare"            "Nightmare"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare_Description"        "Increases The Plains of Water's max bounce count and damage based on Caster's INT. Also, each bounce onto enemy hero steals INT from them."
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare_extra_bounce"       "EXTRA BOUNCE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare_int_ratio"          "INT RATIO:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare_int_steal"          "INT STEAL AMOUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare_int_steal_duration" "INT STEAL DURATION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_nightmare_Note0"      "Bonus damage from INT does not diminish after bounce."
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence"     "Reminiscence"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence_Description" "Reduces Nameless Forest's cooldown, increaes its cast range, and causes it to steal STR, AGI, and INT from enemy hero. Also, enables Reminiscence.\nReminiscence: Releases hero from Nameless Forest immediately."
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence_cdr"     "COOLDOWN REDUCTION:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence_bonus_cast_range"    "BONUS CAST RANGE:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence_stat_steal"          "STAT STEAL AMOUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_reminiscence_stat_steal_duration" "STAT STEAL DURATION:"
+
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game"        "Improve Queen's Glass Game"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_Description"        "Increaes Queen's Glass Game's instant heal amount based on Caster's INT and causes its healing effect to replenish portion of mana as well.\nIn addition, A Story for Somebody's Sake's cooldown is reduced."
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_heal_bonus"     "BONUS INSTANT HEAL AMOUNT:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_heal_bonus_int_ratio"   "EXTRA INSTANT HEAL AMOUNT INT RATIO:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_heal_bonus_missing_health"  "BONUS HEAL AMOUNT BASED ON MISSING HEALTH:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_mana_ratio" "HEALTH TO MANA RATIO:"
+    "DOTA_Tooltip_Ability_nursery_rhyme_attribute_improve_queens_glass_game_cdr"            "COMBO COOLDOWN REDUCTION:"
+
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol"   "Divine Symbol"
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Description"   "Increases Luminosite Eternelle's maximum crowd control duration, and causes it to apply Charisma to all allied Servants within sacred zone at cast. In addition, Ruler automatically casts Charisma on herself when La Pucelle activates."
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_Note0"             "Charisma effect follows current level."
+    "DOTA_Tooltip_Ability_jeanne_attribute_divine_symbol_bonus_duration"    "EXTRA CC DURATION:"
+
+    "DOTA_Tooltip_Ability_jeanne_saint"     "Saint"
+    "DOTA_Tooltip_Ability_jeanne_saint_Description" "Ruler judges each enemy Servant by their K/D counts. Servants whose Kills are higher than their Deaths are marked as <font color='#ff9900'>Unjust.</font>\nRuler's abilities gain special effects against Unjust enemies."
+
+
+
+    //==================================
+    //  NEW VERSION
+    //==================================
+    "DOTA_Tooltip_ability_attribute_bonus_custom"   "Acquire All Stats"
+    "DOTA_Tooltip_ability_attribute_bonus_custom_Description"       "Increases your STR, AGI, and INT."
+    "DOTA_Tooltip_ability_attribute_bonus_custom_stats"         "STAT BONUS:"

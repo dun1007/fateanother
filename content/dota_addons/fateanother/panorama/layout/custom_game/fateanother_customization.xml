@@ -44,11 +44,11 @@
 	            	<Panel id="CustomizationShardLayout" hittest="false">
 		            </Panel>
 	            </Panel>
-
 	        </Panel>
 	    </Panel>
+	    <DOTAHeroMovie id="DailyHeroMovie" class="HeroMovie" src="file://{resources}/videos/heroes/npc_dota_hero_legion_commander.webm" controls="none" repeat="true" autoplay="onload" />
         <Button id="CustomizationOpenButton" onactivate="OnCustomizeButtonPressed()" onmouseover="OnCustomizeButtonShowTooltip()" onmouseout="OnCustomizeButtonHideTooltip()" hittest="true">
-            <Image id="CustomizationOpenButtonImage" src="file://{images}/custom_game/customization_button.png" hittest="false"/>
+            <!--<Image id="CustomizationOpenButtonImage" src="file://{images}/misc/gold_arrow.png" hittest="false"/>-->
             <Label id="CustomizationOpenButtonText" class="CustomizationText" text="#Fateanother_Customize" hittest="false"/>
         </Button>
     </Panel>

@@ -1,6 +1,22 @@
 ATTR_HEARTSEEKER_AD_RATIO = 2
 ATTR_HEARTSEEKER_COMBO_AD_RATIO = 3
 
+function OnPFAStart(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+
+	ability:ApplyDataDrivenModifier(caster, caster, "modifier_lancer_protection_from_arrows_active", {duration=3})
+	caster:EmitSound("DOTA_Item.Buckler.Activate")
+	StartAnimation(caster, {duration=1, activity=ACT_DOTA_CAST_ABILITY_1, rate=0.45})
+
+end
+
+function OnPFAThink(keys)
+	local caster = keys.caster
+	local ability = keys.ability
+	ProjectileManager:ProjectileDodge(caster)
+end
+
 function OnBattleContinuationStart(keys)
 	local caster = keys.caster
 	local ability = keys.ability
@@ -25,7 +41,7 @@ function LancerOnTakeDamage(keys)
 	if currentHealth == 0 and keys.ability:IsCooldownReady() and keys.DamageTaken <= highend and keys.DamageTaken >= lowend and IsRevivePossible(caster) then
 		caster:SetHealth(health)
 		keys.ability:StartCooldown(cd) 
-		ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_continuation_cooldown", {duration = ability:GetCooldown(ability:GetLevel())})
+		ability:ApplyDataDrivenModifier(caster, caster, "modifier_battle_continuation_cooldown", {duration = cd})
 		local reviveFx = ParticleManager:CreateParticle("particles/items_fx/aegis_respawn.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
 		ParticleManager:SetParticleControl(reviveFx, 3, caster:GetAbsOrigin())
 
@@ -43,12 +59,16 @@ function RuneMagicOpen(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-	caster:SwapAbilities("lancer_5th_rune_of_disengage", a1:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_rune_of_replenishment", a2:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_rune_of_flame", a4:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_close_spellbook", a5:GetName(), true, true) 
-	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, true) 
+	caster:SwapAbilities("lancer_5th_rune_of_disengage", a1:GetName(), true, false) 
+	caster:SwapAbilities("lancer_5th_rune_of_replenishment", a2:GetName(), true, false) 
+	if a3:GetName() == "lancer_5th_wesen_gae_bolg" then
+		caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, false) 
+	else
+		caster:SwapAbilities("lancer_5th_rune_of_trap", a3:GetName(), true, true) -- opening a spellbook should not cancel gae bolg's casting point
+	end 
+	caster:SwapAbilities("lancer_5th_rune_of_flame", a4:GetName(), true, false) 
+	caster:SwapAbilities("lancer_5th_close_spellbook", a5:GetName(), true, false) 
+	caster:SwapAbilities("lancer_5th_rune_of_conversion", a6:GetName(), true, true) -- same as above
 end
 
 function RuneLevelUp(keys)
@@ -68,18 +88,18 @@ function RuneMagicUsed(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-	a1:StartCooldown(20)
-	a2:StartCooldown(20)
-	a3:StartCooldown(20)
-	a4:StartCooldown(20)
-	a6:StartCooldown(20)
+	caster:FindAbilityByName("lancer_5th_rune_of_disengage"):StartCooldown(20)
+	caster:FindAbilityByName("lancer_5th_rune_of_replenishment"):StartCooldown(20)
+	caster:FindAbilityByName("lancer_5th_rune_of_trap"):StartCooldown(20)
+	caster:FindAbilityByName("lancer_5th_rune_of_flame"):StartCooldown(20)
+	caster:FindAbilityByName("lancer_5th_rune_of_conversion"):StartCooldown(20)
 	caster:SwapAbilities(a1:GetName(), "lancer_5th_rune_magic", true, true) 
 	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", true, true) 
 	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", true, true) 
 	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", true, true) 
 	caster:SwapAbilities(a5:GetName(), "fate_empty1", true, true) 
 	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", true, true) 
-	caster:GetAbilityByIndex(0):StartCooldown(20) 
+	caster:FindAbilityByName("lancer_5th_rune_magic"):StartCooldown(20)
 end
 
 function RuneMagicClose(keys)
@@ -90,13 +110,17 @@ function RuneMagicClose(keys)
 	local a4 = caster:GetAbilityByIndex(3)
 	local a5 = caster:GetAbilityByIndex(4)
 	local a6 = caster:GetAbilityByIndex(5)
-	caster:SwapAbilities(a1:GetName(), "lancer_5th_rune_magic", true, true) 
-	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", true, true) 
-	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", true, true) 
-	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", true, true) 
-	caster:SwapAbilities(a5:GetName(), "fate_empty1", true, true) 
-	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", true, true) 
-	caster:GetAbilityByIndex(0):EndCooldown() 
+	caster:SwapAbilities(a1:GetName(), "lancer_5th_rune_magic", false, true) 
+	caster:SwapAbilities(a2:GetName(), "lancer_5th_relentless_spear", false, true) 
+	caster:SwapAbilities(a3:GetName(), "lancer_5th_gae_bolg", false, true) 
+	caster:SwapAbilities(a4:GetName(), "lancer_5th_battle_continuation", false, true) 
+	if caster.IsPFAAcquired then
+		caster:SwapAbilities(a5:GetName(), "lancer_5th_protection_from_arrows", false, true) 
+	else
+		caster:SwapAbilities(a5:GetName(), "fate_empty1", false, true) 
+	end
+	caster:SwapAbilities(a6:GetName(), "lancer_5th_gae_bolg_jump", false, true) 
+	--caster:GetAbilityByIndex(0):EndCooldown() 
 
 end
 
@@ -524,7 +548,7 @@ function LancerCheckCombo(caster, ability)
 				endTime = 3,
 				callback = function()
 				if caster:GetAbilityByIndex(2):GetName() == "lancer_5th_wesen_gae_bolg" then 
-					caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, true) 
+					caster:SwapAbilities("lancer_5th_gae_bolg", "lancer_5th_wesen_gae_bolg", true, false) 
 				end
 			end
 			})
@@ -558,6 +582,7 @@ function OnPFAAcquired(keys)
 	local ply = caster:GetPlayerOwner()
 	local hero = caster:GetPlayerOwner():GetAssignedHero()
 	hero:FindAbilityByName("lancer_5th_protection_from_arrows"):SetLevel(1) 
+	hero:SwapAbilities("fate_empty1" , "lancer_5th_protection_from_arrows", false, true)
 	hero.IsPFAAcquired = true
 
 	-- Set master 1's mana 

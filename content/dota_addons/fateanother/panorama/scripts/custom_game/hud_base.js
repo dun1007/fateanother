@@ -26,7 +26,7 @@ function AddNotification(msg, panel) {
   }
   
   $.Schedule(msg.duration, function(){
-    $.Msg('callback')
+    //$.Msg('callback')
     notification.DeleteAsync(0);
   });
 

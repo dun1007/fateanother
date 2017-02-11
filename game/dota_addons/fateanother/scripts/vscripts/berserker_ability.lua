@@ -163,15 +163,14 @@ function OnBerserkStart(keys)
 	ability:ApplyDataDrivenModifier(caster, caster, "modifier_berserk_self_buff", {})
 	Timers:CreateTimer(function()
 		if caster:HasModifier("modifier_berserk_self_buff") == false then return end
-		if berserkCounter == duration then return end
+		if berserkCounter > duration then return end
 		-- local particle = ParticleManager:CreateParticle("particles/units/heroes/hero_ogre_magi/ogre_magi_bloodlust_buff_symbol.vpcf", PATTACH_ABSORIGIN_FOLLOW, caster)
   --   	ParticleManager:SetParticleControl(particle, 1, caster:GetAbsOrigin() )
-		caster:SetHealth(hplock)
-		berserkCounter = berserkCounter + 0.01
-		return 0.01
+		caster:SetHealth(math.min(hplock , caster:GetMaxHealth() - caster:GetModifierStackCount("modifier_gae_buidhe", keys.ability) * 100)) -- 100 being unit health reduction, refer to ZL KV/lua.
+		berserkCounter = berserkCounter + 0.033
+		return 0.033
 		end
 	)
-
 
 	if caster.IsEternalRageAcquired then 
 		local explosionCounter = 0
@@ -379,7 +378,7 @@ function OnNineLanded(caster, ability)
 				for k,v in pairs(lasthitTargets) do
 					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
+					giveUnitDataDrivenModifier(caster, v, "revoked", 1.0)
 					-- push enemies back
 					local pushback = Physics:Unit(v)
 					v:PreventDI()
@@ -419,7 +418,7 @@ function OnNineLanded(caster, ability)
 				for k,v in pairs(targets) do
 					DoDamage(caster, v, damage, DAMAGE_TYPE_MAGICAL, 0, ability, false)
 					v:AddNewModifier(caster, v, "modifier_stunned", {Duration = 1.0})
-					giveUnitDataDrivenModifier(caster, v, "rb_sealdisabled", 1.0)
+					giveUnitDataDrivenModifier(caster, v, "revoked", 1.0)
 				end
 
 				ParticleManager:SetParticleControl(particle, 2, Vector(1,1,radius))
@@ -451,12 +450,12 @@ function BerCheckCombo(caster, ability)
 			})
 		elseif ability == caster:FindAbilityByName("berserker_5th_berserk") and caster:FindAbilityByName("berserker_5th_courage"):IsCooldownReady() and caster:FindAbilityByName("berserker_5th_madmans_roar"):IsCooldownReady()  then
 			if QUsed == true then 
-				caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+				caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, false) 
 				local newTime =  GameRules:GetGameTime()
 				Timers:CreateTimer({
 					endTime = 4 - (newTime - QTime),
 					callback = function()
-					caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", true, true) 
+					caster:SwapAbilities("berserker_5th_madmans_roar", "berserker_5th_courage", false, true) 
 					QUsed = false
 				end
 				})

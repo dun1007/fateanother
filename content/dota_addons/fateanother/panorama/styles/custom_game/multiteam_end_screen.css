@@ -123,6 +123,11 @@
 	transform: translatey(0px);
 }
 
+.FlyoutTeam.team_winner
+{
+	border: 2px solid #DAA520;
+}
+
 .FlyoutTeam.no_players
 {
 	visibility: collapse;

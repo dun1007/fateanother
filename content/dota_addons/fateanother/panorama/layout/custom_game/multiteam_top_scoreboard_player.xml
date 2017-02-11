@@ -15,8 +15,8 @@
 		<Panel hittest="false" id="RespawnIndicator">
 			<Label hittest="false" id="RespawnTimer" />
 		</Panel>
-		<Panel hittest="false" class="ScoreboardPlayer">
-			<Button class="PlayerPortraitWrapper" onmouseactivate="PortraitClicked();">
+		<Panel hittest="true" class="ScoreboardPlayer">
+			<Button class="PlayerPortraitWrapper">
 				<Panel hittest="false" id="PlayerColorBar" />
 				<Image hittest="false" id="HeroIcon" />
 				<Panel hittest="false" id="PlayerIDBar">

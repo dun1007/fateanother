@@ -40,7 +40,6 @@ function OnVanishStart(keys)
 		caster:GiveMana(ability:GetManaCost(1)) 
 		return 
 	end 
-	if IsSpellBlocked(keys.target) then return end -- Linken effect checker
 	local info = {
 		Target = target, -- chainTarget
 		Source = caster, -- chainSource
@@ -55,8 +54,13 @@ function OnVanishStart(keys)
 end
 
 function OnVanishHit(keys)
-	local caster = keys.caster
 	local target = keys.target
+	if IsSpellBlocked(target)
+		or target:IsMagicImmune()
+	then
+		return
+	end -- Linken effect checker
+	local caster = keys.caster
 	local ability = keys.ability
 	local damage = keys.Damage
 	ApplyPurge(target)
@@ -161,7 +165,8 @@ function OnDownHit(keys)
 	end
 
 	if caster.bIsSanityAcquired then
-		caster:PerformAttack(target, true, true, true, true, false)
+		--caster:PerformAttack(target, true, true, true, true, false)
+		caster:PerformAttack( target, true, true, true, true, false, false, false )
 	end
 end
 
@@ -486,7 +491,7 @@ function OnRideAscend(keys)
 	local duration = keys.Duration
 	giveUnitDataDrivenModifier(caster, caster, "jump_pause_nosilence", duration)
 	caster:AddEffects(EF_NODRAW)
-	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", true, true)
+	caster:SwapAbilities("fate_empty1", "astolfo_hippogriff_rush", false, true)
 	local ascendFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_raid/astolfo_hippogriff_raid_ascend.vpcf", PATTACH_CUSTOMORIGIN, nil )
 	ParticleManager:SetParticleControl( ascendFx, 0, caster:GetAbsOrigin())
 	--local aoeIndicatorFx = ParticleManager:CreateParticle( "particles/custom/astolfo/hippogriff_ride/astolfo_hippogriff_ride_aoe_indicator.vpcf", PATTACH_CUSTOMORIGIN, nil )
@@ -578,6 +583,7 @@ function OnMStrengthAcquired(keys)
     hero:SetBaseStrength(hero:GetBaseStrength()+10) 
     hero:AddAbility("astolfo_monstrous_strength")
     hero:FindAbilityByName("astolfo_monstrous_strength"):SetLevel(1)
+    hero:FindAbilityByName("astolfo_monstrous_strength"):SetHidden(true)
 end
 
 function OnIActionAcquired(keys)
@@ -591,6 +597,7 @@ function OnIActionAcquired(keys)
 
     hero:AddAbility("astolfo_independent_action")
     hero:FindAbilityByName("astolfo_independent_action"):SetLevel(1)
+    hero:FindAbilityByName("astolfo_independent_action"):SetHidden(true)
 end
 
 function OnSanityAcquired(keys)
@@ -604,5 +611,5 @@ function OnSanityAcquired(keys)
 
     hero:AddAbility("astolfo_down_with_a_touch_passive")
     hero:FindAbilityByName("astolfo_down_with_a_touch_passive"):SetLevel(1)
-
+    hero:FindAbilityByName("astolfo_down_with_a_touch_passive"):SetHidden(true)
 end
