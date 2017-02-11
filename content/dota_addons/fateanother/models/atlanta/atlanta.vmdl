@@ -95,7 +95,7 @@
 						]
 					},
 					{
-						m_name = "attach_weapon"
+						m_name = "attach_attack1"
 						m_influences = 
 						[
 							{

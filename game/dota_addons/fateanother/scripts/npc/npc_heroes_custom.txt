@@ -1419,4 +1419,73 @@
 		"VisionDaytimeRange"			"800"
 		"VisionNighttimeRange"			"800"
 	}
+
+	
+	//=================================================================================================================
+	//	Archer of Red - Atalanta
+	//=================================================================================================================
+	"npc_dota_hero_atalanta"
+	{
+		"override_hero"			"npc_dota_hero_drow_ranger"
+		"DisableWearables" 			"1"
+		"Model"					"models/atlanta/atlanta.vmdl"
+		//"Model"					"models/development/invisiblebox.vmdl"
+		"ModelScale"			"1.00"
+		//"HeroID"					"114"
+		"DrawParticlesWhileHidden" "1"
+
+		"AbilityLayout"			"6"
+		"Ability1"				""
+		"Ability2"				""
+		"Ability3"				""
+		"Ability4"				""
+		"Ability5"				""
+		"Ability6"				""
+		"Ability13"				"presence_detection_passive"
+		"Ability14"				"attribute_bonus_custom"
+
+		"Combo"						""
+		"AttributeNumber"			"5"
+		"Attribute1"				""
+		"Attribute2"				""
+		"Attribute3"				""
+		"Attribute4"				""
+		"Attribute5"				""
+
+
+		"StatusHealth"					"1100"
+		"StatusHealthRegen"				"7"
+		"StatusMana"					"1050"
+		"StatusManaRegen"				"5"
+		
+		"ArmorPhysical"					"4"
+		"MagicalResistance"				"5"
+		
+		"AttackCapabilities"			"DOTA_UNIT_CAP_RANGED_ATTACK"
+		"AttackRange"					"700"
+		"AttackDamageMin"				"53"
+		"AttackDamageMax"				"57"
+		"AttackRate"					"1.1"
+		"AttackAcquisitionRange"		"1000"
+		"AttackAnimationPoint"			"0.3"
+		"ProjectileModel"	"particles/units/heroes/hero_drow/drow_base_attack.vpcf"
+		"ProjectileSpeed"	"1500"
+		
+		
+		"AttributePrimary"				"DOTA_ATTRIBUTE_AGILITY"
+		"AttributeBaseStrength"			"0"
+		"AttributeStrengthGain"			"0.7"
+		"AttributeBaseAgility"			"0"
+		"AttributeAgilityGain"			"1.4"
+		"AttributeBaseIntelligence"		"0"
+		"AttributeIntelligenceGain"		"0.9"
+		
+		"MovementSpeed"					"340"
+		"MovementTurnRate"				"0.8"
+		
+		"VisionDaytimeRange"			"1300"
+		"VisionNighttimeRange"			"1300"
+
+	}
+	
 }
