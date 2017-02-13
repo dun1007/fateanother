@@ -916,6 +916,18 @@ function FateGameMode:OnHeroInGame(hero)
         hero:SwapItems(DOTA_ITEM_SLOT_3, DOTA_ITEM_SLOT_9)
         hero:AddItem(CreateItem("item_blink_scroll", nil, nil) ) -- Give blink scroll
     end)
+
+    -- Removing Talents
+    for i=0,23 do
+        if hero:GetAbilityByIndex(i) ~= nil then
+            local ability = hero:GetAbilityByIndex(i)
+            if string.match(ability:GetName(),"special_bonus") then
+                hero:RemoveAbility(ability:GetName())
+            end
+        end
+    end
+    --END
+
     hero.CStock = 10
     hero.ShardAmount = 0
 
