@@ -9136,7 +9136,7 @@
 					"Heal"
 					{
 						"Target"		"CASTER"
-						"HealAmount"	"%heal_amount/5"
+						"HealAmount"	"%heal_over_time"
 					}		
 				}	// Search
 

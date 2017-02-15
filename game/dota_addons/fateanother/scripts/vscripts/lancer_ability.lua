@@ -397,46 +397,53 @@ function OnGBComboHit(keys)
 				return 
 			end
 		    local lancer = Physics:Unit(caster)
-		    caster:PreventDI()
-		    caster:SetPhysicsFriction(0)
-		    caster:SetPhysicsVelocity((keys.target:GetAbsOrigin() - keys.caster:GetAbsOrigin()):Normalized() * 3000)
-		    caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
-		    caster:FollowNavMesh(false)	
-		    caster:SetAutoUnstuck(false)
+
 		    keys.ability:ApplyDataDrivenModifier(caster, caster, "modifier_wesen_gae_bolg_pierce_anim", {})
-		    caster:OnPhysicsFrame(function(unit)
-				local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
-				local dir = diff:Normalized()
-				unit:SetPhysicsVelocity(dir * 3000)
-				if diff:Length() < 100 then
-				  	caster:RemoveModifierByName("pause_sealdisabled")
-					unit:PreventDI(false)
-					unit:SetPhysicsVelocity(Vector(0,0,0))
-					unit:OnPhysicsFrame(nil)
-					unit:SetAutoUnstuck(true)
-			        FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 
-			        if caster:IsAlive() then 
-			        	local RedScreenFx = ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
-			        	Timers:CreateTimer( 3.0, function()
-							ParticleManager:DestroyParticle( RedScreenFx, false )
-						end)
-			        	target:EmitSound("Hero_Lion.Impale")
-			        	StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK2, rate=2})
-						local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
-						local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
+		    caster:OnHibernate(function(unit)
+		    	caster:SetPhysicsVelocity((keys.target:GetAbsOrigin() - keys.caster:GetAbsOrigin()):Normalized() * 3000)
+		    	caster:PreventDI()
+		    	caster:SetPhysicsFriction(0)
+		    	caster:SetNavCollisionType(PHYSICS_NAV_NOTHING)
+		    	caster:FollowNavMesh(false)	
+		    	caster:SetAutoUnstuck(false)
+		    	caster:OnPhysicsFrame(function(unit)
+					local diff = target:GetAbsOrigin() - caster:GetAbsOrigin()
+					local dir = diff:Normalized()
+					unit:SetPhysicsVelocity(dir * 3000)
+					if diff:Length() < 100 then
+				  		caster:RemoveModifierByName("pause_sealdisabled")
+						unit:PreventDI(false)
+						unit:SetPhysicsVelocity(Vector(0,0,0))
+						unit:OnPhysicsFrame(nil)
+						unit:OnHibernate(nil)
+						unit:SetAutoUnstuck(true)
+			        	FindClearSpaceForUnit(unit, unit:GetAbsOrigin(), true)
 
-						giveUnitDataDrivenModifier(caster, target, "can_be_executed", 0.033)
-				    	DoDamage(caster, target, keys.Damage + target:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
-						target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
+				        if caster:IsAlive() then 
+				        	local RedScreenFx = ParticleManager:CreateParticle("particles/custom/screen_red_splash.vpcf", PATTACH_EYES_FOLLOW, caster)
+				        	Timers:CreateTimer( 3.0, function()
+								ParticleManager:DestroyParticle( RedScreenFx, false )
+							end)
+			        		target:EmitSound("Hero_Lion.Impale")
+			        		StartAnimation(caster, {duration=0.3, activity=ACT_DOTA_ATTACK2, rate=2})
+							local runeAbil = caster:FindAbilityByName("lancer_5th_rune_of_flame")
+							local healthDamagePct = runeAbil:GetLevelSpecialValueFor("ability_bonus_damage", runeAbil:GetLevel()-1)
 
-						PlayNormalGBEffect(target)
-						if target:GetHealth() < HBThreshold then 
-							PlayHeartBreakEffect(ability, caster, target)
+							giveUnitDataDrivenModifier(caster, target, "can_be_executed", 0.033)
+				    		DoDamage(caster, target, keys.Damage + target:GetHealth() * healthDamagePct/100, DAMAGE_TYPE_MAGICAL, 0, keys.ability, false)
+							target:AddNewModifier(caster, target, "modifier_stunned", {Duration = 1.0})
+
+							PlayNormalGBEffect(target)
+							if target:GetHealth() < HBThreshold then 
+								PlayHeartBreakEffect(ability, caster, target)
+							end
 						end
 					end
-				end
-			end)
+				end)
+		    end)
+
+
 			return
 		end)
 	end
