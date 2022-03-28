@@ -1,6 +1,8 @@
 # [Fate/Another](https://steamcommunity.com/sharedfiles/filedetails/?id=366886594)
 
-[![Trailer Video](http://img.youtube.com/vi/DWNJVBVwank/sddefault.jpg)](https://www.youtube.com/watch?v=DWNJVBVwank)
+[![Demo Video](http://img.youtube.com/vi/DWNJVBVwank/sddefault.jpg)](https://youtu.be/5X2c2rYPuOk?t=1181)
+
+**Click on image above for demo video**
 
 **DISCLAIMER: As of 2017, I have passed the leadership of project to someone more fitting. Below information may no longer be relevant.**
 
